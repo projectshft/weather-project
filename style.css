@@ -8,10 +8,6 @@ h1 {
   margin-bottom: 50px;
 }
 
-.no-gutters {
-  margin-bottom: 50px;
-}
-
 .temp {
   font-size: 32px;
   font-weight: bold;
@@ -31,5 +27,17 @@ h1 {
 .daily-list {
   width: 90%;
   margin: auto;
+  margin-top: 50px;
+}
+
+.default {
+  cursor: pointer;
+}
+
+.undo {
+  cursor: pointer;
+}
+
+.current-weather {
   margin-top: 50px;
 }
