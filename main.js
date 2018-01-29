@@ -32,14 +32,13 @@ var renderWeatherView = function() {
 };
 
 var getLocation = function() {
-  //if number is negative, translate to html-safe string
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(function(position) {
       latitude = Math.round(position.coords.latitude);
       longitude = Math.round(position.coords.longitude);
-    })
+    });
   }
-}
+};
 
 var setQueryString = function(queryType) {
   var queryString = '';
@@ -49,6 +48,17 @@ var setQueryString = function(queryType) {
     queryString = `lat=${latitude}&lon=${longitude}`;
   }
   return queryString;
+}
+
+var setConditions = function(weatherObj){
+  var conditions = {};
+  var iconName = weatherObj.weather[0].icon;
+  conditions.temp = Math.round(weatherObj.main.temp);
+  conditions.cityName = weatherObj.name;
+  conditions.weather = weatherObj.weather[0].main;
+  conditions.iconURL = `http://openweathermap.org/img/w/${iconName}.png`,
+  conditions.default = searchZip === getDefaultZip();
+  return conditions;
 }
 
 var renderForecastView = function() {
@@ -65,13 +75,7 @@ var fetchWeather = function(queryType) {
     url: url,
     dataType: "json",
     success: function(data) {
-      var iconName = data.weather[0].icon;
-      weatherConditions.temp = Math.round(data.main.temp);
-      weatherConditions.cityName = data.name;
-      weatherConditions.weather = data.weather[0].main //can update this to make more descriptive/specific
-      weatherConditions.iconURL = `http://openweathermap.org/img/w/${iconName}.png`,
-        weatherConditions.default = searchZip === getDefaultZip();
-        console.log(`fetched weather for ${weatherConditions.cityName}`)
+      weatherConditions = setConditions(data);
       renderWeatherView();
     },
 
@@ -97,13 +101,8 @@ var fetchForecast = function(queryType) {
         return !((index + 1) % 8); //gives you 5 days, starting ~24 hours from now
       })
       fiveDayArray.forEach(function(day) {
-        //make setConditions function and use for this and fetchWeather
-        var iconName = day.weather[0].icon;
-        var forecastForDay = {};
-        forecastForDay.temp = Math.round(day.main.temp);
-        forecastForDay.weather = day.weather[0].main;
-        forecastForDay.iconURL = `http://openweathermap.org/img/w/${iconName}.png`,
-          forecastForDay.day = moment(day.dt_txt).format('dddd');
+        var forecastForDay = setConditions(day);
+        forecastForDay.day = moment(day.dt_txt).format('dddd');
         forecastData.forecasts.push(forecastForDay);
       })
       renderForecastView();
