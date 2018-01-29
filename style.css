@@ -1,0 +1,35 @@
+.container {
+  width: 50%;
+  margin: auto;
+}
+
+h1 {
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+.no-gutters {
+  margin-bottom: 50px;
+}
+
+.temp {
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.city {
+  font-size: 28px;
+}
+
+.daily {
+  border-style: solid;
+  border-width: 2px;
+  margin: 5px;
+  padding: 5px;
+}
+
+.daily-list {
+  width: 90%;
+  margin: auto;
+  margin-top: 50px;
+}
