@@ -2,6 +2,13 @@ var weather = []
 var today = {}
 var daysofWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
 
+storedData = localStorage.getItem("location")
+if (storedData) {
+  defaultLocation = JSON.parse(storedData)
+  getDailyWeather(defaultLocation);
+  getWeeklyWeather(defaultLocation);
+}
+
 $('.search').on('click', function() {
   input = $('#search-query').val();
   getDailyWeather(input);
@@ -10,7 +17,7 @@ $('.search').on('click', function() {
 
 $('body').on("click",".default-location", function () {
   input = $('#search-query').val();
-  
+  localStorage.setItem('location', JSON.stringify(input))
 })
 
 var renderDailyForecast = function() {
