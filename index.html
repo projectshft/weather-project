@@ -20,7 +20,9 @@
           <p class="text-center">
             <input type="text" id="search-zip" placeholder="Enter U.S. zipcode">
             <button type="button" class="btn btn-primary" id="search">Search</button>
-            <p class="text-center"><button type="button" class="btn btn-default btn-sm" id="use-location">Use my location</button></p>
+            <p class="text-center">
+              <button type="button" class="btn btn-default btn-sm" id="use-location">Use my location</button>
+            </p>
 
           </p>
         </div>
@@ -35,8 +37,9 @@
         <h2>
           {{temp}}&#176;
           {{#if default}}
-          <button type="button" class="btn btn-sm btn-info float-right">&#x2714; City set as default</button>
-          {{else}}<button type="button" class="btn btn-sm btn-info float-right" id="set-default">Set city as default</button>
+            <button type="button" class="btn btn-sm btn-info float-right">&#x2714; City set as default</button>
+          {{else}}
+            <button type="button" class="btn btn-sm btn-info float-right" id="set-default">Set city as default</button>
           {{/if}}
         </h2>
         <h2>
@@ -44,22 +47,25 @@
           <img src={{iconURL}}>
 
         </h2>
-          <p>{{weather}}</p>
+        <p>{{weather}}</p>
+      </div>
+
+    </script>
+
+    <script type="text/x-handlebars" id="map-template">
+      <div class="col-md-3">
+        <iframe width="100%" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBkvj8D5KyBwaLqGgaFcxyuevmz6PFaRrU&q={{googleQuery}}&zoom=8" allowfullscreen="allowfullscreen"></iframe>
       </div>
     </script>
 
     <script id="forecast-view-template" type="text/x-handlebars">
-      {{#each forecasts}}
-      <div class="col-md-1 custom-border">
-        <p class="text-center">{{weather}}</p>
-        <h2 class="text-center">{{temp}}&#176;</h2>
-        <h2 class="text-center"><img src="{{iconURL}}"></h2>
-        <p class="text-center">{{day}}</p>
-      </div>
-      {{/each}}
-    </script>
+      {{#each forecasts}} <div class="col-md-1 custom-border"> <p class="text-center">{{weather}}</p>
+      <h2 class="text-center">{{temp}}&#176;</h2>
+      <h2 class="text-center"><img src={{iconURL}}></h2>
+      <p class="text-center">{{day}}</p>
+    </div>{{/each}}</script>
 
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script type="text/javascript" src="main.js"></script>

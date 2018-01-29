@@ -1,3 +1,8 @@
+
+var googleMapsKey = "AIzaSyBkvj8D5KyBwaLqGgaFcxyuevmz6PFaRrU";
+
+
+
 var setDefaultZip = function(zip) {
   var defaultZip = JSON.stringify({
     zip: zip
@@ -23,13 +28,10 @@ var forecastData = {
 };
 
 var weatherViewTemplate = Handlebars.compile($('#weather-view-template').html());
+var mapTemplate = Handlebars.compile($('#map-template').html());
 var forecastViewTemplate = Handlebars.compile($('#forecast-view-template').html());
 
-var renderWeatherView = function() {
-  $('#weather-view').empty();
-  var weatherViewHTML = weatherViewTemplate(weatherConditions);
-  $('#weather-view').append(weatherViewHTML)
-};
+
 
 var getLocation = function() {
   if (navigator.geolocation) {
@@ -41,6 +43,7 @@ var getLocation = function() {
 };
 
 var setQueryString = function(queryType) {
+  //can we have it check for global zip instead?
   var queryString = '';
   if (queryType === 'zip') {
     queryString = `zip=${searchZip}`
@@ -50,6 +53,16 @@ var setQueryString = function(queryType) {
   return queryString;
 }
 
+var setGoogleString = function(){
+  var googleObj = {};
+  if (searchZip){
+    googleObj.googleQuery = searchZip;
+  } else {
+    googleObj.googleQuery = `${latitude}%2C${longitude}`;
+  }
+  return googleObj;
+}
+
 var setConditions = function(weatherObj){
   var conditions = {};
   var iconName = weatherObj.weather[0].icon;
@@ -57,15 +70,24 @@ var setConditions = function(weatherObj){
   conditions.cityName = weatherObj.name;
   conditions.weather = weatherObj.weather[0].main;
   conditions.iconURL = `http://openweathermap.org/img/w/${iconName}.png`,
-  conditions.default = searchZip === getDefaultZip();
+  conditions.default = searchZip === getDefaultZip(); //this works for reeaaaallly sketchy reasons when using geolocation
   return conditions;
 }
 
+var renderWeatherView = function() {
+  $('#weather-view').empty();
+  var weatherViewHTML = weatherViewTemplate(weatherConditions);
+  var mapHTML = mapTemplate(setGoogleString());
+  console.log(mapHTML)
+  $('#weather-view').append(weatherViewHTML, mapHTML);
+
+};
 var renderForecastView = function() {
   $('#forecast-view').empty();
   var forecastViewHTML = forecastViewTemplate(forecastData);
   $('#forecast-view').append(forecastViewHTML);
 }
+
 
 var fetchWeather = function(queryType) {
   var queryString = setQueryString(queryType);
@@ -141,6 +163,7 @@ $('#use-location').on('click', function() {
   if (latitude && longitude) {
     fetchWeather();
     fetchForecast();
+    searchZip = null;
   } else {
     console.log('unable to get location')
   }
