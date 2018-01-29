@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>My Weather</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <div class="container">
+      <div class="row m-4">
+        <div class="col-md-6 offset-md-3">
+          <h1 class="text-center">Current Weather</h1>
+        </div>
+      </div>
+      <div class="row m-4">
+        <div class="col-md-6 offset-md-3">
+          <p class="text-center">
+            <input type="text" id="search-zip" placeholder="Enter U.S. zipcode">
+            <button type="button" class="btn btn-primary" id="search">Search</button>
+            <p class="text-center"><button type="button" class="btn btn-default btn-sm" id="use-location">Use my location</button></p>
+
+          </p>
+        </div>
+      </div>
+      <div class="row justify-content-center m-4" id="weather-view"></div>
+    </div>
+    <div class="row justify-content-center" id="forecast-view"></div>
+
+    <script id="weather-view-template" type="text/x-handlebars">
+      <div class="col-md-3">
+
+        <h2>
+          {{temp}}&#176;
+          {{#if default}}
+          <button type="button" class="btn btn-sm btn-info float-right">&#x2714; City set as default</button>
+          {{else}}<button type="button" class="btn btn-sm btn-info float-right" id="set-default">Set city as default</button>
+          {{/if}}
+        </h2>
+        <h2>
+          {{cityName}}
+          <img src={{iconURL}}>
+
+        </h2>
+          <p>{{weather}}</p>
+      </div>
+    </script>
+
+    <script id="forecast-view-template" type="text/x-handlebars">
+      {{#each forecasts}}
+      <div class="col-md-1 custom-border">
+        <p class="text-center">{{weather}}</p>
+        <h2 class="text-center">{{temp}}&#176;</h2>
+        <h2 class="text-center"><img src="{{iconURL}}"></h2>
+        <p class="text-center">{{day}}</p>
+      </div>
+      {{/each}}
+    </script>
+
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="main.js"></script>
+  </body>
+</html>
