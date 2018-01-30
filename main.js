@@ -14,6 +14,10 @@ var defaultLocationName = ""
 var storedData = localStorage.getItem("location")
 if (storedData) {
   var defaultLocation = JSON.parse(storedData)
+  //show a spinner while fetching data from the API
+  $('.weekly-forecast').addClass('hide')
+  $('.daily-forecast').addClass('hide')
+  $('.spinner').removeClass('hide')
   //pass location query and true for isDefault because we're defining this as the default location
   getLocationCoordinates(defaultLocation, true)
 }
@@ -21,6 +25,10 @@ if (storedData) {
 //use geolocation data to find locality name
 $('.locate-me').on('click', function() {
   if ("geolocation" in navigator) {
+    //show a spinner while fetching data from the API
+    $('.weekly-forecast').addClass('hide')
+    $('.daily-forecast').addClass('hide')
+    $('.spinner').removeClass('hide')
     navigator.geolocation.getCurrentPosition(function(position) {
       locationLatitude = position.coords.latitude
       locationLongitude = position.coords.longitude
@@ -34,6 +42,10 @@ $('.locate-me').on('click', function() {
 //on search get location information and pass it to the weather APIs
 $('.search').on('click', function() {
   input = $('#search-query').val();
+  //show a spinner while fetching data from the API
+  $('.weekly-forecast').addClass('hide')
+  $('.daily-forecast').addClass('hide')
+  $('.spinner').removeClass('hide')
   //pass location query and false because we are not defining this as the default location
   getLocationCoordinates(input, false)
 })
@@ -47,25 +59,28 @@ $('body').on("click", ".default-location", function() {
 
 //used in geolocation: gets a location name from the location address data to pass to the getLocationCoordinates function to get weather data
 var parseLocation = function(data) {
-  //iterates through location address data to find the item that gives the locality or sublocality name to pass to the getLocationCoordinates function
+  //iterates through location address data to find the item that gives the locality or sublocality name to pass to the getLocationCoordinates function. If no name, alerts an error and hides the spinner
   var locationName
   for (i = 0; i < data.results.length; i++) {
     for (j = 0; j < data.results[i].types.length; j++) {
       if (data.results[i].types[j] == "locality" || data.results[i].types[j] == "sublocality") {
-        locationName = data.results[i].formatted_address
-        break
+        locationName = data.results[i].formatted_address;
+        break;
       }
     }
   }
   if (!locationName) {
-    locationName = data.results[2].formatted_address
+    $('.spinner').addClass('hide')
+    alert("Geolocation error, please try again.")
   }
   $('#search-query').val(locationName)
   getLocationCoordinates(locationName, false)
 }
-
 //pass search query to a Google maps API to get full name, latitude, and longitude then pass latitude and longitude to the openweather API to get weather data
 var getWeather = function(data, isDefault) {
+  $('.weekly-forecast').removeClass('hide')
+  $('.daily-forecast').removeClass('hide')
+  $('.spinner').addClass('hide')
   //if we're getting weather for the default location, we set the default location name
   if (isDefault) {
     defaultLocationName = data.results[0].formatted_address

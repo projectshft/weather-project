@@ -52,7 +52,6 @@
 
 .small-forecast {
   font-family: 'Ubuntu', sans-serif;
-
   float:left;
   border: 0.5px solid gray;
   padding-top: 10px;
@@ -75,7 +74,3 @@
   text-align: center;
   margin-bottom: 20px;
 }
-
-/* div {
-  border: 2px solid red;
-} */
