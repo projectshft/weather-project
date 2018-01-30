@@ -24,7 +24,7 @@ $('.locate-me').on('click', function() {
     navigator.geolocation.getCurrentPosition(function(position) {
       locationLatitude = position.coords.latitude
       locationLongitude = position.coords.longitude
-      getLocationAddress(locationLatitude,locationLongitude)
+      getLocationAddress(locationLatitude, locationLongitude)
     });
   } else {
     alert('location services not available')
@@ -48,9 +48,10 @@ $('body').on("click", ".default-location", function() {
 //used in geolocation: gets a location name from the location address data to pass to the getLocationCoordinates function to get weather data
 var parseLocation = function(data) {
   //iterates through location address data to find the item that gives the locality or sublocality name to pass to the getLocationCoordinates function
-  for (i=0; i<data.results.length; i++) {
-    for (j=0; j<data.results[i].types.length;j++) {
-      if(data.results[i].types[j] == "locality" || data.results[i].types[j] == "sublocality") {
+  var locationName
+  for (i = 0; i < data.results.length; i++) {
+    for (j = 0; j < data.results[i].types.length; j++) {
+      if (data.results[i].types[j] == "locality" || data.results[i].types[j] == "sublocality") {
         locationName = data.results[i].formatted_address
         break
       }
@@ -155,7 +156,9 @@ var currentWeather = function(data, location) {
 var weeklyWeather = function(data) {
   //determine current day
   var now = moment()
-  var previousDay = now.day()
+  if (now.hour() > 12) {
+    previousDay = now.day()
+  } else var previousDay = now.day() - 1
   weather = [];
   //for each data point in the forecast list from the API, check whether that date is after the current day AND greater than or equal to 12pm, increment previous day each loop
   for (j = 0; j < data.list.length; j++) {
