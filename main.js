@@ -8,18 +8,30 @@ var today = {}
 var daysofWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
 
 //sets defaultLocationName to an empty string, will populate later if there is a default location
-defaultLocationName = ""
+var defaultLocationName = ""
 
 //if a default location has been set, load that data automatically
-storedData = localStorage.getItem("location")
+var storedData = localStorage.getItem("location")
 if (storedData) {
   var defaultLocation = JSON.parse(storedData)
-
   //pass location query and true for isDefault because we're defining this as the default location
   getLocationCoordinates(defaultLocation, true)
 }
 
-//on search get location information and pass them to the weather APIs
+//use geolocation data to find locality name
+$('.locate-me').on('click', function() {
+  if ("geolocation" in navigator) {
+    navigator.geolocation.getCurrentPosition(function(position) {
+      locationLatitude = position.coords.latitude
+      locationLongitude = position.coords.longitude
+      getLocationAddress(locationLatitude,locationLongitude)
+    });
+  } else {
+    alert('location services not available')
+  }
+})
+
+//on search get location information and pass it to the weather APIs
 $('.search').on('click', function() {
   input = $('#search-query').val();
   //pass location query and false because we are not defining this as the default location
@@ -33,31 +45,45 @@ $('body').on("click", ".default-location", function() {
   getLocationCoordinates(input, true)
 })
 
+//used in geolocation: gets a location name from the location address data to pass to the getLocationCoordinates function to get weather data
+var parseLocation = function(data) {
+  //iterates through location address data to find the item that gives the locality or sublocality name to pass to the getLocationCoordinates function
+  for (i=0; i<data.results.length; i++) {
+    for (j=0; j<data.results[i].types.length;j++) {
+      if(data.results[i].types[j] == "locality" || data.results[i].types[j] == "sublocality") {
+        locationName = data.results[i].formatted_address
+        break
+      }
+    }
+  }
+  if (!locationName) {
+    locationName = data.results[2].formatted_address
+  }
+  $('#search-query').val(locationName)
+  getLocationCoordinates(locationName, false)
+}
+
 //pass search query to a Google maps API to get full name, latitude, and longitude then pass latitude and longitude to the openweather API to get weather data
 var getWeather = function(data, isDefault) {
-
   //if we're getting weather for the default location, we set the default location name
   if (isDefault) {
     defaultLocationName = data.results[0].formatted_address
   }
   var locationName = data.results[0].formatted_address
-
-  //checks whether we are at the default location - if so we hide the active default location button and show the disabled default location button
+  //checks whether a "normal search" is for the default location - if so we hide the active default location button and show the disabled default location button
   if (locationName == defaultLocationName) {
-    $('.not-default').addClass('hide')
-    $('.is-default').removeClass('hide')
+    $('.not-default').addClass('hide');
+    $('.is-default').removeClass('hide');
+  } else {
+    $('.not-default').removeClass('hide');
+    $('.is-default').addClass('hide');
   }
-  else {
-    $('.not-default').removeClass('hide')
-    $('.is-default').addClass('hide')
-  }
-
   //remove the ', USA' from cities in the United States to improve display
   if (locationName.search(/,\sUSA/) != -1) {
-    locationName = locationName.slice(0, locationName.search(/,\sUSA/))
+    locationName = locationName.slice(0, locationName.search(/,\sUSA/));
   }
-  locationLatitude = data.results[0].geometry.location.lat
-  locationLongitude = data.results[0].geometry.location.lng
+  locationLatitude = data.results[0].geometry.location.lat;
+  locationLongitude = data.results[0].geometry.location.lng;
   getDailyWeather(locationName, locationLatitude, locationLongitude);
   getWeeklyWeather(locationLatitude, locationLongitude);
 }
@@ -140,7 +166,7 @@ var weeklyWeather = function(data) {
     //timestamp of the API item
     var dataTime = dt.hour()
     if (dataDay - previousDay == 1 || dataDay - previousDay == -6) {
-      if (dataTime > 13) {
+      if (dataTime >= 12) {
         previousDay++
 
         var temp = function() {
@@ -207,6 +233,7 @@ var weeklyWeather = function(data) {
   renderWeeklyForecast();
 };
 
+//uses the latitude and longitude coordinates of a city to return the current weather conditions
 function getDailyWeather(location, lat, lon) {
   $.ajax({
     method: "GET",
@@ -221,6 +248,7 @@ function getDailyWeather(location, lat, lon) {
   });
 };
 
+//uses the latitude and longitude coordinates of a city to return the 5-day weather forecast
 function getWeeklyWeather(lat, lon) {
   $.ajax({
     method: "GET",
@@ -235,6 +263,7 @@ function getWeeklyWeather(lat, lon) {
   });
 };
 
+//gets location coordinates from a city name and passes this information to a function that gets weather information for that city
 function getLocationCoordinates(input, isDefault) {
   //transform the input so it can be passed in the url by replacing spaces with "+"
   var transformedQuery = input.replace(/\s/g, "+");
@@ -242,6 +271,19 @@ function getLocationCoordinates(input, isDefault) {
     url: `http://maps.googleapis.com/maps/api/geocode/json?address=${transformedQuery}&sensor=true`,
     success: function(data) {
       getWeather(data, isDefault);
+    },
+    error: function(jqXHR, textStatus, errorThrown) {
+      console.log(textStatus);
+    }
+  });
+};
+
+//gets address data for latitude and longitude coordinates to determine the city so the city can be passed to getLocationCoordinates which activates the function that gets the weather
+function getLocationAddress(lat, lon) {
+  $.ajax({
+    url: `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lon}&sensor=true`,
+    success: function(data) {
+      parseLocation(data);
     },
     error: function(jqXHR, textStatus, errorThrown) {
       console.log(textStatus);
