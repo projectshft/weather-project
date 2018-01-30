@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- Required meta tags -->
+    <link rel="stylesheet" href="style.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
+     integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <title>Weather App</title>
+  </head>
+
+  <body>
+    <div class="container top">
+      <h1 class="text-center">Current Weather</h1>
+        <div class="row justify-content-center top">
+            <div class="form-group row justify-content-center">
+              <div class="col-auto">
+                <input type="text" class="user-input" placeholder="Enter City Name">
+              </div>
+            </div>
+        </div>
+        <div class="form-group row justify-content-center">
+          <div class="col-auto">
+            <input type="button" class="btn-primary search" value="Search">
+          </div>
+          <div class="col-auto">
+            <p>or</p>
+          </div>
+          <div class="col-auto">
+            <input type="button" class="btn-primary location" value="Use location">
+          </div>
+        </div>
+
+        <div class="row display justify-content-center top">
+        </div>
+        <div class="row five-day justify-content-center top">
+        </div>
+    </div>
+
+
+    <!-- handlebars script -->
+    <script id="weather-template" type="text/x-handlebars-template">
+      <div class="col-auto text-center">
+        <h2>{{ city }}</h2>
+        <button class="btn-sm btn-link user-set" id="default-city">Set as default</button>
+        <h1>{{ temp }}</h1>
+        <img src={{ icon }}></img>
+        <h3>{{ conditions }}</h3>
+      </div>
+    </script>
+
+    <!-- handlebars script -->
+    <script id="five-day-template" type="text/x-handlebars-template">
+      <div class="col text-center forecast">
+        <h4>{{ day }}</h4>
+        <h2>{{ temp }}</h2>
+        <img src={{ icon }}></img>
+        <h4>{{ conditions }}</h4>
+      </div>
+    </script>
+
+    <!-- resource links -->
+    <script src="http://code.jquery.com/jquery-3.3.1.js"
+    integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
+    <script src="main.js" type="text/javascript"></script>
+  </body>
+</html>
