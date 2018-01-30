@@ -52,7 +52,7 @@ getWeather = function() {
     }
   };
 
-  var getCurrent = function (){
+  var getCurrent = function () {
     return current.city;
   };
 
@@ -63,6 +63,7 @@ getWeather = function() {
 };
 
 app = getWeather();
+
 // EVENTS
 $('.search').click(function() {
   userInput = "q=";
@@ -74,7 +75,6 @@ $('.search').click(function() {
 $('.location').click(function() {
   navigator.geolocation.getCurrentPosition(function(position) {
     userInput = "lat=" + position.coords.latitude + "&lon=" + position.coords.longitude;
-    console.log("geolocation");
     app.refresh();
   });
 });
