@@ -1,28 +1,27 @@
 
-var googleMapsKey = "AIzaSyBkvj8D5KyBwaLqGgaFcxyuevmz6PFaRrU";
-
-
-
-var setDefaultZip = function(zip) {
-  var defaultZip = JSON.stringify({
-    zip: zip
-  });
-  localStorage.defaultZip = defaultZip;
+var setDefaultLocation = function() {
+  //if zipcode, store the zipcode
+  //if no zipcode, store the lat/long
+  var defaultValues = {};
+  if (searchLocation.zip){
+    defaultValues.zip = searchLocation.zip;
+  } else {
+    defaultValues.latitude = searchLocation.latitude;
+    defaultValues.longitude = searchLocation.longitude;
+  }
+  var defaultLocation = JSON.stringify(defaultValues);
+  localStorage.defaultLocation = defaultLocation;
 }
 
-var getDefaultZip = function() {
-  return localStorage.defaultZip ? JSON.parse(localStorage.defaultZip).zip : null;
+var getDefaultLocation = function() {
+  return localStorage.defaultLocation ? JSON.parse(localStorage.defaultLocation) : {};
 }
 
-var searchZip = getDefaultZip();
-var latitude = null;
-var longitude = null;
+var searchLocation = getDefaultLocation();
+
 var weatherConditions = {
-  temp: null,
-  cityName: null,
-  weather: null,
-  iconURL: null,
 };
+
 var forecastData = {
   forecasts: []
 };
@@ -31,34 +30,31 @@ var weatherViewTemplate = Handlebars.compile($('#weather-view-template').html())
 var mapTemplate = Handlebars.compile($('#map-template').html());
 var forecastViewTemplate = Handlebars.compile($('#forecast-view-template').html());
 
-
-
 var getLocation = function() {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(function(position) {
-      latitude = Math.round(position.coords.latitude);
-      longitude = Math.round(position.coords.longitude);
+      searchLocation.latitude = Math.round(position.coords.latitude);
+      searchLocation.longitude = Math.round(position.coords.longitude);
     });
   }
 };
 
-var setQueryString = function(queryType) {
-  //can we have it check for global zip instead?
+var setQueryString = function() {
   var queryString = '';
-  if (queryType === 'zip') {
-    queryString = `zip=${searchZip}`
+  if (searchLocation.zip) {
+    queryString = `zip=${searchLocation.zip}`
   } else {
-    queryString = `lat=${latitude}&lon=${longitude}`;
+    queryString = `lat=${searchLocation.latitude}&lon=${searchLocation.longitude}`;
   }
   return queryString;
 }
 
 var setGoogleString = function(){
   var googleObj = {};
-  if (searchZip){
-    googleObj.googleQuery = searchZip;
+  if (searchLocation.zip){
+    googleObj.googleQuery = searchLocation.zip;
   } else {
-    googleObj.googleQuery = `${latitude}%2C${longitude}`;
+    googleObj.googleQuery = `${searchLocation.latitude}%2C${searchLocation.longitude}`;
   }
   return googleObj;
 }
@@ -70,7 +66,7 @@ var setConditions = function(weatherObj){
   conditions.cityName = weatherObj.name;
   conditions.weather = weatherObj.weather[0].main;
   conditions.iconURL = `http://openweathermap.org/img/w/${iconName}.png`,
-  conditions.default = searchZip === getDefaultZip(); //this works for reeaaaallly sketchy reasons when using geolocation
+  conditions.default = searchLocation.zip === getDefaultLocation().zip //
   return conditions;
 }
 
@@ -78,7 +74,6 @@ var renderWeatherView = function() {
   $('#weather-view').empty();
   var weatherViewHTML = weatherViewTemplate(weatherConditions);
   var mapHTML = mapTemplate(setGoogleString());
-  console.log(mapHTML)
   $('#weather-view').append(weatherViewHTML, mapHTML);
 
 };
@@ -89,8 +84,8 @@ var renderForecastView = function() {
 }
 
 
-var fetchWeather = function(queryType) {
-  var queryString = setQueryString(queryType);
+var fetchWeather = function() {
+  var queryString = setQueryString();
   var url = `http://api.openweathermap.org/data/2.5/weather?${queryString}&units=imperial&appid=6c2fa6a0fe784b355d9a286151f346b6`
   $.ajax({
     method: "GET",
@@ -107,8 +102,8 @@ var fetchWeather = function(queryType) {
   })
 }
 
-var fetchForecast = function(queryType) {
-  var queryString = setQueryString(queryType);
+var fetchForecast = function() {
+  var queryString = setQueryString();
   var url = `http://api.openweathermap.org/data/2.5/forecast?${queryString}&units=imperial&appid=6c2fa6a0fe784b355d9a286151f346b6`
   $.ajax({
     method: "GET",
@@ -120,7 +115,7 @@ var fetchForecast = function(queryType) {
         forecastData.forecasts.pop();
       };
       var fiveDayArray = data.list.filter(function(forecast, index) {
-        return !((index + 1) % 8); //gives you 5 days, starting ~24 hours from now
+        return forecast.dt_txt.indexOf('21:00') !== -1; //gives you forecasts for 9pm UTC/4pm ET/1pm PT
       })
       fiveDayArray.forEach(function(day) {
         var forecastForDay = setConditions(day);
@@ -138,32 +133,32 @@ var fetchForecast = function(queryType) {
 
 getLocation();
 
-if (searchZip) {
-  fetchWeather('zip');
-  fetchForecast('zip');
+if (searchLocation.zip || searchLocation.latitude) {
+  fetchWeather();
+  fetchForecast();
 }
 
 //when user enters search, check that city is a valid us zipcode. if valid, set searchZip equal to .val
 $('#search').on('click', function() {
   var userInput = $('#search-zip').val();
   if (userInput.length === 5 && userInput == parseInt(userInput)) {
-    searchZip = userInput;
-    fetchWeather('zip');
-    fetchForecast('zip');
+    searchLocation.zip = userInput;
+    fetchWeather();
+    fetchForecast();
   } else {
     alert("Please enter a 5-digit US zipcode.")
   }
 })
 $('#weather-view').on('click', '#set-default', function() {
-  setDefaultZip(searchZip);
+  setDefaultLocation();
   $(this).html('&#x2714; City set as default')
 })
 
 $('#use-location').on('click', function() {
-  if (latitude && longitude) {
+  if (searchLocation.latitude && searchLocation.longitude) {
+    searchLocation.zip = null;
     fetchWeather();
     fetchForecast();
-    searchZip = null;
   } else {
     console.log('unable to get location')
   }
