@@ -8,10 +8,12 @@
   margin: 1px;
   background-color: white;
   opacity: .8;
+  color: #000917;
 }
 
 body {
-  background-color: #000917
+  background-color: #000917;
+  font-family: "Gill Sans", sans-serif;
 }
 
 p {
