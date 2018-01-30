@@ -34,6 +34,16 @@
     <div class="row daily-forecast">
 
     </div>
+    <div class="row">
+      <div class="col-md-4 offset-md-4 default-button">
+        <span class="not-default default-location">
+          <button type="button" class="btn btn-primary">Set default location</button>
+        </span>
+        <span class="is-default default-location">
+          <button type="button" class="btn btn-primary" disabled>This is your default location</button>
+      </span>
+      </div>
+    </div>
 
     <div class="row weekly-forecast">
       <div class="col-sm-1">
@@ -53,24 +63,28 @@
     <div class="col-sm-6 offset-sm-3 today d-table">
       <div class="large-forecast d-table-cell">
         <h2>{{ temp }}&deg;F</h2>
-        <h3>{{ cityName }}<h3>
-        <p>{{ weatherDescription }}</p>
-        <button type="button" class="btn btn-primary default-location">Set default location</button>
+        <h3>{{ cityName }}</h3>
+        <h4>{{ weatherDescription }}</h4>
+        <!-- <span class="not-default default-location">
+          <button type="button" class="btn btn-primary">Set default location</button>
+        </span>
+        <span class="is-default default-location">
+        <button type="button" class="btn btn-primary" disabled>This is your default location</button>
+        </span> -->
       </div>
       <div class="d-table-cell align-middle">
         <i class="large-icon owi owi-{{icon}}"></i>
       </div>
-
     </div>
   </script>
 
   <script id="five-day-forecast-template" type="text/x-handlebars-template">
-      <div class="col-md-2 small-forecast">
-        <h5>{{dayOfWeek}}</h5>
-        <h5>{{ temp }}&deg;F</h5>
-        <i class="small-icon owi owi-{{icon}}"></i>
-        <p>{{ weatherDescription }}</p>
-      </div>
+    <div class="col-md-2 small-forecast">
+      <h5>{{dayOfWeek}}</h5>
+      <h5>{{ temp }}&deg;F</h5>
+      <i class="small-icon owi owi-{{icon}}"></i>
+      <p>{{ weatherDescription }}</p>
+    </div>
     </div>
   </script>
 

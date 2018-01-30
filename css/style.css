@@ -30,30 +30,27 @@
   text-align: center;
   display: flex;
   justify-content: center;
-
 }
 
 .large-icon {
-  width: 50%;
+  width: 30%;
   font-size: 5em;
   padding-bottom: 10px;
 }
 
 .small-icon {
-  /* width: 25%; */
   font-size: 2em;
   margin-bottom: 10px;
-  margin-right:10px;
 }
 
 .large-forecast {
   font-family: 'Ubuntu', sans-serif;
-  width: 50%;
+  width: 70%;
 }
 
 .small-forecast {
   font-family: 'Ubuntu', sans-serif;
-  text-align: center;
+
   float:left;
   border: 0.5px solid gray;
   padding-top: 10px;
@@ -66,6 +63,15 @@
 .default-location {
   font-family:sans-serif;
   font-size: 14px;
+}
+
+.hide {
+  display:none;
+}
+
+.default-button {
+  text-align: center;
+  margin-bottom: 20px;
 }
 
 /* div {
