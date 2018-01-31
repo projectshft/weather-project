@@ -1,0 +1,49 @@
+.container {
+  width: 50%;
+  margin: auto;
+}
+
+h1 {
+  margin-top: 50px;
+  margin-bottom: 30px;
+}
+
+.temp {
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.city {
+  font-size: 28px;
+}
+
+.daily {
+  border-style: solid;
+  border-width: 2px;
+  margin: 5px;
+  padding: 5px;
+}
+
+.daily-list {
+  width: 90%;
+  margin: auto;
+  margin-top: 50px;
+}
+
+.default {
+  cursor: pointer;
+}
+
+.undo {
+  cursor: pointer;
+}
+
+.current-weather {
+  margin-top: 50px;
+}
+
+.geo {
+  font-size: 15px;
+  margin: 0px;
+  cursor: pointer;
+}
