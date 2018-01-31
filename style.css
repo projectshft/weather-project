@@ -5,7 +5,7 @@
 
 h1 {
   margin-top: 50px;
-  margin-bottom: 50px;
+  margin-bottom: 30px;
 }
 
 .temp {
@@ -40,4 +40,10 @@ h1 {
 
 .current-weather {
   margin-top: 50px;
+}
+
+.geo {
+  font-size: 15px;
+  margin: 0px;
+  cursor: pointer;
 }

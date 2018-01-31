@@ -15,3 +15,8 @@ $('#input-search').keyup(function(event) {
     $('.search').click();
   };
 });
+
+//find location when user clicks 'Use Location' button
+$('.geo').on('click', function() {
+  findLocation();
+});

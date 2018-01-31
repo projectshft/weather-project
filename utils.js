@@ -96,6 +96,44 @@ var fetchForecast = function (query) {
   });
 };
 
+//retrieve current weather based off of user current location
+var fetchCurrentGeo = function(lat, long) {
+  $.ajax({
+    method: "GET",
+    url: 'http://api.openweathermap.org/data/2.5/weather?lat=' + lat + '&lon=' + long + '&units=imperial&APPID=9c1a2a4005cf6abf4da3b1086d6c56e8',
+    dataType: "json",
+    success: function(data) {
+      postCurrent(data);
+    },
+    error: function(jqXHR, textStatus, errorThrown) {
+      postError('Location ' + errorThrown)
+    }
+  });
+};
+
+//retrieve weather forecast based off of user current location
+var fetchForecastGeo = function(lat, long) {
+  $.ajax({
+    method: "GET",
+    url: "http://api.openweathermap.org/data/2.5/forecast?lat=" + lat + "&lon=" + long + "&units=imperial&APPID=9c1a2a4005cf6abf4da3b1086d6c56e8",
+    dataType: "json",
+    success: function(data) {
+      postForecast(data);
+    },
+    error: function(jqXHR, textStatus, errorThrown) {
+      postError('Location ' + errorThrown)
+    }
+  });
+};
+
+//retrieve user current location
+var findLocation = function() {
+  navigator.geolocation.getCurrentPosition(function(position) {
+    fetchCurrentGeo(position.coords.latitude, position.coords.longitude);
+    fetchForecastGeo(position.coords.latitude, position.coords.longitude);
+  });
+};
+
 //sets current city as default city
 var setDefault = function (data) {
 
