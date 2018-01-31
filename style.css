@@ -1,0 +1,29 @@
+
+.cloudy {
+  background: no-repeat center center fixed url("https://theultralinx.com/.image/t_share/MTM0ODA4Mzc2MTk3NjE4MTQy/tumblr_nyhmweoztx1tq9q5vo1_500gif.gif");
+  background-size: cover;
+  color: #000;
+}
+
+.snowy {
+  background: no-repeat center center fixed url("https://media.giphy.com/media/115AWE57d10f4s/giphy.gif");
+  background-size: cover;
+  color: #000;
+}
+
+.sunny {
+  background: no-repeat center center fixed url("https://i.imgur.com/kxER1eM.gif");
+  background-size: cover;
+  color: #000;
+}
+
+.rainy {
+  background: no-repeat center center fixed url("https://orig00.deviantart.net/acb6/f/2013/303/7/6/gif___running_through_the_rain_by_turst67-d6scius.gif");
+  background-size: cover;
+  color: #000;
+}
+
+.weather-box {
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+}
