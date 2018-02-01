@@ -49,8 +49,7 @@ const parseDay = (rawDate) => {
   // console.log(currentDay);
   return currentDay;
 }
-
-// TODO: change name of func to getWeatherInfo ??                                                                     
+                                                                  
 const getWeather = (currentDay) => {
   let dayForecasted = convertTime(currentDay.dt).toFormat('DDDD').split(',', 1).toString()
   let weather = Math.floor(currentDay.main.temp);
@@ -68,7 +67,6 @@ const getWeather = (currentDay) => {
 }
 
 const getDaysArray = (data, days) => {
-  // TODO: chnage name
   let daysObj = {
     // Do not return a 6th day
     // In some cases we get a 6th array
@@ -173,8 +171,6 @@ $('.search').on('click', () => {
 
 });
 
-// TODO:
-let paginateNext = (startIndex) => startIndex + 10;
 
 const fetch = (query) => {
   $.ajax({
@@ -205,6 +201,4 @@ const fetchFiveDay = (query) => {
   });
 };
 
-
-$('.pagination').hide();
 $('.weather-card').hide();
