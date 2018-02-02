@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+  </head>
+
+  <body>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12 text-center">
+          <div class="page-header">
+            <h1>Current Weather</h1>
+            <h6>An OpenWeatherMap API Page</h6>
+            <hr/>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="row">
+        <div class="col-md-6 offset-md-3">
+          <div class="input-group input-group-lg">
+            <input type="text" id="search-query" class="form-control" placeholder="Enter City, Country" value="sacramento, us">
+              <span class="input-group-btn ">
+                <button id="btn" class="btn btn-secondary search-button" type="button">Search</button>
+              </span>
+          </div>
+          <hr/>
+        </div>
+      </div>
+
+      <script id="weather-template" type="text/x-handlebars-template">
+        <div class="col-sm-3 offset-sm-5">
+          <div><h1> {{ temperature }}&deg</h1></div>
+          <div><h5> {{ cityName }}, {{ country }}</h5></div>
+          <div><h6> {{ weatherDescription }}</h6></div>
+          <img class="offset-sm-1" src="http://openweathermap.org/img/w/{{weatherIcon}}.png" alt="{{weatherDescription}}">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+        </div>
+      {{#each forecast}}
+        <div id="forecast-box" class="col-2">
+          <div><h6> {{ forecastDescription }}</h6></div>
+          <div><h5> {{ forecastTemperature }}&deg</h5></div>
+          <img class="offset-sm-1" src="http://openweathermap.org/img/w/{{forecastIcon}}.png" alt="{{forecastDescription}}">
+          <div><h6> {{ dayOfWeek }}</h6></div>
+        </div>
+      {{/each}}
+      </script>
+
+      <div id="weather-list" class="weather row">
+
+      </div>
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
+    <script src="main.js" type="text/javascript"></script>
+  </body>
+</html>
