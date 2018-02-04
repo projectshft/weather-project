@@ -1,0 +1,76 @@
+
+.header-text {
+  text-align: center;
+  font-family: 'Ubuntu', sans-serif;
+}
+
+.search-form {
+  margin-top: 40px;
+  width: 100%
+}
+
+.form-control {
+  margin-top: 5%;
+  margin-bottom:1%;
+  float:left;
+  width: 80%;
+}
+
+.search {
+  margin-top: 5%;
+  margin-bottom:1%;
+  float:right;
+  width:20%;
+}
+
+.daily-forecast {
+  margin-top: 20px;
+  text-align:center;
+}
+
+.weekly-forecast {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+}
+
+.large-icon {
+  width: 30%;
+  font-size: 5em;
+  padding-bottom: 10px;
+}
+
+.small-icon {
+  font-size: 2em;
+  margin-bottom: 10px;
+}
+
+.large-forecast {
+  font-family: 'Ubuntu', sans-serif;
+  width: 70%;
+}
+
+.small-forecast {
+  font-family: 'Ubuntu', sans-serif;
+  float:left;
+  border: 0.5px solid gray;
+  padding-top: 10px;
+}
+
+.footer {
+  margin-top:50px;
+}
+
+.default-location {
+  font-family:sans-serif;
+  font-size: 14px;
+}
+
+.hide {
+  display:none;
+}
+
+.default-button {
+  text-align: center;
+  margin-bottom: 20px;
+}
