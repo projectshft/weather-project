@@ -1,0 +1,19 @@
+.forecast-day {
+  width: 20%;
+  box-sizing: border-box;
+  border: 1px solid black;
+  float: left;
+  text-align: center;
+}
+body {
+  text-align: center;
+}
+
+.weather-text {
+  display: inline-block;
+
+}
+
+.weather-image {
+  display: inline-block;
+}

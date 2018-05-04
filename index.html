@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Weather Project</title>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Current Weather</h1>
+      <div class="enter-city form-inline">
+        <input type="text" class="city-name form-control" placeholder="Enter City Name">
+        <button class="submit-city btn btn-default">Search</button>
+      </div>
+      <div id="current-weather"></div>
+      <div id="forecast"></div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
+    <script src="https://momentjs.com/downloads/moment.min.js"></script>
+    <script src="main.js"></script>
+    <script id="current-weather-template" type="text/x-handlebars-template">
+      <div class="weather-text">
+        <h2 class="temperature">{{temperature}}&deg;F</h2>
+        <h3 class="location">{{location}}</h3>
+        <div class="weather-type">{{type}}</div>
+      </div>
+      <div class="weather-image">
+        <img src="{{image}}">
+      </div>
+      <br>
+      <button class="set-default btn btn-info">Set this city as default</button>
+    </script>
+    <script id="forecast-template" type="text/x-handlebars-template">
+      <h1>Five-Day Forecast</h1>
+      {{#each days}}
+        <div class="forecast-day">
+          <div class="weather-type">{{type}}</div>
+          <h4 class="temperature">{{temperature}}&deg;F</h4>
+          <div class="weather-image"><img src="{{image}}"></div>
+          <div class="day">{{day}}</div>
+        </div>
+      {{/each}}
+    </script>
+  </body>
+</html>
