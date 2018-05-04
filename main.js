@@ -11,11 +11,11 @@ var todayFetch = function(query){
     success: function (data) {
         $('#loaderDiv').hide();
       addToday(data);
-      console.log("We are the winner!");
+      console.log("today weather Fetch Successful");
     },
     error: function(jqXHR,textStatus,errorThrown) {
       $('#loaderDiv').hide();
-      alert("NOT A VALID SEARCH");
+      alert("NOT A VALID CITY");
       console.log(textStatus);
       console.log('FAIL!');
     }
@@ -25,30 +25,30 @@ var todayFetch = function(query){
 var dateStrToName = function(dateStr){
   return moment(dateStr, "ddd dddd");
 }
-
-var fetchGeo = function(lat, long){
-  $.ajax({
-    method: "GET",
-    url: "https://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + long + "&APPID=3539d3ddceaed0d39c41bd28668ccd0e",
-    dataType: "json",
-    beforeSend: function() {
-      $('#loaderDiv').show();
-    },
-    success: function (data) {
-        $('#loaderDiv').hide();
-
-        //TODO change addToday to addge
-      addToday(data);
-      console.log("We are the winner!");
-    },
-    error: function(jqXHR,textStatus,errorThrown) {
-      $('#loaderDiv').hide();
-      alert("NOT A VALID SEARCH");
-      console.log(textStatus);
-      console.log('FAIL!');
-    }
-  })
-}
+// FIXME for use with geolocation feature
+// var fetchGeo = function(lat, long){
+//   $.ajax({
+//     method: "GET",
+//     url: "https://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + long + "&APPID=3539d3ddceaed0d39c41bd28668ccd0e",
+//     dataType: "json",
+//     beforeSend: function() {
+//       $('#loaderDiv').show();
+//     },
+//     success: function (data) {
+//         $('#loaderDiv').hide();
+//
+//         //TODO change addToday to addge
+//       addToday(data);
+//       console.log("We are the winner!");
+//     },
+//     error: function(jqXHR,textStatus,errorThrown) {
+//       $('#loaderDiv').hide();
+//       alert("NOT A VALID SEARCH");
+//       console.log(textStatus);
+//       console.log('FAIL!');
+//     }
+//   })
+// }
 
 var forcastFetch = function(query){
   lastQuery = encodeURIComponent(query);
@@ -62,13 +62,12 @@ var forcastFetch = function(query){
     success: function (forcastData) {
         $('#loaderDiv').hide();
       addForcast(forcastData);
-      console.log("We are the winner!");
+      console.log("forcast fetch success");
     },
     error: function(jqXHR,textStatus,errorThrown) {
       $('#loaderDiv').hide();
-      alert("NOT A VALID SEARCH");
       console.log(textStatus);
-      console.log('FAIL!');
+      console.log('forcast FAIL!');
     }
   })
 }
@@ -104,7 +103,6 @@ var addForcast = function(forcastData){
       if(forcastData.list[i]["dt_txt"]){
         var fullDate = forcastData.list[i]["dt_txt"];
         var splitDate = fullDate.split(" ");
-        console.log('forcast day: ' + (i+1) + 'day of the week is: ' + dateStrToName(forcastData.list[i]["dt_txt"]));
         var nameDate = moment(splitDate[0]).format("dddd");
         return nameDate;
       }
@@ -254,8 +252,10 @@ var addToday = function(data){
 
 
 $('.search').on('click', function(){
-   query = $('#city-search').val();
+   query = encodeURIComponent($('#city-search').val());
+   console.log(query)
   $('.forcast').empty();
+
 
 todayFetch(query);
 
