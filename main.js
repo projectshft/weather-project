@@ -8,8 +8,8 @@ var kelvinToF = function(kelvin){
 window.onload = function(){
   var city = localStorage.getItem("city");
   if(city){
-    getCurrentWeather(city);
-  getForecast(city);
+    getCurrentWeather("q="+city);
+  getForecast("q="+city);
   }
 };
 
@@ -17,8 +17,8 @@ window.onload = function(){
 $(".submit-city").click(function(){
   var city = $(".city-name").val().trim();
   city=city.split(" ").join("+")
-  getCurrentWeather(city);
-  getForecast(city);
+  getCurrentWeather("q="+city);
+  getForecast("q="+city);
   $(".set-default").click(function(){
     console.log("set-default clicked");
     localStorage.setItem("city", city);
@@ -42,7 +42,7 @@ var forecastHTML = function(weatherObjectArray){      //should be an array or we
 var getCurrentWeather =function(query){
   $.ajax({
     method: "GET",
-    url: "http://api.openweathermap.org/data/2.5/weather?q="+query+"&appid="+openWeatherAPIKey,
+    url: "http://api.openweathermap.org/data/2.5/weather?"+query+"&appid="+openWeatherAPIKey,
     dataType: "json",
     success: function(data) {
       var temperature=kelvinToF(data.main.temp);
@@ -58,7 +58,6 @@ var getCurrentWeather =function(query){
       $("#current-weather").html(currentWeatherHTML(weatherObject));
       //Sets the functionality of the set default button, after the button has been added to the DOM
       $(".set-default").click(function(){
-        console.log("set-default clicked");
         localStorage.setItem("city", city);
       });
 
@@ -73,7 +72,7 @@ var getCurrentWeather =function(query){
 var getForecast = function(query){
   $.ajax({
     method: "GET",
-    url: "http://api.openweathermap.org/data/2.5/forecast?q="+query+"&appid="+openWeatherAPIKey,
+    url: "http://api.openweathermap.org/data/2.5/forecast?"+query+"&appid="+openWeatherAPIKey,
     dataType: "json",
     success: function(data){
 
@@ -104,3 +103,15 @@ var getForecast = function(query){
     }
   });
 }
+
+var getWeatherFromGeolocation = function() {
+  navigator.geolocation.getCurrentPosition(function(position){
+    var lat = position.coords.latitude;
+    var lon = position.coords.longitude;
+    var queryString = "lat="+lat+"&lon="+lon;
+    getCurrentWeather(queryString);
+    getForecast(queryString);
+  });
+}
+
+$(".geolocate").click(getWeatherFromGeolocation);
