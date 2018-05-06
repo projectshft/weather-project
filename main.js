@@ -1,4 +1,5 @@
-const currentWeather = []
+const currentWeather = [];
+const fiveDayForecast = [];
 
 var renderWeather = function () {
   $('.current-weather').empty();
@@ -24,7 +25,7 @@ var fetch = function (query) {
   $('#loading_icon').removeClass("hide");
   $.ajax({
     method: "GET",
-    url: "https://api.openweathermap.org/data/2.5/weather?APPID=617793780ad9ce0ef4274bedce3819d2&q="+query,
+    url: "https://api.openweathermap.org/data/2.5/weather?APPID=617793780ad9ce0ef4274bedce3819d2&q="+query+',us',
     dataType: "json",
     success: function(data) {
       storeWeather(data);
@@ -41,8 +42,31 @@ var storeWeather = function (data) {
   renderWeather();
 };
 
+var fetchFiveDay = function (query) {
+  $('#loading_icon').removeClass("hide");
+  $.ajax({
+    method: "GET",
+    url: "http://api.openweathermap.org/data/2.5/forecast?APPID=617793780ad9ce0ef4274bedce3819d2&q="+query+",us",
+    dataType: "json",
+    success: function(data) {
+      storefiveDay(data);
+    },
+    error: function(jqXHR, textStatus, errorThrown) {
+      console.log(textStatus);
+    }
+  });
+};
+
+var storefiveDay = function (data) {
+  console.log('SUCCESS')
+  fiveDayForecast[0] = data
+  dateTime();
+  // renderWeather();
+};
+
 $('.search').on('click', function () {
   var search = $('#search-query').val();
 
   fetch(search);
+  fetchFiveDay(search);
 });

@@ -24,34 +24,24 @@
       <div class="row py-4">
         <div class="col-sm-4 text-center">
         </div>
-        <div class="col-sm-3 text-center">
+        <div class="col-xs-3 text-center">
           <input id="search-query" class="form-control input-group" placeholder="Enter City Name"></input>
         </div>
         <button type="button" class=" search btn btn-primary">Search</button>
-        <div class="col-sm-4 text-center">
+        <div class="col-xs-4 text-center">
         </div>
       </div>
     </div>
 
     <div class ="current-weather">
     </div>
-    <!-- <div class="container-fluid">
-      <div class="row">
-        <div class="col-sm-4">
-        </div>
-        <div class="col-sm-2">
-          <h2>46°</h2>
-          <h3>Durham, NC</h3>
-          <h4>Cloudy</h4>
-        </div>
+
+    <div class="container-fluid">
+      <div class="row py-4 forecast">
         <div class="col-sm-1">
-          <h1>ICON</h1>
-        </div>
-        <div class="col-sm-4">
         </div>
       </div>
-    </div> -->
-
+    </div>
 
   </body>
 
@@ -60,19 +50,33 @@
       <div class="row">
         <div class="col-sm-4">
         </div>
-        <div class="col-sm-2">
-          <h2>{{temp}}°</h2>
-          <h3>{{city}}</h3>
-          <h4>{{description}}</h4>
-        </div>
-        <div class="col-sm-1">
-          <img class="pt-4" style="height:100px" src={{imageURL}}>
-        </div>
-        <div class="col-sm-4">
+        <div class="col-sm-6">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-xs-6">
+                <h2>{{temp}}°</h2>
+                <h3>{{city}}</h3>
+                <h4>{{description}}</h4>
+              </div>
+              <div class="col-xs-4">
+                <img class="pt-4" style="height:100px" src={{imageURL}}>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </script>
 
+  <script id="forecast-template" type="text/x-handlebars-template">
+    <div class="col-sm-2 col-box text-center">
+      <h4>{{description}}</h4>
+      <h3>{{temp}}°</h4>
+        <img style="height:50px" src={{imageURL}}>
+      <h4>{{day}}</h4>
+    </div>
+  </script>
+
   <script type="text/javascript" src="main.js"></script>
+  <script type="text/javascript" src="dateFunction&renderFiveDay.js"></script>
 </html>
