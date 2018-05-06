@@ -10,6 +10,8 @@ var renderWeather = function () {
     var newHTML = template({
       temperature:Math.round(weather[0].main.temp * 1.8 - 459.67) + '\xB0',
       city:weather[0].name  + ', ' + weather[0].sys.country,
+      low:Math.round(weather[0].main.temp_min * 1.8 - 459.67) + '\xB0',
+      high:Math.round(weather[0].main.temp_max * 1.8 - 459.67) + '\xB0',
       condition:weather[0].weather[0].description,
       icon: 'http:\/\/openweathermap.org\/img\/w\/' + weather[0].weather[0].icon + '.png'
     })
