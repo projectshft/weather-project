@@ -1,0 +1,49 @@
+body {
+  background-image: url("https://i.pinimg.com/originals/11/6f/4d/116f4d9f91e2142f763585b919599c10.jpg");
+  height: 100%;
+  width: 100%;
+}
+
+button {
+  border-radius: 50px;
+  width: 100%;
+  font-family: cursive;
+  background-color: #8e968e;
+}
+
+input {
+  width: 100%;
+  text-align: center;
+  border-radius: 50px;
+  font-family: cursive;
+}
+
+.page-header {
+  padding: 10px;
+  font-family: 'Kaushan Script', 'Helvetica Neue', Helvetica, Arial, cursive;
+  background-color: rgb(136, 145, 135, 0.7);
+  border-radius: 20px;
+}
+
+.current-weather {
+  border-radius: 20px;
+  background-color: rgb(136, 145, 135, 0.7);
+}
+
+.forecast-weather {
+  background-color: rgb(136, 145, 135, 0.7);
+}
+
+.snow {
+  background-image: url("https://media.giphy.com/media/6UP9qKvxQDg0o/giphy.gif");
+  height: 100%;
+  width: 100%;
+  opacity: 0.4;
+  background-repeat: repeat;
+  position: absolute;
+  top: 0;
+}
+
+#spinner{
+  display:none;
+}
