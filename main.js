@@ -55,6 +55,7 @@ var addCurrentWeather = function(data) {
 
   currentWeather = [];
   currentWeather.push(data);
+  console.log(currentWeather);
   renderCurrentWeather();
 
 };
@@ -63,6 +64,7 @@ var addForecast = function(data) {
 
   forecastWeather = [];
   forecastWeather.push(data);
+  console.log(currentWeather);
   renderForecast();
 
 };
