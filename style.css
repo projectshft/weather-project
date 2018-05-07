@@ -1,4 +1,18 @@
 .col-box{
   border: 1px solid;
   height: 170px;
+  padding-right:0px;
+  padding-left:0px;
+}
+
+.hide{
+  display: none;
+}
+
+.red-text{
+  color: red;
+}
+
+.bolder{
+  font-style: bold;
 }

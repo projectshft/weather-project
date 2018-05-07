@@ -1,34 +1,17 @@
 const currentWeather = [];
 const fiveDayForecast = [];
 
-var renderWeather = function () {
-  $('.current-weather').empty();
-    let currentTemperature = (Number(currentWeather[0].main.temp)*9/5-459.67).toFixed(0);
-    let currentCity = currentWeather[0].name;
-    let currentDescription = currentWeather[0].weather[0].main;
-    let weatherIcon = "http://openweathermap.org/img/w/"+currentWeather[0].weather[0].icon+".png"
-
-    var source = $('#current-weather-template').html();
-    var template = Handlebars.compile(source);
-    var newHTML = template({
-      temp:currentTemperature,
-      city:currentCity,
-      description:currentDescription,
-      imageURL:weatherIcon,
-    })
-    $(newHTML).appendTo($('.current-weather'));
-
-  // $('#loading_icon').addClass("hide");
-};
-
-var fetch = function (query) {
-  $('#loading_icon').removeClass("hide");
+/* fetch current weather from weather API and execute storeCurrentWeather to store the api data */
+var fetchCurrentWeather = function (query) {
   $.ajax({
     method: "GET",
     url: "https://api.openweathermap.org/data/2.5/weather?APPID=617793780ad9ce0ef4274bedce3819d2&q="+query+',us',
     dataType: "json",
     success: function(data) {
-      storeWeather(data);
+      console.log("current weather data found and extracted")
+
+      storeCurrentWeather(data);
+      fetchFiveDay(query);
     },
     error: function(jqXHR, textStatus, errorThrown) {
       $('#loading_icon').addClass("hide");
@@ -37,36 +20,41 @@ var fetch = function (query) {
   });
 };
 
-var storeWeather = function (data) {
+/* store current weather data and execute renderCurrentWeather */
+var storeCurrentWeather = function (data) {
   currentWeather[0] = data
-  renderWeather();
+  renderCurrentWeather();
 };
 
+/* fetch forecast weather from weather API and execute storefiveDay to store the api data */
 var fetchFiveDay = function (query) {
-  $('#loading_icon').removeClass("hide");
+  console.log("sent input query to API for request of data for 5-day weather forecast")
   $.ajax({
     method: "GET",
     url: "http://api.openweathermap.org/data/2.5/forecast?APPID=617793780ad9ce0ef4274bedce3819d2&q="+query+",us",
     dataType: "json",
     success: function(data) {
+      console.log(" \nforecast weather data found and extracted")
+      $('.invalid-query').addClass('hide')
       storefiveDay(data);
     },
     error: function(jqXHR, textStatus, errorThrown) {
       console.log(textStatus);
+      $('.invalid-query').removeClass('hide')
     }
   });
 };
 
+/* store fiveDayForecast weather data and execute renderForecast */
 var storefiveDay = function (data) {
-  console.log('SUCCESS')
   fiveDayForecast[0] = data
-  dateTime();
-  // renderWeather();
+  renderForecast();
 };
 
+/* on clicking search, send input value as a query to request API data */
 $('.search').on('click', function () {
   var search = $('#search-query').val();
+  console.log("sent input query to API for request of data for today's weather")
 
-  fetch(search);
-  fetchFiveDay(search);
+  fetchCurrentWeather(search);
 });
