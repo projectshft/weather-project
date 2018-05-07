@@ -1,0 +1,19 @@
+.form-ground {
+  box-shadow: 2px 2px 2px black;
+}
+
+.top-margin {
+  padding-top: 50px;
+}
+
+.forcast {
+  display:flex;
+  flex-direction: row;
+}
+#loaderDiv {
+  display:none;
+}
+
+.set-default {
+  display:none;
+}

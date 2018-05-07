@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <header>
+      <div class="jumbotron text-center"><h1>Current Weather</h1></div>
+    </header>
+    <div class="container">
+      <div class="row">
+          <div class="col-6 offset-3">
+          <input type="text" class="form-control" placeholder="Enter City Name" id="city-search">
+          </div>
+          <div class="col">
+          <button type="button" class="btn btn-primary search"> Search </button>
+          <button type="button" class="btn btn-primary set-default"> Set as Default </button>
+          <button type="button" class="btn btn-primary geolocate"> Geolocate! </button>
+          </div>
+      </div>
+    </div>
+    <div class="container text-center justify-content-center">
+    <div id="loaderDiv">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif" alt="">
+        </div>
+        </div>
+    <div class="container mt-4">
+      <div class="row">
+        <div class="col text-center today-weather">
+
+        </div>
+      </div>
+    </div>
+    <div class="container mt-4 text-center justify-content-center">
+      <div class="row text-center justify-content-center">
+      <div class="forcast mt-4"></div>
+    </div>
+  </div>
+  </body>
+
+  <script id="today-template"type="text/x-handlebars-template">
+    <div class="col text-center">
+    <div class="temperature"><h4> <strong>{{temperature}}</strong>F</h4></div>
+    <div class="location">{{locationName}}, {{locationCountry}}</div>
+    <div class="description">{{description}}</div>
+    <img class="today-icon" src="{{icon}}">
+    </div>
+  </script>
+
+  <script id="forcast-template" type="text/x-handlebars-template">
+    <div class="col border">
+    <div class="mt-4 forcast-description">{{forcastDescription}}</div>
+    <div class="forcast-temperature"><h4> <strong>{{forcastTemperature}}</strong>F</h4></div>
+    <div class="forcast-date">{{forcastDay}}</div>
+    <img class="forcast-icon" src="{{forcastIcon}}">
+    </div>
+  </script>
+  <script src="https://code.jquery.com/jquery-3.1.1.js" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/moment.js" charset="utf-8"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.js" charset="utf-8"></script>
+  <script src="main.js" charset="utf-8"></script>
+</html>
