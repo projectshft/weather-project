@@ -23,7 +23,7 @@
           </div>
 
           <div class="form-group">
-            <input type="text" id="search-query" class="form-control" placeholder="City, Country">
+            <input type="text" id="search-query" class="form-control" placeholder="Enter City Name">
             </input>
           </div>
 
@@ -31,8 +31,7 @@
           <hr/>
         </form>
 
-        <div class="current-weather row">
-
+        <div class="current-weather row text-center allign-middle">
         </div>
         <div class="forecast row">
 
@@ -41,27 +40,31 @@
     </div>
   </div>
 
-  <!-- the current weather info goes here -->
+  <!-- the current weather info goes here for the handlebars-->
   <script id="current-weather-template" type="text/x-handlebars-template">
     <div class="weather-currently text-center col-md-12">
-      <div>
-        <h1><strong>{{ temperature }}</strong></h1></div>
-      <div>City: <strong>{{ city }}</strong></div>
-      <div>Low: <strong>{{ low }}</strong> High: <strong>{{ high }}</strong></div>
-      <div>Condition: <strong>{{ condition }}</strong></div>
-      <div><img src="{{ icon }}"></div>
+      <form class="card">
+        <div class="card-body">
+          <div>
+            <h1><strong>{{ temperature }}</strong></h1></div>
+          <div>City: <strong>{{ city }}</strong></div>
+          <div>Low: <strong>{{ low }}</strong> High: <strong>{{ high }}</strong></div>
+          <div>Condition: <strong>{{ condition }}</strong></div>
+          <div><img src="{{ icon }}"></div>
+        </div>
+      </form>
     </div>
   </script>
 
 
-<!-- the five day info goes here -->
+  <!-- the five day info goes here for the handlebars-->
   <script id="forecast-template" type="text/x-handlebars-template">
-    <div class="weather-cond col-sm-2">
-        <div><h1><strong>{{ temperature }}</strong></h1></div>
-      <div>Low: <strong>{{ low }}</strong> High: <strong>{{ high }}</strong></div>
+    <div class="weather-cond col-sm-2 text-center">
+      <div>
+        <h2><strong>{{ temperature }}</strong></h2></div>
       <div>Condition: <strong>{{ condition }}</strong></div>
       <div><img src="{{ icon }}"></div>
-      <div>Time: {{ time }}</div>
+      <div><strong>{{ time }}</strong></div>
     </div>
   </script>
 
