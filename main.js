@@ -25,30 +25,52 @@ var todayFetch = function(query){
 var dateStrToName = function(dateStr){
   return moment(dateStr, "ddd dddd");
 }
-// FIXME for use with geolocation feature
-// var fetchGeo = function(lat, long){
-//   $.ajax({
-//     method: "GET",
-//     url: "https://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + long + "&APPID=3539d3ddceaed0d39c41bd28668ccd0e",
-//     dataType: "json",
-//     beforeSend: function() {
-//       $('#loaderDiv').show();
-//     },
-//     success: function (data) {
-//         $('#loaderDiv').hide();
-//
-//         //TODO change addToday to addge
-//       addToday(data);
-//       console.log("We are the winner!");
-//     },
-//     error: function(jqXHR,textStatus,errorThrown) {
-//       $('#loaderDiv').hide();
-//       alert("NOT A VALID SEARCH");
-//       console.log(textStatus);
-//       console.log('FAIL!');
-//     }
-//   })
-// }
+
+var fetchGeo = function(lat, long){
+  $.ajax({
+    method: "GET",
+    url: "https://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + long + "&APPID=3539d3ddceaed0d39c41bd28668ccd0e",
+    dataType: "json",
+    beforeSend: function() {
+      $('#loaderDiv').show();
+    },
+    success: function (data) {
+        $('#loaderDiv').hide();
+
+      addToday(data);
+      console.log("geo locate current weather success");
+    },
+    error: function(jqXHR,textStatus,errorThrown) {
+      $('#loaderDiv').hide();
+      alert("NOT A VALID SEARCH");
+      console.log(textStatus);
+      console.log('forcast geolocate fetch FAIL!');
+    }
+  })
+}
+
+
+var forcastGeo = function(lat, lon){
+  $.ajax({
+    method: "GET",
+    url: "https://api.openweathermap.org/data/2.5/forecast?lat=" + lat + "&lon=" + lon + "&APPID=3539d3ddceaed0d39c41bd28668ccd0e",
+    dataType: "json",
+    beforeSend: function() {
+      $('#loaderDiv').show();
+    },
+    success: function (forcastData) {
+        $('#loaderDiv').hide();
+        $('.forcast').empty();
+      addForcast(forcastData);
+      console.log("Geo locate forcast fetch success");
+    },
+    error: function(jqXHR,textStatus,errorThrown) {
+      $('#loaderDiv').hide();
+      console.log(textStatus);
+      console.log('forcast FAIL!');
+    }
+  })
+}
 
 var forcastFetch = function(query){
   lastQuery = encodeURIComponent(query);
@@ -61,6 +83,7 @@ var forcastFetch = function(query){
     },
     success: function (forcastData) {
         $('#loaderDiv').hide();
+        $('.forcast').empty();
       addForcast(forcastData);
       console.log("forcast fetch success");
     },
@@ -252,9 +275,9 @@ var addToday = function(data){
 
 
 $('.search').on('click', function(){
-   query = encodeURIComponent($('#city-search').val());
+   query = $('#city-search').val();
    console.log(query)
-  $('.forcast').empty();
+
 
 
 todayFetch(query);
@@ -278,10 +301,14 @@ $(document).ready(function(){
   else {console.log("no default")}
 });
 
-// not currently working FIXME
-// $('.geolocate').on('click', function(){
-//   debugger;
-//   navigator.geolocation.getCurrentPosition(function (p) {
-//     console.log(p.coords.longitude);
-//   })
-// })
+
+$('.geolocate').on('click', function(){
+  navigator.geolocation.getCurrentPosition(function (position) {
+    var long = position.coords.longitude;
+    var lat = position.coords.latitude;
+
+    fetchGeo(lat, long);
+    forcastGeo(lat, long);
+
+  })
+})
