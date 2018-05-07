@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> `
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="style.css">
+  <title>Weather Project</title>
+</head>
+
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 offset-md-3">
+        <h1 id="title" class="text-center">Awsome Weather App</h1>
+
+        <form id="search-form" class="" action="#" method="">
+          <div class="input-group">
+            <input type="text" class="form-control">
+          </div>
+          <div class="btn-toolbar text-center" role="toolbar">
+            <button type="button" id="search" class="btn btn-primary">Search</button>
+            <button type="button" id="search-geolocation" class="btn btn-secondary">I'm Feeling Lucky</button>
+          </div>
+        </form>
+
+        <div class="results-view">
+          <div id="current-weather">
+            <div class="temp"></div>
+            <img class="icon" src="" alt="">
+            <div class="location"></div>
+            <div class="condition text-muted"></div>
+          </div>
+
+          <!-- extended weather will be appended to div below -->
+          <div id="extended-weather"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Day Template -->
+  <script id="day-template" type="text/x-handlebars-template">
+    <div class="day">
+      <div class="inner-div">
+        <div class="condition">{{ condition }}</div>
+        <div class="temp">{{ temp }}</div>
+        <div class="condition-icon">
+          <img src="{{ iconURL }}" alt="{{ condition }}">
+        </div>
+        <div class="day-of-week">{{ dayOfWeek }}</div>
+      </div>
+    </div>
+  </script>
+
+  <!-- ************************* Libraries ************************* -->
+  <script src="https://code.jquery.com/jquery-3.1.1.min.js" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
+  <script src="utils.js" type="text/javascript"></script>
+  <script src="main.js" type="text/javascript"></script>
+</body>
+
+</html>
