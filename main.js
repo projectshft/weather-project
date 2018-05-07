@@ -1,13 +1,14 @@
 var currentWeather = [];
 var forecastWeather = [];
 
-//ONLY finds the specifics for the current weather. ie today
+//ONLY search database to get the right json database
 var renderCurrentWeather = function() {
   $('.current-weather').empty();
 
   var source = $('#current-weather-template').html();
   var template = Handlebars.compile(source);
   var newHTML = template({
+    //convert kelvin to Fahrenheit
     temperature: Math.round(currentWeather[0].main.temp * 1.8 - 459.67) + '\xB0',
     city: currentWeather[0].name + ', ' + currentWeather[0].sys.country,
     low: Math.round(currentWeather[0].main.temp_min * 1.8 - 459.67) + '\xB0',
@@ -18,22 +19,23 @@ var renderCurrentWeather = function() {
   $(newHTML).appendTo($('.current-weather'));
 };
 
-//ONLY finds the specifics for the 5 day forecast
+//ONLY search database to get the right json database
 var renderForecast = function() {
   $('.forecast').empty();
   for (var i = 0; i < forecastWeather[0].list.length; i++) {
-    //these are the days that I want. They are all noon time dates.
+    //these are the 5 day forecast icked from the database. They are all noon time dates.
     if (forecastWeather[0].list[i] === forecastWeather[0].list[3] ||
       forecastWeather[0].list[i] === forecastWeather[0].list[11] ||
       forecastWeather[0].list[i] === forecastWeather[0].list[19] ||
       forecastWeather[0].list[i] === forecastWeather[0].list[27] ||
       forecastWeather[0].list[i] === forecastWeather[0].list[35]) {
 
-      // var m = moment();
+      //MOMENT.js  slice the time stamp to yyyy,mm,dd then convert with MOMENT.
       var timed = forecastWeather[0].list[i].dt_txt;
       var slicedTime = timed.slice(0, 10);
+      console.log(slicedTime);
+      //slice till information only grabs the first 3 letters for the day of week ie mon, tue, wed
       var m = moment(slicedTime).toString().slice(0, 3);
-
 
       var source = $('#forecast-template').html();
       var template = Handlebars.compile(source);
@@ -96,7 +98,7 @@ var fetchForecast = function(query) {
 };
 
 
-//function for when you click on the search button. it gets the values of search parameter.
+//function for when you click on the search button. it gets the values of search parameter. ie city name
 $('.search').on('click', function() {
   var search = $('#search-query').val();
 
