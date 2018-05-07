@@ -81,7 +81,7 @@ var fetchGeoLocation = function(lat, lon) {
     error: function(jqXHR, textStatus, errorThrown) {
       $("#spinner").hide();
       console.log(textStatus);
-      alert("Unable to find your current Location. Please check if geolocation enabled.");
+      alert("Unable to find your current Location.");
     }
   });
 };
@@ -171,7 +171,10 @@ var renderCurrentWeather = function() {
   $('#currentWeatherSection').empty();
 
   var currentNewHTML = currentTemplate(weatherData.searchedData);
+  $('#currentWeatherSection').hide();
   $('#currentWeatherSection').append(currentNewHTML);
+  $('#currentWeatherSection').show("slow");
+
 
   // compare temp with local localStorage
   // 'durham' for example, must have country saved in storage.
@@ -191,7 +194,9 @@ var renderForecast = function() {
 
   weatherData.forecast.forEach(function(forecast){
     var forecastNewHTML = forecastTemplate(forecast);
+    $('#fiveDayWeatherSection').hide();
     $('#fiveDayWeatherSection').append(forecastNewHTML);
+    $('#fiveDayWeatherSection').show("fast");
   });
 };
 
