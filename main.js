@@ -174,7 +174,7 @@ var addForcast = function(forcastData) {
   }
   var forcastTemplate = Handlebars.compile($('#forcast-template').html())
   for (i = 0; i < forcast.length; i++) {
-    $('.forcast').append(forcastTemplate(forcast[i]));
+    $('.forcast').append(forcastTemplate(forcast[i])).hide().show('slow');
   }
 }
 var convertToF = function(temp) {
