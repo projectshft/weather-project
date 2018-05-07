@@ -8,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
   <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
 </head>
 
 <body>
@@ -27,11 +27,11 @@
             </input>
           </div>
 
-          <button type="button" class="btn btn-primary btn-block search">Search</button>
+          <button type="button" class="btn btn-secondary btn-block search">Search</button>
           <hr/>
         </form>
 
-        <div class="current-weather row text-center allign-middle">
+        <div class="current-weather row">
         </div>
         <div class="forecast row">
 
@@ -42,7 +42,7 @@
 
   <!-- the current weather info goes here for the handlebars-->
   <script id="current-weather-template" type="text/x-handlebars-template">
-    <div class="weather-currently text-center col-md-12">
+    <div class="weather-currently  text-center col-md-12">
       <form class="card">
         <div class="card-body">
           <div>
@@ -59,12 +59,14 @@
 
   <!-- the five day info goes here for the handlebars-->
   <script id="forecast-template" type="text/x-handlebars-template">
-    <div class="weather-cond col-sm-2 text-center">
+    <div class="weather-cond ml-3 mt-5 col-sm-2 text-center">
+
       <div>
         <h2><strong>{{ temperature }}</strong></h2></div>
-      <div>Condition: <strong>{{ condition }}</strong></div>
+      <div><strong>{{ condition }}</strong></div>
       <div><img src="{{ icon }}"></div>
       <div><strong>{{ time }}</strong></div>
+
     </div>
   </script>
 
