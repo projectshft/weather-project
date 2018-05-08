@@ -1,0 +1,35 @@
+.col-box{
+  border: 1px solid;
+  height: 170px;
+  padding-right:0px;
+  padding-left:0px;
+}
+
+.hide{
+  display: none;
+}
+
+.red-text{
+  color: red;
+}
+
+.bolder{
+  font-style: bold;
+}
+
+.alert-default{
+  width:100%
+  position: fixed;
+  top:10px;
+  margin:auto
+}
+
+.nearby-cities{
+
+  float:top;
+  float:left;
+}
+
+.nearby-cities-list{
+
+}
