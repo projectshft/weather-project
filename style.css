@@ -16,3 +16,10 @@
 .bolder{
   font-style: bold;
 }
+
+.alert-default{
+  width:100%
+  position: fixed;
+  top:10px;
+  margin:auto
+}

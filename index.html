@@ -10,42 +10,52 @@
     <meta charset="utf-8">
     <title>Hew's Weather App</title>
   </head>
-  <body>
+  <body style="background:lightgray">
     <div class="container-fluid">
       <div class="row py-5">
+
         <div class="col-sm-12 text-center ">
-          <h1>Current Weather</h1>
+          <h1>U.S. Weather Forecast</h1>
         </div>
 
       </div>
     </div>
 
     <div class="container-fluid">
-      <div class="row pt-4">
-        <div class="col-sm-4 text-center">
-        </div>
+      <div class="center-block row pt-4">
 
-          <div class="col-xs-4">
+          <form style="margin:auto" class = "form-inline">
+
             <input id="search-query" class="form-control input-group" placeholder="Enter City Name">
-          </div>
-          <button type="button" class="search btn btn-primary">Search</button>
-        <!-- </form> -->
+
+          <button type="submit" class="search btn btn-primary">Search</button>
+          <!-- <div class="col-sm-1">
+            </div> -->
+          <a class="btn-warning btn hide ml-4">Set as<br /> Default </a>
+
+
+        </form>
+
         <div class="col-xs-4 text-center">
         </div>
       </div>
     </div>
 
-    <div class="container-fluid">
-      <div class="row pb-4">
+    <div class="container-fluid invalid-city pb-4">
+      <div class="row">
+
         <div class="col-sm-4 text-center">
         </div>
+
         <div class="col-xs-3 text-center">
           <p class="invalid-query hide red-text">Please enter a valid U.S. city</p>
         </div>
+
       </div>
     </div>
 
     <div class ="current-weather">
+      <p class="forecast-down hide red-text">Please enter a valid U.S. city</p>
     </div>
 
     <div class="container-fluid">
@@ -58,6 +68,9 @@
   </body>
 
   <script id="current-weather-template" type="text/x-handlebars-template">
+    <div class="alert-default text-center hide ">
+      {{city}} set as default
+    </div>
     <div class="container-fluid py-2">
       <div class="row">
         <div class="col-sm-4">
