@@ -44,7 +44,8 @@ var renderForecast = function() {
     if (hour == 12) {
       /* Find current day and add index. Then find day in dayOfWeek array. if index ever gets above 6, subtract 7 to start over in the array dayOfWeek */
       index++;
-      if (index > 6) {
+
+      if ((new Date().getDay() + index) > 6) {
         index -= 7;
       }
       var day = dayOfWeek[new Date().getDay() + index];

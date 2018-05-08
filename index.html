@@ -1,107 +1,117 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="style.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.js"></script>
-    <meta charset="utf-8">
-    <title>Hew's Weather App</title>
-  </head>
-  <body style="background:lightgray">
-    <div class="container-fluid">
-      <div class="row py-5">
 
-        <div class="col-sm-12 text-center ">
-          <h1>U.S. Weather Forecast</h1>
-        </div>
+<head>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.js"></script>
+  <meta charset="utf-8">
+  <title>Hew's Weather App</title>
+</head>
 
+<body style="background:lightgray">
+
+  <div class="container-fluid">
+    <div class="row py-5">
+      <div class="col-sm-12 text-center ">
+        <h1>U.S. Weather Forecast</h1>
       </div>
     </div>
+  </div>
 
-    <div class="container-fluid">
-      <div class="center-block row pt-4">
+  <div class="container-fluid">
+    <div class="center-block row pt-4">
 
-          <form style="margin:auto" class = "form-inline">
+      <form style="margin:auto" class="form-inline">
 
-            <input id="search-query" class="form-control input-group" placeholder="Enter City Name">
+        <input id="search-query" class="form-control input-group" placeholder="Enter City Name">
 
-          <button type="submit" class="search btn btn-primary">Search</button>
-          <!-- <div class="col-sm-1">
-            </div> -->
-          <a class="btn-warning btn hide ml-4">Set as<br /> Default </a>
+        <button type="submit" class="search btn btn-primary">Search</button>
 
+        <a class="btn-warning btn hide ml-4">Set as<br /> Default </a>
+      </form>
 
-        </form>
+      <!-- <div class="col-xs-4 text-center">
+      </div> -->
+    </div>
+  </div>
 
-        <div class="col-xs-4 text-center">
-        </div>
+  <div class="container-fluid invalid-city pb-4">
+    <div class="row">
+
+      <div class="col-sm-4 text-center">
+      </div>
+
+      <div class="col-xs-3 text-center">
+        <p class="invalid-query hide red-text">Please enter a valid U.S. city</p>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="current-weather">
+    <p class="forecast-down hide red-text">Please enter a valid U.S. city</p>
+  </div>
+
+  <div class="container-fluid">
+    <div class="row py-4 forecast">
+      <div class="col-sm-1">
       </div>
     </div>
+  </div>
 
-    <div class="container-fluid invalid-city pb-4">
-      <div class="row">
+  <div class="nearby-cities">
+    <h4>Nearby Cities</h4>
+    <div class="nearby-cities-list">
+      Columbus
+    </div>
+  </div>
 
-        <div class="col-sm-4 text-center">
-        </div>
+</body>
 
-        <div class="col-xs-3 text-center">
-          <p class="invalid-query hide red-text">Please enter a valid U.S. city</p>
-        </div>
-
+<script id="current-weather-template" type="text/x-handlebars-template">
+  <div class="alert-default text-center hide ">
+    {{city}} set as default
+  </div>
+  <div class="container-fluid py-2">
+    <div class="row">
+      <div class="col-sm-4">
       </div>
-    </div>
-
-    <div class ="current-weather">
-      <p class="forecast-down hide red-text">Please enter a valid U.S. city</p>
-    </div>
-
-    <div class="container-fluid">
-      <div class="row py-4 forecast">
-        <div class="col-sm-1">
-        </div>
-      </div>
-    </div>
-
-  </body>
-
-  <script id="current-weather-template" type="text/x-handlebars-template">
-    <div class="alert-default text-center hide ">
-      {{city}} set as default
-    </div>
-    <div class="container-fluid py-2">
-      <div class="row">
-        <div class="col-sm-4">
-        </div>
-        <div class="col-sm-6">
-          <div class="container-fluid">
-            <div class="row">
-              <div class="col-xs-6">
-                <h2>{{temp}}°</h2>
-                <h3>{{city}}</h3>
-                <h4>{{description}}</h4>
-              </div>
-              <div class="col-xs-4">
-                <img class="pt-4" style="height:100px" src={{imageURL}}>
-              </div>
+      <div class="col-sm-6">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-xs-6">
+              <h2>{{temp}}°</h2>
+              <h3>{{city}}</h3>
+              <h4>{{description}}</h4>
+            </div>
+            <div class="col-xs-4">
+              <img class="pt-4" style="height:100px" src={{imageURL}}>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </script>
+  </div>
+</script>
 
-  <script id="forecast-template" type="text/x-handlebars-template">
-    <div class="col-sm-2 col-box text-center">
-      <h4 class="pt-2">{{description}}</h4>
-      <h3>{{temp}}°</h4>
+<script id="forecast-template" type="text/x-handlebars-template">
+  <div class="col-sm-2 col-box text-center">
+    <h4 class="pt-2">{{description}}</h4>
+    <h3>{{temp}}°</h4>
         <img style="height:50px" src={{imageURL}}>
       <p>{{day}}</p>
     </div>
   </script>
 
+  <script id="nearby-cities-template" type="text/x-handlebars-template">
+    {{city}}
+    </script>
+
   <script type="text/javascript" src="main.js"></script>
   <script type="text/javascript" src="renderView.js"></script>
+  <script type="text/javascript" src="nearbyCities.js"></script>
 </html>

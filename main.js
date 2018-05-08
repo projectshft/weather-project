@@ -1,5 +1,6 @@
 const currentWeather = [];
 const fiveDayForecast = [];
+const nearbyCities = [];
 var lastSearch = ''
 
 /* fetch current weather from weather API and execute storeCurrentWeather to store the api data */
@@ -27,6 +28,7 @@ var fetchCurrentWeather = function(query) {
 var storeCurrentWeather = function(data) {
   currentWeather[0] = data
   renderCurrentWeather();
+  fetchNearbyCities();
 };
 
 /* fetch forecast weather from weather API and execute storefiveDay to store the api data */
@@ -86,3 +88,10 @@ $('.btn-warning').on('click', function() {
 if (localStorage.default) {
   fetchCurrentWeather(localStorage.default);
 }
+
+$('.nearby-cities-list').on('click','.nearby', function(e) {
+  e.preventDefault();
+  this.city = this.innerHTML
+
+  fetchCurrentWeather(this.city);
+});
