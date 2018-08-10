@@ -5,11 +5,27 @@
 }
 
 .search-form {
-  /* text-align: center; */
+  text-align: center;
   padding-bottom: 20px;
 }
 
 .weathers {
+  width: 100%;
   text-align: center;
   padding-top: 10px;
+}
+
+.weather {
+  padding-top: 40px;
+  margin-left: 20%;
+}
+
+#search-query {
+  width: 75%;
+  float: left;
+}
+
+.btn {
+  width: 20%;
+  float: right;
 }

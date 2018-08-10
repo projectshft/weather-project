@@ -1,8 +1,10 @@
 //Fetch the weather information from the api and return in JSON format
 var fetch = function (query) {
+  var citySearch = $('#search-query').val();
+  var url1 = 'http://api.openweathermap.org/data/2.5/weather?q=' + citySearch + ',us&units=imperial&appid=015bc22e332b00d0c46a9ee1a9d27e75';
   $.ajax({
     method: "GET",
-    url: "http://api.openweathermap.org/data/2.5/weather?q=durham,us&APPID=015bc22e332b00d0c46a9ee1a9d27e75",
+    url: url1,
     dataType: "json",
     success: function(data) {
       addWeather(data);
@@ -23,7 +25,7 @@ var addWeather = function (data) {
 
     var temp = function () {
       if (weatherData.main.temp) {
-        return Math.round(9/5 * (weatherData.main.temp - 273) + 32);
+        return Math.round(weatherData.main.temp);
       } else {
         return null;
       }
