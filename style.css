@@ -1,12 +1,15 @@
-h1 {
+.page-header {
   text-align: center;
+  padding-top: 30px;
+  padding-bottom: 30px;
 }
 
-p {
-  width: 100%;
-  text-align: center;
+.search-form {
+  /* text-align: center; */
+  padding-bottom: 20px;
 }
 
-button {
+.weather {
   text-align: center;
+  padding-top: 10px;
 }
