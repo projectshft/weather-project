@@ -2,7 +2,7 @@
 var fetch = function (query) {
   $.ajax({
     method: "GET",
-    url: "http://api.openweathermap.org/data/2.5/forecast?id=4464368&APPID=015bc22e332b00d0c46a9ee1a9d27e75",
+    url: "http://api.openweathermap.org/data/2.5/weather?q=durham,us&APPID=015bc22e332b00d0c46a9ee1a9d27e75",
     dataType: "json",
     success: function(data) {
       addWeather(data);
@@ -18,28 +18,28 @@ var weathers;
 var addWeather = function (data) {
   weathers = [];
 
-  for (var i = 0; i < data.items.length; i++) {
-    var weatherData = data.items[i];
+  for (var i = 0; i < 1; i++) {
+    var weatherData = data;
 
     var temp = function () {
-      if (weatherData.) {
-        return weatherData.;
+      if (weatherData.main.temp) {
+        return Math.round(9/5 * (weatherData.main.temp - 273) + 32);
       } else {
         return null;
       }
     };
 
     var city = function () {
-      if (weatherData.) {
-        return weatherData.;
+      if (weatherData.name) {
+        return weatherData.name;
       } else {
         return null;
       }
     };
 
     var climate = function () {
-      if (weatherData.) {
-        return weatherData.;
+      if (weatherData.weather[0].main) {
+        return weatherData.weather[0].main;
       } else {
         return null;
       }
@@ -59,7 +59,7 @@ var addWeather = function (data) {
 
 //Create a function to render the weather onto the page
 var renderWeather = function () {
-  $('.weather').empty();
+  $('.weathers').empty();
   var source = $('#weather-template').html();
   var template = Handlebars.compile(source);
 
