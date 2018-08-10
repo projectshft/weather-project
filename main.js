@@ -1,3 +1,4 @@
+//Fetch the weather information from the api and return in JSON format
 var fetch = function (query) {
   $.ajax({
     method: "GET",
@@ -13,7 +14,7 @@ var fetch = function (query) {
 };
 
 var weathers;
-
+//Create a function that takes weather data from the api and pushes it into the weathers array
 var addWeather = function (data) {
   weathers = [];
 
@@ -56,6 +57,7 @@ var addWeather = function (data) {
   renderWeather();
 };
 
+//Create a function to render the weather onto the page
 var renderWeather = function () {
   $('.weather').empty();
   var source = $('#weather-template').html();
@@ -70,7 +72,7 @@ var renderWeather = function () {
     $('.weathers').append(weather);
   }
 };
-
+//Listen for clicks and perform a search based on what is entered in the input box
 $('.search').on('click', function () {
   var search = $('#search-query').val();
 
