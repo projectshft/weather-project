@@ -1,8 +1,14 @@
-btn-inline {
+.btn-inline {
   display: inline-block;
-  color: red;
 }
 
-h1 {
+.h1 {
 
+}
+
+.weather-icon {
+  display: inline-block;
+  transform: scale(4,4);
+  float: right;
+  margin: 5%;
 }

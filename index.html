@@ -8,43 +8,49 @@
   <title>Project Weather</title>
 </head>
 
+
+<!-- CSS classes could use tweaking.  Add @media.  Currently works well on desktop, maximized. -->
 <body>
-  <div class="row">
-    <div class="center col-lg-6 col-lg-offset-3"> <!-- come back and fix this css -->
+  <div class="container">
+    <div class="row">
+      <div class="col-6 offset-3">
 
-      <div class="page-header text-center">
-        <h1>Current Weather</h1>
-      </div>
-
-      <form>
-        <div class="location-form col-lg-3 col-lg-offset-4">
-          <input type="text" id="location-input" class="form-control" placeholder="Enter your location">
-          </input>
+        <div class="page-header text-center">
+          <h1>Current Weather</h1>
         </div>
-        <button type="button" id="location-submit" class="btn btn-inline btn-primary">Submit</button>
-      </form>
 
-      <div class="weather-main">
+        <form>
+          <div class="col-md-4"></div>
+          <div class="location-form col-md-3">
+            <input type="text" id="location-input" class="form-control" placeholder="Enter your location (US only)">
+            </input>
+          </div>
+          <button type="button" id="location-submit" class="btn btn-inline btn-primary">Submit</button>
+        </form>
+
+        <div class="weather-main">
+        </div>
+
       </div>
-
-    </div>
   </div>
+</div>
 
   <script id="weather-handlebars" type="text/x-handlebars-template">
-    <div class="weather-formatted col-lg-4 col-lg-offset-4">
+      <div class="col-md-4"></div>
+      <div class="weather-formatted col-md-4">
         <div class="temperature-display">
           <h1><strong> {{ temp }} </strong></h1>
         </div>
+        <span class="img weather-icon">
+          <img src="{{ image }}"</img>
+        </span>
         <div class="location-display">
           <h3><strong> {{ location }} </strong><h/3>
         </div>
         <div class="description-display">
           <h3><strong> {{ description }} </strong></h3>
         </div>
-        <div class="image-display">
-          <img src={{ image }}".jpg"></img>
-        </div>
-    </div>
+      </div>
   </script>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>

@@ -39,7 +39,7 @@ var fetch = function (search) {
 };
 
 var addWeather = function (data) {
-  $('.weather-main-display').empty();
+  $('.weather-main').empty();
     // for (var i=0; i<10; i++) {
       // console.log(data.items[i]);
     weatherArray.push(data);
@@ -59,7 +59,8 @@ var renderWeather = function () {
       {
       temp: (tempRounded + "° F"),
       location: weatherArray[0].name,
-      description: weatherArray[0].weather[0].main
+      description: weatherArray[0].weather[0].main,
+      image: ("http://openweathermap.org/img/w/" + weatherArray[0].weather[0].icon + ".png")
       }
     );
     $('.weather-main').append(newHTML);
@@ -74,5 +75,6 @@ $('#location-submit').on('click', function () {
   console.log("clicked the submit button")
   var search = $('#location-input').val();
   console.log("search input was: " + search);
+  $('#location-input').val('');
   fetch(search);
 });
