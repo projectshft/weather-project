@@ -5,4 +5,16 @@ body {
 
 .title{
   text-align: center;
+  padding-bottom: 100px;
+}
+
+.city-search{
+  width: 78%;
+  float:left;
+  padding: 10px
+}
+
+#search-button{
+  width: 20%;
+  float:right;
 }
