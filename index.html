@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
@@ -9,18 +8,16 @@
   <title>Project Weather</title>
 </head>
 
-
-
 <body>
   <div class="row">
-    <div class="col-sm-6 col-sm-offset-3"> <!-- come back and fix this css -->
+    <div class="center col-lg-6 col-lg-offset-3"> <!-- come back and fix this css -->
 
-      <div class="page-header">
+      <div class="page-header text-center">
         <h1>Current Weather</h1>
       </div>
 
       <form>
-        <div class="location-form col-sm-4">
+        <div class="location-form col-lg-3 col-lg-offset-4">
           <input type="text" id="location-input" class="form-control" placeholder="Enter your location">
           </input>
         </div>
@@ -34,7 +31,7 @@
   </div>
 
   <script id="weather-handlebars" type="text/x-handlebars-template">
-    <div class="weather-formatted">
+    <div class="weather-formatted col-lg-4 col-lg-offset-4">
         <div class="temperature-display">
           <h1><strong> {{ temp }} </strong></h1>
         </div>
@@ -44,13 +41,15 @@
         <div class="description-display">
           <h3><strong> {{ description }} </strong></h3>
         </div>
+        <div class="image-display">
+          <img src={{ image }}".jpg"></img>
+        </div>
     </div>
   </script>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.js"></script>
-  <script src="js/utils.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>

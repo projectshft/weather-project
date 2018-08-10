@@ -9,20 +9,21 @@
 var weatherArray = [];
 
 //functions
-
 var fetch = function (search) {
   //URL components
   var baseUrl = "http://api.openweathermap.org/data/2.5/";
   var current = "weather?q=";
-// var forecast = "forecast?q=";
+  var forecast = "forecast?q=";
   var cityName = search;
   var country = ",us"
   var apiKey = "&APPID=94e4fb6ff9320109825dcbc988e23b69";
   //concatened URLs
   var units = "&units=imperial"
   var currentQuery = baseUrl + current + cityName + country + apiKey + units;
+  var forecastQuery = baseUrl + forecast + cityName + country + apiKey + units;
   // var forecastQuery = baseUrl + forecast + cityID + apiKey;
   console.log("concatened URL for current weather request: " + currentQuery); //test the concat
+  console.log("concatened URL for forecast weather request: " + forecastQuery); //test the concat
 
   $.ajax({
     method: "GET",
@@ -56,9 +57,9 @@ var renderWeather = function () {
     var weatherMainDisplayTemplate = Handlebars.compile(source);
     var newHTML = weatherMainDisplayTemplate(
       {
-      temp: tempRounded,
+      temp: (tempRounded + "° F"),
       location: weatherArray[0].name,
-      description: weatherArray[0].weather[0].description
+      description: weatherArray[0].weather[0].main
       }
     );
     $('.weather-main').append(newHTML);
