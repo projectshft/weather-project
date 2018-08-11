@@ -19,7 +19,7 @@ if (localStorage.location != null) {
   console.log("at page load, local default was: " + localStorage.location);
   defaultLocation = localStorage.getItem('location');
   console.log("value of defaultLocation var being passed to fetchData is: " + defaultLocation);
-  setTimeout(function(){fetchData(defaultLocation);}, 500);
+  setTimeout(function(){fetchData(defaultLocation);}, 100);
 } else {
   console.log("There is no default location in localStorage");
 }
@@ -107,6 +107,9 @@ var renderWeather = function (cityState) {
 
   var temperature = weatherArray[0].main.temp;
   var tempRounded = temperature.toFixed(1);
+  var description = weatherArray[0].weather[0].main;
+  var icon = weatherArray[0].weather[0].icon;
+  console.log("the icon is: " + icon);
 
   var source = $('#weather-handlebars').html();
   var weatherMainDisplayTemplate = Handlebars.compile(source);
@@ -114,12 +117,13 @@ var renderWeather = function (cityState) {
     {
     temp: (tempRounded + "° F"),
     location: cityState,
-    description: weatherArray[0].weather[0].main,
-    image: ("http://openweathermap.org/img/w/" + weatherArray[0].weather[0].icon + ".png")
+    description: description,
+    image: ("http://openweathermap.org/img/w/" + icon + ".png")
     }
   );
 
   $('.weather-main').append(newHTML);
+  changeBackground(icon);
   console.log("renderWeather completed, invoking Forecast")
   $('#set-default').on('click', setDefault);
   renderForecast();
@@ -167,4 +171,23 @@ var setDefault = function () {
   console.log("clicked the set default button")
   localStorage.setItem('location', defaultLocation);
   console.log("localstored default: " + localStorage.location);
+};
+
+var changeBackground = function (icon) {
+  if (icon === "03d" |
+    icon === "03n" |
+    icon === "04d" |
+    icon === "04n" |
+    icon === "09d" |
+    icon === "09n" |
+    icon === "10d" |
+    icon === "10n" |
+    icon === "11d" |
+    icon === "11n") {
+    document.body.style.backgroundColor = "#EAEDED";
+  } else if (icon === "01d" | icon === "02d" ) {
+    document.body.style.backgroundColor = "#F9E79F";
+  } else if (icon === "01n" | icon === "02n" ) {
+    document.body.style.backgroundColor = "#808080";
+  }
 };
