@@ -12,25 +12,37 @@
 //containers for weather data
 var weatherArray = [];
 var forecastArray = [];
+var defaultLocation;
+
+//on page load, check for default
+if (localStorage.location != null) {
+  console.log("at page load, local default was: " + localStorage.location);
+  defaultLocation = localStorage.getItem('location');
+  console.log("value of defaultLocation var being passed to fetchData is: " + defaultLocation);
+  setTimeout(function(){fetchData(defaultLocation);}, 500);
+} else {
+  console.log("There is no default location in localStorage");
+}
 
 //click handler
 $('#location-submit').on('click', function () {
   weatherArray.length = 0;  //empties the array
   forecastArray.length = 0;
   console.log("clicked the submit button")
-  var search = $('#location-input').val();
-  console.log("search input was: " + search);
+  var $search = $('#location-input').val();
+  defaultLocation = $search;
+  console.log("search input was: " + $search);
   $('#location-input').val('');
-  fetch(search);
+  fetchData($search);
 });
 
 //functions
-var fetch = function (search) {
+var fetchData = function ($search) {
   //URL components
   var baseUrl = "http://api.openweathermap.org/data/2.5/";
   var current = "weather?q=";
   var forecast = "forecast?q=";
-  var cityName = search;
+  var cityName = $search;
   var country = ",us"
   var apiKey = "&APPID=94e4fb6ff9320109825dcbc988e23b69";
   var units = "&units=imperial"
@@ -74,7 +86,7 @@ var addForecast = function (data) {
     console.log("forecastArray has been updated");
 };
 
-var findState = function (search) {
+var findState = function ($search) {
   var latLng = (weatherArray[0].coord.lat + ',' + weatherArray[0].coord.lon);
   var Url = ("https://maps.googleapis.com/maps/api/geocode/json?latlng=" + latLng +
     "&sensor=true&result_type=locality&key=AIzaSyCIF-nV9qLeAriwePo8cTdgHGEuH_VAno0");
@@ -109,6 +121,7 @@ var renderWeather = function (cityState) {
 
   $('.weather-main').append(newHTML);
   console.log("renderWeather completed, invoking Forecast")
+  $('#set-default').on('click', setDefault);
   renderForecast();
 };
 
@@ -148,4 +161,10 @@ var renderForecast = function () {
     $('.forecast-main').append(newHTML);
   }
   console.log("Forecast loop complete");
+};
+
+var setDefault = function () {
+  console.log("clicked the set default button")
+  localStorage.setItem('location', defaultLocation);
+  console.log("localstored default: " + localStorage.location);
 };

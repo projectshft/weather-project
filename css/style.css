@@ -12,6 +12,7 @@
 
 .weather-main {
   display: block;
+  margin-bottom: 3em;
 }
 
 .box {
@@ -20,4 +21,12 @@
   margin: 15px;
   height: 250px;
   box-shadow: 2px 2px grey;
+}
+
+.page-header {
+  margin-bottom: 5em;
+}
+
+.location-form {
+  margin-bottom: 3em;
 }
