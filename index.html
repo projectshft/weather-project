@@ -2,8 +2,6 @@
 <html lang="en" dir="ltr">
 
 <head>
-  <!-- Required meta tags -->
-  <link rel="stylesheet" href="style.css">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -23,103 +21,81 @@
 
 
 <body>
+  <!-- main content -->
 
-  <!-- outer container open -->
-  <div id="main-container">
-    <!-- current weather open-->
-    <div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3">
 
-      <!-- current weather div close -->
-    </div>
+          <!-- current weather open -->
+          <div style="background:transparent !important" class="jumbotron">
+            <h1>Current Weather</h1>
+            <!-- main title -->
+          </div>
 
+          <!-- form open -->
+          <form class="form-group">
+            <!-- enter city name open -->
+            <input type="text" id="search-query" class="form-control" placeholder="Enter City Name">
+            </input>
+            <!-- enter city name close -->
 
-    <!-- form open -->
-    <div>
-      <!-- enter city name open-->
-      <div>
+            <!-- search button open -->
+            <div class="form-group">
+              <button id="search-button" type="button" class="btn btn-primary search">Search</button>
+            </div>
+            <!-- search button close -->
 
-        <!-- enter city name close -->
-      </div>
-
-      <!-- search button open -->
-      <div>
-
-        <!-- search button close -->
-      </div>
-
-      <!-- form close   -->
-    </div>
-
-    <!-- weather results open -->
-    <div>
-
-      <!-- weather results left -->
-      <div>
+          </form>
+          <!-- form close   -->
 
 
-        <!-- temp open -->
-        <div>
+          <!-- weather results open -->
+          <div class=forecast>
+            <h3>46</h3>
+            <h2>Durham, NC</h2>
+            <h2>Sunny</h2>
 
-          <!--temp close -->
+
+          <!-- 5-day forcast open -->
+          <div>
+
+            <!-- monday -->
+            <div>
+            </div>
+
+            <!-- Tuesday -->
+            <div>
+            </div>
+
+            <!-- Wednesday -->
+            <div>
+            </div>
+
+            <!-- Thursday -->
+            <div>
+            </div>
+
+            <!-- friday -->
+            <div>
+            </div>
+
+            <div>
+            </div>
+
+            <!-- 5-day forcast close -->
+          </div>
+
+          <!-- close container-fluid -->
         </div>
 
-        <!-- city/state open  -->
-        <div>
-
-          <!-- city/state close   -->
-        </div>
-
-        <!-- weather results left close -->
+      <!-- close column -->
       </div>
 
-      <!-- weather resuts right open -->
-      <div>
-        <!-- weather image open -->
-        <div>
-
-          <!-- weather image close -->
-        </div>
-
-        <!-- weather results right close -->
-      </div>
-
-      <!-- weather results close -->
+    <!-- close row -->
     </div>
 
-
-
-    <!-- 5-day forcast open       -->
-    <div>
-
-      <!-- monday -->
-      <div>
-      </div>
-
-      <!-- Tuesday -->
-      <div>
-      </div>
-
-      <!-- Wednesday -->
-      <div>
-      </div>
-
-      <!-- Thursday -->
-      <div>
-      </div>
-
-      <!-- friday -->
-      <div>
-      </div>
-
-      <div>
-      </div>
-
-      <!-- 5-day forcast close -->
-    </div>
-
-
-    <!-- outer container close   -->
-  </div>
+  <!-- close main content -->
 
   <!-- external javascript -->
   <script src="main.js"></script>
