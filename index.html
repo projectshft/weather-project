@@ -16,7 +16,7 @@
     <div class="row">
       <div class="col-xs-2"></div>
       <div class="col-xs-8 page-header text-center">
-        <h1>Current Weather</h1>
+        <h1>Project Weather</h1>
       </div>
       <div class="col-xs-2"></div>
     </div>
@@ -49,6 +49,17 @@
     </div>
   </div>
 
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-1"></div>
+      <div class="col-xs-10">
+        <div class="forecast-main">
+        </div>
+      </div>
+      <div class="col-xs-1"></div>
+    </div>
+  </div>
+
 </body>
 
   <script id="weather-handlebars" type="text/x-handlebars-template">
@@ -59,10 +70,19 @@
       <img src="{{ image }}"</img>
     </span>
     <div class="location-display">
-      <h3><strong> {{ location }} </strong><h/3>
+      <h3><strong> {{ location }} </strong></h3>
     </div>
     <div class="description-display">
       <h3><strong> {{ description }} </strong></h3>
+    </div>
+  </script>
+
+  <script id="forecast-handlebars" type="text/x-handlebars-template">
+    <div class="col-xs-2 box text-center">
+      <h3><strong> {{ description }} </strong></h3><p>
+      <h3><strong> {{ temp }} </h3></strong><p>
+      <img src="{{ image }}"</img>
+      <h3><strong> {{ day }} </h3></strong><p>
     </div>
   </script>
 
@@ -70,5 +90,8 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.js"></script>
   <script src="js/main.js"></script>
+  <script>
+    moment().format();
+  </script>
 
 </html>
