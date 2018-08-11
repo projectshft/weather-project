@@ -8,7 +8,8 @@
 
 .weather-icon {
   display: inline-block;
-  transform: scale(4,4);
+  transform: scale(3,3);
   float: right;
-  margin: 5%;
+  margin-bottom: 10%;
+  margin-right: 10%;
 }

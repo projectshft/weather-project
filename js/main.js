@@ -22,8 +22,8 @@ var fetch = function (search) {
   var currentQuery = baseUrl + current + cityName + country + apiKey + units;
   var forecastQuery = baseUrl + forecast + cityName + country + apiKey + units;
   // var forecastQuery = baseUrl + forecast + cityID + apiKey;
-  console.log("concatened URL for current weather request: " + currentQuery); //test the concat
-  console.log("concatened URL for forecast weather request: " + forecastQuery); //test the concat
+  console.log("concatenated URL for current weather request: " + currentQuery); //test the concat
+  console.log("concatenated URL for forecast weather request: " + forecastQuery); //test the concat
 
   $.ajax({
     method: "GET",
@@ -43,13 +43,29 @@ var addWeather = function (data) {
     // for (var i=0; i<10; i++) {
       // console.log(data.items[i]);
     weatherArray.push(data);
-    console.log("here's the forecast array after data push: " + weatherArray);
+    console.log("here's the forecast array after data push: " + weatherArray[0]);
     console.log("here's the forecast array's 0.main.temp: " + weatherArray[0].main.temp);
   // }
-  renderWeather();
+  findState(data);
 };
 
-var renderWeather = function () {
+var findState = function (search) {
+  var latLng = (weatherArray[0].coord.lat + ',' + weatherArray[0].coord.lon);
+  var Url = ("https://maps.googleapis.com/maps/api/geocode/json?latlng=" + latLng +
+    "&sensor=true&result_type=locality&key=AIzaSyCIF-nV9qLeAriwePo8cTdgHGEuH_VAno0");
+  console.log("the latLng value is:" + latLng);
+  console.log("the concat latLng URL is: " + Url);
+  $.ajax({
+    url: Url,
+    success: function (data) {
+      var cityState = (data.results[0].formatted_address);
+      console.log("The result of the state lookup function is: " + cityState);
+      renderWeather(cityState);
+    }
+  });
+};
+
+var renderWeather = function (cityState) {
   // for (var i=0; i<renderWeather; i++){
     var temperature = weatherArray[0].main.temp;
     var tempRounded = temperature.toFixed(1);
@@ -58,7 +74,7 @@ var renderWeather = function () {
     var newHTML = weatherMainDisplayTemplate(
       {
       temp: (tempRounded + "° F"),
-      location: weatherArray[0].name,
+      location: cityState,
       description: weatherArray[0].weather[0].main,
       image: ("http://openweathermap.org/img/w/" + weatherArray[0].weather[0].icon + ".png")
       }
@@ -66,8 +82,6 @@ var renderWeather = function () {
     $('.weather-main').append(newHTML);
   // }
 };
-
-// renderWeather();
 
 //click handlers
 $('#location-submit').on('click', function () {
