@@ -3,6 +3,11 @@
 
 <head>
   <meta charset="utf-8">
+
+  <!-- project title -->
+  <title>Weather App</title>
+
+  <!-- Responsive viewport tag, tells small screens that it's responsive -->
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
   <!-- link to css page -->
@@ -14,9 +19,6 @@
   <!-- link to jquery --should be moved to bottom -->
   <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
 
-  <!-- project title -->
-  <title>Weather App</title>
-
 </head>
 
 
@@ -27,73 +29,60 @@
     <div class="row">
       <div class="col-md-6 col-md-offset-3">
 
-          <!-- current weather open -->
-          <div style="background:transparent !important" class="jumbotron">
-            <h1>Current Weather</h1>
-            <!-- main title -->
-          </div>
-
-          <!-- form open -->
-          <form class="form-group">
-            <!-- enter city name open -->
-            <input type="text" id="search-query" class="form-control" placeholder="Enter City Name">
-            </input>
-            <!-- enter city name close -->
-
-            <!-- search button open -->
-            <div class="form-group">
-              <button id="search-button" type="button" class="btn btn-primary search">Search</button>
-            </div>
-            <!-- search button close -->
-
-          </form>
-          <!-- form close   -->
-
-
-          <!-- weather results open -->
-          <div class=forecast>
-            <h3>46</h3>
-            <h2>Durham, NC</h2>
-            <h2>Sunny</h2>
-
-
-          <!-- 5-day forcast open -->
-          <div>
-
-            <!-- monday -->
-            <div>
-            </div>
-
-            <!-- Tuesday -->
-            <div>
-            </div>
-
-            <!-- Wednesday -->
-            <div>
-            </div>
-
-            <!-- Thursday -->
-            <div>
-            </div>
-
-            <!-- friday -->
-            <div>
-            </div>
-
-            <div>
-            </div>
-
-            <!-- 5-day forcast close -->
-          </div>
-
-          <!-- close container-fluid -->
+        <!-- current weather open -->
+        <div style="background:transparent !important" class="jumbotron">
+          <h1>Current Weather</h1>
+          <!-- main title -->
         </div>
 
-      <!-- close column -->
+        <!-- form open -->
+        <form id="form-group">
+          <!-- enter city name open -->
+          <input type="text" id="search-query" class="form-control" placeholder="Enter City Name">
+          </input>
+          <!-- enter city name close -->
+
+          <!-- search button open -->
+          <div class="form-group">
+            <button id="search-button" type="button" class="btn btn-primary search">Search</button>
+          </div>
+          <!-- search button close -->
+
+        </form>
+        <!-- form close   -->
+
+
+        <!-- weather results open -->
+        <div class="city-weather-results">
+
+          <div class="current-forecast">
+            <!-- daily forecast results -->
+            <div id="city">
+              <!-- updated by js -->
+            </div>
+
+            
+          </div>
+          <!-- daily forecast results close -->
+
+          <div class="weekly-forecast">
+            <!-- weekly forecast results -->
+            next 5 day weather forecast
+
+          </div>
+          <!-- weekly forecast resuts close -->
+
+        </div>
+        <!-- weather results close -->
+
       </div>
+      <!-- close container-->
+
+      <!-- close column -->
+    </div>
 
     <!-- close row -->
-    </div>
+  </div>
 
   <!-- close main content -->
 
