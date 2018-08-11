@@ -11,51 +11,64 @@
 
 <!-- CSS classes could use tweaking.  Add @media.  Currently works well on desktop, maximized. -->
 <body>
+
   <div class="container">
     <div class="row">
-      <div class="col-6 offset-3">
+      <div class="col-xs-2"></div>
+      <div class="col-xs-8 page-header text-center">
+        <h1>Current Weather</h1>
+      </div>
+      <div class="col-xs-2"></div>
+    </div>
+  </div>
 
-        <div class="page-header text-center">
-          <h1>Current Weather</h1>
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-4"></div>
+      <form>
+        <div class="location-form col-xs-3">
+          <input type="text" id="location-input" class="form-control" placeholder="Enter a location">
+          </input>
         </div>
-
-        <form>
-          <div class="col-md-4"></div>
-          <div class="location-form col-md-3">
-            <input type="text" id="location-input" class="form-control" placeholder="Enter a location">
-            </input>
-          </div>
+        <span class="input-group-btn">
           <button type="button" id="location-submit" class="btn btn-inline btn-primary">Submit</button>
-        </form>
+        </span>
+      </form>
+      <div class="col-xs-4"></div>
+    </div>
+  </div>
 
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-4"></div>
+      <div class="col-xs-4">
         <div class="weather-main">
         </div>
-
       </div>
+      <div class="col-xs-4"></div>
+    </div>
   </div>
-</div>
+
+</body>
 
   <script id="weather-handlebars" type="text/x-handlebars-template">
-      <div class="col-md-4"></div>
-      <div class="weather-formatted col-md-4">
-        <div class="temperature-display">
-          <h1><strong> {{ temp }} </strong></h1>
-        </div>
-        <span class="img weather-icon">
-          <img src="{{ image }}"</img>
-        </span>
-        <div class="location-display">
-          <h3><strong> {{ location }} </strong><h/3>
-        </div>
-        <div class="description-display">
-          <h3><strong> {{ description }} </strong></h3>
-        </div>
-      </div>
+    <div class="temperature-display">
+      <h1><strong> {{ temp }} </strong></h1>
+    </div>
+    <span class="img weather-icon">
+      <img src="{{ image }}"</img>
+    </span>
+    <div class="location-display">
+      <h3><strong> {{ location }} </strong><h/3>
+    </div>
+    <div class="description-display">
+      <h3><strong> {{ description }} </strong></h3>
+    </div>
   </script>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.js"></script>
   <script src="js/main.js"></script>
-</body>
+
 </html>

@@ -2,14 +2,14 @@
   display: inline-block;
 }
 
-.h1 {
-
-}
-
 .weather-icon {
   display: inline-block;
   transform: scale(3,3);
   float: right;
   margin-bottom: 10%;
-  margin-right: 10%;
+  margin-right: 5%;
+}
+
+.weather-main {
+  display: block;
 }
