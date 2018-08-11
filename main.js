@@ -1,10 +1,10 @@
 //Fetch the weather information from the api and return in JSON format
 var fetch = function (query) {
   var citySearch = $('#search-query').val();
-  var url1 = 'http://api.openweathermap.org/data/2.5/weather?q=' + citySearch + ',us&units=imperial&appid=015bc22e332b00d0c46a9ee1a9d27e75';
+  var url = 'http://api.openweathermap.org/data/2.5/weather?q=' + citySearch + ',us&units=imperial&appid=015bc22e332b00d0c46a9ee1a9d27e75';
   $.ajax({
     method: "GET",
-    url: url1,
+    url: url,
     dataType: "json",
     success: function(data) {
       addWeather(data);
@@ -25,7 +25,7 @@ var addWeather = function (data) {
 
     var temp = function () {
       if (weatherData.main.temp) {
-        return Math.round(weatherData.main.temp);
+        return Math.round(weatherData.main.temp) + '°';
       } else {
         return null;
       }
@@ -40,8 +40,19 @@ var addWeather = function (data) {
     };
 
     var climate = function () {
-      if (weatherData.weather[0].main) {
+      if (weatherData.weather[0].main == "Clouds") {
+        return "Cloudy"
+      } else if (weatherData.weather[0].main) {
         return weatherData.weather[0].main;
+      } else {
+        return null;
+      }
+    };
+
+    var icon = function () {
+      var iconURL = 'http://openweathermap.org/img/w/' + weatherData.weather[0].icon +'.png';
+      if (weatherData.weather[0].icon) {
+        return iconURL;
       } else {
         return null;
       }
@@ -50,7 +61,8 @@ var addWeather = function (data) {
     var weather = {
       temp: temp(),
       city: city(),
-      climate: climate()
+      climate: climate(),
+      icon: icon()
     };
 
     weathers.push(weather);
@@ -69,7 +81,8 @@ var renderWeather = function () {
     var weather = template({
         temp: weathers[i].temp,
         city: weathers[i].city,
-        climate: weathers[i].climate
+        climate: weathers[i].climate,
+        icon: weathers[i].icon
       });
     $('.weathers').append(weather);
   }
