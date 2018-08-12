@@ -6,17 +6,13 @@
 
   <!-- project title -->
   <title>Weather App</title>
-
   <!-- Responsive viewport tag, tells small screens that it's responsive -->
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
   <!-- link to css page -->
   <link rel="stylesheet" type="text/css" href="style.css">
-
   <!-- link to bootstrap -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
-
-  <!-- link to jquery --should be moved to bottom -->
+  <!-- link to jquery - should be moved to bottom -->
   <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
 
 </head>
@@ -26,8 +22,8 @@
   <!-- main content -->
 
   <div class="container">
-    <div class="row">
-      <div class="col-md-6 col-md-offset-3">
+    <div class="row justify-content-center">
+      <div class="col-md-9">
 
         <!-- current weather open -->
         <div style="background:transparent !important" class="jumbotron">
@@ -37,17 +33,20 @@
 
         <!-- form open -->
         <form id="form-group">
-          <!-- enter city name open -->
-          <input type="text" id="search-query" class="form-control" placeholder="Enter City Name">
-          </input>
-          <!-- enter city name close -->
+          <div class="col-md-4">
+            <!-- enter city name open -->
+            <input type="text" id="search-query" class="form-control" placeholder="Enter City Name">
+            </input>
+            <!-- enter city name close -->
+          </div>
 
           <!-- search button open -->
           <div class="form-group">
-            <button id="search-button" type="button" class="btn btn-primary search">Search</button>
+            <div class="col-md-4">
+              <button id="search-button" type="button" class="btn btn-primary search">Search</button>
+            </div>
+            <!-- search button close -->
           </div>
-          <!-- search button close -->
-
         </form>
         <!-- form close   -->
 
@@ -61,13 +60,16 @@
               <!-- updated by js -->
             </div>
 
-            
+            <div id="currentWeather">
+              
+            </div>
+
           </div>
           <!-- daily forecast results close -->
 
-          <div class="weekly-forecast">
+          <div id="weekly-forecast">
             <!-- weekly forecast results -->
-            next 5 day weather forecast
+
 
           </div>
           <!-- weekly forecast resuts close -->
@@ -85,9 +87,10 @@
   </div>
 
   <!-- close main content -->
-
+  </div>
   <!-- external javascript -->
   <script src="main.js"></script>
+
 </body>
 
 </html>

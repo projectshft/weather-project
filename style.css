@@ -1,3 +1,15 @@
-* {
-border: 3px solid blue;
+h1 {
+  margin-bottom: 60px;
+  border: 2px blue Solid;
+  text-align: center;
+  font-family: Garamond, serif;
+  text: bold;
+
+}
+
+.city-weather-results {
+  text-align: center;
+  margin-bottom: 20px;
+  font-family: fantasy;
+  font-size: 40px;
 }
