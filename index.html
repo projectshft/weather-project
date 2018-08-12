@@ -43,13 +43,24 @@
       <div class="row">
         <div class="col-sm-3"></div>
         <div class="col-sm-6">
-          <h2 class ="current-weather">Hello I'm the Weather</h2>
+          <div class ="current-weather"></div>
+          <div>create radio dials for zip,</div>
         </div>
         <div class="col-sm-3"></div>
       </div>
     </div>
 
-
+   <!-- this section is for the template to link to main.js -->
+    <script id="weather-template" type="text/x-handlebars-template">
+      <div class="container">
+        <div class= "row">
+          <h1>{{temp}}&deg</h1>
+          <div><h3><strong>{{ city }}</strong></h3></div>
+          <div><h4><strong>{{ weather }}</strong></h4></div>
+          <img src="{{imageURL}}" alt="">
+        </div>
+      </div>
+    </script>
 
 
 
