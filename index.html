@@ -45,11 +45,11 @@
     </script>
 
     <script id="forecast-template" type="text/x-handlebars">
-      <div class="col-md-1">
-        <p>{{ climate }}</p>
-        <h2>{{ temp }}</h2>
-        <h2><img src={{ icon }}></h2>
-        <p>{{ day }}</p>
+      <div class="forecast card">
+        <div><h3>{{ climate }}</h3></div>
+        <div><h2>{{ temp }}</h2></div>
+        <div><h2><img src={{ icon }}></h2></div>
+        <div><h4>{{ day }}</h4></div>
       </div>
     </script>
   </body>
