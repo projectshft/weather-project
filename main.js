@@ -40,8 +40,56 @@ var weatherInfo = [];
       });
     };
 
-//the addWeather function is invoked upon successful api call and passes in the data retrieved from the api
+//loop through all the data that came back from the API, build individual current weather objects with the data we need and push it to the weatherInfo array.
     var addWeather = function(data){
+      var dataArr = [];
+      dataArr.push(data);
+
+      for(var obj = 0; obj < dataArr.length; obj++){
+
+        var city = function(){
+          if(dataArr[obj].name){
+          alert('the city function returns' + dataArr[obj].name);
+          return dataArr[obj].name;
+        } else {
+          return null;
+        }
+      };
+
+      var temp = function(){
+        if(dataArr[obj].main.temp){
+        alert('the temp function returns ' + dataArr[obj].main.temp);
+        return dataArr[obj].main.temp;
+      } else {
+        return null;
+      }
+    };
+
+    var condition = function(){
+      if(dataArr[obj].weather[0].main){
+      alert('the city function returns' + dataArr[obj].weather[0].main);
+      return dataArr[obj].weather[0].main;
+    } else {
+      return null;
+    }
+  };
+
+  var description = function(){
+    if(dataArr[obj].weather[0].description){
+    alert('the city function returns' + dataArr[obj].weather[0].description);
+    return dataArr[obj].weather[0].description;
+  } else {
+    return null;
+  }
+};
+
+city();
+temp();
+condition();
+description();
+};
+
+
       //make sure there is no data already in weatherInfo array
       weatherInfo.length = 0;
 
@@ -53,6 +101,7 @@ var weatherInfo = [];
       //invoke the renderWeather function
       renderWeather();
     };
+
 
   //the renderWeather function will iterate through theweather array and append the weather info to the page.
     var renderWeather = function () {
