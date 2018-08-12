@@ -32,12 +32,12 @@ var fetchForecast = function (query) {
   });
 };
 //create empty arrays to store data in for our model
-var weathers = [];
-var forecasts = [];
+var weathers;
+var forecasts;
 
 //Create a function that takes weather data from the api and pushes it into the weathers array
 var addWeather = function (data) {
-
+  weathers = [];
   for (var i = 0; i < 1; i++) {
     var weatherData = data;
 
@@ -91,7 +91,7 @@ var addWeather = function (data) {
 
 //create a function that takes the 5 day forecast data from the api and pushes it into the forecasts array
 var addForecast = function (data) {
-
+  forecasts = [];
   for (var i = 0; i < 40; i+=8) {
     var forecastData = data;
 
