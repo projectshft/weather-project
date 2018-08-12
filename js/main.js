@@ -19,7 +19,7 @@ if (localStorage.location != null) {
   console.log("at page load, local default was: " + localStorage.location);
   defaultLocation = localStorage.getItem('location');
   console.log("value of defaultLocation var being passed to fetchData is: " + defaultLocation);
-  setTimeout(function(){fetchData(defaultLocation);}, 100);
+  setTimeout(function(){fetchData(defaultLocation);}, 50);
 } else {
   console.log("There is no default location in localStorage");
 }
@@ -54,7 +54,9 @@ var fetchData = function ($search) {
   console.log("concatenated URL for forecast weather request: " + forecastQuery);
   //make the ajax calls separately, push to arrays, push to html
   ajaxFunc(currentQuery, weatherArray, addWeather);
+  console.log("ajax call for current weather complete");
   ajaxFunc(forecastQuery, forecastArray, addForecast);
+  console.log("ajax call for forecast weather complete");
 };
 
 //ajax function.  accepts a source URL, target array, and target function.
@@ -77,20 +79,20 @@ var addWeather = function (data) {
   $('.weather-main').empty();
     weatherArray.push(data);
     console.log("weatherArray has been updated");
-  findState(data);
 };
 
 var addForecast = function (data) {
   $('.forecast-main').empty();
     forecastArray.push(data);
     console.log("forecastArray has been updated");
+    findState(data);
 };
 
 var findState = function ($search) {
   var latLng = (weatherArray[0].coord.lat + ',' + weatherArray[0].coord.lon);
   var Url = ("https://maps.googleapis.com/maps/api/geocode/json?latlng=" + latLng +
     "&sensor=true&result_type=locality&key=AIzaSyCIF-nV9qLeAriwePo8cTdgHGEuH_VAno0");
-  console.log("the latLng value is:" + latLng);
+  console.log("the latLng value is: " + latLng);
   console.log("the concat latLng URL is: " + Url);
   $.ajax({
     url: Url,
@@ -124,15 +126,16 @@ var renderWeather = function (cityState) {
 
   $('.weather-main').append(newHTML);
   changeBackground(icon);
-  console.log("renderWeather completed, invoking Forecast")
+  console.log("renderWeather completed, starting renderForecast")
   $('#set-default').on('click', setDefault);
   renderForecast();
 };
 
 
 var renderForecast = function () {
-  console.log("renderForecast has been invoked");
-
+  console.log("renderForecast has started");
+  console.log("contents of the forecastArray are on the next line:")
+  console.log(forecastArray);
   var forecasts = forecastArray[0].list;
   var numberForecasts = forecasts.length;
   console.log("There are " + numberForecasts + " forecasts in 3hr increments");
