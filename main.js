@@ -83,24 +83,23 @@ var weatherInfo = [];
   }
 };
 
-city();
-temp();
-condition();
-description();
+var cityWeatherInfo = {
+  city : city(),
+  temp : temp(),
+  condition: condition(),
+  description: description()
 };
 
+//make sure there is no data already in weatherInfo array
+weatherInfo.length = 0;
 
-      //make sure there is no data already in weatherInfo array
-      weatherInfo.length = 0;
+weatherInfo.push(cityWeatherInfo);
+console.log(weatherInfo);
+};
 
-      //push data from api call into weatherInfo array
-      //****log it for test
-      weatherInfo.push(data);
-      console.log('data pushed:' + data);
-
-      //invoke the renderWeather function
-      renderWeather();
-    };
+//invoke the renderWeather function
+renderWeather();
+};
 
 
   //the renderWeather function will iterate through theweather array and append the weather info to the page.
@@ -117,7 +116,7 @@ description();
             //****template will not compile data whose valuerepresents an object as the value of the array(ex: arr.main.temp)
             //**** will need to either create additional forloops to find this data or find another way.
 
-            var context = ({"name" : weatherInfo[arr].name, "temp" : weatherInfo[arr][0].main.temp, "condition" : weatherInfo[arr][0].weather[0].main, "description" : weatherInfo[arr][0].weather[0].description});
+            var context = ({"name" : weatherInfo[arr].name, "temp" : weatherInfo[arr].temp, "condition" : weatherInfo[arr].condition, "description" : weatherInfo[arr].description});
 
             var newHTML = template(context);
 
