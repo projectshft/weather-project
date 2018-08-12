@@ -47,10 +47,12 @@
 
     <script id="weather-template" type="text/x-handlebars-template">
     <div class="weather col-md-6">
-      <h4>{{ City }}</h4>
-      <div>Temperature: <strong>{{ temperature }}</strong></div>
-      <div>Weather Condition: <strong>{{ weather }}</strong></div>
+      <h1><strong>{{temperature}} &#176 </strong> <img id="current-icon" src="{{imageURL}}" alt="Weather"></h1>
+      <div><h3>{{ City }}</h4></div>
+      <div><h4>{{ weather }}</h4></div>
+
     </div>
+
   </script>
 
   </body>

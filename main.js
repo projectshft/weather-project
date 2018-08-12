@@ -28,11 +28,12 @@ var addWeather = function(data) {
   var city = data.city.name;
   var weathertype = data.list[0].weather[0].main;
   var temp = data.list[0].main.temp;
-
+  var weatherIcon = 'http://openweathermap.org/img/w/' + data.list[0].weather[0].icon + '.png';
   var uniqueWeather = {
     city: city,
     weather: weathertype,
-    temp: temp
+    temp: temp,
+    icon: weatherIcon
   };
 
   weatherArray.push(uniqueWeather);
@@ -48,7 +49,7 @@ var renderWeather = function() {
 
     var source = $('#weather-template').html();
     var template = Handlebars.compile(source);
-    var newHTML = template({"City": weatherArray[i].city, "temperature": weatherArray[i].temp, "weather": weatherArray[i].weather});
+    var newHTML = template({"City": weatherArray[i].city, "temperature": weatherArray[i].temp, "weather": weatherArray[i].weather, "imageURL": weatherArray[i].icon});
 
     $('.weather').append(newHTML);
   };
