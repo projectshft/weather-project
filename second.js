@@ -1,3 +1,5 @@
+
+
 var urlBase = "https://api.openweathermap.org/data/2.5/"
 var weatherSpecification = "weather?q="
 var forecastSpecification = "forecast?q="
@@ -13,8 +15,6 @@ var currentWeatherInputValuesBase = urlBase + weatherSpecification
 var forecastInputValues = urlBase + forecastSpecification
 var defaultInputValueSpecifications = usaDefault + addApi + apiKey + unitsSpecification + imperialUnits
 
-var currentWeather = [];
-var forecastWeather = [];
 
 //////////////////////////////////////////////////////////////////////////////////
 // so at the end of the fetch function, you kick off the ajax call like:
@@ -22,28 +22,17 @@ var forecastWeather = [];
 
 // so like ajaxFunc (url, array, func)
 
+var currentWeatherInputValuesBase = urlBase + weatherSpecification
+var forecastInputValues = urlBase + forecastSpecification
+var defaultInputValueSpecifications = usaDefault + addApi + apiKey + unitsSpecification + imperialUnits
 
-var weatherFetch = function (query) {
+var weatherGetter = function (urlbase, query, array) {
     $.ajax({
       method: "GET",
-      url: currentWeatherInputValuesBase + query + defaultInputValueSpecifications,
+      url: urlbase + query + defaultInputValueSpecifications,
       dataType: "json",
       success: function(data) {
-        console.log(data)
-      },
-      error: function(jqXHR, textStatus, errorThrown) {
-        console.log(textStatus);
-      }
-  });
-};
-
-var forecastFetch = function (query) {
-    $.ajax({
-      method: "GET",
-      url: forecastInputValues + query + defaultInputValueSpecifications,
-      dataType: "json",
-      success: function(data) {
-        forecastWeather.push(data);
+        array.push(data);
       },
       error: function(jqXHR, textStatus, errorThrown) {
         console.log(textStatus);
@@ -53,9 +42,21 @@ var forecastFetch = function (query) {
 
 var forecastWeather = [];
 
+
+//////////////////////////////////////////////////////////////////////////////////
+// "Sunday Aug 12th"
+moment().format('dddd MMM Do');
+//////////////////////////////////////////////////////////////////////////////////
+
+
+
 $('#theButton').on('click', function () {
+  $('.weather').empty();
   var search = $('#city-query').val();
-  // weatherFetch(search);
-  console.log(forecastFetch(search))
-  // $('.weather').append(currentWeather)
+
+  weatherGetter(forecastInputValues, search, forecastWeather)
+  var source = $('#current-weather-template').html();
+  var template = Handlebars.compile(source);
+  var newHTML = []
+  $('.weather').append(newHTML)
 });
