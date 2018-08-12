@@ -1,20 +1,9 @@
-//This project uses the OpenWeather API for weather information, and the Google Maps API to find the state
-//from lat/lon since OpenWeather does not provide it.
-
-//notes:
-//Currently only accepts a city name as input, state cannot be specified.
-//Hardcoded to US only
-//Hardcoded to imperial units
-//The weather forecast is for ~21hrs from the time of the request, then every 24hrs -- not the day's high
-//Sometimes the Google Maps lookup adds a ZIP which is ugly.  That's an inconsistency with Google's pre-formatted data,
-//could be fixed by manually parsing out the city and state only.
-
-//containers for weather data
+//global containers for weather data
 var weatherArray = [];
 var forecastArray = [];
 var defaultLocation;
 
-//on page load, check for default
+//on page load, check for default location
 if (localStorage.location != null) {
   console.log("at page load, local default was: " + localStorage.location);
   defaultLocation = localStorage.getItem('location');
