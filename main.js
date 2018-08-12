@@ -1,37 +1,12 @@
-
-/* first, build out the front-end: get page set up to take in the weather information for cities that the API will retrieve. render a couple hard-coded cities to test */
-
 //weatherInfo will be the data structure that holds the stats for each city
 var weatherInfo = [];
 
-  //the renderWeather function will iterate through theweather array and append the weather info to the page.
-    var renderWeather = function () {
-    //first empty out weather div to make sure page matches what is in the weatherInfo array
-    $('.weather').empty();
-    //loop through weatherInfo arr in order to fill outthe weather template and append it to the weather div in the html
-    for (var arr = 0; arr < weatherInfo.length; arr++){
-      //compile handlebars template
-        var source = $('#weather-template').html();
-        var template = Handlebars.compile(source);
-
-        //***TO DO ***
-        //****template will not compile data whose valuerepresents an object as the value of the array(ex: arr.main.temp)
-        //**** will need to either create additional forloops to find this data or find another way.
-
-        var forecast = template(
-          {city:weatherInfo[arr].name, temp:weatherInfo[arr].main.temp, condition:weatherInfo[arr].weather.condition, description:weatherInfo[arr].weather.description});
-
-      //once template compiles a forecast into thehandlebars template, append the forecast to theweather div
-        $('.weather').append(forecast);
-    };
-  };
-
-  /* Next =============================
-  - get input when a user clicks search
-  - make a GET request from the open Weather Map API to get info about city
-  - put data into weatherInfo array
-  -invoke renderWeather
-   ====================================*/
+/* =============================
+- get input when a user clicks search
+- make a GET request from the open Weather Map API to get info about city
+- put data into weatherInfo array
+-invoke renderWeather
+ ====================================*/
 
 //click event handler responds when search button is clicked
   //1-cancels default sumbit just in case this is every changed, etc.
@@ -41,76 +16,63 @@ var weatherInfo = [];
 
   $('.search-btn').on('click', function (e) {
     e.preventDefault();
+    alert('clicked!')
     var $cityInput = $('.city-input').val();
+    console.log('city:' + $cityInput)
     fetch($cityInput);
     });
 
-var fetch = function ($cityInput) {
+    var fetch = function ($cityInput) {
+      var urlEnd = $cityInput + "&APPID=f386691c0cd26a16742b12643c9b113e&units=imperial";
 
-  var urlEnd = $cityInput + "&APPID=" + "f386691c0cd26a16742b12643c9b113e";
-
-  $.ajax({
-    method: "GET",
-    url: "http://api.openweathermap.org/data/2.5/weather?q=" + urlEnd,
-    dataType: "json",
-    success: function(ret) {
-    addWeather(ret);
-    },
-    error: function(jqXHR, textStatus, errorThrown) {
-      console.log(textStatus);
-    }
-  });
-
-
-  var addWeather = function (ret) {
-
-  weatherForecast = [];
-
-  for (var indx = 0; indx < ret.length; indx++) {
-    var city = function () {
-      if (ret[indx].name) {
-        return ret[indx].name;
-      } else {
-        return null;
-      }
+      $.ajax({
+        method: "GET",
+        url: "http://api.openweathermap.org/data/2.5/weather?q=" + urlEnd,
+        dataType: "json",
+        success: function(data) {
+        alert('successful API request');
+        console.log(data);
+        addWeather(data);
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+          console.log(textStatus);
+        }
+      });
     };
 
-    var temp = function () {
-      if (ret[indx].list.main.temp) {
-        alert(ret[indx].main.temp);
-        return ret[indx].main.temp;
-      } else {
-        return null;
-      }
+//the addWeather function is invoked upon successful api call and passes in the data retrieved from the api
+    var addWeather = function(data){
+      //make sure there is no data already in weatherInfo array
+      weatherInfo.length = 0;
+
+      //push data from api call into weatherInfo array
+      //****log it for test
+      weatherInfo.push(data);
+      console.log('data pushed:' + data);
+
+      //invoke the renderWeather function
+      renderWeather();
     };
 
-    var condition = function () {
-      if (ret[indx].weather.id) {
-        return ret[indx].weather.id;
-      } else {
-        return null;
-      }
-    };
+  //the renderWeather function will iterate through theweather array and append the weather info to the page.
+    var renderWeather = function () {
+        //first empty out weather div to make sure page matches what is in the weatherInfo array
+        $('.weather').empty();
+        //loop through weatherInfo arr in order to fill outthe weather template and append it to the weather div in the html
+        for (var arr = 0; arr < weatherInfo.length; arr++){
+          //compile handlebars template
+            var source = $('#weather-template').html();
+            var template = Handlebars.compile(source);
 
-    var description = function () {
-      if (ret[indx].weather.description) {
-        return ret[indx].weather.description;
-      } else {
-        return null;
-      }
-    };
+            //***TO DO ***
+            //****template will not compile data whose valuerepresents an object as the value of the array(ex: arr.main.temp)
+            //**** will need to either create additional forloops to find this data or find another way.
 
-    var cityForecast = {
-      city: city(),
-      temp: temp(),
-      condition: condition(),
-      description: description(),
-    };
-    weatherForecast.push(cityForecast);
+            var context = ({"name" : weatherInfo[arr].name, "temp" : weatherInfo[arr][0].main.temp, "condition" : weatherInfo[arr][0].weather[0].main, "description" : weatherInfo[arr][0].weather[0].description});
 
-  };
+            var newHTML = template(context);
 
-  weatherInfo.push(weatherForecast);
-  };
-  renderWeather();
-  };
+          //once template compiles a forecast into thehandlebars template, append the forecast to the weather div
+            $('.weather').append(newHTML);
+        };
+      };
