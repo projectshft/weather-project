@@ -10,6 +10,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <!-- link to css page -->
   <link rel="stylesheet" type="text/css" href="style.css">
+  <!-- link to handlebars -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
   <!-- link to bootstrap -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
   <!-- link to jquery - should be moved to bottom -->
@@ -27,26 +29,28 @@
 
         <!-- current weather open -->
         <div style="background:transparent !important" class="jumbotron">
-          <h1>Current Weather</h1>
+          <h1 id="title">Current Weather</h1>
           <!-- main title -->
         </div>
 
         <!-- form open -->
         <form id="form-group">
-          <div class="col-md-4">
-            <!-- enter city name open -->
-            <input type="text" id="search-query" class="form-control" placeholder="Enter City Name">
-            </input>
-            <!-- enter city name close -->
-          </div>
-
-          <!-- search button open -->
-          <div class="form-group">
-            <div class="col-md-4">
-              <button id="search-button" type="button" class="btn btn-primary search">Search</button>
+          <div class="col-md-12">
+            <div class="row justify-content-center">
+              <!-- enter city name open -->
+              <input type="text" id="search-query" class="form-control" placeholder="Enter City Name">
+              </input>
+              <!-- enter city name close -->
             </div>
-            <!-- search button close -->
-          </div>
+
+            <!-- search button open -->
+            <div class="form-group">
+              <div class="col-md-12">
+                <div class="row justify-content-center">
+                  <button id="search-button" type="button" class="btn btn-primary search">Search</button>
+                </div>
+                <!-- search button close -->
+              </div>
         </form>
         <!-- form close   -->
 
@@ -61,7 +65,7 @@
             </div>
 
             <div id="currentWeather">
-              
+
             </div>
 
           </div>
@@ -77,19 +81,36 @@
         </div>
         <!-- weather results close -->
 
+        </div>
+        <!-- close container-->
+
+        <!-- close column -->
+        </div>
+
+        <!-- close row -->
       </div>
-      <!-- close container-->
 
-      <!-- close column -->
-    </div>
+      <!-- close main content -->
 
-    <!-- close row -->
-  </div>
+      <!-- handlebars template -->
+      <script id="weather-template" type="text/x-handlebars-template">
+        <div class="row">
+          <div class="col-md-2 daily">
+            <p>temp: {{temp}}</p>
+            </br>
+            <p>conditions: {{conditions}}</p </div>
+            <div class="col-md-2 daily"></div>
+            <div class="col-md-2 daily"></div>
+            <div class="col-md-2 daily"></div>
+            <div class="col-md-2 daily"></div>
+          </div>
+      </script>
 
-  <!-- close main content -->
-  </div>
-  <!-- external javascript -->
-  <script src="main.js"></script>
+      <div class="content-placeholder"></div>
+
+
+      <!-- external javascript -->
+      <script src="main.js"></script>
 
 </body>
 
