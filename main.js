@@ -1,3 +1,11 @@
+var map;
+function initMap() {
+  map = new google.maps.Map(document.getElementById('map'), {
+    center: {lat: 35.9940, lng: -78.8986},
+    zoom: 8
+    });
+  };
+
 //Fetch the weather information from the api and return in JSON format
 var fetchWeather = function (query) {
   var citySearch = $('#search-query').val();
@@ -131,7 +139,7 @@ var addForecast = function (data) {
     };
 
     var day = function () {
-      
+
       var d = new Date(forecastData.list[i].dt_txt);
       var weekday = new Array(7);
       weekday[0] =  "Sunday";
