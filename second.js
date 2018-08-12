@@ -13,18 +13,15 @@ var currentWeatherInputValuesBase = urlBase + weatherSpecification
 var forecastInputValues = urlBase + forecastSpecification
 var defaultInputValueSpecifications = usaDefault + addApi + apiKey + unitsSpecification + imperialUnits
 
-
 var currentWeather = [];
+var forecastWeather = [];
 
-var formatWeather = function (data) {
-  
-  var weatherObj = {
-    temp: data[0].main.temp,
-    city: data[0].name,
-    weather: data[0].weather[0].main
-  };
-  return weatherObj.temp;
-}
+//////////////////////////////////////////////////////////////////////////////////
+// so at the end of the fetch function, you kick off the ajax call like:
+// ajaxFunc(forecastUrl, forecastArray, addForecast)
+
+// so like ajaxFunc (url, array, func)
+
 
 var weatherFetch = function (query) {
     $.ajax({
@@ -32,7 +29,7 @@ var weatherFetch = function (query) {
       url: currentWeatherInputValuesBase + query + defaultInputValueSpecifications,
       dataType: "json",
       success: function(data) {
-        formatWeather(data);
+        console.log(data)
       },
       error: function(jqXHR, textStatus, errorThrown) {
         console.log(textStatus);
@@ -46,7 +43,7 @@ var forecastFetch = function (query) {
       url: forecastInputValues + query + defaultInputValueSpecifications,
       dataType: "json",
       success: function(data) {
-        console.log(data)
+        forecastWeather.push(data);
       },
       error: function(jqXHR, textStatus, errorThrown) {
         console.log(textStatus);
@@ -54,9 +51,11 @@ var forecastFetch = function (query) {
   });
 };
 
+var forecastWeather = [];
 
 $('#theButton').on('click', function () {
   var search = $('#city-query').val();
-  weatherFetch(search);
+  // weatherFetch(search);
+  console.log(forecastFetch(search))
   // $('.weather').append(currentWeather)
 });
