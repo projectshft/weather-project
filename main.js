@@ -97,3 +97,108 @@ var renderWeather = function() {
     $('.weather').append(newHTML);
   };
 }
+
+function geoFindMe() {
+  var output = document.getElementById("out");
+
+  if (!navigator.geolocation){
+    output.innerHTML = "<p>Geolocation is not supported by your browser</p>";
+    return;
+  }
+
+  function success(position) {
+    var latitude  = position.coords.latitude;
+    var longitude = position.coords.longitude;
+
+    output.innerHTML = '<p>Latitude is ' + latitude + '° <br>Longitude is ' + longitude + '°</p>';
+
+    var img = new Image();
+    img.src = "https://maps.googleapis.com/maps/api/staticmap?center=" + latitude + "," + longitude + "&zoom=13&size=300x300&sensor=false";
+
+
+    var fetch = function(search) {
+      $.ajax({
+        method: "GET",
+        url: "http://api.openweathermap.org/data/2.5/forecast?lat=" +latitude+ "&lon=" +longitude+ "&units=imperial&APPID=f4f569817c0687a151c5c1af2f1ddfd2",
+        dataType: "json",
+        success: function(data) {
+          addWeather(data);
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+          console.log(textStatus);
+        }
+      });
+    };
+
+    output.appendChild(img);
+  }
+
+  function error() {
+    output.innerHTML = "Unable to retrieve your location";
+  }
+
+  output.innerHTML = "<p>Locating…</p>";
+
+  navigator.geolocation.getCurrentPosition(success, error);
+}
+
+var addWeather = function(data) {
+  weatherArray = [];
+
+  var city = data.city.name;
+  var weathertype = data.list[0].weather[0].main;
+  var temp = data.list[0].main.temp;
+  var weatherIcon = 'http://openweathermap.org/img/w/' + data.list[0].weather[0].icon + '.png';
+
+  var weathertype1 = data.list[3].weather[0].main;
+  var temp1 = data.list[3].main.temp;
+  var weatherIcon1 = 'http://openweathermap.org/img/w/' + data.list[3].weather[0].icon + '.png';
+
+  var weathertype2 = data.list[11].weather[0].main;
+  var temp2 = data.list[11].main.temp;
+  var weatherIcon2 = 'http://openweathermap.org/img/w/' + data.list[11].weather[0].icon + '.png';
+
+  var city = data.city.name;
+  var weathertype3 = data.list[19].weather[0].main;
+  var temp3 = data.list[19].main.temp;
+  var weatherIcon3 = 'http://openweathermap.org/img/w/' + data.list[19].weather[0].icon + '.png';
+
+  var weathertype4 = data.list[27].weather[0].main;
+  var temp4 = data.list[27].main.temp;
+  var weatherIcon4 = 'http://openweathermap.org/img/w/' + data.list[27].weather[0].icon + '.png';
+
+  var weathertype5 = data.list[35].weather[0].main;
+  var temp5 = data.list[35].main.temp;
+  var weatherIcon5 = 'http://openweathermap.org/img/w/' + data.list[35].weather[0].icon + '.png';
+
+  var uniqueWeather = {
+    city: city,
+    weather: weathertype,
+    temp: temp,
+    icon: weatherIcon,
+
+    weather1: weathertype1,
+    temp1: temp1,
+    icon1: weatherIcon1,
+
+    weather2: weathertype2,
+    temp2: temp2,
+    icon2: weatherIcon2,
+
+    weather3: weathertype3,
+    temp3: temp3,
+    icon3: weatherIcon3,
+
+    weather4: weathertype4,
+    temp4: temp4,
+    icon4: weatherIcon4,
+
+    weather5: weathertype5,
+    temp5: temp5,
+    icon5: weatherIcon5
+
+  };
+
+  weatherArray.push(uniqueWeather);
+  renderWeather();
+};

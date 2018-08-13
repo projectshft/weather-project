@@ -10,8 +10,26 @@
 .btn {
 
 }
-
+.weather {
+  float: left;
+  width: 100%;
+  text-align: center;
+}
 #current-icon {
-  position: absolute;
+  position: relative;
+}
 
+.container {
+  float: left;
+  width: 20%;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  border-style: solid;
+  border-width: 1px
+
+}
+
+hr {
+  background-color: white;
 }
