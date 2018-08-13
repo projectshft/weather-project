@@ -53,47 +53,33 @@ $(document).ready(function() {
       },
       dataType: "json",
       success: function(data) {
-        console.log(data);
+        //clear out in case there was a previous city search
+        $("#five-day-forecast").empty();
 
-        // note:
-        for (var i = 0; i < 40; i+=8) {
-
+        //endpoint returns forecast for every 3 hours
+        //8 forecasts per day, iterate through every 8th item
+        //to get 1 forecast per date
+        for (var i = 0; i < 40; i += 8) {
+          //get info for current day
           var temp = data.list[i].main.temp;
-          var cond =data.list[i].weather[0].description;
-          console.log(temp + "-" + cond);
+          var cond = data.list[i].weather[0].description;
+          var weekDay = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
+          //create new daily forecast div an insert current forecast data
+          var dailyForecast = "<div class='col-md-2'>" +
+            "<h5 id='temperature'>" + temp + "</h5>" +
+            "<h5 class='weather-conditions'>" + cond + "</br>" + weekDay[i++] + "</h5>";
 
-          var line2 = temp + "</br>";
-          var line3 = cond + "</br>";
-          // add new div with date and weather
-          $('#weekly-forecast').append(line2 + line3);
+          //add dailyForecast data into html
+          $('#five-day-forecast').append(dailyForecast);
+        }
 
-
-
-
-/*
-          var listItem, itemStatus, eventType;
-          listItem = 'item: ' + e.target.textContent + '<br/>';
-          itemStatus = 'Status: ' + e.data.status + '<br /> ';
-          eventType= 'Event: ' + e.type;
-          $('#notes').html(listItem + itemStatus + eventType);
-*/
-
-
-      }
-    },
+      },
       error: function(jqXHR, textStatus, errorThrown) {
         console.log(textStatus, errorThrown);
         alert("Error! PLease try again later.")
       }
 
-
-
     });
-
-
-    // https://api.openweathermap.org/data/2.5/weather ?id=524901 & APPID=1111111111
-
-
   })
 })

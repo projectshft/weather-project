@@ -17,3 +17,21 @@
 #search-query {
   text-align: justify;
 }
+
+.col-md-2 {
+  border: 1px solid black;
+  margin-top: 10px;
+  padding-top: 20px;
+  background-color: #F0FFFF;
+}
+
+.current-forecast {
+  margin-top: 15px;
+}
+
+.title  {
+  margin-top: 50px;
+  margin-bottom: 50px;
+  margin-bottom: 30px;
+}
+}
