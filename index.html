@@ -19,10 +19,11 @@
           </div>
           <form class="search-form">
             <div class="form-group">
-              <input type="text" id="search-query" class="form-control" placeholder="Enter City Name">
-              </input>
+              <input type="text" id="search-query" class="form-control" placeholder="Enter City Name"></input>
+              <button type="button" class="btn btn-primary" id="search">Search</button>
+              <!-- Allow user to save default city -->
+              <!-- <button type="button" class="btn btn-primary" id="set-as-default">Set as default?</button> -->
             </div>
-            <button type="button" class="btn btn-primary search">Search</button>
           </form>
           <div class="weathers row"></div>
           <div class="forecasts row"></div>
@@ -31,6 +32,7 @@
         <div class="col-md-3"></div>
       </div>
     </div>
+
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
@@ -53,6 +55,7 @@
         <div><h4>{{ day }}</h4></div>
       </div>
     </script>
+
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDth2MZulO8-gnrSvXZ_iSilXHTYr_tvts&callback=initMap" async defer></script>
   </body>
 </html>

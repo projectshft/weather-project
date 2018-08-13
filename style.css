@@ -16,7 +16,7 @@
 }
 
 .weather {
-  padding-top: 30px;
+  padding-top: 20px;
   margin-left: 20%;
   padding-bottom: 30px;
 }
@@ -26,10 +26,16 @@
   float: left;
 }
 
-.btn {
+#search {
   width: 20%;
-  float: right;
+  margin-bottom: 5px;
 }
+
+/* #set-as-default {
+  width: 20%;
+  margin-top: 5px;
+  float:right;
+} */
 
 #icon {
   float:right;
