@@ -2,8 +2,16 @@
 // only stor data in model.
 // only up date when events(client) changes it.
 
-var openWeatherInfo = []
-
+var openCurrentCityWeatherInfo = [];
+var openForcastCityWeatherInfo = [];
+var monday;
+var tuesday;
+var wednesday;
+var thursday;
+var friday;
+var saturday;
+var sunday;
+var dayOfTheWeek;
 
 
 //View What the user see rendered to the screen
@@ -12,18 +20,40 @@ var openWeatherInfo = []
 
 //to make change in data show up on screen
 //I need to render temp/city name and weather on 3 seperate lines
-var renderCityWeather = function(){
+var renderCurrentCityWeather = function(){
 
-  for (i=0;i<openWeatherInfo.length;i++ ){
+  for (i=0;i<openCurrentCityWeatherInfo.length;i++ ){
     var source = $('#weather-template').html();
     var weatherTemplate = Handlebars.compile(source);
     var weatherInfo = weatherTemplate(
-      {temp: Math.round(openWeatherInfo[0].list[0].main.temp*(9/5)- 459.67),
-      city: openWeatherInfo[0].city.name,
-      weather: openWeatherInfo[0].list[0].weather[0].description,
-      imageURL:"http://openweathermap.org/img/w/"+openWeatherInfo[0].list[0].weather[0].icon+".png",
+      {temp: Math.round(openCurrentCityWeatherInfo[0].main.temp*(9/5)- 459.67),
+      city: openCurrentCityWeatherInfo[0].name,
+      weather: openCurrentCityWeatherInfo[0].weather[0].description,
+      imageURL:"http://openweathermap.org/img/w/"+openCurrentCityWeatherInfo[0].weather[0].icon+".png",
     });
     $('.current-weather').append(weatherInfo);
+  }
+};
+
+
+var renderForcastCityWeather = function(){
+
+  for (i=0;i<openForcastCityWeatherInfo.length;i++ ){
+    var source = $('#forecast-template').html();
+    var weatherTemplate = Handlebars.compile(source);
+    var weatherInfo = weatherTemplate(
+      {weather: openForcastCityWeatherInfo[0].list[0].weather[0].description,
+      temp_max: Math.round(openForcastCityWeatherInfo[0].list[0].main.temp_max*(9/5)- 459.67),
+      temp_min: Math.round(openForcastCityWeatherInfo[0].list[0].main.temp_min*(9/5)- 459.67),
+      imageURL:"http://openweathermap.org/img/w/"+openForcastCityWeatherInfo[0].list[0].weather[0].icon+".png",
+      day: dayOfTheWeek,
+    });
+
+    $('.forcast-weather').append(weatherInfo);
+    $('.forcast-weather').append(weatherInfo);
+    $('.forcast-weather').append(weatherInfo);
+    $('.forcast-weather').append(weatherInfo);
+    $('.forcast-weather').append(weatherInfo);
   }
 };
 
@@ -40,22 +70,37 @@ $('#search-button').on('click', function () {
   fetch(town);
   //clears the search box
   $('.city-search').val('');
-  fetch(town);
+
 });
 
 // brings back info on the town that was looked up.
 var fetch = function (town) {
-
-  var searchQuery = "http://api.openweathermap.org/data/2.5/forecast?q="+town+"&APPID=8eaea670a3e514d673d6c151d0ee74be";
+// this fetch will bring back current weather
+  var searchCurrent = "http://api.openweathermap.org/data/2.5/weather?q="+town+"&APPID=8eaea670a3e514d673d6c151d0ee74be";
   // 4464374
   // 8eaea670a3e514d673d6c151d0ee74be
-  console.log(searchQuery);
+  console.log(searchCurrent);
   $.ajax({
     method: "GET",
-    url: searchQuery,
+    url: searchCurrent,
     dataType: "json",
     success: function(data) {
-      addWeather(data);
+      addCurrentWeather(data);
+    },
+    error: function(jqXHR, textStatus, errorThrown) {
+      console.log(textStatus);
+    }
+  });
+
+  // this fetch will bring back 5 day forcast for every 3 hours
+  var searchForcast = "http://api.openweathermap.org/data/2.5/forecast?q="+town+"&APPID=8eaea670a3e514d673d6c151d0ee74be";
+  console.log(searchForcast);
+  $.ajax({
+    method: "GET",
+    url: searchForcast,
+    dataType: "json",
+    success: function(data) {
+      addForcastWeather(data);
     },
     error: function(jqXHR, textStatus, errorThrown) {
       console.log(textStatus);
@@ -63,13 +108,37 @@ var fetch = function (town) {
   });
 };
 
-var addWeather = function (data) {
+
+
+// this function adds data to the main model array thin calls the render to display
+var addCurrentWeather = function (data) {
   //clearout old data from view and from model
   $('.current-weather').empty();
-  openWeatherInfo.length= 0;
+  openCurrentCityWeatherInfo.length= 0;
     // for (var i=0; i<10; i++) {
     console.log(data);
-  openWeatherInfo.push(data);
+  openCurrentCityWeatherInfo.push(data);
   // }
-  renderCityWeather();
+  renderCurrentCityWeather();
 };
+
+
+var addForcastWeather = function (data) {
+  //clearout old data from view and from model
+  $('.forcast-weather').empty();
+  openForcastCityWeatherInfo.length= 0;
+    // for (var i=0; i<10; i++) {
+    console.log(data);
+  openForcastCityWeatherInfo.push(data);
+  // }
+
+  getWhichDayItIs();
+
+  renderForcastCityWeather();
+};
+
+
+var getWhichDayItIs = function() {
+  day1 = moment(openForcastCityWeatherInfo[0].list[0].dt_txt).format('LLLL');
+  dayOfTheWeek = day1.slice(0, day1.indexOf("y")+1);
+}

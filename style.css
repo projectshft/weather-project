@@ -18,3 +18,19 @@ body {
   width: 20%;
   float:right;
 }
+
+.current-image {
+  /* float: right; */
+}
+
+.forcast-weather{
+  background-color: gold;
+  float: left;
+  width: 100%;
+}
+#forecast-template {
+    float: left;
+  }
+.forecast-row {
+  float: left;
+}
