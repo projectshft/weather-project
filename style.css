@@ -1,5 +1,5 @@
 body {
-  background-color: grey;
+  background-color: gray;
   color: white
 }
 
@@ -24,7 +24,6 @@ body {
 }
 
 .forcast-weather{
-  background-color: gold;
   float: left;
   width: 100%;
 }
