@@ -1,5 +1,6 @@
 <!DOCTYPE html>
   <html lang="en">
+  <title>Weather Project</title>
   <head>
     <!-- Required meta tags -->
     <link rel="stylesheet" href="style.css">
@@ -45,12 +46,30 @@
   <script src="second.js" type="text/javascript"></script>
 
     <script id="current-weather-template" type="text/x-handlebars-template">
-      <div class="theCurrentWeather col-md-6">
-        <div>Temperature: <strong>{{ temperature }}</strong></div>
-        <div>City: <strong>{{ city }}</strong></div>
-        <div>Weather: <strong>{{ weather }}</strong></div>
-        <!-- <div>ISBN: <strong>{{ isbn }}</strong></div> -->
-        <!-- <img src="{{imageURL}}" alt=""> -->
+      <div class="theCurrentWeather col-md-2">
+        <div><strong>{{ temperature }}</strong></div>
+        <div><strong>{{ city }}</strong></div>
+        <div><strong>{{ weather }}</strong></div>
+      </div>
+    </script>
+
+    <script id="forecast-weather-template" type="text/x-handlebars-template">
+      <div class="forecastWeather col-md-6">
+        <div><strong>{{ dat1temp }}</strong></div>
+        <div><strong>{{ day1Icon }}</strong></div>
+        <div><strong>{{ day1weather }}</strong></div>
+        <div><strong>{{ dat2temp }}</strong></div>
+        <div><strong>{{ day2Icon }}</strong></div>
+        <div><strong>{{ day2weather }}</strong></div>
+        <div><strong>{{ dat3temp }}</strong></div>
+        <div><strong>{{ day3Icon }}</strong></div>
+        <div><strong>{{ day3weather }}</strong></div>
+        <div><strong>{{ dat4temp }}</strong></div>
+        <div><strong>{{ day4Icon }}</strong></div>
+        <div><strong>{{ day4weather }}</strong></div>
+        <div><strong>{{ dat5temp }}</strong></div>
+        <div><strong>{{ day5Icon }}</strong></div>
+        <div><strong>{{ day5weather }}</strong></div>
       </div>
     </script>
 

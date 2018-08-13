@@ -40,7 +40,7 @@ var renderCurrentWeather = function (data) {
   $('.weather').empty();
   var source = $('#current-weather-template').html();
   var template = Handlebars.compile(source);
-  var newHTML = template({temperature: data[0].main.temp, city: data[0].name, weather: data[0].weather[0].main)
+  var newHTML = template({temperature: data.main.temp, city: data.name, weather: data.weather[0].main})
   $('.weather').append(newHTML);
 };
 
@@ -62,7 +62,7 @@ var renderWeatherForecast = function (data) {
 let parsedWeatherData = [];
 
 // this function extracts and formats day of week, hour/minute of day, temp, and weather description
-var weatherFormatter = function(data) {
+var weatherFormatter = function(data, arr) {
    for (let i = 0; i < data[0].list.length; i++) {
       let structuredData = {
          [i]: {
@@ -70,16 +70,15 @@ var weatherFormatter = function(data) {
             dayOfWeek: moment(data[0].list[i].dt_txt).format('dddd').toString(),
             // formats the hour and minute ex: '18:00'
             timeOfDay: moment(data[0].list[i].dt_txt).format('hh:mm').toString(),
-            // gets all un-rounded temperature values
+            // gets all un-rounded temperature values ex: 74.29
             temp: data[0].list[i].main.temp,
             // gets all weather descriptions ex: 'Sunny', 'Cloudy'
             weather: data[0].list[0].weather[0].main
          }
       };
-      // pushes to data in global scope
-      parsedWeatherData.push(structuredData);
+      // pushes to array in global scope
+      arr.push(structuredData);
    }
-   // return data
 }
 
 /////////////////////////////////////////////////
@@ -168,6 +167,7 @@ $('#theButton').on('click', function() {
    var search = $('#city-query').val();
    weatherGetter(currentWeatherInputValuesBase, search, currentWeather)
    weatherGetter(forecastInputValues, search, forecastWeather)
+   weatherFormatter(forecastWeather, parsedWeatherData)
    renderCurrentWeather(currentWeather)
    renderWeatherForecast(forecastWeather)
 });
