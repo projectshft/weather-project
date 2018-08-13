@@ -48,19 +48,19 @@
 
   <script id="weather-template" type="text/x-handlebars-template">
     <div class="weather col-md-6">
-      <h1><strong>{{temperature}} &#176 </strong></h1>
+      <h1><strong>{{temperature}}&#176 </strong></h1>
       <div>
         <h3>{{ City }} <img id="current-icon" src="{{imageURL}}" alt="Weather"></h3></div>
       <div>
         <h4>{{ weather }}</h4></div>
-      <div>  </div>
+      <div> </div>
 
       <div>
         <div class="container">
           <div>
             <h4>{{weather1}}</h4></div>
           <div>
-            <h3>{{temperature1}} &#176 </h3></div>
+            <h3>{{temperature1}}&#176 </h3></div>
           <div><img id="day1Icon" src="{{imageURL1}}" alt="Day1"></div>
           <div>
             <h4><b>Monday</b></h4></div>
@@ -69,7 +69,7 @@
           <div>
             <h4>{{weather2}}</h4></div>
           <div>
-            <h3>{{temperature2}} &#176 </h3></div>
+            <h3>{{temperature2}}&#176 </h3></div>
           <div><img id="day2Icon" src="{{imageURL2}}" alt="Day2"></div>
           <div>
             <h4><b>Tuesday</b></h4></div>
@@ -78,7 +78,7 @@
           <div>
             <h4>{{weather3}}</h4></div>
           <div>
-            <h3>{{temperature3}} &#176 </h3></div>
+            <h3>{{temperature3}}&#176 </h3></div>
           <div><img id="day3Icon" src="{{imageURL3}}" alt="Day3"></div>
           <div>
             <h4><b>Wed</b></h4></div>
@@ -87,7 +87,7 @@
           <div>
             <h4>{{weather4}}</h4></div>
           <div>
-            <h3>{{temperature4}} &#176</h3></div>
+            <h3>{{temperature4}}&#176</h3></div>
           <div><img id="day4Icon" src="{{imageURL4}}" alt="Day4"></div>
           <div>
             <h4><b>Thursday</b><h4></div>
@@ -95,7 +95,7 @@
 <div class="container">
       <div><h4>{{weather5}}</h4></div>
           <div>
-            <h3>{{temperature5}} &#176 </h3></div>
+            <h3>{{temperature5}}&#176 </h3></div>
           <div><img id="day5Icon" src="{{imageURL5}}" alt="Day5"></div>
           <div>
             <h4><b>Friday</b></h4></div>
@@ -105,10 +105,10 @@
     </div>
     <hr>
   </script>
-
-  <p><button onclick="geoFindMe()">Show my location</button></p>
-  <div id="out"></div>
-
+  <div class="geolocation">
+    <p><button id="geo" onclick="geoFindMe()">Show my location</button></p>
+    <div id="out"></div>
+  </div>
 </body>
 
 </html>
