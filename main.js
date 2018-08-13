@@ -1,3 +1,6 @@
+var dateString = moment.unix(1487246400).format("MM/DD/YYYY");
+
+
 //weatherInfo will be the data structure that holds the stats for each city
 var weatherInfo = [];
 
@@ -25,19 +28,23 @@ $('.search-btn').on('click', function(e) {
 var fetch = function($cityInput) {
   var urlEnd = $cityInput + "&APPID=f386691c0cd26a16742b12643c9b113e&units=imperial";
 
-  $.ajax({
-    method: "GET",
-    url: "http://api.openweathermap.org/data/2.5/weather?q=" + urlEnd,
-    dataType: "json",
-    success: function(data) {
-      alert('successful API request');
-      console.log(data);
-      addWeather(data);
-    },
-    error: function(jqXHR, textStatus, errorThrown) {
-      console.log(textStatus);
-    }
-  });
+
+//call API for 5 day forecast weather
+
+$.ajax({
+  method: "GET",
+  url: "http://api.openweathermap.org/data/2.5/forecast?q=" + urlEnd,
+  dataType: "json",
+  success: function(data) {
+    alert('successful API request 2');
+    console.log(data);
+    addWeather(data);
+  },
+  error: function(jqXHR, textStatus, errorThrown) {
+    console.log(textStatus);
+  }
+});
+
 };
 
 //addweather function is invoked whenever the ajax function returns a successful api call.  addWeather passes in the data returned with that api call.
@@ -47,14 +54,23 @@ var addWeather = function(data) {
   var dataArr = [];
   dataArr.push(data);
 
-//loop through all the data that came back from the API, build individual current weather objects with the data we need and push it to the weatherInfo array.
-  for (var obj = 0; obj < dataArr.length; obj++) {
+  //city() searches the data for the name of the city
+  var city = function() {
+    if (dataArr[0].name) {
+      alert('the city function returns' + dataArr[0].name);
+      return dataArr[0].name;
+    } else {
+      return null;
+    }
+  };
 
-    //city() searches the data for the name of the city
-    var city = function() {
-      if (dataArr[obj].name) {
-        alert('the city function returns' + dataArr[obj].name);
-        return dataArr[obj].name;
+//loop through all the data that came back from the API, build individual current weather objects with the data we need and push it to the weatherInfo array.
+  for (var day = 3; day < dataArr[0].list.length; day+= 8) {
+
+    var date = function(){
+      if(dataArr[0].list[day].dt){
+        alert('the temp function returns ' + dataArr[0].list[day].dt);
+        return dataArr[0].list[day].dt;
       } else {
         return null;
       }
@@ -62,9 +78,9 @@ var addWeather = function(data) {
 
     //temp() searches data for current temp
     var temp = function() {
-      if (dataArr[obj].main.temp) {
-        alert('the temp function returns ' + dataArr[obj].main.temp);
-        return dataArr[obj].main.temp;
+      if (dataArr[0].list[day].main.temp) {
+        alert('the temp function returns ' + dataArr[0].list[day].main.temp);
+        return dataArr[0].list[day].main.temp;
       } else {
         return null;
       }
@@ -72,9 +88,9 @@ var addWeather = function(data) {
 
     //condition() searches data for current condition
     var condition = function() {
-      if (dataArr[obj].weather[0].main) {
-        alert('the city function returns' + dataArr[obj].weather[0].main);
-        return dataArr[obj].weather[0].main;
+      if (dataArr[0].list[day].weather[0].main) {
+        alert('the city function returns' + dataArr[0].list[day].weather[0].main);
+        return dataArr[0].list[day].weather[0].main;
       } else {
         return null;
       }
@@ -82,9 +98,9 @@ var addWeather = function(data) {
 
     //description() searches data description of weather
     var description = function() {
-      if (dataArr[obj].weather[0].description) {
-        alert('the city function returns' + dataArr[obj].weather[0].description);
-        return dataArr[obj].weather[0].description;
+      if (dataArr[0].list[day].weather[0].description) {
+        alert('the city function returns' + dataArr[0].list[day].weather[0].description);
+        return dataArr[0].list[day].weather[0].description;
       } else {
         return null;
       }
@@ -92,14 +108,14 @@ var addWeather = function(data) {
 
     //cityWeatherInfo is an object that calls functions that are set to values of properties that will eventually manipulate the html
     var cityWeatherInfo = {
-      city: city(),
+      date: date(),
       temp: temp(),
       condition: condition(),
       description: description()
     };
 
     //make sure there is no data already in weatherInfo array
-    weatherInfo.length = 0;
+    // weatherInfo.length = 0;
 
     //push the cityWeatherInfo object into the weatherInfo array
     weatherInfo.push(cityWeatherInfo);
@@ -108,7 +124,7 @@ var addWeather = function(data) {
   };
 
   //invoke the renderWeather function
-  renderWeather();
+  // renderWeather();
 };
 
 
