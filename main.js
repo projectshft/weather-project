@@ -6,7 +6,7 @@ var saveToLocalStorage = function () {
     localStorage.setItem(STORAGE_ID, JSON.stringify($('#search-query').val()));
   }
   else {
-    alert("You must enter a valid U.S. city.")
+    alert("Please enter a valid U.S. city.")
   }
 };
 var getFromLocalStorage = function () {
@@ -17,9 +17,29 @@ $('#set-as-default').on('click', function () {
   saveToLocalStorage();
 });
 
+//Fetch the coordinates information from the api based on what city the user enters and return it in JSON format
+var fetchCoordinates = function (query) {
+  var cityStateSearch = $('#search-query').val();
+  var citySearch = cityStateSearch.slice(0, -4);
+  var url = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + citySearch;
+  $.ajax({
+    method: "GET",
+    url: url,
+    dataType: "json",
+    success: function(data) {
+      addCoordinates(data);
+    },
+    error: function(jqXHR, textStatus, errorThrown) {
+      console.log(textStatus);
+    }
+  });
+};
+
+
 //Create a map with a default location of Durham that changes to the location of the city entered by the user
 var map;
 function initMap() {
+  var latLng;
   map = new google.maps.Map(document.getElementById('map'), {
     center: {lat: 35.9050, lng: -78.8615},
     zoom: 9
@@ -28,7 +48,9 @@ function initMap() {
 
 //Fetch the weather information from the api and return it in JSON format
 var fetchWeather = function (query) {
-  var citySearch = $('#search-query').val();
+  var cityStateSearch = $('#search-query').val();
+  var citySearch = cityStateSearch.slice(0, -4);
+  console.log(citySearch);
   var url = 'http://api.openweathermap.org/data/2.5/weather?q=' + citySearch + ',us&units=imperial&appid=015bc22e332b00d0c46a9ee1a9d27e75';
   $.ajax({
     method: "GET",
@@ -45,7 +67,8 @@ var fetchWeather = function (query) {
 
 //Fetch the 5 day forecast from the api and return it in JSON format
 var fetchForecast = function (query) {
-  var citySearch = $('#search-query').val();
+  var cityStateSearch = $('#search-query').val();
+  var citySearch = cityStateSearch.slice(0, -4);
   var url = 'http://api.openweathermap.org/data/2.5/forecast?q=' + citySearch + ',us&units=imperial&appid=015bc22e332b00d0c46a9ee1a9d27e75';
   $.ajax({
     method: "GET",
@@ -63,7 +86,20 @@ var fetchForecast = function (query) {
 //create empty arrays to store weather data in for our model
 var weathers;
 var forecasts;
-
+// var coordinates;
+//
+// var addCoordinates = function (data) {
+//   coordinates = [];
+//   for (var i = 0; i < 1; i++) {
+//     var coordinateData = data;
+//
+//     var coordinatesCoordinates = function () {
+//        if (coordinatesData.results[0].geometry.location) {
+//       return coordinatesData.results[0].geometry.location;
+//     } else {
+//       return null;
+//     }
+//   };
 //Create a function that takes weather data from the api and pushes it into the weathers array
 var addWeather = function (data) {
   weathers = [];
@@ -106,11 +142,22 @@ var addWeather = function (data) {
       var iconURL = 'http://openweathermap.org/img/w/' + iconData +'.png';
 
       //Change CSS styling based on the icon returned
-
-      // var styles = function () {
-      //   var background =  document.body.style.backgroundColor;
-      //   if (iconData = '03d') {
-      //     background = #FFFF00;
+      // var changeBackground = function () {
+      //   if (iconData === "03d" ||
+      //     iconData === "03n" ||
+      //     iconData === "04d" ||
+      //     iconData === "04n" ||
+      //     iconData === "09d" ||
+      //     iconData === "09n" ||
+      //     iconData === "10d" ||
+      //     iconData === "10n" ||
+      //     iconData === "11d" ||
+      //     iconData === "11n") {
+      //     document.body.style.backgroundColor = "#FFFF00";
+      //   } else if (iconData === "01d" || iconData === "02d" ) {
+      //     document.body.style.backgroundColor = "#FF5511";
+      //   } else if (iconData === "01n" || iconData === "02n" ) {
+      //     document.body.style.backgroundColor = "#00FF00";
       //   }
       // };
 
