@@ -55,22 +55,23 @@ var addWeather = function(data) {
   dataArr.push(data);
 
   //city() searches the data for the name of the city
-  var city = function() {
-    if (dataArr[0].name) {
-      alert('the city function returns' + dataArr[0].name);
-      return dataArr[0].name;
-    } else {
-      return null;
-    }
-  };
+  // var city = function() {
+  //   if (dataArr[0].name) {
+  //     alert('the city function returns' + dataArr[0].name);
+  //     return dataArr[0].name;
+  //   } else {
+  //     return null;
+  //   }
+  // };
 
 //loop through all the data that came back from the API, build individual current weather objects with the data we need and push it to the weatherInfo array.
   for (var day = 3; day < dataArr[0].list.length; day+= 8) {
 
     var date = function(){
       if(dataArr[0].list[day].dt){
-        alert('the temp function returns ' + dataArr[0].list[day].dt);
-        return dataArr[0].list[day].dt;
+        var weekday= moment.unix(dataArr[0].list[day].dt).format("ddd");
+        alert('the temp function returns ' + weekday);
+        return weekday;
       } else {
         return null;
       }
@@ -80,7 +81,8 @@ var addWeather = function(data) {
     var temp = function() {
       if (dataArr[0].list[day].main.temp) {
         alert('the temp function returns ' + dataArr[0].list[day].main.temp);
-        return dataArr[0].list[day].main.temp;
+        var degrees = dataArr[0].list[day].main.temp;
+        return degrees.toString();
       } else {
         return null;
       }
@@ -124,21 +126,23 @@ var addWeather = function(data) {
   };
 
   //invoke the renderWeather function
-  // renderWeather();
+  renderWeather();
 };
 
 
 //the renderWeather function will iterate through theweather array and append the weather info to the page.
 var renderWeather = function() {
+  debugger;
   //first empty out weather div to make sure page matches what is in the weatherInfo array
   $('.weather').empty();
+
   //loop through weatherInfo arr in order to fill outthe weather template and append it to the weather div in the html
   for (var arr = 0; arr < weatherInfo.length; arr++) {
     //compile handlebars template
     var source = $('#weather-template').html();
     var template = Handlebars.compile(source);
     var context = ({
-      "name": weatherInfo[arr].name,
+      "date" : weatherInfo[arr].date,
       "temp": weatherInfo[arr].temp,
       "condition": weatherInfo[arr].condition,
       "description": weatherInfo[arr].description
@@ -147,5 +151,11 @@ var renderWeather = function() {
 
     //once template is compiled with weather info, append the forecast to the weather div
     $('.weather').append(newHTML);
+
   };
 };
+
+
+//*****took this out of template for now
+//"name": weatherInfo[arr].name,
+//delete if not using
