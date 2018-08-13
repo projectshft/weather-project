@@ -6,3 +6,9 @@ img {
   width: 100px;
   height: auto;
 }
+
+.container {
+  max-width: 600px;
+  height: auto;
+  background-color: #51A39D;
+}

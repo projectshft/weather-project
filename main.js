@@ -1,6 +1,3 @@
-var dateString = moment.unix(1487246400).format("MM/DD/YYYY");
-
-
 //weatherInfo will be the data structure that holds the stats for each city
 var weatherInfo = [];
 
@@ -69,7 +66,7 @@ var addWeather = function(data) {
 
     var date = function(){
       if(dataArr[0].list[day].dt){
-        var weekday= moment.unix(dataArr[0].list[day].dt).format("ddd");
+        var weekday= moment.unix(dataArr[0].list[day].dt).format("dddd");
         alert('the temp function returns ' + weekday);
         return weekday;
       } else {
@@ -82,7 +79,7 @@ var addWeather = function(data) {
       if (dataArr[0].list[day].main.temp) {
         alert('the temp function returns ' + dataArr[0].list[day].main.temp);
         var degrees = dataArr[0].list[day].main.temp;
-        return degrees.toString();
+        return Math.round(degrees);
       } else {
         return null;
       }
@@ -132,27 +129,19 @@ var addWeather = function(data) {
 
 //the renderWeather function will iterate through theweather array and append the weather info to the page.
 var renderWeather = function() {
-  debugger;
   //first empty out weather div to make sure page matches what is in the weatherInfo array
   $('.weather').empty();
 
   //loop through weatherInfo arr in order to fill outthe weather template and append it to the weather div in the html
-  for (var arr = 0; arr < weatherInfo.length; arr++) {
+  $(function(){
     //compile handlebars template
-    var source = $('#weather-template').html();
+    var source = $('#current-weather-template').html();
     var template = Handlebars.compile(source);
-    var context = ({
-      "date" : weatherInfo[arr].date,
-      "temp": weatherInfo[arr].temp,
-      "condition": weatherInfo[arr].condition,
-      "description": weatherInfo[arr].description
-    });
-    var newHTML = template(context);
+    var newHTML = template(weatherInfo);
 
     //once template is compiled with weather info, append the forecast to the weather div
-    $('.weather').append(newHTML);
-
-  };
+    $('.upcoming-weather').html(newHTML);
+  });
 };
 
 
