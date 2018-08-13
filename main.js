@@ -150,18 +150,19 @@ var renderWeather = function() {
     var cwContext = ({
       "city": weatherInfo[0].city,
       "current-temp": weatherInfo[0].temp,
-      "current-description": weatherInfo[0].description
+      "current-description": weatherInfo[0].description,
+      "current-iconImg" : weatherInfo[0].iconImg,
     });
     var cwHTML = cwTemplate(cwContext);
-
     //once template is compiled with weather info, append the forecast to the weather div
     $('.current-weather').html(cwHTML);
   };
-
   renderCurrent();
-  //fill outthe current weather template and append it to the weather div in the html
-  $(function() {
+
+  //fill out the upcoming-weather template and append it to the weather div in the html
+ $(function() {
     //compile handlebars template
+    //template's script in the html doc is set with help that says for each {{}} in the weatherInfo array create a new template of weatherInfo
     var source = $('#upcoming-weather-template').html();
     var template = Handlebars.compile(source);
     var newHTML = template(weatherInfo);

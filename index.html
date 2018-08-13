@@ -26,7 +26,7 @@
           <div class="col-md-2"></div>
           <div class="col-md-6">
             <div class="input-group">
-              <input type="text" class="form-control city-input" placeholder="City...">
+              <input type="text" class="form-control city-input" placeholder="Enter a city to search">
               <span class="input-group-btn">
                 <button class="btn btn-default search-btn" type="button">Search!</button>
               </span>
@@ -45,9 +45,8 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
   <!-- moment.js -->
   <script src="https://unpkg.com/moment"></script>
-
+<!-- upcoming weather (5-day forecast template) -->
 <script id="upcoming-weather-template" type="text/x-handlebars-template">
-
 {{#each this}}
   <div class="col-sm-7 col-md-2">
     <div class="card">
@@ -61,29 +60,25 @@
             <div><strong>{{ description }}</strong></div>
           </p>
           <div id="icon">
-            <img id="weather-icon" src= {{ imgIcon }} >
+            <img id="weather-icon" src="{{ iconImg }}">
           </div>
       </div>
     </div>
   </div>
 {{/each}}
-
 </script>
-
+<!-- current weather template -->
 <script id="current-weather-template" type="text/x-handlebars-template">
-
   <div class="col-md-6">
-    <h2>Current Weather for:
-  {{ city }}</h2>
+    <h2>Current Weather for:{{ city }}</h2>
   </div>
   <div class="col-md-2">
     <h1>{{ current-temp }} &deg;</h1>
     <h3> {{ current-description }}</h3>
   </div>
   <div class="col-md-2">
-    <img src="/Users/lschinasi/code/ps-week3/day5/weather-project/img_forest.jpg" alt="">
+    <img src="{{ current-iconImg }}">
   </div>
-
 </script>
 
 <script src="main.js" type="text/javascript"></script>
