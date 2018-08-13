@@ -17,7 +17,8 @@ var defaultInputValueSpecifications = usaDefault + addApi + apiKey + unitsSpecif
 
 /////////////////////////////////////////////////
 
-
+// this function allows for current or forecast weather queries to be made
+// and pushed to their respective arrays
 var weatherGetter = function(urlbase, query, array) {
    $.ajax({
       method: "GET",
@@ -30,6 +31,30 @@ var weatherGetter = function(urlbase, query, array) {
          console.log(textStatus);
       }
    });
+};
+
+/////////////////////////////////////////////////
+
+// function to render current weather data to page
+var renderCurrentWeather = function (data) {
+  $('.weather').empty();
+  var source = $('#current-weather-template').html();
+  var template = Handlebars.compile(source);
+  var newHTML = template({temperature: data[0].main.temp, city: data[0].name, weather: data[0].weather[0].main)
+  $('.weather').append(newHTML);
+};
+
+// function to render weather forecast to page
+var renderWeatherForecast = function (data) {
+  $('.forecast').empty();
+  var source = $('#forecast-weather-template').html();
+  var template = Handlebars.compile(source);
+  var newHTML = template({weather1: data[0].weather[0].main, temp1: data[0].main.temp, icon1: , day1: ,
+                          weather2: data[0].weather[0].main, temp2: data[0].main.temp, icon2: , day2: ,
+                          weather3: data[0].weather[0].main, temp3: data[0].main.temp, icon3: , day3: ,
+                          weather4: data[0].weather[0].main, temp4: data[0].main.temp, icon4: , day4: ,
+                          weather5: data[0].weather[0].main, temp5: data[0].main.temp, icon5: , day5: )
+  $('.forecast').append(newHTML);
 };
 
 /////////////////////////////////////////////////
@@ -141,11 +166,8 @@ var forecastWeather = [];
 $('#theButton').on('click', function() {
    $('.weather').empty();
    var search = $('#city-query').val();
-
    weatherGetter(currentWeatherInputValuesBase, search, currentWeather)
    weatherGetter(forecastInputValues, search, forecastWeather)
-   var currentWeatherTemplate = $('#current-weather-template').html();
-   var template = Handlebars.compile(currentWeatherTemplate);
-   var newHTML = [{}]
-   $('.weather').append(newHTML)
+   renderCurrentWeather(currentWeather)
+   renderWeatherForecast(forecastWeather)
 });
