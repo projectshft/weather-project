@@ -2,16 +2,22 @@
 var weatherArray = [];
 var forecastArray = [];
 var defaultLocation;
+var positionResult;
+var latLng;
 
 //on page load, check for default location
+//since introducing "find my location", i had to make this run 100% with coordinates instead of $search result
+//localstorage gets a string, but that won't work with the query building functions, so i split it
 if (localStorage.location != null) {
   console.log("at page load, local default was: " + localStorage.location);
   defaultLocation = localStorage.getItem('location');
-  console.log("value of defaultLocation var being passed to fetchData is: " + defaultLocation);
-  setTimeout(function(){fetchData(defaultLocation);}, 50);
+  var formattingArray = defaultLocation.split(','); //split at the comma
+  var formattedPosition = ("lat=" + formattingArray[0] + "&lon=" + formattingArray[1]);
+  console.log("formatted coordinate lookup being sent to fetchDataCoords is: " + formattedPosition);
+  setTimeout(function(){fetchDataCoords(formattedPosition);}, 50); //the delay lets the compiler define fetchData before it gets invoked
 } else {
-  console.log("There is no default location in localStorage");
-}
+    console.log("There is no default location in localStorage");
+};
 
 //click handler
 $('#location-submit').on('click', function () {
@@ -23,6 +29,23 @@ $('#location-submit').on('click', function () {
   console.log("search input was: " + $search);
   $('#location-input').val('');
   fetchData($search);
+});
+
+$('#location-find').on('click', function getLocation() {
+  console.log("clicked the location button");
+  weatherArray.length = 0;  //empties the array
+  forecastArray.length = 0;
+  navigator.geolocation.getCurrentPosition(function (position) {
+    defaultLocation = position;
+    positionResult = position;
+    console.log("the position lookup returned: " + positionResult);
+    console.log("positionResult.coords.latitude: " + positionResult.coords.latitude);
+    console.log("positionResult.coords.longitude: " + positionResult.coords.longitude);
+    var formattedPosition = ("lat=" + positionResult.coords.latitude + "&lon=" + positionResult.coords.longitude)
+    console.log("formatted for fetchDataCoords: " + formattedPosition);
+    console.log("sending formattedPosition to fetchDataCoords");
+    fetchDataCoords(formattedPosition);
+  });
 });
 
 //functions
@@ -47,6 +70,28 @@ var fetchData = function ($search) {
   ajaxFunc(forecastQuery, forecastArray, addForecast);
   console.log("ajax call for forecast weather complete");
 };
+
+//this is a tweaked version of fetchData that concats appropriately for using geolocation and coordinates
+var fetchDataCoords = function (coords) {
+  //URL components
+  var baseUrl = "http://api.openweathermap.org/data/2.5/";
+  var current = "weather?";
+  var forecast = "forecast?";
+  var coords = coords;
+  var apiKey = "&APPID=94e4fb6ff9320109825dcbc988e23b69";
+  var units = "&units=imperial"
+  //concatenated URLs
+  var currentQuery = baseUrl + current + coords + apiKey + units;
+  var forecastQuery = baseUrl + forecast + coords + apiKey + units;
+  //log the URLs for testing/viewing data
+  console.log("concatenated URL for current weather request: " + currentQuery);
+  console.log("concatenated URL for forecast weather request: " + forecastQuery);
+  //make the ajax calls separately, push to arrays, push to html
+  ajaxFunc(currentQuery, weatherArray, addWeather);
+  console.log("ajax call for current weather complete");
+  ajaxFunc(forecastQuery, forecastArray, addForecast);
+  console.log("ajax call for forecast weather complete");
+}
 
 //ajax function.  accepts a source URL, target array, and target function.
 var ajaxFunc = function (url, arr, func) {
@@ -74,11 +119,12 @@ var addForecast = function (data) {
   $('.forecast-main').empty();
     forecastArray.push(data);
     console.log("forecastArray has been updated");
-    findState(data);
+    setTimeout(function(){findState(data);}, 250);
 };
 
+//uses googleapi to find city/state from coords
 var findState = function ($search) {
-  var latLng = (weatherArray[0].coord.lat + ',' + weatherArray[0].coord.lon);
+  latLng = (weatherArray[0].coord.lat + ',' + weatherArray[0].coord.lon);
   var Url = ("https://maps.googleapis.com/maps/api/geocode/json?latlng=" + latLng +
     "&sensor=true&result_type=locality&key=AIzaSyCIF-nV9qLeAriwePo8cTdgHGEuH_VAno0");
   console.log("the latLng value is: " + latLng);
@@ -130,7 +176,7 @@ var renderForecast = function () {
   console.log("There are " + numberForecasts + " forecasts in 3hr increments");
 
   console.log("now looping through the forecast object");
-  for (var i=7; i<numberForecasts; i+=8){
+  for (var i=6; i<numberForecasts; i+=8) {
     console.log("This is index: " + i)
 
     var temperature = forecastArray[0].list[i].main.temp;
@@ -161,7 +207,7 @@ var renderForecast = function () {
 
 var setDefault = function () {
   console.log("clicked the set default button")
-  localStorage.setItem('location', defaultLocation);
+  localStorage.setItem('location', latLng); //it stores coordinates, not city name
   console.log("localstored default: " + localStorage.location);
 };
 
