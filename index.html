@@ -20,7 +20,7 @@
     </div>
     <div class="container-fluid">
       <div class="row">
-        <div class="col-md-6 offset-md-3">
+        <div class="col-md-8">
         <div class="current-weather">
           <!-- current weather data should render here -->
         </div>
@@ -32,12 +32,14 @@
         </div>
   </body>
   <script id="weather-template" type="text/x-handlebars-template">
-  <div class="weather col-md-6">
+  <span>
+  <div class="weather col-md-12">
     <div>Temperature: <strong>{{ temperature }}</strong></div>
     <div>City: <strong>{{ city }}</strong></div>
     <div>Conditions: <strong>{{ conditions }}</strong></div>
     <img src="{{image}}" alt="">
   </div>
+  </span>
 </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.3.1.js"></script>

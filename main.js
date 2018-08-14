@@ -18,17 +18,16 @@ var renderData = function(data) {
   var template = Handlebars.compile(source);
   var newHTML = template(data);
 
-  $('.current-weather').append(newHTML);
+  $('.current-weather').append('<br>' + newHTML);
 };
 
 //create function to grab desired data
 var parseData = function(data) {
-  var temperature = data.main.temp;
+  var temperature = data.main.temp + "°";
   var conditions = data.weather[0].description;
-  var image = "http://openweathermap.org/img/w/" + data.weather[0].icon + ".png";
   var city = data.name;
+  var image = "http://openweathermap.org/img/w/" + data.weather[0].icon + ".png";
 
-  console.log(image);
 
   return {
     temperature: temperature,
@@ -45,7 +44,7 @@ var fetch = function (query) {
   $.ajax({
     method: "GET",
     // url currently grabs the user's search query and connects the ajax call
-    url: "http://api.openweathermap.org/data/2.5/weather?q=" + searchQuery + ",us&APPID=1b7b6777bc5e9df73114043701e7a3d1",
+    url: "http://api.openweathermap.org/data/2.5/weather?q=" + searchQuery + ",us&units=imperial&APPID=1b7b6777bc5e9df73114043701e7a3d1",
     dataType: "json",
     success: function(data) {
       var weatherData = parseData(data);
