@@ -18,21 +18,21 @@ $('#set-as-default').on('click', function () {
 });
 
 //Fetch the coordinates information from the api based on what city the user enters and return it in JSON format
-var fetchCoordinates = function (query) {
-  var cityStateSearch = $('#search-query').val();
-  var url = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + cityStateSearch;
-  $.ajax({
-    method: "GET",
-    url: url,
-    dataType: "json",
-    success: function(data) {
-      addCoordinates(data);
-    },
-    error: function(jqXHR, textStatus, errorThrown) {
-      console.log(textStatus);
-    }
-  });
-};
+// var fetchCoordinates = function (query) {
+//   var cityStateSearch = $('#search-query').val();
+//   var url = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + cityStateSearch;
+//   $.ajax({
+//     method: "GET",
+//     url: url,
+//     dataType: "json",
+//     success: function(data) {
+//       addCoordinates(data);
+//     },
+//     error: function(jqXHR, textStatus, errorThrown) {
+//       console.log(textStatus);
+//     }
+//   });
+// };
 
 
 //Create a map with a default location of Durham that changes to the location of the city entered by the user
@@ -40,7 +40,7 @@ var map;
 function initMap() {
   var latLng;
   map = new google.maps.Map(document.getElementById('map'), {
-    center: addCoordinates(),
+    center: {lat: 35.9, lng: -78.89},
     zoom: 9
     });
   };
@@ -85,30 +85,30 @@ var fetchForecast = function (query) {
 //create empty arrays to store weather data in for our model
 var weathers;
 var forecasts;
-var coordinates;
-
-var addCoordinates = function (data) {
-  coordinates = [];
-    var coordinatesData = data;
-    var cityStateSearch = $('#search-query').val();
-    var citySearch = cityStateSearch.slice(0, -4);
-    var lat = coordinatesData.results[0].geometry.location.lat;
-    var lng = coordinatesData.results[0].geometry.location.lng;
-    var latLng = {lat: lat, lng: lng};
-    console.log(latLng);
-    var coordinatesCoordinates = function () {
-       if (coordinatesData.results[0].geometry.location) {
-      return latLng;
-    } else {
-      return null;
-      }
-    }
-
-    renderCoordinates();
-
-    coordinates.push(coordinatesCoordinates);
-
-  };
+// var coordinates;
+//
+// var addCoordinates = function (data) {
+//   coordinates = [];
+//     var coordinatesData = data;
+//     var cityStateSearch = $('#search-query').val();
+//     var citySearch = cityStateSearch.slice(0, -4);
+//     var lat = coordinatesData.results[0].geometry.location.lat;
+//     var lng = coordinatesData.results[0].geometry.location.lng;
+//     var latLng = {lat: lat, lng: lng};
+//     console.log(latLng);
+//     var coordinatesCoordinates = function () {
+//        if (coordinatesData.results[0].geometry.location) {
+//       return latLng;
+//     } else {
+//       return null;
+//       }
+//     }
+//
+//     renderCoordinates();
+//
+//     coordinates.push(coordinatesCoordinates);
+//
+//   };
 //Create a function that takes weather data from the api and pushes it into the weathers array
 var addWeather = function (data) {
   weathers = [];
@@ -299,9 +299,9 @@ var renderForecast = function () {
   }
 };
 
-var renderCoordinates = function () {
-  coordinates().empty();
-};
+// var renderCoordinates = function () {
+//   coordinates().empty();
+// };
 
 //Listen for clicks and perform a search based on what is entered in the input box
 $('#search').on('click', function () {
