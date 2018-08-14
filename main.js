@@ -20,8 +20,7 @@ $('#set-as-default').on('click', function () {
 //Fetch the coordinates information from the api based on what city the user enters and return it in JSON format
 var fetchCoordinates = function (query) {
   var cityStateSearch = $('#search-query').val();
-  var citySearch = cityStateSearch.slice(0, -4);
-  var url = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + citySearch;
+  var url = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + cityStateSearch;
   $.ajax({
     method: "GET",
     url: url,
@@ -41,7 +40,7 @@ var map;
 function initMap() {
   var latLng;
   map = new google.maps.Map(document.getElementById('map'), {
-    center: {lat: 35.9050, lng: -78.8615},
+    center: addCoordinates(),
     zoom: 9
     });
   };
@@ -86,97 +85,104 @@ var fetchForecast = function (query) {
 //create empty arrays to store weather data in for our model
 var weathers;
 var forecasts;
-// var coordinates;
-//
-// var addCoordinates = function (data) {
-//   coordinates = [];
-//   for (var i = 0; i < 1; i++) {
-//     var coordinateData = data;
-//
-//     var coordinatesCoordinates = function () {
-//        if (coordinatesData.results[0].geometry.location) {
-//       return coordinatesData.results[0].geometry.location;
-//     } else {
-//       return null;
-//     }
-//   };
+var coordinates;
+
+var addCoordinates = function (data) {
+  coordinates = [];
+    var coordinatesData = data;
+    var cityStateSearch = $('#search-query').val();
+    var citySearch = cityStateSearch.slice(0, -4);
+    var lat = coordinatesData.results[0].geometry.location.lat;
+    var lng = coordinatesData.results[0].geometry.location.lng;
+    var latLng = {lat: lat, lng: lng};
+    console.log(latLng);
+    var coordinatesCoordinates = function () {
+       if (coordinatesData.results[0].geometry.location) {
+      return latLng;
+    } else {
+      return null;
+      }
+    }
+
+    renderCoordinates();
+
+    coordinates.push(coordinatesCoordinates);
+
+  };
 //Create a function that takes weather data from the api and pushes it into the weathers array
 var addWeather = function (data) {
   weathers = [];
 
-  //Reformat this
-  for (var i = 0; i < 1; i++) {
-    var weatherData = data;
+  var weatherData = data;
 
-    var temp = function () {
-      if (weatherData.main.temp) {
-        return Math.round(weatherData.main.temp) + '°';
-      } else {
-        return null;
-      }
-    };
+  var temp = function () {
+    if (weatherData.main.temp) {
+      return Math.round(weatherData.main.temp) + '°';
+    } else {
+      return null;
+    }
+  };
 
-    var city = function () {
-      // if (localStorage.location !== null && localStorage.location !== "") {
-      //   return localStorage.location;
-      // }
-      if (weatherData.name) {
-        return weatherData.name;
-      } else {
-        return null;
-      }
-    };
+  var city = function () {
+    // if (localStorage.location !== null && localStorage.location !== "") {
+    //   return localStorage.location;
+    // }
+    if (weatherData.name) {
+      return weatherData.name;
+    } else {
+      return null;
+    }
+  };
 
-    var climate = function () {
-      if (weatherData.weather[0].main == "Clouds") {
-        return "Cloudy"
-      } else if (weatherData.weather[0].main) {
-        return weatherData.weather[0].main;
-      } else {
-        return null;
-      }
-    };
+  var climate = function () {
+    if (weatherData.weather[0].main == "Clouds") {
+      return "Cloudy"
+    } else if (weatherData.weather[0].main) {
+      return weatherData.weather[0].main;
+    } else {
+      return null;
+    }
+  };
 
-    var icon = function () {
-      var iconData = weatherData.weather[0].icon;
-      var iconURL = 'http://openweathermap.org/img/w/' + iconData +'.png';
+  var icon = function () {
+    var iconData = weatherData.weather[0].icon;
+    var iconURL = 'http://openweathermap.org/img/w/' + iconData +'.png';
 
-      //Change CSS styling based on the icon returned
-      // var changeBackground = function () {
-      //   if (iconData === "03d" ||
-      //     iconData === "03n" ||
-      //     iconData === "04d" ||
-      //     iconData === "04n" ||
-      //     iconData === "09d" ||
-      //     iconData === "09n" ||
-      //     iconData === "10d" ||
-      //     iconData === "10n" ||
-      //     iconData === "11d" ||
-      //     iconData === "11n") {
-      //     document.body.style.backgroundColor = "#FFFF00";
-      //   } else if (iconData === "01d" || iconData === "02d" ) {
-      //     document.body.style.backgroundColor = "#FF5511";
-      //   } else if (iconData === "01n" || iconData === "02n" ) {
-      //     document.body.style.backgroundColor = "#00FF00";
-      //   }
-      // };
+    //Change CSS styling based on the icon returned
+    // var changeBackground = function () {
+    //   if (iconData === "03d" ||
+    //     iconData === "03n" ||
+    //     iconData === "04d" ||
+    //     iconData === "04n" ||
+    //     iconData === "09d" ||
+    //     iconData === "09n" ||
+    //     iconData === "10d" ||
+    //     iconData === "10n" ||
+    //     iconData === "11d" ||
+    //     iconData === "11n") {
+    //     document.body.style.backgroundColor = "#FFFF00";
+    //   } else if (iconData === "01d" || iconData === "02d" ) {
+    //     document.body.style.backgroundColor = "#FF5511";
+    //   } else if (iconData === "01n" || iconData === "02n" ) {
+    //     document.body.style.backgroundColor = "#00FF00";
+    //   }
+    // };
 
-      if (iconData) {
-        return iconURL;
-      } else {
-        return null;
-      }
-    };
+    if (iconData) {
+      return iconURL;
+    } else {
+      return null;
+    }
+  };
 
-    var weather = {
-      temp: temp(),
-      city: city(),
-      climate: climate(),
-      icon: icon()
-    };
+  var weather = {
+    temp: temp(),
+    city: city(),
+    climate: climate(),
+    icon: icon()
+  };
 
-    weathers.push(weather);
-  }
+  weathers.push(weather);
 
   renderWeather();
 };
@@ -293,6 +299,10 @@ var renderForecast = function () {
   }
 };
 
+var renderCoordinates = function () {
+  coordinates().empty();
+};
+
 //Listen for clicks and perform a search based on what is entered in the input box
 $('#search').on('click', function () {
   var search = $('#search-query').val();
@@ -301,6 +311,7 @@ $('#search').on('click', function () {
   } else {
   fetchWeather(search);
   fetchForecast(search);
+  fetchCoordinates(search);
   }
 });
 
