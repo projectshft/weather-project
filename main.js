@@ -25,8 +25,10 @@ var renderData = function(data) {
 var parseData = function(data) {
   var temperature = data.main.temp;
   var conditions = data.weather[0].description;
-  var image = data.weather[0].icon;
+  var image = "http://openweathermap.org/img/w/" + data.weather[0].icon + ".png";
   var city = data.name;
+
+  console.log(image);
 
   return {
     temperature: temperature,
