@@ -9,3 +9,11 @@
 .form-group {
   display: inline;
 }
+.forecast {
+  display: inline-block;
+  float:left;
+  width: 100%;
+}
+.weather {
+  display: inline-block;
+}
