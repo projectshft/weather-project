@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link href="node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <script src="node_modules/jquery/dist/jquery.min.js"></script>
+  <script src="node_modules/handlebars/dist/handlebars.min.js"></script>
+
+  <title>Document</title>
+</head>
+<body>
+  <!-- Here is the intro to the page, will be static -->
+<div class="nav"></div>
+<div class="container">
+  <div class="page-header jumbotron col-md-12">
+    <h1>Weather App <br>
+      <small>Enter your city into the search bar, dummy</small>
+    </h1>
+  </div>
+  <!-- This is the input forms, where the user will put in their city or zip  -->
+  <div class="row">
+    <div class="col-md-12 input-group col-offset-3">
+      <input type="text" id="city-input"  class="form-control "placeholder="Enter City Name or 5 digit ZIP"><button id="search" class="input-group-addon btn btn-info input-group-btn">Get Weather Info!</button>
+    </div>
+  </div>
+  <!-- This is the weather for today - current weather -->
+  <div class="row page-header current-weather-display">
+
+  </div>
+  <!-- this is the forecast weather -->
+  <div class="row forecast">
+
+  </div>
+</div>
+
+<!-- Handlebars scripts  -->
+<script id="weather-display-template" type="text/x-handlebars-template">
+  <div class="todays-weather center-block col-md-12">
+    <div class="city"><h1>{{ currentCity }}</h1></div>
+    <div class="condition"><h2>{{ currentCondition}}</h2></div>
+    <div className="icon">
+      <img src="http://openweathermap.org/img/w/{{ currentIcon }}.png" alt=""/>
+    </div>
+    <div class="temperature"><h2>{{ currentTemperature}}&#8457;</h2></div>
+  </div>
+</script>
+
+<script id="forecast-display-template" type="text/x-handlebars-template">
+<div class="day col-xs-3">
+  <div class="day-date"><h2>{{dayDate}}</h2></div>
+  <div class="day-condition"><h3>{{dayCondition}}</h3></div>
+  <div class="day-icon"><img src="http://openweathermap.org/img/w/{{ dayIcon }}.png" alt="{{dayCondition}}"></div>
+  <div class="day-temp"><h3>{{dayTemperature}}</h3></div>
+</div>
+</script>
+<script src="node_modules\moment\moment.js"></script>
+<script src="main.js" charset="utf-8"></script>
+</body>
+</html>

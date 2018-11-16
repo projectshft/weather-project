@@ -1,0 +1,27 @@
+.todays-weather{
+  text-align:center;
+  font-size:2em;
+  margin-top:20px;
+  text-shadow:
+  -1px -1px 0 #fff,
+  1px -1px 0 #fff,
+  -1px 1px 0 #fff,
+  1px 1px 0 #fff;
+}
+.forecast{
+  margin-top:25px;
+  text-align: center;
+  text-shadow:
+  -1px -1px 0 #fff,
+  1px -1px 0 #fff,
+  -1px 1px 0 #fff,
+  1px 1px 0 #fff;
+}
+.day {
+  margin:10px;
+}
+
+body{
+  background-image: url("https://previews.123rf.com/images/pinglabel/pinglabel1801/pinglabel180100006/93168105-clear-blue-sky-background-clouds-with-background-.jpg");
+  background-size: cover;
+}
