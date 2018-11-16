@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css">
+    <title>Weather Project</title>
+</head>
+
+<body>
+    <h1>Current Weather</h1>
+    <form>
+        <div class="form-group">
+            <label for="searchField">Search for the weather in your city</label>
+            <input type="text" class="form-control" id="searchField" placeholder="Search by city name">
+        </div>
+        <button type="submit" class="btn btn-search">Search</button>
+    </form>
+
+    <br>
+
+<!-- Put a place for the template to populate -->
+    <div id="weather-data">
+
+    </div>
+
+    <script id="currentWeather-template" type="text/x-handlebars-template">
+        <div class="card" style="width: 18rem;">
+            <div class="card-header">
+                Today's Weather
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"><h3>{{main.temp}}</h3></li>
+                <li class="list-group-item"><h4>{{name}}</h4></li>
+                <li class="list-group-item"><h5>{{weather.0.main}}</h5></li>
+            </ul>
+        </div>
+    </script>
+
+
+    <!-- <script src="node_modules/bootstrap/dist/js/bootstrap.js"></script> -->
+    <script src="node_modules/handlebars/dist/handlebars.js"></script>
+    <script src="node_modules/jquery/dist/jquery.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
