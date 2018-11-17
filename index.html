@@ -17,11 +17,19 @@
       <div class="col">
         <h1 class="page-header">Current Weather</h1>
         <input type="text" class="city-input" placeholder="Enter City Name"></input>
+        <select name="country" class="country-code">
+        </select>
+        <select name="state" class="state-code">
+        </select>
         <button type="button" class="btn btn-success search">Search</button>
         <div class="forecast-section">
         </div>
       </div>
       <div class="col">
+        <!-- <div id="map">
+        </div>
+        <input type="text" id="latlng" placeholder="lat,long"></input>
+        <button id="submit">Submit Map</button> -->
       </div>
     </div>
     <div class="row">
@@ -52,11 +60,28 @@
       <p class="day"> {{day}} </p>
     </div>
   </script>
+
+  <script id="state-dropdown-template" type="text/x-handlebars-template">
+    <option value="{{abbr}}">{{state}} - {{abbr}}</option>
+  </script>
+
+  <script id="country-dropdown-template" type="text/x-handlebars-template">
+    <option value="{{code}}">{{country}} - {{code}}</option>
+  </script>
+
   <script src="node_modules/moment/moment.js"></script>
   <script src="node_modules/handlebars/dist/handlebars.js"> </script>
   <script src="node_modules/jquery/dist/jquery.js"> </script>
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.11/lodash.min.js" charset="utf-8"></script>
+  <script src="country-state-data.js" charset="utf-8"></script>
   <script src="test-data.js" charset="utf-8"></script>
+  <script src="city-list.min.js" charset="utf-8"></script>
+  <script src="google-maps.js" charset="utf-8"></script>
   <script src="main.js" charset="utf-8"></script>
+  <!-- <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAhNv8W5Hr9-CcjnVCKEwfikaafcn21I80&callback=initMap">
+    </script> -->
+
+
 </body>
 
 </html>
