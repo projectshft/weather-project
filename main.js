@@ -1,9 +1,62 @@
 //This JS will take in user input, enter into an ajax request with jquery, which will recieve data form the API and then display the weather in a usable fashion. First I need to get some example data
 
+//This first half deals with current weather, the functions are all invoked when the ajax request is successful
 
-//TODO Set up 5 day forecast
 
-//takes in various inputs and tailers the endpoint for the query
+//this function does 2 things, it takes in the weather data and parses, and then returns HTML via Handlebars
+var getCurrentWeatherHTML = function(weatherObject) {
+
+
+  //these functions parse the incoming data for the data points that I am interested in.
+  var getCurrentCity = function(weatherObject) {
+    var cityName = weatherObject.name;
+    return cityName;
+  };
+
+  var getCurrentTemp = function(weatherObject) {
+    var currentTempInKelvin = weatherObject.main.temp;
+    var currentTempInFahrenheit = Math.floor((currentTempInKelvin - 273.15) * (9 / 5) + 32);
+    return currentTempInFahrenheit;
+  };
+
+  var getCurrentConditions = function(weatherObject) {
+
+    var currentConditions = weatherObject.weather[0].description;
+    //just to make the text look nice
+    return currentConditions.replace(/\b\w/g, function(l) {
+      return l.toUpperCase()
+    });
+  };
+
+  var getCurrentIcon = function(weatherObject) {
+    var icon = weatherObject.weather[0].icon;
+    return icon;
+  };
+
+  var weatherData = {
+    currentCity: getCurrentCity(weatherObject),
+    currentCondition: getCurrentConditions(weatherObject),
+    currentTemperature: getCurrentTemp(weatherObject),
+    currentIcon: getCurrentIcon(weatherObject)
+  };
+
+  //This takes in the data and runs through handlebars
+  var template = Handlebars.compile($('#weather-display-template').html());
+
+  var weatherHTML = template(weatherData)
+  //final weather HTML
+  return weatherHTML;
+};
+
+
+//Simply appends HTML to the page
+var renderCurrentWeatherHTML = function(HTML) {
+  $currentWeather = $('.current-weather-display');
+  $currentWeather.empty();
+  $currentWeather.append(HTML);
+}
+
+//takes in various inputs and tailors the endpoint for the query
 var generateCurrentEndpoint = function(userInput) {
   var key = "2553abd6528baa245ba265a61f82b544";
   //For ZIP codes
@@ -30,10 +83,12 @@ var fetchCurrentWeatherData = function(cityName) {
       renderCurrentWeatherHTML(HTML);
     },
     error: function(jqXHR, textStatus, errorThrown) {
-      console.log(textStatus);
+      alert("Something went wrong, please try again")
     }
   });
 };
+
+//this second half deals with the future forecast weather
 
 var generateForecastEndpoint = function(userInput) {
   var key = "2553abd6528baa245ba265a61f82b544";
@@ -129,55 +184,6 @@ var renderForecastHTML = function(weatherHTML) {
 }
 
 // this is the main function that willtake in the weather object and generate HTML
-var getCurrentWeatherHTML = function(weatherObject) {
-
-
-  //these functions parse the incoming data for the data points that I am interested in.
-  var getCurrentCity = function(weatherObject) {
-    var cityName = weatherObject.name;
-    return cityName;
-  };
-
-  var getCurrentTemp = function(weatherObject) {
-    var currentTempInKelvin = weatherObject.main.temp;
-    var currentTempInFahrenheit = Math.floor((currentTempInKelvin - 273.15) * (9 / 5) + 32);
-    return currentTempInFahrenheit;
-  };
-
-  var getCurrentConditions = function(weatherObject) {
-
-    var currentConditions = weatherObject.weather[0].description;
-    //just to make the text look nice
-    return currentConditions.replace(/\b\w/g, function(l) {
-      return l.toUpperCase()
-    });
-  };
-
-  var getCurrentIcon = function(weatherObject) {
-    var icon = weatherObject.weather[0].icon;
-    return icon;
-  };
-
-  var weatherData = {
-    currentCity: getCurrentCity(weatherObject),
-    currentCondition: getCurrentConditions(weatherObject),
-    currentTemperature: getCurrentTemp(weatherObject),
-    currentIcon: getCurrentIcon(weatherObject)
-  };
-
-  //This takes in the data and runs through handlebars
-  var template = Handlebars.compile($('#weather-display-template').html());
-
-  var weatherHTML = template(weatherData)
-  //final weather HTML
-  return weatherHTML;
-};
-
-var renderCurrentWeatherHTML = function(HTML) {
-  $currentWeather = $('.current-weather-display');
-  $currentWeather.empty();
-  $currentWeather.append(HTML);
-}
 
 $('#search').on('click', function() {
   $input = $('#city-input').val()
