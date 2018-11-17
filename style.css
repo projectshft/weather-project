@@ -1,0 +1,24 @@
+body {
+  font-family: 'Allerta Stencil', sans-serif;
+  background-image: url(https://images.pexels.com/photos/417045/pexels-photo-417045.jpeg?cs=srgb&dl=cloudiness-clouds-cloudy-417045.jpg&fm=jpg);
+}
+
+.container {
+  padding-top: 150px;
+}
+
+.card {
+  border: 1px solid black;
+  box-sizing: border-box;
+  width: 20%;
+  float: left;
+  text-align:center;
+}
+
+.day {
+  font-size: 0.8rem;
+}
+
+.city-name {
+  font-size: 1.2rem;
+}
