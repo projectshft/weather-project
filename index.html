@@ -1,16 +1,85 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title>Weather Project</title>
-    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css">
-    <link rel="stylesheet" href="styles/main.css">
-  </head>
-  <body>
 
-    <script type="text/javascript" src="node_modules/moment/src/moment.js"></script>
-    <script type="text/javascript" src="node_modules/jquery/dist/jquery.js"></script>
-    <script type="text/javascript" src="node_modules/handlebars/dist/handlebars.js"></script>
-    <script type="text/javascript" src="scripts/main.js"></script>
-  </body>
+<head>
+  <meta charset="utf-8">
+  <title>Weather Project</title>
+  <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css">
+  <link rel="stylesheet" href="styles/main.css">
+</head>
+
+<body>
+  <div class="container">
+    <div class="header-container col-8">
+      <h1 class="text-center">Current Weather</h1>
+      <hr>
+      <div class="row">
+        <div class="col-8">
+          <div class="form-group">
+            <input type="text" class="form-control" id="citySearchUS" placeholder="Enter 'City Name, ST'">
+          </div>
+        </div>
+        <div class="col-2">
+          <button class="btn btn-primary" id="citySearchUSButton" type="button" name="button">Search</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="current-weather-container">
+
+    </div>
+    <div class="forecast-container row d-flex justify-content-center flex-nowrap">
+      <div class="day border d-flex flex-column align-items-center" id="day0">
+      </div>
+      <div class="day border d-flex flex-column align-items-center" id="day1">
+      </div>
+      <div class="day border d-flex flex-column align-items-center" id="day2">
+      </div>
+      <div class="day border d-flex flex-column align-items-center" id="day3">
+      </div>
+      <div class="day border d-flex flex-column align-items-center" id="day4">
+      </div>
+    </div>
+
+  </div>
+
+  <script id="current-template" type="text/x-handlebars-template">
+    <div class="left-column">
+      <div class="temperature">
+        {{ temperature }}<sup>o</sup>
+      </div>
+      <div class="city">
+        {{ city }}
+      </div>
+      <div class="condition">
+        {{ condition }}
+      </div>
+    </div>
+    <div class="right-column">
+      <div class="icon-current">
+        <img src="{{ icon }}" alt="{{ condition }}">
+      </div>
+    </div>
+  </script>
+
+  <script id="day-template" type="text/x-handlebars-template">
+    <div class="condition">
+      {{ condition }}
+    </div>
+    <div class="temperature">
+      {{ temperature }}<sup>o</sup>
+    </div>
+    <div class="icon-day">
+      <img src="{{ icon }}" alt="{{ condition }}">
+    </div>
+    <div class="day-of-week">
+      {{ day }}
+    </div>
+  </script>
+
+  <script type="text/javascript" src="node_modules/jquery/dist/jquery.js"></script>
+  <script type="text/javascript" src="node_modules/handlebars/dist/handlebars.js"></script>
+  <script type="text/javascript" src="scripts/main.js"></script>
+</body>
+
 </html>
