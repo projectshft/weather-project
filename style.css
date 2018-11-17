@@ -1,0 +1,13 @@
+.card {
+  border-color: black;
+}
+
+
+body {
+  margin-top: 40px;
+}
+
+
+.container {
+  max-width: 75rem
+}
