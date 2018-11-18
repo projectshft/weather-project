@@ -10,44 +10,57 @@
 </head>
 
 <body>
-  <div class="container">
+  <div class="container-fluid">
     <div class="row">
-      <div class="col">
+      <div class="col-2">
       </div>
-      <div class="col">
+      <div class="col-8">
         <h1 class="page-header">Current Weather</h1>
+      <div class="d-flex justify-content-center">
         <input type="text" class="city-input" placeholder="Enter City Name"></input>
         <select name="country" class="country-code">
         </select>
         <select name="state" class="state-code">
         </select>
-        <button type="button" class="btn btn-success search">Search</button>
+      </div>
+      </div>
+      <div class="col-2">
+      </div>
+        </div>
+        <div class="row">
+          <div class="col d-flex justify-content-center">
+        <button type="button" class="btn btn-success btn-lg search">Search</button>
+      </div>
+  </div>
+
+    <div class="row">
+      <div class="col-2">
+      </div>
+      <div class="col-8">
         <div class="forecast-section">
         </div>
-      </div>
-      <div class="col">
-        <!-- <div id="map">
         </div>
-        <input type="text" id="latlng" placeholder="lat,long"></input>
-        <button id="submit">Submit Map</button> -->
+        <div class="col-2">
+        </div>
       </div>
-    </div>
+
+
     <div class="row">
-      <div class="col">
+      <div class="col-2">
       </div>
-      <div class="col">
+      <div class="col-8">
         <div class="five-day">
 
       </div>
       </div>
-      <div class="col">
+      <div class="col-2">
       </div>
     </div>
   </div>
 
   <script id="current-template" type="text/x-handlebars-template">
-    <h4 class="temperature"> {{temperature}}&deg F </h4>
-    <p class="city-name"> {{cityName}} </p>
+    <h4 class="temperature"> {{temperature}}&deg F | {{cityName}}</h4>
+    <br>
       <span class="forecast"> {{forecast}} <img src='{{iconurl}}' alt="condition-icon"></img></span>
     <h3> Five Day Forecast </h3>
   </script>

@@ -15,13 +15,13 @@ var weatherApp = function() {
     return currentData[attribute];
   };
 
-  var setCurrent = function(attribute,value) {
+  var setCurrent = function(attribute, value) {
     currentData[attribute] = value;
   };
 
-  var fetchData = function(query,dataType) {
+  var fetchData = function(query, dataType) {
     var APIkey = "&APPID=e915b1b5accb2008bf721504d13ae081";
-    query = query.replace(" ","+");
+    query = query.replace(" ", "+");
 
     $.ajax({
       method: "GET",
@@ -43,45 +43,44 @@ var weatherApp = function() {
     });
   };
 
-  var fetchReverseGeo = function(coordSet,state) {
+  var fetchReverseGeo = function(coordSet, state) {
     console.log('fetching reserve geo')
-    var APIkey = 	"22f456ce1acc46ad848dcc9f1f09b19d";
+    var APIkey = "22f456ce1acc46ad848dcc9f1f09b19d";
     coordSet.forEach(set => {
       var url = 'https://geoservices.tamu.edu/Services/ReverseGeocoding/WebService/v04_01/Rest/?apiKey=' + APIkey + '&version=4.10&lat=' + set.lat + '&lon=' + set.lon + '&format=json';
       console.log(url);
-    $.ajax({
-      method: "GET",
-      url: url,
-      dataType: "json",
-      success: function(data) {
-        console.log('got data successfully');
-        console.log(data);
-        parseReverseGeoData(data,state, set.lat);
-      },
-      error: function(jqXHR, textStatus, errorThrown) {
-        console.log(textStatus);
-      }
-    });
+      $.ajax({
+        method: "GET",
+        url: url,
+        dataType: "json",
+        success: function(data) {
+          console.log('got data successfully');
+          console.log(data);
+          parseReverseGeoData(data, state, set.lat);
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+          console.log(textStatus);
+        }
+      });
     })
-
-    };
+  };
 
   var parseCurrentData = function(data) {
     setCurrent('cityName', data.name);
     setCurrent('temperature', Math.round(data.main.temp));
-    setCurrent('forecast',data.weather[0].main);
+    setCurrent('forecast', data.weather[0].main);
     setCurrent('iconurl', 'http://openweathermap.org/img/w/' + data.weather[0].icon + '.png');
   };
 
   var parseForecastData = function(data) {
     forecastData = [];
-  //  var startIndex = data.list.indexOf(dt_txt)
-    for(let i = 4; i <=36; i+=8) {
+    var startIndex = findIndexOfNoon(data.list);
+    for (let i = startIndex; i <= 39; i += 8) {
       var dayObj = {};
-      dayObj.forecast =  data.list[i].weather[0].main;
+      dayObj.forecast = data.list[i].weather[0].main;
       dayObj.temperature = Math.round(data.list[i].main.temp);
       dayObj.iconurl = 'http://openweathermap.org/img/w/' + data.list[i].weather[0].icon + '.png';
-      dayObj.day = moment(data.list[i].dt_txt).format('dddd');
+      dayObj.day = moment(data.list[i].dt_txt).format('dddd').slice(0, 3);
       forecastData.push(dayObj);
     }
   };
@@ -95,11 +94,9 @@ var weatherApp = function() {
       console.log(matchingCity);
       matchingIdStr = 'id=' + matchingCity.id;
       console.log(matchingIdStr);
-      fetchData(matchingIdStr,'weather');
+      fetchData(matchingIdStr, 'weather');
       fetchData(matchingIdStr, 'forecast');
     }
-  //  console.log(possibleCity);
-  //  reverseGeoData.push(possibleCity);
   }
 
   var renderData = function() {
@@ -116,14 +113,6 @@ var weatherApp = function() {
     forecastData.forEach(day => $('.five-day').append(fiveDayTemplate(day)));
   };
 
-  // var renderReverseGeoData = function() {
-  //   console.log('rendering rev geo data');
-  //  $('.forecast-section').empty();
-  //   var reverseGeoSource = $('#reverse-geo-template').html();
-  //   var reverseGeoTemplate = Handlebars.compile(reverseGeoSource);
-  //   reverseGeoData.forEach(possibleCity => $('.forecast-section').append(reverseGeoTemplate(possibleCity)));
-  // }
-
   return {
     fetchData: fetchData,
     fetchReverseGeo: fetchReverseGeo
@@ -135,13 +124,13 @@ var app = weatherApp();
 //when the document is ready, load the country code options into the dropdown
 //and filter the full city list down to US cities only (to check against states)
 $('document').ready(function() {
-var countrySource = $('#country-dropdown-template').html();
-var countryTemplate = Handlebars.compile(countrySource);
-countryCodes.forEach(country => $('.country-code').append(countryTemplate(country)));
-usaCityList = cityList.filter(city => city.country === "US");
-var stateSource = $('#state-dropdown-template').html();
-var stateTemplate = Handlebars.compile(stateSource);
-states.forEach(state => $('.state-code').append(stateTemplate(state)));
+  var countrySource = $('#country-dropdown-template').html();
+  var countryTemplate = Handlebars.compile(countrySource);
+  countryCodes.forEach(country => $('.country-code').append(countryTemplate(country)));
+  usaCityList = cityList.filter(city => city.country === "US");
+  var stateSource = $('#state-dropdown-template').html();
+  var stateTemplate = Handlebars.compile(stateSource);
+  states.forEach(state => $('.state-code').append(stateTemplate(state)));
 });
 
 //fetch data when button is clicked
@@ -150,25 +139,24 @@ $('.search').click(function() {
   //make sure it's in a title case format
   userSearch = _.startCase(userSearch);
   //if it's a US city, then grab all the matching cities so we can check what state
-if($('.country-code').val() === "US") {
-  var state = $('.state-code').val();
-  console.log(state);
-  sameCityList = usaCityList.filter(city => city.name === userSearch);
-  console.log(sameCityList);
-  var sameCityCoords = [];
-  //get all the lat/long coordinates for each option
-  sameCityList.forEach(city => sameCityCoords.push(city.coord));
-//  sameCityCoords.splice(2);
-  console.log('same city coords',sameCityCoords);
-  reverseGeoData = [];
-  app.fetchReverseGeo(sameCityCoords,state);
-  //for now, if it's another country, fetch the data based on only city name and country
-  //TODO: eventually you would want to add in Canadian provinces & other country considerations
-} else {
-  userSearch += "," + $('.country-code').val();
-  app.fetchData('q=' + userSearch,'weather');
-  app.fetchData('q=' + userSearch,'forecast');
-}
+  if ($('.country-code').val() === "US") {
+    var state = $('.state-code').val();
+    console.log(state);
+    sameCityList = usaCityList.filter(city => city.name === userSearch);
+    console.log(sameCityList);
+    var sameCityCoords = [];
+    //get all the lat/long coordinates for each option
+    sameCityList.forEach(city => sameCityCoords.push(city.coord));
+    console.log('same city coords', sameCityCoords);
+    reverseGeoData = [];
+    app.fetchReverseGeo(sameCityCoords, state);
+    //for now, if it's another country, fetch the data based on only city name and country
+    //TODO: eventually you would want to add in Canadian provinces & other country considerations
+  } else {
+    userSearch += "," + $('.country-code').val();
+    app.fetchData('q=' + userSearch, 'weather');
+    app.fetchData('q=' + userSearch, 'forecast');
+  }
 
 })
 
@@ -179,21 +167,14 @@ $('select[name="country"]').change(function() {
     $('.state-code').prop('disabled', false);
   }
 })
-//
-// var findDiffToNoon = function() {
-//   var currentHour = new Date().getHours();
-//   if (currentHour < 4) {
-//     return
-//   }
-//   switch (currentHour) {
-//     case :
-//   }
-// }
+
+var findIndexOfNoon = function(weatherArr) {
+  var hourArr = weatherArr.map(reading => moment(reading.dt_txt).format('H'));
+  return hourArr.indexOf("12");
+}
 
 //decide on set/get functions or pushing directly
 //error handling & edge cases
-//fix time of day for forecast
-//make display responsive
 //add local storage (set as default)
 //add geolocation option
 //alter styling depending on current city
