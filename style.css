@@ -32,6 +32,10 @@ input {
   font-size: 1.2rem;
 }
 
+.btn {
+  margin: 5px;
+}
+
 #map {
         height: 500px;
       }

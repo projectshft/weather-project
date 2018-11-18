@@ -30,6 +30,7 @@
         <div class="row">
           <div class="col d-flex justify-content-center">
         <button type="button" class="btn btn-success btn-lg search">Search</button>
+        <button type = "button" class= "btn btn-primary btn-lg geolocation">Use Current Location</button>
       </div>
   </div>
 
@@ -59,9 +60,8 @@
   </div>
 
   <script id="current-template" type="text/x-handlebars-template">
-    <h4 class="temperature"> {{temperature}}&deg F | {{cityName}}</h4>
-    <br>
-      <span class="forecast"> {{forecast}} <img src='{{iconurl}}' alt="condition-icon"></img></span>
+    <h4 class="temperature"> {{temperature}}&deg F | {{cityName}} | <span class="forecast"> {{forecast}} <img src='{{iconurl}}' alt="condition-icon"></img></span></h4>
+      <button id="default" type="button" class="btn btn-primary btn-lg">Set current city as default</button>
     <h3> Five Day Forecast </h3>
   </script>
 
