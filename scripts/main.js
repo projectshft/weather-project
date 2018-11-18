@@ -1,5 +1,13 @@
+/*
+This weather app should accept City, State or City, Country input by the user. The browser should display the current weather conditions, and also the five-day forecast for that city.
+*/
+
 var weatherDataCurrent = [];
 var weatherDataForecast = [];
+var weatherDataFiveDay = [];
+var searchCity = '';
+var searchState = '';
+var searchCountry = '';
 
 
 
@@ -15,8 +23,7 @@ var renderWeatherCurrent = function () {
 }
 
 
-
-var renderWeatherForecast = function () {
+var renderWeatherFiveDay = function () {
 
   for (let i = 0; i <=4; i++) {
     $("#day" + i).empty();
@@ -25,8 +32,8 @@ var renderWeatherForecast = function () {
   var sourceDay   = $('#day-template').html();
   var templateDay = Handlebars.compile(sourceDay);
 
-  for (var i = 0; i < weatherDataForecast.length; i++) {
-      var htmlDay = templateDay(weatherDataForecast[i]);
+  for (var i = 0; i < weatherDataFiveDay.length; i++) {
+      var htmlDay = templateDay(weatherDataFiveDay[i]);
       $('#day' + i).append(htmlDay);
   }
 }
@@ -69,8 +76,12 @@ var fetch = function (query) {
     url: "http://www.mapquestapi.com/geocoding/v1/address?key="+ mapQuestKey +"&location=" + cityToCoordinatesParameter,
     dataType: "json",
     success: function(data) {
+      console.log(data);
       var longitude = data.results[0].locations[0].latLng.lng;
       var latitude = data.results[0].locations[0].latLng.lat;
+      searchCity = data.results[0].locations[0].adminArea5;
+      searchState = data.results[0].locations[0].adminArea3;
+      searchCountry = data.results[0].locations[0].adminArea1;
       getWeatherDataFromAPI(longitude, latitude);
     },
     error: function(jqXHR, textStatus, errorThrown) {
@@ -96,11 +107,12 @@ var addWeatherDataCurrent = function (data) {
   }
 
   var weather = {
-    temperature: data.main.temp,
+    temperature: Math.round(data.main.temp),
     city: data.name,
     condition: condition(data),
-    day: "Today",
-    icon: "http://openweathermap.org/img/w/" + data.weather[0].icon + ".png"
+    icon: "http://openweathermap.org/img/w/" + data.weather[0].icon + ".png",
+    state: searchState,
+    country: searchCountry
   }
 
   weatherDataCurrent.push(weather);
@@ -110,35 +122,59 @@ var addWeatherDataCurrent = function (data) {
 
 
 var addWeatherDataForecast = function (data) {
-  console.log(data);
   weatherDataForecast = [];
 
   for (var i = 0; i < data.list.length; i++) {
     var weather = {
-      temperature: data.list[i].main.temp,
+      temperature: Math.round(data.list[i].main.temp),
       condition: data.list[i].weather[0].main,
-      dt_txt: data.list[i].dt_txt,
-      day:"",
-      icon: "http://openweathermap.org/img/w/" + data.list[i].weather[0].icon + ".png"
+      icon: "http://openweathermap.org/img/w/" + data.list[i].weather[0].icon + ".png",
+      day: moment(data.list[i].dt_txt).format('dddd')
     }
-    weatherDataForecast.push(weather);
+    if (moment().format('dddd') !== weather.day) {
+      weatherDataForecast.push(weather);
+    }
   }
 
-  sortAndDateForecast();
-  //renderWeatherForecast();
+  buildFiveDayForecast();
+  renderWeatherFiveDay();
 }
 
-var sortAndDateForecast = function () {
-  weatherDataForecast.forEach(function(element){
-    element.day = moment(element.dt_txt).format('dddd');
+var buildFiveDayForecast = function () {
+  weatherDataFiveDay = [];
+
+  var day1 = weatherDataForecast.filter(e => e.day === weatherDataForecast[0].day);
+  var day2 = weatherDataForecast.filter(e => e.day === weatherDataForecast[day1.length].day);
+  var day3 = weatherDataForecast.filter(e => e.day === weatherDataForecast[day1.length + day2.length].day);
+  var day4 = weatherDataForecast.filter(e => e.day === weatherDataForecast[day1.length + day2.length + day3.length].day);
+  var day5 = weatherDataForecast.filter(e => e.day === weatherDataForecast[day1.length + day2.length + day3.length + day4.length].day);
+
+  var temporaryArray = [day1, day2, day3, day4, day5];
+
+  temporaryArray.forEach(function(eachDay){
+
+    var temperaturesArray = eachDay.map(el => el.temperature);
+    var sumOfConditions = _.chain(eachDay).countBy("condition").value();
+    var mostCommonCondition = Object.keys(sumOfConditions).reduce((a,b) => sumOfConditions[a] > sumOfConditions[b] ? a : b);
+    var elementOfCommonCondition = eachDay.find(el => el.condition === mostCommonCondition);
+    var mostCommonIcon = elementOfCommonCondition.icon.replace('n.png', 'd.png');
+
+    var dayOfFiveDay = {
+      day: eachDay[0].day,
+      temperature_high: temperaturesArray.reduce((a, el) => Math.max(a, el)),
+      temperature_low: temperaturesArray.reduce((a, el) => Math.min(a, el)),
+      condition: mostCommonCondition,
+      icon: mostCommonIcon
+    }
+    weatherDataFiveDay.push(dayOfFiveDay);
   })
-  console.log(weatherDataForecast);
 }
+
 
 //add event listener to search button
 //enforce certain
 
-$('#citySearchUSButton').on('click', function () {
-  var query = $('#citySearchUS').val();
+$('#citySearchButton').on('click', function () {
+  var query = $('#citySearch').val();
   fetch(query);
 });

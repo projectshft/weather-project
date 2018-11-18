@@ -16,11 +16,11 @@
       <div class="row">
         <div class="col-8">
           <div class="form-group">
-            <input type="text" class="form-control" id="citySearchUS" placeholder="Enter 'City, ST' or 'City, CN'">
+            <input type="text" class="form-control" id="citySearch" placeholder="Enter 'City, ST' or 'City, CN'">
           </div>
         </div>
         <div class="col-2">
-          <button class="btn btn-primary" id="citySearchUSButton" type="button" name="button">Search</button>
+          <button class="btn btn-primary" id="citySearchButton" type="button" name="button">Search</button>
         </div>
       </div>
     </div>
@@ -28,6 +28,7 @@
     <div class="current-weather-container">
 
     </div>
+    <div class="w-100"></div>
     <div class="forecast-container row d-flex justify-content-center flex-nowrap">
       <div class="day border d-flex flex-column align-items-center" id="day0">
       </div>
@@ -49,7 +50,7 @@
         {{ temperature }}<sup>o</sup>
       </div>
       <div class="city">
-        {{ city }}
+        {{ city }}, {{ state }} {{ country }}
       </div>
       <div class="condition">
         {{ condition }}
@@ -67,7 +68,12 @@
       {{ condition }}
     </div>
     <div class="temperature">
-      {{ temperature }}<sup>o</sup>
+      <div class="high">
+        H- {{ temperature_high }}<sup>o</sup>
+      </div>
+      <div class="low">
+        L- {{ temperature_low }}<sup>o</sup>
+      </div>
     </div>
     <div class="icon-day">
       <img src="{{ icon }}" alt="{{ condition }}">
@@ -77,7 +83,8 @@
     </div>
   </script>
 
-  <script src="node_modules\moment\moment.js"></script>
+  <script type="text/javascript" src="node_modules/lodash/lodash.js"></script>
+  <script type="text/javascript" src="node_modules/moment/moment.js"></script>
   <script type="text/javascript" src="node_modules/jquery/dist/jquery.js"></script>
   <script type="text/javascript" src="node_modules/handlebars/dist/handlebars.js"></script>
   <script type="text/javascript" src="scripts/main.js"></script>
