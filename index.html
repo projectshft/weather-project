@@ -16,23 +16,23 @@
       </div>
       <div class="col-8">
         <h1 class="page-header">Current Weather</h1>
-      <div class="d-flex justify-content-center">
-        <input type="text" class="city-input" placeholder="Enter City Name"></input>
-        <select name="country" class="country-code">
-        </select>
-        <select name="state" class="state-code">
-        </select>
-      </div>
+        <div class="d-flex justify-content-center">
+          <input type="text" class="city-input" placeholder="Enter City Name"></input>
+          <select name="country" class="country-code">
+          </select>
+          <select name="state" class="state-code">
+          </select>
+        </div>
       </div>
       <div class="col-2">
       </div>
-        </div>
-        <div class="row">
-          <div class="col d-flex justify-content-center">
+    </div>
+    <div class="row">
+      <div class="col d-flex justify-content-center">
         <button type="button" class="btn btn-success btn-lg search">Search</button>
-        <button type = "button" class= "btn btn-primary btn-lg geolocation">Use Current Location</button>
+        <button type="button" class="btn btn-primary btn-lg geolocation">Use Current Location</button>
       </div>
-  </div>
+    </div>
 
     <div class="row">
       <div class="col-2">
@@ -40,10 +40,10 @@
       <div class="col-8">
         <div class="forecast-section">
         </div>
-        </div>
-        <div class="col-2">
-        </div>
       </div>
+      <div class="col-2">
+      </div>
+    </div>
 
 
     <div class="row">
@@ -52,12 +52,26 @@
       <div class="col-8">
         <div class="five-day">
 
-      </div>
+        </div>
       </div>
       <div class="col-2">
       </div>
     </div>
   </div>
+
+  <div class="row">
+    <div class="col d-flex justify-content-center map-section">
+    </div>
+  </div>
+
+  <script id="map-template" type="text/x-handlebars-template">
+    <iframe
+  width="600"
+  height="450"
+  frameborder="0" style="border:0"
+  src="https://www.google.com/maps/embed/v1/place?key=AIzaSyAhNv8W5Hr9-CcjnVCKEwfikaafcn21I80&q={{mapSearch}}">
+</iframe>
+</script>
 
   <script id="current-template" type="text/x-handlebars-template">
     <h4 class="temperature"> {{temperature}}&deg F | {{cityName}} | <span class="forecast"> {{forecast}} <img src='{{iconurl}}' alt="condition-icon"></img></span></h4>
@@ -85,15 +99,12 @@
   <script src="node_modules/moment/moment.js"></script>
   <script src="node_modules/handlebars/dist/handlebars.js"> </script>
   <script src="node_modules/jquery/dist/jquery.js"> </script>
-    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.11/lodash.min.js" charset="utf-8"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.11/lodash.min.js" charset="utf-8"></script>
   <script src="country-state-data.js" charset="utf-8"></script>
   <script src="test-data.js" charset="utf-8"></script>
   <script src="city-list.min.js" charset="utf-8"></script>
   <script src="google-maps.js" charset="utf-8"></script>
   <script src="main.js" charset="utf-8"></script>
-  <!-- <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAhNv8W5Hr9-CcjnVCKEwfikaafcn21I80&callback=initMap">
-    </script> -->
-
 
 </body>
 

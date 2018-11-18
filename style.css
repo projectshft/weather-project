@@ -1,15 +1,36 @@
 body {
   font-family: 'Allerta Stencil', sans-serif;
-  background-image: url(https://images.pexels.com/photos/417045/pexels-photo-417045.jpeg?cs=srgb&dl=cloudiness-clouds-cloudy-417045.jpg&fm=jpg);
+  background-image: url(https://images.pexels.com/photos/912110/pexels-photo-912110.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260);
+}
+
+.cloudy {
+  background-image: url(https://images.pexels.com/photos/912110/pexels-photo-912110.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260);
+}
+
+.rain {
+  background-image: url(https://images.pexels.com/photos/531906/pexels-photo-531906.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260);
+}
+
+.storm {
+  background-image: url(https://images.pexels.com/photos/1118869/pexels-photo-1118869.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260);
+  color: white;
+}
+
+.snow {
+  background-image: url(https://images.pexels.com/photos/66284/winter-nature-season-trees-66284.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260);
+}
+
+.foggy {
+  background-image: url(https://images.pexels.com/photos/5230/road-fog-foggy-mist.jpg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260);
 }
 
 h1 {
   text-align: center;
 }
+
 input {
   align-items: center;
 }
-
 
 .container-fluid {
   padding-top: 150px;
@@ -21,7 +42,8 @@ input {
   box-sizing: border-box;
   width: 20%;
   float: left;
-  text-align:center;
+  text-align: center;
+  color: black;
 }
 
 .day {
@@ -35,7 +57,3 @@ input {
 .btn {
   margin: 5px;
 }
-
-#map {
-        height: 500px;
-      }

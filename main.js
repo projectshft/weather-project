@@ -4,11 +4,23 @@ var weatherApp = function() {
     cityName: "",
     temperature: 0,
     forecast: "",
-    iconurl: ""
+    iconurl: "",
+    id: 0
   };
-
   var forecastData = [];
+  //allows to set a default city & map location in local storage
   var currentCityId;
+  var mapSearch = "";
+
+  //toggles background picture depending on current conditions
+  var backgroundImageClass = {
+    condition2: "storm",
+    condition3: "rain",
+    condition5: "rain",
+    condition6: "snow",
+    condition7: "foggy",
+    condition8: "cloudy"
+  };
 
   //restrict the properties of the current data by using only getters & setters
   //these aren't strictly necessary, but they can be returned and used for testing
@@ -19,6 +31,15 @@ var weatherApp = function() {
   var setCurrent = function(attribute, value) {
     currentData[attribute] = value;
   };
+
+  //setter and getter for the string needed to search Google Maps API
+  var getMapSearch = function() {
+    return mapSearch;
+  }
+
+  var setMapSearch = function(string) {
+    mapSearch = string;
+  }
 
   //this checks to be sure that the five day forecast pulls data for noon each upcoming day
   var findIndexOfNoon = function(weatherArr) {
@@ -33,10 +54,9 @@ var weatherApp = function() {
     $.ajax({
       method: "GET",
       url: 'https://api.openweathermap.org/data/2.5/' + dataType + '?' + query + '&units=imperial' + APIkey,
-      //url: 'https://api.openweathermap.org/data/2.5/weather?lat=35.9293939&lon=-78.9511836&units=imperial&APPID=e915b1b5accb2008bf721504d13ae081',
       dataType: "json",
       success: function(data) {
-        //chose to either get the current weather or 5 day forecast
+        //either gets the current weather or 5 day forecast
         if (dataType === 'weather') {
           parseCurrentData(data);
         } else if (dataType === 'forecast') {
@@ -47,7 +67,7 @@ var weatherApp = function() {
       },
       error: function(jqXHR, textStatus, errorThrown) {
         console.log(textStatus);
-        alert("An error:", textStatus, "Try another city");
+        alert("An error has occurred, try another city");
       }
     });
   };
@@ -78,9 +98,10 @@ var weatherApp = function() {
     setCurrent('temperature', Math.round(data.main.temp));
     setCurrent('forecast', data.weather[0].main);
     setCurrent('iconurl', 'http://openweathermap.org/img/w/' + data.weather[0].icon + '.png');
+    setCurrent('id', data.weather[0].id);
   };
 
-  //assign the forecast properties for the queried city into 5 objects
+  //assign the forecast properties for the queried city into 5 objects, 1 per day
   var parseForecastData = function(data) {
     forecastData = [];
     //make sure it's the 5 daytime forecasts (for noon) regardless of the time of the search
@@ -93,6 +114,7 @@ var weatherApp = function() {
       dayObj.day = moment(data.list[i].dt_txt).format('dddd').slice(0, 3);
       forecastData.push(dayObj);
     }
+    //get the id in case the user wants to set this city as default
     currentCityId = data.city.id;
   };
 
@@ -127,22 +149,39 @@ var weatherApp = function() {
     var fiveDaySource = $('#forecast-template').html();
     var fiveDayTemplate = Handlebars.compile(fiveDaySource);
     forecastData.forEach(day => $('.five-day').append(fiveDayTemplate(day)));
+    var conditionCode = 'condition' + Math.round(currentData.id / 100);
+    //remove any previous image class and then apply the current condition
+    $('body').removeClass();
+    $('body').addClass(backgroundImageClass[conditionCode]);
   };
 
+  //renders the map at the bottom of the page
+  var renderMap = function(mapData) {
+    $('.map-section').empty();
+    //render the map in bottom section
+    var mapSource = $('#map-template').html();
+    var mapTemplate = Handlebars.compile(mapSource);
+    $('.map-section').append(mapTemplate(mapData));
+  }
+  //used to set a city in local storage
   var getCurrentCityId = function() {
     return currentCityId;
   }
-  //these are the 3 functions necessary outside the app
+
+  //these are the only functions necessary outside the app
   return {
     fetchData: fetchData,
     fetchReverseGeo: fetchReverseGeo,
-    getCurrentCityId: getCurrentCityId
+    renderMap: renderMap,
+    getCurrentCityId: getCurrentCityId,
+    getMapSearch: getMapSearch,
+    setMapSearch: setMapSearch
   }
 }
 
 //initialize the app and city list to filter down to US only
-var app = weatherApp();
 var usaCityList;
+var app = weatherApp();
 
 $('document').ready(function() {
   //load the country options into the dropdown
@@ -163,9 +202,14 @@ $('document').ready(function() {
     app.fetchData(idStr, 'weather');
     app.fetchData(idStr, 'forecast');
   }
+  //if there's a default city, get the map for it
+  if (localStorage.getItem('mapSearch')) {
+    app.setMapSearch(localStorage.getItem('mapSearch'));
+    app.renderMap({mapSearch: app.getMapSearch()});
+  }
 });
 
-//fetch and render data when button is clicked
+//fetch and render data when search button is clicked
 $('.search').click(function() {
   var userSearch = $('.city-input').val();
   //make sure the user entered some text
@@ -174,6 +218,7 @@ $('.search').click(function() {
   } else {
     //make sure it's in a title case format to match the existing data
     userSearch = _.startCase(userSearch);
+    var mapSearch = "";
     //if it's a US city, then grab all the matching cities from the full US list
     if ($('.country-code').val() === "US") {
       var state = $('.state-code').val();
@@ -181,19 +226,25 @@ $('.search').click(function() {
       var sameCityCoords = [];
       //get all the lat/long coordinates for each option
       matchingCities.forEach(city => sameCityCoords.push(city.coord));
-      //fetch the data which matches the city and state
+      //fetch the data which matches the city and state and set the map string to the right format
       app.fetchReverseGeo(sameCityCoords, state, matchingCities);
+      app.setMapSearch(userSearch + "," + $('.state-code').val());
       //for now, if it's a non-US country, fetch the data based on only city name and country
       //TODO: eventually, add in Canadian provinces & other country considerations
     } else {
+      //set the map string to the right format
+      app.setMapSearch(userSearch + "+" + $('.country-code').val());
+      //then fetch data for the city
       userSearch += "," + $('.country-code').val();
       app.fetchData('q=' + userSearch, 'weather');
       app.fetchData('q=' + userSearch, 'forecast');
     }
   }
+  //render the Google Map with searched location
+  app.renderMap({mapSearch: app.getMapSearch()});
 })
 
-//if a non-US country is selected, disable state selection
+//if a non-US country is selected, disable state dropdown
 $('select[name="country"]').change(function() {
   if ($(this).val() !== "US") {
     $('.state-code').prop('disabled', true);
@@ -206,22 +257,22 @@ $('select[name="country"]').change(function() {
 $('.geolocation').click(function() {
   if ("geolocation" in navigator) {
     navigator.geolocation.getCurrentPosition(function(position) {
-      var latLongStr = 'lat=' + position.coords.latitude.toPrecision(8) + '&lon=' + position.coords.longitude.toPrecision(8);
+      var roundedLat = position.coords.latitude.toPrecision(8);
+      var roundedLong = position.coords.longitude.toPrecision(8);
+      var latLongStr = 'lat=' + roundedLat + '&lon=' + roundedLong;
       app.fetchData(latLongStr, 'weather');
       app.fetchData(latLongStr, 'forecast');
+      app.renderMap({mapSearch: "+&center=" + roundedLat + "," + roundedLong});
     })
   } else {
     alert("Cannot find your current position, please enable geolocation or type in your city.")
   }
 })
 
-//enable a  city to be saved to local storage by its ID value
+//enable a city to be saved to local storage by its ID value
 $('.forecast-section').on('click', '#default', (function() {
   var currentCity = app.getCurrentCityId();
+  var currentMapSearch = app.getMapSearch();
   localStorage.setItem('defaultId', currentCity);
+  localStorage.setItem('mapSearch', currentMapSearch);
 }));
-
-//alter styling depending on current city
-//add a map with the current location on google maps
-//add nearby cities on google maps & let a user click a pin to change the city
-//geocoding API key for Google: AIzaSyAhNv8W5Hr9-CcjnVCKEwfikaafcn21I80
