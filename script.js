@@ -48,43 +48,50 @@ var fetch2 = function (query) {
 
             //fill template with data
             var html2 = template2(data);
-            $('#weather-forecast').html(html2)
+            $('#weather-forecast').html(html2);
 
-            //jQuery select DOM element
+            // THIS WORKED AND i WANT TO KEEP IT FOR REFERENCE
+            //1. jQuery select DOM element
+
             var dates = $("p.day")
             console.log(dates);
 
-            //jQuery - access NodeList items
+            //2.jQuery - access NodeList items
+
             for (var i = 0; i < dates.length; i++) {
                 var dayText = dates[i].innerText;
                 console.log(dayText);
 
-                // var moment = require('moment');
-                var dayName = moment(dayText, "YYYY-MM-DD HH:MM:SS").format("ddd");
+            //3. convert text date to name of week
+                var dayName = moment(dayText).format("ddd");
                 console.log(dayName);
-
-
+                return(dayName);
             };
 
+            $('p.day').replaceWith("<p class='day'>" + dayName + "</p>");
+
+            // var $dayText = $("p.day").each(function (index) {
+            //         (this.innerText);
+            //         return ($dayText);
+            //     });
+            //     //not grabbing the correct this
+            // $($dayText).replaceWith("<p class='day'>" + moment().format("ddd") + "</p>");
+
+
+
 
 
         },
-
         error: function (jqXHR, textStatus, errorThrown) {
             console.log(textStatus);
-        },
+        }
 
     });
 };
 
-// //get the text from each p.day element as a string(ie: 2018-11-19 21:00:00)
-//     var myDates = $("p.day").text();
-//     console.log(myDates.length);
 
-// //replace the text with day of the week (ie - Mon)
-//     $("myDates").each().replaceWith(function () {
-//         moment().format("ddd");
-//     });
+
+
 
 
 
