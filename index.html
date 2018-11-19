@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+    <title>Weather</title>
+  </head>
+  <body class="text-center">
+    <div class="container-fluid">
+      <div class="row mt-5">
+        <div class="col-md-8 offset-md-2">
+          <h1 class="display-3">Current Weather</h1>
+          <form class="form-inline justify-content-center">
+            <input class="form-control mr-1 city" type="text" placeholder="City" autofocus required/>
+            <select class="form-control country-select mr-1"></select>
+            <button class="btn btn-primary search-btn" type="button">Search</button>
+          </form>
+          <h5 class="mt-2">OR</h5>
+          <button class="btn btn-primary my-location-btn">Use My Location</button>
+          <hr/>
+        </div>
+      </div>
+      <!-- </div> .row -->
+      <div class="row">
+        <div class="col-md-8 offset-md-2">
+          <div class="weather-box mt-4">
+            <h2 class="location"></h2>
+            <!-- <button class="temp-btn btn btn-default"> -->
+            <h3 class="temperature"></h3>
+            <!-- </button> -->
+            <p class="desc mt-3 mb-0"></p>
+            <p class="icon"></p>
+            <hr/>
+          </div> <!-- .weather-box -->
+        </div>
+      </div> <!-- .row -->
+      <div class="row">
+        <div class="col-md-8 offset-md-2">
+          <div class="forecast-box row d-flex justify-content-center mb-5">
+            
+          </div>
+        </div>
+      </div>
+    </div> <!-- .container -->
+
+    <!-- *********************** Scripts *********************** -->    
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.12/handlebars.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+    <script src="data/countries.js"></script>
+    <script src="main.js"></script>
+
+    <!-- *********************** Handlebars Templates *********************** -->
+    <!-- Country List Dropdown-->
+    <script id="option-template" type="text/x-handlebars-template">
+      <option value="{{code}}">{{ name }}</option>
+    </script>
+
+    <!-- Forecast Divs -->
+    <script id="forecast-template" type="text/x-handlebars-template">
+      <div class="forecast col-md-2">
+        <div class="card">
+          <div class="card-body">
+            <p class="card-text desc">{{ desc }}</p>
+            <!-- <button class="temp-btn btn btn-default"> -->
+            <h5 class="temperature">{{ temps.fahr }}&deg; F</h5>
+            <!-- </button> -->
+            <p class="icon"><img src='{{ iconURL }}' alt='Weather Icon'></p>
+            <h5 class="card-text">{{ day }}</h5>
+          </div>
+        </div>
+      </div>
+    </script>
+
+  </body>
+</html>
