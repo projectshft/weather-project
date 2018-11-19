@@ -14,33 +14,38 @@
             <input id="search-query" type="text" class="form-control" placeholder="Enter City Name"></input>
           </div>
           <div class="col-md-2">
-            <button id="find-weather" class="btn btn-primary ">Search</button>
+            <button id="find-weather" class="btn btn-primary">Search</button>
           </div>
         </div>
       </div>
       <div id="todays-weather"></div>
       <div id="weeks-forecast" class="row"></div>
 
+
+
+    <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
     <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.12/handlebars.js" charset="utf-8"></script>
     <script src="main.js"></script>
 
+
  <!-- today's weather handlebars template -->
   <script id="current-weather-template" type="text/x-handlebars-template">
-    <div class="jumbotron container">
-      <div class="col-md-2">
-        <img src="http://openweathermap.org/img/w/{{ icon }}.png" alt="">
-      </div>
-      <div class="col-md-2">
-        <h4>{{ temp }}˚</h4>
+    <div id="current-weather-display">
+      <div class="col-md-4" id="current-weather-information">
+        <h3>{{ temp }}˚</h3>
         <div>{{ location }}</div>
         <div>{{ weather }}</div>
         <div>{{ date }}</div>
       </div>
+      <div class="col-md-5" id="icon-display">
+        <img src="http://openweathermap.org/img/w/{{ icon }}.png" alt="">
+      </div>
     </div>
   </script>
 
+  <!-- weelky forecast hanldebars template -->
   <script id="weeks-forecast-template" type="text/x-handlebars-template">
     <div class="col-sm-2">
       <div class="card" style="width: 18rem;">
@@ -50,40 +55,7 @@
         <div>{{ date }}</div>
       </div>
     </div>
-    <!-- <div class="col-sm-2">
-      <div class="card" style="width: 18rem;">
-        <div>{{ weather }}</div>
-        <div> <strong>{{ temp }}˚</strong></div>
-        <img src="http://openweathermap.org/img/w/{{ icon }}.png" alt="">
-        <div>{{ date }}</div>
-      </div>
-    </div>
-    <div class="col-sm-2">
-      <div class="card" style="width: 18rem;">
-        <div>{{ weather }}</div>
-        <div> <strong>{{ temp }}˚</strong></div>
-        <img src="http://openweathermap.org/img/w/{{ icon }}.png" alt="">
-        <div>{{ date }}</div>
-      </div>
-    </div>
-    <div class="col-sm-2">
-      <div class="card" style="width: 18rem;">
-        <div>{{ weather }}</div>
-        <div> <strong>{{ temp }}˚</strong></div>
-        <img src="http://openweathermap.org/img/w/{{ icon }}.png" alt="">
-        <div>{{ date }}</div>
-      </div>
-    </div>
-    <div class="col-sm-2">
-      <div class="card" style="width: 18rem;">
-        <div>{{ weather }}</div>
-        <div> <strong>{{ temp }}˚</strong></div>
-        <img src="http://openweathermap.org/img/w/{{ icon }}.png" alt="">
-        <div>{{ date }}</div>
-      </div>
-    </div> -->
   </script>
 
 </body>
 </html>
-<!-- API Key = fa9a0e4c4fd59f4be6924cdceb975e9b -->

@@ -2,11 +2,12 @@
 var forecasts = [];
 var currentWeather = {};
 
+//function designed to add properties to the currentWeather object
 var declareCurrentWeather = function (data) {
 
   var temp = function () {
     if (data.main.temp) {
-      return data.main.temp;
+      return Number(data.main.temp).toFixed();
     }
   };
 
@@ -39,8 +40,9 @@ var declareCurrentWeather = function (data) {
 
 };
 
-
+//function that adds objects for each following day's weather forecast
 var addWeeklyForecast = function (data) {
+
   forecasts = [];
 
   for (var i = 0; i < data.list.length; i+=8) {
@@ -49,7 +51,7 @@ var addWeeklyForecast = function (data) {
 
     var temp = function () {
       if (forecastData.main.temp) {
-        return forecastData.main.temp;
+        return Number(forecastData.main.temp).toFixed();
       } else {
         return null;
       }
@@ -97,12 +99,12 @@ var addWeeklyForecast = function (data) {
 
     forecasts.push(forecast);
   }
-  console.log(forecasts)
+
   renderWeeklyForecast();
 };
 
 
-//fetch requests from openDataAPI
+//fetch requests to openWeatherAPI
 var fetchCurrentWeather = function (query) {
   $.ajax({
     method: "GET",
@@ -126,12 +128,13 @@ var fetchWeeklyForecast = function(query) {
       addWeeklyForecast(data);
     },
     error: function(jqXHR, textStatus, errorThrown) {
+      //
     }
   });
 };
 
 
-//render function
+//functions to render weather conditions and forecasts, as well as function to convert objects to handlebars templates
 var renderCurrentWeather = function() {
   $('#todays-weather').empty();
   var todaysWeather = renderCurrentWeatherWithHandlebars(currentWeather);
@@ -161,23 +164,14 @@ var renderWeeksForecastWithHandlebars = function(dailyForecastObject) {
 };
 
 
-//click event
+//click event to invoke fetch requests
 $('#find-weather').on('click', function() {
   var city = $('#search-query').val();
   if (city !== '') {
-    $("#search-query").focus( function() {
-      $(this).val("");
-    });
     fetchCurrentWeather(city);
     fetchWeeklyForecast(city)
   }  else {
     alert('Please enter valid search parameters!')
   }
-  // $('search-query[placeholder]').html('')
+  $("#search-query").val('');
 });
-
-
-//appid: fa9a0e4c4fd59f4be6924cdceb975e9b,
-
-
-//make a JSON file with country codes

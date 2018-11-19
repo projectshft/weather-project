@@ -3,22 +3,46 @@ body {
 }
 
 #input {
-  margin-bottom: 40px;
+  margin-bottom: 20px;
+}
+
+#current-weather-display {
+  display: inline-block;
+}
+
+#current-weather-information {
+  text-align: left;
+  padding-right: 20px;
 }
 
 h1 {
-  text-align: center;
   margin-top: 40px;
   margin-bottom: 20px;
 }
 
-
-.container {
+.form-group {
   max-width: 75rem;
+  display: inline-flex;
 }
 
 .card {
   border: black solid;
   border-radius: 25px;
   text-align: center;
+  margin: 5px;
+}
+
+#weeks-forecast {
+  display: inline-block;
+}
+
+#icon-display {
+  margin-top: 40px;
+  margin-left: 10px;
+  transform: scale(2);
+}
+
+.card div {
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
