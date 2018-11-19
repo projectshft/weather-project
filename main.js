@@ -27,7 +27,7 @@ var fetchAndDisplayCurrentWeatherData = function(userInput) {
         return l.toUpperCase()
       });
     };
-//The icons are represented by a three character string, "02d" for example
+    //The icons are represented by a three character string, "02d" for example
     var getCurrentIcon = function(rawWeatherData) {
       var icon = rawWeatherData.weather[0].icon;
       return icon;
@@ -101,9 +101,6 @@ var fetchAndDisplayForecastData = function(userInput) {
 
     var forecastArray = [];
 
-    //I am gonna have to loop through the data and get the conditions at noon the next 5 days. However I am not sure if the api data structure changes throughout the day, (meaning will the 0 index data always be midnight, no matter the time of request?)
-
-    //starting at index 4, every 8 data points represent noon in the next 5 days
 
     var getDayConditions = function(weatherNoonObject) {
       var condition = weatherNoonObject.weather[0].description;
@@ -200,8 +197,8 @@ var fetchAndDisplayForecastData = function(userInput) {
   });
 };
 
-$(document).ready(function(){
-  if (localStorage.getItem("default")){
+$(document).ready(function() {
+  if (localStorage.getItem("default")) {
     var defaultCity = localStorage.getItem("default");
     fetchAndDisplayCurrentWeatherData(defaultCity);
     fetchAndDisplayForecastData(defaultCity);
@@ -213,10 +210,10 @@ $('#search').on('click', function() {
   fetchAndDisplayCurrentWeatherData($input);
   fetchAndDisplayForecastData($input);
 });
-$('#default').on('click',function(){
+$('#default').on('click', function() {
   $input = $('#city-input').val();
   localStorage.setItem("default", $input);
-  if ($input){
-  alert("Default city/ZIP set to: " + $input);
-}
+  if ($input) {
+    alert("Default city/ZIP set to: " + $input);
+  }
 })
