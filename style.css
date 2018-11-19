@@ -1,6 +1,6 @@
 .jumbotron{
   text-align:center;
-  background-color: #FFFFD5
+  background-color: #00B2FF
 }
 
 
@@ -22,12 +22,13 @@
   1px -1px 0 #fff,
   -1px 1px 0 #fff,
   1px 1px 0 #fff;
+  padding-left:150px;
 }
 .day {
   margin:10px;
 }
 
 body{
-  background-image: url("https://previews.123rf.com/images/pinglabel/pinglabel1801/pinglabel180100006/93168105-clear-blue-sky-background-clouds-with-background-.jpg");
+  background-image: url("https://images.unsplash.com/photo-1517483000871-1dbf64a6e1c6?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=71fccab9bea9d8442c60daa81bae7dff&w=1000&q=80");
   background-size: cover;
 }
