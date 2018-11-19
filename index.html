@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>Weather</title>
+  <!--Scripts-->
+  <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"></script>
+</head>
+
+<body>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-6 col-sm-offset-3">
+        <div class="page-header">
+          <h1>
+            <center>Current Weather</center>
+          </h1>
+        </div>
+
+        <form class="search-form">
+          <div class="form-group">
+            <input type="text" id="search-query" placeholder="Enter City Name" class="form-control">
+            </input>
+          </div>
+          <button type="button" class="btn btn-primary" id="search">Search</button>
+        </form>
+
+        <hr />
+
+
+        <div class="weather-data">
+        </div>
+      </div>
+    </div>
+<!--current data handlebar-->
+    <script id="weather-template" type="text/x-handlebars-template">
+      <div class="col-sm-4 col-sm-offset-4">
+        <div><h1 id="temperature">{{ temperature }}&deg</h1></div>
+        <div><h5 id="cityName">{{ cityName }}, {{country}}</h5></div>
+        <div><h6 id="weatherDescription">{{weatherDescription}}</h6></div>
+          <img class="offset-sm-1" src="http://openweathermap.org/img/w/{{weatherIcon}}.png" alt="{{weatherDescription}}">
+      </div>
+  </script>
+    <div id="weather-forecast"></div>
+
+    <!--forecast handlebar-->
+
+  <script id="five-day-template" type="text/x-handlebars-template">
+      <div class="col-sm-2>
+        <div><h1 id="forecastDescription">{{forecastDescription}}</h1></div>
+        <div><h5 id="forecastTemperature">{{forecastTemperature}}&deg</h5><div>
+        <div><h6 id="date">{{date}}</h6></div>
+        <img class="offset-sm-1" src="http://openweathermap.org/img/w/{{weatherIcon}}.png" alt="{{weatherDescription}}">
+      </div>
+    </script>
+
+    <div id="five-day"></div>
+    <script src="main.js"></script>
+
+</body>
+
+</html>
