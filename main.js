@@ -29,22 +29,13 @@ var renderCurrentWeather = function (data) {
 
   $('.weather').html(html);
 
-// began to make sure that the link for the forecast API was set up and ready.
-//   var endpoint = "https://api.openweathermap.org/data/2.5/forecast?id=5724406&APPID=142c495750b9cb1361277a4d48edc9d6";
-// };
-}
-//
-var renderForecast = function (data) {
 
+}
+
+var renderForecast = function (data) {
   var source = $('#five-day-weather-template').html();
   var template = Handlebars.compile(source);
-
-  var forecastObj = {
-    forecasts: forecasts.find(function(forecast)){
-      return dt_txt
-    }
-  };
-
+  var forecastObj = { forecasts: data }
   var html = template(forecastObj);
   $('.weather-forecast').html(html);
 }
@@ -57,7 +48,6 @@ var fetchCurrent = function (query) {
     url: "https://api.openweathermap.org/data/2.5/weather?q=" + query + "&units=imperial&APPID=142c495750b9cb1361277a4d48edc9d6",
     dataType: "json",
     success: function (data) {
-      // console.log(data);
       renderCurrentWeather(data);
     },
     error: function (jqXHR, textStatus, errorThrown) {
@@ -72,8 +62,13 @@ var fetchForecast = function (query) {
     url: "https://api.openweathermap.org/data/2.5/forecast?q=" + query + "&units=imperial&APPID=142c495750b9cb1361277a4d48edc9d6",
     dataType: "json",
     success: function (data) {
-      console.log(data);
-      renderForecast(data);
+      const completeForecastArr = data.list;
+      const fiveDayForecast = [];
+      for (let i = 0; i < completeForecastArr.length; i+=8) {
+      fiveDayForecast.push(completeForecastArr[i])
+      }
+      renderForecast(fiveDayForecast)
+
     },
     error: function (jqXHR, textStatus, errorThrown) {
       console.log(textStatus);
