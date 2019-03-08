@@ -1,19 +1,40 @@
 let weather = [];
+let forecastData = [];
+
+// Creates click handler for search button and when clicked calls the fetchCurrentConditions function
 
 $('#search-city').on('click', function () {
-  var search = $('#city-name').val();
-
-  fetch(search);
+  const search = $('#city-name').val();
+  fetchCurrentConditions(search);
+  fetchFiveDayForecast(search);
 });
 
-const fetch = function (query) {
+// Grabs the current condition data from the API 
+
+const fetchCurrentConditions = function (query) {
   $.ajax({
     method: "GET",
     url: "https://api.openweathermap.org/data/2.5/weather?q=" + query + '&APPID=486f4890e6823edadc8d626bbb26cdc7',
     dataType: "json",
     success: function(data) {
-      console.log(data);
       currentConditions(data);
+    },
+    error: function(jqXHR, textStatus, errorThrown) {
+      alert('Please enter only a city name');
+    }
+  });
+}
+
+// Grabs the five day forecast data from the API
+
+const fetchFiveDayForecast = function (query) {
+  $.ajax({
+    method: "GET",
+    url: "https://api.openweathermap.org/data/2.5/forecast?q=" + query + '&APPID=486f4890e6823edadc8d626bbb26cdc7',
+    dataType: "json",
+    success: function(data) {
+      console.log(data);
+      fiveDayForecast(forecastData);
     },
     error: function(jqXHR, textStatus, errorThrown) {
       console.log(textStatus);
@@ -21,14 +42,30 @@ const fetch = function (query) {
   });
 }
 
-const currentConditions = function (data) {  
-  weather.push({
+// Takes in the data from the API and creates an object for the current conditions
+
+const currentConditions = function (data) {
+  weather = [{
+    temp: Math.round((data.main.temp - 273.15) * (9/5) + 32),
+    city: data.name,
+    weatherConditions: data.weather[0].main
+  }];
+  renderWeather();
+}
+
+// Takes in the data from the API and creates object for five day forecast
+
+const fiveDayForecast = function (forecastData) {
+  forecast = [];
+  
+  forecast.push({
     temp: Math.round((data.main.temp - 273.15) * (9/5) + 32),
     city: data.name,
     weatherConditions: data.weather[0].main
   });
-  renderWeather();
+  renderForecast();
 }
+
 
 const source = $('#current-conditions-template').html();
 const template = Handlebars.compile(source);
@@ -39,6 +76,18 @@ const renderWeather = function() {
   weather.forEach(item => {
     var newHTML = template(item);
     $('.current-conditions').append(newHTML);
+  }); 
+}
+
+const source1 = $('#current-conditions-template').html();
+const forecastTemplate = Handlebars.compile(source1);
+
+const renderForecast = function() {
+  $('.forecast').empty();
+
+  forecast.forEach(item => {
+    var newHTML = forecastTemplate(item);
+    $('.forecast').append(newHTML);
   }); 
 }
 
