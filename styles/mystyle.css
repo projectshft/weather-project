@@ -1,0 +1,149 @@
+body {
+ background-color: black;
+}
+
+.my-header-col {
+  height: 45px;
+  width: 600px;
+  background-color: #2e2b2d;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  box-shadow: 0px 0px 30px 5px #2e2b2d;
+  z-index: 5;
+}
+
+.btn-current-location {
+  margin-left: 9px;
+  margin-top: -4px
+}
+
+.input {
+  margin-top: 7px;
+  margin-left: 7px;
+  margin-right: 0px;
+  border-radius: 5px;
+  width: 368px;
+}
+
+.input:focus {
+    outline-width: 0;
+}
+
+.btn-search {
+  margin-top: -4px;
+  margin-left: 8px;
+}
+
+.my-weather-container {
+  position: fixed;
+  top: 0;
+  background: url(../assets/clouds-large.png);
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.my-weather-row {
+  height: 100vh;
+  padding-top: 50px;
+  padding-bottom: 50px;
+  margin-left: 50px;
+  margin-right: 50px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.my-weather-col {
+  width: 500px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-left: 50px;
+  margin-right: 50px;
+}
+
+.my-current-weather {
+  height: 400px;
+  width: 400px;
+  border: 1px solid white;
+}
+
+.my-five-day-row-top {
+  height: 120px;
+  width: 500px;
+  border: 1px solid black;
+  margin-bottom: 10px;
+  margin-left: 50px;
+  margin-right: 50px;
+  display: flex;
+  flex-wrap: wrap;
+  border-radius: 5px;
+  box-shadow: 0px 0px 30px 5px #2e2b2d;
+}
+
+.my-five-day-row-middle {
+  height: 120px;
+  width: 500px;
+  border: 1px solid black;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: 50px;
+  margin-right: 50px;
+  display: flex;
+  flex-wrap: wrap;
+  border-radius: 5px;
+  box-shadow: 0px 0px 30px 5px #2e2b2d;
+}
+
+.my-five-day-row-bottom {
+  height: 120px;
+  width: 500px;
+  border: 1px solid black;
+  margin-top: 10px;
+  margin-left: 50px;
+  margin-right: 50px;
+  display: flex;
+  flex-wrap: wrap;
+  border-radius: 5px;
+  box-shadow: 0px 0px 30px 5px #2e2b2d;
+}
+
+.footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%
+}
+
+.my-footer-col {
+  height: 45px;
+  width: 600px;
+  background-color: #2e2b2d;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  box-shadow: 0px 0px 30px 5px #2e2b2d;
+}
+
+.btn-set-default {
+  display: inline-block;
+  margin-top: 8px;
+  margin-left: 8px;
+}
+
+.display-location {
+  display: inline-block;
+  margin-left: 8px;
+  margin-right: 8px;
+  width: 340px;
+  height: 45px;
+  text-align: center;
+  color: white;
+}
+
+.display-location-text {
+}
+
+.btn-map {
+  display: inline-block;
+  margin-top: 8px;
+  margin-left: 62px;
+}

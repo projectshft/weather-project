@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="styles/mystyle.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title></title>
+  </head>
+  <body>
+
+    <div class="header">
+      <div class="container-fluid">
+        <div class="row justify-content-center my-header-row">
+          <div class="my-header-col">
+            <button type="button" class="btn btn-light btn-sm btn-current-location">Current Location</button>
+            <input class="input" type="text">
+            <button type="button" class="btn btn-light btn-sm btn-search">Search</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container-fluid my-weather-container">
+      <div class="justify-content-around align-items-center my-weather-row overflow-auto">
+        <div class="my-weather-col">
+          <div class="row justify-content-center align-items-center current-weather-row">
+            <div class="col-10 my-current-weather">
+            </div>
+          </div>
+        </div>
+        <div class="my-forecast-col">
+          <div class="my-five-day-row-top">
+            <div class="col-10 my-five-day-top">
+            </div>
+          </div>
+          <div class="my-five-day-row-middle">
+            <div class="col-10 my-five-day-two">
+            </div>
+          </div>
+          <div class="my-five-day-row-middle">
+            <div class="col-10 my-five-day-three">
+            </div>
+          </div>
+          <div class="my-five-day-row-middle">
+            <div class="col-10 my-five-day-four">
+            </div>
+          </div>
+          <div class="my-five-day-row-bottom">
+            <div class="col-10 my-five-day-five">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer">
+      <div class="container-fluid">
+        <div class="row justify-content-center my-footer-row">
+          <div class="my-footer-col">
+            <button type="button" class="btn btn-light btn-sm btn-set-default">Set As Default</button>
+            <div class="display-location">
+              <p class="display-location-text"> New York City, New Yok</p>
+            </div>
+            <button type="button" class="btn btn-light btn-sm btn-map">Map</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="scripts/main.js"></script>
+  </body>
+</html>
