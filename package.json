@@ -18,7 +18,8 @@
   "homepage": "https://github.com/Rihuf/weather-project#readme",
   "dependencies": {
     "handlebars": "^4.1.0",
-    "jquery": "^3.3.1"
+    "jquery": "^3.3.1",
+    "moment": "^2.24.0"
   },
   "devDependencies": {}
 }
