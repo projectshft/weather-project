@@ -20,12 +20,16 @@
           </div>          
         </form>
         <div class="container-fluid current-conditions"></div>
-        <div class="forecast"></div>
+        <div class="container-fluid forecast-container">
+          <div class="row forecast"></div>
+        </div>
+        </div>
       </div>      
     </div>
   </div>
 <script src="node_modules/jquery/dist/jquery.js"></script>
 <script src="node_modules/handlebars/dist/handlebars.js"></script>
+<script src="node_modules/moment/moment.js"></script>
 
 <script id="current-conditions-template" type="text/x-handlebars-template">
   <div class="row">
@@ -41,16 +45,11 @@
 </script>
 
 <script id="forecast-template" type="text/x-handlebars-template">
-  <div class="row">
-    <div class="col-md-1"></div>
     <div class="forecast-day col-md-2">
-      <h4>Current Conditions</h4>
-      <div><h2><strong>{{ temp }}&deg F</strong></h2></div>
-      <div><h3><strong>{{ city }}</strong></h3></div>
       <div><h4><strong>{{ weatherConditions }}</strong></h4></div>
+      <div><h3><strong>{{ temp }}&deg F</strong></h3></div>
+      <div><h3><strong>{{ day }}</strong></h3></div>      
     </div>
-    <div class="col-md-1"></div>
-  </div>
 </script>
 
 <script src="main.js"></script>
