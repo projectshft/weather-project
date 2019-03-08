@@ -57,13 +57,15 @@ const currentConditions = function (data) {
 // Takes in the data from the API and creates object for five day forecast
 
 const fiveDayForecast = function (forecastData) {
+  console.log(forecastData)
   forecast = [];
   for(let i = 7; i <= forecastData.list.length; i += 8) {
     var date = forecastData.list[i].dt;
     forecast.push({
       temp: Math.round((forecastData.list[i].main.temp - 273.15) * (9/5) + 32),
       day: moment.unix(date).format('dddd'),
-      weatherConditions: forecastData.list[i].weather[0].main
+      weatherConditions: forecastData.list[i].weather[0].main,
+      icon: 'http://openweathermap.org/img/w/' + forecastData.list[i].weather[0].icon + '.png'
     });  
   } renderForecast();
 }
