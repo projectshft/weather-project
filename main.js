@@ -32,8 +32,8 @@ const fetchFiveDayForecast = function (query) {
     method: "GET",
     url: "https://api.openweathermap.org/data/2.5/forecast?q=" + query + '&APPID=486f4890e6823edadc8d626bbb26cdc7',
     dataType: "json",
-    success: function(data) {
-      console.log(data);
+    success: function(forecastData) {
+      console.log(forecastData);
       fiveDayForecast(forecastData);
     },
     error: function(jqXHR, textStatus, errorThrown) {
@@ -57,13 +57,13 @@ const currentConditions = function (data) {
 
 const fiveDayForecast = function (forecastData) {
   forecast = [];
-  
-  forecast.push({
-    temp: Math.round((data.main.temp - 273.15) * (9/5) + 32),
-    city: data.name,
-    weatherConditions: data.weather[0].main
-  });
-  renderForecast();
+  for(let i = 7; i <= forecastData.list.length; i += 8) {
+    forecast.push({
+      temp: Math.round((forecastData.list[i].main.temp - 273.15) * (9/5) + 32),
+      day: moment().format('dddd'),
+      weatherConditions: forecastData.list[i].weather[0].main
+    });  
+  } renderForecast();
 }
 
 
@@ -79,7 +79,7 @@ const renderWeather = function() {
   }); 
 }
 
-const source1 = $('#current-conditions-template').html();
+const source1 = $('#forecast-template').html();
 const forecastTemplate = Handlebars.compile(source1);
 
 const renderForecast = function() {
