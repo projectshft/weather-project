@@ -36,6 +36,11 @@ i {
   margin-right: 5px;
 }
 
-.conditions {
+.current-conditions {
+  display: inline-block;
+}
+
+.forecast-day {
+  border: solid 1px black;
   text-align: center;
 }

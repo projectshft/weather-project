@@ -48,7 +48,8 @@ const currentConditions = function (data) {
   weather = [{
     temp: Math.round((data.main.temp - 273.15) * (9/5) + 32),
     city: data.name,
-    weatherConditions: data.weather[0].main
+    weatherConditions: data.weather[0].main,
+    icon: 'http://openweathermap.org/img/w/' + data.weather[0].icon + '.png'
   }];
   renderWeather();
 }
