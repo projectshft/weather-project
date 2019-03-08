@@ -10,29 +10,62 @@ $(document)
   })
 
 var fetch = function(query) {
+  apikey= 'c48f732410a96bcb96dac9c9866f624f'
+  var weatherUrl = 'https://api.openweathermap.org/data/2.5/weather?q=' + query + '&units=imperial&appid='+ apikey;
 
-//update code to include API info
+  $.ajax({
+    method: "GET",
+    url: weatherUrl,
+    dataType: "json",
 
+    success: function(data) {
+      $loading.hide();
+      addWeather(data);
+    },
+    error: function(jqXHR, textStatus, errorThrown) {
+      console.log(textStatus);
+    }
+  });
+
+};
 
 var addWeather = function(data) {
-
-  // use API to get temperature info
+  //delete previous search from weather array
+    weather.splice(0)
+// use API to get temperature
   var temperature = function() {
-
+    if (data.main.temp) {
+      return Math.round(data.main.temp);
+    } else {
+      return null;
+    }
   };
-
-  // API get icon
+    // API get icon
   var icon = function() {
-
+    if (data.weather[0].icon) {
+      return data.weather[0].icon;
+    } else {
+      return null;
+    }
   };
+  //API to get city name
   var city = function() {
-    //API to get city name
+    if (data.name) {
+      return data.name;
+    } else {
+      return null;
+    }
   };
+  //API to get current conditions
   var conditions = function() {
-    //API to get current conditions
+    if (data.weather[0].main) {
+      return data.weather[0].main;
+    } else {
+      return null;
+    }
   };
 
-  //return the all functions
+//return the all functions
   var current = {
     temperature: temperature(),
     icon: icon(),
@@ -41,25 +74,25 @@ var addWeather = function(data) {
     conditions: conditions()
   };
 
-  //push to weather array
   weather.push(current);
-  //call renderWeather function
   renderWeather();
 };
 
 var renderWeather = function() {
   //delete anything currently on screen
-  $('.currentWeather').empty();
+  $('.current-weather').empty();
 
   //update handlebars with current weather array
+  // Handlebars.compile($('#post-template').html())
+  weather.forEach(function(i) {
     var source = $('#weather-template').html();
     var template = Handlebars.compile(source);
-    var newHTML = template(weather)
+    var newHTML = template(i)
 
-    $('.weather').append(newHTML);
+    $('.current-weather').append(newHTML);
+  })
 };
 
-//on click funciton to call fetch
 $('.search').on('click', function() {
   var search = $('#search-query').val();
 

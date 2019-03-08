@@ -3,7 +3,7 @@
   <head>
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css">
     <link rel="stylesheet" href="style.css">
-    <title></title>
+    <title>Neato Weather</title>
   </head>
   <body>
     <div class="container-fluid">
@@ -26,31 +26,28 @@
           <button type="button" class="btn btn-primary search">Search</button>
         </form>
 
-        <div id='loading'><img id="#load" src="https://thumbs.gfycat.com/LoneDetailedFairybluebird-max-1mb.gif"></div>
+        <div id='loading'><img id="load" src="https://thumbs.gfycat.com/LoneDetailedFairybluebird-max-1mb.gif"></div>
 
         <hr/>
-      <div class='.current-weather'>
+      <div class='current-weather'>
         </div>
 
       </div>
     </div>
     </div>
 
-
-
     <script src="node_modules/handlebars/dist/handlebars.js"></script>
     <script src="node_modules/jquery/dist/jquery.js"></script>
-    <script src="node_modules/ajax/lib/ajax.js"></script>
 
-    <script id="#weather-template" type="text/mariel-handlebars-template">
-      <div class="currentWeather">
+    <script id="weather-template" type="text/x-handlebars-template">
+      <div class="current-conditions">
         <h4>{{ city }}</h4>
-        <img src="{{ icon }}" alt="">
-        <h1>{{ temperature }} &#176;</h1>
+        <img src="http://openweathermap.org/img/w/{{ icon }}.png" alt="">
+        <h1>{{ temperature }}&#176;</h1>
         <h4>{{ conditions }}</h4>
       </div>
     </script>
 
-  <script src="main.js" type="text/javascript"></script>
+    <script src="main.js" type="text/javascript"></script>
   </body>
 </html>
