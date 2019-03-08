@@ -58,9 +58,10 @@ const currentConditions = function (data) {
 const fiveDayForecast = function (forecastData) {
   forecast = [];
   for(let i = 7; i <= forecastData.list.length; i += 8) {
+    var date = forecastData.list[i].dt;
     forecast.push({
       temp: Math.round((forecastData.list[i].main.temp - 273.15) * (9/5) + 32),
-      day: moment().format('dddd'),
+      day: moment.unix(date).format('dddd'),
       weatherConditions: forecastData.list[i].weather[0].main
     });  
   } renderForecast();
