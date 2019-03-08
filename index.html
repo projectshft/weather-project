@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="style.css">
+    <title></title>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-6 offset-md-3">
+        <div class="page-header">
+          <h1>Current Weather</h1>
+          <hr/>
+        </div>
+
+
+        <form class="search-form">
+          <h3>Search Cities</h3>
+
+          <div class="form-group">
+            <input type="text" id="search-query" class="form-control">
+            </input>
+          </div>
+
+          <button type="button" class="btn btn-primary search">Search</button>
+        </form>
+
+        <div id='loading'><img id="#load" src="https://thumbs.gfycat.com/LoneDetailedFairybluebird-max-1mb.gif"></div>
+
+        <hr/>
+      <div class='.current-weather'>
+        </div>
+
+      </div>
+    </div>
+    </div>
+
+
+
+    <script src="node_modules/handlebars/dist/handlebars.js"></script>
+    <script src="node_modules/jquery/dist/jquery.js"></script>
+    <script src="node_modules/ajax/lib/ajax.js"></script>
+
+    <script id="#weather-template" type="text/mariel-handlebars-template">
+      <div class="currentWeather">
+        <h4>{{ city }}</h4>
+        <img src="{{ icon }}" alt="">
+        <h1>{{ temperature }} &#176;</h1>
+        <h4>{{ conditions }}</h4>
+      </div>
+    </script>
+
+  <script src="main.js" type="text/javascript"></script>
+  </body>
+</html>
