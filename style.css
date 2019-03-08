@@ -1,0 +1,31 @@
+.header-title {
+  padding-top: 2rem;
+  text-align: center;
+}
+
+.form-container {
+  margin-top: 3rem;
+}
+
+.current-weather--container {
+  padding-top: 2rem;
+}
+
+.forecast-weather--container {
+  margin-top: 4.5rem;
+}
+
+.main-weather {
+  border-radius: 5%;
+  border: 2px solid rgb(71, 179, 221);
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  padding-right: 1rem;
+}
+
+.card {
+  border-radius: 5%;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  border: 2px solid rgb(71, 179, 221);
+}
