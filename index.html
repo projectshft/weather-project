@@ -24,6 +24,17 @@
     </div>
   </div>
 <script src="node_modules/jquery/dist/jquery.js"></script>
+<script src="node_modules/handlebars/dist/handlebars.js"></script>
+
+<script id="current-conditions-template" type="text/x-handlebars-template">
+  <div class="conditions col-md-12">
+    <h4>Current Conditions</h4>
+    <div><h2><strong>{{ temp }}&deg F</strong></h2></div>
+    <div><h3><strong>{{ city }}</strong></h3></div>
+    <div><h4><strong>{{ weatherConditions }}</strong></h4></div>
+  </div>
+</script>
 <script src="main.js"></script>
+
 </body>
 </html>
