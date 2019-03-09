@@ -44,6 +44,26 @@ var fetch = function (query) {
         }
     });
 };
+
+//currentWeather should show the city name, temperature, and condition
+var addCurrentWeather = function(data) {
+    //splice to remove the last search from the array
+    currentWeather.splice(0);
+        
+        console.log(data);
+            // build obj to fit handlebars template {city, temperature, condition, icon}
+
+            var rightNow = {
+                // if there is a city, temperature. condition, . . . etc, set them equal to it; if there isn't, make it an empty string
+                city: data.name ? data.name : "",
+                temperature: Math.round(data.main.temp) ? Math.round(data.main.temp) : "",
+                condition: data.weather[0].main ? data.weather[0].main : "",
+                // icon: "http://openweathermap.org/img/w/" + data.weather[0].icon + ".png" ? data.weather[0].icon : "",
+            };
+        
+        currentWeather.push(rightNow);
+        renderCurrentWeather();
+};
 //users should be able to search for a city and see the current weather
 
 //currentWeather should be rendered as soon as the page is loaded
