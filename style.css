@@ -1,4 +1,12 @@
 body {
   background-color: #e0e0e0;
-  color: #5f5f5f;
+  color: rgb(148, 83, 83);
+}
+
+.current-weather-icon {
+  height: 100px;
+}
+
+.forecast-icon {
+  height: 75px;
 }

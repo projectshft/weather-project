@@ -19,88 +19,22 @@
     <div class="enter-city row">
       <div class="col-sm-10 col-md-8 col-lg-6 m-auto">
         <form class="form-group mb-5">
-          <input type="text" name="city" id="city" class="form-control form-control-lg mb-md-1" placeholder="Enter City">
-          <button type="button" class="btn btn-success btn-block btn-lg col-md-4 m-auto">Click Me!</button>            
+          <input type="text" name="city" id="cityText" class="form-control form-control-lg mb-md-1"
+            placeholder="Enter City">
+          <button type="button" id="cityButton" class="btn btn-success btn-block btn-lg col-md-4 m-auto">Click
+            Me!</button>
         </form>
       </div>
     </div>
 
     <div class="todays-weather row text-center">
-      <div class="col-md-6 col-sm-8 m-auto">
-        <div class="card">
-          <div class="card-header h3">
-            Today
-          </div>
-          <div class="card-body">
-            <h4 class="card-title">Raleigh</h4>
-            <p class="card-text h5">47&deg; and Cloudy</p>
-          </div>
-        </div>
-      </div>
+      <!-- Current weather template goes in here -->
     </div>
 
-    <h3 class="text-center mt-5">Your Five-Day Forecast</h3>
+    <h3 class="text-center mt-5" id="forecast-heading" style="display: none;">Your Five-Day Forecast</h3>
 
     <div class="forecast text-center row justify-content-center">
-      <div class="day-1 p-2 col-sm-6 col-md-4 col-lg-2">
-        <div class="card">
-          <div class="card-header h5">
-            Day 1
-          </div>
-          <div class="card-body">
-            <h5 class="card-title">Raleigh</h5>
-            <p class="card-text">47&deg; and Cloudy</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="day-2 p-2 col-sm-6 col-md-4 col-lg-2">
-        <div class="card">
-          <div class="card-header">
-            Day 2
-          </div>
-          <div class="card-body">
-            <h5 class="card-title">Raleigh</h5>
-            <p class="card-text">47&deg; and Cloudy</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="day-3 p-2 col-sm-6 col-md-4 col-lg-2">
-        <div class="card">
-          <div class="card-header">
-            Day 3
-          </div>
-          <div class="card-body">
-            <h5 class="card-title">Raleigh</h5>
-            <p class="card-text">47&deg; and Cloudy</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="day-4 p-2 col-sm-6 col-md-4 col-lg-2">
-        <div class="card">
-          <div class="card-header">
-            Day 4
-          </div>
-          <div class="card-body">
-            <h5 class="card-title">Raleigh</h5>
-            <p class="card-text">47&deg; and Cloudy</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="day-5 p-2 col-sm-6 col-md-4 col-lg-2">
-        <div class="card">
-          <div class="card-header">
-            Day 5
-          </div>
-          <div class="card-body">
-            <h5 class="card-title">Raleigh</h5>
-            <p class="card-text">47&deg; and Cloudy</p>
-          </div>
-        </div>
-      </div>
+      <!-- Forecast template goes in here -->
     </div>
 
   </div>
@@ -110,6 +44,35 @@
   <script src="node_modules/handlebars/dist/handlebars.js"></script>
   <script src="node_modules/moment/moment.js"></script>
   <script src="app.js"></script>
+
+  <script id="current-weather-template" type="text/x-handlebars-template">
+    <div class="col-md-4 col-sm-8 m-auto">
+      <div class="card">
+        <div class="card-header h5">
+          {{date}}
+          </div>
+        <div class="card-body">
+          <img class="current-weather-icon" src="https://openweathermap.org/img/w/{{ icon }}.png">
+          <h4 class="card-title">{{city}}</h4>
+          <p class="card-text h5">{{temp}}&deg; and {{conditions}}</p>
+        </div>
+      </div>
+    </div>
+  </script>
+
+  <script id="forecast-weather-template" type="text/x-handlebars-template">
+    <div class="pb-2 p-sm-3 col-sm-6 col-md-4 col-xl">
+        <div class="card daily-weather-card">
+          <div class="card-header">
+            {{date}}
+          </div>
+          <div class="card-body">
+            <img class="forecast-icon" src="http://openweathermap.org/img/w/{{ icon }}.png">
+            <p class="card-text">{{temp}}&deg; and {{conditions}}</p>
+          </div>
+        </div>
+      </div>
+  </script>
 </body>
 
 </html>
