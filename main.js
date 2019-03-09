@@ -37,7 +37,19 @@ var renderCurrentWeather = function () {
 };
 
 //when fiveDayForecast is rendered, the model should appear in the view
+var renderForecast = function () {
+    $('.forecast').empty();
 
+    for (var i = 0; i < fiveDayForecast.length; i++) {
+        console.log(fiveDayForecast[i]);
+
+        //uses handlebars
+        var source = $('#forecast-template').html();
+        var template = Handlebars.compile(source);
+        var newHTML = template(fiveDayForecast[i]);
+        $('.forecast').append(newHTML);
+    }
+};
 
 //the weather data should be fetched and extracted from the weather API
 var fetch = function (query) {
