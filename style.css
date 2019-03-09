@@ -1,8 +1,15 @@
+html {
+  height: 100%;
+}
 body {
   background-color: #EDEDED;
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 100%;
 }
 h4 {
   margin-bottom: 0px;
+  font-size: small;
 }
 h5 {
   color:white;
@@ -10,7 +17,7 @@ h5 {
   text-align: center;
   margin-top: 50px;
   margin-bottom: 125px;
-  font-size: 50px;
+  font-size: 60px;
 }
 .weatherData {
   font-family: -apple-system;
@@ -19,32 +26,59 @@ h5 {
   font-size: 40px;
   line-height: 40px;
   border-radius: 20px;
-  border: 1px solid rgb(45, 45, 46);
-  background-color: rgb(139, 137, 145);
+  border: 1px solid rgb(45, 45, 46, .7);
+  background-color: rgb(0,102,255,.7);
   margin-top: 5px;
   margin-bottom: 5px;
   margin-left: 30%;
   margin-right: 30%;
+  overflow: hidden;
 }
 .col-lg-6 {
-background-color: lightgray;
+background-color: rgb(212, 211, 211,.5);
 border-radius: 20px;
-border: 1px solid rgb(45, 45, 46);
+border: 1px solid rgb(45, 45, 46, .5);
 padding-bottom: 15px;
 }
 .currentWeather {
+  margin-top: 5px;
   text-align: center;
   align-content: center;
 }
 .forecastData {
   color:white;
-  float:left;
-  width: 19%;
+  display: inline-block;
+  width: 18%;
   text-align: center;
   font-size: 40px;
   line-height: 40px;
   border-radius: 20px;
-  border: 1px solid rgb(45, 45, 46);
-  background-color: rgb(139, 137, 145);
+  border: 1px solid rgb(45, 45, 46, .7);
+  background-color: rgb(0,102,255,.7);
   margin: 5px 1px 1px 1px;
+  padding-bottom: 5px;
+  overflow: hidden;
+}
+
+#forecastWeather {
+ text-align: center;
+}
+
+.forecastHeader {
+  color:white;
+  font-weight: bold;
+  font-size: 40px;
+}
+
+.col-lg-8 {
+  border-radius: 20px;
+  border: 1px solid rgb(45, 45, 46, .5);
+  background-color: rgb(212, 211, 211,.5);
+  margin: 5px 1px 1px 1px;
+  padding-bottom: 5px;
+  overflow: hidden;
+}
+
+#forecastContainer {
+display: none;
 }
