@@ -1,7 +1,7 @@
 var WeatherApp = function() {
 
-  var searchFunc = function() { //Hard coded API call function
-    fetch('https://api.openweathermap.org/data/2.5/weather?q=Durham&APPID=72e02d7e6f07aa32ae20388abf818118')
+  var searchFunc = function(input) { //API call
+    fetch('https://api.openweathermap.org/data/2.5/weather?q=' + input + '&APPID=72e02d7e6f07aa32ae20388abf818118')
     .then(function(response) {
       return response.json();
     })
@@ -17,7 +17,7 @@ var WeatherApp = function() {
       condition: data.weather[0].main,
       condIconLink: "http://openweathermap.org/img/w/"+ data.weather[0].icon +".png" //Using Openweathermap's condition images.
     }
-
+    $('#currentWeather').empty();
     var source = $('#currentConditionsTemplate').html();
     var template = Handlebars.compile(source);
     var newHTML = template(queryData);
@@ -29,5 +29,11 @@ var WeatherApp = function() {
   }
 }
 
-var myWeatherApp = WeatherApp();
-myWeatherApp.searchFunc(); //testing module
+$(document).on('click', '.btn' ,function() {
+  var input = $('#searchVal').val();
+  if (input != "") {
+    var myWeatherApp = WeatherApp();
+    myWeatherApp.searchFunc(input);
+    $("#searchVal").val("");
+  }
+});
