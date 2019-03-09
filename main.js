@@ -30,6 +30,20 @@ var renderCurrentWeather = function () {
     }
 };
 
-//the weather data should be fetched and extracted from the API
+//the weather data should be fetched and extracted from the weather API
+var fetch = function (query) {
+    $.ajax({
+        method: "GET",
+        url: "https://api.openweathermap.org/data/2.5/weather?q=" + query + "&appid=67a3461ef47ac031e5c7b307ce98c09c&units=imperial",
+        dataType: "json",
+        success: function(data) {
+            addForecast(data);
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.log(textStatus);
+        }
+    });
+};
+//users should be able to search for a city and see the current weather
 
-//
+//currentWeather should be rendered as soon as the page is loaded
