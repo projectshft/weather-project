@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>~~~~ weather.app ~~~~</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
+</head>
+<body>
+
+    <!-- Views hiearchy ---------
+        a) Current weather view
+
+        b) Forecast view
+            1. Day 1 view
+            2. Day 2 view
+            3. Day 3 view
+            4. Day 4 view
+            5. Day 5 view
+     -------------------------->
+
+     <!-- Structure-------------
+        Static HTML
+            Weather.app
+            Search input box
+            Submit button
+        Dynamic HTML
+            Current weather
+            Five day weather
+     -------------------------->
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-6 offset-md-3">
+
+          <div class="page-header">
+            <h1>we @ her .app</h1>
+            <hr/>
+          </div>
+
+          <form class="search-form">
+                <h3>What is my weather?</h3>
+      
+                <div class="form-group">
+                  <input type="text" id="search-query" class="form-control" placeholder="US city name">
+                  </input>
+                </div>
+      
+                <button type="button" class="btn btn-primary search">Search</button>
+              </form>
+
+            <div class="currentWeatherView row">
+                <!-- renderCurrentWeatherDataView() -->
+            </div>
+            
+        </div>
+      </div>
+    </div>
+
+    <!-- Handlebars template -->
+    <script id="currentWeather-template" type="text/x-handlebars-template">
+        <div class="current col-md-6">
+          <h4>Right now in {{ city }}</h4>
+          <div>Condition: <strong>{{ condition }}</strong></div>
+          <div>Temperature: <strong>{{ temperature }}&#8457;</strong></div>
+        </div>
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="main.js" type="text/javascript"></script>
+</body>
+</html>
