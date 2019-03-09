@@ -1,0 +1,57 @@
+.top {
+    
+    background-color: rgb(93,198,188, 0.8);
+    font-family: 'Mukta', sans-serif;
+}
+
+.title {
+    margin-top: 40px; 
+    font-family: 'Mukta', sans-serif;
+    color: rgb(72,160,178);
+  }
+
+.weather {
+    background-color: rgb(72,160,178);
+    border-radius: 4%;
+    color: lightcyan;
+    vertical-align: middle;
+    padding: 5px;
+}
+
+.big-img {
+    max-height: 170px;
+    max-width: 170px;
+}
+
+.small-img {
+    max-height: 40px;
+    max-width: 40px;
+}
+.bottom {
+    font-family: 'Mukta', sans-serif;
+}
+
+.forecast {
+    background-color: rgb(72,160,178);
+    border-radius: 10px;
+    margin: 10px;
+    color: white;
+}
+
+/* .weather {
+    background-color: pink;
+    border-style:solid;
+    border-color: white;
+    width: auto;
+    height: auto;
+    text-align: center;
+    border-radius: 300px;
+    vertical-align:middle;
+    display:table;
+    padding: 10px;
+}
+
+span {
+    display:table-cell;
+    vertical-align:middle;
+}  */
