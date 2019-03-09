@@ -60,7 +60,7 @@ const fiveDayForecast = function (forecastData) {
   console.log(forecastData)
   forecast = [];
   for(let i = 7; i <= forecastData.list.length; i += 8) {
-    var date = forecastData.list[i].dt;
+    let date = forecastData.list[i].dt;
     forecast.push({
       temp: Math.round((forecastData.list[i].main.temp - 273.15) * (9/5) + 32),
       day: moment.unix(date).format('dddd'),
@@ -78,7 +78,7 @@ const renderWeather = function() {
   $('.current-conditions').empty();
 
   weather.forEach(item => {
-    var newHTML = template(item);
+    let newHTML = template(item);
     $('.current-conditions').append(newHTML);
   }); 
 }

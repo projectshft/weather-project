@@ -8,25 +8,35 @@
   <link rel="stylesheet" href="styles.css" />
   <title>Doss2k Weather App</title>
 </head>
+
 <body>
   <h1 class="text-center">Current Weather</h1>
   <div class="container">
     <div class="row">      
-      <div class="col-12 inner-container">
-        <form class="city-search">
-          <div class="form-group">
-            <input id="city-name" type="text" placeholder="Enter City Name">
-            <button type="button" class="btn btn-primary" id="search-city">Search</button>
-          </div>          
-        </form>
-        <div class="container-fluid current-conditions"></div>
+      <div class="col-md-12 inner-container">
+        <div class="row">
+          <div class="col-md-2"></div>
+          <form class="col-md-8 city-search">
+            <div class="form-group">
+              <input id="city-name" type="text" placeholder="Enter City Name">
+              <button type="button" class="btn btn-primary" id="search-city">Search</button>
+            </div>          
+          </form>
+          <div class="col-md-2"></div>
+        </div>
+        <div class="container current-conditions"></div>
         <div class="container-fluid forecast-container">
-          <div class="row forecast"></div>
+          <div class="row">
+            <div class="col-md-1"></div>
+            <div class="col-md-10 forecast d-flex justify-content-between"></div>
+            <div class="col-md-1"></div> 
+          </div>
         </div>
         </div>
       </div>      
     </div>
   </div>
+
 <script src="node_modules/jquery/dist/jquery.js"></script>
 <script src="node_modules/handlebars/dist/handlebars.js"></script>
 <script src="node_modules/moment/moment.js"></script>
@@ -35,21 +45,27 @@
   <div class="row">
     <div class="col-md-4"></div>
     <div class="conditions col-md-4">
-      <h4>Current Conditions</h4>
-      <div><h2><strong>{{ temp }}&deg F</strong></h2></div>
-      <div><h3><strong>{{ city }}</strong></h3></div>
-      <div><h4><strong>{{ weatherConditions }}</strong></h4></div>
-      <div><image src={{ icon }}></image></div>
+      <h4 class="text-center">Current Conditions</h4>
+      <div class="row">
+        <div class="col-md-6">
+          <div><h2><strong>{{ temp }}&deg F</strong></h2></div>
+          <div><h4><strong>{{ city }}</strong></h4></div>
+          <div><h4><strong>{{ weatherConditions }}</strong></h4></div>
+        </div>
+        <div class="col-md-6">
+          <div><img src={{ icon }} /></div>
+        </div>
+      </div>
     </div>
     <div class="col-md-4"></div>
   </div>
 </script>
 
 <script id="forecast-template" type="text/x-handlebars-template">
-    <div class="forecast-day col-md-2">
+    <div class="forecast-day">
       <div><h4><strong>{{ weatherConditions }}</strong></h4></div>
       <div><h3><strong>{{ temp }}&deg F</strong></h3></div>
-      <div><image src={{ icon }}></image></div>
+      <div><img src={{ icon }} /></div>
       <div><h6><strong>{{ day }}</strong></h6></div>      
     </div>
 </script>

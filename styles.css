@@ -8,15 +8,14 @@ body {
 }
 
 input {
-  width: 50%;
+  width: 60%;
   padding-left: 7px;
 }
 
-i {
-  margin-top: 5px;
-  margin-right: 10px;
+img {
+  width: 80px;
+  height: 80px;
 }
-
 .inner-container {
   background-color: #c7dfff;
   border-radius: 10px;
@@ -24,6 +23,7 @@ i {
   margin-bottom: 200px;
   margin-top: 15px;
   padding-top: 50px;
+  padding-bottom: 100px;
   word-wrap: break-word;
 }
 
@@ -38,9 +38,21 @@ i {
 
 .current-conditions {
   display: inline-block;
+  margin-bottom: 20px;
+}
+
+.conditions {
+  background-color: #add0ff;
+  border: solid 1px #4376d4;
+  border-radius: 10px;
 }
 
 .forecast-day {
-  border: solid 1px black;
+  background-color: #add0ff;
+  border: solid 1px #4376d4;
+  border-radius: 10px;
   text-align: center;
+  display: inline-block;
+  padding: 5px 40px;
 }
+
