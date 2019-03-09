@@ -1,5 +1,21 @@
 let weather = [];
-let forecastData = [];
+let forecast = [];
+
+let STORAGE_WEATHER = 'current_weather';
+let STORAGE_FORECAST = 'forecast_data';
+
+// Saves current contents of weather and forecast arrays to local storage
+
+const saveToLocalStorage = function () {
+  localStorage.setItem(STORAGE_WEATHER, JSON.stringify(weather));
+  localStorage.setItem(STORAGE_FORECAST, JSON.stringify(forecast));
+}
+
+// Grabs info from local storage
+
+const getFromLocalStorage = function (ID) {
+  return JSON.parse(localStorage.getItem(ID) || '[]');
+}
 
 // Creates click handler for search button 
 
@@ -19,6 +35,13 @@ $('#search-geolocation').on('click', function () {
   navigator.geolocation.getCurrentPosition(function(position) {
     fetchFiveDayForecastByGeolocation(position.coords.latitude, position.coords.longitude);
   });
+});
+
+// Creates click handler for Set Default button
+
+$('.inner-container').on('click', '#set-default', function () {
+  $(this).removeClass('btn-primary').addClass('btn-success');
+  saveToLocalStorage();
 });
 
 // Grabs the current condition data from the API based on searched city name
@@ -101,7 +124,6 @@ const currentConditions = function (data) {
 // Takes in the data from the API and creates object for five day forecast
 
 const fiveDayForecast = function (forecastData) {
-  console.log(forecastData)
   forecast = [];
   for(let i = 7; i <= forecastData.list.length; i += 8) {
     let date = forecastData.list[i].dt;
@@ -139,4 +161,9 @@ const renderForecast = function() {
     $('.forecast').append(newHTML);
   }); 
 }
+
+  weather = getFromLocalStorage(STORAGE_WEATHER);
+  forecast = getFromLocalStorage(STORAGE_FORECAST);
+  renderWeather();
+  renderForecast();
 

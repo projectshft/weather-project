@@ -19,6 +19,10 @@ i {
   margin-left: 7px;
 }
 
+i:hover {
+  color: #1f67b4;
+}
+
 img {
   width: 80px;
   height: 80px;
@@ -63,4 +67,6 @@ img {
   display: inline-block;
   padding: 5px 40px;
 }
+
+
 
