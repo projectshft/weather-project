@@ -25,6 +25,15 @@ $('#search-city').on('click', function () {
   fetchFiveDayForecast(search);
 });
 
+// Creates key press handler for enter key
+
+$(document).keypress(function (e) {
+  if (e.which == 13) {
+    $('#search-city').click();
+    return false;
+  }
+});
+
 // Creates click handler for Geolocation button
 
 $('#search-geolocation').on('click', function () {
@@ -116,7 +125,7 @@ const currentConditions = function (data) {
     temp: Math.round((data.main.temp - 273.15) * (9/5) + 32),
     city: data.name,
     weatherConditions: data.weather[0].main,
-    icon: 'http://openweathermap.org/img/w/' + data.weather[0].icon + '.png'
+    icon: 'https://openweathermap.org/img/w/' + data.weather[0].icon + '.png'
   }];
   renderWeather();
 }
@@ -131,7 +140,7 @@ const fiveDayForecast = function (forecastData) {
       temp: Math.round((forecastData.list[i].main.temp - 273.15) * (9/5) + 32),
       day: moment.unix(date).format('dddd'),
       weatherConditions: forecastData.list[i].weather[0].main,
-      icon: 'http://openweathermap.org/img/w/' + forecastData.list[i].weather[0].icon + '.png'
+      icon: 'https://openweathermap.org/img/w/' + forecastData.list[i].weather[0].icon + '.png'
     });  
   } renderForecast();
 }

@@ -68,5 +68,9 @@ img {
   padding: 5px 40px;
 }
 
+.forecast-container {
+  display: block;
+}
+
 
 
