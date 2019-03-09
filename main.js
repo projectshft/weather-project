@@ -65,5 +65,10 @@ var addCurrentWeather = function(data) {
         renderCurrentWeather();
 };
 //users should be able to search for a city and see the current weather
+$('.search').on('click', function () {
+    var search = $('#search-query').val();
+
+    fetch(search);
+})
 
 //currentWeather should be rendered as soon as the page is loaded
