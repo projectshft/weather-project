@@ -52,28 +52,13 @@ var renderForecast = function () {
 };
 
 //the weather data should be fetched and extracted from the weather API
-var fetch = function (query) {
+var fetchCurrentWeather = function (query) {
     $.ajax({
         method: "GET",
         url: "https://api.openweathermap.org/data/2.5/weather?q=" + query + "&appid=67a3461ef47ac031e5c7b307ce98c09c&units=imperial",
         dataType: "json",
         success: function(data) {
-            addForecast(data);
-        },
-        error: function(jqXHR, textStatus, errorThrown) {
-            console.log(textStatus);
-        }
-    });
-};
-
-//the five day forecast data should be fetched and extracted from the weather API
-var fetch = function (query) {
-    $.ajax({
-        method: "GET",
-        url: "api.openweathermap.org/data/2.5/forecast?q=" + query + "&appid=67a3461ef47ac031e5c7b307ce98c09c&units=imperial",
-        dataType: "json",
-        success: function(data) {
-            addForecast(data.list);
+            addCurrentWeather(data);
         },
         error: function(jqXHR, textStatus, errorThrown) {
             console.log(textStatus);
@@ -101,37 +86,60 @@ var addCurrentWeather = function(data) {
         renderCurrentWeather();
 };
 
+
+//the five day forecast data should be fetched and extracted from the weather API
+var fetchForecast = function (query) {
+    $.ajax({
+        method: "GET",
+        url: "https://api.openweathermap.org/data/2.5/forecast?q=" + query + "&appid=67a3461ef47ac031e5c7b307ce98c09c&units=imperial",
+        dataType: "json",
+        success: function(data) {
+            addForecast(data.list);
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.log(textStatus);
+        }
+    });
+};
+
 //fiveDayForecast should show the weekday, temperature, and condition for the searched city for the next five days
         //moment.min.js will be required to parse the date
 var addForecast = function(data) {
     //splice to remove the last search from the array
     fiveDayForecast.splice(0);
     //for every day in the forecast API response
-    for (var i = 0; i < data.length; i ++) {
+    for (var i = 0; i < 5; i ++) {
 
         console.log("this is what the data from the forecast API looks like:", data);
             // build obj to fit handlebars template {city, temperature, condition, icon}
 
+            //refactor to use moment.min.js
+            var weekday = moment(data[i].dt_txt).format('dddd');
+            console.log("This is what weekday looks like:", weekday);
+
             var dailyForecast = {
                 // if there is a city, temperature. condition, . . . etc, set them equal to it; if there isn't, make it an empty string
-                weekday: data.list[i].dt ? data.list[i].dt : "", //refactor to use moment.min.js
-                temperature: Math.round(data.list[i].main.temp) ? Math.round(data.list[i].main.temp) : "",
-                condition: data.list[i].weather[0].main ? data.list[i].weather[0].main : "",
-                // icon: "http://openweathermap.org/img/w/" + data.list[i].weather[0].icon + ".png" ? data.list[i].weather[0].icon : "",
+                weekday: weekday ? weekday : "", 
+                temperature: Math.round(data[i].main.temp) ? Math.round(data[i].main.temp) : "",
+                condition: data[i].weather[0].main ? data[i].weather[0].main : "",
+                // icon: "http://openweathermap.org/img/w/" + data[i].weather[0].icon + ".png" ? data[i].weather[0].icon : "",
             };
         
         fiveDayForecast.push(dailyForecast);
         renderForecast();
+    }
 };
 
 //users should be able to search for a city and see the current weather
 $('.search').on('click', function () {
     var search = $('#search-query').val();
 
-    fetch(search);
+    fetchCurrentWeather(search);
+    fetchForecast(search);
 })
 
 //currentWeather should be rendered as soon as the page is loaded
 renderCurrentWeather();
 
-//fiveDayForecast should be rendered after the search button is clicked
+// //fiveDayForecast should be rendered after the search button is clicked
+//renderForecast;
