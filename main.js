@@ -72,3 +72,4 @@ $('.search').on('click', function () {
 })
 
 //currentWeather should be rendered as soon as the page is loaded
+renderCurrentWeather();
