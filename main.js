@@ -1,19 +1,25 @@
 /* Weather-Project Eval
 Part 1:
-- A user should be able to enter a city into the url, click "Search" and get weather data on the city they entered.
-- A user should be able to see the current temperature (in imperial units).
-- A user should be able to see the current conditions (whether it's cloudy, raining, etc).
-- When a user does another search, their first search should be replaced.
+✔︎ A user should be able to enter a city into the url, click "Search" and get weather data on the city they entered.
+✔︎ A user should be able to see the current temperature (in imperial units).
+✔︎ A user should be able to see the current conditions (whether it's cloudy, raining, etc).
+✔︎ When a user does another search, their first search should be replaced.
 
 Part 2:
 - When a user searches, they should additionally see a 5-day forecast, and each of the five days should have an associated day of the week, weather condition and temperature.
 
 my API key: 67a3461ef47ac031e5c7b307ce98c09c
 
+TO DO:
+-refactor icons
+-refactor html design
+
 */
 
 //the data should live in a data structure outside of the view
 var currentWeather = [];
+
+var fiveDayForecast = [];
 
 //when CurrentWeather is rendered, the model should appear in the view
 var renderCurrentWeather = function () {
@@ -30,6 +36,9 @@ var renderCurrentWeather = function () {
     }
 };
 
+//when fiveDayForecast is rendered, the model should appear in the view
+
+
 //the weather data should be fetched and extracted from the weather API
 var fetch = function (query) {
     $.ajax({
@@ -44,6 +53,8 @@ var fetch = function (query) {
         }
     });
 };
+
+//the five day forecast data should be fetched and extracted from the weather API
 
 //currentWeather should show the city name, temperature, and condition
 var addCurrentWeather = function(data) {
@@ -64,6 +75,10 @@ var addCurrentWeather = function(data) {
         currentWeather.push(rightNow);
         renderCurrentWeather();
 };
+
+//fiveDayForecast should show the weekday, temperature, and condition for the searched city for the next five days
+        //moment.min.js will be required to parse the date
+
 //users should be able to search for a city and see the current weather
 $('.search').on('click', function () {
     var search = $('#search-query').val();
@@ -73,3 +88,5 @@ $('.search').on('click', function () {
 
 //currentWeather should be rendered as soon as the page is loaded
 renderCurrentWeather();
+
+//fiveDayForecast should be rendered after the search button is clicked
