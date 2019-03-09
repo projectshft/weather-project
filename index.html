@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="style.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.1.0/handlebars.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.js"></script>
   <script src="main.js"></script>
   <title>Weather Project</title>
 </head>
@@ -27,21 +28,29 @@
       </div>
     </div>
   </div>
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-10">
+        <div id="forecastWeather">
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
 </html>
 <script id="currentConditionsTemplate" type="text/x-handlebars-template">
   <div class="weatherData">
-    <div class="temp">{{temp}}&deg;</div>
     <div>{{name}}</div>
-    <div>{{condition}}</div>
+    <div class="temp"><h4>{{temp}}&deg;</h4></div>
+    <div><h4>{{condition}}</h4></div>
     <img class="currentIcon" src="{{condIconLink}}">
   </div>
 </script>
 <script id="forecastTemplate" type="text/x-handlebars-template">
   <div class="forecastData">
-    <div>{{condition}}</div>
-    <div class="temp">{{temp}}&deg;</div>
+    <div class="temp"><h4>{{temp}}&deg;</h4></div>
+    <div><h4>{{condition}}</h4></div>
     <img class="forecastIcon" src="{{forecastIconLink}}">
-    <div>{{day}}</div>
+    <div><h4>{{day}}</h4></div>
   </div>
 </script>

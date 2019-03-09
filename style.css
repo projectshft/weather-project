@@ -1,14 +1,20 @@
 body {
   background-color: #EDEDED;
-
+}
+h4 {
+  margin-bottom: 0px;
 }
 h5 {
+  color:white;
+  font-weight: bolder;
   text-align: center;
   margin-top: 50px;
   margin-bottom: 125px;
   font-size: 50px;
 }
 .weatherData {
+  font-family: -apple-system;
+  color:white;
   text-align: center;
   font-size: 40px;
   line-height: 40px;
@@ -24,20 +30,21 @@ h5 {
 background-color: lightgray;
 border-radius: 20px;
 border: 1px solid rgb(45, 45, 46);
+padding-bottom: 15px;
 }
 .currentWeather {
   text-align: center;
   align-content: center;
 }
 .forecastData {
+  color:white;
+  float:left;
+  width: 19%;
   text-align: center;
   font-size: 40px;
   line-height: 40px;
   border-radius: 20px;
   border: 1px solid rgb(45, 45, 46);
   background-color: rgb(139, 137, 145);
-  margin-top: 5px;
-  margin-bottom: 5px;
-  margin-left: 30%;
-  margin-right: 30%;
+  margin: 5px 1px 1px 1px;
 }

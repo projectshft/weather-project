@@ -24,25 +24,27 @@ var WeatherApp = function() {
       condIconLink: "http://openweathermap.org/img/w/"+ data.weather[0].icon +".png", //Using Openweathermap's condition images.
     }
 
-    //current weather
+    //current weather Handlebar stuff
     $('#currentWeather').empty();
     var source = $('#currentConditionsTemplate').html();
     var template = Handlebars.compile(source);
     var newHTML = template(queryData);
     $('#currentWeather').append(newHTML);
   } else {
-    //forecast - forecast data is every 3 hours so 8 items per 24 hours
-    for (var i=0;i<data.list.length; i+=8) {
+    $('#forecastWeather').empty();
+    //forecast - forecast data is every 3 hours so 8 items per 24 hours, starting from index 7 gives us the max # of forecasts
+    for (var i=7;i<data.list.length; i+=8) {
+      console.log(i);
       var forecastData = {
         condition: data.list[i].weather[0].main,
         temp: parseInt(((data.list[i].main.temp-273.15)*9/5)+32),
         forecastIconLink: "http://openweathermap.org/img/w/"+ data.list[i].weather[0].icon +".png",
-        day: data.list[i].dt_txt
+        day: moment(data.list[i].dt_txt, 'YYYY-MM-DD HH:mm:ss').format("dddd")
     }
-    var source = $('#forecastTemplate').html();
+    var source = $('#forecastTemplate').html(); //forecast Handlebar stuff
     var template = Handlebars.compile(source);
     var newHTML = template(forecastData);
-    $('#currentWeather').append(newHTML);
+    $('#forecastWeather').append(newHTML);
     }
   }
   }
@@ -61,6 +63,8 @@ $(document).on('click', '.btn' ,function() {
   }
 });
 
+
+//notes
 //every i + 8 = 24 hours
 //condition data.list.main
 //temp data.list[i].main.temp
