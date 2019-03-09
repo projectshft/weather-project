@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <link rel="stylesheet" href="style.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
-  <script sec="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.1.0/handlebars.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.1.0/handlebars.js"></script>
   <script src="main.js"></script>
   <title>Weather Project</title>
 </head>
@@ -22,9 +22,18 @@
             <button type="submit" class="btn btn-primary">Submit</button>
           </div>
         </form>
-        <h5>current loc weather placeholder</h5>
+        <div id="currentWeather">
+        </div>
       </div>
     </div>
   </div>
 </body>
 </html>
+<script id="currentConditionsTemplate" type="text/x-handlebars-template">
+  <div class="weatherData">
+    <div class="temp">{{temp}}&deg;</div>
+    <div>{{name}}</div>
+    <div>{{condition}}</div>
+    <img class="currentIcon" src="{{condIconLink}}">
+  </div>
+</script>
