@@ -176,3 +176,10 @@ const renderForecast = function() {
   renderWeather();
   renderForecast();
 
+$(window).resize(function () {
+  var viewportWidth = $(window).width();
+  if (viewportWidth < 1000) {
+    $(".forecast").removeClass("d-flex justify-content-between");
+  }
+});
+
