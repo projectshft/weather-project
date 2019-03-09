@@ -2,66 +2,74 @@
 <html lang="en" dir="ltr">
   <head>
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
     <link rel="stylesheet" href="style.css">
     <title>Neato Weather</title>
   </head>
   <body>
-    <div class="container-fluid">
+    <!--Nav-Bar-->
+    <div class="hero">
+      <nav class="navbar">
+        <a class="navbar-brand" href="#">
+          <i class="fas fa-cloud-sun"></i><strong> Mariel</strong>Weather
+        </a>
+      </nav>
+    </div>
+
+    <div class="container">
       <div class="row">
         <div class="col-md-6 offset-md-3">
-        <div class="page-header">
-          <h1>Current Weather</h1>
+          <form class="search-form">
+            <h3>Search Cities</h3>
+
+            <div class="form-group">
+              <input type="text" id="search-query" class="form-control">
+              </input>
+            </div>
+            <button type="button" class="btn btn-primary search">Search</button>
+          </form>
           <hr/>
         </div>
+      </div>
+    </div>
 
+    <div id='loading'><img id="load" src="https://thumbs.gfycat.com/LoneDetailedFairybluebird-max-1mb.gif"></div>
 
-        <form class="search-form">
-          <h3>Search Cities</h3>
-
-          <div class="form-group">
-            <input type="text" id="search-query" class="form-control">
-            </input>
-          </div>
-
-          <button type="button" class="btn btn-primary search">Search</button>
-        </form>
-
-        <div id='loading'><img id="load" src="https://thumbs.gfycat.com/LoneDetailedFairybluebird-max-1mb.gif"></div>
-
-        <hr/>
-      <div class='current-weather'>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 current-weather mx-auto">
         </div>
-
-      <div class='forecast'>
-      </div>
-
       </div>
     </div>
+
+    <div class="container five-day">
+      <div class="row forecast">
+      </div>
     </div>
+    
 
-    <script src="node_modules/handlebars/dist/handlebars.js"></script>
-    <script src="node_modules/jquery/dist/jquery.js"></script>
-    <script src="node_modules/moment/moment.js"></script>
+        <script src="node_modules/handlebars/dist/handlebars.js"></script>
+        <script src="node_modules/jquery/dist/jquery.js"></script>
+        <script src="node_modules/moment/moment.js"></script>
 
-    <script id="current-template" type="text/x-handlebars-template">
-      <div class="current-conditions">
-        <h4>{{ city }}</h4>
-        <img src="http://openweathermap.org/img/w/{{ icon }}.png" alt="">
-        <h1>{{ temperature }}&#176;</h1>
-        <h4>{{ conditions }}</h4>
-      </div>
-    </script>
+        <script id="current-template" type="text/x-handlebars-template">
+            <div class="weather-head">
+              <h3 id="location" class="text-center display-4">{{ city }}</h3>
+              <img class="text-center" src="http://openweathermap.org/img/w/{{ icon }}.png" alt="">
+              <p class="text-center temp">{{ temperature }}&#176;</p>
+              <p class="text-center current-conditions mx-auto">{{ conditions }}</p>
+            </div>
+        </script>
 
-    <script id="forecast-template" type="text/x-handlebars-template">
-      <div class="current-conditions">
-        <h4>{{ city }}</h4>
-        <img src="http://openweathermap.org/img/w/{{ icon }}.png" alt="">
-        <h1>{{ temperature }}&#176;</h1>
-        <h4>{{ conditions }}</h4>
-        <h4>{{ dayOfWeek }}</h4>
-      </div>
-    </script>
+        <script id="forecast-template" type="text/x-handlebars-template">
+          <div class="text-center col-sm daily">
+            <h4>{{ dayOfWeek }}</h4>
+            <img src="http://openweathermap.org/img/w/{{ icon }}.png" alt="">
+            <h1>{{ temperature }}&#176;</h1>
+            <p>{{ conditions }}</p>
+          </div>
+        </script>
 
-    <script src="main.js" type="text/javascript"></script>
-  </body>
-</html>
+        <script src="main.js" type="text/javascript"></script>
+      </body>
+    </html>

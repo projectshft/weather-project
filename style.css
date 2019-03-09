@@ -1,10 +1,60 @@
-.page-header {
-  margin-top: 40px;
+body {
+  background-image: url("https://backgroundcheckall.com/wp-content/uploads/2017/12/weather-background-5.jpg");
+  min-height: 100vh;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: white;
+  font-family: 'Raleway', sans-serif;
+}
+
+.hero {
+  position: absolute;
+  min-height: 100vh;
+  min-width: 100vw;
+  top: 0;
+  bottom: 0;
+  background-color: rgba(118, 135, 195, 0.3);
+}
+
+.navbar {
+  background-color: rgba(69, 106, 171);
+}
+
+.navbar a{
+  color: white;
+  font-size: 25px;
 }
 
 .search-form {
-  margin-top: 40px;
+  margin-top: 100px;
   margin-bottom: 40px;
+}
+
+.current-weather{
+  border: 1px solid white;
+  background-color: rgba(0, 0, 0, 0.34)
+}
+
+#weather-icons {
+  font-size: 5rem;
+  padding-top: 2rem;
+}
+
+.temp {
+  font-size: 9em;
+  font-weight: 900;
+  color: rgba(255, 215, 1, 0.59);
+}
+.five-day {
+  margin: 25px;
+}
+
+.daily {
+  margin: 10px;
+  text: center;
+  border: 1px solid white;
+  background-color: rgba(0, 0, 0, 0.34)
 }
 
 #loading img {
