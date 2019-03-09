@@ -21,6 +21,18 @@ var currentWeather = [];
 
 var fiveDayForecast = [];
 
+//add top level variable as key for local Storage
+var STORAGE_ID = 'weather-app';
+
+// //stringify and save currentWeather array
+// var saveToLocalStorage = function () {
+//     localStorage.setItem(STORAGE_ID, JSON.stringify(currentWeather));
+// };
+// //get local storage and turn back into JSON
+// var getFromLocalStorage = function () {
+//     return JSON.parse(localStorage.getItem(STORAGE_ID) || '[]');
+//   }
+
 //when CurrentWeather is rendered, the model should appear in the view
 var renderCurrentWeather = function () {
     //ensure the div is empty before rendering
@@ -74,15 +86,15 @@ var addCurrentWeather = function(data) {
         console.log("this is what the data from the current weather API looks like:", data);
             // build obj to fit handlebars template {city, temperature, condition, icon}
 
-            var rightNow = {
+            var WeatherRightNow = {
                 // if there is a city, temperature. condition, . . . etc, set them equal to it; if there isn't, make it an empty string
                 city: data.name ? data.name : "",
                 temperature: Math.round(data.main.temp) ? Math.round(data.main.temp) : "",
+                icon: data.weather[0].icon ? `http://openweathermap.org/img/w/${data.weather[0].icon}.png` : "",
                 condition: data.weather[0].main ? data.weather[0].main : "",
-                // icon: "http://openweathermap.org/img/w/" + data.weather[0].icon + ".png" ? data.weather[0].icon : "",
             };
         
-        currentWeather.push(rightNow);
+        currentWeather.push(WeatherRightNow);
         renderCurrentWeather();
 };
 
@@ -108,21 +120,30 @@ var addForecast = function(data) {
     //splice to remove the last search from the array
     fiveDayForecast.splice(0);
     //for every day in the forecast API response
-    for (var i = 0; i < 5; i ++) {
+    for (var i = 0; i < data.length; i += 8) {
 
         console.log("this is what the data from the forecast API looks like:", data);
             // build obj to fit handlebars template {city, temperature, condition, icon}
 
-            //refactor to use moment.min.js
-            var weekday = moment(data[i].dt_txt).format('dddd');
-            console.log("This is what weekday looks like:", weekday);
+            // if (data[i].dt_txt.includes("12:00:00") > -1) {
+            //     var weekday = moment(data[i].dt_txt).format('dddd');
+            // };
 
+            //refactor to use moment.min.js and also to shorten the name of the day
+            var day = data[i].dt_txt.includes("12:00:00") > -1;
+            console.log("This is what day looks like:", day);
+
+            var weekday = moment(data[i].dt_txt).format('dddd');
+            shortenedWeekday = weekday.substring(0,3);
+            console.log("This is what weekday looks like:", shortenedWeekday);
+
+            console.log("this is what the icon looks like:", data[i].weather[0].icon);
             var dailyForecast = {
                 // if there is a city, temperature. condition, . . . etc, set them equal to it; if there isn't, make it an empty string
-                weekday: weekday ? weekday : "", 
+                weekday: shortenedWeekday ? shortenedWeekday : "", 
                 temperature: Math.round(data[i].main.temp) ? Math.round(data[i].main.temp) : "",
                 condition: data[i].weather[0].main ? data[i].weather[0].main : "",
-                // icon: "http://openweathermap.org/img/w/" + data[i].weather[0].icon + ".png" ? data[i].weather[0].icon : "",
+                icon: data[i].weather[0].icon ? `http://openweathermap.org/img/w/${data[i].weather[0].icon}.png` : "",
             };
         
         fiveDayForecast.push(dailyForecast);

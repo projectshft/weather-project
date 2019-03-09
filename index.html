@@ -11,26 +11,23 @@
 </head>
 <body>
     <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-6 offset-md-3">
-                <div class="page-header">
-                    <h1>Weather</h1>
-                    <hr/>
-                </div>
+        <div class="row top">
+            <div class="col-md-6 offset-md-3 top2">
+                <div class="row">
+                    <form class="search-form col-md-4">
+                        <h1>Weather</h1>
+                        <div class="form-group form-group-sm">
+                            <input type="text" id="search-query" class="form-control input-sm" placeholder="Enter City">
+                            </input>
+                        </div>
           
-                <form class="search-form">
-                    <div class="form-group">
-                        <input type="text" id="search-query" class="form-control" placeholder="Enter City">
-                        </input>
-                    </div>
+                        <button type="button" class="btn btn-primary btn-sm search">Search</button>
+                        <button type="button" class="btn btn-secondary btn-sm default">Set as Default</button>
+                    </form>
           
-                    <button type="button" class="btn btn-primary search">Search</button>
-                </form>
-                  
-                <hr/>
-          
-                <div class="current-weather row">
+                    <div class="current-weather col-md-8">
                     
+                    </div>
                 </div>
             </div>
         </div>
@@ -39,27 +36,40 @@
                 <div class="forecast row">
 
                 </div>
+                <!-- <div class="info row">
+
+                </div> -->
+
             </div>
         </div>
     </div> 
           
     <script id="current-weather-template" type="text/x-handlebars-template">
-        <div class="col-md-6">
-            <h4>{{ city }}</h4>
-            <div><strong>{{ temperature }}&deg;</strong></div>
-            <div><strong>{{ condition }}</strong></div>
-            <img src="{{ icon }}" alt="">
+        <div class="current"> 
+            <div class="row">
+                <div class="offset-md-1">
+                    <h2 class="text-center">{{ city }}</h2>
+                </div>
+            </div>
+            <div class="row">
+                    <img src="{{ icon }}" alt="" class="grayscale big-img offset-md-4">
+                <h2 class="text-center">{{ temperature }}&deg;</h2>
+            </div>
+            <div class="row">
+                <div class="offset-md-1">
+                    <h4 class="text-center">{{ condition }}</h4>
+                </div>
+            </div>
         </div>
     </script>  
           
 
     <script id="forecast-template" type="text/x-handlebars-template">
-        <div class="col-md-6">
-            <h4>{{ weekday }}</h4>
-            <div><strong>{{ temperature }}</strong></div>
-            <div><strong>{{ condition }}</strong></div>
-            <img src="{{ icon }}" alt="">
-            <hr />
+        <div class="col-md-2">
+            <h6 class="text-center">{{ weekday }}</h6>
+            <h5 class="text-center">{{ temperature }}&deg;</h5>
+            <img src="{{ icon }}" alt="" class="grayscale offset-md-2">
+            <h6 class="text-center">{{ condition }}</h6>
         </div>
     </script>
 
