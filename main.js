@@ -1,7 +1,7 @@
 let weather = [];
 let forecastData = [];
 
-// Creates click handler for search button and when clicked calls the fetchCurrentConditions function
+// Creates click handler for search button 
 
 $('#search-city').on('click', function () {
   const search = $('#city-name').val();
@@ -9,7 +9,19 @@ $('#search-city').on('click', function () {
   fetchFiveDayForecast(search);
 });
 
-// Grabs the current condition data from the API 
+// Creates click handler for Geolocation button
+
+$('#search-geolocation').on('click', function () {
+  navigator.geolocation.getCurrentPosition(function(position) {
+    fetchCurrentConditionsByGeolocation(position.coords.latitude, position.coords.longitude);
+  });
+
+  navigator.geolocation.getCurrentPosition(function(position) {
+    fetchFiveDayForecastByGeolocation(position.coords.latitude, position.coords.longitude);
+  });
+});
+
+// Grabs the current condition data from the API based on searched city name
 
 const fetchCurrentConditions = function (query) {
   $.ajax({
@@ -25,7 +37,7 @@ const fetchCurrentConditions = function (query) {
   });
 }
 
-// Grabs the five day forecast data from the API
+// Grabs the five day forecast data from the API based on searched city name
 
 const fetchFiveDayForecast = function (query) {
   $.ajax({
@@ -34,6 +46,38 @@ const fetchFiveDayForecast = function (query) {
     dataType: "json",
     success: function(forecastData) {
       console.log(forecastData);
+      fiveDayForecast(forecastData);
+    },
+    error: function(jqXHR, textStatus, errorThrown) {
+      console.log(textStatus);
+    }
+  });
+}
+
+// Grabs the current condition data from the API based on your Geolocation
+
+const fetchCurrentConditionsByGeolocation = function (lat, long) {
+  $.ajax({
+    method: "GET",
+    url: "https://api.openweathermap.org/data/2.5/weather?lat=" + lat + '&lon=' + long + '&APPID=486f4890e6823edadc8d626bbb26cdc7',
+    dataType: "json",
+    success: function(data) {
+      currentConditions(data);
+    },
+    error: function(jqXHR, textStatus, errorThrown) {
+      alert('Geolocation is currently not available');
+    }
+  });
+}
+
+// Grabs the five day forecast data from the API based on your Geolocation
+
+const fetchFiveDayForecastByGeolocation = function (lat, long) {
+  $.ajax({
+    method: "GET",
+    url: "https://api.openweathermap.org/data/2.5/forecast?lat=" + lat + '&lon=' + long + '&APPID=486f4890e6823edadc8d626bbb26cdc7',
+    dataType: "json",
+    success: function(forecastData) {
       fiveDayForecast(forecastData);
     },
     error: function(jqXHR, textStatus, errorThrown) {
@@ -70,12 +114,12 @@ const fiveDayForecast = function (forecastData) {
   } renderForecast();
 }
 
-
-const source = $('#current-conditions-template').html();
-const template = Handlebars.compile(source);
+// Renders the current conditions based on handlebars template
 
 const renderWeather = function() {
   $('.current-conditions').empty();
+  const source = $('#current-conditions-template').html();
+  const template = Handlebars.compile(source);
 
   weather.forEach(item => {
     let newHTML = template(item);
@@ -83,14 +127,15 @@ const renderWeather = function() {
   }); 
 }
 
-const source1 = $('#forecast-template').html();
-const forecastTemplate = Handlebars.compile(source1);
+// Renders the five day forecast based on handlebars template
 
 const renderForecast = function() {
   $('.forecast').empty();
+  const source = $('#forecast-template').html();
+  const template = Handlebars.compile(source);
 
   forecast.forEach(item => {
-    var newHTML = forecastTemplate(item);
+    let newHTML = template(item);
     $('.forecast').append(newHTML);
   }); 
 }

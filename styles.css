@@ -12,10 +12,18 @@ input {
   padding-left: 7px;
 }
 
+i {
+  color: #007bff;
+  font-size: 39px;
+  vertical-align: middle;
+  margin-left: 7px;
+}
+
 img {
   width: 80px;
   height: 80px;
 }
+
 .inner-container {
   background-color: #c7dfff;
   border-radius: 10px;
@@ -28,7 +36,7 @@ img {
 }
 
 .city-search {
-  display: inline;
+  display: inline-block;
   text-align: center;
 }
 
