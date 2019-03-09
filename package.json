@@ -18,6 +18,8 @@
   "homepage": "https://github.com/projectshft/weather-project#readme",
   "dependencies": {
     "bootstrap": "^4.3.1",
+    "handlebars": "^4.1.0",
+    "jquery": "^3.3.1",
     "moment": "^2.24.0"
   }
 }
