@@ -41,7 +41,7 @@ var renderForecast = function () {
     $('.forecast').empty();
 
     for (var i = 0; i < fiveDayForecast.length; i++) {
-        console.log(fiveDayForecast[i]);
+        console.log("this is what the forecast array looks like:", fiveDayForecast[i]);
 
         //uses handlebars
         var source = $('#forecast-template').html();
@@ -67,7 +67,19 @@ var fetch = function (query) {
 };
 
 //the five day forecast data should be fetched and extracted from the weather API
-
+var fetch = function (query) {
+    $.ajax({
+        method: "GET",
+        url: "api.openweathermap.org/data/2.5/forecast?q=" + query + "&appid=67a3461ef47ac031e5c7b307ce98c09c&units=imperial",
+        dataType: "json",
+        success: function(data) {
+            addForecast(data.list);
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.log(textStatus);
+        }
+    });
+};
 //currentWeather should show the city name, temperature, and condition
 var addCurrentWeather = function(data) {
     //splice to remove the last search from the array
