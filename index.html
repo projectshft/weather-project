@@ -8,6 +8,8 @@
   <link rel="stylesheet" href="style.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel='stylesheet' type='text/css' href='sdk/map.css' />
+  <script src='sdk/tomtom.min.js'></script>
   <title>Document</title>
 </head>
 
@@ -34,18 +36,18 @@
         </div>
       </div>
     </form>
+  </div>
 
-    <div class="current-weather--container">
-      <script id="weather-template" type="text/x-handlebars-template">
-        <div class="main-weather col-md-4">
-          <h2>{{ degrees }}</h2>
-          <h4>{{ city }}</h4>
-          <h5>{{ weather }}</h5>
-        </div>
-      </script>
+  <div class="container main-weather">
+    <div class="row">
+      <div class="col-md-6 current-weather"></div>
+      <div class="col-md-6">
+        <div id='map' style='height:250px;width:450px'></div>
+      </div>
     </div>
+  </div>
 
-    <!-- <div class="row forecast-weather--container d-flex justify-content-between">
+  <!-- <div class="row forecast-weather--container d-flex justify-content-between">
       <script id="forecast-weather-template" type="text/x-handlebars-template">
         <div class="forecast-weather col-md-2 card">
           <h2>{{ degrees }}</h2>
@@ -74,7 +76,6 @@
         </div>
       </script>
     </div> -->
-  </div>
 
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
     crossorigin="anonymous"></script>
@@ -83,6 +84,11 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
     crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
+  <script id="weather-template" type="text/x-handlebars-template">
+    <h2>{{ degrees }}</h2>
+    <h4>{{ city }}</h4>
+    <h5>{{ weather }}</h5>
+  </script>
   <script src="main.js"></script>
 </body>
 

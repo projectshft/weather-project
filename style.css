@@ -16,11 +16,7 @@
 }
 
 .main-weather {
-  border-radius: 5%;
-  border: 2px solid rgb(71, 179, 221);
-  padding-top: 2rem;
-  padding-bottom: 2rem;
-  padding-right: 1rem;
+  padding-top: 4rem;
 }
 
 .card {
