@@ -36,7 +36,6 @@ var addWeather = function(data) {
   for (var i = 0; i < data.list.length; i+= 8) {
   // use API to get temperature
     var temperature = function() {
-      console.log(data.list[i].main.temp)
       if (data.list[i].main.temp) {
         return Math.round(data.list[i].main.temp);
       } else {
@@ -70,8 +69,10 @@ var addWeather = function(data) {
     //API to get day of week
     var dayOfWeek = function() {
       if (data.list[i].dt) {
-        var day = data.list[i].dt
-        return moment(day).format('dddd');
+        var day = data.list[i].dt_txt
+        var local = moment.utc(day).local();
+
+        return moment.utc(day).local().format('dddd');
       }else {
         return null;
       }
@@ -95,16 +96,19 @@ var addWeather = function(data) {
 var renderWeather = function() {
   //delete anything currently on screen
   $('.current-weather').empty();
+  $('.forecast').empty();
 
   //update handlebars with current weather array
-  // Handlebars.compile($('#post-template').html())
-for (var i = 0; i < weather.length; i+= 8) {
+  var template1 = Handlebars.compile($('#current-template').html());
+  var newHTML1 = template1(weather[0])
+  $('.current-weather').append(newHTML1);
+
+  //update handlebars with five day forecast
   weather.forEach(function(i) {
-    var template = Handlebars.compile($('#weather-template').html());
+    var template = Handlebars.compile($('#forecast-template').html());
     var newHTML = template(i)
-    $('.current-weather').append(newHTML);
+    $('.forecast').append(newHTML);
     })
-  }
 };
 
 $('.search').on('click', function() {

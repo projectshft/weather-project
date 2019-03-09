@@ -43,7 +43,16 @@
     <script src="node_modules/jquery/dist/jquery.js"></script>
     <script src="node_modules/moment/moment.js"></script>
 
-    <script id="weather-template" type="text/x-handlebars-template">
+    <script id="current-template" type="text/x-handlebars-template">
+      <div class="current-conditions">
+        <h4>{{ city }}</h4>
+        <img src="http://openweathermap.org/img/w/{{ icon }}.png" alt="">
+        <h1>{{ temperature }}&#176;</h1>
+        <h4>{{ conditions }}</h4>
+      </div>
+    </script>
+
+    <script id="forecast-template" type="text/x-handlebars-template">
       <div class="current-conditions">
         <h4>{{ city }}</h4>
         <img src="http://openweathermap.org/img/w/{{ icon }}.png" alt="">
@@ -51,7 +60,6 @@
         <h4>{{ conditions }}</h4>
         <h4>{{ dayOfWeek }}</h4>
       </div>
-      <hr>
     </script>
 
     <script src="main.js" type="text/javascript"></script>
