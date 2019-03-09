@@ -11,11 +11,11 @@ $(document)
 
 var fetch = function(query) {
   apikey= 'c48f732410a96bcb96dac9c9866f624f'
-  var weatherUrl = 'https://api.openweathermap.org/data/2.5/weather?q=' + query + '&units=imperial&appid='+ apikey;
+  var fiveDay = 'https://api.openweathermap.org/data/2.5/forecast?q=' + query + ',us&units=imperial&appid='+ apikey;
 
   $.ajax({
     method: "GET",
-    url: weatherUrl,
+    url: fiveDay,
     dataType: "json",
 
     success: function(data) {
@@ -31,51 +31,65 @@ var fetch = function(query) {
 
 var addWeather = function(data) {
   //delete previous search from weather array
-    weather.splice(0)
-// use API to get temperature
-  var temperature = function() {
-    if (data.main.temp) {
-      return Math.round(data.main.temp);
-    } else {
-      return null;
-    }
-  };
-    // API get icon
-  var icon = function() {
-    if (data.weather[0].icon) {
-      return data.weather[0].icon;
-    } else {
-      return null;
-    }
-  };
-  //API to get city name
-  var city = function() {
-    if (data.name) {
-      return data.name;
-    } else {
-      return null;
-    }
-  };
-  //API to get current conditions
-  var conditions = function() {
-    if (data.weather[0].main) {
-      return data.weather[0].main;
-    } else {
-      return null;
-    }
-  };
+  weather.splice(0)
 
-//return the all functions
-  var current = {
-    temperature: temperature(),
-    icon: icon(),
-    city: city(),
-    state: '',
-    conditions: conditions()
-  };
+  for (var i = 0; i < data.list.length; i+= 8) {
+  // use API to get temperature
+    var temperature = function() {
+      console.log(data.list[i].main.temp)
+      if (data.list[i].main.temp) {
+        return Math.round(data.list[i].main.temp);
+      } else {
+        return null;
+      }
+    };
+      // API get icon
+    var icon = function() {
+      if (data.list[i].weather[0].icon) {
+        return data.list[i].weather[0].icon;
+      } else {
+        return null;
+      }
+    };
+    //API to get city name
+    var city = function() {
+      if (data.city.name) {
+        return data.city.name;
+      } else {
+        return null;
+      }
+    };
+    //API to get current conditions
+    var conditions = function() {
+      if (data.list[i].weather[0].main) {
+        return data.list[i].weather[0].main;
+      } else {
+        return null;
+      }
+    };
+    //API to get day of week
+    var dayOfWeek = function() {
+      if (data.list[i].dt) {
+        var day = data.list[i].dt
+        return moment(day).format('dddd');
+      }else {
+        return null;
+      }
+    };
 
-  weather.push(current);
-  renderWeather();
+  //return the all functions
+    var current = {
+      temperature: temperature(),
+      icon: icon(),
+      city: city(),
+      state: '',
+      conditions: conditions(),
+      dayOfWeek: dayOfWeek()
+    };
+
+    weather.push(current);
+    renderWeather();
+  };
 };
 
 var renderWeather = function() {
@@ -84,13 +98,13 @@ var renderWeather = function() {
 
   //update handlebars with current weather array
   // Handlebars.compile($('#post-template').html())
+for (var i = 0; i < weather.length; i+= 8) {
   weather.forEach(function(i) {
-    var source = $('#weather-template').html();
-    var template = Handlebars.compile(source);
+    var template = Handlebars.compile($('#weather-template').html());
     var newHTML = template(i)
-
     $('.current-weather').append(newHTML);
-  })
+    })
+  }
 };
 
 $('.search').on('click', function() {

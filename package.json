@@ -15,4 +15,12 @@
   "bugs": {
     "url": "https://github.com/marielklem/weather-project/issues"
   },
+  "homepage": "https://github.com/marielklem/weather-project#readme",
+  "dependencies": {
+    "ajax": "0.0.4",
+    "bootstrap": "^4.3.1",
+    "handlebars": "^4.1.0",
+    "jquery": "^3.3.1",
+    "moment": "^2.24.0"
+  }
 }
