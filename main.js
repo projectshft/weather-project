@@ -80,12 +80,13 @@ var fetch = function (query) {
         }
     });
 };
+
 //currentWeather should show the city name, temperature, and condition
 var addCurrentWeather = function(data) {
     //splice to remove the last search from the array
     currentWeather.splice(0);
         
-        console.log(data);
+        console.log("this is what the data from the current weather API looks like:", data);
             // build obj to fit handlebars template {city, temperature, condition, icon}
 
             var rightNow = {
@@ -102,6 +103,26 @@ var addCurrentWeather = function(data) {
 
 //fiveDayForecast should show the weekday, temperature, and condition for the searched city for the next five days
         //moment.min.js will be required to parse the date
+var addForecast = function(data) {
+    //splice to remove the last search from the array
+    fiveDayForecast.splice(0);
+    //for every day in the forecast API response
+    for (var i = 0; i < data.length; i ++) {
+
+        console.log("this is what the data from the forecast API looks like:", data);
+            // build obj to fit handlebars template {city, temperature, condition, icon}
+
+            var dailyForecast = {
+                // if there is a city, temperature. condition, . . . etc, set them equal to it; if there isn't, make it an empty string
+                weekday: data.list[i].dt ? data.list[i].dt : "", //refactor to use moment.min.js
+                temperature: Math.round(data.list[i].main.temp) ? Math.round(data.list[i].main.temp) : "",
+                condition: data.list[i].weather[0].main ? data.list[i].weather[0].main : "",
+                // icon: "http://openweathermap.org/img/w/" + data.list[i].weather[0].icon + ".png" ? data.list[i].weather[0].icon : "",
+            };
+        
+        fiveDayForecast.push(dailyForecast);
+        renderForecast();
+};
 
 //users should be able to search for a city and see the current weather
 $('.search').on('click', function () {
