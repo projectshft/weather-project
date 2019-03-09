@@ -69,6 +69,16 @@
 
     <script src="node_modules/jquery/dist/jquery.min.js"></script>
     <script src="node_modules/handlebars/dist/handlebars.js"></script>
+
+    <script id="query-template" type="text/x-handlebars-template">
+      <div class=my-focus-weather>
+        <p>temperature: {{temp}}</p>
+        <p>condition: {{condition}}</p>
+        <p>day: {{icon}}</p>
+      </div>
+    </script>
+
     <script src="scripts/main.js"></script>
+    <script type="text/javascript" src="scripts/listeners.js"></script>
   </body>
 </html>
