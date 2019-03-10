@@ -85,11 +85,12 @@
     crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
   <script id="weather-template" type="text/x-handlebars-template">
-    <h2>{{ degrees }}</h2>
-    <h4>{{ city }}</h4>
+    <h2>{{ degrees }}&#176;</h2>
+    <h4>{{ city }}, {{ state }}</h4>
     <h5>{{ weather }}</h5>
   </script>
-  <script src="main.js"></script>
+  <script src="./scripts/weather.js"></script>
+  <script src="./scripts/main.js"></script>
 </body>
 
 </html>
