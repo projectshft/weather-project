@@ -14,11 +14,10 @@ body {
   min-width: 100vw;
   top: 0;
   bottom: 0;
-  background-color: rgba(118, 135, 195, 0.3);
 }
 
 .navbar {
-  background-color: rgba(69, 106, 171);
+  background-color: rgba(160, 160, 160, 0.5);
 }
 
 .navbar a{
@@ -33,11 +32,12 @@ body {
 
 .current-weather{
   border: 1px solid white;
-  background-color: rgba(0, 0, 0, 0.34)
+  background-color: rgba(0, 0, 0, 0.34);
+  border-radius: 25px;
 }
 
-#weather-icons {
-  font-size: 5rem;
+#icons {
+  font-size: 3rem;
   padding-top: 2rem;
 }
 
@@ -54,7 +54,8 @@ body {
   margin: 10px;
   text: center;
   border: 1px solid white;
-  background-color: rgba(0, 0, 0, 0.34)
+  background-color: rgba(0, 0, 0, 0.34);
+  border-radius: 25px;
 }
 
 #loading img {

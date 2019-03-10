@@ -66,6 +66,17 @@ var addWeather = function(data) {
         return null;
       }
     };
+
+    // API get icon
+  var icon = function() {
+    if (data.list[i].weather[0].icon) {
+      var icon = data.list[i].weather[0].icon;
+      var newIcon = selectIcon(icon)
+      return(newIcon)
+    } else {
+      return null;
+    }
+  };
     //API to get day of week
     var dayOfWeek = function() {
       if (data.list[i].dt) {
@@ -97,6 +108,8 @@ var renderWeather = function() {
   //delete anything currently on screen
   $('.current-weather').empty();
   $('.forecast').empty();
+
+  var newbkg = newBackground(weather[0].icon)
 
   //update handlebars with current weather array
   var template1 = Handlebars.compile($('#current-template').html());
