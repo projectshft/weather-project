@@ -1,0 +1,25 @@
+body
+{
+    background-color: blanchedalmond;
+}
+
+.page-header
+{
+    padding-top: 20px;
+}
+
+.d-flex 
+{
+    font-family: 'Patrick Hand SC', cursive;
+}
+
+.currentWeatherView 
+{
+    padding: 35px;
+    font-family: 'Patrick Hand SC', cursive;
+}
+
+.container-fluid
+{
+    font-family: 'Patrick Hand SC', cursive;
+}

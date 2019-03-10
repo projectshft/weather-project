@@ -6,6 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>~~~~ weather.app ~~~~</title>
+
+  
+    <link rel="stylesheet" type="text/css" href="style.css"> 
+    <link href="https://fonts.googleapis.com/css?family=Gochi+Hand" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Patrick+Hand+SC" rel="stylesheet">
+   
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
     <script src="https://unpkg.com/moment"></script>
 
@@ -37,47 +44,61 @@
         <div class="col-md-6 offset-md-3">
 
           <div class="page-header">
-            <h1>we @ her .app</h1>
+            <h1>WEATHER . APP</h1>
             <hr/>
           </div>
 
           <form class="search-form">
-                <h3>What is my weather?</h3>
+                <h3>what is my weather?</h3>
       
                 <div class="form-group">
-                  <input type="text" id="search-query" class="form-control" placeholder="US city name">
+                  <input type="text" id="search-query" class="form-control-lg" placeholder="US city name">
                   </input>
                 </div>
-      
-                <button type="button" class="btn btn-primary search">Search</button>
-              </form>
+           
+                <button type="button" class="btn btn-dark search">Search</button>         
+          </form>
+
 
             <div class="currentWeatherView row">
                 <!-- renderCurrentWeatherDataView() -->
             </div>
 
-            <div class="fiveDay row">
-                    <div id="firstDayForecastView">
-                        <h4>First Day</h4>
+
+
+            <div class="d-flex justify-content-start">
+                    <div class="p-2 flex-fill shadow p-3 mb-9 bg-light rounded">
+                        <div id="firstDayForecastView" class="">
+        
                             <!-- renderFiveDayForecastDataView() -->
+                        </div>
                     </div>
-                    <div id="secondDayForecastView">
-                        <h4>Second Day</h4>
+                    <div class="p-2 flex-fill shadow p-3 mb-9 bg-light rounded">
+                        <div id="secondDayForecastView" class="">
+                   
                             <!-- renderFiveDayForecastDataView() -->
+                        </div>
                     </div>
-                    <div id="thirdDayForecastView">
-                        <h4>Third Day</h4>
+                    <div class="p-2 flex-fill shadow p-3 mb-9 bg-light rounded">
+                        <div id="thirdDayForecastView" class="">
+                       
                                 <!-- renderFiveDayForecastDataView() -->
+                        </div>
                     </div>
-                    <div id="fourthDayForecastView">
-                        <h4>Fourth Day</h4>
+                    <div class="p-2 flex-fill shadow p-3 mb-9 bg-light rounded">
+                        <div id="fourthDayForecastView" class="">
+                   
                                 <!-- renderFiveDayForecastDataView() -->
+                        </div>
                     </div>
-                    <div id="fifthDayForecastView">
-                        <h4>Fifth Day</h4>
+                    <div class="p-2 flex-fill shadow p-3 mb-9 bg-light rounded">
+                        <div id="fifthDayForecastView" class="">
+                     
                                 <!-- renderFiveDayForecastDataView() -->
+                        </div>
                     </div>
             </div>
+
             
         </div>
       </div>
@@ -86,54 +107,54 @@
     <!-- Handlebars template CURRENT WEATHER -->
     <script id="currentWeather-template" type="text/x-handlebars-template">
         <div class="current col-md-6">
-          <h4>Right now in {{ city }}</h4>
-          <div>Condition: <strong>{{ condition }}</strong></div>
-          <div>Temperature: <strong>{{ temperature }}&#8457;</strong></div>
+          <h4>Right Now In {{ city }}</h4>
+          <div><strong>{{ condition }}</strong></div>
+          <div><strong>{{ temperature }}&#8457;</strong></div>
         </div>
     </script>
 
     <!-- Handlebars template DAY ONE FORECAST -->
     <script id="firstDayForecast-template" type="text/x-handlebars-template">
         <div class="current col-md-6">
-          <h4>Day 1: {{ date }}</h4>
-          <div>Condition: <strong>{{ condition }}</strong></div>
-          <div>Temperature: <strong>{{ temperature }}&#8457;</strong></div>
+          <h4>{{ date }}</h4>
+          <div><strong>{{ condition }}</strong></div>
+          <div><strong>{{ temperature }}&#8457;</strong></div>
         </div>
     </script>
 
     <!-- Handlebars template DAY TWO FORECAST -->
     <script id="secondDayForecast-template" type="text/x-handlebars-template">
         <div class="current col-md-6">
-          <h4>Day 2: {{ date }}</h4>
-          <div>Condition: <strong>{{ condition }}</strong></div>
-          <div>Temperature: <strong>{{ temperature }}&#8457;</strong></div>
+          <h4>{{ date }}</h4>
+          <div><strong>{{ condition }}</strong></div>
+          <div><strong>{{ temperature }}&#8457;</strong></div>
         </div>
     </script>
 
     <!-- Handlebars template DAY THREE FORECAST -->
     <script id="thirdDayForecast-template" type="text/x-handlebars-template">
         <div class="current col-md-6">
-          <h4>Day 3: {{ date }}</h4>
-          <div>Condition: <strong>{{ condition }}</strong></div>
-          <div>Temperature: <strong>{{ temperature }}&#8457;</strong></div>
+          <h4>{{ date }}</h4>
+          <div><strong>{{ condition }}</strong></div>
+          <div><strong>{{ temperature }}&#8457;</strong></div>
         </div>
     </script>
 
     <!-- Handlebars template DAY FOUR FORECAST -->
     <script id="fourthDayForecast-template" type="text/x-handlebars-template">
         <div class="current col-md-6">
-          <h4>Day 4: {{ date }}</h4>
-          <div>Condition: <strong>{{ condition }}</strong></div>
-          <div>Temperature: <strong>{{ temperature }}&#8457;</strong></div>
+          <h4>{{ date }}</h4>
+          <div><strong>{{ condition }}</strong></div>
+          <div><strong>{{ temperature }}&#8457;</strong></div>
         </div>
     </script>
     
     <!-- Handlebars template DAY FIVE FORECAST -->
     <script id="fifthDayForecast-template" type="text/x-handlebars-template">
         <div class="current col-md-6">
-          <h4>Day 5: {{ date }}</h4>
-          <div>Condition: <strong>{{ condition }}</strong></div>
-          <div>Temperature: <strong>{{ temperature }}&#8457;</strong></div>
+          <h4>{{ date }}</h4>
+          <div><strong>{{ condition }}</strong></div>
+          <div><strong>{{ temperature }}&#8457;</strong></div>
         </div>
     </script>
 
