@@ -71,10 +71,12 @@ const WeatherProject = function () {
   // Same here for the forecastData array. Looping over every 8 items since they are 3 hour increments per the API docs, resulting in 24 hour intervals
   const setFiveDayForecast = data => {
     forecastData = [];
-    // Decided to start collecting forecast data at 12:00, because who cares what the weather is going to be like at 3 AM for the next five days. It MAAAYY result in a four day forecast on occasion, depending on what time the query is made. Small price to pay for relevant results.
+    
+    // OK...so moment converts the unix time stamps to local time, but the data output from the API is set at every third hour (i.e. 12, 3, 6, 9, etc.) and is set to UTC time. Sooooo, I chose the UTC time that best corresponds with mid-day local time, 15:00 UTC -> 11:00 AM EST. 
     data.list
-      .filter(datum => datum.dt_txt.includes("12:00:00"))
+      .filter(datum => datum.dt_txt.includes("15:00:00"))
       .forEach(item => {
+        
         const date = moment.unix(item.dt).format("ddd, MMM Do"),
           temp = Math.round(item.main.temp),
           conditions = item.weather[0].main,
@@ -87,6 +89,8 @@ const WeatherProject = function () {
           icon
         });
       });
+  
+      
   };
   // First empty the .todays-weather div, then append it with the Handlebars template
   const renderCurrentWeather = () => {
