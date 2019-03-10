@@ -1,0 +1,36 @@
+.forecast-temp {
+  color: white;
+  font-size: 36px;
+  font-family: 'Open Sans', sans-serif;
+  margin-bottom: 0px;
+  margin-top: 20px;
+  margin-left: 50px;
+  margin-bottom: -20px;
+  width: 50px;
+}
+
+.forecast-condition {
+  color: white;
+  font-size: 12px;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.forecast-day {
+  color: white;
+  font-size: 18px;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.condition-div {
+  text-align: center;
+  margin-left: 0px;
+  width: 100px;
+  margin-bottom: -16px;
+  margin-left: 19px;
+}
+
+.day-div {
+  text-align: center;
+  width: 200px;
+  margin-left: 175px;
+}

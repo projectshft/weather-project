@@ -5,6 +5,7 @@
   <head>
     <meta charset="utf-8">
     <link rel="stylesheet" href="styles/mystyle.css">
+    <link rel="stylesheet" href="styles/forecast.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700" rel="stylesheet">
     <title></title>
@@ -31,7 +32,7 @@
           </div>
         </div>
         <div class="my-forecast-col">
-          <div class="my-five-day-row-top" style="background-image:url('assets/dayTemplates/fewCloudsDayTemplate.png');">
+          <div class="my-five-day-row-top" style="">
             <div class="col-10 my-five-day-top">
             </div>
           </div>
@@ -82,62 +83,82 @@
     </script>
 
     <script id="dayPlusOne-template" type="text/x-handlebars-template">
-      <div class=my-dayPlusOne-temp>
+      <div class="my-dayPlusOne-temp forecast-temp">
         <p>{{temp}}</p>
       </div>
-      <div class=my-dayPlusOne-condition>
-        <p>{{condition}}</p>
+      <div class="condition-div">
+        <div class="my-dayPlusOne-condition forecast-condition">
+          <p>{{condition}}</p>
+        </div>
       </div>
-      <div class=my-dayPlusOne-day>
-        <p>{{dayOfWeek}}</p>
+      <div class="day-div">
+        <div class="my-dayPlusOne-day forecast-day">
+          <p>{{dayOfWeek}}</p>
+        </div>
       </div>
     </script>
 
     <script id="dayPlusTwo-template" type="text/x-handlebars-template">
-      <div class=my-dayPlusTwo-temp>
+      <div class="my-dayPlusTwo-temp forecast-temp">
         <p>{{temp}}</p>
       </div>
-      <div class=my-dayPlusTwo-condition>
-        <p>{{condition}}</p>
+      <div class="condition-div">
+        <div class="my-dayPlusTwo-condition forecast-condition">
+          <p>{{condition}}</p>
+        </div>
       </div>
-      <div class=my-dayPlusTwo-day>
-        <p>{{dayOfWeek}}</p>
+      <div class="day-div">
+        <div class="my-dayPlusTwo-day forecast-day">
+          <p>{{dayOfWeek}}</p>
+        </div>
       </div>
     </script>
 
     <script id="dayPlusThree-template" type="text/x-handlebars-template">
-      <div class=my-dayPlusThree-temp>
+      <div class="my-dayPlusThree-temp forecast-temp">
         <p>{{temp}}</p>
       </div>
-      <div class=my-dayPlusThree-condition>
-        <p>{{condition}}</p>
+      <div class="condition-div">
+        <div class="my-dayPlusThree-condition forecast-condition">
+          <p>{{condition}}</p>
+        </div>
       </div>
-      <div class=my-dayPlusThree-day>
-        <p>{{dayOfWeek}}</p>
+      <div class="day-div">
+        <div class="my-dayPlusThree-day forecast-day">
+          <p>{{dayOfWeek}}</p>
+        </div>
       </div>
     </script>
 
     <script id="dayPlusFour-template" type="text/x-handlebars-template">
-      <div class=my-dayPlusFour-temp>
+      <div class="my-dayPlusFour-temp forecast-temp">
         <p>{{temp}}</p>
       </div>
-      <div class=my-dayPlusFour-condition>
-        <p>{{condition}}</p>
+      <div class="condition-div">
+        <div class="my-dayPlusFour-condition forecast-condition">
+          <p>{{condition}}</p>
+        </div>
       </div>
-      <div class=my-dayPlusFour-day>
-        <p>{{dayOfWeek}}</p>
+      <div class="day-div">
+        <div class="my-dayPlusFour-day forecast-day">
+          <p>{{dayOfWeek}}</p>
+        </div>
       </div>
     </script>
 
     <script id="dayPlusFive-template" type="text/x-handlebars-template">
-      <div class=my-dayPlusFive-temp>
+      <div class="my-dayPlusFive-temp forecast-temp">
         <p>{{temp}}</p>
       </div>
-      <div class=my-dayPlusFive-condition>
-        <p>{{condition}}</p>
+      <div class="condition-div">
+        <div class="my-dayPlusFive-condition forecast-condition">
+          <p>{{condition}}</p>
+        </div>
       </div>
-      <div class=my-dayPlusFive-day>
-        <p>{{dayOfWeek}}</p>
+      <div class="day-div">
+        <div class="my-dayPlusFive-day forecast-day">
+          <p>{{dayOfWeek}}</p>
+        </div>
       </div>
     </script>
 
