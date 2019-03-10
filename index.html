@@ -6,6 +6,7 @@
     <meta charset="utf-8">
     <link rel="stylesheet" href="styles/mystyle.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700" rel="stylesheet">
     <title></title>
   </head>
   <body>
@@ -21,7 +22,7 @@
         </div>
       </div>
     </div>
-    <div class="container-fluid my-weather-container">
+    <div class="container-fluid my-weather-container" style="background-image:url(assets/clouds-large.png);">
       <div class="justify-content-around align-items-center my-weather-row overflow-auto">
         <div class="my-weather-col">
           <div class="row justify-content-center align-items-center current-weather-row">
@@ -67,14 +68,16 @@
       </div>
     </div>
 
+    <script src="node_modules/moment/moment.js"></script>
     <script src="node_modules/jquery/dist/jquery.min.js"></script>
     <script src="node_modules/handlebars/dist/handlebars.js"></script>
 
     <script id="current-weather-template" type="text/x-handlebars-template">
-      <div class=my-focus-weather>
+      <div class=my-focus-temp>
         <p>{{temp}}</p>
+      </div>
+      <div class=my-focus-condition>
         <p>{{condition}}</p>
-        <p>icon: {{icon}}</p>
       </div>
     </script>
 
@@ -82,7 +85,9 @@
       <div class=display-location-text>{{city}}</div>
     </script>
 
+    <script type="text/javascript" src="scripts/icons.js"></script>
     <script type="text/javascript" src="scripts/currentWeather.js"></script>
+    <script type="text/javascript" src="scripts/forecastWeather.js"></script>
     <script type="text/javascript" src="scripts/listeners.js"></script>
   </body>
 </html>

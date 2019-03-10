@@ -9,8 +9,8 @@ var currentWeatherFetch = function(query) {
       var tempF = Math.floor((data.main.temp - 273.15) * 9/5 + 32); //(tempK − 273.15) × 9/5 + 32
       var fetchAttributes = {
         city: query,
-        temp: tempF + ' °F',
-        condition: data.weather[0].description,
+        temp: tempF,
+        condition: 'with ' + data.weather[0].description,
         icon: data.weather[0].icon
       };
       console.log('This is my fetch result: ', fetchAttributes);
@@ -29,12 +29,10 @@ var currentWeatherFetch = function(query) {
       //append the HTML to the page
       $(".display-location").append(currentCityViewRender.render());
       $('.my-current-weather').append(currentWeatherViewRender.render());
-
-
-      //////works as intended///////
-      var test = currentWeatherModelRender.getAttributes();
-      console.log(test);
-      //////works as intened///////
+      //update background
+      var newBackgroundURL = iconToBG(fetchAttributes.icon);
+      $('.my-weather-container').css('style',"");
+      $('.my-weather-container').attr('style', "background-image:url(" + newBackgroundURL + ");");
 
     },
     error: function(jqXHR, textStatus, errorThrown) {

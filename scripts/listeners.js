@@ -1,8 +1,9 @@
 //add the event listener for the searched city
 $(".btn-search").click(function() {
   var query = $(".search-query").val();
-  $(".search-query").val('Please enter a US city');
+  $(".search-query").val('');
   currentWeatherFetch(query);
+  forecastFetch(query);
 
 
   // var searchModel = CurrentCityModel({ :, :})
