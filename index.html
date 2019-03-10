@@ -13,76 +13,79 @@
 </head>
 
 <body>
-
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-md-12">
-        <h1 class="header-title">Get Weather</h1>
+  <div class="main-content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <h1 class="header-title">Get Weather</h1>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div class="container form-container">
-    <form>
-      <div class="form-row">
-        <div class="col-sm-8">
-          <input id="weather-input" type="text" class="form-control" placeholder="Enter City Name">
+    <div class="container form-container">
+      <form>
+        <div class="form-row">
+          <div class="col-sm-8">
+            <input id="weather-input" type="text" class="form-control" placeholder="Enter City Name">
+          </div>
+          <div class="col-sm-4 mx-auto">
+            <button id="get-weather" type="submit" class="btn btn-primary mb-2">
+              Search Weather
+            </button>
+          </div>
         </div>
-        <div class="col-sm-4 mx-auto">
-          <button id="get-weather" type="submit" class="btn btn-primary mb-2">
-            Search Weather
-          </button>
-        </div>
-      </div>
-    </form>
-  </div>
+      </form>
+    </div>
 
-  <div class="container main-weather">
-    <div class="row">
-      <div class="col-md-6 current-weather"></div>
-      <div class="col-md-6">
-        <div id='map' style='height:250px;width:450px'></div>
+    <div class="container main-weather">
+      <div class="row">
+        <div class="col-md-6 current-weather"></div>
+        <div class="col-md-6">
+          <div id='map' style='height:250px;width:450px'></div>
+        </div>
       </div>
     </div>
-  </div>
 
-  <!-- <div class="row forecast-weather--container d-flex justify-content-between">
-      <script id="forecast-weather-template" type="text/x-handlebars-template">
-        <div class="forecast-weather col-md-2 card">
-          <h2>{{ degrees }}</h2>
-          <h4>{{ city }}</h4>
-          <h5>{{ weather }}</h5>
-        </div>
-        <div class="forecast-weather col-md-2 card">
-          <h2>{{ degrees }}</h2>
-          <h4>{{ city }}</h4>
-          <h5>{{ weather }}</h5>
-        </div>
-        <div class="forecast-weather col-md-2 card">
-          <h2>{{ degrees }}</h2>
-          <h4>{{ city }}</h4>
-          <h5>{{ weather }}</h5>
-        </div>
-        <div class="forecast-weather col-md-2 card">
-          <h2>{{ degrees }}</h2>
-          <h4>{{ city }}</h4>
-          <h5>{{ weather }}</h5>
-        </div>
-        <div class="forecast-weather col-md-2 card">
-          <h2>{{ degrees }}</h2>
-          <h4>{{ city }}</h4>
-          <h5>{{ weather }}</h5>
-        </div>
-      </script>
-    </div> -->
+    <!-- <div class="row forecast-weather--container d-flex justify-content-between">
+        <script id="forecast-weather-template" type="text/x-handlebars-template">
+          <div class="forecast-weather col-md-2 card">
+            <h2>{{ degrees }}</h2>
+            <h4>{{ city }}</h4>
+            <h5>{{ weather }}</h5>
+          </div>
+          <div class="forecast-weather col-md-2 card">
+            <h2>{{ degrees }}</h2>
+            <h4>{{ city }}</h4>
+            <h5>{{ weather }}</h5>
+          </div>
+          <div class="forecast-weather col-md-2 card">
+            <h2>{{ degrees }}</h2>
+            <h4>{{ city }}</h4>
+            <h5>{{ weather }}</h5>
+          </div>
+          <div class="forecast-weather col-md-2 card">
+            <h2>{{ degrees }}</h2>
+            <h4>{{ city }}</h4>
+            <h5>{{ weather }}</h5>
+          </div>
+          <div class="forecast-weather col-md-2 card">
+            <h2>{{ degrees }}</h2>
+            <h4>{{ city }}</h4>
+            <h5>{{ weather }}</h5>
+          </div>
+        </script>
+      </div> -->
+  </div>
 
   <script src="node_modules/jquery/dist/jquery.js"></script>
   <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
   <script src="node_modules/handlebars/dist/handlebars.js"></script>
   <script id="weather-template" type="text/x-handlebars-template">
-    <h2>{{ degrees }}&#176;</h2>
-    <h4>{{ city }}, {{ state }}</h4>
-    <h5>{{ weather }}</h5>
+    <div class="current-weather__container">
+      <h2>{{ degrees }}&#176;</h2>
+      <h4>{{ city }}, {{ state }}</h4>
+      <h5>{{ weather }}</h5>
+    </div>
   </script>
   <script src="./scripts/weather.js"></script>
   <script src="./scripts/main.js"></script>

@@ -1,3 +1,9 @@
+.main-content {
+  margin: 2rem;
+  padding-bottom: 24rem;
+  background-color: rgb(245, 212, 169);
+}
+
 .header-title {
   padding-top: 2rem;
   text-align: center;
@@ -13,6 +19,13 @@
 
 .forecast-weather--container {
   margin-top: 4.5rem;
+}
+
+.current-weather__container {
+  padding: 2rem .5rem 6rem .5rem;
+  border: .2rem solid rgb(97, 211, 116);
+  background-color: rgb(165, 233, 152);
+  border-radius: 5px;
 }
 
 .main-weather {
