@@ -10,3 +10,15 @@ body {
 .forecast-icon {
   height: 75px;
 }
+
+.card {
+  border-radius: 7px;
+}
+
+#forecast-heading {
+  display: none;
+}
+
+#error {
+  display: none;
+}

@@ -12,11 +12,15 @@ const WeatherProject = function() {
       url: `${currentWeatherUrl}${inputCity},us&units=imperial&APPID=${superSecretAPIKey}`,
       dataType: "json",
       success: data => {
+        $(".todays-weather").empty();
         getCurrentWeather(data);
         renderTodaysWeather();
+        $("#error").hide(); 
       },
       error: (jqXHR, textStatus, errorThrown) => {
-        console.log(textStatus);      
+        console.log(textStatus);
+        $(".todays-weather").empty();
+        $("#error").show();      
       }
     });
   };
@@ -27,11 +31,14 @@ const WeatherProject = function() {
       url: `${fiveDayForecastUrl}${inputCity},us&units=imperial&APPID=${superSecretAPIKey}`,
       dataType: "json",
       success: data => {
+        $(".forecast").empty();
+        $("#forecast-heading").show();
         getFiveDayForecast(data);
         renderFiveDayForecast();
-        $("#forecast-heading").show();
       },
       error: (jqXHR, textStatus, errorThrown) => {
+        $(".forecast").empty();
+        $("#forecast-heading").hide();
         console.log(textStatus);      
       }
     });
@@ -53,10 +60,10 @@ const WeatherProject = function() {
         const date = moment
           .unix(data.list[i].dt)
           .format("ddd, MMM Do")
-        const city = data.city.name;
-        const temp = Math.round(data.list[i].main.temp);
-        const conditions = data.list[i].weather[0].main;
-        const icon = data.list[i].weather[0].icon;
+        const city = data.city.name,
+              temp = Math.round(data.list[i].main.temp),
+              conditions = data.list[i].weather[0].main,
+              icon = data.list[i].weather[0].icon;
       
         forecastData.push({
           date, 
@@ -70,8 +77,6 @@ const WeatherProject = function() {
   };
 // First empty the .todays-weather div, then append it with the Handlebars template
   const renderTodaysWeather = () => {
-    $(".todays-weather").empty();
-
     const templateCurrentWeather = 
       Handlebars.compile($("#current-weather-template").html());
       
@@ -82,8 +87,6 @@ const WeatherProject = function() {
   };
 // Same here, except do it for each element in the array
   const renderFiveDayForecast = () => {
-    $(".forecast").empty();
-
     forecastData.forEach(datum => {
       const templateForecast = 
         Handlebars.compile($("#forecast-weather-template").html());
@@ -105,6 +108,8 @@ const WeatherProject = function() {
         fetchCurrentWeather(city);
         fetchFiveDayForecast(city);
       }
+
+      $("#cityText").val("");
     });
   };
 
@@ -115,4 +120,3 @@ const WeatherProject = function() {
 
 const app = new WeatherProject();
 app.start();
-
