@@ -88,9 +88,7 @@ const WeatherProject = function () {
           conditions,
           icon
         });
-      });
-  
-      
+      });  
   };
   // First empty the .todays-weather div, then append it with the Handlebars template
   const renderCurrentWeather = () => {
