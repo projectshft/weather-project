@@ -23,7 +23,7 @@ const WeatherProject = function () {
           $("#set-default").show();
         }
         setCurrentWeather(data);
-        renderTodaysWeather();
+        renderCurrentWeather();
         $("#error").hide();
 
       },
@@ -89,7 +89,7 @@ const WeatherProject = function () {
       });
   };
   // First empty the .todays-weather div, then append it with the Handlebars template
-  const renderTodaysWeather = () => {
+  const renderCurrentWeather = () => {
     $(".todays-weather").empty();
 
     const templateCurrentWeather =
