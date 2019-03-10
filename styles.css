@@ -8,7 +8,7 @@ body {
 }
 
 input {
-  width: 60%;
+  width: 69%;
   padding-left: 7px;
 }
 
@@ -36,7 +36,6 @@ img {
   margin-top: 15px;
   padding-top: 50px;
   padding-bottom: 100px;
-  word-wrap: break-word;
 }
 
 .city-search {
