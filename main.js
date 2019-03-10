@@ -7,8 +7,8 @@
 
 
 var weather = [];
-// my API jey
-var key = "0439b3d5de6bee4961a3e1454084792f"
+// my API key & pulls temperature in as fahrenheit because America. 
+var key = "&units=imperial&appid=0439b3d5de6bee4961a3e1454084792f"
 
 
 // fetch function that pulls from
