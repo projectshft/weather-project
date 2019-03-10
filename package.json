@@ -1,0 +1,24 @@
+{
+  "name": "weather-project",
+  "version": "1.0.0",
+  "description": "weather project for project shift",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AndresXI/weather-project.git"
+  },
+  "author": "Andres Alcocer",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AndresXI/weather-project/issues"
+  },
+  "homepage": "https://github.com/AndresXI/weather-project#readme",
+  "dependencies": {
+    "bootstrap": "^4.3.1",
+    "handlebars": "^4.1.0",
+    "jquery": "^3.3.1"
+  }
+}
