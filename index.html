@@ -34,46 +34,44 @@
             <div class="col-md-1"></div> 
           </div>
         </div>
-        </div>
       </div>      
     </div>
   </div>
 
-<script src="node_modules/jquery/dist/jquery.js"></script>
-<script src="node_modules/handlebars/dist/handlebars.js"></script>
-<script src="node_modules/moment/moment.js"></script>
+  <script src="node_modules/jquery/dist/jquery.js"></script>
+  <script src="node_modules/handlebars/dist/handlebars.js"></script>
+  <script src="node_modules/moment/moment.js"></script>
 
-<script id="current-conditions-template" type="text/x-handlebars-template">
-  <div class="row">
-    <div class="col-md-4"></div>
-    <div class="conditions col-md-4">
-      <h4 class="text-center">Current Conditions</h4>
-      <div class="row">
-        <div class="col-md-6">
-          <div><h2><strong>{{ temp }}&deg F</strong></h2></div>
-          <div><h4><strong>{{ city }}</strong></h4></div>
-          <div><h4><strong>{{ weatherConditions }}</strong></h4></div>
-        </div>
-        <div class="col-md-6">
-          <div><img src={{ icon }} /></div>
-          <div><button type="submit" class="btn btn-primary btn-sm" id="set-default">Set Default</button></div>
+  <script id="current-conditions-template" type="text/x-handlebars-template">
+    <div class="row">
+      <div class="col-md-4"></div>
+      <div class="conditions col-md-4">
+        <h4 class="text-center">Current Conditions</h4>
+        <div class="row">
+          <div class="col-md-6">
+            <div><h2><strong>{{ temp }}&deg F</strong></h2></div>
+            <div><h4><strong>{{ city }}</strong></h4></div>
+            <div><h4><strong>{{ weatherConditions }}</strong></h4></div>
+          </div>
+          <div class="col-md-6">
+            <div><img src={{ icon }} /></div>
+            <div><button type="submit" class="btn btn-primary btn-sm" id="set-default">Set Default</button></div>
+          </div>
         </div>
       </div>
+      <div class="col-md-4"></div>
     </div>
-    <div class="col-md-4"></div>
-  </div>
-</script>
+  </script>
 
-<script id="forecast-template" type="text/x-handlebars-template">
+  <script id="forecast-template" type="text/x-handlebars-template">
     <div class="forecast-day">
       <div><h4><strong>{{ weatherConditions }}</strong></h4></div>
       <div><h3><strong>{{ temp }}&deg F</strong></h3></div>
       <div><img src={{ icon }} /></div>
       <div><h6><strong>{{ day }}</strong></h6></div>      
     </div>
-</script>
+  </script>
 
-<script src="main.js"></script>
-
+  <script src="main.js"></script>
 </body>
 </html>
