@@ -6,14 +6,36 @@ var currentWeatherFetch = function(query) {
     dataType: "json",
     success: function(data) {
       //get the relevant data and add to new object
+      var tempF = Math.floor((data.main.temp - 273.15) * 9/5 + 32); //(tempK − 273.15) × 9/5 + 32
       var fetchAttributes = {
         city: query,
-        temp: data.main.temp,
+        temp: tempF + ' °F',
         condition: data.weather[0].description,
         icon: data.weather[0].icon
       };
       console.log('This is my fetch result: ', fetchAttributes);
-      CurrentCityModel(fetchAttributes);
+      //invoked CurrentWeatherModel and store return value in variable currentWeatherModelRender
+      var currentWeatherModelRender = CurrentWeatherModel(fetchAttributes);
+      //retrieve and assign my HTML templates via handlebars
+      var currentWeatherTemplate = Handlebars.compile($('#current-weather-template').html());
+      var currentCityTemplate = Handlebars.compile($('#current-city-template').html());
+      //invoke and store the return value in vairable currentWeatherViewRender
+      var currentWeatherViewRender = CurrentWeatherView(currentWeatherModelRender, currentWeatherTemplate);
+      var currentCityViewRender = CurrentWeatherView(currentWeatherModelRender, currentCityTemplate);
+      //clear elements to be rendered
+      $(".my-current-weather").empty();
+      $(".display-location-text").remove();
+      $("display-location").empty();
+      //append the HTML to the page
+      $(".display-location").append(currentCityViewRender.render());
+      $('.my-current-weather').append(currentWeatherViewRender.render());
+
+
+      //////works as intended///////
+      var test = currentWeatherModelRender.getAttributes();
+      console.log(test);
+      //////works as intened///////
+
     },
     error: function(jqXHR, textStatus, errorThrown) {
       console.log(textStatus);
@@ -22,8 +44,8 @@ var currentWeatherFetch = function(query) {
 };
 
 
-//create the model for the current city
-var CurrentCityModel = function(fetchAttributes) {
+//create the model for the current weather
+var CurrentWeatherModel = function(fetchAttributes) {
   //initialize a "previous" attributes variable to be compared against the incoming one.
   var previousAttributes = {};
   //initialize a changeCallback to be updated with the render function upon prompt to change the view
@@ -56,3 +78,15 @@ var CurrentCityModel = function(fetchAttributes) {
     getAttributes
   };
 };
+
+//create the View for the current weather
+var CurrentWeatherView = function(model, template) {
+  //initialize the render function for the current weather
+  var render = function(){
+    var attributes = model.getAttributes();
+    return template(attributes);
+  };
+  return {
+    render
+  };
+}

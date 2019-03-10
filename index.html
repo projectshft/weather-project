@@ -15,7 +15,7 @@
         <div class="row justify-content-center my-header-row">
           <div class="my-header-col">
             <button type="button" class="btn btn-light btn-sm btn-current-location">Current Location</button>
-            <input class="input search-query" type="text">
+            <input class="input search-query" type="text" placeholder="Please enter a US city: Durham, NC">
             <button type="button" class="btn btn-light btn-sm btn-search">Search</button>
           </div>
         </div>
@@ -70,15 +70,19 @@
     <script src="node_modules/jquery/dist/jquery.min.js"></script>
     <script src="node_modules/handlebars/dist/handlebars.js"></script>
 
-    <script id="query-template" type="text/x-handlebars-template">
+    <script id="current-weather-template" type="text/x-handlebars-template">
       <div class=my-focus-weather>
-        <p>temperature: {{temp}}</p>
-        <p>condition: {{condition}}</p>
-        <p>day: {{icon}}</p>
+        <p>{{temp}}</p>
+        <p>{{condition}}</p>
+        <p>icon: {{icon}}</p>
       </div>
     </script>
 
-    <script src="scripts/main.js"></script>
+    <script id="current-city-template" type="text/x-handlebars-template">
+      <div class=display-location-text>{{city}}</div>
+    </script>
+
+    <script type="text/javascript" src="scripts/currentWeather.js"></script>
     <script type="text/javascript" src="scripts/listeners.js"></script>
   </body>
 </html>
