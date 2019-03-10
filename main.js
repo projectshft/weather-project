@@ -4,3 +4,43 @@
 // 5. Get API to pull properly and link files
 // 6. Make pretty with Bootstrap && css
 // 7. Profit???
+
+
+var weather = [];
+// my API jey
+var key = "0439b3d5de6bee4961a3e1454084792f"
+
+
+// fetch function that pulls from
+var fetch = function(query) {
+  $.ajax({
+    method: "GET",
+    // pulls query
+    url: "api.openweathermap.org/data/2.5/weather?q=" + query,
+    dataType: "json",
+    success: function(data) {console.log(data);
+      addWeather(weather.items);
+    },
+    error: function(jqXHR, textStatus, errorThrown) {
+      console.log(textStatus);
+    }
+  });
+};
+
+// render Weather
+var renderWeather = function() {
+
+
+
+
+}
+
+
+
+
+// on click
+$('.search').on('click', function() {
+  var search = $('#search-query').val(); console.log(search);
+
+  fetch(search);
+})
