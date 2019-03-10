@@ -7,12 +7,6 @@
  ************************************************************************/
 
 // TODO:
-// Find bootstrap template for weather app
-// Look back at week's material
-// Set up pseudocode
-// Check API key account activated
-// Download moment.js
-// Refer to book-shelf project
 // npm install node_modules
 
 
@@ -136,45 +130,61 @@ var setCurrentWeather = function(data)
  * 
  *****************************************************************************/
 
- // TODO:
- // Moment.js
- // convert unix timestamp to human date
- // SET currentDate = user input date
- //     day 1: firstItem[currentDate] that matches current date
- //         current date += 1 day
- //     day 2: firstItem[currentDate] that matches current date
- //         current date += 1 day
- //     day 3: ...
-
-
- // Do 5 day forecast with unix timestamp
- 
  // Reference for API format: https://api.openweathermap.org/data/2.5/forecast?q=cupertino,us&units=imperial&APPID=df48a036cbdd3435156ea83fd8913f6d
 
 
+/************************************
+ *  FIRST DAY FORECAST RENDER
+ ************************************/
 // Declare empty array to contain the 5 Day Forecast data retrieved from API
- var fiveDayForecastDataObj = [];
+ var firstDayForecastDataObj = [];
 
 
-// Function renders 5 Day Forecast data to the DOM
-var renderFiveDayForecastDataView = function () {
-    $('.fiveDayForecastView').empty();
+// Function renders each of the 5 single-day Forecast data to the DOM
+var renderFirstDayForecast = function () {
+    $('#firstDayForecastView').empty();
     
     // Iterates through each property and attribute in the 5 Day Forecast data
     // and writes it into Handlebars template, then rendered to the DOM
-    for (var i = 0; i < fiveDayForecastDataObj.length; i++) {
-      var fiveDayForecastDataView = fiveDayForecastDataObj[i];
+    for (var i = 0; i < firstDayForecastDataObj.length; i++) {
+      var firstDayForecastView = firstDayForecastDataObj[i];
 
-      var source = $('#fiveDayForecast-template').html();
+      var source = $('#firstDayForecast-template').html();
       var template = Handlebars.compile(source);
-      var newHTML = template(fiveDayForecastDataView);
+      var newHTML = template(firstDayForecastView);
     
-      $('.fiveDayForecastView').append(newHTML);
+      $('#firstDayForecastView').append(newHTML);
     }
   };
 
-renderFiveDayForecastDataView();
+renderFirstDayForecast();
 
+/************************************
+ *  SECOND DAY FORECAST RENDER
+ ************************************/
+// Declare empty array to contain the 5 Day Forecast data retrieved from API
+var secondDayForecastDataObj = [];
+
+var renderSecondDayForecast = function () {
+    $('#secondDayForecastView').empty();
+    
+    // Iterates through each property and attribute in the 5 Day Forecast data
+    // and writes it into Handlebars template, then rendered to the DOM
+    for (var i = 0; i < secondDayForecastDataObj.length; i++) {
+      var secondDayForecastView = secondDayForecastDataObj[i];
+
+      var source = $('#secondDayForecast-template').html();
+      var template = Handlebars.compile(source);
+      var newHTML = template(secondDayForecastView);
+    
+      $('#secondDayForecastView').append(newHTML);
+    }
+  };
+
+renderSecondDayForecast();
+
+
+/*************************************************************************/
 
  // Retrieve API data for 5 Day Forecast in a user-specified US city, in imperial units
 var fetchFiveDayForecast = function (query) {
@@ -184,9 +194,11 @@ var fetchFiveDayForecast = function (query) {
       dataType: "json",
       success: function(data) { 
     
-            console.log(data)
+            console.log('5 day forecast data: ' + data);
 
-        setFiveDayForecast(data);
+        setFirstDayForecast(data);
+        setSecondDayForecast(data);
+      
       },
       error: function(jqXHR, textStatus, errorThrown) {
         console.log(textStatus);
@@ -199,26 +211,30 @@ $('.search').on('click', function ()
 {
     var search = $('#search-query').val();
 
-        console.log(search);
+        //console.log(search);
 
     fetchFiveDayForecast(search);
 });
 
+/********************************************************************* */
+
 // Information required to display 5 Day Forecast is extracted from retrieved API,
-// stored in fiveDayForecastDataObj array, then rendered to the DOM
-var setFiveDayForecast = function(data)
+// stored in firstDayForecastDataObj array, then rendered to the DOM
+// Create 5 models, one for each forecast day
+// Reference to use Moment.js: moment().format();
+var setFirstDayForecast = function(data)
 {
-    fiveDayForecastDataObj = [];
+    firstDayForecastDataObj = [];
 
-    var fiveDayForecastData = data;
+    var firstDayForecastData = data;
 
-        //moment().format();
-        var date = function()
+        
+        var date = function() 
         {
-            if (fiveDayForecastData.list)
-            {       
-                var dayOneForecastDate = moment(fiveDayForecastData.list[0].dt_txt).format("dddd");
-                return dayOneForecastDate;
+            if (firstDayForecastData.list)
+            {      
+                var firstDayForecastDate = moment(firstDayForecastData.list[0].dt_txt).format("dddd");
+                return firstDayForecastDate;                   
             }
             else
             {
@@ -228,9 +244,9 @@ var setFiveDayForecast = function(data)
     
         var condition = function()
         {
-            if (fiveDayForecastData.list[0].weather)
+            if (firstDayForecastData.list[0].weather)
             {         
-                return fiveDayForecastData.list[0].weather[0].description;
+                return firstDayForecastData.list[0].weather[0].description;
             }
             else
             {
@@ -240,9 +256,9 @@ var setFiveDayForecast = function(data)
 
         var temperature = function()
         {
-            if (fiveDayForecastData.list[0].main)
+            if (firstDayForecastData.list[0].main)
             {         
-                return fiveDayForecastData.list[0].main.temp;
+                return firstDayForecastData.list[0].main.temp;
             }
             else
             {
@@ -251,17 +267,81 @@ var setFiveDayForecast = function(data)
         };
     
 
-    var fiveDayForecastData = 
+    var firstDayForecast = 
     {
         date: date(),
         condition: condition(),
         temperature: temperature().toFixed() // Round to nearest ones place
     };
 
-    fiveDayForecastDataObj.push(fiveDayForecastData); 
+    firstDayForecastDataObj.push(firstDayForecast); 
     
-    console.log(fiveDayForecastDataObj);
+    console.log('First day data object: ' + firstDayForecastDataObj);
 
-    renderFiveDayForecastDataView();
+    renderFirstDayForecast();
 }
+
+/***************************************************
+ * SECOND DAY FORECAST
+ ***************************************************/
+var setSecondDayForecast = function(data)
+{
+    secondDayForecastDataObj = [];
+
+    var secondDayForecastData = data;
+
+        
+        var date = function() 
+        {
+            if (secondDayForecastData.list)
+            {      
+                var secondDayForecastDate = moment(secondDayForecastData.list[8].dt_txt).format("dddd");
+                return secondDayForecastDate;                   
+            }
+            else
+            {
+                return null;    
+            }   
+        };
+    
+        var condition = function()
+        {
+            if (secondDayForecastData.list[8].weather)
+            {         
+                return secondDayForecastData.list[8].weather[0].description;
+            }
+            else
+            {
+                return null;    
+            }      
+        };
+
+        var temperature = function()
+        {
+            if (secondDayForecastData.list[8].main)
+            {         
+                return secondDayForecastData.list[8].main.temp;
+            }
+            else
+            {
+                return null;    
+            }      
+        };
+    
+
+    var secondDayForecast = 
+    {
+        date: date(),
+        condition: condition(),
+        temperature: temperature().toFixed() // Round to nearest ones place
+    };
+
+    secondDayForecastDataObj.push(secondDayForecast); 
+    
+    console.log('Second day Data Obj: ' + secondDayForecastDataObj);
+
+    renderSecondDayForecast();
+}
+
+
 
