@@ -6,12 +6,11 @@ Part 1:
 ✔︎ When a user does another search, their first search should be replaced.
 
 Part 2:
-- When a user searches, they should additionally see a 5-day forecast, and each of the five days should have an associated day of the week, weather condition and temperature.
+✔︎ When a user searches, they should additionally see a 5-day forecast, and each of the five days should have an associated day of the week, weather condition and temperature.
 
 my API key: 67a3461ef47ac031e5c7b307ce98c09c
 
 TO DO:
--refactor icons
 -refactor html design
 
 */
@@ -21,8 +20,8 @@ var currentWeather = [];
 
 var fiveDayForecast = [];
 
-//add top level variable as key for local Storage
-var STORAGE_ID = 'weather-app';
+// // add top level variable as key for local Storage
+// var STORAGE_ID = 'weather-app';
 
 // //stringify and save currentWeather array
 // var saveToLocalStorage = function () {
@@ -67,7 +66,7 @@ var renderForecast = function () {
 var fetchCurrentWeather = function (query) {
     $.ajax({
         method: "GET",
-        url: "https://api.openweathermap.org/data/2.5/weather?q=" + query + "&appid=67a3461ef47ac031e5c7b307ce98c09c&units=imperial",
+        url: "https://api.openweathermap.org/data/2.5/weather?q=" + query + ",us&appid=67a3461ef47ac031e5c7b307ce98c09c&units=imperial",
         dataType: "json",
         success: function(data) {
             addCurrentWeather(data);
@@ -103,7 +102,7 @@ var addCurrentWeather = function(data) {
 var fetchForecast = function (query) {
     $.ajax({
         method: "GET",
-        url: "https://api.openweathermap.org/data/2.5/forecast?q=" + query + "&appid=67a3461ef47ac031e5c7b307ce98c09c&units=imperial",
+        url: "https://api.openweathermap.org/data/2.5/forecast?q=" + query + ",us&appid=67a3461ef47ac031e5c7b307ce98c09c&units=imperial",
         dataType: "json",
         success: function(data) {
             addForecast(data.list);
@@ -123,11 +122,6 @@ var addForecast = function(data) {
     for (var i = 0; i < data.length; i += 8) {
 
         console.log("this is what the data from the forecast API looks like:", data);
-            // build obj to fit handlebars template {city, temperature, condition, icon}
-
-            // if (data[i].dt_txt.includes("12:00:00") > -1) {
-            //     var weekday = moment(data[i].dt_txt).format('dddd');
-            // };
 
             //refactor to use moment.min.js and also to shorten the name of the day
             var day = data[i].dt_txt.includes("12:00:00") > -1;
@@ -138,6 +132,8 @@ var addForecast = function(data) {
             console.log("This is what weekday looks like:", shortenedWeekday);
 
             console.log("this is what the icon looks like:", data[i].weather[0].icon);
+
+            // build obj to fit handlebars template {city, temperature, condition, icon}
             var dailyForecast = {
                 // if there is a city, temperature. condition, . . . etc, set them equal to it; if there isn't, make it an empty string
                 weekday: shortenedWeekday ? shortenedWeekday : "", 
@@ -151,16 +147,17 @@ var addForecast = function(data) {
     }
 };
 
+var $defaultbtn = $('.default').hide();
+
 //users should be able to search for a city and see the current weather
 $('.search').on('click', function () {
     var search = $('#search-query').val();
 
     fetchCurrentWeather(search);
     fetchForecast(search);
+
+    $defaultbtn.show();
 })
 
 //currentWeather should be rendered as soon as the page is loaded
 renderCurrentWeather();
-
-// //fiveDayForecast should be rendered after the search button is clicked
-//renderForecast;
