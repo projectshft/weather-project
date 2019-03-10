@@ -1,6 +1,7 @@
 const WeatherApp = function() {
-  
-  // Grabs the current condition data from the API based on searched city name
+  let weather = [];
+
+  // Grabs the current weather conditions data from the API based on searched city name
 
   const fetchCurrentConditions = function (query) {
     $.ajax({
@@ -16,7 +17,7 @@ const WeatherApp = function() {
     });
   }
 
-  // Grabs the five day forecast data from the API based on searched city name
+  // Grabs the five day weather forecast data from the API based on searched city name
 
   const fetchFiveDayForecast = function (query) {
     $.ajax({
@@ -24,7 +25,6 @@ const WeatherApp = function() {
       url: "https://api.openweathermap.org/data/2.5/forecast?q=" + query + '&APPID=486f4890e6823edadc8d626bbb26cdc7',
       dataType: "json",
       success: function(forecastData) {
-        console.log(forecastData);
         fiveDayForecast(forecastData);
       },
       error: function(jqXHR, textStatus, errorThrown) {
@@ -33,7 +33,7 @@ const WeatherApp = function() {
     });
   }
 
-  // Grabs the current condition data from the API based on your Geolocation
+  // Grabs the current weather conditions data from the API based on your Geolocation
 
   const fetchCurrentConditionsByGeolocation = function (lat, long) {
     $.ajax({
@@ -49,7 +49,7 @@ const WeatherApp = function() {
     });
   }
 
-  // Grabs the five day forecast data from the API based on your Geolocation
+  // Grabs the five day weather forecast data from the API based on your Geolocation
 
   const fetchFiveDayForecastByGeolocation = function (lat, long) {
     $.ajax({
@@ -65,25 +65,25 @@ const WeatherApp = function() {
     });
   }
 
-  // Takes in the data from the API and creates an object for the current conditions
+  // Takes in the data returned from the API and creates an object for the current conditions
 
   const currentConditions = function (data) {
     weather = [{
       temp: Math.round((data.main.temp - 273.15) * (9/5) + 32),
       city: data.name,
       weatherConditions: data.weather[0].main,
-      icon: 'https://openweathermap.org/img/w/' + data.weather[0].icon + '.png'
+      icon: 'https://openweathermap.org/img/w/' + data.weather[0].icon + '.png',
+      forecast: []
     }];
     renderWeather();
   }
 
-  // Takes in the data from the API and creates object for five day forecast
+  // Takes in the data returned from the API and creates an object for five day forecast
 
   const fiveDayForecast = function (forecastData) {
-    forecast = [];
     for(let i = 7; i <= forecastData.list.length; i += 8) {
       let date = forecastData.list[i].dt;
-      forecast.push({
+      weather[0].forecast.push({
         temp: Math.round((forecastData.list[i].main.temp - 273.15) * (9/5) + 32),
         day: moment.unix(date).format('dddd'),
         weatherConditions: forecastData.list[i].weather[0].main,
@@ -112,7 +112,7 @@ const WeatherApp = function() {
     const source = $('#forecast-template').html();
     const template = Handlebars.compile(source);
 
-    forecast.forEach(item => {
+    weather[0].forecast.forEach(item => {
       let newHTML = template(item);
       $('.forecast').append(newHTML);
     }); 
@@ -121,7 +121,7 @@ const WeatherApp = function() {
   // Saves current city of weather array to local storage
 
   let STORAGE_WEATHER = 'default-city-weather';
-  
+
   const saveToLocalStorage = function () {
     localStorage.setItem(STORAGE_WEATHER, JSON.stringify(weather[0].city));
   }
@@ -141,14 +141,11 @@ const WeatherApp = function() {
   }
 
   return {
-    renderForecast,
-    renderWeather,
-    saveToLocalStorage,
-    getFromLocalStorage,
     fetchCurrentConditions,
     fetchFiveDayForecast,
     fetchCurrentConditionsByGeolocation,
-    fetchFiveDayForecastByGeolocation
+    fetchFiveDayForecastByGeolocation, 
+    saveToLocalStorage
   }
 }
 
