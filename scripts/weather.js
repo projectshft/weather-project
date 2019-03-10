@@ -16,7 +16,6 @@ const weatherModule = () => {
   /** Initialize a map, provided by the TomTom API */
   const initMap = () => {
     tomtom.setProductInfo('weather-project', '1.0');
-
     const weatherMap = tomtom.L.map('map', {
       key: attributes.API_MAP_KEY,
       source: 'vector',
@@ -67,8 +66,8 @@ const weatherModule = () => {
    * @param { String } city - The city to get the weather forecast
    */
   const getWeatherForecast = async (city) => {
-    const apiCall = await fetch(`http://api.openweathermap.org/data/2.5/forecast?q=${city},us&units=imperial&appid=${attributes.API_WEATHER_KEY}`);
-    const data = await apiCall.json();
+    const response = await fetch(`http://api.openweathermap.org/data/2.5/forecast?q=${city},us&units=imperial&appid=${attributes.API_WEATHER_KEY}`);
+    const data = await response.json();
     attributes.forecastData = [];
     // Push fives objects representing a five day forecast list
     for (let i = 0; i < data.list.length; i += 8) {
@@ -96,8 +95,8 @@ const weatherModule = () => {
   return {
     getWeatherForecast: getWeatherForecast,
     getCurrentWeather: getCurrentWeather,
-    getAttribute: getAttribute,
     initMap: initMap,
+    getAttribute: getAttribute,
     getAddress: getAddress,
     renderTemplate: renderTemplate,
     renderFiveDayForecast: renderFiveDayForecast
