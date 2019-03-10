@@ -1,6 +1,6 @@
 var WeatherApp = function() {
-  var queryData = {};
-  var forecastData = {};
+  var queryData = {}; //Current weather data.
+  var forecastData = {}; //Forecast data.
 
   var searchFunc = function(input) { //API calls - hard coded to US
     var urls = ['https://api.openweathermap.org/data/2.5/weather?q=' + input + ',US&APPID=72e02d7e6f07aa32ae20388abf818118', //Current conditions
@@ -27,9 +27,9 @@ var WeatherApp = function() {
       condition: data.weather[0].main,
       condIconLink: "http://openweathermap.org/img/w/"+ data.weather[0].icon +".png", //Using Openweathermap's condition images.
     }
-    renderFunc("current");
+    renderFunc("current"); 
   } else {
-    //forecast - forecast data is every 3 hours so 8 items per 24 hours, starting from index 7 gives us the max # of forecasts
+    //forecast - forecast data is every 3 hours so 8 items per 24 hours, starting from index 7 gives us the max # of forecasts (index 7 to 39)
     for (var i=7;i<data.list.length; i+=8) {
       forecastData = {
         condition: data.list[i].weather[0].main,
@@ -49,14 +49,19 @@ var renderFunc = function(updateType) { //Render function - is invoked based on 
     $('#forecastWeather').empty(); //Clear forecast element
     $('body').css('background-image', 'url(assets/' + queryData.condition + '.jpg)'); //Changes background image depending on condition
     handleBarFunc('#currentConditionsTemplate', queryData, '#currentWeather'); //Does Handlebar stuff to generate html for current weather
-  } else {
+    if (queryData.name == localStorage.getItem("defaultCity")) { //Keeps default city box checked when viewing the default city, not checked otherwise.
+       $('#defaultCity').prop('checked', true);
+     } else {
+      $('#defaultCity').prop('checked', false)
+     }
+  } else { //Assumed any else condition is forecast
     handleBarFunc('#forecastTemplate', forecastData, '#forecastWeather'); ////Does Handlebar stuff to generate html for forecast
   }
 
-  if ($('#forecastContainer').css('display') =='none') { //Toggle forecast container to display after data loads
+  if ($('#forecastContainer').css('display') =='none') { //Toggle forecast container to display after data loads.
     $('#forecastContainer').toggle();
   }
-  if ($('.form-check').css('display') =='none') { //unhide forecast container
+  if ($('.form-check').css('display') =='none') { //Toggle default city check box to be visible after data loads.
     $(".form-check").toggle();
   }    
 }
@@ -68,7 +73,7 @@ var renderFunc = function(updateType) { //Render function - is invoked based on 
     $(targElement).append(newHTML);
   }
     
-  var setDefault = function(checkBox) {    
+  var setDefault = function(checkBox) { //Default city checkbox handling
     if (checkBox.checked) {
       localStorage.setItem("defaultCity", queryData.name);
     } else {
@@ -76,7 +81,7 @@ var renderFunc = function(updateType) { //Render function - is invoked based on 
     }
   }
 
-  var checkDefault = function() {
+  var checkDefault = function() { //Checks to see if a default city exists in local storage and does a call on it.
     var defaultCity = localStorage.getItem("defaultCity")
     if (defaultCity) {
       searchFunc(defaultCity);
