@@ -99,7 +99,7 @@ body {
   box-shadow: 0px 0px 30px 5px black;
 }
 
-.my-five-day-row-middle {
+.my-five-day-row-two {
   height: 120px;
   width: 500px;
   border: 1px solid black;
@@ -113,7 +113,35 @@ body {
   box-shadow: 0px 0px 30px 5px black;
 }
 
-.my-five-day-row-bottom {
+.my-five-day-row-three {
+  height: 120px;
+  width: 500px;
+  border: 1px solid black;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: 50px;
+  margin-right: 50px;
+  display: flex;
+  flex-wrap: wrap;
+  border-radius: 5px;
+  box-shadow: 0px 0px 30px 5px black;
+}
+
+.my-five-day-row-four {
+  height: 120px;
+  width: 500px;
+  border: 1px solid black;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: 50px;
+  margin-right: 50px;
+  display: flex;
+  flex-wrap: wrap;
+  border-radius: 5px;
+  box-shadow: 0px 0px 30px 5px black;
+}
+
+.my-five-day-row-five {
   height: 120px;
   width: 500px;
   border: 1px solid black;

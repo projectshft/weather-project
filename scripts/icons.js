@@ -17,3 +17,21 @@ var iconToBG = function(icon){
     return 'assets/backgroundImages/snowBG.png';
   };
 };
+
+var iconToTemplates = function(icon){
+  if (icon == '01d' || icon == '01n'){
+    return 'assets/dayTemplates/clearSkyDayTemplate.png';
+  } else if (icon == '02d' || icon == '02n'){
+    return 'assets/dayTemplates/fewCloudsDayTemplate.png';
+  } else if (icon == '03d' || icon == '03n'){
+    return 'assets/dayTemplates/scatteredCloudsDayTemplate.png';
+  } else if (icon == '04d' || icon == '04n'){
+    return 'assets/dayTemplates/brokenCloudsDayTemplate.png';
+  } else if (icon == '09d' || icon == '09n' || icon == '10d' || icon == '10n' || icon == '50d' || icon == '50n'){
+    return 'assets/dayTemplates/rainDayTemplate.png';
+  } else if (icon == '11d' || icon == '11n'){
+    return 'assets/dayTemplates/thunderstormDayTemplate.png';
+  } else if (icon == '13d' || icon == '13n'){
+    return 'assets/dayTemplates/snowDayTemplate.png';
+  };
+};

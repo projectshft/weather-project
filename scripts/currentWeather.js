@@ -5,34 +5,36 @@ var currentWeatherFetch = function(query) {
     url: `http://api.openweathermap.org/data/2.5/weather?q=${query},usa&APPID=e5c41b556e0f143b4f3f8ea018a675ca`,
     dataType: "json",
     success: function(data) {
-      //get the relevant data and add to new object
+      //turn K to F and assign to new variable
       var tempF = Math.floor((data.main.temp - 273.15) * 9/5 + 32); //(tempK − 273.15) × 9/5 + 32
+      //determine which BG to assign to "icon"
+      var targetBG = iconToBG(data.weather[0].icon);
+      //get the relevant data and add to new object
       var fetchAttributes = {
         city: query,
         temp: tempF,
         condition: 'with ' + data.weather[0].description,
-        icon: data.weather[0].icon
+        icon: targetBG
       };
       console.log('This is my fetch result: ', fetchAttributes);
-      //invoked CurrentWeatherModel and store return value in variable currentWeatherModelRender
+      //invoke CurrentWeatherModel and store return value in variable currentWeatherModelRender
       var currentWeatherModelRender = CurrentWeatherModel(fetchAttributes);
       //retrieve and assign my HTML templates via handlebars
       var currentWeatherTemplate = Handlebars.compile($('#current-weather-template').html());
       var currentCityTemplate = Handlebars.compile($('#current-city-template').html());
-      //invoke and store the return value in vairable currentWeatherViewRender
+      //invoke the View and store the return value in vairable currentWeatherViewRender
       var currentWeatherViewRender = CurrentWeatherView(currentWeatherModelRender, currentWeatherTemplate);
       var currentCityViewRender = CurrentWeatherView(currentWeatherModelRender, currentCityTemplate);
       //clear elements to be rendered
       $(".my-current-weather").empty();
       $(".display-location-text").remove();
-      $("display-location").empty();
+      $(".display-location").empty();
       //append the HTML to the page
       $(".display-location").append(currentCityViewRender.render());
       $('.my-current-weather').append(currentWeatherViewRender.render());
       //update background
-      var newBackgroundURL = iconToBG(fetchAttributes.icon);
       $('.my-weather-container').css('style',"");
-      $('.my-weather-container').attr('style', "background-image:url(" + newBackgroundURL + ");");
+      $('.my-weather-container').attr('style', "background-image:url(" + currentWeatherModelRender.getAttributes().icon + ");");
 
     },
     error: function(jqXHR, textStatus, errorThrown) {
@@ -78,6 +80,7 @@ var CurrentWeatherModel = function(fetchAttributes) {
 };
 
 //create the View for the current weather
+//I'm again using the same view to render two different models...
 var CurrentWeatherView = function(model, template) {
   //initialize the render function for the current weather
   var render = function(){

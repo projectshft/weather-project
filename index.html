@@ -16,13 +16,13 @@
         <div class="row justify-content-center my-header-row">
           <div class="my-header-col">
             <button type="button" class="btn btn-light btn-sm btn-current-location">Current Location</button>
-            <input class="input search-query" type="text" placeholder="Please enter a US city: Durham, NC">
+            <input class="input search-query" type="text" placeholder="Please enter a US city">
             <button type="button" class="btn btn-light btn-sm btn-search">Search</button>
           </div>
         </div>
       </div>
     </div>
-    <div class="container-fluid my-weather-container" style="background-image:url(assets/clouds-large.png);">
+    <div class="container-fluid my-weather-container" style="background-image:url('assets/backgroundImages/clearSkyBG.png');">
       <div class="justify-content-around align-items-center my-weather-row overflow-auto">
         <div class="my-weather-col">
           <div class="row justify-content-center align-items-center current-weather-row">
@@ -31,23 +31,23 @@
           </div>
         </div>
         <div class="my-forecast-col">
-          <div class="my-five-day-row-top">
+          <div class="my-five-day-row-top" style="background-image:url('assets/dayTemplates/fewCloudsDayTemplate.png');">
             <div class="col-10 my-five-day-top">
             </div>
           </div>
-          <div class="my-five-day-row-middle">
+          <div class="my-five-day-row-two">
             <div class="col-10 my-five-day-two">
             </div>
           </div>
-          <div class="my-five-day-row-middle">
+          <div class="my-five-day-row-three">
             <div class="col-10 my-five-day-three">
             </div>
           </div>
-          <div class="my-five-day-row-middle">
+          <div class="my-five-day-row-four">
             <div class="col-10 my-five-day-four">
             </div>
           </div>
-          <div class="my-five-day-row-bottom">
+          <div class="my-five-day-row-five">
             <div class="col-10 my-five-day-five">
             </div>
           </div>
@@ -68,10 +68,6 @@
       </div>
     </div>
 
-    <script src="node_modules/moment/moment.js"></script>
-    <script src="node_modules/jquery/dist/jquery.min.js"></script>
-    <script src="node_modules/handlebars/dist/handlebars.js"></script>
-
     <script id="current-weather-template" type="text/x-handlebars-template">
       <div class=my-focus-temp>
         <p>{{temp}}</p>
@@ -84,6 +80,70 @@
     <script id="current-city-template" type="text/x-handlebars-template">
       <div class=display-location-text>{{city}}</div>
     </script>
+
+    <script id="dayPlusOne-template" type="text/x-handlebars-template">
+      <div class=my-dayPlusOne-temp>
+        <p>{{temp}}</p>
+      </div>
+      <div class=my-dayPlusOne-condition>
+        <p>{{condition}}</p>
+      </div>
+      <div class=my-dayPlusOne-day>
+        <p>{{dayOfWeek}}</p>
+      </div>
+    </script>
+
+    <script id="dayPlusTwo-template" type="text/x-handlebars-template">
+      <div class=my-dayPlusTwo-temp>
+        <p>{{temp}}</p>
+      </div>
+      <div class=my-dayPlusTwo-condition>
+        <p>{{condition}}</p>
+      </div>
+      <div class=my-dayPlusTwo-day>
+        <p>{{dayOfWeek}}</p>
+      </div>
+    </script>
+
+    <script id="dayPlusThree-template" type="text/x-handlebars-template">
+      <div class=my-dayPlusThree-temp>
+        <p>{{temp}}</p>
+      </div>
+      <div class=my-dayPlusThree-condition>
+        <p>{{condition}}</p>
+      </div>
+      <div class=my-dayPlusThree-day>
+        <p>{{dayOfWeek}}</p>
+      </div>
+    </script>
+
+    <script id="dayPlusFour-template" type="text/x-handlebars-template">
+      <div class=my-dayPlusFour-temp>
+        <p>{{temp}}</p>
+      </div>
+      <div class=my-dayPlusFour-condition>
+        <p>{{condition}}</p>
+      </div>
+      <div class=my-dayPlusFour-day>
+        <p>{{dayOfWeek}}</p>
+      </div>
+    </script>
+
+    <script id="dayPlusFive-template" type="text/x-handlebars-template">
+      <div class=my-dayPlusFive-temp>
+        <p>{{temp}}</p>
+      </div>
+      <div class=my-dayPlusFive-condition>
+        <p>{{condition}}</p>
+      </div>
+      <div class=my-dayPlusFive-day>
+        <p>{{dayOfWeek}}</p>
+      </div>
+    </script>
+
+    <script src="node_modules/moment/moment.js"></script>
+    <script src="node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="node_modules/handlebars/dist/handlebars.js"></script>
 
     <script type="text/javascript" src="scripts/icons.js"></script>
     <script type="text/javascript" src="scripts/currentWeather.js"></script>
