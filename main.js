@@ -129,3 +129,139 @@ var setCurrentWeather = function(data)
 
     renderCurrentWeatherDataView();
 }
+
+/*****************************************************************************
+ * 
+ * 5 DAY FORECAST SECTION
+ * 
+ *****************************************************************************/
+
+ // TODO:
+ // Moment.js
+ // convert unix timestamp to human date
+ // SET currentDate = user input date
+ //     day 1: firstItem[currentDate] that matches current date
+ //         current date += 1 day
+ //     day 2: firstItem[currentDate] that matches current date
+ //         current date += 1 day
+ //     day 3: ...
+
+
+ // Do 5 day forecast with unix timestamp
+ 
+ // Reference for API format: https://api.openweathermap.org/data/2.5/forecast?q=cupertino,us&units=imperial&APPID=df48a036cbdd3435156ea83fd8913f6d
+
+
+// Declare empty array to contain the 5 Day Forecast data retrieved from API
+ var fiveDayForecastDataObj = [];
+
+
+// Function renders 5 Day Forecast data to the DOM
+var renderFiveDayForecastDataView = function () {
+    $('.fiveDayForecastView').empty();
+    
+    // Iterates through each property and attribute in the 5 Day Forecast data
+    // and writes it into Handlebars template, then rendered to the DOM
+    for (var i = 0; i < fiveDayForecastDataObj.length; i++) {
+      var fiveDayForecastDataView = fiveDayForecastDataObj[i];
+
+      var source = $('#fiveDayForecast-template').html();
+      var template = Handlebars.compile(source);
+      var newHTML = template(fiveDayForecastDataView);
+    
+      $('.fiveDayForecastView').append(newHTML);
+    }
+  };
+
+renderFiveDayForecastDataView();
+
+
+ // Retrieve API data for 5 Day Forecast in a user-specified US city, in imperial units
+var fetchFiveDayForecast = function (query) {
+    $.ajax({
+      method: "GET",
+      url: "https://api.openweathermap.org/data/2.5/forecast?q=" + query + ",us&units=imperial&APPID=df48a036cbdd3435156ea83fd8913f6d",
+      dataType: "json",
+      success: function(data) { 
+    
+            console.log(data)
+
+        setFiveDayForecast(data);
+      },
+      error: function(jqXHR, textStatus, errorThrown) {
+        console.log(textStatus);
+      }
+    });
+  };
+
+// Store user input in search variable    
+$('.search').on('click', function () 
+{
+    var search = $('#search-query').val();
+
+        console.log(search);
+
+    fetchFiveDayForecast(search);
+});
+
+// Information required to display 5 Day Forecast is extracted from retrieved API,
+// stored in fiveDayForecastDataObj array, then rendered to the DOM
+var setFiveDayForecast = function(data)
+{
+    fiveDayForecastDataObj = [];
+
+    var fiveDayForecastData = data;
+
+        //moment().format();
+        var date = function()
+        {
+            if (fiveDayForecastData.list)
+            {       
+                var dayOneForecastDate = moment(fiveDayForecastData.list[0].dt_txt).format("dddd");
+                return dayOneForecastDate;
+            }
+            else
+            {
+                return null;    
+            }   
+        };
+    
+        var condition = function()
+        {
+            if (fiveDayForecastData.list[0].weather)
+            {         
+                return fiveDayForecastData.list[0].weather[0].description;
+            }
+            else
+            {
+                return null;    
+            }      
+        };
+
+        var temperature = function()
+        {
+            if (fiveDayForecastData.list[0].main)
+            {         
+                return fiveDayForecastData.list[0].main.temp;
+            }
+            else
+            {
+                return null;    
+            }      
+        };
+    
+
+    var fiveDayForecastData = 
+    {
+        date: date(),
+        condition: condition(),
+        temperature: temperature().toFixed() // Round to nearest ones place
+    };
+
+    fiveDayForecastDataObj.push(fiveDayForecastData); 
+    
+    console.log(fiveDayForecastDataObj);
+
+    renderFiveDayForecastDataView();
+}
+

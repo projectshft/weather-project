@@ -7,6 +7,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>~~~~ weather.app ~~~~</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
+    <script src="https://unpkg.com/moment"></script>
+
 </head>
 <body>
 
@@ -53,6 +55,10 @@
             <div class="currentWeatherView row">
                 <!-- renderCurrentWeatherDataView() -->
             </div>
+
+            <div class="fiveDayForecastView row">
+                    <!-- renderFiveDayForecastDataView() -->
+            </div>
             
         </div>
       </div>
@@ -62,6 +68,15 @@
     <script id="currentWeather-template" type="text/x-handlebars-template">
         <div class="current col-md-6">
           <h4>Right now in {{ city }}</h4>
+          <div>Condition: <strong>{{ condition }}</strong></div>
+          <div>Temperature: <strong>{{ temperature }}&#8457;</strong></div>
+        </div>
+    </script>
+
+    <!-- Handlebars template -->
+    <script id="fiveDayForecast-template" type="text/x-handlebars-template">
+        <div class="current col-md-6">
+          <h4>Forecast: {{ date }}</h4>
           <div>Condition: <strong>{{ condition }}</strong></div>
           <div>Temperature: <strong>{{ temperature }}&#8457;</strong></div>
         </div>
