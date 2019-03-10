@@ -82,3 +82,9 @@ padding-bottom: 15px;
 #forecastContainer {
 display: none;
 }
+
+.form-check {
+  display: none;
+  text-align: center;
+  color: white;
+}
