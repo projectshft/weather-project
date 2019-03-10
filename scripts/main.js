@@ -12,11 +12,13 @@ $(document).ready(function () {
     const resultIsOk = await weather.getCurrentWeather(searchInput);
     // render weather template if location exists else alert error to user
     if (resultIsOk) {
+      await weather.getAddress();
       const template = await Handlebars.compile($('#weather-template').html());
 
       const newHtml = template({
         degrees: weather.getAttribute('temperature'),
         city: weather.getAttribute('city'),
+        state: weather.getAttribute('state'),
         weather: weather.getAttribute('condition')
       });
 

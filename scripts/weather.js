@@ -1,18 +1,19 @@
 /** Weather module */
 const weatherModule = () => {
-  const state = {
+  const attributes = {
     API_WEATHER_KEY: "60271f8873cd6fca6c2b2ce6c281a2c6",
     API_MAP_KEY: "2aSqKtcpMzpdSdRBKacFLAgpdVR2ZOqO",
     temperature: '',
     city: '',
+    state: '',
     condition: '',
     coords: [0, 0]
   }
 
   /** getter */
   const getAttribute = (attribute) => {
-    if (state.hasOwnProperty(attribute)) {
-      return state[attribute];
+    if (attributes.hasOwnProperty(attribute)) {
+      return attributes[attribute];
     }
   }
 
@@ -21,13 +22,35 @@ const weatherModule = () => {
     tomtom.setProductInfo('weather-project', '1.0');
 
     const weatherMap = tomtom.L.map('map', {
-      key: state.API_MAP_KEY,
+      key: attributes.API_MAP_KEY,
       source: 'vector',
       basePath: '/sdk',
     });
     return weatherMap;
   }
 
+  /** 
+   * Converts longitude and latitude into a human readable address 
+   * by using the TomTom Search API.
+   */
+  const getAddress = async () => {
+    const stateAddress = await fetch(`https://api.tomtom.com/search/2/reverseGeocode/${attributes.coords[0]},${attributes.coords[1]}.json?key=${attributes.API_MAP_KEY}`)
+      .then(result => {
+        if (result.ok) {
+          return result.json();
+        } else {
+          return false;
+        }
+      })
+      .then(data => {
+        const stateFound = data.addresses[0].address.countrySubdivisionName;
+        return stateFound;
+      })
+      .catch(error => {
+        console.log('error: ', error);
+      });
+    attributes['state'] = stateAddress;
+  }
   /**
    * Gets the weather forecast with the user input as a query. Makes a
    * call to the OpenWeatherMap Api
@@ -45,7 +68,7 @@ const weatherModule = () => {
    * @param { String } city - The city to get the current weather.
    */
   const getCurrentWeather = (city) => {
-    const res = fetch(`http://api.openweathermap.org/data/2.5/weather?q=${city},us&units=imperial&appid=${state.API_WEATHER_KEY}`)
+    const resultStatus = fetch(`http://api.openweathermap.org/data/2.5/weather?q=${city},us&units=imperial&appid=${attributes.API_WEATHER_KEY}`)
       .then(result => {
         if (result.ok) {
           return result.json();
@@ -55,26 +78,28 @@ const weatherModule = () => {
       })
       .then(data => {
         // set map coordinates
-        state['coords'][0] = data.coord.lat;
-        state['coords'][1] = data.coord.lon;
-        console.log(state.coords)
+        attributes['coords'][0] = data.coord.lat;
+        attributes['coords'][1] = data.coord.lon;
         // set weather data
-        state['city'] = data.name;
-        state['temperature'] = Math.ceil(data.main.temp);
-        state['condition'] = data.weather[0].main;
+        attributes['city'] = data.name;
+        attributes['temperature'] = Math.ceil(data.main.temp);
+        attributes['condition'] = data.weather[0].main;
         return true;
       })
       .catch(err => {
         return false;
       });
+    // console.log('coords: ', attributes.coords);
+    // console.log('state: ', stateAd);
 
-    return res;
+    return resultStatus;
   }
 
   return {
     getWeatherForecast: getWeatherForecast,
     getCurrentWeather: getCurrentWeather,
     getAttribute: getAttribute,
-    initMap: initMap
+    initMap: initMap,
+    getAddress: getAddress
   }
 };
