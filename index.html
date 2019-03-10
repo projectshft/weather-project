@@ -65,6 +65,18 @@
                         <h4>Second Day</h4>
                             <!-- renderFiveDayForecastDataView() -->
                     </div>
+                    <div id="thirdDayForecastView">
+                        <h4>Third Day</h4>
+                                <!-- renderFiveDayForecastDataView() -->
+                    </div>
+                    <div id="fourthDayForecastView">
+                        <h4>Fourth Day</h4>
+                                <!-- renderFiveDayForecastDataView() -->
+                    </div>
+                    <div id="fifthDayForecastView">
+                        <h4>Fifth Day</h4>
+                                <!-- renderFiveDayForecastDataView() -->
+                    </div>
             </div>
             
         </div>
@@ -97,6 +109,34 @@
           <div>Temperature: <strong>{{ temperature }}&#8457;</strong></div>
         </div>
     </script>
+
+    <!-- Handlebars template DAY THREE FORECAST -->
+    <script id="thirdDayForecast-template" type="text/x-handlebars-template">
+        <div class="current col-md-6">
+          <h4>Day 3: {{ date }}</h4>
+          <div>Condition: <strong>{{ condition }}</strong></div>
+          <div>Temperature: <strong>{{ temperature }}&#8457;</strong></div>
+        </div>
+    </script>
+
+    <!-- Handlebars template DAY FOUR FORECAST -->
+    <script id="fourthDayForecast-template" type="text/x-handlebars-template">
+        <div class="current col-md-6">
+          <h4>Day 4: {{ date }}</h4>
+          <div>Condition: <strong>{{ condition }}</strong></div>
+          <div>Temperature: <strong>{{ temperature }}&#8457;</strong></div>
+        </div>
+    </script>
+    
+    <!-- Handlebars template DAY FIVE FORECAST -->
+    <script id="fifthDayForecast-template" type="text/x-handlebars-template">
+        <div class="current col-md-6">
+          <h4>Day 5: {{ date }}</h4>
+          <div>Condition: <strong>{{ condition }}</strong></div>
+          <div>Temperature: <strong>{{ temperature }}&#8457;</strong></div>
+        </div>
+    </script>
+
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>

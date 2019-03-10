@@ -183,6 +183,78 @@ var renderSecondDayForecast = function () {
 
 renderSecondDayForecast();
 
+/************************************
+ *  THIRD DAY FORECAST RENDER
+ ************************************/
+// Declare empty array to contain the 5 Day Forecast data retrieved from API
+var thirdDayForecastDataObj = [];
+
+var renderThirdDayForecast = function () {
+    $('#thirdDayForecastView').empty();
+    
+    // Iterates through each property and attribute in the 5 Day Forecast data
+    // and writes it into Handlebars template, then rendered to the DOM
+    for (var i = 0; i < thirdDayForecastDataObj.length; i++) {
+      var thirdDayForecastView = thirdDayForecastDataObj[i];
+
+      var source = $('#thirdDayForecast-template').html();
+      var template = Handlebars.compile(source);
+      var newHTML = template(thirdDayForecastView);
+    
+      $('#thirdDayForecastView').append(newHTML);
+    }
+  };
+
+renderThirdDayForecast();
+
+/************************************
+ *  FOURTH DAY FORECAST RENDER
+ ************************************/
+// Declare empty array to contain the 5 Day Forecast data retrieved from API
+var fourthDayForecastDataObj = [];
+
+var renderFourthDayForecast = function () {
+    $('#fourthDayForecastView').empty();
+    
+    // Iterates through each property and attribute in the 5 Day Forecast data
+    // and writes it into Handlebars template, then rendered to the DOM
+    for (var i = 0; i < fourthDayForecastDataObj.length; i++) {
+      var fourthDayForecastView = fourthDayForecastDataObj[i];
+
+      var source = $('#fourthDayForecast-template').html();
+      var template = Handlebars.compile(source);
+      var newHTML = template(fourthDayForecastView);
+    
+      $('#fourthDayForecastView').append(newHTML);
+    }
+  };
+
+renderFourthDayForecast();
+
+/************************************
+ *  FIFTH DAY FORECAST RENDER
+ ************************************/
+// Declare empty array to contain the 5 Day Forecast data retrieved from API
+var fifthDayForecastDataObj = [];
+
+var renderFifthDayForecast = function () {
+    $('#fifthDayForecastView').empty();
+    
+    // Iterates through each property and attribute in the 5 Day Forecast data
+    // and writes it into Handlebars template, then rendered to the DOM
+    for (var i = 0; i < fifthDayForecastDataObj.length; i++) {
+      var fifthDayForecastView = fifthDayForecastDataObj[i];
+
+      var source = $('#fifthDayForecast-template').html();
+      var template = Handlebars.compile(source);
+      var newHTML = template(fifthDayForecastView);
+    
+      $('#fifthDayForecastView').append(newHTML);
+    }
+  };
+
+renderFifthDayForecast();
+
 
 /*************************************************************************/
 
@@ -198,6 +270,9 @@ var fetchFiveDayForecast = function (query) {
 
         setFirstDayForecast(data);
         setSecondDayForecast(data);
+        setThirdDayForecast(data);
+        setFourthDayForecast(data);
+        setFifthDayForecast(data);
       
       },
       error: function(jqXHR, textStatus, errorThrown) {
@@ -343,5 +418,190 @@ var setSecondDayForecast = function(data)
     renderSecondDayForecast();
 }
 
+/***************************************************
+ * THIRD DAY FORECAST
+ ***************************************************/
+var setThirdDayForecast = function(data)
+{
+    thirdDayForecastDataObj = [];
+
+    var thirdDayForecastData = data;
+
+        
+        var date = function() 
+        {
+            if (thirdDayForecastData.list)
+            {      
+                var thirdDayForecastDate = moment(thirdDayForecastData.list[16].dt_txt).format("dddd");
+                return thirdDayForecastDate;                   
+            }
+            else
+            {
+                return null;    
+            }   
+        };
+    
+        var condition = function()
+        {
+            if (thirdDayForecastData.list[16].weather)
+            {         
+                return thirdDayForecastData.list[16].weather[0].description;
+            }
+            else
+            {
+                return null;    
+            }      
+        };
+
+        var temperature = function()
+        {
+            if (thirdDayForecastData.list[16].main)
+            {         
+                return thirdDayForecastData.list[16].main.temp;
+            }
+            else
+            {
+                return null;    
+            }      
+        };
+    
+
+    var thirdDayForecast = 
+    {
+        date: date(),
+        condition: condition(),
+        temperature: temperature().toFixed() // Round to nearest ones place
+    };
+
+    thirdDayForecastDataObj.push(thirdDayForecast); 
+    
+    console.log('Third day Data Obj: ' + thirdDayForecastDataObj);
+
+    renderThirdDayForecast();
+}
+
+/***************************************************
+ * FOURTH DAY FORECAST
+ ***************************************************/
+var setFourthDayForecast = function(data)
+{
+    fourthDayForecastDataObj = [];
+
+    var fourthDayForecastData = data;
+
+        
+        var date = function() 
+        {
+            if (fourthDayForecastData.list)
+            {      
+                var fourthDayForecastDate = moment(fourthDayForecastData.list[24].dt_txt).format("dddd");
+                return fourthDayForecastDate;                   
+            }
+            else
+            {
+                return null;    
+            }   
+        };
+    
+        var condition = function()
+        {
+            if (fourthDayForecastData.list[24].weather)
+            {         
+                return fourthDayForecastData.list[24].weather[0].description;
+            }
+            else
+            {
+                return null;    
+            }      
+        };
+
+        var temperature = function()
+        {
+            if (fourthDayForecastData.list[24].main)
+            {         
+                return fourthDayForecastData.list[24].main.temp;
+            }
+            else
+            {
+                return null;    
+            }      
+        };
+    
+
+    var fourthDayForecast = 
+    {
+        date: date(),
+        condition: condition(),
+        temperature: temperature().toFixed() // Round to nearest ones place
+    };
+
+    fourthDayForecastDataObj.push(fourthDayForecast); 
+    
+    console.log('Fourth day Data Obj: ' + fourthDayForecastDataObj);
+
+    renderFourthDayForecast();
+}
+
+/***************************************************
+ * FIFTH DAY FORECAST
+ ***************************************************/
+var setFifthDayForecast = function(data)
+{
+    fifthDayForecastDataObj = [];
+
+    var fifthDayForecastData = data;
+
+        
+        var date = function() 
+        {
+            if (fifthDayForecastData.list)
+            {      
+                var fifthDayForecastDate = moment(fifthDayForecastData.list[32].dt_txt).format("dddd");
+                return fifthDayForecastDate;                   
+            }
+            else
+            {
+                return null;    
+            }   
+        };
+    
+        var condition = function()
+        {
+            if (fifthDayForecastData.list[32].weather)
+            {         
+                return fifthDayForecastData.list[32].weather[0].description;
+            }
+            else
+            {
+                return null;    
+            }      
+        };
+
+        var temperature = function()
+        {
+            if (fifthDayForecastData.list[32].main)
+            {         
+                return fifthDayForecastData.list[32].main.temp;
+            }
+            else
+            {
+                return null;    
+            }      
+        };
+    
+
+    var fifthDayForecast = 
+    {
+        date: date(),
+        condition: condition(),
+        temperature: temperature().toFixed() // Round to nearest ones place
+    };
+
+    fifthDayForecastDataObj.push(fifthDayForecast); 
+    
+    console.log('Fifth day Data Obj: ' + fifthDayForecastDataObj);
+
+    renderFifthDayForecast();
+}
 
 
