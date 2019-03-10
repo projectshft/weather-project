@@ -22,3 +22,11 @@ body {
 #error {
   display: none;
 }
+
+#set-default {
+  display: none;
+}
+
+#current-default {
+  display: none;
+}
