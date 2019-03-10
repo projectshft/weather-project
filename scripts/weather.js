@@ -78,7 +78,7 @@ const weatherModule = () => {
 
   /**
    * Gets the current weather with the user input as a query. Api call
-   * to OpenWeatherMap. Returns true if result data is ok, otherwise false.
+   * to OpenWeatherMap. Sets the correct data, to created attributes.
    * @param { String } city - The city to get the current weather.
    */
   const getCurrentWeather = async (city) => {
