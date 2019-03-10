@@ -32,9 +32,13 @@
   padding-top: 4rem;
 }
 
-.card {
-  border-radius: 5%;
-  padding-top: 2rem;
-  padding-bottom: 2rem;
-  border: 2px solid rgb(71, 179, 221);
+.forecast-weather {
+  padding-top: 4rem;
+}
+
+.forecast-weather__container {
+  text-align: center;
+  padding: 2rem .5rem 6rem .5rem;
+  border: .2rem solid rgb(97, 211, 116);
+  background-color: rgb(165, 233, 152);
 }

@@ -46,35 +46,9 @@
       </div>
     </div>
 
-    <!-- <div class="row forecast-weather--container d-flex justify-content-between">
-        <script id="forecast-weather-template" type="text/x-handlebars-template">
-          <div class="forecast-weather col-md-2 card">
-            <h2>{{ degrees }}</h2>
-            <h4>{{ city }}</h4>
-            <h5>{{ weather }}</h5>
-          </div>
-          <div class="forecast-weather col-md-2 card">
-            <h2>{{ degrees }}</h2>
-            <h4>{{ city }}</h4>
-            <h5>{{ weather }}</h5>
-          </div>
-          <div class="forecast-weather col-md-2 card">
-            <h2>{{ degrees }}</h2>
-            <h4>{{ city }}</h4>
-            <h5>{{ weather }}</h5>
-          </div>
-          <div class="forecast-weather col-md-2 card">
-            <h2>{{ degrees }}</h2>
-            <h4>{{ city }}</h4>
-            <h5>{{ weather }}</h5>
-          </div>
-          <div class="forecast-weather col-md-2 card">
-            <h2>{{ degrees }}</h2>
-            <h4>{{ city }}</h4>
-            <h5>{{ weather }}</h5>
-          </div>
-        </script>
-      </div> -->
+    <div class="container">
+      <div class="row d-flex forecast-weather justify-content-between"></div>
+    </div>
   </div>
 
   <script src="node_modules/jquery/dist/jquery.js"></script>
@@ -85,6 +59,13 @@
       <h2>{{ degrees }}&#176;</h2>
       <h4>{{ city }}, {{ state }}</h4>
       <h5>{{ weather }}</h5>
+    </div>
+  </script>
+  <script id="forecast-weather-template" type="text/x-handlebars-template">
+    <div class="forecast-weather__container col-md-2 col-sm-12">
+      <h4>{{ condition }}</h4>
+      <h2>{{ temperature }}&#176;</h2>
+      <h4>{{ date }}</h4>
     </div>
   </script>
   <script src="./scripts/weather.js"></script>

@@ -3,14 +3,10 @@ const weatherModule = () => {
   const attributes = {
     API_WEATHER_KEY: "60271f8873cd6fca6c2b2ce6c281a2c6",
     API_MAP_KEY: "2aSqKtcpMzpdSdRBKacFLAgpdVR2ZOqO",
-    temperature: '',
-    city: '',
-    state: '',
-    condition: '',
-    coords: [0, 0]
+    coords: [0, 0],
   }
 
-  /** getter */
+  /** Getter */
   const getAttribute = (attribute) => {
     if (attributes.hasOwnProperty(attribute)) {
       return attributes[attribute];
@@ -29,37 +25,55 @@ const weatherModule = () => {
     return weatherMap;
   }
 
+  /** Render the main weather template */
+  const renderTemplate = () => {
+    const template = Handlebars.compile($('#weather-template').html());
+    const newHtml = template({
+      degrees: attributes.temperature,
+      city: attributes.city,
+      state: attributes.state,
+      weather: attributes.condition
+    });
+    $('.current-weather').append(newHtml);
+  }
+
+  /** Render the five day weather forecast template to the user */
+  const renderFiveDayForecast = () => {
+    attributes.forecastData.forEach((day) => {
+      const template = Handlebars.compile($('#forecast-weather-template').html());
+      const newHtml = template({
+        condition: day.weather[0].main,
+        temperature: Math.ceil(day.main.temp),
+        date: new Date(day.dt_txt).toString().slice(0, 3),
+      });
+      $('.forecast-weather').append(newHtml);
+    });
+  }
+
   /** 
    * Converts longitude and latitude into a human readable address 
    * by using the TomTom Search API.
    */
   const getAddress = async () => {
-    const stateAddress = await fetch(`https://api.tomtom.com/search/2/reverseGeocode/${attributes.coords[0]},${attributes.coords[1]}.json?key=${attributes.API_MAP_KEY}`)
-      .then(result => {
-        if (result.ok) {
-          return result.json();
-        } else {
-          return false;
-        }
-      })
-      .then(data => {
-        const stateFound = data.addresses[0].address.countrySubdivisionName;
-        return stateFound;
-      })
-      .catch(error => {
-        console.log('error: ', error);
-      });
-    attributes['state'] = stateAddress;
+    const response = await fetch(`https://api.tomtom.com/search/2/reverseGeocode/${attributes.coords[0]},${attributes.coords[1]}.json?key=${attributes.API_MAP_KEY}`);
+    const data = await response.json();
+    const stateFound = data.addresses[0].address.countrySubdivisionName;
+    attributes.state = stateFound;
   }
+
   /**
    * Gets the weather forecast with the user input as a query. Makes a
    * call to the OpenWeatherMap Api
    * @param { String } city - The city to get the weather forecast
    */
   const getWeatherForecast = async (city) => {
-    const apiCall = await fetch('http://api.openweathermap.org/data/2.5/forecast?q=durham,us&appid=60271f8873cd6fca6c2b2ce6c281a2c6');
+    const apiCall = await fetch(`http://api.openweathermap.org/data/2.5/forecast?q=${city},us&units=imperial&appid=${attributes.API_WEATHER_KEY}`);
     const data = await apiCall.json();
-    console.log('data for 5 days: ', data);
+    attributes.forecastData = [];
+    // Push fives objects representing a five day forecast list
+    for (let i = 0; i < data.list.length; i += 8) {
+      attributes.forecastData.push(data.list[i]);
+    }
   }
 
   /**
@@ -67,32 +81,16 @@ const weatherModule = () => {
    * to OpenWeatherMap. Returns true if result data is ok, otherwise false.
    * @param { String } city - The city to get the current weather.
    */
-  const getCurrentWeather = (city) => {
-    const resultStatus = fetch(`http://api.openweathermap.org/data/2.5/weather?q=${city},us&units=imperial&appid=${attributes.API_WEATHER_KEY}`)
-      .then(result => {
-        if (result.ok) {
-          return result.json();
-        } else {
-          return false;
-        }
-      })
-      .then(data => {
-        // set map coordinates
-        attributes['coords'][0] = data.coord.lat;
-        attributes['coords'][1] = data.coord.lon;
-        // set weather data
-        attributes['city'] = data.name;
-        attributes['temperature'] = Math.ceil(data.main.temp);
-        attributes['condition'] = data.weather[0].main;
-        return true;
-      })
-      .catch(err => {
-        return false;
-      });
-    // console.log('coords: ', attributes.coords);
-    // console.log('state: ', stateAd);
-
-    return resultStatus;
+  const getCurrentWeather = async (city) => {
+    const response = await fetch(`http://api.openweathermap.org/data/2.5/weather?q=${city},us&units=imperial&appid=${attributes.API_WEATHER_KEY}`)
+    const data = await response.json();
+    // set map coordinates
+    attributes['coords'][0] = data.coord.lat;
+    attributes['coords'][1] = data.coord.lon;
+    // set weather data
+    attributes.city = data.name;
+    attributes.temperature = Math.ceil(data.main.temp);
+    attributes.condition = data.weather[0].main;
   }
 
   return {
@@ -100,6 +98,8 @@ const weatherModule = () => {
     getCurrentWeather: getCurrentWeather,
     getAttribute: getAttribute,
     initMap: initMap,
-    getAddress: getAddress
+    getAddress: getAddress,
+    renderTemplate: renderTemplate,
+    renderFiveDayForecast: renderFiveDayForecast
   }
 };
