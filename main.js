@@ -1,22 +1,5 @@
 const WeatherApp = function() {
-  let STORAGE_WEATHER = 'current_weather';
-  let STORAGE_FORECAST = 'forecast_data';
-
-  // Saves current contents of weather and forecast arrays to local storage
-
-  const saveToLocalStorage = function () {
-    localStorage.setItem(STORAGE_WEATHER, JSON.stringify(weather));
-    localStorage.setItem(STORAGE_FORECAST, JSON.stringify(forecast));
-  }
-
-  // Grabs info from local storage
-
-  const getFromLocalStorage = function (ID) {
-    return JSON.parse(localStorage.getItem(ID) || '[]');
-  }
   
-  
-
   // Grabs the current condition data from the API based on searched city name
 
   const fetchCurrentConditions = function (query) {
@@ -133,10 +116,29 @@ const WeatherApp = function() {
       let newHTML = template(item);
       $('.forecast').append(newHTML);
     }); 
-  }  
+  }
 
-  let weather = getFromLocalStorage(STORAGE_WEATHER);
-  let forecast = getFromLocalStorage(STORAGE_FORECAST);
+  // Saves current city of weather array to local storage
+
+  let STORAGE_WEATHER = 'default-city-weather';
+  
+  const saveToLocalStorage = function () {
+    localStorage.setItem(STORAGE_WEATHER, JSON.stringify(weather[0].city));
+  }
+
+  // Grabs the saved default city location info from local storage if available otherwise returns an empty array
+
+  const getFromLocalStorage = function (ID) {
+    return JSON.parse(localStorage.getItem(ID) || '[]');
+  }  
+  
+  /* Checks to see if a default location is stored in local storage and if so grabs that
+     info and passes it into the API functions */
+
+  if(getFromLocalStorage(STORAGE_WEATHER).length >= 1) {
+    fetchCurrentConditions(getFromLocalStorage(STORAGE_WEATHER));
+    fetchFiveDayForecast(getFromLocalStorage(STORAGE_WEATHER));
+  }
 
   return {
     renderForecast,
@@ -150,12 +152,7 @@ const WeatherApp = function() {
   }
 }
 
-const app = WeatherApp();  // Creates new WeaherApp
-
-// Calls the two render functions at start to display default from local storage if available
-
-app.renderWeather();
-app.renderForecast();
+const app = WeatherApp();  // Creates new WeatherApp
 
 /* Creates click handler for the search button which captures the value of the input field and then 
    passes that data onto the API fetch functions */
