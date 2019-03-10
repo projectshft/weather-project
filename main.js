@@ -6,8 +6,9 @@
 // 7. Profit???
 
 
-var weather = [];
-// my API key & pulls temperature in as fahrenheit because America. 
+var currentWeather = [];
+var fiveDayWeather = [];
+// my API key & pulls temperature in as fahrenheit because America.
 var key = "&units=imperial&appid=0439b3d5de6bee4961a3e1454084792f"
 
 
@@ -16,7 +17,7 @@ var fetch = function(query) {
   $.ajax({
     method: "GET",
     // pulls query
-    url: "api.openweathermap.org/data/2.5/weather?q=" + query,
+    url: "api.openweathermap.org/data/2.5/weather?q=" + query + key,
     dataType: "json",
     success: function(data) {console.log(data);
       addWeather(weather.items);

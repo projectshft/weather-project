@@ -3,8 +3,10 @@
   <head>
     <meta charset="utf-8">
     <title>Project Shift</title>
-    <script src="node_modules/bootstrap/dist/css/bootstrap.css"> </script>
     <link rel="stylesheet" href="style.css">
+
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css">
+
   </head>
   <body>
 
@@ -18,7 +20,7 @@
       </input>
     </div>
 
-    <button type="button" class="btn btn-primary search"> Search </button>
+    <button type="button" class="search"> Search </button>
   </form>
 
   <div class="view">
@@ -27,7 +29,7 @@
       <div> Temp: <strong>{{ temp }}</strong> </div>
       <div> Location: <strong>{{ location }}</strong></div>
       <div> Condition: <strong>{{ condition }}</conditions></div>
-      <img src="{{imageURL}}" alt="">
+      <!-- <img src="{{imageURL}}" alt=""> -->
     </div>
 
     <div class="five-day-weather">
@@ -37,7 +39,8 @@
     </div>
   </div>
 
-    <script src="nodle_modules/jquery/dist/jquery.js"> </script>
+    <script src="node_modules/jquery/dist/jquery.js"> </script>
+    <script src="node_modules/tether/dist/js/tether.min.js"></script>
     <script src="node_modules/handlebars/dist/handlebars.js"> </script>
     <script src="node_modules/moment/moment.js"> </script>
     <script src="node_modules/bootstrap/dist/js/bootstrap.js"> </script>
