@@ -20,17 +20,18 @@ var currentWeather = [];
 
 var fiveDayForecast = [];
 
-// // add top level variable as key for local Storage
-// var STORAGE_ID = 'weather-app';
+// add top level variable as key for local Storage
+var STORAGE_ID = 'weather-app';
 
-// //stringify and save currentWeather array
-// var saveToLocalStorage = function () {
-//     localStorage.setItem(STORAGE_ID, JSON.stringify(currentWeather));
-// };
-// //get local storage and turn back into JSON
-// var getFromLocalStorage = function () {
-//     return JSON.parse(localStorage.getItem(STORAGE_ID) || '[]');
-//   }
+//stringify and save currentWeather array
+var saveToLocalStorage = function () {
+    localStorage.setItem(STORAGE_ID, JSON.stringify(currentWeather, fiveDayForecast));
+};
+
+//get local storage and turn back into JSON
+var getFromLocalStorage = function () {
+    return JSON.parse(localStorage.getItem(STORAGE_ID) || '[]');
+  }
 
 //when CurrentWeather is rendered, the model should appear in the view
 var renderCurrentWeather = function () {
@@ -82,19 +83,39 @@ var addCurrentWeather = function(data) {
     //splice to remove the last search from the array
     currentWeather.splice(0);
         
-        console.log("this is what the data from the current weather API looks like:", data);
-            // build obj to fit handlebars template {city, temperature, condition, icon}
-
-            var WeatherRightNow = {
-                // if there is a city, temperature. condition, . . . etc, set them equal to it; if there isn't, make it an empty string
-                city: data.name ? data.name : "",
-                temperature: Math.round(data.main.temp) ? Math.round(data.main.temp) : "",
-                icon: data.weather[0].icon ? `http://openweathermap.org/img/w/${data.weather[0].icon}.png` : "",
-                condition: data.weather[0].main ? data.weather[0].main : "",
-            };
+    console.log("this is what the data from the current weather API looks like:", data);
         
-        currentWeather.push(WeatherRightNow);
-        renderCurrentWeather();
+    // build obj to fit handlebars template {city, temperature, condition, icon}
+
+    var WeatherRightNow = {
+        // if there is a city, temperature. condition, . . . etc, set them equal to it; if there isn't, make it an empty string
+        city: data.name ? data.name : "",
+        temperature: Math.round(data.main.temp) ? Math.round(data.main.temp) : "",
+        icon: data.weather[0].icon ? `http://openweathermap.org/img/w/${data.weather[0].icon}.png` : "",
+        condition: data.weather[0].main ? data.weather[0].main : "",
+    };
+    
+        //depending on the current weather condition, a gif of that weather condition will automatically play in the background
+    if (data.weather[0].main === "Rain") {
+        $('.bottom').css('background-image', 'url("https://media.giphy.com/media/t7Qb8655Z1VfBGr5XB/giphy.gif")');
+    } else if (data.weather[0].main == "Clouds") {
+        $('.bottom').css('background-image', 'url("https://i.gifer.com/srG.gif")');
+    } else if (data.weather[0].main == "Clear") {
+        $('.bottom').css('background-image', 'url("https://media.giphy.com/media/QCsEPhEd8PpEA/giphy.gif")');
+    };
+
+        //depending on the current weather condition, a user will feel the condition (an attempt to refactor)
+    // if (data.weather[0].main === "Rain") {
+    //     $('.bottom').removeClass().addClass("rain");
+    // } else if (data.weather[0].main == "Clouds") {
+    //     $('.bottom').removeClass().addClass("clouds");
+    // } else if (data.weather[0].main == "Clear") {
+    //     $('.bottom').removeClass().addClass("clear");
+    // };
+
+    currentWeather.push(WeatherRightNow);
+    renderCurrentWeather();
+    saveToLocalStorage();
 };
 
 
@@ -144,9 +165,10 @@ var addForecast = function(data) {
         
         fiveDayForecast.push(dailyForecast);
         renderForecast();
+        saveToLocalStorage();
     }
 };
-
+// the set as default button should be hidden until the user searches for a city
 var $defaultbtn = $('.default').hide();
 
 //users should be able to search for a city and see the current weather
@@ -157,6 +179,11 @@ $('.search').on('click', function () {
     fetchForecast(search);
 
     $defaultbtn.show();
+})
+
+//users should be able to set a city as their default city after search
+$('.default').on('click', function () {
+    getFromLocalStorage();
 })
 
 //currentWeather should be rendered as soon as the page is loaded
