@@ -13,51 +13,41 @@ var other = "http://images5.fanpop.com/image/photos/30900000/supercell-weather-3
 var selectIcon = function (icon) {
   if (icon == "01d" || icon == "01n") {
     var newIcon = "wi-day-sunny"
-    // $("body").css("background-image" "url(clear)");
     return (newIcon)
   };
   if (icon == "02d" || icon == "02n") {
     var newIcon = 'wi-day-cloudy'
-    // var newBackground = $("body").css(background-image: url(fewClouds))
     return (newIcon)
   };
   if (icon == "03d" || icon == "03n") {
     var newIcon = 'wi-cloud'
-    // var newBackground = $("body").css(background-image: url(scattered))
     return (newIcon)
   };
   if (icon == "04d" || icon == "04n") {
     var newIcon = 'wi-cloudy'
-    // var newBackground = $("body").css(background-image: url(scattered))
     return (newIcon)
   };
   if (icon == "09d" || icon == "09n") {
     var newIcon = 'wi-rain-wind'
-    // var newBackground = $("body").css(background-image: url(showers))
     return (newIcon)
   };
   if (icon == "10d" || icon == "10n") {
     var newIcon = 'wi-raindrops'
-    // var newBackground = $("body").css(background-image: url(rain))
     return (newIcon)
   };
   if (icon == "11d" || icon == "11n") {
     var newIcon = 'wi-lightning'
-    // var newBackground = $("body").css(background-image: url(thunderstorm))
     return (newIcon)
   };
   if (icon == "13d" || icon == "13n") {
     var newIcon = 'wi-snowflake-cold'
-    // var newBackground = $("body").css(background-image: url(snow))
     return (newIcon)
   };
   if (icon == "50d" || icon == "50n") {
     var newIcon = 'wi-smoke'
-    // var newBackground = $("body").css(background-image: url(mist))
-    return (newIcon, newBackground)
+    return (newIcon)
   } else {
     var newIcon = 'wi-alien'
-    // var newBackground = $("body").css(background-image: url(other))
     return (newIcon)
   };
 };

@@ -1,15 +1,75 @@
 weather = [];
-
-//show the loader image before the data is done being fetched
-var $loading = $('#loading').hide();
-
-//when the ajax starts, show the loading gif
-$(document)
-  .ajaxStart(function() {
-    $loading.show();
-  })
+forecast =[];
 
 var fetch = function(query) {
+    apikey= 'c48f732410a96bcb96dac9c9866f624f'
+    var weatherUrl = 'https://api.openweathermap.org/data/2.5/weather?q=' + query + '&units=imperial&appid='+ apikey;
+
+    $.ajax({
+      method: "GET",
+      url: weatherUrl,
+      dataType: "json",
+
+      success: function(data) {
+        addWeather(data);
+      },
+      error: function(jqXHR, textStatus, errorThrown) {
+        console.log(textStatus);
+      }
+    });
+
+  };
+
+  var addWeather = function(data) {
+    //delete previous search from weather array
+      weather.splice(0)
+  // use API to get temperature
+    var temperature = function() {
+      if (data.main.temp) {
+        return Math.round(data.main.temp);
+      } else {
+        return null;
+      }
+    };
+      // API get icon
+    var icon = function() {
+      if (data.weather[0].icon) {
+        return data.weather[0].icon;
+      } else {
+        return null;
+      }
+    };
+    //API to get city name
+    var city = function() {
+      if (data.name) {
+        return data.name;
+      } else {
+        return null;
+      }
+    };
+    //API to get current conditions
+    var conditions = function() {
+      if (data.weather[0].main) {
+        return data.weather[0].main;
+      } else {
+        return null;
+      }
+    };
+
+  //return the all functions
+    var current = {
+      temperature: temperature(),
+      icon: icon(),
+      city: city(),
+      conditions: conditions()
+    };
+
+    weather.push(current);
+    fetchForecast();
+  };
+
+
+var fetchForecast = function(query) {
   apikey= 'c48f732410a96bcb96dac9c9866f624f'
   var fiveDay = 'https://api.openweathermap.org/data/2.5/forecast?q=' + query + ',us&units=imperial&appid='+ apikey;
 
@@ -19,8 +79,7 @@ var fetch = function(query) {
     dataType: "json",
 
     success: function(data) {
-      $loading.hide();
-      addWeather(data);
+      addForecast(data);
     },
     error: function(jqXHR, textStatus, errorThrown) {
       console.log(textStatus);
@@ -29,9 +88,9 @@ var fetch = function(query) {
 
 };
 
-var addWeather = function(data) {
-  //delete previous search from weather array
-  weather.splice(0)
+var addForecast = function(data) {
+  //delete previous search from forecast array
+  forecast.splice(0)
 
   for (var i = 0; i < data.list.length; i+= 8) {
   // use API to get temperature
@@ -99,7 +158,7 @@ var addWeather = function(data) {
       dayOfWeek: dayOfWeek()
     };
 
-    weather.push(current);
+    forecast.push(current);
     renderWeather();
   };
 };
@@ -109,6 +168,7 @@ var renderWeather = function() {
   $('.current-weather').empty();
   $('.forecast').empty();
 
+  //update background to match weather
   var newbkg = newBackground(weather[0].icon)
 
   //update handlebars with current weather array
@@ -117,13 +177,14 @@ var renderWeather = function() {
   $('.current-weather').append(newHTML1);
 
   //update handlebars with five day forecast
-  weather.forEach(function(i) {
+  forecast.forEach(function(i) {
     var template = Handlebars.compile($('#forecast-template').html());
     var newHTML = template(i)
     $('.forecast').append(newHTML);
     })
 };
 
+//function to call API based on city user inputs
 $('.search').on('click', function() {
   var search = $('#search-query').val();
 
