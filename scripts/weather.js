@@ -31,7 +31,8 @@ const weatherModule = () => {
       degrees: attributes.temperature,
       city: attributes.city,
       state: attributes.state,
-      weather: attributes.condition
+      weather: attributes.condition,
+      url: attributes.iconUrl
     });
     $('.current-weather').append(newHtml);
   }
@@ -39,11 +40,13 @@ const weatherModule = () => {
   /** Render the five day weather forecast template to the user */
   const renderFiveDayForecast = () => {
     attributes.forecastData.forEach((day) => {
+      var iconUrl = `http://openweathermap.org/img/w/${day.weather[0].icon}.png`;
       const template = Handlebars.compile($('#forecast-weather-template').html());
       const newHtml = template({
         condition: day.weather[0].main,
         temperature: Math.ceil(day.main.temp),
         date: new Date(day.dt_txt).toString().slice(0, 3),
+        url: iconUrl
       });
       $('.forecast-weather').append(newHtml);
     });
@@ -83,6 +86,7 @@ const weatherModule = () => {
   const getCurrentWeather = async (city) => {
     const response = await fetch(`http://api.openweathermap.org/data/2.5/weather?q=${city},us&units=imperial&appid=${attributes.API_WEATHER_KEY}`)
     const data = await response.json();
+    var url = `http://openweathermap.org/img/w/${data.weather[0].icon}.png`;
     // set map coordinates
     attributes['coords'][0] = data.coord.lat;
     attributes['coords'][1] = data.coord.lon;
@@ -90,6 +94,7 @@ const weatherModule = () => {
     attributes.city = data.name;
     attributes.temperature = Math.ceil(data.main.temp);
     attributes.condition = data.weather[0].main;
+    attributes.iconUrl = url;
   }
 
   return {

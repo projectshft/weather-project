@@ -60,6 +60,7 @@
   <script id="weather-template" type="text/x-handlebars-template">
     <div class="current-weather__container">
       <h2>{{ degrees }}&#176;</h2>
+      <div id="icon"><img id="wicon" src={{ url }} alt="Weather icon"></div>
       <h4>{{ city }}, {{ state }}</h4>
       <h5>{{ weather }}</h5>
     </div>
@@ -68,6 +69,7 @@
     <div class="forecast-weather__container col-md-2 col-sm-12">
       <h4>{{ condition }}</h4>
       <h2>{{ temperature }}&#176;</h2>
+      <div id="icon"><img id="wicon" src={{ url }} alt="Weather icon"></div>
       <h4>{{ date }}</h4>
     </div>
   </script>
