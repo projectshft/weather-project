@@ -1,0 +1,127 @@
+body {
+  /* font-family: 'Ariel'; */
+  font: 14px 'Trebuchet', sans-serif;
+  color: whitesmoke;
+  background: url(https://www.projectshift.io/wp-content/uploads/2017/12/TIS4202Panorama_hdr_tonemapped2013IceFactoryATC-Scott_Faber_Photography.jpg)
+    no-repeat center fixed;
+  background-size: cover;
+
+  /* Full height */
+  height: 100%;
+  /* background: url(https://www.projectshift.io/wp-content/uploads/2017/12/TIS4202Panorama_hdr_tonemapped2013IceFactoryATC-Scott_Faber_Photography.jpg);
+  background-size: cover;
+  height: 100%;
+  background-position: center;
+  background-repeat: no-repeat; */
+}
+
+/* background color on top of bg image*/
+.hero {
+  min-height: 100vh;
+  min-width: 100vw;
+  top: 50px;
+  bottom: 0;
+  background-color: rgba(228, 228, 228, 0.075);
+  /* z-index: -5; */
+}
+
+h5 {
+  text-align: center;
+}
+
+/* navbar */
+/* .navbar {
+  position: absolute;
+  background-color: #94b6d4;
+}
+
+.navbar a {
+  color: white;
+  font-size: 25px;
+} */
+
+.page-header {
+  font-size: 4rem;
+  text-align: center;
+  padding-top: 40px;
+  margin-bottom: 30px;
+  margin-top: 40px;
+}
+
+.search_bar_container {
+  margin: 0 auto;
+  margin-bottom: 40px;
+  max-width: 45%;
+  /* height: auto; */
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  align-items: center;
+  align-self: space-between;
+  /* justify-content: flex-start; */
+}
+
+/* weather section */
+.weather-box {
+  border: 1px solid white;
+  margin-top: 2rem;
+  background-color: rgba(9, 29, 49, 0.68);
+  border-radius: 20px;
+  padding: 2rem;
+  padding-bottom: 3rem;
+}
+
+.temperature-box {
+  font-size: 3rem;
+}
+
+/* .day-box {
+  height: 50%;
+} */
+
+#icon-desc {
+  font-size: 3rem;
+  padding-top: 1rem;
+}
+
+/* .humidity,
+.wind,
+.visibility {
+  border-top: 1px solid white;
+  border-bottom: 1px solid white;
+  font-size: 1.5rem;
+} */
+
+#description {
+  font-size: 2rem;
+  text-align: center;
+}
+
+#temperature {
+  font-size: 3rem;
+}
+
+#icon-thermometer {
+  font-size: 2rem;
+}
+
+/* #humidity,
+#wind,
+#visibility {
+  font-size: 2rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+} */
+
+/* weather section */
+/* .weather {
+  border: 1px solid white;
+  margin-top: 10rem;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 20px;
+  color: white;
+}
+
+.weather-head {
+  height: 50%;
+} */
