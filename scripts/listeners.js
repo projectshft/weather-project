@@ -35,7 +35,7 @@ $(".btn-current-location").click(function() {
     long = Math.floor(position.coords.longitude);
     console.log('lat: ', lat);
     console.log('long: ', long);
-    currentWeatherFetchCoords(lat, long);
-    forecastFetchCoords(lat, long);
+    currentWeatherFetch(null, lat, long);
+    forecastFetch(null, lat, long);
   });
 });

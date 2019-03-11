@@ -1,8 +1,9 @@
 //add the fetch function
-var currentWeatherFetch = function(query) {
+var currentWeatherFetch = function(query, lat, long) {
   $.ajax({
     method: "GET",
-    url: `http://api.openweathermap.org/data/2.5/weather?q=${query},usa&APPID=e5c41b556e0f143b4f3f8ea018a675ca`,
+    url: (query === null) ? `http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&APPID=e5c41b556e0f143b4f3f8ea018a675ca` :
+    `http://api.openweathermap.org/data/2.5/weather?q=${query},usa&APPID=e5c41b556e0f143b4f3f8ea018a675ca`,
     dataType: "json",
     success: function(data) {
       //turn K to F and assign to new variable

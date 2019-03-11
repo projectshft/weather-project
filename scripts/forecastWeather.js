@@ -1,8 +1,9 @@
 //add the fetch function
-var forecastFetch = function(query) {
+var forecastFetch = function(query, lat, long) {
   $.ajax({
     method: "GET",
-    url: `http://api.openweathermap.org/data/2.5/forecast?q=${query},us&APPID=e5c41b556e0f143b4f3f8ea018a675ca`,
+    url: (query === null) ? `http://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${long}&APPID=e5c41b556e0f143b4f3f8ea018a675ca` :
+    `http://api.openweathermap.org/data/2.5/forecast?q=${query},us&APPID=e5c41b556e0f143b4f3f8ea018a675ca`,
     dataType: "json",
     success: function(data) {
       //invoke myBAMFForecastEngine and assign the return obj to a new accessible object
