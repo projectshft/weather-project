@@ -45,9 +45,11 @@ var fetch = function (query) {
       method: "GET",
       url: "https://api.openweathermap.org/data/2.5/weather?q=" + query + ",us&units=imperial&APPID=df48a036cbdd3435156ea83fd8913f6d",
       dataType: "json",
-      success: function(data) { //console.log(data)
+      success: function(data) { 
+          console.log(data)
 
         setCurrentWeather(data);
+
       },
       error: function(jqXHR, textStatus, errorThrown) {
         console.log(textStatus);
@@ -61,7 +63,12 @@ var fetch = function (query) {
 $('.search').on('click', function () 
 {
     var search = $('#search-query').val();
-        //console.log(search);
+        
+      if (search.length == 0) 
+      { 
+         alert("Please enter a valid city name!");           
+      }
+
     fetch(search);
 });
 
@@ -110,13 +117,29 @@ var setCurrentWeather = function(data)
                 return null;    
             }      
         };
+
+        var imgURL = function()
+        {
+            if (currentWeatherData.weather)
+            {         
+                var imgURL = "http://openweathermap.org/img/w/" + currentWeatherData.weather[0].icon + ".png"; 
+                console.log (imgURL);
+                return imgURL;
+            }
+            else
+            {
+                return null;    
+            }      
+        };
+
     
 
     var currentWeatherData = 
     {
         city: city(),
         condition: condition(),
-        temperature: temperature().toFixed() // Round to nearest ones place
+        temperature: temperature().toFixed(), // Round to nearest ones place
+        imgURL: imgURL()
     };
 
     currentWeatherDataObj.push(currentWeatherData); //console.log(currentWeatherDataObj);
@@ -264,9 +287,7 @@ var fetchFiveDayForecast = function (query) {
       method: "GET",
       url: "https://api.openweathermap.org/data/2.5/forecast?q=" + query + ",us&units=imperial&APPID=df48a036cbdd3435156ea83fd8913f6d",
       dataType: "json",
-      success: function(data) { 
-    
-            console.log('5 day forecast data: ' + data);
+      success: function(data) {  //console.log('5 day forecast data: ' + data);
 
         setFirstDayForecast(data);
         setSecondDayForecast(data);
@@ -281,17 +302,22 @@ var fetchFiveDayForecast = function (query) {
     });
   };
 
-// Store user input in search variable    
+// Store user input in search variable, check for null entry,
+// pass search city as query to API fetch function  
 $('.search').on('click', function () 
 {
-    var search = $('#search-query').val();
+    var search = $('#search-query').val();  
 
-        //console.log(search);
+    // if (search.value == null) 
+    //   { 
+    //      alert("Please enter a valid city name!");           
+    //   }
+   
 
     fetchFiveDayForecast(search);
 });
 
-/********************************************************************* */
+/**********************************************************************/
 
 // Information required to display 5 Day Forecast is extracted from retrieved API,
 // stored in firstDayForecastDataObj array, then rendered to the DOM
@@ -340,8 +366,7 @@ var setFirstDayForecast = function(data)
                 return null;    
             }      
         };
-    
-
+   
     var firstDayForecast = 
     {
         date: date(),
@@ -350,8 +375,6 @@ var setFirstDayForecast = function(data)
     };
 
     firstDayForecastDataObj.push(firstDayForecast); 
-    
-    console.log('First day data object: ' + firstDayForecastDataObj);
 
     renderFirstDayForecast();
 }
@@ -403,7 +426,6 @@ var setSecondDayForecast = function(data)
             }      
         };
     
-
     var secondDayForecast = 
     {
         date: date(),
@@ -413,8 +435,6 @@ var setSecondDayForecast = function(data)
 
     secondDayForecastDataObj.push(secondDayForecast); 
     
-    console.log('Second day Data Obj: ' + secondDayForecastDataObj);
-
     renderSecondDayForecast();
 }
 
@@ -465,7 +485,6 @@ var setThirdDayForecast = function(data)
             }      
         };
     
-
     var thirdDayForecast = 
     {
         date: date(),
@@ -474,8 +493,6 @@ var setThirdDayForecast = function(data)
     };
 
     thirdDayForecastDataObj.push(thirdDayForecast); 
-    
-    console.log('Third day Data Obj: ' + thirdDayForecastDataObj);
 
     renderThirdDayForecast();
 }
@@ -527,7 +544,6 @@ var setFourthDayForecast = function(data)
             }      
         };
     
-
     var fourthDayForecast = 
     {
         date: date(),
@@ -536,8 +552,6 @@ var setFourthDayForecast = function(data)
     };
 
     fourthDayForecastDataObj.push(fourthDayForecast); 
-    
-    console.log('Fourth day Data Obj: ' + fourthDayForecastDataObj);
 
     renderFourthDayForecast();
 }
@@ -588,8 +602,7 @@ var setFifthDayForecast = function(data)
                 return null;    
             }      
         };
-    
-
+  
     var fifthDayForecast = 
     {
         date: date(),
@@ -598,8 +611,6 @@ var setFifthDayForecast = function(data)
     };
 
     fifthDayForecastDataObj.push(fifthDayForecast); 
-    
-    console.log('Fifth day Data Obj: ' + fifthDayForecastDataObj);
 
     renderFifthDayForecast();
 }
