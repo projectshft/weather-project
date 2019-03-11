@@ -11,33 +11,60 @@
   <body>
 
 
-
+    <h2> Project Shift's Super Duper Weather App </h2>
     <form class="weather">
-      <h2> Current Weather </h2>
 
       <div class="form-group">
-        <input type="text" id="search-query" class="form-control">
+        <input type="text" id="search-query" class="form-control" placeholder="City">
       </input>
     </div>
 
     <button type="button" class="search"> Search </button>
   </form>
 
-  <div class="view">
-    <div class="today-weather">
-      <h4> Today's Weather</h4>
-      <div> Temp: <strong>{{ temp }}</strong> </div>
-      <div> Location: <strong>{{ location }}</strong></div>
-      <div> Condition: <strong>{{ condition }}</conditions></div>
-      <!-- <img src="{{imageURL}}" alt=""> -->
-    </div>
 
-    <div class="five-day-weather">
+  <div class="current-weather col-md-8">
+
+  </div>
+
+  <script id="current-weather-template" type="text/x-handlebars-template">
+    <div class="current">
+      <div class="row">
+        <h2> Current Weather </h2> <br>
+        <h3 class="text-center city">{{ cityName }}</h3>
+      </div>
+
+      <div class="row">
+        <img src="{{ icon }}" alt="">
+
+        <h2 class="text-center">{{ temp }}°F</h2>
+      </div>
+
+      <div class="row">
+        <h4 class="text-center">{{ condition }}</h4>
+      </div>
+    </div>
+  </script>
+
+
+  <script id="forecast-template" type="text/x-handlebars-template">
+      <div class="col-md-2">
+          <h6 class="text-center">{{ weekday }}</h6>
+          <h5 class="text-center">{{ temperature }}</h5>
+          <!-- <img src="{{ icon }}" alt="" class="grayscale offset-md-2"> -->
+          <h6 class="text-center">{{ condition }}</h6>
+      </div>
+  </script>
+
+
+
+    <!-- <div class="five-day-weather">
       <h4> Five Day Forecast</h4>
       <div> Condition: <strong>{{ condition }}</strong></div>
       <div> Temp: <strong> {{ temp }} </strong></div>
-    </div>
-  </div>
+    </div> -->
+
+
 
     <script src="node_modules/jquery/dist/jquery.js"> </script>
     <script src="node_modules/tether/dist/js/tether.min.js"></script>
