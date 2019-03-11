@@ -1,73 +1,74 @@
 weather = [];
-forecast =[];
+forecast = [];
 
 var fetch = function(query) {
-    apikey= 'c48f732410a96bcb96dac9c9866f624f'
-    var weatherUrl = 'https://api.openweathermap.org/data/2.5/weather?q=' + query + '&units=imperial&appid='+ apikey;
+  apikey= 'c48f732410a96bcb96dac9c9866f624f'
+  var weatherUrl = 'https://api.openweathermap.org/data/2.5/weather?q=' + query + '&units=imperial&appid='+ apikey;
 
-    $.ajax({
-      method: "GET",
-      url: weatherUrl,
-      dataType: "json",
+  $.ajax({
+    method: "GET",
+    url: weatherUrl,
+    dataType: "json",
 
-      success: function(data) {
-        addWeather(data);
-      },
-      error: function(jqXHR, textStatus, errorThrown) {
-        console.log(textStatus);
-      }
-    });
+    success: function(data) {
+      addWeather(data);
+      fetchForecast(query)
+    },
+    error: function(jqXHR, textStatus, errorThrown) {
+      console.log(textStatus);
+    }
+  });
 
+};
+
+var addWeather = function(data) {
+  //delete previous search from weather array
+    weather.splice(0)
+// use API to get temperature
+  var temperature = function() {
+    if (data.main.temp) {
+      return Math.round(data.main.temp);
+    } else {
+      return null;
+    }
+  };
+    // API get icon
+  var icon = function() {
+    if (data.weather[0].icon) {
+      icon = data.weather[0].icon;
+      var newIcon = selectIcon(icon)
+      return(newIcon)
+    } else {
+      return null;
+    }
+  };
+  //API to get city name
+  var city = function() {
+    if (data.name) {
+      return data.name;
+    } else {
+      return null;
+    }
+  };
+  //API to get current conditions
+  var conditions = function() {
+    if (data.weather[0].main) {
+      return data.weather[0].main;
+    } else {
+      return null;
+    }
   };
 
-  var addWeather = function(data) {
-    //delete previous search from weather array
-      weather.splice(0)
-  // use API to get temperature
-    var temperature = function() {
-      if (data.main.temp) {
-        return Math.round(data.main.temp);
-      } else {
-        return null;
-      }
-    };
-      // API get icon
-    var icon = function() {
-      if (data.weather[0].icon) {
-        return data.weather[0].icon;
-      } else {
-        return null;
-      }
-    };
-    //API to get city name
-    var city = function() {
-      if (data.name) {
-        return data.name;
-      } else {
-        return null;
-      }
-    };
-    //API to get current conditions
-    var conditions = function() {
-      if (data.weather[0].main) {
-        return data.weather[0].main;
-      } else {
-        return null;
-      }
-    };
-
-  //return the all functions
-    var current = {
-      temperature: temperature(),
-      icon: icon(),
-      city: city(),
-      conditions: conditions()
-    };
-
-    weather.push(current);
-    fetchForecast();
+//return the all functions
+  var current = {
+    temperature: temperature(),
+    icon: icon(),
+    city: city(),
+    conditions: conditions()
   };
 
+  weather.push(current);
+};
 
 var fetchForecast = function(query) {
   apikey= 'c48f732410a96bcb96dac9c9866f624f'
@@ -85,7 +86,6 @@ var fetchForecast = function(query) {
       console.log(textStatus);
     }
   });
-
 };
 
 var addForecast = function(data) {
@@ -153,7 +153,6 @@ var addForecast = function(data) {
       temperature: temperature(),
       icon: icon(),
       city: city(),
-      state: '',
       conditions: conditions(),
       dayOfWeek: dayOfWeek()
     };
@@ -168,7 +167,6 @@ var renderWeather = function() {
   $('.current-weather').empty();
   $('.forecast').empty();
 
-  //update background to match weather
   var newbkg = newBackground(weather[0].icon)
 
   //update handlebars with current weather array
@@ -184,9 +182,9 @@ var renderWeather = function() {
     })
 };
 
-//function to call API based on city user inputs
 $('.search').on('click', function() {
   var search = $('#search-query').val();
 
   fetch(search);
+  fetchForecast(search)
 });
