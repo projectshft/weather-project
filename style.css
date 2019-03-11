@@ -1,0 +1,55 @@
+body {
+  text-align: center;
+  background-color: lightblue;
+}
+
+
+h1 {
+  color: yellow;
+  margin-top: 80px;
+  margin-bottom: 80px;
+  font-weight: 600;
+  font-style: italic;
+}
+
+#currentDisplayRendered {
+  display: inline-block;
+}
+
+#currentWeatherData {
+  text-align: left;
+  padding-bottom: 30px;
+  padding-right: 20px;
+}
+
+
+.form-group {
+  max-width: 100rem;
+  display: inline-block;
+}
+
+
+#weekDisplay {
+  display: inline-block;
+}
+
+#pic-display {
+  margin-top: 40px;
+  margin-left: 10px;
+  transform: scale(3);
+}
+#input {
+  margin-bottom: 10px;
+}
+
+.card {
+  text-align: center;
+  border-radius: 10px;
+  margin: 0px;
+  border: white solid;
+}
+
+.card div {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
