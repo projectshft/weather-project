@@ -17,7 +17,7 @@ var iconToBG = function(icon){
     return 'assets/backgroundImages/snowBG.png';
   };
 };
-
+//do the same with the forecast templates
 var iconToTemplates = function(icon){
   if (icon == '01d' || icon == '01n'){
     return 'assets/dayTemplates/clearSkyDayTemplate.png';

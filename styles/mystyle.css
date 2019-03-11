@@ -8,7 +8,7 @@ body {
   background-color: black;
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
-  box-shadow: 0px 0px 30px 5px black;
+  box-shadow: 0px 0px 10px 2px black;
   z-index: 5;
 }
 
@@ -96,7 +96,7 @@ body {
   display: flex;
   flex-wrap: wrap;
   border-radius: 5px;
-  box-shadow: 0px 0px 30px 5px black;
+  box-shadow: 0px 0px 10px 1px black;
 }
 
 .my-five-day-row-two {
@@ -110,7 +110,7 @@ body {
   display: flex;
   flex-wrap: wrap;
   border-radius: 5px;
-  box-shadow: 0px 0px 30px 5px black;
+  box-shadow: 0px 0px 10px 1px black;
 }
 
 .my-five-day-row-three {
@@ -124,7 +124,7 @@ body {
   display: flex;
   flex-wrap: wrap;
   border-radius: 5px;
-  box-shadow: 0px 0px 30px 5px black;
+  box-shadow: 0px 0px 10px 1px black;
 }
 
 .my-five-day-row-four {
@@ -138,7 +138,7 @@ body {
   display: flex;
   flex-wrap: wrap;
   border-radius: 5px;
-  box-shadow: 0px 0px 30px 5px black;
+  box-shadow: 0px 0px 10px 1px black;
 }
 
 .my-five-day-row-five {
@@ -151,7 +151,7 @@ body {
   display: flex;
   flex-wrap: wrap;
   border-radius: 5px;
-  box-shadow: 0px 0px 30px 5px black;
+  box-shadow: 0px 0px 10px 1px black;
 }
 
 .footer {
@@ -166,7 +166,7 @@ body {
   background-color: black;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
-  box-shadow: 0px 0px 30px 5px black;
+  box-shadow: 0px 0px 10px 2px black;
 }
 
 .btn-set-default {
