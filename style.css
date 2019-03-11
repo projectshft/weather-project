@@ -24,19 +24,23 @@ body {
     min-height: 170px;
     min-width: 170px;
 }
-
+.city {
+    padding: 5px;
+}
 .forecast {
     border-radius: 10px;
     margin-top: 10px;
+    padding-left: 100px;
+    padding-top: 5px;
     margin-bottom:100px;
     color: white;
 }
-
+/*
 .grayscale { 
     filter: grayscale(100%);
 }
 
-/* .rain {
+ .rain {
     background-image: url("https://media.giphy.com/media/t7Qb8655Z1VfBGr5XB/giphy.gif");
 }
 
@@ -51,4 +55,5 @@ body {
 .bottom {
     background-size: cover;
     background-repeat: no-repeat;
-} */
+} 
+*/

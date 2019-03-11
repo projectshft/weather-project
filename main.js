@@ -11,7 +11,7 @@ Part 2:
 my API key: 67a3461ef47ac031e5c7b307ce98c09c
 
 TO DO:
--refactor html design
+✔︎ refactor html design
 
 */
 
@@ -21,17 +21,18 @@ var currentWeather = [];
 var fiveDayForecast = [];
 
 // add top level variable as key for local Storage
-var STORAGE_ID = 'weather-app';
+// var STORAGE_ID = 'weather-app';
 
-//stringify and save currentWeather array
-var saveToLocalStorage = function () {
-    localStorage.setItem(STORAGE_ID, JSON.stringify(currentWeather, fiveDayForecast));
-};
+//attempt at saving to local storage
+// //stringify and save currentWeather array
+// var saveToLocalStorage = function () {
+//     localStorage.setItem(STORAGE_ID, JSON.stringify(currentWeather, fiveDayForecast));
+// };
 
-//get local storage and turn back into JSON
-var getFromLocalStorage = function () {
-    return JSON.parse(localStorage.getItem(STORAGE_ID) || '[]');
-  }
+// //get local storage and turn back into JSON
+// var getFromLocalStorage = function () {
+//     return JSON.parse(localStorage.getItem(STORAGE_ID) || '[]');
+//   }
 
 //when CurrentWeather is rendered, the model should appear in the view
 var renderCurrentWeather = function () {
@@ -94,17 +95,20 @@ var addCurrentWeather = function(data) {
         icon: data.weather[0].icon ? `http://openweathermap.org/img/w/${data.weather[0].icon}.png` : "",
         condition: data.weather[0].main ? data.weather[0].main : "",
     };
-    
-        //depending on the current weather condition, a gif of that weather condition will automatically play in the background
-    if (data.weather[0].main === "Rain") {
+       //depending on the current weather condition, a gif of that weather condition will automatically play in the background
+       if (WeatherRightNow.condition == "Rain") {
         $('.bottom').css('background-image', 'url("https://media.giphy.com/media/t7Qb8655Z1VfBGr5XB/giphy.gif")');
-    } else if (data.weather[0].main == "Clouds") {
+    } else if (WeatherRightNow.condition == "Clouds") {
         $('.bottom').css('background-image', 'url("https://i.gifer.com/srG.gif")');
-    } else if (data.weather[0].main == "Clear") {
+    } else if (WeatherRightNow.condition == "Clear") {
         $('.bottom').css('background-image', 'url("https://media.giphy.com/media/QCsEPhEd8PpEA/giphy.gif")');
+    } else if (WeatherRightNow.condition == "Mist") {
+        $('.bottom').css('background-image', 'url("https://i.gifer.com/gwv.gif")');
+    } else if (WeatherRightNow.condition == "Snow") {
+        $('.bottom').css('background-image', 'url("https://media.giphy.com/media/bnsWLCG5bEaiI/giphy.gif")');
     };
 
-        //depending on the current weather condition, a user will feel the condition (an attempt to refactor)
+     //depending on the current weather condition, a user will feel the condition (an attempt to refactor)
     // if (data.weather[0].main === "Rain") {
     //     $('.bottom').removeClass().addClass("rain");
     // } else if (data.weather[0].main == "Clouds") {
@@ -114,8 +118,8 @@ var addCurrentWeather = function(data) {
     // };
 
     currentWeather.push(WeatherRightNow);
+    //saveToLocalStorage();
     renderCurrentWeather();
-    saveToLocalStorage();
 };
 
 
@@ -144,28 +148,28 @@ var addForecast = function(data) {
 
         console.log("this is what the data from the forecast API looks like:", data);
 
-            //refactor to use moment.min.js and also to shorten the name of the day
-            var day = data[i].dt_txt.includes("12:00:00") > -1;
-            console.log("This is what day looks like:", day);
+        //refactor to use moment.min.js and also to shorten the name of the day
+        var day = data[i].dt_txt.includes("12:00:00") > -1;
+        console.log("This is what day looks like:", day);
 
-            var weekday = moment(data[i].dt_txt).format('dddd');
-            shortenedWeekday = weekday.substring(0,3);
-            console.log("This is what weekday looks like:", shortenedWeekday);
+        var weekday = moment(data[i].dt_txt).format('dddd');
+        shortenedWeekday = weekday.substring(0,3);
+        console.log("This is what weekday looks like:", shortenedWeekday);
 
-            console.log("this is what the icon looks like:", data[i].weather[0].icon);
+        console.log("this is what the icon looks like:", data[i].weather[0].icon);
 
-            // build obj to fit handlebars template {city, temperature, condition, icon}
-            var dailyForecast = {
-                // if there is a city, temperature. condition, . . . etc, set them equal to it; if there isn't, make it an empty string
-                weekday: shortenedWeekday ? shortenedWeekday : "", 
-                temperature: Math.round(data[i].main.temp) ? Math.round(data[i].main.temp) : "",
-                condition: data[i].weather[0].main ? data[i].weather[0].main : "",
-                icon: data[i].weather[0].icon ? `http://openweathermap.org/img/w/${data[i].weather[0].icon}.png` : "",
-            };
+        // build obj to fit handlebars template {city, temperature, condition, icon}
+        var dailyForecast = {
+            // if there is a city, temperature. condition, . . . etc, set them equal to it; if there isn't, make it an empty string
+            weekday: shortenedWeekday ? shortenedWeekday : "", 
+            temperature: Math.round(data[i].main.temp) ? Math.round(data[i].main.temp) : "",
+            condition: data[i].weather[0].main ? data[i].weather[0].main : "",
+            icon: data[i].weather[0].icon ? `http://openweathermap.org/img/w/${data[i].weather[0].icon}.png` : "",
+        };
         
         fiveDayForecast.push(dailyForecast);
+        //saveToLocalStorage();
         renderForecast();
-        saveToLocalStorage();
     }
 };
 // the set as default button should be hidden until the user searches for a city
@@ -181,10 +185,10 @@ $('.search').on('click', function () {
     $defaultbtn.show();
 })
 
-//users should be able to set a city as their default city after search
-$('.default').on('click', function () {
-    getFromLocalStorage();
-})
+// //users should be able to set a city as their default city after search
+// $('.default').on('click', function () {
+//     getFromLocalStorage();
+// })
 
 //currentWeather should be rendered as soon as the page is loaded
 renderCurrentWeather();
