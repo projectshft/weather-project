@@ -81,7 +81,8 @@ const WeatherApp = function() {
   // Takes in the data returned from the API and creates an object for five day forecast
 
   const fiveDayForecast = function (forecastData) {
-    for(let i = 7; i <= forecastData.list.length; i += 8) {
+    weather[0].forecast = [];
+    for(let i = 7; i <= forecastData.list.length; i += 7) {
       let date = forecastData.list[i].dt;
       weather[0].forecast.push({
         temp: Math.round((forecastData.list[i].main.temp - 273.15) * (9/5) + 32),
