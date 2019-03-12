@@ -13,12 +13,13 @@ var fiveDayForecast = [];
 const key = "&units=imperial&appid=0439b3d5de6bee4961a3e1454084792f"
 
 
+
 // fetch functions that pull from API
-var fetchCurrent = function(query) {
+var fetchCurrent = function(query, country) {
   $.ajax({
     method: "GET",
     // pulls query
-    url: "https://api.openweathermap.org/data/2.5/weather?q=" + query + key,
+    url: "https://api.openweathermap.org/data/2.5/weather?q=" + query + ',' + country + key,
     dataType: "json",
     success: function(data) {
         console.log("success! This was your query:" + query)
@@ -34,7 +35,7 @@ var fetchCurrent = function(query) {
 var fetchForecast = function (query) {
   $.ajax({
     method: "GET",
-    url: "https://api.openweathermap.org/data/2.5/forecast?q=" + query + ',us' + key,
+    url: "https://api.openweathermap.org/data/2.5/forecast?q=" + query + ',' + country + key,
     dataType: "json",
     success: function(data) {
         console.log("success! This was your forecast query:" + query)
@@ -169,6 +170,7 @@ let renderForecast = function () {
 // on click
 $('.search').on('click', function() {
   var search = $('#search-query').val();
+  var country = $('#country').val();
   console.log(search);
 
   fetchCurrent(search);
