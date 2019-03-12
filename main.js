@@ -34,13 +34,14 @@ var fetchCurrent = function(query) {
 var fetchForecast = function (query) {
   $.ajax({
     method: "GET",
-    url: "https://api.openweathermap.org/data/2.5/forecast?q=" + query + key,
+    url: "https://api.openweathermap.org/data/2.5/forecast?q=" + query + ',us' + key,
     dataType: "json",
     success: function(data) {
+        console.log("success! This was your forecast query:" + query)
         addForecast(data);
     },
     error: function(jqXHR, textStatus, errorThrown) {
-        console.log(textStatus);
+        console.log("forecast error");
     }
   });
   };
@@ -73,36 +74,14 @@ var addCurrentWeather = function(data) {
     }
   };
 
-  var icon = function() {
-    if (data.weather[0].icon) {
-      var icon = data.weather[0].icon;
-      return icon
-    } else {
-      return null;
-    }
-  };
 
   today = {
     temp: temp(),
     cityName: cityName(),
     condition: condition(),
-    icon: icon()
   };
   currentWeather.push(today);
   renderCurrent();
-};
-
-
-// render Weather
-var renderCurrent = function() {
-  $('.current-weather').empty();
-  for (var i = 0; i < currentWeather.length; i ++) {
-
-    var source= $('#current-weather-template').html();
-    var template = Handlebars.compile(source);
-    var newHTML = template(currentWeather[i]);
-    $('.current-weather').append(newHTML);
-  }
 };
 
 
@@ -118,15 +97,6 @@ var addForecast = function(data) {
             return null;
           }
         };
-
-        // var icon = function() {
-        //   if (data.weather[0].icon) {
-        //     var icon = 'http://openweathermap.org/img/w/${obj.weather[0].icon}.png';
-        //     return icon
-        //   } else {
-        //     return null;
-        //   }
-        // };
 
         var cityName = function() {
           if (data.city.name) {
@@ -156,33 +126,50 @@ var addForecast = function(data) {
 
         var forecast = {
           temp: temp(),
-          //icon: icon(),
           cityName: cityName(),
           condition: condition(),
           dayOfTheWeek: dayOfTheWeek()
         };
+        fiveDayForecast.push(forecast);
       };
-      fiveDayForecast.push(forecast);
+      console.log(fiveDayForecast);
+
       renderForecast();
+
 };
 
 
-var renderForecast = function () {
+// render Weather
+let renderCurrent = function() {
+  $('.current-weather').empty();
+  for (let i = 0; i < currentWeather.length; i ++) {
+
+    let source= $('#current-weather-template').html();
+    let template = Handlebars.compile(source);
+    let newHTML = template(currentWeather[i]);
+    $('.current-weather').append(newHTML);
+  }
+};
+
+
+
+let renderForecast = function () {
     $('.forecast').empty();
-
-    for (var i = 0; i < fiveDayForecast.length; i++) {
-
+    console.log('this is the fiveDayForecast' + fiveDayForecast)
+    console.log('this is the length of the fiveDayForecast' + fiveDayForecast.length);
+    for (let i = 0; i < fiveDayForecast.length; i++) {
         //uses handlebars
-        var source = $('#forecast-template').html();
-        var template = Handlebars.compile(source);
-        var newHTML = template(fiveDayForecast[i]);
+        let source = $('#forecast-template').html();
+        let template = Handlebars.compile(source);
+        let newHTML = template(fiveDayForecast[i]);
         $('.forecast').append(newHTML);
     }
 };
 
 // on click
 $('.search').on('click', function() {
-  var search = $('#search-query').val(); console.log(search);
+  var search = $('#search-query').val();
+  console.log(search);
 
   fetchCurrent(search);
   fetchForecast(search);
