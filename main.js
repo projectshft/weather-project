@@ -12,8 +12,8 @@
 
 // Global variables
 const apiKey = 'add32f7253f0ba69178d0ca6ee5ef2b3';
-var locationInput;
-var days = [
+let locationInput;
+const days = [
   'Sunday',
   'Monday',
   'Tuesday',
@@ -23,13 +23,13 @@ var days = [
   'Saturday'
 ];
 
-getWeather = () => {
-  var current;
-  var fiveDayForecast = [{}, {}, {}, {}, {}];
+const getWeather = () => {
+  let current;
+  let fiveDayForecast = [{}, {}, {}, {}, {}];
   /************************************
      API call for Current Weather
   *************************************/
-  var initApiCall = () => {
+  const initApiCall = () => {
     $.getJSON(
       'http://api.openweathermap.org/data/2.5/weather?' +
         locationInput +
@@ -55,11 +55,11 @@ getWeather = () => {
   /**************************************************
     Render current weather to Handlebars template
   ***************************************************/
-  var renderCurrentWeather = () => {
+  const renderCurrentWeather = () => {
     $('.current-weather-display').empty();
-    var source = $('#weather-template').html();
-    var template = Handlebars.compile(source);
-    var newHTML = template(current);
+    let source = $('#weather-template').html();
+    let template = Handlebars.compile(source);
+    let newHTML = template(current);
     $('.current-weather-display').append(newHTML);
     defaultCity();
   };
@@ -67,7 +67,7 @@ getWeather = () => {
   /************************************
      API call for Five-Day Forecast
   *************************************/
-  var getFiveDayForecast = () => {
+  const getFiveDayForecast = () => {
     $.getJSON(
       'http://api.openweathermap.org/data/2.5/forecast?' +
         locationInput +
@@ -86,7 +86,7 @@ getWeather = () => {
             'http://openweathermap.org/img/w/' +
             weatherData.list[i * 8].weather[0].icon +
             '.png';
-          var day = new Date(weatherData.list[i * 8].dt_txt);
+          let day = new Date(weatherData.list[i * 8].dt_txt);
           fiveDayForecast[i].day = days[day.getDay()];
         }
         renderFiveDayForecast();
@@ -97,17 +97,17 @@ getWeather = () => {
   /**************************************************
     Render five-day forecast to Handlebars template
   ***************************************************/
-  var renderFiveDayForecast = () => {
+  const renderFiveDayForecast = () => {
     $('.five-day-forecast-display').empty();
     for (let i = 0; i < 5; i++) {
-      var source = $('#five-day-forecast-template').html();
-      var template = Handlebars.compile(source);
-      var newHTML = template(fiveDayForecast[i]);
+      let source = $('#five-day-forecast-template').html();
+      let template = Handlebars.compile(source);
+      let newHTML = template(fiveDayForecast[i]);
       $('.five-day-forecast-display').append(newHTML);
     }
   };
 
-  var getCurrentWeather = () => {
+  const getCurrentWeather = () => {
     return current.city;
   };
 
@@ -117,7 +117,7 @@ getWeather = () => {
   };
 };
 
-app = getWeather();
+const app = getWeather();
 
 /*********************
    Event handlers
@@ -131,6 +131,7 @@ $('.search').click(function() {
 });
 
 // "Use my current location" button
+// NOTE: This was working previously but is now unresponsive. Mozilla docs say: "This feature is available only in secure contexts (HTTPS), in some or all supporting browsers."
 $('.location').click(function() {
   // Invoke read-only property "navigator.geolocation" to get user's current location. (Returns a geolocation object.)
   navigator.geolocation.getCurrentPosition(function(position) {
@@ -141,7 +142,7 @@ $('.location').click(function() {
 });
 
 // "Set as default location" button
-var defaultCity = () => {
+let defaultCity = () => {
   $('#default-city').click(function() {
     locationInput = 'q=';
     locationInput += app.getCurrentWeather();
