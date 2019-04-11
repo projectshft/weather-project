@@ -1,169 +1,96 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>PS Weather Project</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- Bootstrap 4.0.0-->
-    <!-- <link
+    <!-- Google Font: Muli -->
+    <link
+      href="https://fonts.googleapis.com/css?family=Muli"
       rel="stylesheet"
-      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-      crossorigin="anonymous"
-    /> -->
+    />
 
     <!-- Bootstrap 4.3.1 -->
     <link
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-      crossorigin="anonymous"
     />
 
-    <!-- Fontawesome -->
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
-    />
+    <link rel="stylesheet" href="style.css" />
 
-    <!-- Weather icons -->
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.9/css/weather-icons.min.css"
-    />
-
-    <!-- Stylesheet -->
-    <link rel="stylesheet" type="text/css" href="style.css" />
+    <title>PS Weather Project</title>
   </head>
 
   <body>
-    <!-- Navbar -->
-    <!-- <nav class="navbar">
-        <div class="row">
-          <a class="navbar-brand" href="#">
-            <i class="fa fa-sun-o" aria-hidden="true"></i>
-            PS Weather Project
-          </a>
-          <span class="date lead" id="nav-date">Time | Date</span>
-        </div>
-      </nav> -->
-
-    <div class="overlay"></div>
-    <div class="hero">
-      <div class="page-container">
-        <h1 class="page-header">Current Weather</h1>
-
-        <div class="row">
-          <div class="search_bar_container col-4 mx-auto text-center">
-            <div class="location">
-              <!-- data-name="location-search"??? -->
-              <div class="btn-group">
-                <input
-                  id="city-name"
-                  type="text"
-                  class="search form-control"
-                  placeholder="Enter city name"
-                  required
-                />
-                <!-- data-name="city-name"??? -->
-                <button
-                  id="getWeather"
-                  type="button"
-                  name="button"
-                  class="btn btn-primary btn-sm"
-                >
-                  Search
-                </button>
-              </div>
-            </div>
+    <div class="page-container">
+      <h1 class="page-header text-center">Current Weather</h1>
+      <div class="row form-group justify-content-center">
+        <div class="col-auto">
+          <div class="btn-group">
+            <input
+              type="text"
+              class="location-input search form-control"
+              placeholder="Enter City Name"
+              required
+            />
+            <input
+              type="button"
+              class="search btn-primary btn-sm"
+              value="Search"
+            />
           </div>
         </div>
-
-        <!-- main weather section  -->
-        <div class="main-weather-container">
-          <div class="row" id="weather-today"></div>
-        </div>
-        <!-- append template for main-weather-box here -->
       </div>
     </div>
 
+    <div class="row form-group justify-content-center">
+      <div class="col-auto">
+        <input
+          type="button"
+          class="location btn-primary btn-sm"
+          value="Use current location"
+        />
+      </div>
+    </div>
+
+    <!-- Current-Weather section (Handlebars weather-template will append here)-->
+    <div class="row current-weather-display justify-content-center top"></div>
+    <!-- Five-day-forecast section (Handlebars five-day-forecast-template will append here)-->
+    <div class="row five-day-forecast-display justify-content-center top"></div>
+
+    <!-------------------------------------------------------------------->
+    <!-- Handlebars template for current weather -->
+    <script id="weather-template" type="text/x-handlebars-template">
+      <div class="col-auto text-center">
+      <h1 id=city-title><strong>{{ city }}</strong></h1>
+        <button class="btn-sm btn-link user-set" id="default-city">Set as default location</button>
+        <h1><strong>{{ temp }}</strong></h1>
+        <img src={{ icon }}></img>
+        <h4><strong>{{ conditions }}</strong></h4>
+      </div>
+    </script>
+
+    <!-- Handlebars stemplate for five-day forecast -->
+    <script id="five-day-forecast-template" type="text/x-handlebars-template">
+      <div class="col forecast text-center">
+        <h4>{{ day }}</h4>
+        <h2>{{ temp }}</h2>
+        <img src={{ icon }}></img>
+        <h5>{{ conditions }}</h5>
+      </div>
+    </script>
+    <!-------------------------------------------------------------------->
+
     <script
-      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      src="https://code.jquery.com/jquery-3.4.0.min.js"
+      integrity="sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg="
       crossorigin="anonymous"
     ></script>
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-      crossorigin="anonymous"
-    ></script>
-
-    <!-- Bootstrap 4.3.1 -->
-    <script
-      src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-      crossorigin="anonymous"
-    ></script>
-
-    <!-- javascript file -->
-    <script src="main.js"></script>
-
-    <!-- <script id="weather-template" type="text/x-handlebars-template">
-      <div class="weather-box align-items-center">
-        <h2 id="location" class="text-center">
-          <strong>Durham, NC </strong>
-        </h2>
-        <div class="row">
-          <div class="col-4 mx-auto text-center">
-            <p class="temperature-box">
-              <span id="temperature">45</span><span>° </span>
-              <i id="icon-thermometer" class="wi wi-thermometer"></i -->
-    <!-- </p>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-4 mx-auto text-center" id="description">
-            <p id="txt-desc">Cloudy</p>
-          </div>  -->
-    <!-- <div class="row">
-              <div class="description col-4 mx-auto text-center">
-                <i id="icon-desc" class="wi wi-owm-200"></i>
-              </div>
-            </div> -->
-    <!-- </div>
-      </div> -->
-    <!-- </script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.1.0/handlebars.min.js"></script>
+    <script src="main.js" type="text/javascript"></script>
   </body>
 </html>
-
-<!-- <div class="row">
-                      <div class="description col-4 mx-auto text-center">
-                        <i id="icon-desc" class="wi wi-owm-200"></i>
-                      </div>
-                    </div> -->
-<!-- </div> -->
-<!-- </section> -->
-
-<!-- day box  -->
-<!-- <div class="row day-box">
-                    <div class="col-4 mx-auto text-center">
-                      <span id="day">Day of the Week</span>
-                      <i class="wi wi-raindrop"></i>
-                    </div>
-                  </div>  -->
-
-<!-- weather body header -->
-<!-- <div class="weather-body">
-                    <div class="row">
-                      <div class="day-date col-4 text-center">
-    
-                      </div>
-                    </div> -->
-
-<!-- weather body data -->
-<!-- <div class="row">
-                      <div id="dayOfTheWeek" class="date-data col-4 text-center">
-                       Monday
-                      </div>
-                    </div> -->
