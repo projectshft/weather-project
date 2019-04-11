@@ -122,6 +122,14 @@ const app = getWeather();
 /*********************
    Event handlers
 **********************/
+// TODO: event.preventDefault?
+// $( "a" ).click(function( event ) {
+//   event.preventDefault();
+//   $( "<div>" )
+//     .append( "default " + event.type + " prevented" )
+//     .appendTo( "#log" );
+// });
+
 // "Search" button
 $('.search').click(function() {
   locationInput = 'q=';
@@ -129,11 +137,13 @@ $('.search').click(function() {
   locationInput += ',US';
   app.initApiCall();
 });
+// TODO: add keypress enter (=13) in addition to button click?
 
 // "Use my current location" button
-// NOTE: This was working previously but is now unresponsive. Mozilla docs say: "This feature is available only in secure contexts (HTTPS), in some or all supporting browsers."
+// NOTE: Functionality of this button is unreliable: sometimes it works, sometimes not; often it's slow to load (several seconds, up to a minute or more).
 $('.location').click(function() {
   // Invoke read-only property "navigator.geolocation" to get user's current location. (Returns a geolocation object.)
+  // Mozilla docs say: "This feature is available only in secure contexts (HTTPS), in some or all supporting browsers." This could be a conflict, and the cause for the lag / dysfunction.
   navigator.geolocation.getCurrentPosition(function(position) {
     locationInput =
       'lat=' + position.coords.latitude + '&lon=' + position.coords.longitude;

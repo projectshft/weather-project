@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <!-- Required meta tags -->
+    <!-- meta tags -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
@@ -43,14 +43,16 @@
         </div>
       </div>
     </div>
-    <!-- "Use current location" button is not currently working -->
+
+    <!-- "Use my current location" button -->
     <div class="row form-group justify-content-center">
       <div class="col-auto">
         <input
           type="button"
           class="location btn-primary btn-sm"
-          value="Use current location"
+          value="Use my current location"
         />
+        <!--"Use my current location" button's speed to load is highly variable. Sometimes it takes a while. -->
       </div>
     </div>
 
@@ -71,7 +73,7 @@
       </div>
     </script>
 
-    <!-- Handlebars stemplate for five-day forecast -->
+    <!-- Handlebars template for five-day forecast -->
     <script id="five-day-forecast-template" type="text/x-handlebars-template">
       <div class="col forecast text-center">
         <h4>{{ day }}</h4>
