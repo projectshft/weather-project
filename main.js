@@ -2,14 +2,11 @@
    OPENWEATHER API doesn't work with "https://"
    Browser address bar must use "http://"
 **************************************************/
-
 // OpenWeather API Keys (2)
-
-// Key: add32f7253f0ba69178d0ca6ee5ef2b3   Name: Default
-// Key: 2b2a168d8dac44dd31cfd36829f44f93   Name: Lucas
+//    Key: add32f7253f0ba69178d0ca6ee5ef2b3   Name: Default
+//    Key: 2b2a168d8dac44dd31cfd36829f44f93   Name: Lucas
 
 /**********************************************************/
-
 // Global variables
 const apiKey = 'add32f7253f0ba69178d0ca6ee5ef2b3';
 let locationInput;
