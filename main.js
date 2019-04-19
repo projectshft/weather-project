@@ -112,18 +112,14 @@ const getWeather = () => {
     }
   };
 
-  const getCurrentWeather = () => {
+  const weatherByCity = () => {
     return currentWeather.city;
   };
 
   return {
     initApiCall,
-    getCurrentWeather
+    weatherByCity
   };
-
-  // return initApiCall (only)
-  // OR
-  // return getWeather;
 };
 
 /*********************
@@ -137,7 +133,6 @@ $('.search').click(function(event) {
 $('.search').click(function() {
   locationInput = 'q=' + $('.location-input').val() + hardcodedCountry;
   getWeather().initApiCall();
-  // getWeather();
 });
 // TODO: add keypress enter (=13) in addition to button click
 
@@ -148,13 +143,22 @@ $('.user-location').click(function(event) {
 // NOTE: Functionality of this button is unreliable: sometimes it works, sometimes not; often it's slow to load (several seconds, up to a minute or more).
 $('.user-location').click(function() {
   // Invoke read-only property "navigator.geolocation" to get user's current location. (Returns a geolocation object.)
-  // Mozilla docs say: "This feature is available only in secure contexts (HTTPS), in some or all supporting browsers." This could be a conflict, and the cause for the lag / dysfunction.
+  // Mozilla docs say: "This feature is available only in secure contexts (HTTPS), in some or all supporting browsers."
   navigator.geolocation.getCurrentPosition(position => {
     locationInput =
       'lat=' + position.coords.latitude + '&lon=' + position.coords.longitude;
     getWeather().initApiCall();
-    // getWeather();
   });
 });
 
 $(document).ready();
+
+/***************************
+ * TODO:
+ ************************* */
+// 1) improve error handling
+//     a) empty field submitted
+//     b) city not found
+// 2) accept enter keypress as well as button for location input
+// 3) default location button
+// 4) Google Maps
