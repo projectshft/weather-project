@@ -10,11 +10,6 @@
       rel="stylesheet"
     />
 
-    <link
-      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
-      rel="stylesheet"
-    />
-
     <!-- Bootstrap 4.3.1 -->
     <link
       rel="stylesheet"
@@ -28,7 +23,7 @@
     <div class="container-fluid">
       <h1 class="page-header text-center">Current Weather</h1>
       <hr />
-      <div class="row form-group justify-content-center">
+      <section class="row form-group justify-content-center">
         <div class="col-auto">
           <div class="btn-group">
             <input
@@ -40,52 +35,53 @@
             <input class="search btn-primary btn-sm" type="button" value="Go" />
           </div>
         </div>
-      </div>
+      </section>
+      <!-- </div> -->
+
+      <!-- "Use my current location" button -->
+      <section class="row form-group justify-content-center">
+        <div class="col-auto">
+          <input
+            class="user-location btn-primary btn-sm"
+            type="button"
+            value="Use my current location"
+          />
+          <!--"Use my current location" is highly variable in its time to load. Sometimes it takes a while, like more than a minute or two -->
+        </div>
+      </section>
+
+      <!-- Current-Weather section (Handlebars weather-template will append here)-->
+      <div class="row current-weather-card justify-content-center"></div>
+      <!-- Five-day-forecast section (Handlebars five-day-forecast-template will append here)-->
+      <div class="row five-day-forecast-card justify-content-center"></div>
+
+      <!-------------------------------------------------------------------->
+      <!-- Handlebars template for current weather -->
+      <script id="weather-template" type="text/x-handlebars-template">
+        <div class="col-auto text-center">
+        <h1 id=city-title><strong>{{ city }}</strong></h1>
+          <h1><strong>{{ temp }}</strong></h1>
+          <img src={{ icon }}></img>
+          <h4><strong>{{ conditions }}</strong></h4>
+        </div>
+      </script>
+
+      <!-- Handlebars template for five-day forecast -->
+      <script id="five-day-forecast-template" type="text/x-handlebars-template">
+        <div class="col forecast-card text-center">
+          <h4>{{ day }}</h4>
+          <h2>{{ temp }}</h2>
+          <img src={{ icon }}></img>
+          <h5>{{ conditions }}</h5>
+        </div>
+      </script>
+      <!-------------------------------------------------------------------------------------->
+      <!-- Script CDNs -->
+      <script src="https://code.jquery.com/jquery-3.4.0.min.js"></script>
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.1.0/handlebars.min.js"></script>
+      <!-- ________________________________________________________________________________ -->
+      <script src="main.js" type="text/javascript"></script>
     </div>
-
-    <!-- "Use my current location" button -->
-    <div class="row form-group justify-content-center">
-      <div class="col-auto">
-        <input
-          class="user-location btn-primary btn-sm"
-          type="button"
-          value="Use my current location"
-        />
-        <!--"Use my current location" is highly variable in its time to load. Sometimes it takes a while, like more than a minute or two -->
-      </div>
-    </div>
-
-    <!-- Current-Weather section (Handlebars weather-template will append here)-->
-    <div class="row current-weather-card justify-content-center"></div>
-    <!-- Five-day-forecast section (Handlebars five-day-forecast-template will append here)-->
-    <div class="row five-day-forecast-card justify-content-center"></div>
-
-    <!-------------------------------------------------------------------->
-    <!-- Handlebars template for current weather -->
-    <script id="weather-template" type="text/x-handlebars-template">
-      <div class="col-auto text-center">
-      <h1 id=city-title><strong>{{ city }}</strong></h1>
-        <h1><strong>{{ temp }}</strong></h1>
-        <img src={{ icon }}></img>
-        <h4><strong>{{ conditions }}</strong></h4>
-      </div>
-    </script>
-
-    <!-- Handlebars template for five-day forecast -->
-    <script id="five-day-forecast-template" type="text/x-handlebars-template">
-      <div class="col forecast-card text-center">
-        <h4>{{ day }}</h4>
-        <h2>{{ temp }}</h2>
-        <img src={{ icon }}></img>
-        <h5>{{ conditions }}</h5>
-      </div>
-    </script>
-    <!-------------------------------------------------------------------------------------->
-    <!-- Script CDNs -->
-    <script src="https://code.jquery.com/jquery-3.4.0.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.1.0/handlebars.min.js"></script>
-    <!-- ________________________________________________________________________________ -->
-    <script src="main.js" type="text/javascript"></script>
   </body>
 </html>
