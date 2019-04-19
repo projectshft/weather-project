@@ -3,34 +3,33 @@ body {
     no-repeat center fixed;
   background-size: cover;
   height: 100%;
-  font-family: 'Muli', sans-serif;
-}
-
-.location {
-  margin-bottom: 30px;
-}
-
-.current-weather-display {
-  color: whitesmoke;
-  margin-bottom: 25px;
+  font-family: 'Oxygen', sans-serif;
 }
 
 .page-header {
   color: whitesmoke;
-  lsfont-size: 3rem;
+  font-size: 3rem;
   text-align: center;
-  margin-top: 30px;
-  margin-bottom: 20px;
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+  /* margin-top: 30px;
+  margin-bottom: 20px; */
 }
 
-#default-city {
+.my-location {
+  margin-bottom: 1rem;
+}
+
+.current-weather-card {
+  color: whitesmoke;
+  margin-top: 3rem;
   margin-bottom: 2rem;
 }
 
-.forecast {
-  border-radius: 7%;
-  padding: 10px;
-  margin: 20px;
+.forecast-card {
   background-color: lightgray;
   color: black;
+  border-radius: 7%;
+  padding: 0.5rem;
+  margin: 2rem;
 }
