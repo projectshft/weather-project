@@ -3,3 +3,16 @@
   text-align: center;
   margin: 0px;
 }
+
+.current-weather {
+  padding: 0% 25%;
+}
+
+.current-weather img {
+  max-height: 150px;
+  max-width: 150px;
+  min-width: 60%;
+  min-height: 60%;
+  align-content: center;
+  
+}
