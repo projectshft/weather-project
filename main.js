@@ -20,6 +20,16 @@ var WeatherApp = function() {
     $todaysWeather.append(newHTML);
   }
 
+  //TODO: Create a function to render the five day forecast
+  //Possibly combine the render functions so it is all in one placeholder
+  //because it is all using the same data
+  // var renderFiveDayForecast = function() {
+  // }
+
+  //Function to set the weather object to the data being queried by the
+  //user with the JSON object returned by the OpenWeather api
+  //TODO: call the render for the five day forecast with its own separate
+  //function
   var addWeather = function(data) {
     weather = {
       tempurature: Math.round(data.main.temp),
@@ -29,8 +39,12 @@ var WeatherApp = function() {
       imgURL: 'https://openweathermap.org/img/w/' + data.weather[0].icon + '.png'
     }
     renderCurrentWeather();
+    // renderFiveDayForecast();
   }
 
+  //Function that takes the lower case data for the weather description
+  //returned from the OpenWeather api and capitalizes the first letter
+  //of each word to make it look nicer
   var _upperCaseEachWord = function(text) {
     text = text.toLowerCase()
     .split(' ')
@@ -38,7 +52,9 @@ var WeatherApp = function() {
     .join(' ');
     return text;
   }
-
+  //AJAX function that queries the OpenWeather api with a GET request
+  //TODO: Figure out if there is a way to get the state, dont see a data
+  //point for that in the OpenWeather API
   var fetch = function (query) {
   $.ajax({
     method: "GET",
@@ -64,9 +80,8 @@ var WeatherApp = function() {
 
 var currentWeather = WeatherApp();
 
-/* TODO: event listener for getting city from text box when search button
-is clicked, currently dummy button testing functionality of getting data
-from the text area */
+//Event listener that takes the user's text from the text field and passes
+//it to be queried by the OpenWeather API
 $('#city-search-button').on('click', function() {
   var search = $('#search-query').val();
   currentWeather.fetch(search);
