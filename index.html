@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
+
+    <title>Weather App</title>
+  </head>
+  <body>
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3">
+        <div class="page-header">
+          <h1>Current Weather</h1>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-5 col-md-offset-3">
+        <input type="text" class="form-control" id="city-search" placeholder="Enter a city">
+      </div>
+      <div class="col-md-1">
+        <button type="button" id="city-search-button" name="search-button">Search</button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3" id="todays-weather">
+      </div>
+    </div>
+    <!-- TODO: Handlebars Template for initial weather data -->
+    <script type="text/javascript" src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
+    <script src="main.js" charset="utf-8"></script>
+  </body>
+</html>
