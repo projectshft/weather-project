@@ -33,6 +33,18 @@
 
     //function to make fetch request - 'controller' outside of weatherApp
     const makeRequest = city => {
+      
+      //create request url
+      const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&APPID=${API_KEY}`;
+
+      //fetch and save
+      fetch(url).then( function(response) {
+        return response.json();
+      }).then( function(json) {
+        console.log(JSON.stringify(json));
+      });
+
+      //parse json to update model
 
     };
 
