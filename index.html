@@ -7,7 +7,6 @@
   <title>Weather Forecast</title>
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.4/handlebars.js"></script>
 </head>
 
 <body>
@@ -20,7 +19,7 @@
      </div>
 
     <div class = "row">
-      <div class = "col-md-12">
+      <div id = "search-form" class = "col-md-12">
         <input id = "search-query" placeholder = "Enter City Name"></input>
         <button id ="search-button" type = "button" class = "btn btn-primary">Search</button>
         </div>
@@ -28,22 +27,20 @@
 
      <div class = "row todays-weather">
 
-         </div>
+     </div>
 
     </div>
-  <script id="todays-weather-template" type ="text/x-handlebars-template">
+  <script id="current-weather-template" type ="text/x-handlebars-template">
     <div class = "main-weather col-md-6">
-      <div> {{ temperature }} </div> <br />
-      <div> {{ city }} </div> <br />
-      <div> {{ weather-description }} </div>
-      //insert the icon
+      <div id = "currentTemp" class="currentTempClass"> {{ temperature }}&#176; </div> <br />
+      <div id = "currentLocation" class="currentTempClass"> {{ city }} </div> <br />
+      <div id = "Current Description" class = "currentTempClass text-capitalize" > {{ weatherDescription }} </div>
     </div>
   </script>
-
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.4/handlebars.js"></script>
   <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
   <script src="main.js" type="text/javascript"></script>
 </body>
-
 </html>

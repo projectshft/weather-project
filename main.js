@@ -5,7 +5,7 @@ var weatherData = [];
 var fetch = function(query) {
 
   //setting base url for queries
-  var queryUrl = "https://api.openweathermap.org/data/2.5/weather?q="+ query.replace(' ', '%20') + "&APPID=40767c2b5aacbb8e4c3a6c5162279cd6"
+  var queryUrl = "https://api.openweathermap.org/data/2.5/weather?q="+ query.replace(' ', '%20') + "&units=imperial&APPID=40767c2b5aacbb8e4c3a6c5162279cd6"
 
   $.ajax ({
     method: "GET",
@@ -15,7 +15,7 @@ var fetch = function(query) {
       addWeather(data);
     },
     error: function (textStatus) {
-    console.log(textStatus);
+    alert(textStatus);
   }
 });
 };
@@ -27,9 +27,18 @@ var addWeather = function(data) {
 };
 //using handlebars render the temperature location and weather description to the view
 var renderCurrentDay = function() {
-  var source = $('#current-weather-template');
+$('.todays-weather').empty();
+for (let i = 0; i < weatherData.length; i++) {
+  var source = $('#current-weather-template').html();
   var template = Handlebars.compile(source);
-  var newHTML = template({weatherData});
+  var newHTML = template({
+    temperature: weatherData[i].main.temp,
+    city: weatherData[i].name,
+    weatherDescription: weatherData[i].weather[0].description
+  })
+    $('.todays-weather').append(newHTML);
+}
+
 
 };
 
