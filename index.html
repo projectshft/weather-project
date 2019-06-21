@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  <script src="node_modules/jquery/dist/jquery.min.js"></script>
   <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
   <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
   <script src="node_modules/handlebars/dist/handlebars.min.js"></script>
@@ -29,8 +30,20 @@
   <section id="forecast"></section>
 
   <script id="current-weather-content" type="text/x-handlebars-template">
-    
+   <div class="container mt-5">
+    <div class="row justify-content-center">
+      <p class="city">{{city}}</p>
+    </div>
+    <div class="row justify-content-center">
+      <h1 class="main-temperature">{{temperature}}&deg;</h1>
+    </div>
+    <div class="row justify-content-center">
+      <p class="condition">{{condition}}</p>
+    </div>
+   </div> 
   </script>
+
+  <script src="weatherApp.js"></script>
 
 </body>
 </html>
