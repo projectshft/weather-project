@@ -13,9 +13,12 @@
   *   [X] main centered current weather
   *   [ ] daily forecast - maybe use {{#each ...}}
   * 
-  * [ ] get api key
-  * [ ] fetch request at current location
+  * [X] get api key
+  * [ ] fetch request user input
+  *   [ ] click handler for forms
   * [ ] insert data into handlebar templates
+  * [ ] if get returns city not found, add an error next to input forms
+  * [ ] initialize current weather from local storage || browser location
   */
 
   const WeatherApp = () => {
@@ -32,26 +35,55 @@
     };
 
     //function to make fetch request - 'controller' outside of weatherApp
-    const makeRequest = city => {
+    const getCurrentWeather = city => {
       
       //create request url
-      const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&APPID=${API_KEY}`;
+      const url = `https://api.openweathermap.org/data/2.5/weather?q=${city},us&APPID=${API_KEY}&units=imperial`;
 
       //fetch and save
       fetch(url).then( function(response) {
         return response.json();
       }).then( function(json) {
         console.log(JSON.stringify(json));
+
+        const weatherResponseObj = JSON.parse(JSON.stringify(json));
+        console.log(weatherResponseObj);
+
+        //if api cant find city, don't change model or update view
+        if (weatherResponseObj.cod === '404') {
+          console.log('City not found.');
+          return;
+        }
+        
+        //parse json to update model
+        _updateWeather(weatherResponseObj);
+
+        console.log(currentWeather);
+
+        //update view
+        _render();
+
       });
 
-      //parse json to update model
+    };
+
+    //helper functions
+    const _updateWeather = newWeather => {
+      
+      currentWeather.city = newWeather.name;
+      currentWeather.temperature = newWeather.main.temp;
+      currentWeather.condition = newWeather.weather[0].main;
+      currentWeather.icon = newWeather.weather[0].icon;
 
     };
 
     //'view' update when new query
+    const _render = () => {
+
+    };
 
     return {
-      makeRequest
+      getCurrentWeather
     };
 
   };
