@@ -6,6 +6,36 @@
 var apiKey = "ed5a139b64c682afc125b2cec0f6c859"; 
 var $loading = $('#loader');
 
+/*
+var WeatherModel = Backbone.Model.extend({
+    defaults: function() {
+        return {
+            location: '',
+            day: '',
+            temperature: 0,
+            condition: ''
+        }
+    }
+});
+var WeatherView = Backbone.View.extend({
+    template: Handlebars.compile($('#weather-template').html()),
+
+    className: 'pane', 
+
+    render: function () {
+        this.$el.html(this.template(this.model.attributes));
+    
+        return this;
+    }
+});
+var weatherTest = {
+    location: 'Durham, NC',
+    day: 'Friday',
+    temperature: 88,
+    condition: 'Cloudy'
+}
+*/
+
 var CurrentWeatherModel = Backbone.Model.extend({
     defaults: function() {
         return {
@@ -17,7 +47,7 @@ var CurrentWeatherModel = Backbone.Model.extend({
 });
 
 var CurrentWeatherView = Backbone.View.extend({
-    template: Handlebars.compile($('#current-weather-template').html()),
+    template: Handlebars.compile($('#weather-template').html()), //current-weather-template
 
     render: function () {
         this.$el.html(this.template(this.model.attributes));
@@ -45,7 +75,12 @@ var addWeather = function (data) {
 
     var myTemplate = Handlebars.compile($('#current-weather-template').html()); 
     var myView = myTemplate(weatherObject); 
-    $('#current-weather').append(myView);
+    $('#current-weather').html(myView);
+
+    var myTemplate2 = Handlebars.compile($('#weather-template').html()); 
+    var myView2 = myTemplate2(weatherObject); 
+    $('.shelf').html(myView2);
+    //$('.shelf').html(myView2);
     //return weatherObject;
    };
 
@@ -84,4 +119,8 @@ $('.search').on('click', function () {
 
     //$('#current-weather').append(myView); //myCurrentWeatherView.render().el); 
 
+    //var weatherModel = new CurrentWeatherModel(currentWeatherObjectTest); //weatherTest
+    //var weatherView = new CurrentWeatherView({ model: weatherModel });
+  
+    //$('.shelf').append(weatherView.render().el)
 });
