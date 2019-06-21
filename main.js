@@ -6,8 +6,6 @@
 var apiKey = "ed5a139b64c682afc125b2cec0f6c859"; 
 var $loading = $('#loader');
 
-//encodeURIComponent
-
 var CurrentWeatherModel = Backbone.Model.extend({
     defaults: function() {
         return {
@@ -32,6 +30,8 @@ var currentWeatherObjectTest = {
 };
 
 var addWeather = function (data) {
+
+  console.log(JSON.stringify(data));
       var location = data.name || null;
       var temperature = data.main.temp ||  null;
       var condition = data.weather[0].main || null;
@@ -55,8 +55,9 @@ var addWeather = function (data) {
 var fetch = function (query) {
     $.ajax({
         method: "GET",
-        url: 'https://' + "api.openweathermap.org/data/2.5/weather?id=4464368&units=imperial" + "&APPID=" + apiKey, 
+        url: 'https://' + "api.openweathermap.org/data/2.5/weather?q=" + query + "&units=imperial" + "&APPID=" + apiKey, 
         //"api.openweathermap.org/data/2.5/weather?q=" + query,
+        //durham, nc ?id=4464368
         dataType: "json",
         beforeSend: function() {
           $loading.html('<img src="ajax-loader.gif"/>');
@@ -75,7 +76,8 @@ var fetch = function (query) {
 $('.search').on('click', function () { 
     var search = $('#search-query').val();
     //var currentWeatherObject =  
-    fetch(search);
+    //var searchURI = encodeURIComponent(search);
+    fetch(search); //searchURI);
 
     //var myCurrentWeatherModel = new CurrentWeatherModel(currentWeatherObject); //-Test
     //var myCurrentWeatherView = new CurrentWeatherView({ model: myCurrentWeatherModel});
