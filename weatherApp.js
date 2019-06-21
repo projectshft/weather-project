@@ -20,7 +20,27 @@
 
   const WeatherApp = () => {
 
+    //keep api key inaccessible
+    const API_KEY = '488ccba088277352dc6babea1f438def';
+    
+    //initialize weather - get from local storage
+    const currentWeather = {
+      city: null,
+      temperature: null,
+      condition: null,
+      icon: null
+    };
 
+    //function to make fetch request - 'controller' outside of weatherApp
+    const makeRequest = city => {
+
+    };
+
+    //'view' update when new query
+
+    return {
+      makeRequest
+    };
 
   };
 
