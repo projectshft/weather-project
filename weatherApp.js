@@ -14,9 +14,9 @@
   *   [ ] daily forecast - maybe use {{#each ...}}
   * 
   * [X] get api key
-  * [ ] fetch request user input
-  *   [ ] click handler for forms
-  * [ ] insert data into handlebar templates
+  * [X] fetch request user input
+  *   [X] click handler for forms
+  * [X] insert data into handlebar templates
   * [ ] if get returns city not found, add an error next to input forms
   * [ ] initialize current weather from local storage || browser location
   */
@@ -34,6 +34,8 @@
       icon: null
     };
 
+    const $currentWeather = $('#current-weather');
+
     //function to make fetch request - 'controller' outside of weatherApp
     const getCurrentWeather = city => {
       
@@ -43,10 +45,8 @@
       //fetch and save
       fetch(url).then( function(response) {
         return response.json();
-      }).then( function(json) {
-        console.log(JSON.stringify(json));
-
-        const weatherResponseObj = JSON.parse(JSON.stringify(json));
+      }).then( function(weatherResponseObj) {
+        
         console.log(weatherResponseObj);
 
         //if api cant find city, don't change model or update view
@@ -79,7 +79,11 @@
 
     //'view' update when new query
     const _render = () => {
-
+      $currentWeather.empty();
+      
+      const currentWeatherTemplate = Handlebars.compile($('#current-weather-content').html());
+      const newHTML = currentWeatherTemplate(currentWeather);
+      $('#current-weather').append(newHTML);
     };
 
     return {
@@ -91,7 +95,13 @@
 
   const app = WeatherApp();
 
+  $('.form-inline').submit(function(e) {
+    e.preventDefault();
+    const userSearchInput = $('#city-search-input').val();
+    app.getCurrentWeather(userSearchInput);
+  });
+
   //testing handlebars template
-  const currentWeatherTemplate = Handlebars.compile($('#current-weather-content').html());
-  const testItem = currentWeatherTemplate({ city: 'Durham', temperature: '80', condition: 'sunny' });
-  $('#current-weather').append(testItem);
+  // const currentWeatherTemplate = Handlebars.compile($('#current-weather-content').html());
+  // const testItem = currentWeatherTemplate({ city: 'Durham', temperature: '80', condition: 'sunny' });
+  // $('#current-weather').append(testItem);
