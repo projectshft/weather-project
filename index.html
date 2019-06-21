@@ -21,14 +21,20 @@
             </div>
             <div class="card"
               <div class="card-body current-weather-block">
-                  Handlebars template here
+
               </div>
           </div>
         <div class="col-md-2"></div>
       </div>
     </div>
-
-
+  <script id="current-weather-template" type="text/x-handlebars-template">
+    <div class="current">
+    <h3 class="temp">{{attributes.currentTemp}}°F</h3>
+    <h5 class="display-5">{{attributes.city}}</h5>
+    <p class="cond">{{attributes.currentConditions}}</p>
+    <img src="http://openweathermap.org/img/w/{{attributes.iconURL}}.png">
+    </div>
+  </script>
 
     <script type="text/javascript" src="main.js"></script>
   </body>
