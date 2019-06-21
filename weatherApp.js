@@ -6,6 +6,7 @@
  */
 
  /**
+  * [X] get handlebars and bootstrap
   * [ ] create static title and search elements
   * [ ] section containers where handlebar templates will be inserted
   * [ ] handlebar templates
