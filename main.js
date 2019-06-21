@@ -6,35 +6,7 @@
 var apiKey = "ed5a139b64c682afc125b2cec0f6c859"; 
 var $loading = $('#loader');
 
-/*
-var WeatherModel = Backbone.Model.extend({
-    defaults: function() {
-        return {
-            location: '',
-            day: '',
-            temperature: 0,
-            condition: ''
-        }
-    }
-});
-var WeatherView = Backbone.View.extend({
-    template: Handlebars.compile($('#weather-template').html()),
-
-    className: 'pane', 
-
-    render: function () {
-        this.$el.html(this.template(this.model.attributes));
-    
-        return this;
-    }
-});
-var weatherTest = {
-    location: 'Durham, NC',
-    day: 'Friday',
-    temperature: 88,
-    condition: 'Cloudy'
-}
-*/
+//encodeURIComponent
 
 var CurrentWeatherModel = Backbone.Model.extend({
     defaults: function() {
@@ -45,16 +17,14 @@ var CurrentWeatherModel = Backbone.Model.extend({
         }
     }
 });
-
 var CurrentWeatherView = Backbone.View.extend({
-    template: Handlebars.compile($('#weather-template').html()), //current-weather-template
+    template: Handlebars.compile($('#current-weather-template').html()), 
 
     render: function () {
         this.$el.html(this.template(this.model.attributes));
         return this;
     }
 });
-
 var currentWeatherObjectTest = {
     location: 'Durham, NC',
     temperature: 88,
@@ -80,8 +50,6 @@ var addWeather = function (data) {
     var myTemplate2 = Handlebars.compile($('#weather-template').html()); 
     var myView2 = myTemplate2(weatherObject); 
     $('.shelf').html(myView2);
-    //$('.shelf').html(myView2);
-    //return weatherObject;
    };
 
 var fetch = function (query) {
@@ -109,18 +77,7 @@ $('.search').on('click', function () {
     //var currentWeatherObject =  
     fetch(search);
 
-   // console.log(currentWeatherObject);
-   //console.log(JSON.stringify(currentWeatherObject));
-
-    //var myTemplate = Handlebars.compile($('#current-weather-template').html()); 
-    //var myView = myTemplate(currentWeatherObject); 
-    //var myCurrentWeatherModel = new CurrentWeatherModel(currentWeatherObject); //currentWeatherObjectTest
+    //var myCurrentWeatherModel = new CurrentWeatherModel(currentWeatherObject); //-Test
     //var myCurrentWeatherView = new CurrentWeatherView({ model: myCurrentWeatherModel});
-
-    //$('#current-weather').append(myView); //myCurrentWeatherView.render().el); 
-
-    //var weatherModel = new CurrentWeatherModel(currentWeatherObjectTest); //weatherTest
-    //var weatherView = new CurrentWeatherView({ model: weatherModel });
-  
-    //$('.shelf').append(weatherView.render().el)
+    //$('#current-weather').append(myCurrentWeatherView.render().el); 
 });
