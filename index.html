@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+    crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.1.2/handlebars.min.js"></script>
+  
+  <title>Sean's Sweet Weather App</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  
+</head>
+<body>
+
+  <div class='container-fluid'>
+  <div class='row'>
+    <div class="col"></div>
+  <div class='col-sm-8 weather'>
+    <div class='row'>
+      <div class="col-sm-12">
+        <div class="jumbotron"><h1>Current Weather</h1></div>
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" placeholder="Durham, NC" aria-label="Enter City Name"
+            aria-describedby="search-button">
+          <div class="input-group-append">
+            <button class="btn btn-primary" type="button" id="search-button">Get Weather!</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div class="col"></div>
+  </div>
+  </div>
+
+  <script id="current-weather" type="text/x-handlebars-template">
+    <div class="container city-weather"> 
+      <div class='row'>
+        <div class='col-sm-4'>
+          <h1>{{main.temp}}</h1>
+          <h3>{{name}}</h3>
+          <h4>{{weather[0].description}}</h4>
+        </div>
+        <div class='col-sm-8'>
+          <img src=`http://openweathermap.org/img/w/${{{weather[0].icon}}}.png`>
+        </div>
+      </div>
+    </div>
+  </script>
+  <script src="main.js"></script>
+</body>
+</html>
