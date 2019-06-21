@@ -14,19 +14,9 @@ var WeatherApp = function(){
   //function to fetch our current city info
   var fetchCurrentWeather = function () {
     let currentWeatherURL = `https://api.openweathermap.org/data/2.5/weather?q=London,UK&units=imperial&appid=${my_key}`;
-    let currentCityWeather = fetch(currentWeatherURL).then( function (response) {
-      if (response.ok) {
-        return response.blob();
-      }
-        throw new Error('Weather API is most displeased.');
-    }).then(function (myBlob) {
-      var objectURL = URL.createObjectURL(myBlob);
-      return objectURL;
-    }).catch(function (error) {
-      console.log('There has been a problem with your fetch operation: ', error.message);
-    });
+    let currentCityWeather = fetch(currentWeatherURL).then(response => response.json()).then(data => console.log(data));
 
-    console.log(currentCityWeather);
+    //console.log(currentCityWeather);
   };
 
   //function to fetch our 5 day forecast info
