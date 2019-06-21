@@ -18,20 +18,33 @@
     </div>
     <div class="row">
       <div class="col-md-5 col-md-offset-3">
-        <input type="text" class="form-control" id="city-search" placeholder="Enter a city">
+        <input type="text" class="form-control" id="search-query" placeholder="Enter a city">
       </div>
       <div class="col-md-1">
         <button type="button" id="city-search-button" name="search-button">Search</button>
       </div>
     </div>
-    <div class="row">
-      <div class="col-md-6 col-md-offset-3" id="todays-weather">
-      </div>
+    <div class="row" id="todays-weather">
+
     </div>
-    <!-- TODO: Handlebars Template for initial weather data -->
+    <script id="main-weather-template" type="text/x-handlebars-template">
+      <div class="col-md-1 col-md-offset-3" id="todays-weather">
+        <p>{{tempurature}} °F</p>
+        <p>
+          <span>{{city}}</span>, <span>{{country}}</span>
+        </p>
+        <p>{{precipitation}}</p>
+      </div>
+      <div class="col-md-2" id="weather-icon">
+        <img src="{{imgURL}}" id="weather-img" alt="weather_icon">
+      </div>
+    </script>
     <script type="text/javascript" src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
     <script src="main.js" charset="utf-8"></script>
+      <!-- Basic Template for initial weather data
+      TODO: Create better layout -->
+
   </body>
 </html>
