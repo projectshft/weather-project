@@ -1,0 +1,12 @@
+.row {
+    justify-content: center;
+    display: flex;
+}
+    
+.wrapper {
+    margin: 20px auto;
+}
+
+.weather-tile {
+    padding: 10px;
+}

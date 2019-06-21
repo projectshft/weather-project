@@ -12,7 +12,50 @@
     <title>Document</title>
 </head>
 <body>
-    
+    <!--"Current Weather" - input "Enter City Name" - button "Search" -->
+    <!--"temperature <degrees>" - "City, State" - "condition" -->
+
+<div class="container-fluid">
+<div class="wrapper">
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-center">
+                <h1> Weather</h1>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-center">        
+                <form class="form-inline search-form">
+                <div class="form-group">
+                    <input type="text" id="search-query" class="form-control" placeholder="Enter City Name">
+                    </input>
+                    <button type="button" class="btn btn-primary search">Search</button>
+                    <div id='loader' style="float: right;"> </div>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12" id="current-weather">
+            
+        </div>
+    </div>
+
+</div>
+</div>
+
+    <script id="current-weather-template" type="text/x-handlebars-template">
+        <div class="weather-tile d-flex justify-content-center">
+            <div> <h2> {{ temperature }}&deg </h2> </div> 
+            <div> <h3> {{ location }} </h3> </div>
+            <div> <h4> {{ condition }} </h4> </div>
+        </div>
+    </script>
 
     <script src="main.js"></script>
 </body>
