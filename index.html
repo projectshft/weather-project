@@ -17,7 +17,7 @@
 
   <section id="city-search">
     <form class="form-inline justify-content-center">
-      <div class="form-group">
+      <div class="form-group mb-0">
         <label for="city-search-input" class="sr-only">City Search Input</label>
         <input type="text" class="form-control" id="city-search-input" placeholder="Enter a city">
       </div>
@@ -42,6 +42,15 @@
       <p class="condition">{{condition}}</p>
     </div>
    </div> 
+  </script>
+
+  <script id="invalid-city-input-alert" type="text/x-handlebars-template">
+    <div class="alert alert-warning alert-dismissible fade show mt-5" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <strong>City not found.</strong> Please enter another city name.
+    </div>
   </script>
 
   <script src="weatherApp.js"></script>
