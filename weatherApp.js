@@ -7,8 +7,8 @@
 
  /**
   * [X] get handlebars and bootstrap
-  * [ ] create static title and search elements
-  * [ ] section containers where handlebar templates will be inserted
+  * [X] create static title and search elements
+  * [X] section containers where handlebar templates will be inserted
   * [ ] handlebar templates
   *   [ ] main centered current weather
   *   [ ] daily forecast - maybe use {{#each ...}}
