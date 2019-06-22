@@ -18,7 +18,7 @@
   * [X] fetch request user input
   *   [X] click handler for forms
   * [X] insert data into handlebar templates
-  * [ ] if get returns city not found, add an error next to input forms
+  * [X] if get returns city not found, add an error next to input forms
   * [ ] initialize current weather from local storage || browser location
   * 
   * [ ] use daily api, count of 6 for next 5 days
@@ -35,17 +35,26 @@ const WeatherApp = () => {
   //keep api key inaccessible
   //naming is to reinforce mvc thinking for now
   const THEMODEL = {
+    API_KEY: '488ccba088277352dc6babea1f438def',
+    search: '',
     currentWeather: {
-      city: null,
-      temperature: null,
-      condition: null,
-      icon: null
+      city: '',
+      temperature: 0,
+      condition: '',
+      icon: ''
     },
-    API_KEY: '488ccba088277352dc6babea1f438def'
+    numDaysForecasted: 5,
+    futureForecast: []
   };
 
 
   const $currentWeather = $('#current-weather');
+
+  const searchForCity = city => {
+
+    console.log(`Searching for "${city}"`);
+
+  };
 
   //function to make fetch request - 'controller' outside of weatherApp
   const getCurrentWeather = city => {
@@ -80,13 +89,14 @@ const WeatherApp = () => {
 
   const getForecast = city => {
 
-    const url =`https://api.openweathermap.org/data/2.5/forecast?q=${city},us&APPID=${API_KEY}&units=imperial`;
+    const url =`https://api.openweathermap.org/data/2.5/forecast/daily?q=${city},us&cnt=${THEMODEL.numDaysForecasted+1}&APPID=${THEMODEL.API_KEY}&units=imperial`;
 
     //fetch and save
     fetch(url).then( function(response) {
       return response.json();
     }).then( function(forecastResponseObj) {
 
+      console.log(forecastResponseObj);
       //if api cant find city, don't change model or update view
 
       //parse json to update model
@@ -128,7 +138,8 @@ const WeatherApp = () => {
 
   return {
     getCurrentWeather,
-    getForecast
+    getForecast,
+    searchForCity
   };
 
 };
