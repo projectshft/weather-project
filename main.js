@@ -16,7 +16,7 @@ get a form from bootstrap
 let long;
 let lat;
 var source = $('#current-weather-template').html();
-var templateDefault = Handlebars.compile(source);
+var template = Handlebars.compile(source);
 
 if (navigator.geolocation) {
   navigator.geolocation.getCurrentPosition(position => {
@@ -33,7 +33,7 @@ if (navigator.geolocation) {
         console.log(data);
         $('.location-city-name').append(data.name);
         $('.temp-degree').prepend(data.main.temp);
-        $('.temp-description').append(data.weather[0].description);
+        $('.temp-description').append('<strong>' + data.weather[0].description + '</strong>');
       })
   });
 }
@@ -45,27 +45,54 @@ $('button').on('click', function(e) {
   $('.toggle').hide();
   console.log(userInput);
 
-  const city = `https://api.openweathermap.org/data/2.5/weather?q=${userInput}&units=imperial&APPID=1d6f5ea050c2a30c3485c7944ca499e0`
-
+  const city = `https://api.openweathermap.org/data/2.5/forecast/daily?q=${userInput}&cnt=6&units=imperial&APPID=488ccba088277352dc6babea1f438def`
   fetch(city)
     .then(response => {
       return response.json();
     })
     .then(data => {
-      let weatherTemplate = templateDefault({
-        name: data.name,
-        temp: data.main.temp,
-        description: data.weather[0].description
+      console.log(data);
+      let weatherTemplate = template({
+        name: data.city.name,
+        temp: data.list[0].temp.day,
+        description: data.list[0].weather[0].description,
+
+        day2: moment().add(1, 'd').format("dddd"),
+        temp2: data.list[1].temp.day,
+        description2: data.list[1].weather[0].description,
+
+        day3: moment().add(2, 'd').format("dddd"),
+        temp3: data.list[2].temp.day,
+        description3: data.list[2].weather[0].description,
+
+        day4: moment().add(3, 'd').format("dddd"),
+        temp4: data.list[3].temp.day,
+        description4: data.list[3].weather[0].description,
+
+        day5: moment().add(4, 'd').format("dddd"),
+        temp5: data.list[4].temp.day,
+        description5: data.list[4].weather[0].description
       })
       $('.header').append(weatherTemplate);
     })
-  const forecast = `https://api.openweathermap.org/data/2.5/forecast?q=${userInput}&units=imperial&APPID=1d6f5ea050c2a30c3485c7944ca499e0`
 
-  fetch(forecast)
-    .then(response =>{
-      return response.json();
-    })
-    .then(data => {
-      console.log(data);
-    })
+
+  //   const forecast = `https://api.openweathermap.org/data/2.5/forecast/daily?q=${userInput}&cnt=6&units=imperial&APPID=488ccba088277352dc6babea1f438def`
+  //
+  //
+  // fetch(forecast)
+  //   .then(response =>{
+  //     return response.json();
+  //   })
+  //   .then(data => {
+  //     console.log(data);
+  //     console.log(moment().format("dddd") + " " + moment().add(1, 'd').format("dddd"));
+  //     let day2 = moment().add(1, 'd').format("dddd")
+  //     let weatherForecast = templateForecast({
+  //       today: "Today",
+  //       day2: day2,
+  //
+  //     })
+  //
+  //   })
 })

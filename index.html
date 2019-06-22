@@ -9,7 +9,6 @@
 </head>
 
 <body>
-
   <div class="container-fluid header">
     <div class="row">
       <form class="city-search col-md-6 offset-md-3">
@@ -27,22 +26,23 @@
     </div>
   </div>
   <div class="container-fluid">
-      <div class="toggle show col-4 mx-auto">
-        <div class="current-weather">
-          <div class="location">
-            <h1 class="location-city-name"></h1>
+    <div class="toggle col-4 mx-auto">
+      <div class="current-weather">
+        <div class="location">
+          <h1 class="location-city-name"></h1>
+        </div>
+        <div class="temp">
+          <div class="degree-section">
+            <h2 class="temp-degree"><span>°F</span></h2>
+            <p>(current temp)</p>
           </div>
-          <div class="temp">
-            <div class="degree-section">
-              <h2 class="temp-degree"><span>°F</span></h2>
-            </div>
-            <div class="temp-description">
-            </div>
+          <div class="temp-description">
           </div>
         </div>
       </div>
+    </div>
   </div>
-  <div class="forecast card-deck">
+  <div class="forecast card-deck toggle">
     <div class="card text-white bg-dark mb-3" style="max-width: 20%;">
       <div class="card-header">Monday</div>
       <br><br>
@@ -95,7 +95,7 @@
   <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
-
+  <script src="https://cdn.jsdelivr.net/npm/moment@2.24.0/min/moment.min.js"></script>
   <script id="current-weather-template" type="text/x-handlebars-template">
     <div class="toggle show">
       <div class="current-weather">
@@ -105,12 +105,65 @@
         <div class="temp">
           <div class="degree-section">
             <h2 class="temp-degree">{{ temp }}<span>°F</span></h2>
+            <p>(High)</p>
           </div>
           <div class="temp-description">{{ description }}
           </div>
         </div>
       </div>
+    <div class="forecast card-deck toggle">
+      <div class="card text-white bg-dark mb-3" style="max-width: 20%;">
+        <div class="card-header">Today</div>
+        <br><br>
+        <div class="card-body">
+          <h5>High</h5>
+          <h4 class="card-title">{{ temp }}<span>°F</span></h4>
+          <br>
+          <p class="card-text">{{ description }}</p>
+        </div>
+      </div>
+      <div class="card text-white bg-dark mb-3" style="max-width: 20%;">
+        <div class="card-header">{{ day2 }}</div>
+        <br><br>
+        <div class="card-body">
+          <h5>High</h5>
+          <h4 class="card-title">{{ temp2 }}<span>°F</span></h4>
+          <br>
+          <p class="card-text">{{ description2 }}</p>
+        </div>
+      </div>
+      <div class="card text-white bg-dark mb-3" style="max-width: 20%;">
+        <div class="card-header">{{ day3 }}</div>
+        <br><br>
+        <div class="card-body">
+          <h5>High</h5>
+          <h4 class="card-title">{{ temp3 }}<span>°F</span></h4>
+          <br>
+          <p class="card-text">{{ description3 }}</p>
+        </div>
+      </div>
+      <div class="card text-white bg-dark mb-3" style="max-width: 20%;">
+        <div class="card-header">{{ day4 }}</div>
+        <br><br>
+        <div class="card-body">
+          <h5>High</h5>
+          <h5 class="card-title">{{ temp4 }}<span>°F</span></h5>
+          <br>
+          <p class="card-text">{{ description4 }}</p>
+        </div>
+      </div>
+      <div class="card text-white bg-dark mb-3" style="max-width: 20%;">
+        <div class="card-header">{{ day5 }}</div>
+        <br><br>
+        <div class="card-body">
+          <h5>High</h5>
+          <h5 class="card-title">{{ temp5 }}<span>°F</span></h5>
+          <br>
+          <p class="card-text">{{ description5 }}</p>
+        </div>
+      </div>
     </div>
+  </div>
   </script>
 
   <script src="main.js"></script>
