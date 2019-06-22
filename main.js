@@ -4,25 +4,65 @@
 // https://api.openweathermap.org/data/2.5/weather?id=4464368&units=imperial&APPID=ed5a139b64c682afc125b2cec0f6c859
 
 var apiKey = "ed5a139b64c682afc125b2cec0f6c859"; 
+var STORAGE_ID = 'my-saved-location';
 var $loading = $('#loader');
 
-var CurrentWeatherModel = Backbone.Model.extend({
-    defaults: function() {
-        return {
-            location: '',
-            temperature: 0,
-            condition: ''
-        }
-    }
-});
-var CurrentWeatherView = Backbone.View.extend({
-    template: Handlebars.compile($('#current-weather-template').html()), 
+var WeatherApp = function () {
+  var $current_weather = $('#current-weather');
+  var $day_weather = $('.day-weather'); 
 
-    render: function () {
-        this.$el.html(this.template(this.model.attributes));
-        return this;
-    }
-});
+  var currentWeatherModel = Model(); 
+  currentWeatherModel.change(function () {
+    renderCurrentWeather();
+  });
+
+  var renderCurrentWeather = function () {
+    $current_weather.empty();
+    var currentWeatherTemplate = Handlebars.compile($('#current-weather-template').html()); 
+    var currentWeatherView = View(currentWeatherModel, currentWeatherTemplate); 
+    $current_weather.html(currentWeatherView.render());
+  };
+  
+  var setCurrentWeather = function (data) {
+    var location = data.name || null;
+    var temperature = data.main.temp ||  null;
+    var condition = data.weather[0].main || null;
+    var icon = data.weather[0].icon || null; 
+
+    currentWeatherModel.set('location', location); 
+    currentWeatherModel.set('temperature', temperature); 
+    currentWeatherModel.set('condition', condition); 
+    currentWeatherModel.set('icon', icon); 
+  };
+
+  var fetchCurrentWeather = function (query) {
+    $.ajax({
+        method: "GET",
+        url: 'https://' + "api.openweathermap.org/data/2.5/weather?q=" + query + "&units=imperial" + "&APPID=" + apiKey, 
+        dataType: "json",
+        beforeSend: function() {
+          $loading.html('<img src="ajax-loader.gif"/>');
+          $loading.show();
+        },
+        success: function(data) {
+          $loading.hide();
+          setCurrentWeather(data);
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+          console.log(textStatus);
+        }
+      });
+  };
+
+  return {
+    renderCurrentWeather: renderCurrentWeather,
+    setCurrentWeather: setCurrentWeather,
+    fetchCurrentWeather: fetchCurrentWeather
+  }; 
+
+}; 
+
+/*
 var currentWeatherObjectTest = {
     location: 'Durham, NC',
     temperature: 88,
@@ -30,7 +70,6 @@ var currentWeatherObjectTest = {
 };
 
 var addWeather = function (data) {
-
   console.log(JSON.stringify(data));
       var location = data.name || null;
       var temperature = data.main.temp ||  null;
@@ -49,8 +88,10 @@ var addWeather = function (data) {
 
     var myTemplate2 = Handlebars.compile($('#weather-template').html()); 
     var myView2 = myTemplate2(weatherObject); 
-    $('.shelf').html(myView2);
+    $('.day-weather').html(myView2);
    };
+
+
 
 var fetch = function (query) {
     $.ajax({
@@ -72,14 +113,11 @@ var fetch = function (query) {
         }
       });
   };
+*/
+
+var app = WeatherApp();
 
 $('.search').on('click', function () { 
     var search = $('#search-query').val();
-    //var currentWeatherObject =  
-    //var searchURI = encodeURIComponent(search);
-    fetch(search); //searchURI);
-
-    //var myCurrentWeatherModel = new CurrentWeatherModel(currentWeatherObject); //-Test
-    //var myCurrentWeatherView = new CurrentWeatherView({ model: myCurrentWeatherModel});
-    //$('#current-weather').append(myCurrentWeatherView.render().el); 
+    app.fetchCurrentWeather(search); 
 });
