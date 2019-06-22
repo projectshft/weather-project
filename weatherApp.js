@@ -54,10 +54,14 @@ const WeatherApp = () => {
 
     console.log(`Searching for "${city}"`);
 
+    //check for city validation inside getCurrentWeather
+    //if valid getCurrentWeather will call getForecast
+    _getCurrentWeather(city);
+
   };
 
   //function to make fetch request - 'controller' outside of weatherApp
-  const getCurrentWeather = city => {
+  const _getCurrentWeather = city => {
     
     //create request url
     const url = `https://api.openweathermap.org/data/2.5/weather?q=${city},us&APPID=${THEMODEL.API_KEY}&units=imperial`;
@@ -87,7 +91,7 @@ const WeatherApp = () => {
 
   };
 
-  const getForecast = city => {
+  const _getForecast = city => {
 
     const url =`https://api.openweathermap.org/data/2.5/forecast/daily?q=${city},us&cnt=${THEMODEL.numDaysForecasted+1}&APPID=${THEMODEL.API_KEY}&units=imperial`;
 
@@ -137,8 +141,6 @@ const WeatherApp = () => {
   };
 
   return {
-    getCurrentWeather,
-    getForecast,
     searchForCity
   };
 
@@ -152,8 +154,6 @@ $('.form-inline').submit(function(e) {
   e.preventDefault();
   const userSearchInput = $('#city-search-input').val();
   app.searchForCity(userSearchInput);
-  app.getCurrentWeather(userSearchInput);
-  app.getForecast(userSearchInput);
 });
 
 //testing handlebars template
