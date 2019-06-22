@@ -6,6 +6,11 @@ body {
   text-align: center;
 }
 
+.forecast-card {
+  padding:0 2px;
+  height:100%;
+}
+
 #weather-img {
   height: 100px;
   width: 100px;

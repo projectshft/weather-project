@@ -27,7 +27,8 @@
     <div class="row" id="todays-weather">
     </div>
     <div class="row" id="five-day-forecast">
-
+      <div class="col-md-3">
+      </div>
     </div>
     <script id="main-weather-template" type="text/x-handlebars-template">
       <div class="col-md-1 col-md-offset-3" id="todays-weather">
@@ -41,10 +42,25 @@
         <img src="{{imgURL}}" id="weather-img" alt="weather_icon">
       </div>
     </script>
+    <script id="forecast-template" type="text/x-handlebars-template">
+      <div class="col-md-1 forecast-card">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">{{day}}</h3>
+          </div>
+          <div class="panel-body">
+            <p> {{tempurature}} </p>
+            <p> {{precipitation}} </p>
+            <img src="{{imgURL}}">
+          </div>
+        </div>
+      </div>
+    </script>
     <script type="text/javascript" src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
-    <script src="main.js" charset="utf-8"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js" charset="utf-8"></script>
+    <script type="text/javascript" src="main.js" charset="utf-8"></script>
       <!-- Basic Template for initial weather data
       TODO: Create better layout -->
 
