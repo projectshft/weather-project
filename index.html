@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>Project Weather</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <div class="container-fluid header">
+    <div class="row">
+      <form class="city-search col-md-6 offset-md-3">
+        <div class="page-header">
+          <h1>Current Weather</h1>
+          <hr />
+        </div>
+        <div class="input-group">
+          <input type="text" class="form-control" id="cityInput" placeholder="Durham, NC, US">
+          <span class="input-group-btn">
+            <button type="submit" class="btn btn-outline-dark">Search</button>
+          </span>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="container-fluid">
+      <div class="toggle show col-4 mx-auto">
+        <div class="current-weather">
+          <div class="location">
+            <h1 class="location-city-name"></h1>
+          </div>
+          <div class="temp">
+            <div class="degree-section">
+              <h2 class="temp-degree"><span>°F</span></h2>
+            </div>
+            <div class="temp-description">
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+  <div class="forecast card-deck">
+    <div class="card text-white bg-dark mb-3" style="max-width: 20%;">
+      <div class="card-header">Monday</div>
+      <br><br>
+      <div class="card-body">
+        <h5 class="card-title">72<span>°F</span></h5>
+        <br><br>
+        <p class="card-text">Cloudy</p>
+      </div>
+    </div>
+    <div class="card text-white bg-dark mb-3" style="max-width: 20%;">
+      <div class="card-header">Tuesday</div>
+      <br><br>
+      <div class="card-body">
+        <h5 class="card-title">74<span>°F</span></h5>
+        <br><br>
+        <p class="card-text">Cloudy</p>
+      </div>
+    </div>
+    <div class="card text-white bg-dark mb-3" style="max-width: 20%;">
+      <div class="card-header">Wednesday</div>
+      <br><br>
+      <div class="card-body">
+        <h5 class="card-title">79<span>°F</span></h5>
+        <br><br>
+        <p class="card-text">Sunny</p>
+      </div>
+    </div>
+    <div class="card text-white bg-dark mb-3" style="max-width: 20%;">
+      <div class="card-header">Thursday</div>
+      <br><br>
+      <div class="card-body">
+        <h5 class="card-title">78<span>°F</span></h5>
+        <br><br>
+        <p class="card-text">Sunny</p>
+      </div>
+    </div>
+    <div class="card text-white bg-dark mb-3" style="max-width: 20%;">
+      <div class="card-header">Friday</div>
+      <br><br>
+      <div class="card-body">
+        <h5 class="card-title">71<span>°F</span></h5>
+        <br><br>
+        <p class="card-text">Sunny</p>
+      </div>
+    </div>
+  </div>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+
+  <script id="current-weather-template" type="text/x-handlebars-template">
+    <div class="toggle show">
+      <div class="current-weather">
+        <div class="location">
+          <h1 class="location-city-name">{{ name }}</h1>
+        </div>
+        <div class="temp">
+          <div class="degree-section">
+            <h2 class="temp-degree">{{ temp }}<span>°F</span></h2>
+          </div>
+          <div class="temp-description">{{ description }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </script>
+
+  <script src="main.js"></script>
+</body>
+
+</html>

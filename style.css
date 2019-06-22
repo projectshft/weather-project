@@ -1,0 +1,36 @@
+.page-header {
+  margin-top: 40px;
+  text-align: center;
+}
+
+.search-form {
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+body{
+  margin-top: 40px;
+}
+.row{
+  text-align: center;
+}
+.degree-section{
+  align-items: center;
+}
+.degree-section span{
+  margin: 10px;
+  font-size: 30px;
+}
+.degree-section h2 {
+  font-size: 40px;
+}
+.toggle{
+  display: show;
+  text-align: center;
+}
+.forecast{
+  margin-left: 10px;
+  margin-right: 10px;
+}
+.card{
+  text-align: center;
+}
