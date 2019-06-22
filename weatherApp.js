@@ -151,6 +151,7 @@ const app = WeatherApp();
 $('.form-inline').submit(function(e) {
   e.preventDefault();
   const userSearchInput = $('#city-search-input').val();
+  app.searchForCity(userSearchInput);
   app.getCurrentWeather(userSearchInput);
   app.getForecast(userSearchInput);
 });
