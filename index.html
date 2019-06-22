@@ -5,6 +5,7 @@
   <meta charset="utf-8">
   <title>Project Weather</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <script src="https://use.fontawesome.com/7cac670fee.js"></script>
   <link rel="stylesheet" href="style.css">
 </head>
 
@@ -13,11 +14,11 @@
     <div class="row">
       <form class="city-search col-md-6 offset-md-3">
         <div class="page-header">
-          <h1>Current Weather</h1>
+          <h1>Current Weather</h1><i class="fa fa-tint fa-3x" aria-hidden="true"></i>
           <hr />
         </div>
         <div class="input-group">
-          <input type="text" class="form-control" id="cityInput" placeholder="Durham, NC, US">
+          <input type="text" class="form-control" id="cityInput" placeholder="Durham, US">
           <span class="input-group-btn">
             <button type="submit" class="btn btn-outline-dark">Search</button>
           </span>
@@ -42,54 +43,6 @@
       </div>
     </div>
   </div>
-  <div class="forecast card-deck toggle">
-    <div class="card text-white bg-dark mb-3" style="max-width: 20%;">
-      <div class="card-header">Monday</div>
-      <br><br>
-      <div class="card-body">
-        <h5 class="card-title">72<span>°F</span></h5>
-        <br><br>
-        <p class="card-text">Cloudy</p>
-      </div>
-    </div>
-    <div class="card text-white bg-dark mb-3" style="max-width: 20%;">
-      <div class="card-header">Tuesday</div>
-      <br><br>
-      <div class="card-body">
-        <h5 class="card-title">74<span>°F</span></h5>
-        <br><br>
-        <p class="card-text">Cloudy</p>
-      </div>
-    </div>
-    <div class="card text-white bg-dark mb-3" style="max-width: 20%;">
-      <div class="card-header">Wednesday</div>
-      <br><br>
-      <div class="card-body">
-        <h5 class="card-title">79<span>°F</span></h5>
-        <br><br>
-        <p class="card-text">Sunny</p>
-      </div>
-    </div>
-    <div class="card text-white bg-dark mb-3" style="max-width: 20%;">
-      <div class="card-header">Thursday</div>
-      <br><br>
-      <div class="card-body">
-        <h5 class="card-title">78<span>°F</span></h5>
-        <br><br>
-        <p class="card-text">Sunny</p>
-      </div>
-    </div>
-    <div class="card text-white bg-dark mb-3" style="max-width: 20%;">
-      <div class="card-header">Friday</div>
-      <br><br>
-      <div class="card-body">
-        <h5 class="card-title">71<span>°F</span></h5>
-        <br><br>
-        <p class="card-text">Sunny</p>
-      </div>
-    </div>
-  </div>
-
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
@@ -114,7 +67,7 @@
     <div class="forecast card-deck toggle">
       <div class="card text-white bg-dark mb-3" style="max-width: 20%;">
         <div class="card-header">Today</div>
-        <br><br>
+        <br>
         <div class="card-body">
           <h5>High</h5>
           <h4 class="card-title">{{ temp }}<span>°F</span></h4>
@@ -124,7 +77,7 @@
       </div>
       <div class="card text-white bg-dark mb-3" style="max-width: 20%;">
         <div class="card-header">{{ day2 }}</div>
-        <br><br>
+        <br>
         <div class="card-body">
           <h5>High</h5>
           <h4 class="card-title">{{ temp2 }}<span>°F</span></h4>
@@ -134,7 +87,7 @@
       </div>
       <div class="card text-white bg-dark mb-3" style="max-width: 20%;">
         <div class="card-header">{{ day3 }}</div>
-        <br><br>
+        <br>
         <div class="card-body">
           <h5>High</h5>
           <h4 class="card-title">{{ temp3 }}<span>°F</span></h4>
@@ -144,7 +97,7 @@
       </div>
       <div class="card text-white bg-dark mb-3" style="max-width: 20%;">
         <div class="card-header">{{ day4 }}</div>
-        <br><br>
+        <br>
         <div class="card-body">
           <h5>High</h5>
           <h5 class="card-title">{{ temp4 }}<span>°F</span></h5>
@@ -154,7 +107,7 @@
       </div>
       <div class="card text-white bg-dark mb-3" style="max-width: 20%;">
         <div class="card-header">{{ day5 }}</div>
-        <br><br>
+        <br>
         <div class="card-body">
           <h5>High</h5>
           <h5 class="card-title">{{ temp5 }}<span>°F</span></h5>
