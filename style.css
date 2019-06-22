@@ -1,3 +1,33 @@
-#search-form {
-  margin-top: 100px;
+.container {
+  text-align: center;
 }
+
+.weatherHead {
+  font-family: 'Oxygen', sans-serif;
+}
+
+#search-form {
+  margin-top: 80px;
+  margin-bottom: 30px;
+}
+
+.currentTempClass {
+  font-family: 'Oxygen', sans-serif;
+  font-weight: 550;
+  color: black;
+}
+
+#currentTemp {
+  font-size: 40px;
+}
+
+#currentLocation {
+  font-size: 30px;
+}
+ #currentDescription {
+   font-size: 20px;
+ }
+
+ #icon-main {
+   width: 200px;
+ }

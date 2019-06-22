@@ -7,6 +7,9 @@
   <title>Weather Forecast</title>
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css?family=Arvo&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Poppins&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Oxygen&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -14,7 +17,7 @@
 
     <div class = "row">
       <div class ="col-md-12">
-        <h1>Current Weather</h1>
+        <h1 class = "weatherHead">Current Weather</h1>
         </div>
      </div>
 
@@ -29,12 +32,51 @@
 
      </div>
 
+     <div class = "row forecast">
+
+       </div>
+
     </div>
   <script id="current-weather-template" type ="text/x-handlebars-template">
-    <div class = "main-weather col-md-6">
+    <div class = "main-weather col-md-3">
       <div id = "currentTemp" class="currentTempClass"> {{ temperature }}&#176; </div> <br />
-      <div id = "currentLocation" class="currentTempClass"> {{ city }} </div> <br />
-      <div id = "Current Description" class = "currentTempClass text-capitalize" > {{ weatherDescription }} </div>
+      <div id = "currentLocation" class="currentTempClass"> {{ city }}, {{country}} </div> <br />
+      <div id = "currentDescription" class = "currentTempClass text-capitalize" > {{ weatherDescription }} </div>
+    </div>
+    <div class = "main-weather-icon col-md-3">
+      <div> <img id="icon-main" src ={{icon}} </div>
+    </div>
+  </script>
+  <script id= "forecast-weather-template" type ="text/x-handlebars-template">
+    <div class = "forecast-weather" "col-md-2">
+      <div id = "currentTemp" class="currentTempClass"> {{ temperature }}&#176; </div> <br />
+      <div id = "currentLocation" class="currentTempClass"> {{ city }}, {{country}} </div> <br />
+      <div id = "currentDescription" class = "currentTempClass text-capitalize" > {{ weatherDescription }} </div>
+      <div> <img id="icon-main" src ={{icon}} </div>
+    </div>
+    <div class = "forecast-weather" "col-md-2">
+      <div id = "currentTemp" class="currentTempClass"> {{ temperature }}&#176; </div> <br />
+      <div id = "currentLocation" class="currentTempClass"> {{ city }}, {{country}} </div> <br />
+      <div id = "currentDescription" class = "currentTempClass text-capitalize" > {{ weatherDescription }} </div>
+      <div> <img id="icon-main" src ={{icon}} </div>
+    </div>
+    <div class = "forecast-weather" "col-md-2">
+      <div id = "currentTemp" class="currentTempClass"> {{ temperature }}&#176; </div> <br />
+      <div id = "currentLocation" class="currentTempClass"> {{ city }}, {{country}} </div> <br />
+      <div id = "currentDescription" class = "currentTempClass text-capitalize" > {{ weatherDescription }} </div>
+      <div> <img id="icon-main" src ={{icon}} </div>
+    </div>
+    <div class = "forecast-weather" "col-md-2">
+      <div id = "currentTemp" class="currentTempClass"> {{ temperature }}&#176; </div> <br />
+      <div id = "currentLocation" class="currentTempClass"> {{ city }}, {{country}} </div> <br />
+      <div id = "currentDescription" class = "currentTempClass text-capitalize" > {{ weatherDescription }} </div>
+      <div> <img id="icon-main" src ={{icon}} </div>
+    </div>
+    <div class = "forecast-weather" "col-md-2">
+      <div id = "currentTemp" class="currentTempClass"> {{ temperature }}&#176; </div> <br />
+      <div id = "currentLocation" class="currentTempClass"> {{ city }}, {{country}} </div> <br />
+      <div id = "currentDescription" class = "currentTempClass text-capitalize" > {{ weatherDescription }} </div>
+      <div> <img id="icon-main" src ={{icon}} </div>
     </div>
   </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.4/handlebars.js"></script>
