@@ -26,6 +26,9 @@
                       <div class="form-group">
                         <input type="text" id="search-query" class="form-control" placeholder="Enter City Name">
                           </input>
+                          <select class="form-control" id="country-selection"> 
+
+                          </select>
                         <button type="button" class="btn btn-primary search">Search</button>
                         <div id='loader' style="float: right;"> </div>
                       </div>
@@ -52,14 +55,16 @@
           <div class="tile d-flex justify-content-center">
             <div> <h4>{{ condition }}</h4> </div> 
             <div> <h3>{{ temperature}}&deg </h3> </div>
-            <div> <h4>{Day}</h4></div>
+            <div> <img src="{{icon}}"> </div>
+            <div> <h4>{{ day }}</h4></div>
           </div>
         </script>
       
         <script id="current-weather-template" type="text/x-handlebars-template">
           <div class="weather-tile d-flex justify-content-center">
               <div> <h2> {{ temperature }}&deg </h2> </div> 
-              <div> <h3> {{ location }} </h3> </div> 
+              <div> <img src="{{icon}}"> </div>
+              <div> <h3> {{ location }} ({{ country }})</h3> </div> 
               <div> <h4> {{ condition }} </h4> </div>
           </div>
       </script>
