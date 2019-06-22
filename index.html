@@ -53,6 +53,21 @@
     </div>
   </script>
 
+  <script id="forecast-weather-content" type="text/x-handlebars-template">
+    <div class="container mt-5">
+      <div class="row">
+        {{#each futureForecast}}
+          <div class="col-sm-2 border">
+            <p>{{condition}}</p>
+            <h1>{{temp}}&deg;</h1>
+            <img src="http://openweathermap.org/img/w/{{icon}}.png">
+            <h4>{{day}}</h3>
+          </div>
+        {{/each}}
+      </div>
+    </div>
+  </script>
+
   <script id="future-weather-content" type="text/x-handlebars-template">
     
   </script>

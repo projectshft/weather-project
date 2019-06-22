@@ -12,7 +12,7 @@
   * [ ] handlebar templates
   *   [X] main centered current weather
   *   [ ] daily forecast - maybe use {{#each ...}}
-  *   [ ] make alert centered, not 100% width
+  *   [X] make alert centered, not 100% width
   * 
   * [X] get api key
   * [X] fetch request user input
@@ -56,15 +56,16 @@ const WeatherApp = () => {
 
     //check for city validation inside getCurrentWeather
     //if valid getCurrentWeather will call getForecast
-    _getCurrentWeather(city);
+    THEMODEL.search = city;
+    _getCurrentWeather();
 
   };
 
   //function to make fetch request - 'controller' outside of weatherApp
-  const _getCurrentWeather = city => {
+  const _getCurrentWeather = () => {
     
     //create request url
-    const url = `https://api.openweathermap.org/data/2.5/weather?q=${city},us&APPID=${THEMODEL.API_KEY}&units=imperial`;
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=${THEMODEL.search},us&APPID=${THEMODEL.API_KEY}&units=imperial`;
 
     //fetch and save
     fetch(url).then( function(response) {
@@ -87,13 +88,16 @@ const WeatherApp = () => {
       //update view
       _renderCurrentWeather();
 
+      //since we know this is valid input now, get forecast data
+      _getForecast();
+
     });
 
   };
 
-  const _getForecast = city => {
+  const _getForecast = () => {
 
-    const url =`https://api.openweathermap.org/data/2.5/forecast/daily?q=${city},us&cnt=${THEMODEL.numDaysForecasted+1}&APPID=${THEMODEL.API_KEY}&units=imperial`;
+    const url =`https://api.openweathermap.org/data/2.5/forecast/daily?q=${THEMODEL.search},us&cnt=${THEMODEL.numDaysForecasted+1}&APPID=${THEMODEL.API_KEY}&units=imperial`;
 
     //fetch and save
     fetch(url).then( function(response) {
@@ -160,3 +164,15 @@ $('.form-inline').submit(function(e) {
 // const currentWeatherTemplate = Handlebars.compile($('#current-weather-content').html());
 // const testItem = currentWeatherTemplate({ city: 'Durham', temperature: '80', condition: 'sunny' });
 // $('#current-weather').append(testItem);
+
+const forecastWeatherTemplate = Handlebars.compile($('#forecast-weather-content').html());
+const testItem = forecastWeatherTemplate({
+  futureForecast: [
+    { condition:'cloudy',temp:80,icon:'04d',day:'Mon' },
+    { condition:'cloudy',temp:80,icon:'04d',day:'Mon' },
+    { condition:'cloudy',temp:80,icon:'04d',day:'Mon' },
+    { condition:'cloudy',temp:80,icon:'04d',day:'Mon' },
+    { condition:'cloudy',temp:80,icon:'04d',day:'Mon' }
+  ]
+});
+$('#forecast').append(testItem);
