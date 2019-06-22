@@ -168,11 +168,11 @@ $('.form-inline').submit(function(e) {
 const forecastWeatherTemplate = Handlebars.compile($('#forecast-weather-content').html());
 const testItem = forecastWeatherTemplate({
   futureForecast: [
+    { condition:'cloudy',temp:80,icon:'04d',day:'Sun' },
     { condition:'cloudy',temp:80,icon:'04d',day:'Mon' },
-    { condition:'cloudy',temp:80,icon:'04d',day:'Mon' },
-    { condition:'cloudy',temp:80,icon:'04d',day:'Mon' },
-    { condition:'cloudy',temp:80,icon:'04d',day:'Mon' },
-    { condition:'cloudy',temp:80,icon:'04d',day:'Mon' }
+    { condition:'cloudy',temp:80,icon:'04d',day:'Tue' },
+    { condition:'cloudy',temp:80,icon:'04d',day:'Wed' },
+    { condition:'cloudy',temp:80,icon:'04d',day:'Thu' }
   ]
 });
 $('#forecast').append(testItem);
