@@ -23,21 +23,27 @@
   * 
   * [ ] use daily api, count of 6 for next 5 days
   *   [ ] parse into array of weather objects
+  * 
+  * [ ] make more MVC - add search query to model, controller sends new search query to model
+  * 
+  * [ ] test api error scenarios
+  * [ ] implement api data model instead of converting?
   */
 
 const WeatherApp = () => {
 
   //keep api key inaccessible
-  const API_KEY = '488ccba088277352dc6babea1f438def';
-  
-  //initialize weather - get from local storage
-  const currentWeather = {
-    city: null,
-    temperature: null,
-    condition: null,
-    icon: null,
-    alertIsOpen: false
+  //naming is to reinforce mvc thinking for now
+  const THEMODEL = {
+    currentWeather: {
+      city: null,
+      temperature: null,
+      condition: null,
+      icon: null
+    },
+    API_KEY: '488ccba088277352dc6babea1f438def'
   };
+
 
   const $currentWeather = $('#current-weather');
 
@@ -45,7 +51,7 @@ const WeatherApp = () => {
   const getCurrentWeather = city => {
     
     //create request url
-    const url = `https://api.openweathermap.org/data/2.5/weather?q=${city},us&APPID=${API_KEY}&units=imperial`;
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=${city},us&APPID=${THEMODEL.API_KEY}&units=imperial`;
 
     //fetch and save
     fetch(url).then( function(response) {
@@ -63,7 +69,7 @@ const WeatherApp = () => {
       //parse json to update model
       _updateWeather(weatherResponseObj);
 
-      console.log(currentWeather);
+      console.log(THEMODEL.currentWeather);
 
       //update view
       _renderCurrentWeather();
@@ -94,10 +100,10 @@ const WeatherApp = () => {
   //helper functions
   const _updateWeather = newWeather => {
     
-    currentWeather.city = newWeather.name;
-    currentWeather.temperature = newWeather.main.temp;
-    currentWeather.condition = newWeather.weather[0].main;
-    currentWeather.icon = newWeather.weather[0].icon;
+    THEMODEL.currentWeather.city = newWeather.name;
+    THEMODEL.currentWeather.temperature = newWeather.main.temp;
+    THEMODEL.currentWeather.condition = newWeather.weather[0].main;
+    THEMODEL.currentWeather.icon = newWeather.weather[0].icon;
 
   };
 
@@ -116,7 +122,7 @@ const WeatherApp = () => {
     $currentWeather.empty();
     
     const currentWeatherTemplate = Handlebars.compile($('#current-weather-content').html());
-    const newHTML = currentWeatherTemplate(currentWeather);
+    const newHTML = currentWeatherTemplate(THEMODEL.currentWeather);
     $('#current-weather').append(newHTML);
   };
 
