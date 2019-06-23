@@ -197,6 +197,10 @@ $('.form-inline').submit(function(e) {
   app.searchForCity(userSearchInput);
 });
 
+$('#current-weather').on('click', '.set-city-button', function(e) {
+  
+});
+
 //testing handlebars template
 // const currentWeatherTemplate = Handlebars.compile($('#current-weather-content').html());
 // const testItem = currentWeatherTemplate({ city: 'Durham', temperature: '80', condition: 'sunny' });
