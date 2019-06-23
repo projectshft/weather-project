@@ -31,7 +31,7 @@
   * [X] add appropriate console.logs
   * 
   * [ ] Default city
-  *   [ ] add 'set as default' button
+  *   [X] add 'set as default' button
   *   [ ] click handler, model updates default city
   *   [ ] 'view' - if search === default city, don't show 'set as default' button
   *   [ ] implement local storage
@@ -158,6 +158,10 @@ const WeatherApp = () => {
 
     $currentWeather.empty();
     $currentWeather.append(currentWeatherTemplate(THEMODEL.currentWeather));
+
+    if (THEMODEL.search.toUpperCase() !== THEMODEL.defaultCity) {
+      $currentWeather.append(setDefaultCityButtonTemplate(THEMODEL));
+    }
   };
 
   const _renderForecast = () => {
@@ -174,6 +178,7 @@ const WeatherApp = () => {
   const $forecast = $('#forecast');
   const alertTemplate = Handlebars.compile($('#invalid-city-input-alert').html());
   const currentWeatherTemplate = Handlebars.compile($('#current-weather-content').html());
+  const setDefaultCityButtonTemplate = Handlebars.compile($('#set-default-city').html());
   const forecastWeatherTemplate = Handlebars.compile($('#forecast-weather-content').html());
 
   return {
