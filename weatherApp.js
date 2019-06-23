@@ -19,20 +19,23 @@
   *   [X] click handler for forms
   * [X] insert data into handlebar templates
   * [X] if get returns city not found, add an error next to input forms
-  * [ ] initialize current weather from local storage || browser location
   * 
   * [X] use daily api, count of 6 for next 5 days
   *   [X] parse into array of weather objects
   * 
   * [X] make more MVC - add search query to model, controller sends new search query to model
   * 
-  * [ ] test api error scenarios
-  * [ ] implement api data model instead of converting?
-  * 
   * [X] initialize all handlebar templates so dom traversal/compile 
   *   doesn't happen on every render call
   * 
-  * [ ] add appropriate console.logs
+  * [X] add appropriate console.logs
+  * 
+  * [ ] Default city
+  *   [ ] add 'set as default' button
+  *   [ ] click handler, model updates default city
+  *   [ ] 'view' - if search === default city, don't show 'set as default' button
+  *   [ ] implement local storage
+  *   [ ] update local storage whenever default city is changed
   */
 
 const WeatherApp = () => {
@@ -40,6 +43,7 @@ const WeatherApp = () => {
   //keep api key inaccessible
   //naming is to reinforce mvc thinking for now
   const THEMODEL = {
+    defaultCity: '',
     API_KEY: '488ccba088277352dc6babea1f438def',
     search: '',
     currentWeather: {
@@ -137,13 +141,13 @@ const WeatherApp = () => {
       condition: newForecastDay.weather[0].main,
       temp: newForecastDay.temp.day,
       icon: newForecastDay.weather[0].icon,
-      day:moment.unix(newForecastDay.dt).format("dddd")
+      day: moment.unix(newForecastDay.dt).format("dddd")
     });
 
   };
 
   const _incorrectInput = () => {
-    console.log('City does not exist.');
+    console.log('City not found.');
     $('#city-search').append(alertTemplate());
   };
 
@@ -193,17 +197,17 @@ $('.form-inline').submit(function(e) {
 // const testItem = currentWeatherTemplate({ city: 'Durham', temperature: '80', condition: 'sunny' });
 // $('#current-weather').append(testItem);
 
-const forecastWeatherTemplate = Handlebars.compile($('#forecast-weather-content').html());
-const testItem = forecastWeatherTemplate({
-  futureForecast: [
-    { condition:'cloudy',temp:80,icon:'04d',day:'Sun' },
-    { condition:'cloudy',temp:80,icon:'04d',day:'Mon' },
-    { condition:'cloudy',temp:80,icon:'04d',day:'Tue' },
-    { condition:'cloudy',temp:80,icon:'04d',day:'Wed' },
-    { condition:'cloudy',temp:80,icon:'04d',day:'Thu' }
-  ]
-});
-$('#forecast').append(testItem);
+// const forecastWeatherTemplate = Handlebars.compile($('#forecast-weather-content').html());
+// const testItem = forecastWeatherTemplate({
+//   futureForecast: [
+//     { condition:'cloudy',temp:80,icon:'04d',day:'Sun' },
+//     { condition:'cloudy',temp:80,icon:'04d',day:'Mon' },
+//     { condition:'cloudy',temp:80,icon:'04d',day:'Tue' },
+//     { condition:'cloudy',temp:80,icon:'04d',day:'Wed' },
+//     { condition:'cloudy',temp:80,icon:'04d',day:'Thu' }
+//   ]
+// });
+// $('#forecast').append(testItem);
 
 //'run' a search on raleigh to skip typing
 app.searchForCity('raleigh');
