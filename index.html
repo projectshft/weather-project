@@ -45,16 +45,16 @@
       <div id = "currentDescription" class = "currentTempClass text-capitalize" > {{ weatherDescription }} </div>
     </div>
     <div class = "main-weather-icon col-md-3">
-      <div> <img id="icon-main" src ={{icon}} </div>
+      <img id = "currentWeather-img" class="icon-main" src ={{icon}}>
     </div>
   </script>
   <script id= "forecast-weather-template" type ="text/x-handlebars-template">
-    <div class = "forecast-weather" "col-md-2">
-      <div id = "currentTemp" class="currentTempClass"> {{ temperature }}&#176; </div> <br />
-      <div id = "currentLocation" class="currentTempClass"> {{ city }}, {{country}} </div> <br />
-      <div id = "currentDescription" class = "currentTempClass text-capitalize" > {{ weatherDescription }} </div>
-      <div> <img id="icon-main" src ={{icon}} </div>
-      <div> {{ day }} </div>
+    <div class = "forecast-weather col-md-2">
+      <div id = "currentTemp" class="forecastTempClass"> {{ temperature }}&#176; </div> <br />
+      <div id = "forecast" class = "forecastTempClass"> {{ city }}, {{country}} </div> <br />
+      <div id = "currentDescription" class = "forecastTempClass text-capitalize" > {{ weatherDescription }} </div>
+      <div> <img id ="forecast-img" class="icon-main"  src ={{icon}} </div>
+      <div class = "forecastTempClass"> {{ day }} </div>
     </div>
   </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.4/handlebars.js"></script>

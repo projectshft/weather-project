@@ -18,7 +18,7 @@ var fetchCurrentDay = function(query) {
       addWeather(data);
     },
     error: function (textStatus) {
-    alert(textStatus);
+    alert("ERROR, UNABLE TO RETRIEVE DATA");
   }
 });
 };
@@ -35,7 +35,7 @@ var fetchForecast = function(query) {
       addWeather2(data);
     },
     error: function (textStatus) {
-      alert(textStatus);
+      alert("ERROR, UNABLE TO RETRIEVE DATA");
     }
   })
 };
@@ -64,7 +64,7 @@ $('.todays-weather').empty();
   var source = $('#current-weather-template').html();
   var template = Handlebars.compile(source);
   var newHTML = template({
-    temperature: weatherData[0].main.temp,
+    temperature: Math.round(weatherData[0].main.temp),
     city: weatherData[0].name,
     country: weatherData[0].sys.country,
     weatherDescription: weatherData[0].weather[0].description,
@@ -79,15 +79,15 @@ var renderForecast = function () {
   //set handlebars template
   for (let i=1; i < weatherData.length; i++) {
     var imageIcon = weatherData[i].weather[0].icon;
-    var source = $('#current-weather-template').html();
+    var source = $('#forecast-weather-template').html();
     var template = Handlebars.compile(source);
     var newHTML = template({
-      temperature: weatherData[i].main.temp,
+      temperature: Math.round(weatherData[i].main.temp),
       city: weatherData[0].name,
       country: weatherData[0].sys.country,
       weatherDescription: weatherData[i].weather[0].description,
       icon: "http://openweathermap.org/img/w/" + imageIcon + ".png",
-      day: moment(weatherData[i].dt_txt).format('dddd')
+      day:  moment(weatherData[i].dt_txt).format('dddd')
     })
       $('.forecast').append(newHTML);
   }
