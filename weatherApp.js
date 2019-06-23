@@ -35,7 +35,7 @@
   *   [X] click handler, model updates default city
   *   [X] 'view' - if search === default city, don't show 'set as default' button
   *   [ ] implement local storage
-  *   [ ] update local storage whenever default city is changed
+  *   [X] update local storage whenever default city is changed
   */
 
 const WeatherApp = () => {
@@ -201,6 +201,8 @@ const WeatherApp = () => {
   //only need to save defaultCity since we want to check weather on reload anyway
   const _saveToLocalStorage = () => localStorage.setItem(STORAGE_ID, JSON.stringify(THEMODEL.defaultCity));
 
+  //don't need JSON.parse for current implementation, but leaving in case want to change what is stored
+  const _getFromLocalStorage = () => JSON.parse(localStorage.getItem(STORAGE_ID) || '');
 
   return {
     searchForCity,
