@@ -52,9 +52,6 @@ const WeatherApp = () => {
     futureForecast: []
   };
 
-
-  const $currentWeather = $('#current-weather');
-
   const searchForCity = city => {
 
     console.log(`Searching for "${city}"`);
@@ -119,6 +116,7 @@ const WeatherApp = () => {
 
       //update view
       console.log(THEMODEL.futureForecast);
+      _renderForecast();
 
     });
 
@@ -153,11 +151,18 @@ const WeatherApp = () => {
   //'view' update when new query
   const _renderCurrentWeather = () => {
     $currentWeather.empty();
-    $('#current-weather').append(currentWeatherTemplate(THEMODEL.currentWeather));
+    $currentWeather.append(currentWeatherTemplate(THEMODEL.currentWeather));
   };
 
-  //initialize Handlebar templates
+  const _renderForecast = () => {
+    $forecast.empty();
+    $forecast.append(forecastWeatherTemplate(THEMODEL));
+  };
+
+  //initialize jquery objs and Handlebar templates
   //not inside an init function so other functions have access to these consts
+  const $currentWeather = $('#current-weather');
+  const $forecast = $('#forecast');
   const alertTemplate = Handlebars.compile($('#invalid-city-input-alert').html());
   const currentWeatherTemplate = Handlebars.compile($('#current-weather-content').html());
   const forecastWeatherTemplate = Handlebars.compile($('#forecast-weather-content').html());
