@@ -77,15 +77,15 @@ $('.todays-weather').empty();
 var renderForecast = function () {
   $('.forecast').empty();
   //set handlebars template
-  for (let i=0; i < weatherData[1].list.length; i++) {
-    var imageIcon = weatherData[1].list[i].weather[0].icon;
+  for (let i=1; i < weatherData.length; i++) {
+    var imageIcon = weatherData[i].weather[0].icon;
     var source = $('#current-weather-template').html();
     var template = Handlebars.compile(source);
     var newHTML = template({
-      temperature: weatherData[1].list[i].main.temp,
-      city: weatherData[1].city.name,
-      country: weatherData[1].city.country,
-      weatherDescription: weatherData[1].list[i].weather[0].description,
+      temperature: weatherData[i].main.temp,
+      city: weatherData[0].name,
+      country: weatherData[0].sys.country,
+      weatherDescription: weatherData[i].weather[0].description,
       icon: "http://openweathermap.org/img/w/" + imageIcon + ".png"
     })
       $('.forecast').append(newHTML);
