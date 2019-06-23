@@ -34,8 +34,9 @@
   *   [X] add 'set as default' button
   *   [X] click handler, model updates default city
   *   [X] 'view' - if search === default city, don't show 'set as default' button
-  *   [ ] implement local storage
+  *   [X] implement local storage
   *   [X] update local storage whenever default city is changed
+  *   [ ] visual cue that shows if current city is default city
   */
 
 const WeatherApp = () => {
@@ -181,6 +182,7 @@ const WeatherApp = () => {
 
     if (THEMODEL.search.toUpperCase() !== THEMODEL.defaultCity) {
       $currentWeather.append(setDefaultCityButtonTemplate(THEMODEL));
+      $('#default-city-message').addClass('d-none');
     }
   };
 
