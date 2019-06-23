@@ -9,9 +9,9 @@
   * [X] get handlebars and bootstrap
   * [X] create static title and search elements
   * [X] section containers where handlebar templates will be inserted
-  * [ ] handlebar templates
+  * [X] handlebar templates
   *   [X] main centered current weather
-  *   [ ] daily forecast - maybe use {{#each ...}}
+  *   [X] daily forecast - maybe use {{#each ...}}
   *   [X] make alert centered, not 100% width
   * 
   * [X] get api key
@@ -101,21 +101,18 @@ const WeatherApp = () => {
     fetch(url).then( function(response) {
       return response.json();
     }).then( function(forecastResponseObj) {
-
-      console.log(forecastResponseObj);
       //if api cant find city, don't change model or update view
       //don't need to check here, was checked in _getCurrentWeather
 
-      //parse json to update model
-      console.log(forecastResponseObj.city);
-      console.log(forecastResponseObj.list);
+      //update model
+      console.log('Updating five day forecast with openweathermap 16 day weather forecast');
 
+      THEMODEL.futureForecast = [];
       for (let i=1; i<=THEMODEL.numDaysForecasted; i++){
-        _updateForecast(forecastResponseObj.list[i]);
+        _addForecastDay(forecastResponseObj.list[i]);
       }
 
       //update view
-      console.log(THEMODEL.futureForecast);
       _renderForecast();
 
     });
@@ -125,6 +122,8 @@ const WeatherApp = () => {
   //helper functions
   const _updateWeather = newWeather => {
     
+    console.log('Updating current weather with openweathermap current weather data');
+
     THEMODEL.currentWeather.city = newWeather.name;
     THEMODEL.currentWeather.temperature = newWeather.main.temp;
     THEMODEL.currentWeather.condition = newWeather.weather[0].main;
@@ -132,7 +131,7 @@ const WeatherApp = () => {
 
   };
 
-  const _updateForecast = newForecastDay => {
+  const _addForecastDay = newForecastDay => {
 
     THEMODEL.futureForecast.push({
       condition: newForecastDay.weather[0].main,
@@ -150,11 +149,17 @@ const WeatherApp = () => {
 
   //'view' update when new query
   const _renderCurrentWeather = () => {
+
+    console.log('Rendering current weather');
+
     $currentWeather.empty();
     $currentWeather.append(currentWeatherTemplate(THEMODEL.currentWeather));
   };
 
   const _renderForecast = () => {
+
+    console.log('Rendering five day forecast');
+
     $forecast.empty();
     $forecast.append(forecastWeatherTemplate(THEMODEL));
   };
