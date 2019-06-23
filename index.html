@@ -1,41 +1,64 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title>Weather App</title>
-    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="style.css">
-    <script src="node_modules/jquery/dist/jquery.min.js"></script>
-    <script src="node_modules/handlebars/dist/handlebars.min.js"></script>
-    <script src="node_modules/underscore/underscore-min.js"></script>
-    <script src="node_modules/backbone/backbone-min.js"></script>
-  </head>
-  <body>
-    <div class="container">
-      <div class="row search">
-        <div class="col-md-2"></div>
-          <div class="col-md-8"><h1>Current Weather</h1>
-            <div class="input-group mb-3">
-            <input type="text" class="form-control search-city" placeholder="Enter City Name" aria-label="Recipient's username" aria-describedby="button-addon2">
-            <div class="input-group-append"><button class="btn btn-outline-secondary search-button" type="button" id="button-addon2">Search</button></div>
-            </div>
-            <div class="card"
-              <div class="card-body current-weather-block">
 
-              </div>
-          </div>
-        <div class="col-md-2"></div>
+<head>
+  <meta charset="utf-8">
+  <title>Weather App</title>
+  <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="style.css">
+  <script src="node_modules/jquery/dist/jquery.min.js"></script>
+  <script src="node_modules/handlebars/dist/handlebars.min.js"></script>
+  <script src="node_modules/moment/min/moment.min.js"></script>
+</head>
+
+<body>
+  <div class="container">
+    <div class="row search">
+      <div class="col-md-3"></div>
+      <div class="col-md-6">
+        <h1>Current Weather</h1>
+        <div class="input-group mb-3">
+          <input type="text" class="form-control search-city" placeholder="Enter City Name" aria-label="City Name" aria-describedby="button-addon2">
+          <div class="input-group-append"><button class="btn btn-outline-secondary search-button" id="button-addon2">Search</button></div>
+        </div>
+        <div class="card current-weather-block" <div class="card-body"></div>
       </div>
+      <div class="col-md-3"></div>
     </div>
+  </div>
+
+  <div class="container extended">
+    <div class="row forecast"></div>
+  </div>
+
+  </div>
+  <script id="error-message-template" type="text/x-handlebars-template">
+    <div class="card-body">
+    <h4 id="empty-error">{{error}}<h4>
+  </div>
+  </script>
+
+  <script id="extended-weather-template" type="text/x-handlebars-template">
+    <div class="card col-md-2 extended-display">
+      <div class="card-body">
+        <h5 class="conditions">{{conditions}}</h5>
+        <h3 class="temp">{{temperature}}°F</h3>
+        <img src="http://openweathermap.org/img/w/{{icon}}.png">
+        <h5 class="day">{{day}}</h5>
+      </div>
+      </div>
+
+  </script>
   <script id="current-weather-template" type="text/x-handlebars-template">
     <div class="current">
     <h3 class="temp">{{attributes.currentTemp}}°F</h3>
     <h5 class="display-5">{{attributes.city}}</h5>
     <p class="cond">{{attributes.currentConditions}}</p>
-    <img src="http://openweathermap.org/img/w/{{attributes.iconURL}}.png">
+    <img id="current-img" src="http://openweathermap.org/img/w/{{attributes.iconURL}}.png">
     </div>
   </script>
 
-    <script type="text/javascript" src="main.js"></script>
-  </body>
+  <script type="text/javascript" src="main.js"></script>
+</body>
+
 </html>

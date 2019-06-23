@@ -3,3 +3,26 @@ h1{
   margin-top: 50px;
   margin-bottom: 25px;
 }
+
+.border{
+  margin-top: 10px;
+}
+
+.extended-display{
+  margin-top: 20px;
+  flex: none;
+  max-width: 20%
+}
+
+#current-img{
+  position:absolute;
+  width: 100px;
+  height: 100px;
+  right: 25px;
+  top: 15px;
+}
+
+#empty-error{
+  color: red;
+  text-align: center;
+}
