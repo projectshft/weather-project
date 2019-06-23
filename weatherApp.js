@@ -71,6 +71,12 @@ const WeatherApp = () => {
 
     const newDefaultCity = THEMODEL.search.toUpperCase();
 
+    //because of how set default button is implemented, don't need to check below
+    // if (newDefaultCity === THEMODEL.defaultCity) {
+    //   console.log(`${newDefaultCity} is already default city.`);
+    //   return;
+    // }
+
     console.log(`Setting ${newDefaultCity} to default city`);
 
     THEMODEL.defaultCity = newDefaultCity;
@@ -199,10 +205,15 @@ const WeatherApp = () => {
   const STORAGE_ID = 'weather-app';
 
   //only need to save defaultCity since we want to check weather on reload anyway
-  const _saveToLocalStorage = () => localStorage.setItem(STORAGE_ID, JSON.stringify(THEMODEL.defaultCity));
+  const _saveToLocalStorage = () => localStorage.setItem(STORAGE_ID, THEMODEL.defaultCity);
 
-  //don't need JSON.parse for current implementation, but leaving in case want to change what is stored
-  const _getFromLocalStorage = () => JSON.parse(localStorage.getItem(STORAGE_ID) || '');
+  const _getFromLocalStorage = () => localStorage.getItem(STORAGE_ID) || '';
+
+  //see if there is local storage
+  THEMODEL.defaultCity = _getFromLocalStorage();
+
+  if (THEMODEL.defaultCity !== '')
+    searchForCity(THEMODEL.defaultCity);
 
   return {
     searchForCity,
@@ -243,4 +254,4 @@ $('#current-weather').on('click', '.set-city-button', function(e) {
 // $('#forecast').append(testItem);
 
 //'run' a search on raleigh to skip typing
-app.searchForCity('raleigh');
+//app.searchForCity('raleigh');
