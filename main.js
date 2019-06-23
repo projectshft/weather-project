@@ -16,11 +16,6 @@ var WeatherApp = function () {
     renderCurrentWeather();
   });
 
-  //var forecastWeatherModel = Model(); 
-  //forecastWeatherModel.change(function () {
-  //  renderWeatherForecast();
-  //});
-
   var forecastWeatherCollection = Collection(); 
   forecastWeatherCollection.change(function () {
     renderWeatherForecast(); 
@@ -46,7 +41,7 @@ var WeatherApp = function () {
   
   var setCurrentWeather = function (data) {
     var location = data.name || null;
-    var temperature = data.main.temp ||  null;
+    var temperature = Math.round(data.main.temp) ||  null;
     var condition = data.weather[0].main || null;
     var icon = data.weather[0].icon || null; 
     var country = data.sys.country || null; 
@@ -58,94 +53,80 @@ var WeatherApp = function () {
     currentWeatherModel.set('country', country); 
   };
 
-  //TODO: clean up the following function. 
-  var createFiveDayObjectsArray = function(data) {
-    var weatherForecastModels = [];
-  
-    // Transform items in forecast list to objects with day/temp only.
-    var dayTempPairs = data.list.map(function(item) {
-      var itemDayName = moment(item.dt_txt).format('dddd');
-      var itemTemp = item.main.temp;
-      //var itemCondition = item.weather.main;
-      //var itemIcon = item.weather.icon;
-      return {
-        day: itemDayName,
-        temp: itemTemp
-      };
-    });
-    // Get an object with five days as keys and temperature arrays as values.
-    var nextFiveDaysObj = dayTempPairs.reduce(function(acc, item) {
-      var hasKey = acc[item.day];
-      if (!hasKey) {
-        acc[item.day] = [item.temp]
-      } else {
-        acc[item.day].push(item.temp);
-      }
-      return acc;
-    }, {});
-    // Create an array of objects with days as keys and max temps as values.
-    var dayTempArray = [];
-    for (var key in nextFiveDaysObj) {
-      var maxTemp = nextFiveDaysObj[key].reduce(function(a, b) {
-        return Math.max(a, b);
-      });
-      var newObj = {};
-      newObj[key] = maxTemp;
-      dayTempArray.push(newObj);
-    };
-    //return dayTempArray;
-  
-    //find index of key/value (as day value/temp value) in dayTempPairs
-    var dayIndices = [];
-    dayTempPairs.forEach(function(element, index) {
-      var myIndex = index;
-      var day = element.day;
-      var temp = element.temp;
-      dayTempArray.forEach(function(item) {
-          if (item[day] === temp) {
-            dayIndices.push(myIndex);
-          }
-      });
-    });
-  
-  for (i = 0; i < dayIndices.length; i++) {
-    var ind = dayIndices[i];
-    var day = moment(data.list[ind].dt_txt).format('dddd') || null;
-    var temperature = data.list[ind].main.temp ||  null;
-    var condition = data.list[ind].weather[0].main || null;
-    var icon = data.list[ind].weather[0].icon || null;
-    var forecastModel = {
-      day: day,
+ var createFiveDayObjectsArray = function(data) {
+
+  // Transform items in forecast list to objects with day/temp/condition/icon/hour.
+  var mappedDataArray = data.list.map(function(item) {
+    var newTime = moment(item.dt_txt).add(data.city.timezone, 'seconds');
+    var dayName = moment(newTime._d.toString()).format('dddd');
+    var temperature = item.main.temp;
+    var condition = item.weather[0].main;
+    var icon = item.weather[0].icon;
+    var hour = moment(newTime._d.toString()).format('HH');
+    return {
+      day: dayName,
       temperature: temperature,
       condition: condition,
-      icon: 'https://openweathermap.org/img/w/' + icon + '.png'
+      icon: 'https://openweathermap.org/img/w/' + icon + '.png',
+      hour: hour
     };
-    weatherForecastModels.push(forecastModel);
-  };
-    return weatherForecastModels;
-  };
+  });
+
+  // Create new array with one object for each day (by max temp) with count for day.
+  var reducedDataArray = mappedDataArray.reduce(function(acc, item) {
+    var accLength = acc.length;
+    var lastAccElem = acc[accLength - 1] || {};
+    if (lastAccElem.day === item.day) {
+      var itemCount = acc[accLength - 1].count;
+      if (lastAccElem.temperature < item.temperature) {
+        acc.pop();
+        var newItem = Object.assign({
+          count: itemCount + 1
+        }, item);
+        acc.push(newItem);
+        acc[accLength - 1].temperature = Math.round(acc[accLength - 1].temperature);
+      } else {
+        acc[accLength - 1].count = itemCount + 1;
+      }
+    } else {
+      var newItem = Object.assign({
+        count: 1
+      }, item);
+      acc.push(newItem);
+    }
+    return acc;
+  }, []);
+
+  // Check if five or six days are included.
+  // If six, decide between first/last: include forecast of day with most data points;
+  // i.e., it makes more sense to include forecast of "current day" if it's early,
+  // rather than last day in range (if data is limited, it won't be representative).
+  var fiveForecastDays = [];
+  if (reducedDataArray.length === 5) {
+    fiveForecastDays = reducedDataArray;
+  } else if (reducedDataArray[0].count >= reducedDataArray[reducedDataArray.length - 1].count) {
+    for (var i = 0; i < 5; i++) {
+      fiveForecastDays.push(reducedDataArray[i]);
+    }
+  } else {
+    for (var i = 0; i < 5; i++) {
+      fiveForecastDays.push(reducedDataArray[i + 1]);
+    }
+  }
+  return fiveForecastDays;
+};
 
   var setWeatherForecast = function (data) {
     var len = forecastWeatherCollection.models.length;
     for (var i = 0; i < len; i++) {
       forecastWeatherCollection.remove(len-1-i);
     }
-    // create function to use list index to find five-day forecast 
     var fiveDaysArray = createFiveDayObjectsArray(data); 
-
-    //var temperature = data.list[0].main.temp ||  null;
-    //var condition = data.list[0].weather[0].main || null;
-    //var icon = data.list[0].weather[0].icon || null; 
-    //var day = "day";
 
     for (var i = 0; i < fiveDaysArray.length; i++) {
       var dayModel = Model(fiveDaysArray[i]); 
       forecastWeatherCollection.add(dayModel); 
     }
-    //forecastWeatherModel.set('day', day); 
-    //forecastWeatherModel.set('temperature', temperature); 
-    //forecastWeatherModel.set('condition', condition); 
-    //forecastWeatherModel.set('icon', 'https://openweathermap.org/img/w/' + icon + '.png'); 
   };
 
   var fetchCurrentWeather = function (query) {
@@ -164,6 +145,7 @@ var WeatherApp = function () {
         error: function(jqXHR, textStatus, errorThrown) {
           $loading.hide();
           $current_weather.html("Sorry, no locations match your search.");
+          $('.day-weather').html(''); 
           console.log(textStatus);
         }
       });
@@ -199,29 +181,17 @@ var WeatherApp = function () {
 
 }; 
 
-/*
-var weatherObjectTest = {
-    location: 'Durham, NC',
-    temperature: 88,
-    condition: 'Cloudy'
-};
-console.log(JSON.stringify(data));
-*/
-
 var app = WeatherApp();
 
 $('.search').on('click', function () { 
     var cityValue = $('#search-query').val() || null; 
-    //console.log(cityValue);
     if (!cityValue) { 
       $('#current-weather').html("<div>Enter a city name.</div>"); 
       $('.day-weather').html(''); 
     } 
     else { 
     var countryValue = $country_selection.val();
-    //console.log(countryValue);
     var search = (!countryValue)? cityValue : cityValue + ',' + countryValue;
-    //console.log(search);
     app.fetchCurrentWeather(search); 
     app.fetchWeatherForecast(search); 
   }
