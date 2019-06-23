@@ -74,7 +74,10 @@ const WeatherApp = () => {
     console.log(`Setting ${newDefaultCity} to default city`);
 
     THEMODEL.defaultCity = newDefaultCity;
-    $currentWeather.children('div.set-city-button').remove()
+    $currentWeather.children('div.set-city-button').remove();
+
+    //add to local storage on change
+    _saveToLocalStorage();
 
   };
 
@@ -191,6 +194,13 @@ const WeatherApp = () => {
   const currentWeatherTemplate = Handlebars.compile($('#current-weather-content').html());
   const setDefaultCityButtonTemplate = Handlebars.compile($('#set-default-city').html());
   const forecastWeatherTemplate = Handlebars.compile($('#forecast-weather-content').html());
+
+  //initialize through local storage
+  const STORAGE_ID = 'weather-app';
+
+  //only need to save defaultCity since we want to check weather on reload anyway
+  const _saveToLocalStorage = () => localStorage.setItem(STORAGE_ID, JSON.stringify(THEMODEL.defaultCity));
+
 
   return {
     searchForCity,
