@@ -32,8 +32,8 @@
   * 
   * [ ] Default city
   *   [X] add 'set as default' button
-  *   [ ] click handler, model updates default city
-  *   [ ] 'view' - if search === default city, don't show 'set as default' button
+  *   [X] click handler, model updates default city
+  *   [X] 'view' - if search === default city, don't show 'set as default' button
   *   [ ] implement local storage
   *   [ ] update local storage whenever default city is changed
   */
@@ -64,6 +64,17 @@ const WeatherApp = () => {
     //if valid getCurrentWeather will call getForecast
     THEMODEL.search = city;
     _getCurrentWeather();
+
+  };
+
+  const setCurrentCityToDefault = () => {
+
+    const newDefaultCity = THEMODEL.search.toUpperCase();
+
+    console.log(`Setting ${newDefaultCity} to default city`);
+
+    THEMODEL.defaultCity = newDefaultCity;
+    $currentWeather.children('div.set-city-button').remove()
 
   };
 
@@ -182,7 +193,8 @@ const WeatherApp = () => {
   const forecastWeatherTemplate = Handlebars.compile($('#forecast-weather-content').html());
 
   return {
-    searchForCity
+    searchForCity,
+    setCurrentCityToDefault
   };
 
 };
@@ -198,10 +210,10 @@ $('.form-inline').submit(function(e) {
 });
 
 $('#current-weather').on('click', '.set-city-button', function(e) {
-  
+  app.setCurrentCityToDefault();
 });
 
-//testing handlebars template
+//testing handlebars templates with hardcoded values
 // const currentWeatherTemplate = Handlebars.compile($('#current-weather-content').html());
 // const testItem = currentWeatherTemplate({ city: 'Durham', temperature: '80', condition: 'sunny' });
 // $('#current-weather').append(testItem);
