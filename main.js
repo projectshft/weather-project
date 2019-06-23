@@ -1,3 +1,8 @@
+//way to get date
+// var mydate = "2019-06-22 00:00:00";
+// var weekDayName =  moment(mydate).format('d');
+// console.log(weekDayName);
+
 //model to store data weather that is retrieved from API
 var weatherData = [];
 
@@ -44,7 +49,11 @@ var addWeather = function(data) {
 };
 //take the 5 day forecast data returned form the api and then push it to our model array
 var addWeather2 = function (data) {
-  weatherData.push(data);
+  for (let i =0; i < data.list.length; i++) {
+    if (data.list[i].dt_txt.includes("12:00:00")) {
+      weatherData.push(data.list[i]);
+    }
+  }
   renderForecast();
 }
 //using handlebars render the temperature location and weather description to the view for the curent day
@@ -67,7 +76,7 @@ $('.todays-weather').empty();
 // using handlebars to render the temperature loacton and weither dsicpriton to the view for a forecast
 var renderForecast = function () {
   $('.forecast').empty();
-  //set handlebars template 
+  //set handlebars template
   for (let i=0; i < weatherData[1].list.length; i++) {
     var imageIcon = weatherData[1].list[i].weather[0].icon;
     var source = $('#current-weather-template').html();
