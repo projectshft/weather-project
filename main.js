@@ -1,6 +1,5 @@
-// TODO: main app with ajax request for getting Weather
 var WeatherApp = function() {
-  // Hard coded information for testing functionality of search button
+  //Variables for handlebars templates and jquery html containers
   var $todaysWeather = $('#todays-weather');
   var currentSource = $('#main-weather-template').html();
   var currentTemplate = Handlebars.compile(currentSource);
@@ -20,18 +19,20 @@ var WeatherApp = function() {
 
   var fiveDayForecast = [];
 
+  //Renders the large section below the search bar for the current
+  //weather
   var renderCurrentWeather = function() {
     $todaysWeather.empty();
     var newHTML = currentTemplate(weather);
     $todaysWeather.append(newHTML);
   }
 
-  //TODO: Create a function to render the five day forecast
-  //Possibly combine the render functions so it is all in one placeholder
-  //because it is all using the same data
+  //Renders the five day forecast in a div using bootstrap panels
   var renderFiveDayForecast = function() {
     $forecast.empty();
     $forecast.append('<div class="col-md-3"></div>');
+    //a loop for the forecast which should be an array of five forecast
+    //objects
     for (i = 0; i < fiveDayForecast.length; i++) {
       var newHTML = forecastTemplate(fiveDayForecast[i]);
       $forecast.append(newHTML);
@@ -40,8 +41,6 @@ var WeatherApp = function() {
 
   //Function to set the weather object to the data being queried by the
   //user with the JSON object returned by the OpenWeather api
-  //TODO: call the render for the five day forecast with its own separate
-  //function
   var addWeather = function(data) {
     weather = {
       tempurature: Math.round(data.main.temp),
@@ -55,6 +54,9 @@ var WeatherApp = function() {
 
   var addForecast = function(data) {
     fiveDayForecast = [];
+    //The weather data comes in 3 hour increments so for the five day forecast
+    //I decided to only take the weather at noon,  this is a filter function to
+    //Only collect the data from the list at 12:00
     var weatherData = data.list.filter(function(item) {
       return item.dt_txt.includes('12:00:00');
     })
@@ -62,7 +64,8 @@ var WeatherApp = function() {
       var day = {
         tempurature: Math.round(weatherData[i].main.temp),
         precipitation: _upperCaseEachWord(weatherData[i].weather[0].description),
-        imgURL: 'https://openweathermap.org/img/w/' + weatherData[i].weather[0].icon + '.png',
+        imgURL: 'https://openweathermap.org/img/w/' + weatherData[i].weather[0].icon + '.png',4
+        //Using moment.js to get the days
         day: moment().add(i+1, 'days').format('dddd')
       }
       fiveDayForecast.push(day);
@@ -97,6 +100,8 @@ var WeatherApp = function() {
     })
   }
 
+  //Separate AJAX function to get the five day forecast querying the forecast
+  //endpoint
   var fetchForecast = function(query) {
     $.ajax({
       method: "GET",
@@ -112,15 +117,11 @@ var WeatherApp = function() {
     });
   };
 
+  //Removed all the unneccesary returns to keep functions not needed by the user
+  //contained within the weatherapp function
   return {
-    fiveDayForecast: fiveDayForecast,
-    weather: weather,
-    renderCurrentWeather: renderCurrentWeather,
     fetchCurrent: fetchCurrent,
-    addWeather: addWeather,
     fetchForecast: fetchForecast,
-    addForecast: addForecast,
-    renderFiveDayForecast: renderFiveDayForecast
   }
 }
 
