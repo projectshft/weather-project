@@ -1,7 +1,7 @@
 //way to get date
-// var mydate = "2019-06-22 00:00:00";
-// var weekDayName =  moment(mydate).format('d');
-// console.log(weekDayName);
+var mydate = "2019-06-24 12:00:00";
+var weekDayName =  moment(mydate).format('dddd');
+console.log(weekDayName);
 
 //model to store data weather that is retrieved from API
 var weatherData = [];
@@ -47,10 +47,10 @@ var addWeather = function(data) {
 //after data is pushed call a function that renders it
   renderCurrentDay();
 };
-//take the 5 day forecast data returned form the api and then push it to our model array
+//take the 5 day forecast data returned form the api get the 3pm weather times for each day and then push it to our model array
 var addWeather2 = function (data) {
   for (let i =0; i < data.list.length; i++) {
-    if (data.list[i].dt_txt.includes("12:00:00")) {
+    if (data.list[i].dt_txt.includes("15:00:00")) {
       weatherData.push(data.list[i]);
     }
   }
@@ -86,7 +86,8 @@ var renderForecast = function () {
       city: weatherData[0].name,
       country: weatherData[0].sys.country,
       weatherDescription: weatherData[i].weather[0].description,
-      icon: "http://openweathermap.org/img/w/" + imageIcon + ".png"
+      icon: "http://openweathermap.org/img/w/" + imageIcon + ".png",
+      day: moment(weatherData[i].dt_txt).format('dddd')
     })
       $('.forecast').append(newHTML);
   }

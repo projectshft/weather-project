@@ -10,6 +10,7 @@
   <link href="https://fonts.googleapis.com/css?family=Arvo&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Poppins&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Oxygen&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
 </head>
 
 <body>
@@ -53,30 +54,7 @@
       <div id = "currentLocation" class="currentTempClass"> {{ city }}, {{country}} </div> <br />
       <div id = "currentDescription" class = "currentTempClass text-capitalize" > {{ weatherDescription }} </div>
       <div> <img id="icon-main" src ={{icon}} </div>
-    </div>
-    <div class = "forecast-weather" "col-md-2">
-      <div id = "currentTemp" class="currentTempClass"> {{ temperature }}&#176; </div> <br />
-      <div id = "currentLocation" class="currentTempClass"> {{ city }}, {{country}} </div> <br />
-      <div id = "currentDescription" class = "currentTempClass text-capitalize" > {{ weatherDescription }} </div>
-      <div> <img id="icon-main" src ={{icon}} </div>
-    </div>
-    <div class = "forecast-weather" "col-md-2">
-      <div id = "currentTemp" class="currentTempClass"> {{ temperature }}&#176; </div> <br />
-      <div id = "currentLocation" class="currentTempClass"> {{ city }}, {{country}} </div> <br />
-      <div id = "currentDescription" class = "currentTempClass text-capitalize" > {{ weatherDescription }} </div>
-      <div> <img id="icon-main" src ={{icon}} </div>
-    </div>
-    <div class = "forecast-weather" "col-md-2">
-      <div id = "currentTemp" class="currentTempClass"> {{ temperature }}&#176; </div> <br />
-      <div id = "currentLocation" class="currentTempClass"> {{ city }}, {{country}} </div> <br />
-      <div id = "currentDescription" class = "currentTempClass text-capitalize" > {{ weatherDescription }} </div>
-      <div> <img id="icon-main" src ={{icon}} </div>
-    </div>
-    <div class = "forecast-weather" "col-md-2">
-      <div id = "currentTemp" class="currentTempClass"> {{ temperature }}&#176; </div> <br />
-      <div id = "currentLocation" class="currentTempClass"> {{ city }}, {{country}} </div> <br />
-      <div id = "currentDescription" class = "currentTempClass text-capitalize" > {{ weatherDescription }} </div>
-      <div> <img id="icon-main" src ={{icon}} </div>
+      <div> {{ day }} </div>
     </div>
   </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.4/handlebars.js"></script>
