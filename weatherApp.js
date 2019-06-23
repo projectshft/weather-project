@@ -21,13 +21,18 @@
   * [X] if get returns city not found, add an error next to input forms
   * [ ] initialize current weather from local storage || browser location
   * 
-  * [ ] use daily api, count of 6 for next 5 days
-  *   [ ] parse into array of weather objects
+  * [X] use daily api, count of 6 for next 5 days
+  *   [X] parse into array of weather objects
   * 
-  * [ ] make more MVC - add search query to model, controller sends new search query to model
+  * [X] make more MVC - add search query to model, controller sends new search query to model
   * 
   * [ ] test api error scenarios
   * [ ] implement api data model instead of converting?
+  * 
+  * [X] initialize all handlebar templates so dom traversal/compile 
+  *   doesn't happen on every render call
+  * 
+  * [ ] add appropriate console.logs
   */
 
 const WeatherApp = () => {
@@ -71,8 +76,6 @@ const WeatherApp = () => {
     fetch(url).then( function(response) {
       return response.json();
     }).then( function(weatherResponseObj) {
-      
-      console.log(weatherResponseObj);
 
       //if api cant find city, don't change model or update view
       if (weatherResponseObj.cod === '404') {
@@ -82,8 +85,6 @@ const WeatherApp = () => {
       
       //parse json to update model
       _updateWeather(weatherResponseObj);
-
-      console.log(THEMODEL.currentWeather);
 
       //update view
       _renderCurrentWeather();
@@ -106,10 +107,18 @@ const WeatherApp = () => {
 
       console.log(forecastResponseObj);
       //if api cant find city, don't change model or update view
+      //don't need to check here, was checked in _getCurrentWeather
 
       //parse json to update model
+      console.log(forecastResponseObj.city);
+      console.log(forecastResponseObj.list);
+
+      for (let i=1; i<=THEMODEL.numDaysForecasted; i++){
+        _updateForecast(forecastResponseObj.list[i]);
+      }
 
       //update view
+      console.log(THEMODEL.futureForecast);
 
     });
 
@@ -125,24 +134,33 @@ const WeatherApp = () => {
 
   };
 
+  const _updateForecast = newForecastDay => {
+
+    THEMODEL.futureForecast.push({
+      condition: newForecastDay.weather[0].main,
+      temp: newForecastDay.temp.day,
+      icon: newForecastDay.weather[0].icon,
+      day:moment.unix(newForecastDay.dt).format("dddd")
+    });
+
+  };
+
   const _incorrectInput = () => {
-
     console.log('City does not exist.');
-
-    const alertTemplate = Handlebars.compile($('#invalid-city-input-alert').html());
-    const newHTML = alertTemplate();
-    $('#city-search').append(newHTML);
-
+    $('#city-search').append(alertTemplate());
   };
 
   //'view' update when new query
   const _renderCurrentWeather = () => {
     $currentWeather.empty();
-    
-    const currentWeatherTemplate = Handlebars.compile($('#current-weather-content').html());
-    const newHTML = currentWeatherTemplate(THEMODEL.currentWeather);
-    $('#current-weather').append(newHTML);
+    $('#current-weather').append(currentWeatherTemplate(THEMODEL.currentWeather));
   };
+
+  //initialize Handlebar templates
+  //not inside an init function so other functions have access to these consts
+  const alertTemplate = Handlebars.compile($('#invalid-city-input-alert').html());
+  const currentWeatherTemplate = Handlebars.compile($('#current-weather-content').html());
+  const forecastWeatherTemplate = Handlebars.compile($('#forecast-weather-content').html());
 
   return {
     searchForCity
@@ -176,3 +194,6 @@ const testItem = forecastWeatherTemplate({
   ]
 });
 $('#forecast').append(testItem);
+
+//'run' a search on raleigh to skip typing
+app.searchForCity('raleigh');
