@@ -22,7 +22,7 @@ if (navigator.geolocation) {
     long = position.coords.longitude;
     lat = position.coords.latitude;
     // use the current location to send request to API for weather based on current location
-    const location = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&units=imperial&id=524901&APPID=1d6f5ea050c2a30c3485c7944ca499e0`
+    const location = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&units=imperial&APPID=1d6f5ea050c2a30c3485c7944ca499e0`
 
     fetch(location)
       .then(response => {
