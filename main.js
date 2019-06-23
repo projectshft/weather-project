@@ -46,6 +46,24 @@
 // });
 
 
+var fetch = function (zip) {
+  $.ajax({
+    method: "GET",
+    url: "https://samples.openweathermap.org/data/2.5/weather?q=London,uk&appid=b6907d289e10d714a6e88b30761fae22",
+    dataType: "json",
+    success: function(data) {
+      console.log(data);
+      renderWeather(data);
+    },
+    error: function(textStatus) {
+      console.log(textStatus);
+    }
+  });
+};
+
+
+
+//Hardcoded currentWeather Json information 
 var currentWeather = {
   "coord": {"lon": -122.08,"lat": 37.39},
   "weather": [
@@ -87,10 +105,11 @@ var currentWeather = {
   "cod": 200
 }
 
-console.log(currentWeather.name);
-console.log(currentWeather.main.temp);
-console.log(currentWeather.weather[0].main);
-
+// console.log(currentWeather.name);
+// console.log(currentWeather.main.temp);
+// console.log(currentWeather.weather[0].main);
+// console.log(currentWeather.weather[0].icon);
+// //Testing render function. Set up handlebars template in HTML.
 var renderWeather = function () {
   $(".weather").empty();
   var source = $('#weather-template-current').html();
@@ -99,6 +118,14 @@ var renderWeather = function () {
   $('.weather').append(newHTML);
 };
 
-console.log(currentWeather)
-renderWeather()
+// console.log(currentWeather)
+//Invoking render to test hardcoded data. 
+
+
+//Setting up click event to run seacrch function. Getting search info from field on screen.
+$('.search').on('click', function () {
+  var search = $('#search-query').val();
+
+  fetch(search);
+});
 

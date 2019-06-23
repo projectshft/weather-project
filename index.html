@@ -35,10 +35,9 @@
     <script id="weather-template-current" type="text/x-handlebars-template">
       <div class="currentWeather col-md-6">
           <div>{{name}}</div>
-          <div>{{weather.[0].main}}</div>
+          <div>{{weather.[0].description}}</div>
           <div>{{main.temp}}</div>
-          <div>http://openweathermap.org/img/w/{{weather.[0].icon}}.png</div>
-          <
+          <img src="http://openweathermap.org/img/w/{{weather.[0].icon}}.png"height="142" width="142">
       </div>
     </script>
 
