@@ -64,7 +64,7 @@ var WeatherApp = function() {
       var day = {
         tempurature: Math.round(weatherData[i].main.temp),
         precipitation: _upperCaseEachWord(weatherData[i].weather[0].description),
-        imgURL: 'https://openweathermap.org/img/w/' + weatherData[i].weather[0].icon + '.png',4
+        imgURL: 'https://openweathermap.org/img/w/' + weatherData[i].weather[0].icon + '.png',
         //Using moment.js to get the days
         day: moment().add(i+1, 'days').format('dddd')
       }
