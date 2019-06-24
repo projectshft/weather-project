@@ -39,7 +39,7 @@
 
 html, body {
   height: 100%;
-  background: #f1f1f1;
+  background: #e1e1e1;  
   color: #333;
   font: 12px/1 'Open Sans', sans-serif;
 }
@@ -49,7 +49,7 @@ html, body {
 [class*="col-"] {
   margin-bottom: 20px;
   min-height: 30px;
-  background: #fff;
+  background: #f1f1f1;
   box-shadow: 0 3px 2px rgba(0, 0, 0, 0.1);
   text-align: center;
   padding: 20px;
@@ -61,7 +61,6 @@ html, body {
 @media all and (min-width: 500px) {
   .wrapper {
     padding: 0 20px;
-	 background-color: #e1e1e1;
 	 padding-top: 20px;
 	 border-radius: 5px;
   }

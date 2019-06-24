@@ -107,7 +107,7 @@ const View = (model, template) => {
   };
 };
 
-var countryList = `<option value="" selected disabled hidden>Select Country</option>
+var countryList = `<option value="" selected>Select Country (optional)</option>
     <option value="AF">Afghanistan</option>
 	<option value="AX">Åland Islands</option>
 	<option value="AL">Albania</option>
