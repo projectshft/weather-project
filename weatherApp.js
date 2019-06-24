@@ -131,6 +131,7 @@ const WeatherApp = () => {
           _renderCurrentWeather();
 
           //since we know this is valid input now, get forecast data
+          //current implementation will search for THEMODEL.search, not browser coords
           //_getForecast();
 
         });
@@ -171,15 +172,15 @@ const WeatherApp = () => {
       _renderCurrentWeather();
 
       //since we know this is valid input now, get forecast data
-      _getForecast();
+      const forecastURL =`https://api.openweathermap.org/data/2.5/forecast/daily?q=${THEMODEL.search},us&cnt=${THEMODEL.numDaysForecasted+1}&APPID=${THEMODEL.API_KEY}&units=imperial`;
+
+      _getForecast(forecastURL);
 
     });
 
   };
 
-  const _getForecast = () => {
-
-    const url =`https://api.openweathermap.org/data/2.5/forecast/daily?q=${THEMODEL.search},us&cnt=${THEMODEL.numDaysForecasted+1}&APPID=${THEMODEL.API_KEY}&units=imperial`;
+  const _getForecast = url => {
 
     //fetch and save
     fetch(url).then( function(response) {
