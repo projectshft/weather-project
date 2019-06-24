@@ -94,6 +94,30 @@ const WeatherApp = () => {
 
   };
 
+  const searchCurrentLocation = () => {
+
+    //check if geolocation is available
+    if ('geolocation' in navigator) {
+
+      console.log('Getting browser\'s location');
+      //get location
+      navigator.geolocation.getCurrentPosition( position => {
+
+        console.log(`Latitude: ${position.coords.latitude}`);
+        console.log(`Longitude: ${position.coords.longitude}`);
+
+      });
+
+      //call api
+    }
+
+    else {
+      console.log('Geolocation information not available.');
+      //add notification/alert in view
+    }
+
+  };
+
   //function to make fetch request - 'controller' outside of weatherApp
   const _getCurrentWeather = () => {
     
