@@ -4,9 +4,14 @@
   margin: 0px;
 }
 
+.grey-border {
+  border: 1px solid lightgrey;
+}
+
 .current-weather {
   padding: 0% 25%;
-  border: 1px solid lightgrey;
+  margin-bottom: 50px;
+  
 }
 
 .current-weather img {
@@ -18,5 +23,27 @@
   display: block;
   margin-left: auto;
   margin-right: auto;
+}
+
+.forecast-weather {
+ padding-left: 3.5%;
   
+
+}
+
+.card {
+  min-width: 150px;
+  min-height: 280px; 
+  margin: 0px 5px;
+  align-content: center;
+  text-align: center;
+}
+
+.centered {
+  text-align: center;
+  align-content: center;
+}
+
+.hidden {
+  display: none;
 }

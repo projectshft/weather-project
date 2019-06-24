@@ -2,48 +2,53 @@
 <html>
 <head>
   <meta charset="utf-8" />
-  
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
     crossorigin="anonymous">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
   <link rel="stylesheet" type="text/css" href="style.css">
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.1.2/handlebars.min.js"></script>
-  
+
   <title>Sean's Sweet Weather App</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  
-  
 </head>
+
 <body>
 
   <div class='container-fluid'>
-  <div class='row'>
-    <div class="col"></div>
-  <div class='col-sm-8'>
     <div class='row'>
-      <div class="col-sm-12 weather">
-        <div class="jumbotron"><h1>Current Weather</h1></div>
-        <div class="input-group mb-3">
-          <input type="text" class="form-control" placeholder="Durham, NC" aria-label="Enter City Name"
-            aria-describedby="search-button">
-          <div class="input-group-append">
-            <button class="btn btn-primary" type="button" id="search-button">Get Weather!</button>
+      <div class="col"></div>
+      <div class='col-sm-8'>
+        <div class='row'>
+          <div class="col-sm-12 main">
+            <div class="jumbotron">
+              <h1>Current Weather</h1>
+            </div>
+            <div class="input-group mb-3">
+              <input type="text" class="form-control" placeholder="Enter City Name" aria-label="Enter City Name"
+                aria-describedby="search-button" required>
+              <div class="input-group-append">
+                <button class="btn btn-primary" type="button" id="search-button">Get Weather!</button>
+              </div>
+            </div>
+            <div class="current-weather grey-border">
+              <h4>No Weather here... yet! Enter a city in the search box for a forecast.</h4>
+              <i class="fas fa-spinner fa-pulse hidden"></i>
+            </div>
+
+            <div><h5 class="centered">Five day forecast:</h5></div>
+            <div class="forecast-weather row">
+              
+            </div>
+
           </div>
+
         </div>
-
       </div>
-
+      <div class="col"></div>
     </div>
-  </div>
-  <div class="col"></div>
-  </div>
   </div>
 
   <script id="current-weather" type="text/x-handlebars-template">
-      <div class='row current-weather'>
+      <div class='row'>
         
         <div class='col-md-6'>
           <h1>{{temp}}°F</h1>
@@ -53,10 +58,28 @@
         <div class='col-md-6'>
           <img src={{icon}}>
         </div>
-        
-      </div>    
+      </div>
+      <i class="fas fa-spinner fa-pulse hidden"></i>
   </script>
-  
+
+  <script id="forecast-weather" type="text/x-handlebars-template">
+      <div class='card grey-border'>
+        <div class='card-body'>
+          <h6>{{description}}</h6>
+          <h4>{{temp}}°F</h4>
+          <img class="card-img" src={{icon}}>
+          <h6>{{weekday}}</h6>
+        </div>
+      </div>
+    </div>
+  </script>
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.1.2/handlebars.min.js"></script>
+  <script src="citylist.js"></script>
   <script src="main.js"></script>
 </body>
+
 </html>
