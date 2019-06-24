@@ -1,7 +1,3 @@
-//way to get date
-var mydate = "2019-06-24 12:00:00";
-var weekDayName =  moment(mydate).format('dddd');
-console.log(weekDayName);
 
 //model to store data weather that is retrieved from API
 var weatherData = [];

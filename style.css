@@ -5,14 +5,21 @@
 
 .weatherHead {
   font-family: 'Oxygen', sans-serif;
+  margin-top: 15px;
 }
 
 #search-form {
-  margin-top: 80px;
+  margin-top: 30px;
   margin-bottom: 30px;
 }
 
+.forecast {
+  padding-left: 150px;
+}
 
+.todays-weather {
+  padding-left: 300px;
+}
 
 .forecast-weather {
   border-style: solid;
@@ -25,6 +32,7 @@
   font-weight: 550;
   color: black;
 }
+
 
 #currentTemp {
   font-size: 40px;
@@ -41,5 +49,12 @@
    width: 200px;
  }
  #forecast-img {
-   padding-right: 35px;
+   padding-right: 10px;
+   width: 100px;
+ }
+
+ #day-descriptor {
+   position: absolute;
+   bottom:0px;
+   padding-left: 30px;
  }
