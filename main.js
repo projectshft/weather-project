@@ -72,6 +72,7 @@ var renderCurrentDay = function() {
 
 // using handlebars to render the temperature loacton and weither dsicpriton to the view for a forecast
 var renderForecast = function () {
+  $('h2').toggle();
   //set handlebars template
   for (let i=1; i < weatherData.length; i++) {
     var imageIcon = weatherData[i].weather[0].icon;
