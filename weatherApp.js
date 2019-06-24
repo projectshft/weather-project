@@ -131,7 +131,7 @@ const WeatherApp = () => {
           _renderCurrentWeather();
 
           //since we know this is valid input now, get forecast data
-          _getForecast();
+          //_getForecast();
 
         });
 
