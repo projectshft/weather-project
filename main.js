@@ -11,11 +11,29 @@ var fetch = function (zip) {
       console.log(data);
       renderWeather(data);
     },
-    error: function(textStatus) {
-      console.log(textStatus);
+    error: function() {
+      alert("Zip not found")
     }
   });
 };
+
+
+var fetchFore = function (zipFore) {
+  $.ajax({
+    method: "GET",
+    url: "https://api.openweathermap.org/data/2.5/forecast?zip="+ zipFore + ",us&units=imperial&appid=991e4a2975c05e3ab3fbb3b9bdc470c9",
+    dataType: "json",
+    success: function(data) {
+      console.log(data);
+      renderForecast(data);
+    },
+    error: function() {
+      alert("Zip not found")
+    }
+  });
+};
+
+
 
 
 
@@ -76,6 +94,16 @@ var renderWeather = function (data) {
   var newHTML = template(data);
   $('.weather').append(newHTML);
 };
+
+var renderForecast = function (data) {
+  $(".weather-forecast").empty();
+  var source = $('#weather-template-forecast').html();
+  var template = Handlebars.compile(source);
+  var newHTML = template(data);
+  $('.weather').append(newHTML);
+};
+
+
 //Invoking render to test hardcoded data. 
 // console.log(currentWeather)
 
@@ -91,7 +119,15 @@ $('#search-button').on('click', function () {
   fetch(search);
 });
 
+$('#search-button').on('click', function () {
+  var searchFore = $('#search-query').val()
+  console.log(searchFore);
+
+  fetchFore(searchFore);
+});
+
 // document.getElementById('search-query').onclick = function() {
 //   alert("button was clicked");
 // };
+
 

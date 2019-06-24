@@ -25,15 +25,15 @@
           </div>
         </form>
         
-        <div class="weather row">
-          
-        </div>
+        <div class="weather row"></div>
+        <div class="weather-forecast row"></div>
       </div>
     </div>
     </div> 
     <!-- Handlebar template for Current Weather -->
     <script id="weather-template-current" type="text/x-handlebars-template">
       <div class="currentWeather col-md-6">
+          <h2>Current Weather</h2>
           <div>{{name}}</div>
           <div>{{weather.[0].description}}</div>
           <div>{{main.temp}}</div>
@@ -44,6 +44,36 @@
     <!-- Handlebar template for Forecast  -->
     <script id="weather-template-forecast" type="text/x-handlebars-template">
       <div class="forecast col-md-6">
+        <h3>Today</h3>
+        <div>{{city.name}}</div>
+        <div>{{list.[0].main.temp}}</div>
+        <div>{{list.[0].weather.[0].description}}</div>
+        <img src="http://openweathermap.org/img/w/{{list.[0].weather.[0].icon}}.png"height="142" width="142">
+        <h3>Tomorrow</h3>
+        <div>{{city.name}}</div>
+        <div>{{list.[9].main.temp}}</div>
+        <div>{{list.[9].weather.[0].description}}</div>
+        <img src="http://openweathermap.org/img/w/{{list.[9].weather.[0].icon}}.png"height="142" width="142">
+        <h3>Day After</h3>
+        <div>{{city.name}}</div>
+        <div>{{list.[17].main.temp}}</div>
+        <div>{{list.[17].weather.[0].description}}</div>
+        <img src="http://openweathermap.org/img/w/{{list.[17].weather.[0].icon}}.png"height="142" width="142">
+        <h3>And the day after that</h3>
+        <div>{{city.name}}</div>
+        <div>{{list.[25].main.temp}}</div>
+        <div>{{list.[25].weather.[0].description}}</div>
+        <img src="http://openweathermap.org/img/w/{{list.[25].weather.[0].icon}}.png"height="142" width="142">
+        <h3>Oh boi</h3>
+        <div>{{city.name}}</div>
+        <div>{{list.[33].main.temp}}</div>
+        <div>{{list.[33].weather.[0].description}}</div>
+        <img src="http://openweathermap.org/img/w/{{list.[33].weather.[0].icon}}.png"height="142" width="142">
+        <h3>Oh boi again</h3>
+        <div>{{city.name}}</div>
+        <div>{{list.[39].main.temp}}</div>
+        <div>{{list.[39].weather.[0].description}}</div>
+        <img src="http://openweathermap.org/img/w/{{list.[39].weather.[0].icon}}.png"height="142" width="142">
       </div>
     </script>
 
