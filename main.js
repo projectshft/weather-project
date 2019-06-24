@@ -54,7 +54,7 @@ var addWeather2 = function (data) {
 }
 //using handlebars render the temperature location and weather description to the view for the curent day
 var renderCurrentDay = function() {
-$('.todays-weather').empty();
+  var query = $('#search-query').val();
   var imageIcon = weatherData[0].weather[0].icon;
   //set handlebars template
   var source = $('#current-weather-template').html();
@@ -64,14 +64,14 @@ $('.todays-weather').empty();
     city: weatherData[0].name,
     country: weatherData[0].sys.country,
     weatherDescription: weatherData[0].weather[0].description,
-    icon: "http://openweathermap.org/img/w/" + imageIcon + ".png"
+    icon: "http://openweathermap.org/img/w/" + imageIcon + ".png",
+    map: "https://www.google.com/maps/embed/v1/place?q=" + query.replace(' ', '%20') + "&key=AIzaSyBqR70rDsq2fjdHR2EfUAMoDxps1hcCpWc"
   })
     $('.todays-weather').append(newHTML);
 };
 
 // using handlebars to render the temperature loacton and weither dsicpriton to the view for a forecast
 var renderForecast = function () {
-  $('.forecast').empty();
   //set handlebars template
   for (let i=1; i < weatherData.length; i++) {
     var imageIcon = weatherData[i].weather[0].icon;

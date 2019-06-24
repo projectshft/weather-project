@@ -22,18 +22,18 @@
         </div>
      </div>
 
-    <div class = "row">
+    <div class = "row form-group">
       <div id = "search-form" class = "col-md-12">
         <input id = "search-query" placeholder = "Enter City Name"></input>
         <button id ="search-button" type = "button" class = "btn btn-primary">Search</button>
         </div>
      </div>
 
-     <div class = "row todays-weather">
+     <div id = "todaytemperature" class = "row todays-weather">
 
      </div>
 
-     <div class = "row forecast">
+     <div id = "fivedayforecast" class = "row forecast">
 
        </div>
 
@@ -43,6 +43,7 @@
       <div id = "currentTemp" class="currentTempClass"> {{ temperature }}&#176; </div> <br />
       <div id = "currentLocation" class="currentTempClass"> {{ city }}, {{country}} </div> <br />
       <div id = "currentDescription" class = "currentTempClass text-capitalize" > {{ weatherDescription }} </div>
+      <iframe width="600" height="450" frameborder="0" style="border:0" src= {{map}} allowfullscreen></iframe>
     </div>
     <div class = "main-weather-icon col-md-3">
       <img id = "currentWeather-img" class="icon-main" src ={{icon}}>
