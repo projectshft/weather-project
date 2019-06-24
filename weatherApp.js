@@ -103,8 +103,37 @@ const WeatherApp = () => {
       //get location
       navigator.geolocation.getCurrentPosition( position => {
 
-        console.log(`Latitude: ${position.coords.latitude}`);
-        console.log(`Longitude: ${position.coords.longitude}`);
+        const latitude = position.coords.latitude;
+        const longitude = position.coords.longitude;
+
+        console.log(`Browser's reported latitude: ${latitude}`);
+        console.log(`Browser's reported longitude: ${longitude}`);
+
+        //create url with coords
+        const urlWithCoords = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&APPID=${THEMODEL.API_KEY}&units=imperial`;
+
+        fetch(urlWithCoords).then( function(response) {
+          return response.json();
+        }).then( function(weatherResponseObj) {
+
+          //COPY/PASTED FOR TESTING, REFACTOR FOR DRY
+
+          //if api cant find city, don't change model or update view
+          if (weatherResponseObj.cod === '404') {
+            _incorrectInput();
+            return;
+          }
+          
+          //parse json to update model
+          _updateWeather(weatherResponseObj);
+
+          //update view
+          _renderCurrentWeather();
+
+          //since we know this is valid input now, get forecast data
+          _getForecast();
+
+        });
 
       });
 
