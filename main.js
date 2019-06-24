@@ -100,7 +100,7 @@ var renderForecast = function (data) {
   var source = $('#weather-template-forecast').html();
   var template = Handlebars.compile(source);
   var newHTML = template(data);
-  $('.weather').append(newHTML);
+  $('.weather-forecast').append(newHTML);
 };
 
 
@@ -117,14 +117,9 @@ $('#search-button').on('click', function () {
   console.log(search);
 
   fetch(search);
+  fetchFore(search);
 });
 
-$('#search-button').on('click', function () {
-  var searchFore = $('#search-query').val()
-  console.log(searchFore);
-
-  fetchFore(searchFore);
-});
 
 // document.getElementById('search-query').onclick = function() {
 //   alert("button was clicked");

@@ -42,40 +42,56 @@
     </script>
 
     <!-- Handlebar template for Forecast  -->
-    <script id="weather-template-forecast" type="text/x-handlebars-template">
-      <div class="forecast col-md-6">
-        <h3>Today</h3>
-        <div>{{city.name}}</div>
-        <div>{{list.[0].main.temp}}</div>
-        <div>{{list.[0].weather.[0].description}}</div>
-        <img src="http://openweathermap.org/img/w/{{list.[0].weather.[0].icon}}.png"height="142" width="142">
-        <h3>Tomorrow</h3>
-        <div>{{city.name}}</div>
-        <div>{{list.[9].main.temp}}</div>
-        <div>{{list.[9].weather.[0].description}}</div>
-        <img src="http://openweathermap.org/img/w/{{list.[9].weather.[0].icon}}.png"height="142" width="142">
-        <h3>Day After</h3>
-        <div>{{city.name}}</div>
-        <div>{{list.[17].main.temp}}</div>
-        <div>{{list.[17].weather.[0].description}}</div>
-        <img src="http://openweathermap.org/img/w/{{list.[17].weather.[0].icon}}.png"height="142" width="142">
-        <h3>And the day after that</h3>
-        <div>{{city.name}}</div>
-        <div>{{list.[25].main.temp}}</div>
-        <div>{{list.[25].weather.[0].description}}</div>
-        <img src="http://openweathermap.org/img/w/{{list.[25].weather.[0].icon}}.png"height="142" width="142">
-        <h3>Oh boi</h3>
-        <div>{{city.name}}</div>
-        <div>{{list.[33].main.temp}}</div>
-        <div>{{list.[33].weather.[0].description}}</div>
-        <img src="http://openweathermap.org/img/w/{{list.[33].weather.[0].icon}}.png"height="142" width="142">
-        <h3>Oh boi again</h3>
-        <div>{{city.name}}</div>
-        <div>{{list.[39].main.temp}}</div>
-        <div>{{list.[39].weather.[0].description}}</div>
-        <img src="http://openweathermap.org/img/w/{{list.[39].weather.[0].icon}}.png"height="142" width="142">
-      </div>
-    </script>
+
+<script id="weather-template-forecast" type="text/x-handlebars-template">
+  <div class="container">
+    <div class="col-sm-1 bg-success forecast">
+     
+  <div class="row">
+    <h3>Today</h3>
+    <div>{{city.name}}</div>
+    <div>{{list.[0].main.temp}}</div>
+    <div>{{list.[0].weather.[0].description}}</div>
+    <img src="http://openweathermap.org/img/w/{{list.[0].weather.[0].icon}}.png"height="142" width="142">
+  </div>
+  <div class="row">
+    <h3>Tomorrow</h3>
+    <div>{{city.name}}</div>
+    <div>{{list.[9].main.temp}}</div>
+    <div>{{list.[9].weather.[0].description}}</div>
+    <img src="http://openweathermap.org/img/w/{{list.[9].weather.[0].icon}}.png">
+  </div>
+  <div class="row">
+    <h3>Day After</h3>
+    <div>{{city.name}}</div>
+    <div>{{list.[17].main.temp}}</div>
+    <div>{{list.[17].weather.[0].description}}</div>
+    <img src="http://openweathermap.org/img/w/{{list.[17].weather.[0].icon}}.png">
+  </div>
+  <div class="row">
+    <h3>And the day after that</h3>
+    <div>{{city.name}}</div>
+    <div>{{list.[25].main.temp}}</div>
+    <div>{{list.[25].weather.[0].description}}</div>
+    <img src="http://openweathermap.org/img/w/{{list.[25].weather.[0].icon}}.png">
+  </div>
+  <div class="row">
+    <h3>Oh boi</h3>
+    <div>{{city.name}}</div>
+    <div>{{list.[33].main.temp}}</div>
+    <div>{{list.[33].weather.[0].description}}</div>
+    <img src="http://openweathermap.org/img/w/{{list.[33].weather.[0].icon}}.png">
+    <h3>Oh boi again</h3>
+  </div>
+  <div class="row">
+    <div>{{city.name}}</div>
+    <div>{{list.[39].main.temp}}</div>
+    <div>{{list.[39].weather.[0].description}}</div>
+    <img src="http://openweathermap.org/img/w/{{list.[39].weather.[0].icon}}.png">
+  </div>
+</div>
+</div>
+  </script>
 
 
 
