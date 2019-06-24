@@ -30,13 +30,19 @@
   * 
   * [X] add appropriate console.logs
   * 
-  * [ ] Default city
+  * [X] Default city
   *   [X] add 'set as default' button
   *   [X] click handler, model updates default city
   *   [X] 'view' - if search === default city, don't show 'set as default' button
   *   [X] implement local storage
   *   [X] update local storage whenever default city is changed
-  *   [ ] visual cue that shows if current city is default city
+  *   [X] visual cue that shows if current city is default city
+  * 
+  * [ ] use browser location to get weather
+  *   [ ] add button to search current location
+  *   [ ] click handler
+  *   [ ] get browser location
+  *   [ ] api request with location
   */
 
 const WeatherApp = () => {
@@ -219,7 +225,8 @@ const WeatherApp = () => {
 
   return {
     searchForCity,
-    setCurrentCityToDefault
+    setCurrentCityToDefault,
+    searchCurrentLocation
   };
 
 };
