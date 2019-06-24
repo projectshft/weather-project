@@ -43,11 +43,13 @@
       <div id = "currentTemp" class="currentTempClass"> {{ temperature }}&#176; </div> <br />
       <div id = "currentLocation" class="currentTempClass"> {{ city }}, {{country}} </div> <br />
       <div id = "currentDescription" class = "currentTempClass text-capitalize" > {{ weatherDescription }} </div>
-      <iframe width="600" height="450" frameborder="0" style="border:0" src= {{map}} allowfullscreen></iframe>
     </div>
     <div class = "main-weather-icon col-md-3">
       <img id = "currentWeather-img" class="icon-main" src ={{icon}}>
     </div>
+    <div class = "col-md-3">
+      <iframe width="300" height="225" frameborder="0" style="border:0" src= {{map}} allowfullscreen></iframe>
+   </div>
   </script>
   <script id= "forecast-weather-template" type ="text/x-handlebars-template">
     <div class = "forecast-weather col-md-2">
