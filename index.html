@@ -10,30 +10,41 @@
 <body>
   <div class="container-fluid">
     <div class="row">
-      <div class="col-md-6 offset-md-3">
-        <div class="page-header text-center">
-          <h1>Current Weather</h1>
-        </div>
-
-
-        <form class="search-form">
-
-
-          <div class="form-group">
-            <input type="text" class="col-md-8 offset-md-1" id="search-query" placeholder="Enter City Here">
-            </input>
-            <button type="button" class="btn btn-primary search">Search</button>
-          </div>
-        </form>
-
-        <hr />
-
-        <div class="books row">
-
-        </div>
+      <div class="col-md-4 offset-md-4 text-center" style="padding-top: 20px;">
+        <h1>Current Weather</h1>
       </div>
     </div>
+    <div class="row">
+      <div class="col-md-4 offset-md-4" style="padding-top: 30px;"><input type="text" class="col-md-9" id="search-query" placeholder="Enter City Here">
+        </input>
+        <button type="button" class="btn btn-primary search">Search</button>
+      </div>
+    </div>
+    <div class="current-weather row" style="padding-top: 30px;">
+    </div>
+    <div class="row" <div id="forecast-weather-input" class="col" style="    padding-left: 350px;
+    padding-top: 30px;
+    padding-right: 200px;">
+    </div>
   </div>
+  <script id="weather-template" type="text/x-handlebars-template">
+    <div class="col-md-1 offset-md-4">
+          <div><h4>{{HBTemperature}}</h4></div>
+          <div><p style="font-family: Comic Sans MS">{{HBCity}}</p></div>
+          <div><p>{{HBConditions}}</p></div>
+        </div>
+        <img class="col-md-1" src="{{HBImage}}" alt="">
+        </div>
+    </script>
+  <script id="forecast-weather-template" type="text/x-handlebars-template">
+    <div class="col-md-2 text-center" style="border-style: solid; border-color: #1873CD;">
+        <div>{{Condition}}</div>
+        <div>{{HighTemp}}</div>
+        <div><img src="{{Image}}"></div>
+        <div>{{DayOfWeek}}</div>
+        </div>
+      </script>
+  <script src="moment.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.11/lodash.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
