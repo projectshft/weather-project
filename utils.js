@@ -31,3 +31,17 @@ const getDailyForecast = (userInput) => {
       $('.header').append(weatherTemplate);
     })
 }
+
+const getCurrentLocationWeather = (long, lat) => {
+  const currentLocationWeather = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&units=imperial&APPID=1d6f5ea050c2a30c3485c7944ca499e0`
+
+  fetch(currentLocationWeather)
+    .then(response => {
+      return response.json();
+    })
+    .then(data => {
+      $('.location-city-name').append(data.name);
+      $('.temp-degree').prepend(data.main.temp);
+      $('.temp-description').append('<strong>' + data.weather[0].description + '</strong>');
+    })
+}

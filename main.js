@@ -9,17 +9,7 @@ if (navigator.geolocation) {
     long = position.coords.longitude;
     lat = position.coords.latitude;
     // use the current location to send request to API for weather based on current location
-    const currentLocationWeather = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&units=imperial&APPID=1d6f5ea050c2a30c3485c7944ca499e0`
-
-    fetch(currentLocationWeather)
-      .then(response => {
-        return response.json();
-      })
-      .then(data => {
-        $('.location-city-name').append(data.name);
-        $('.temp-degree').prepend(data.main.temp);
-        $('.temp-description').append('<strong>' + data.weather[0].description + '</strong>');
-      })
+    getCurrentLocationWeather(long, lat);
   });
 }
 
@@ -36,5 +26,4 @@ $('button').on('click', function(e) {
   $('.toggle').hide();
   // send request to API for weather based on user input
   getDailyForecast($userInput);
-
 })
