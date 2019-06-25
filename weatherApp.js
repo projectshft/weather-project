@@ -131,7 +131,7 @@ const WeatherApp = () => {
           _renderCurrentWeather();
 
           //since we know this is valid input now, get forecast data
-          const forecastURL =`https://api.openweathermap.org/data/2.5/forecast/daily?lat=${latitude}&lon=${longitude}&cnt=${THEMODEL.numDaysForecasted+1}&APPID=${THEMODEL.API_KEY}&units=imperial`;
+          const forecastURL =`https://api.openweathermap.org/data/2.5/forecast/daily?lat=${latitude}&lon  =${longitude}&cnt=${THEMODEL.numDaysForecasted+1}&APPID=${THEMODEL.API_KEY}&units=imperial`;
           _getForecast(forecastURL);
 
         });
