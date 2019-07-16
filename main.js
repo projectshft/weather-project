@@ -2,10 +2,10 @@
 
 // Need to finish work on the API. Get it to call the api instead of using hardcoded information. 
 
-var fetch = function (zip) {
+var fetch = function () {
   $.ajax({
     method: "GET",
-    url: "https://api.openweathermap.org/data/2.5/weather?q="+zip+",us&units=imperial&appid=991e4a2975c05e3ab3fbb3b9bdc470c9",
+    url: "localhost:8000",
     dataType: "json",
     success: function(data) {
       console.log(data);
@@ -18,26 +18,9 @@ var fetch = function (zip) {
 };
 
 
-var fetchFore = function (zipFore) {
-  $.ajax({
-    method: "GET",
-    url: "https://api.openweathermap.org/data/2.5/forecast?zip="+ zipFore + ",us&units=imperial&appid=991e4a2975c05e3ab3fbb3b9bdc470c9",
-    dataType: "json",
-    success: function(data) {
-      console.log(data);
-      renderForecast(data);
-    },
-    error: function() {
-      alert("Zip not found")
-    }
-  });
-};
 
 
-
-
-
-//Hardcoded currentWeather Json information 
+// Hardcoded currentWeather Json information 
 // var currentWeather = {
 //   "coord": {"lon": -122.08,"lat": 37.39},
 //   "weather": [
@@ -83,6 +66,14 @@ var fetchFore = function (zipFore) {
 // console.log(currentWeather.main.temp);
 // console.log(currentWeather.weather[0].main);
 // console.log(currentWeather.weather[0].icon);
+var person = 
+{
+  "name": "Bob",
+  "age": 92,
+  "hair": false
+  }
+
+
 
 // //Testing render function. Set up handlebars template in HTML.
 
@@ -95,13 +86,6 @@ var renderWeather = function (data) {
   $('.weather').append(newHTML);
 };
 
-var renderForecast = function (data) {
-  $(".weather-forecast").empty();
-  var source = $('#weather-template-forecast').html();
-  var template = Handlebars.compile(source);
-  var newHTML = template(data);
-  $('.weather-forecast').append(newHTML);
-};
 
 
 //Invoking render to test hardcoded data. 
@@ -117,12 +101,7 @@ $('#search-button').on('click', function () {
   console.log(search);
 
   fetch(search);
-  fetchFore(search);
 });
 
-
-// document.getElementById('search-query').onclick = function() {
-//   alert("button was clicked");
-// };
 
 
