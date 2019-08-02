@@ -23,14 +23,14 @@ body{
 .degree-section h2 {
   font-size: 40px;
 }
-.toggle{
-  display: show;
-  text-align: center;
-}
 .forecast{
   margin-left: 10px;
   margin-right: 10px;
 }
 .card{
   text-align: center;
+}
+.current-weather{
+  text-align: center;
+  align-items: center;
 }

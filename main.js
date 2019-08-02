@@ -1,29 +1,28 @@
-let long;
-let lat;
-var source = $('#current-weather-template').html();
-var template = Handlebars.compile(source);
-
-// get the users current location for current weather to display
-if (navigator.geolocation) {
-  navigator.geolocation.getCurrentPosition(position => {
-    long = position.coords.longitude;
-    lat = position.coords.latitude;
-    // use the current location to send request to API for weather based on current location
-    getCurrentLocationWeather(long, lat);
-  });
-}
-
-
-// user clicks on button to get weather for city and country input
-$('button').on('click', function(e) {
-  e.preventDefault();
-  // get value of user input
-  var $userInput = $('#cityInput').val();
-  if ($userInput === '') {
-    alert('You must enter a city and country');
-  }
-  // hide the current location weather so user input weather can show
-  $('.toggle').hide();
-  // send request to API for weather based on user input
-  getDailyForecast($userInput);
+$(document).ready(function () {
+  // refrence to everything inside of the weather-module
+  const weather = weatherModule();
+  // // user clicks on button to get weather for city and country input
+  $('button').on('click', async function(e) {
+    // clear things out before new information populates
+    $('.forecast-weather').empty();
+    $('.current-weather').empty();
+    e.preventDefault();
+    const userSearchInput = $('#cityInput').val();``
+    try {
+      await weather.getCurrentWeather(userSearchInput);
+      await weather.getDailyForecast(userSearchInput);
+      weather.renderMainWeather();
+      weather.renderDailyForecast();
+    } catch (error) {
+      alert('Sorry the location was not found. Try again.')
+    }
+  })
 })
+
+
+
+
+
+
+
+
