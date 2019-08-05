@@ -43,6 +43,7 @@ const weatherModule = () => {
     for (let i = 0; i < data.list.length; i++) {
       attributes.forecastData.push(data.list[i]);
     }
+    count = 0;
   }
 
   const getCurrentWeather = async (userSearchInput) => {
@@ -51,6 +52,7 @@ const weatherModule = () => {
     attributes.city = data.name;
     attributes.temp = Math.ceil(data.main.temp);
     attributes.condition = data.weather[0].main;
+    count = 0;
   }
   return {
     getDailyForecast: getDailyForecast,
