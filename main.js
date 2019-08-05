@@ -7,14 +7,20 @@ $(document).ready(function () {
     $('.forecast-weather').empty();
     $('.current-weather').empty();
     e.preventDefault();
+    // get the user's input from search box
     const userSearchInput = $('#cityInput').val();
+    // make the requests with user's input
     try {
       await weather.getCurrentWeather(userSearchInput);
       await weather.getDailyForecast(userSearchInput);
       weather.renderMainWeather();
       weather.renderDailyForecast();
     } catch (error) {
-      alert('Sorry the location was not found. Try again.')
+      if (userSearchInput === ''){
+        alert('Please enter a city.');
+      } else{
+         alert('Sorry the location was not found. Try again.');
+      }
     }
   })
 })
