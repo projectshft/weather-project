@@ -1,6 +1,9 @@
 const weatherModule = () => {
   const attributes = {
     apiKey: '488ccba088277352dc6babea1f438def',
+    dailyForecastRootURL: 'https://api.openweathermap.org/data/2.5/forecast/daily?q=',
+    currentWeatherRootURL: 'http://api.openweathermap.org/data/2.5/weather?q=',
+    
   }
   let count = 0;
   const renderDailyForecast = () => {
@@ -28,8 +31,8 @@ const weatherModule = () => {
     $('.current-weather').append(weatherTemplate);
   }
 
-  const getDailyForecast = async (userInput) => {
-    const response = await fetch(`https://api.openweathermap.org/data/2.5/forecast/daily?q=${userInput}&cnt=5&units=imperial&APPID=${attributes.apiKey}`)
+  const getDailyForecast = async (userSearchInput) => {
+    const response = await fetch(`${attributes.dailyForecastRootURL}${userSearchInput},us&cnt=5&units=imperial&APPID=${attributes.apiKey}`)
     const data = await response.json();
     attributes.forecastData = [];
     for (let i = 0; i < data.list.length; i++) {
@@ -37,8 +40,8 @@ const weatherModule = () => {
     }
   }
 
-  const getCurrentWeather = async (userInput) => {
-    const response = await fetch(`http://api.openweathermap.org/data/2.5/weather?q=${userInput}&units=imperial&APPID=${attributes.apiKey}`)
+  const getCurrentWeather = async (userSearchInput) => {
+    const response = await fetch(`${attributes.currentWeatherRootURL}${userSearchInput},us&units=imperial&APPID=${attributes.apiKey}`)
     const data = await response.json();
     attributes.city = data.name;
     attributes.temp = Math.ceil(data.main.temp);
