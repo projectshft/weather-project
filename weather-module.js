@@ -1,36 +1,41 @@
 const weatherModule = () => {
+  // setting a place to store data
   const attributes = {
     apiKey: '488ccba088277352dc6babea1f438def',
     dailyForecastRootURL: 'https://api.openweathermap.org/data/2.5/forecast/daily?q=',
-    currentWeatherRootURL: 'http://api.openweathermap.org/data/2.5/weather?q=',
-    
+    currentWeatherRootURL: 'http://api.openweathermap.org/data/2.5/weather?q='
   }
-  let count = 0;
+  
+  /** render functions for the 5 day forecast and the current weather, 
+      these use handlebars to pass in the data from the get requests below. */
+  let count = 0; // count used for calc current day in moment.js
   const renderDailyForecast = () => {
     attributes.forecastData.forEach((day) => {
       const source = $('#forecast-weather-template').html();
       const template = Handlebars.compile(source);
-      const weatherTemplate = template({
+      const forecastWeatherTemplate = template({
         temp: day.temp.day,
         description: day.weather[0].description,
         date: moment().add(count, 'd').format("dddd")
       })
       count++;
-      $('.forecast-weather').append(weatherTemplate);
+      $('.forecast-weather').append(forecastWeatherTemplate);
     })
   }
 
-  const renderMainWeather = () => {
-    const source = $('#main-weather-template').html();
+  const renderCurrentWeather = () => {
+    const source = $('#current-weather-template').html();
     const template = Handlebars.compile(source);
-    const weatherTemplate = template({
+    const currentWeatherTemplate = template({
       temp: attributes.temp,
       city: attributes.city,
       weather: attributes.condition
     })
-    $('.current-weather').append(weatherTemplate);
+    $('.current-weather').append(currentWeatherTemplate);
   }
 
+  /** stores the data sent back from the request in an array in the attributes obj so that the 
+      data can be accessed easily in the render functions. */
   const getDailyForecast = async (userSearchInput) => {
     const response = await fetch(`${attributes.dailyForecastRootURL}${userSearchInput},us&cnt=5&units=imperial&APPID=${attributes.apiKey}`)
     const data = await response.json();
@@ -50,7 +55,7 @@ const weatherModule = () => {
   return {
     getDailyForecast: getDailyForecast,
     getCurrentWeather: getCurrentWeather,
-    renderMainWeather: renderMainWeather,
+    renderCurrentWeather: renderCurrentWeather,
     renderDailyForecast: renderDailyForecast
   }
 }
