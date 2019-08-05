@@ -7,7 +7,7 @@ $(document).ready(function () {
     $('.forecast-weather').empty();
     $('.current-weather').empty();
     e.preventDefault();
-    const userSearchInput = $('#cityInput').val();``
+    const userSearchInput = $('#cityInput').val();
     try {
       await weather.getCurrentWeather(userSearchInput);
       await weather.getDailyForecast(userSearchInput);

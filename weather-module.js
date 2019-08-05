@@ -2,6 +2,7 @@ const weatherModule = () => {
   const attributes = {
     apiKey: '488ccba088277352dc6babea1f438def',
   }
+  let count = 0;
   const renderDailyForecast = () => {
     attributes.forecastData.forEach((day) => {
       const source = $('#forecast-weather-template').html();
@@ -9,8 +10,9 @@ const weatherModule = () => {
       const weatherTemplate = template({
         temp: day.temp.day,
         description: day.weather[0].description,
-        date: new Date(day.dt).toString().slice(0, 3)
+        date: moment().add(count, 'd').format("dddd")
       })
+      count++;
       $('.forecast-weather').append(weatherTemplate);
     })
   }
