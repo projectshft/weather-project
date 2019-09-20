@@ -1,5 +1,11 @@
 ## Weather Project
 
-This project has been created by a student at Project Shift, a software engineering fellowship located in Downtown Durham.  The work in this repository is wholly of the student based on a sample starter project that can be accessed by looking at the repository that this project forks.
+This is a basic Weather Application for the purpose of learning programming fundamentals.  This project uses the bootstrap framework to format the website nicely, the jQuery library to manipulate the DOM, handlebars.js to take HTML templates and compile them to javascript, and the moment.js javascript library to easily keep track of the days of the week.  OpenWeatherMap is the API being used to grab weather data.
 
-If you have any questions about this project or the program in general, visit projectshift.io or email hello@projectshift.io.
+---
+
+When the site loads a simple search bar will be presented.  You can search anywhere in the world, but in the US you cannot search by state.  E.G. to find the weather in Raleigh, NC is 
+```
+Raleigh, US
+```
+This program will display the current day's weather and underneath display the next 5 day's forecast.
