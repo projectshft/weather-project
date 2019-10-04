@@ -31,19 +31,18 @@ let addFiveDayWeather = function (data2){
     let workingDate = data2.list[i].dt_txt;
     let workingDateParsed = workingDate.slice(0, 10);
     let workingDateTime = workingDate.slice(11,13);
-    let figureOutDayOfWeek = moment(workingDateParsed).format('dddd');
+    console.log();
     if(workingDateTime == 00) {
       let workingFiveDay = {
         temperature: data2.list[i].main.temp,
         conditions: data2.list[i].weather[0].main,
-        logo: data2.list[i].weather[0].icon,
-        day: figureOutDayOfWeek
+        logo: data2.list[i].weather[0].icon
 
       }
       fiveDayWeather.push(workingFiveDay)
     }
 
-  
+    //fiveDayWeather.push(data2.list[i].dt_txt);
     console.log(fiveDayWeather)
   }
 
