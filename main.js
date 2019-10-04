@@ -3,7 +3,8 @@ const APIkey = "e1034943195c711c89bd0b021b9ad8c4";
 let currentCityWeather = {
   condition: "cloudy",
   location: "durbam",
-  degrees: 88
+  degrees: 88,
+  icon: "10n"
 }
 
 let currentForecast = [{
@@ -37,7 +38,8 @@ const setCurrentWeather = function (data) {
   currentCityWeather = {
     condition: data.weather[0].main,
     location: data.name,
-    degrees: data.main.temp
+    degrees: data.main.temp,
+    icon: data.weather[0].icon
   }
   renderWeather();
 }
@@ -70,7 +72,8 @@ const renderWeather = function () {
   $('#current-weather').append(currentTemplate({
     "current-degrees": currentCityWeather.degrees,
     "current-condition": currentCityWeather.condition,
-    "current-location": currentCityWeather.location
+    "current-location": currentCityWeather.location,
+    "current-icon": currentCityWeather.icon
   }))
 
   const forecastSource = $('#forecast-weather-template').html();
