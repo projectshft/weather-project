@@ -3,13 +3,22 @@ $('.search').on('click', function () {
   getWeatherData(search);
 });
 
-var getWeatherData = () => {
-  fetch(`https://api.openweathermap.org/data/2.5/weather?q=${}&APPID=${API_KEY}`)
+var getWeatherData = (search) => {
+  fetch(`https://api.openweathermap.org/data/2.5/weather?q=${search}&APPID=${API_KEY}&units=imperial`)
     .then(response => response.json())
     .then(data => {
-      console.log(data) // Prints result from `response.json()` in getRequest
+      renderWeather();
+      console.log(data)
     })
     .catch(error => console.error(error))
 }
 
+var renderWeather = () => {
+  $weatherDisplay.empty();
+  var weatherTemplate = Handlebars.compile($('#curr-weather-template').html());
+  $weatherDisplay.append(weatherTemplate());
+}
+
 const API_KEY = '4f479c5fa18add48ba9381407334d58b';
+
+let $weatherDisplay = $('#weather-display');

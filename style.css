@@ -18,6 +18,11 @@
   text-align: center
 }
 
+.curr-weather {
+  text-align: center;
+  width: 100%;
+}
+
 .search-text {
   overflow: hidden; 
   padding-right: .5em;
