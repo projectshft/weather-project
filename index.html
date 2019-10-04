@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="style.css">
+  <title>Skywatcher</title>
+</head>
+
+<body>
+  <div class="justify-content-center">
+    <div>
+      <h1 class="text-center">Skywatcher</h1>
+      <form class="post-form text-center">
+        <div class="form-group">
+          <input type="text" placeholder="location">
+          <button class="btn btn-success">Search</button>
+        </div>
+      </form>
+      <div id="current-weather" class="text-center" style="background-color: orange">
+        <div id="current-degrees">66°</div>
+        <div id="current-location">Durham, NC</div>
+        <div id="current-condition">Partly Cloudy</div>
+      </div>
+      <div id="weather-container" class="card-deck justify-content-center" style="background-color: pink">
+        <div class="weather-day">
+          <div class="card">
+            <div class="card-body">
+              <div>Cloudy</div>
+              <div class="day-degrees">55°</div>
+              <div>Monday</div>
+            </div>
+          </div>
+        </div>
+        <div class="weather-day">
+          <div class="card">
+            <div class="card-body">
+              <div>Cloudy</div>
+              <div class="day-degrees">55°</div>
+              <div>Tuesday</div>
+            </div>
+          </div>
+        </div>
+        <div class="weather-day">
+          <div class="card">
+            <div class="card-body">
+              <div>Cloudy</div>
+              <div class="day-degrees">55°</div>
+              <div>Wednesday</div>
+            </div>
+          </div>
+        </div>
+        <div class="weather-day">
+          <div class="card">
+            <div class="card-body">
+              <div>Cloudy</div>
+              <div class="day-degrees">55°</div>
+              <div>Thursday</div>
+            </div>
+          </div>
+        </div>
+        <div class="weather-day">
+          <div class="card">
+            <div class="card-body">
+              <div>Cloudy</div>
+              <div class="day-degrees">55°</div>
+              <div>Friday</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <script src="main.js"></script>
+</body>
+
+</html>
