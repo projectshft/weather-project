@@ -18,14 +18,11 @@
       <h1 class="text-center">Skywatcher</h1>
       <form class="post-form text-center">
         <div class="form-group">
-          <input type="text" placeholder="location">
+          <input type="text" placeholder="Type in a US city!">
           <button type="button" class="btn btn-success">Search</button>
         </div>
       </form>
       <div id="current-weather" class="text-center" style="background-color: orange">
-        <div id="current-degrees">66°</div>
-        <div id="current-location">Durham, NC</div>
-        <div id="current-condition">Partly Cloudy</div>
       </div>
       <div id="weather-container" class="card-deck justify-content-center" style="background-color: pink">
         <div class="weather-day">
@@ -83,6 +80,7 @@
     <div id="current-condition">{{current-condition}}</div>
   </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"
     integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
   <script src="main.js"></script>

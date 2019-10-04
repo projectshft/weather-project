@@ -1,4 +1,4 @@
-const APIkey = "&APPID=e1034943195c711c89bd0b021b9ad8c4";
+const APIkey = "e1034943195c711c89bd0b021b9ad8c4";
 
 let currentCityWeather = {
   condition: "cloudy",
@@ -31,8 +31,7 @@ const renderWeather = function () {
 
 const fetchCurrentWeather = function (query) {
   const searchURL =
-    "https://api.openweathermap.org/data/2.5/weather?units=imperial&zip=" +
-    query + APIkey;
+    `https://api.openweathermap.org/data/2.5/weather?units=imperial&q=${query},US&APPID=${APIkey}`
 
   $.ajax({
     method: "GET",
@@ -47,6 +46,7 @@ const fetchCurrentWeather = function (query) {
   });
 }
 
+renderWeather();
 
 $('button').on('click', function () {
   const location = $('input').val()
