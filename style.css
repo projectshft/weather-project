@@ -1,0 +1,31 @@
+.main-content {
+  width: 75%;
+  align-content: center;
+  text-align: center;
+
+}
+
+.current-forcast {
+align: center;
+display: inline-block;
+}
+
+.future-forcast {
+  display: inline-block;
+}
+
+.future-forcast2 {
+  display: inline-block;
+}
+
+.long-term-forcast {
+  text-align: center;
+  align: center;
+  display: inline-block;
+  align-content: center;
+  width: 85%;
+}
+
+.long-title {
+  text-align: center;
+}

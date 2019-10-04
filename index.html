@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+  <!-- <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css" rel="stylesheet"> -->
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.4.0/handlebars.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.js"></script>
+  <title>Tyler's Weather App</title>
+</head>
+
+<body>
+  <div class="container main-content">
+    <div class="row justify-content-md-center">
+
+      <div class="col">
+        <div class="page-header">
+          <h1>Tyler's Weather App</h1>
+        </div>
+
+
+
+
+
+        <form class="face-form">
+          <h3>Search a city's weather</h3>
+
+          <div class="form-group">
+            <input type="text" id="citySearch" class="form-control city-search" placeholder="Breckenridge" </input> </div> <button id="search" class="btn btn-primary">Search</button>
+        </form>
+        <br>
+        <br>
+
+        <h2>Current Conditions</h2>
+        <div class="current-forcast">
+          <div class="card border-secondary mb-3" style="max-width: 18rem;">
+            <div class="card-header">City Name</div>
+            <div class="card-body text-secondary">
+              <img width="100" height="80" src="clouds.jpeg">
+              <h5 class="card-title">Current Conditions</h5>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="long-title">5-Day Forcast</h2>
+  <div class="long-term-forcast">
+    <div class="row">
+      <div class="col " mx-auto" style="width: 200px;">
+        <div class="current-forcast">
+          <div class="card border-secondary mb-3" style="max-width: 18rem;">
+            <div class="card-header">City Name</div>
+            <div class="card-body text-secondary">
+              <img width="100" height="80" src="clouds.jpeg">
+              <h5 class="card-title">Current Conditions</h5>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="col">
+        <div class="current-forcast">
+          <div class="card border-secondary mb-3" style="max-width: 18rem;">
+            <div class="card-header">City Name</div>
+            <div class="card-body text-secondary">
+              <img width="100" height="80" src="clouds.jpeg">
+              <h5 class="card-title">Current Conditions</h5>
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="current-forcast">
+          <div class="card border-secondary mb-3" style="max-width: 18rem;">
+            <div class="card-header">City Name</div>
+            <div class="card-body text-secondary">
+              <img width="100" height="80" src="clouds.jpeg">
+              <h5 class="card-title">Current Conditions</h5>
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="current-forcast">
+          <div class="card border-secondary mb-3" style="max-width: 18rem;">
+            <div class="card-header">City Name</div>
+            <div class="card-body text-secondary">
+              <img width="100" height="80" src="clouds.jpeg">
+              <h5 class="card-title">Current Conditions</h5>
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="current-forcast">
+          <div class="card border-secondary mb-3" style="max-width: 18rem;">
+            <div class="card-header">City Name</div>
+            <div class="card-body text-secondary">
+              <img width="100" height="80" src="clouds.jpeg">
+              <h5 class="card-title">Current Conditions</h5>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script id="current-weather-template" type="text/x-handlebars-template">
+    <div class="current-forcast">
+    <div class="card border-secondary mb-3" style="max-width: 18rem;">
+      <div class="card-header">City Name</div>
+      <div class="card-body text-secondary">
+        <img width="100" height="80" src="clouds.jpeg">
+        <h5 class="card-title">Current Conditions</h5>
+
+      </div>
+    </div>
+  </div>
+</div>
+</script>
+
+  <script id="five-day-forcast-template" type="text/x-handlebars-template">
+    <div class="long-term-forcast">
+  <div class="row">
+    <div class="col "mx-auto" style="width: 200px;">
+      <div class="current-forcast">
+        <div class="card border-secondary mb-3" style="max-width: 18rem;">
+          <div class="card-header">{{city}}</div>
+          <div class="card-body text-secondary">
+            <img width="100" height="80" src="{{img}}">
+            <h5 class="card-title">Current Conditions</h5>
+          </div>
+        </div>
+      </div>
+  </script>
+
+
+  </div>
+  </div>
+
+
+
+
+  <script src="main.js"></script>
+</body>
+
+</html>
