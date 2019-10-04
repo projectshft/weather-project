@@ -19,7 +19,7 @@
       <form class="post-form text-center">
         <div class="form-group">
           <input type="text" placeholder="location">
-          <button class="btn btn-success">Search</button>
+          <button type="button" class="btn btn-success">Search</button>
         </div>
       </form>
       <div id="current-weather" class="text-center" style="background-color: orange">
@@ -77,6 +77,14 @@
       </div>
     </div>
   </div>
+  <script id="current-weather-template" type="text/x-handlebars-template">
+    <div id="current-degrees">{{current-degrees}}</div>
+    <div id="current-location">{{current-location}}</div>
+    <div id="current-condition">{{current-condition}}</div>
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
   <script src="main.js"></script>
 </body>
 
