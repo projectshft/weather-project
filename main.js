@@ -124,6 +124,3 @@ $('button').on('click', function () {
   fetchCurrentWeather(location);
   fetchForecastedWeather(location);
 })
-
-var momentDayTest = moment("2019-10-08 00:00:00").format('dddd')
-alert(momentDayTest)

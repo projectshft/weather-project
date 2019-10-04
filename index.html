@@ -29,9 +29,20 @@
     </div>
   </div>
   <script id="current-weather-template" type="text/x-handlebars-template">
-    <div id="current-degrees">{{current-degrees}}°</div>
-    <div id="current-location">{{current-location}}</div>
-    <div id="current-condition">{{current-condition}}</div>
+    <div class="card mb-3 mx-auto">
+      <div class="row no-gutters">
+        <div class="col-md-8">
+          <div class="card-body text-center">
+            <p id="current-degrees" class="card-text">{{current-degrees}}°</p>
+            <p id="current-location" class="card-text">{{current-location}}</p>
+            <p id="current-condition" class="card-text">{{current-condition}}</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <img src="http://openweathermap.org/img/wn/10d@2x.png" class="card-image">
+        </div>
+      </div>
+    </div>
   </script>
   <script id="forecast-weather-template" type="text/x-handlebars-template">
     <div class="weather-day">
