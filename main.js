@@ -14,10 +14,11 @@ $('#search').click(function(event) {
 
 //function to collect current conditions
 let addCurrentWeather = function(data) {
-
+let currentTempInFahrenheit = temperatureToFahrenheit(data.main.temp)
+console.log(currentTempInFahrenheit);
   currentWeather = {
     city: data.name,
-    temperature: data.main.temp,
+    temperature: currentTempInFahrenheit,
     conditions: data.weather[0].main,
     logo: data.weather[0].icon
   };
@@ -42,7 +43,8 @@ renderCurrent = function (obj) {
     $('.current-forcast').append(template({
       "city": currentWeather.city,
       "conditions": currentWeather.conditions,
-      "temperature": currentWeather.temperature
+      "temperature": currentWeather.temperature,
+      "img": currentWeather.logo
     }))
   }
 
