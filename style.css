@@ -34,3 +34,7 @@ img {
   margin-top: 50px;
   margin-bottom: 0px;
 }
+
+.forecast {
+  display: inline-block;
+}
