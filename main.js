@@ -36,10 +36,10 @@ let temperatureToFahrenheit = function(kelvin) {
 renderCurrent = function (obj) {
   $('.current-forcast').empty();
 
-    var source = $('#current-weather-template').html();
-    var template = Handlebars.compile(source);
+    let source = $('#current-weather-template').html();
+    let template = Handlebars.compile(source);
 
-    //$('.current-forcast').append(contributorHTML)
+
     $('.current-forcast').append(template({
       "city": currentWeather.city,
       "conditions": currentWeather.conditions,
@@ -49,18 +49,22 @@ renderCurrent = function (obj) {
   }
 
 //function to render the days of the week
-let renderDaysOfWeek = function (obj) {
+let renderDaysOfWeek = function (arr) {
   $('#five-day-forcast-template').empty();
 
-  for (var i = 0; i < obj.length; i++) {
-    var day = obj[i];
+  for (let i = 0; i < arr.length; i++) {
+    let day = arr[i];
+    let source = $('#current-weather-template').html();
+    let template = Handlebars.compile(source);
+$('#col' + i).append(template({
+      "day": day.day,
+      "conditions": day.conditions,
+      "temperature": day.temperature,
+      "img": day.logo
+    }))
 
-    var source = $('#current-weather-template').html();
-    var template = Handlebars.compile(source);
-    var contributorHTML = template(day);
-
-    $('.current-forcast').append(contributorHTML)
   };
+
 };
 
 
@@ -69,23 +73,21 @@ let renderDaysOfWeek = function (obj) {
 let addFiveDayWeather = function(data2) {
   let fiveDayWeather = [];
   let todaysDate = moment().format();
-  var actualDate = todaysDate.slice(0, 10);
+  let actualDate = todaysDate.slice(0, 10);
   for (i = 0; i < data2.list.length; i++) {
     let workingDate = data2.list[i].dt_txt;
     let workingDateParsed = workingDate.slice(0, 10);
     let workingDateTime = workingDate.slice(11, 13);
     let figureOutDayOfWeek = moment(workingDateParsed).format('dddd');
-    let tempInKelvin = data2.list[i].main.temp;
-    let workingFTemp = temperatureToFahrenheit(tempInKelvin);
-    console.log(workingFTemp);
     //console.log(temperatureToFahrenheit);
     if (workingDateTime == 00) {
+      let tempInKelvin = data2.list[i].main.temp;
+      let workingFTemp = temperatureToFahrenheit(tempInKelvin);
       let workingFiveDay = {
         temperature: workingFTemp,
         conditions: data2.list[i].weather[0].main,
         logo: data2.list[i].weather[0].icon,
         day: figureOutDayOfWeek
-
       }
       fiveDayWeather.push(workingFiveDay)
     }
