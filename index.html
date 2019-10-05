@@ -13,111 +13,72 @@
 <body>
   <div class="container main-content">
     <div class="row justify-content-md-center">
-
       <div class="col">
         <div class="page-header">
           <h1>Tyler's Weather App</h1>
         </div>
-
-
-
-
-
         <form class="face-form">
           <h3>Search a city's weather</h3>
 
           <div class="form-group">
-            <input type="text" id="citySearch" class="form-control city-search" placeholder="Breckenridge" </input> </div> <button id="search" class="btn btn-primary">Search</button>
+            <input type="text" id="citySearch" class="form-control city-search" placeholder="Breckenridge" </input>
+          </div>
+            <button id="search" class="btn btn-primary">Search
+            </button>
         </form>
         <br>
         <br>
 
         <h2>Current Conditions</h2>
         <div class="current-forcast">
-          <!-- <div class="card border-secondary mb-3" style="max-width: 18rem;">
-            <div class="card-header">City Name</div>
-            <div class="card-body text-secondary">
-              <img width="100" height="80" src="clouds.jpeg">
-              <h5 class="card-title">Current Conditions</h5>
-            </div>
-          </div> -->
         </div>
       </div>
     </div>
   </div>
-
-
-
-  <!-- <div class="container secondary-content">
-      <div class="row justify-content-md-center"> -->
+<br>
 <h2 class="long-title">5-Day Forcast</h2>
 <br>
-<br>
 <div class="five-day-containers">
-<div class="row">
-  <div class="col" id="col0"></div>
-  <div class="col" id="col1"></div>
-  <div class="col" id="col2"></div>
-  <div class="col" id="col3"></div>
-  <div class="col" id="col4"></div>
-</div>
-
-</div>
-</div>
-
-  <script id="five-day-forcast-template" type="text/x-handlebars-template">
-    <div class="col">
-      <div class="current-forcast">
-      <div class="card border-secondary mb-3" style="max-width: 18rem;">
-        <div class="card-header">{{day}}</div>
-        <div class="card-body text-secondary">
-          <img width="100" height="80" src="http://openweathermap.org/img/wn/{{img}}@2x.png">
-          <h5 class="card-title">{{conditions}}</h5>
-          <h3 class="card-title">{{temperature}}°F</h3>
-        </div>
-      </div>
-    </div>
+  <div class="row">
+    <div class="col" id="col0"></div>
+    <div class="col" id="col1"></div>
+    <div class="col" id="col2"></div>
+    <div class="col" id="col3"></div>
+    <div class="col" id="col4"></div>
   </div>
-  </script>
+</div>
 
-
-
-  <script id="current-weather-template" type="text/x-handlebars-template">
+<script id="five-day-forcast-template" type="text/x-handlebars-template">
   <div class="col">
     <div class="current-forcast">
-    <div class="card border-secondary mb-3" style="max-width: 18rem;">
-      <div class="card-header">{{city}}{{day}}</div>
+      <div class="card border-secondary mb-3" style="max-width: 18rem;">
+      <div class="card-header">{{day}}</div>
       <div class="card-body text-secondary">
-        <img width="100" height="80" src="http://openweathermap.org/img/wn/{{img}}@2x.png">
-        <h5 class="card-title">{{conditions}}</h5>
-        <h3 class="card-title">{{temperature}}°F</h3>
+      <img width="100" height="80" src="http://openweathermap.org/img/wn/{{img}}@2x.png">
+      <h5 class="card-title">{{conditions}}</h5>
+      <h3 class="card-title">{{temperature}}°F</h3>
+      </div>
       </div>
     </div>
   </div>
-</div>
-</div>
 </script>
 
 
-    <!-- <div class="long-term-forcast">
-<div class="row">-->
-    <!-- <div class="col" "mx-auto" style="width: 200px;">
-      <div class="five-day">
-        <div class="card border-secondary mb-3" style="max-width: 18rem;">
-          <div class="card-header">{{day}}</div>
-          <div class="card-body text-secondary">
-            <img width="100" height="80" src="http://openweathermap.org/img/wn/{{img}}@2x.png">
-            <h5 class="card-title">{{conditions}}</h5>
-            <h3 class="card-title">{{temperature}}°F</h3>
-          </div>
-        </div> -->
-
-    <!-- </div>
-    </div>-->
+<script id="current-weather-template" type="text/x-handlebars-template">
+  <div class="col">
+    <div class="current-forcast">
+      <div class="card border-secondary mb-3" style="max-width: 18rem;">
+        <div class="card-header">{{city}}{{day}}</div>
+        <div class="card-body text-secondary">
+        <img width="100" height="80" src="http://openweathermap.org/img/wn/{{img}}@2x.png">
+        <h5 class="card-title">{{conditions}}</h5>
+        <h3 class="card-title">{{temperature}}°F</h3>
+        </div>
+      </div>
     </div>
   </div>
-
-  <script src="main.js"></script>
+</script>
+<script src="main.js"></script>
 </body>
 
 </html>
