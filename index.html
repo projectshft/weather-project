@@ -36,22 +36,7 @@
         <div id="weather-symbol-display"></div>
       </div>
     </div>
-    <div class="row justify-content-center">
-      <div class="col-md-1 col-color">
-        <div id="weather-display">test</div>
-      </div>
-      <div class="col-md-1 col-color">
-        <div id="weather-symbol-display">test</div>
-      </div>
-      <div class="col-md-1 col-color">
-        <div id="weather-symbol-display">test</div>
-      </div>
-      <div class="col-md-1 col-color">
-        <div id="weather-symbol-display">test</div>
-      </div>
-      <div class="col-md-1 col-color">
-        <div id="weather-symbol-display">test</div>
-      </div>
+    <div class="row justify-content-center" id="forecast-display">
     </div>
   </div>
   ]
@@ -75,6 +60,16 @@
   <script id="curr-weather-symbol-template" type="text/x-handlebars-template">
       <img src="http://openweathermap.org/img/wn/{{iconID}}@2x.png">
     </script>
+  <script id="forecast-template" type="text/x-handlebars-template">
+    <div class="col-color">
+      <div id="forecast-display" class="forecast-display">
+        <h4>{{weatherType}}</h4>
+        <h4>{{temp}}&#176;</h4>
+        <img src="http://openweathermap.org/img/wn/{{iconID}}@2x.png">
+        <h4>{{day}}</h4>
+      </div>
+    </div>
+  </script>
 </body>
 
 </html>

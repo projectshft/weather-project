@@ -4,14 +4,14 @@ $('.search').on('click', function () {
 });
 
 var getWeatherData = (search) => {
-  fetch(`https://api.openweathermap.org/data/2.5/weather?q=${search}&APPID=${API_KEY}&units=imperial`)
+  fetch(`${URI_PREFIX}weather?q=${search}&APPID=${API_KEY}&units=imperial`)
     .then(response => response.json())
     .then(data => {
       //get current weather from this response
       parseCurrentDaysWeather(data, search);
       console.log("Location Data: ");
       console.log(data);
-      return fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${search}&APPID=${API_KEY}&units=imperial`);
+      return fetch(`${URI_PREFIX}forecast?q=${search}&APPID=${API_KEY}&units=imperial`);
     })
     .then(response => response.json())
     .then(data => {
@@ -88,8 +88,23 @@ var renderWeather = (currWeather) => {
   $weatherDisplay.append(weatherTemplate(currWeather));
   var weatherSymbolTemplate = Handlebars.compile($('#curr-weather-symbol-template').html());
   $weatherSymbolDisplay.append(weatherSymbolTemplate(currWeather));
+  var forecastSymbolTemplate = Handlebars.compile($('#forecast-template').html());
+  for (var i = 0; i < currWeather.forecast.length; i++) {
+    //extend weather data and extend it with date representation from date property
+    var forecastData = currWeather.forecast[i];
+    $forecastDisplay.append(forecastSymbolTemplate(
+      $.extend(
+        forecastData.weather,
+        {
+          day: forecastData.date.format('dddd')
+        }
+      )
+    ));
+  }
 }
 
+const URI_PREFIX = 'https://api.openweathermap.org/data/2.5/';
 const API_KEY = '4f479c5fa18add48ba9381407334d58b';
 let $weatherDisplay = $('#weather-display');
 let $weatherSymbolDisplay = $('#weather-symbol-display');
+let $forecastDisplay = $('#forecast-display');
