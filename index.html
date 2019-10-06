@@ -19,12 +19,15 @@
       <form class="post-form text-center">
         <div class="form-group">
           <input type="text" placeholder="Type in a US city!">
-          <button type="button" class="btn btn-success">Search</button>
+          <button type="button" class="btn btn-success search-button">Search</button>
         </div>
       </form>
-      <div id="current-weather" class="text-center" style="background-color: orange">
+      <div id="current-weather" class="text-center">
       </div>
-      <div id="weather-container" class="card-deck justify-content-center" style="background-color: pink">
+      <div class="text-center">
+        <button type="button" class="btn btn-primary default-button">Set Default</button>
+      </div>
+      <div id="weather-container" class="card-deck justify-content-center">
       </div>
     </div>
   </div>
@@ -50,6 +53,9 @@
         <div class="card-body">
           <div>{{forecast-condition}}</div>
           <div class="day-degrees">{{forecast-degrees}}°</div>
+          <div>
+            <img src="http://openweathermap.org/img/wn/{{forecast-icon}}@2x.png" class="card-image">
+          </div>
           <div>{{forecast-day}}</div>
         </div>
       </div>

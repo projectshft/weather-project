@@ -7,7 +7,7 @@
     "type": "chrome",
     "request": "launch",
     "name": "Launch Chrome against localhost",
-    "url": "file:///C:/Users/Sara/code/EVALS/weather-project/index.html",
+    "url": "file:///C:/Users/delas/code/EVALS/weather-project/index.html",
     "webRoot": "${workspaceFolder}"
   }]
 }
