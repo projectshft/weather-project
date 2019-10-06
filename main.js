@@ -76,7 +76,7 @@ var build5DayForecastStorage = () => {
   return storage;
 }
 
-var renderWeather = (currWeather, search) => {
+var renderWeather = (currWeather) => {
   $weatherDisplay.empty();
   $weatherSymbolDisplay.empty();
   $forecastDisplay.empty();
@@ -98,23 +98,34 @@ var renderWeather = (currWeather, search) => {
       )
     ));
   }
-  var defaultTemplate = Handlebars.compile($('#default-template').html());
-  $defaultDisplay.append(defaultTemplate({ search: search }));
+  //display the button only if local storage doesn't match search query
+  if (currentSearchArea !== localStorage.getItem('defaultArea')) {
+    var defaultTemplate = Handlebars.compile($('#default-template').html());
+    $defaultDisplay.append(defaultTemplate({ search: currentSearchArea }));
+  }
 }
 
 const URI_PREFIX = 'https://api.openweathermap.org/data/2.5/';
 const API_KEY = '4f479c5fa18add48ba9381407334d58b';
+let currentSearchArea = localStorage.getItem('defaultArea');
 let $weatherDisplay = $('#weather-display');
 let $weatherSymbolDisplay = $('#weather-symbol-display');
 let $forecastDisplay = $('#forecast-display');
 let $defaultDisplay = $('#default-option');
 
 $('.search').on('click', function () {
-  var search = $('#search-query').val();
-  getWeatherData(search);
+  currentSearchArea = $('#search-query').val();
+  getWeatherData(currentSearchArea);
 });
 
 $defaultDisplay.on('click', 'input', function () {
-  var search = $('#search-query').val();
-  getWeatherData(search);
+  localStorage.setItem('defaultArea', currentSearchArea);
+  alert('Location Saved!');
 });
+
+//restore local storage value and search
+if (currentSearchArea) {
+  console.log($("#search-query"));
+  $("#search-query").val(currentSearchArea);
+  getWeatherData(currentSearchArea);
+}
