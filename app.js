@@ -1,5 +1,5 @@
 const weather = {};
-
+let latitude, longitude;
 
 const fetchWeather = (location) => {
   $.ajax({
@@ -10,12 +10,23 @@ const fetchWeather = (location) => {
       weather.currentWeather = data;
       fetchAddress(data.coord.lat, data.coord.lon);
       fetchForecast(data.coord.lat, data.coord.lon);
+      latitude = data.coord.lat;
+      longitude = data.coord.lon;
     },
     error: function (jqXHR, textStatus, errorThrown) {
       console.log(textStatus);
     }
   });
 }
+
+
+
+//if localStorage has default location, display that
+if (localStorage.defaultLocation) {
+  fetchWeather(localStorage.defaultLocation);
+
+}
+
 
 const fetchForecast = (lat, lon) => {
   $.ajax({
@@ -32,21 +43,6 @@ const fetchForecast = (lat, lon) => {
   });
 }
 
-// const fetchWeatherIcon = (code) => {
-//   $.ajax({
-//     method: "GET",
-//     url: `http://openweathermap.org/img/wn/${code}@2x.png`,
-//     dataType: "json",
-//     success: function(data) {
-//       return data;
-
-//     },
-//     error: function(jqXHR, textStatus, errorThrown) {
-//       console.log(textStatus);
-//     }
-//   });
-// }
-
 const renderLocationWeather = () => {
   $('#weather').empty();
 
@@ -57,10 +53,15 @@ const renderLocationWeather = () => {
   const iconURL = `http://openweathermap.org/img/wn/${weather.currentWeather.weather[0].icon}@2x.png`
 
   $('#weather').append(`<h2>${currentTempFahrenheit}&#xb0</h2>`);
-  $('#weather').append(`<span>${currentLocation}, ${locationState}<img src=${iconURL}></span>`);
+  $('#weather').append(`<span>${currentLocation}, ${locationState}<img src=${iconURL}> <button id="set-default-city" class="btn btn-primary">Set As Default</button></span>`);
   $('#weather').append(`<h4>${conditions}</h4>`);
 
-
+  // add event listener for 'set as default' button
+  $('#set-default-city').on('click', function (e) {
+    alert(`${currentLocation} is set as your default location`);
+    if (localStorage.defaultLocation) localStorage.defaultLocation = '';
+    localStorage.defaultLocation = currentLocation;
+  })
 
 }
 
@@ -79,34 +80,44 @@ const renderForecast = () => {
   }, {})
 
   const finalStats = aggregateDayForecastData(dateObj);
-  console.log(finalStats)
 
   // render final stats
   $('#forecast').empty();
 
   for (let dayObj in finalStats) {
-    console.log(dayObj)
     const currentDay = moment().toString().substr(0, 3);
     let day = finalStats[dayObj];
 
     if (day.day !== currentDay) {
-      console.log(`Object day: ${day.day}  Moment day: ${currentDay}`);
       const source = $('#forecast-template').html(); // turns handlebars template into string
       const template = Handlebars.compile(source);
-      console.log(source)
-      console.log(template)
       const forecastHTML = template(day);
 
       $('#forecast').append(forecastHTML);
     }
   }
+  
+  // Add Geolocation service if available
+  if ("geolocation" in navigator) {
 
+    $('#forecast').append('<button id="geolocation" class="btn btn-primary">Current Coordinates</button>');
+    $('#geolocation').on('click', function () {
+      navigator.geolocation.getCurrentPosition(function (position) {
+        alert(`current lat: ${position.coords.latitude}, long: ${position.coords.longitude}`);
+        latitude = position.coords.latitude; 
+        longitude = position.coords.longitude;
+        initMap(latitude, longitude)
+      })
+    })
+  } else {
+    /* geolocation IS NOT available */
+    alert(`Unfortunately, geolocation services are unavailable at this time`)
+  }
 
 }
 
 const aggregateDayForecastData = (dateObj) => {
   const dateFinalStats = {};
-  console.log(dateObj)
 
   for (let day in dateObj) {
     let dayObj = dateObj[day];
@@ -126,7 +137,7 @@ const aggregateDayForecastData = (dateObj) => {
 
       for (let condition in accumulatedConditions) {
         let frequency = accumulatedConditions[condition];
-        if (frequency > mostFrequentConditionCount) {
+        if (frequency >= mostFrequentConditionCount) {
           mostFrequentConditionCount = frequency;
           mostFrequentCondition = condition;
         }
@@ -140,14 +151,11 @@ const aggregateDayForecastData = (dateObj) => {
       }) / tempsArr.length * 9 / 5 - 459.67)),
 
       conditions: getMostFrequentCondition(conditionsArr),
-      icon: getMostFrequentCondition(iconArr),
+      icon: `http://openweathermap.org/img/wn/${getMostFrequentCondition(iconArr)}@2x.png`,
       day: day
     }
 
   }
-
-  console.log(dateFinalStats); // final forecast Stats to render
-
 
   return dateFinalStats;
 }
@@ -184,4 +192,15 @@ const fetchAddress = (lat, long) => {
   });
 }
 
-// fetchAddress(weather.currentWeather);
+let map;
+
+function initMap(latitude,longitude) {
+ // console.log('initMap called!')
+  map = new google.maps.Map(document.getElementById('map'), {
+    center: { lat: latitude, lng: longitude },
+    zoom: 8
+  });
+}
+
+
+
