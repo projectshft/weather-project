@@ -22,3 +22,7 @@ display: inline-block;
 .long-title {
   text-align: center;
 }
+
+.background {
+  background: rgba(0, 151, 19, 0.6);
+}
