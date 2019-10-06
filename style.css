@@ -24,8 +24,12 @@ img {
   width: 65px;
 }
 
+#main-weather {
+  padding-left: 15px;
+}
+
 #weather {
-  margin-top: 0px;
+  margin-top: 20px;
   padding-top: 0px;
   padding-bottom: 50px;
 }
@@ -42,6 +46,7 @@ img {
   border-color: black;
   text-align: center;
   margin-left: 1px;
+  margin-top: 0px;
   padding: 15px;
 }
 
@@ -62,11 +67,19 @@ html, body {
   position: absolute;
   height: 130px;
   width: 130px;
-  margin-top: 18%;
+  margin-top: 17%;
   margin-left: 22%;
   background-color: white;
 }
 
-div {
-  background-color: white;
+#geolocation {
+  margin: 10px 0px 10px 31%;
 }
+
+#set-default-city {
+  margin-left: 30px;
+}
+
+
+
+

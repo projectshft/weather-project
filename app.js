@@ -1,6 +1,9 @@
+// Weather App - wk 3 project
+
 const weather = {};
 let latitude, longitude;
 
+// fetch the weather for selected location
 const fetchWeather = (location) => {
   $.ajax({
     method: "GET",
@@ -12,6 +15,7 @@ const fetchWeather = (location) => {
       fetchForecast(data.coord.lat, data.coord.lon);
       latitude = data.coord.lat;
       longitude = data.coord.lon;
+      initMap(latitude, longitude);
     },
     error: function (jqXHR, textStatus, errorThrown) {
       console.log(textStatus);
@@ -19,15 +23,14 @@ const fetchWeather = (location) => {
   });
 }
 
-
-
 //if localStorage has default location, display that
 if (localStorage.defaultLocation) {
   fetchWeather(localStorage.defaultLocation);
-
+  latitude = localStorage.lat;
+  longitude = localStorage.lon;
 }
 
-
+// fetch forecast for the selected location
 const fetchForecast = (lat, lon) => {
   $.ajax({
     method: "GET",
@@ -43,6 +46,7 @@ const fetchForecast = (lat, lon) => {
   });
 }
 
+// render the location weather
 const renderLocationWeather = () => {
   $('#weather').empty();
 
@@ -59,12 +63,17 @@ const renderLocationWeather = () => {
   // add event listener for 'set as default' button
   $('#set-default-city').on('click', function (e) {
     alert(`${currentLocation} is set as your default location`);
-    if (localStorage.defaultLocation) localStorage.defaultLocation = '';
+    if (localStorage.defaultLocation) {
+      localStorage.defaultLocation = '';
+      localStorage.coord = '';
+    }
     localStorage.defaultLocation = currentLocation;
+    localStorage.lat = weather.currentWeather.coord.lat;
+    localStorage.lon = weather.currentWeather.coord.lon;
   })
-
 }
 
+// render the forecast
 const renderForecast = () => {
   const forecastArr = weather.forecast;
 
@@ -106,7 +115,6 @@ const renderForecast = () => {
         alert(`current lat: ${position.coords.latitude}, long: ${position.coords.longitude}`);
         latitude = position.coords.latitude; 
         longitude = position.coords.longitude;
-        initMap(latitude, longitude)
       })
     })
   } else {
@@ -116,6 +124,7 @@ const renderForecast = () => {
 
 }
 
+// for each day's forecast times, get the most frequent condtion (e.g. clear) and most frequent icon
 const aggregateDayForecastData = (dateObj) => {
   const dateFinalStats = {};
 
@@ -125,7 +134,7 @@ const aggregateDayForecastData = (dateObj) => {
     let conditionsArr = dayObj.weather;
     let iconArr = dayObj.icon;
 
-    // get the most frequent condition for the forecast day
+    // get the most frequent condition or icon for the forecast day
     const getMostFrequentCondition = (conditionsArr) => {
       let mostFrequentConditionCount = 0, mostFrequentCondition = '';
 
@@ -154,20 +163,18 @@ const aggregateDayForecastData = (dateObj) => {
       icon: `http://openweathermap.org/img/wn/${getMostFrequentCondition(iconArr)}@2x.png`,
       day: day
     }
-
   }
-
   return dateFinalStats;
 }
 
-
+// set event handler for search button
 $('#search').on('click', function (e) {
   const location = $('#location').val();
-
   fetchWeather(location);
   $('#location').val(''); // empty the input field
 })
 
+// ensure that only button click submits, not enter
 $(document).ready(function () {
   $(window).keydown(function (event) {
     if (event.keyCode == 13) {
@@ -177,6 +184,7 @@ $(document).ready(function () {
   });
 });
 
+// fetch the address from google maps for the selected location, used for rendering the state or country code
 const fetchAddress = (lat, long) => {
   $.ajax({
     method: "GET",
@@ -192,9 +200,11 @@ const fetchAddress = (lat, long) => {
   });
 }
 
+// google map display
 let map;
 
 function initMap(latitude,longitude) {
+  if (!latitude) return;
  // console.log('initMap called!')
   map = new google.maps.Map(document.getElementById('map'), {
     center: { lat: latitude, lng: longitude },
