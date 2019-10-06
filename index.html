@@ -39,7 +39,11 @@
     <div class="row justify-content-center" id="forecast-display">
     </div>
   </div>
-  ]
+  <br>
+  <div id="default-option">
+  </div>
+  <br>
+
   <script src="https://rawgit.com/moment/moment/2.2.1/min/moment.min.js"></script>
   <!-- jQuery first, then Tether, then Bootstrap JS. -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
@@ -70,6 +74,9 @@
       </div>
     </div>
   </script>
+  <script id="default-template" type="text/x-handlebars-template">
+        <input type="button" value="Set {{search}} as default city" class="btn btn-primary default" /></input>
+      </script>
 </body>
 
 </html>

@@ -1,8 +1,3 @@
-$('.search').on('click', function () {
-  var search = $('#search-query').val();
-  getWeatherData(search);
-});
-
 var getWeatherData = (search) => {
   fetch(`${URI_PREFIX}weather?q=${search}&APPID=${API_KEY}&units=imperial`)
     .then(response => response.json())
@@ -17,7 +12,7 @@ var getWeatherData = (search) => {
     .then(data => {
       //get forecast from this response
       parseForecast(data);
-      renderWeather(currWeather);
+      renderWeather(currWeather, search);
       console.log("Forecast Data: ");
       console.log(data);
       console.log("Saved Data: ")
@@ -81,10 +76,11 @@ var build5DayForecastStorage = () => {
   return storage;
 }
 
-var renderWeather = (currWeather) => {
+var renderWeather = (currWeather, search) => {
   $weatherDisplay.empty();
   $weatherSymbolDisplay.empty();
   $forecastDisplay.empty();
+  $defaultDisplay.empty();
   var weatherTemplate = Handlebars.compile($('#curr-weather-template').html());
   $weatherDisplay.append(weatherTemplate(currWeather));
   var weatherSymbolTemplate = Handlebars.compile($('#curr-weather-symbol-template').html());
@@ -102,6 +98,8 @@ var renderWeather = (currWeather) => {
       )
     ));
   }
+  var defaultTemplate = Handlebars.compile($('#default-template').html());
+  $defaultDisplay.append(defaultTemplate({ search: search }));
 }
 
 const URI_PREFIX = 'https://api.openweathermap.org/data/2.5/';
@@ -109,3 +107,14 @@ const API_KEY = '4f479c5fa18add48ba9381407334d58b';
 let $weatherDisplay = $('#weather-display');
 let $weatherSymbolDisplay = $('#weather-symbol-display');
 let $forecastDisplay = $('#forecast-display');
+let $defaultDisplay = $('#default-option');
+
+$('.search').on('click', function () {
+  var search = $('#search-query').val();
+  getWeatherData(search);
+});
+
+$defaultDisplay.on('click', 'input', function () {
+  var search = $('#search-query').val();
+  getWeatherData(search);
+});

@@ -44,6 +44,10 @@ img.filter-image {
     margin-right: auto;
 }
 
+#default-option {
+  text-align: center;
+}
+
 .forecast-display{
   text-align: center;
   display: block;
