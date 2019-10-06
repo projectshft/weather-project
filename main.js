@@ -84,6 +84,7 @@ var build5DayForecastStorage = () => {
 var renderWeather = (currWeather) => {
   $weatherDisplay.empty();
   $weatherSymbolDisplay.empty();
+  $forecastDisplay.empty();
   var weatherTemplate = Handlebars.compile($('#curr-weather-template').html());
   $weatherDisplay.append(weatherTemplate(currWeather));
   var weatherSymbolTemplate = Handlebars.compile($('#curr-weather-symbol-template').html());
