@@ -1,0 +1,11 @@
+body {
+    text-align: center;
+}
+.form-control { 
+    width: 50%;
+    display: inline-block;
+}
+.padding {
+    padding: 20px;
+}
+
