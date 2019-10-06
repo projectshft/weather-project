@@ -37,6 +37,7 @@ const renderWeather = function () {
   $('#current-weather').empty()
   $('#weather-container').empty()
 
+  // Rendering current weather
   const currentSource = $('#current-weather-template').html();
   const currentTemplate = Handlebars.compile(currentSource);
   $('#current-weather').append(currentTemplate({
@@ -46,6 +47,7 @@ const renderWeather = function () {
     "current-icon": currentCityWeather.icon
   }))
 
+  // Rendering 5-day forecast
   const forecastSource = $('#forecast-weather-template').html();
   const forecastTemplate = Handlebars.compile(forecastSource);
   currentForecast.forEach(function (forecastDay) {
@@ -56,7 +58,6 @@ const renderWeather = function () {
       "forecast-icon": forecastDay.icon
     }))
   })
-
   $('.default-button').css("display", "inline")
 }
 
@@ -96,16 +97,22 @@ const fetchForecastedWeather = function (query) {
   });
 }
 
-renderWeather();
-
 // Search click listener
 $('.search-button').on('click', function () {
   const location = $('input').val()
   fetchCurrentWeather(location);
   fetchForecastedWeather(location);
 })
-
+// Set default listener
 $('.default-button').on('click', function () {
   localStorage.setItem("current-weather", JSON.stringify(currentCityWeather))
   localStorage.setItem("current-forecast", JSON.stringify(currentForecast))
+  alert("Defaults set - try refreshing!")
 })
+
+// Checks localStorage on page load and renders weather values if defaults are found
+if (localStorage.length > 0) {
+  currentCityWeather = JSON.parse(localStorage.getItem("current-weather"))
+  currentForecast = JSON.parse(localStorage.getItem("current-forecast"))
+  renderWeather();
+}
