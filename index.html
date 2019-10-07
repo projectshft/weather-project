@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="container m-auto shadow row">
+      <div
+        class="container justify-content-center p-4 mx-auto my-2 rounded drop-shadow col-sm-9 col-md-8 col-lg-7"
+      >
+        <h3 class="display-4 text-center mt-3">Check the Weather!</h3>
+        <small class="text-muted text-center d-inline-block mb-3"
+          >Enter your city or choose current location</small
+        >
+        <div class="input-group mb-3">
+          <input
+            type="text"
+            class="form-control shadow"
+            placeholder="City"
+            aria-label="City"
+            autofocus="true"
+          />
+          <div class="input-group-append">
+            <button class="btn" type="button" id="search">Search</button>
+          </div>
+        </div>
+        <div class="d-flex justify-content-center m-auto p-3">
+          <button class="btn btn-dark btn-sm mx-1" id="current-location">
+            Your current location
+          </button>
+          <button class="btn btn-info btn-sm mx-1" id="change-country-code">
+            Change country
+          </button>
+        </div>
+        <div id="country-codes">
+          <select id="country-code-select" class="w-50 m-auto"></select>
+        </div>
+      </div>
+      <div
+        id="weather-data"
+        class="bg-warning text-dark border-dark drop-shadow"
+      ></div>
+    </div>
+
+    <script id="weather-template" type="text/x-handlebars-template">
+      <div id="main-weather-container" class="shadow p-3">
+
+         <h3 class="display-4 text-center">Displaying weather for <strong>{{name}}, {{time.country}}</strong></h3>
+         <hr/>
+         <div id="current-weather-header">
+            <img src="http://openweathermap.org/img/w/{{weatherDescription.icon}}.png" alt="icon" id="weather-icon">
+            <p>{{weatherDescription.description}}</p>
+         </div>
+         <ul id="current-weather-details" class="drop-shadow">
+            <li><strong>Temperature: </strong> {{temperature.temp}}℉</li>
+         </ul>
+         <button class="btn btn-lg btn-info btn-block" id="toggle-forecast">See 5 day forecast</button>
+         <div id="weather-forecast" class="container-fluid p-3 m-auto">
+            <div class="card-group">
+               {{#filteredForecastData}}
+               <div class="card">
+                     <img class="card-img-top" src="http://openweathermap.org/img/w/{{weather.[0].icon}}.png" alt="Card image cap" />
+                     <div class="card-body">
+                       <h5 class="card-title">{{formatDate dt_txt}}</h5>
+                       <ul class="card-text" id="weather-forecast-ul">
+                   </div>
+            </div>
+
+               {{/filteredForecastData}}
+
+         </div>
+      </div>
+    </script>
+    <script id="country-code-template" type="text/x-handlebars-template">
+      <option value="US" selected>United States: US</option>
+      {{#each codes}}
+      <option value="{{code}}">{{name}}: {{code}}</option>
+      {{/each}}
+    </script>
+
+    <script src="handlebars.js"></script>
+    <script src="main.js"></script>
+  </body>
+</html>
+
+
+
+
