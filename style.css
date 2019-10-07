@@ -1,5 +1,6 @@
 body {
     text-align: center;
+    padding-top: 25px;
 }
 
 .form-control { 
@@ -12,7 +13,7 @@ body {
 }
 
 #forecast-cards {
-
     width: 30%;
     margin: auto;
 }
+
