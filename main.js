@@ -43,9 +43,8 @@ var renderFiveDayForecast = function (renderForecast) {
         "icon": "http://openweathermap.org/img/wn/" + forecast[i].icon + "@2x.png",
         "temperature": forecast[i].temperature,
         "day": moment(forecast[i].day).format('dddd')
-    
-    
     });
+    
     $('#forecast-cards').append(fiveDayForecastHTML);
 }};
 
