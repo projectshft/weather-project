@@ -1,34 +1,55 @@
+let getGeoLocWeatherData = () => {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function (position) {
+      getWeatherData(position);
+    });
+  } else {
+    alert("Geolocation not available");
+  }
+}
+
 var getWeatherData = (search) => {
-  fetch(`${URI_PREFIX}weather?q=${search}&APPID=${API_KEY}&units=imperial`)
+  let searchType = "";
+  //if passed a search object, assume its geo loc data
+  if (typeof search == 'object') {
+    //don't want to save lat/long coords yet until we figure out how to find city name from that?
+    currentSearchArea = "";
+    searchType = `lat=${search.coords.latitude}&lon=${search.coords.longitude}`;
+  }
+  else {
+    searchType = `q=${search}`;
+  }
+
+  return fetch(`${URI_PREFIX}weather?${searchType}&APPID=${API_KEY}&units=imperial`)
     .then(response => response.json())
     .then(data => {
       //get current weather from this response
-      parseCurrentDaysWeather(data, search);
+      parseCurrentDaysWeather(data);
       console.log("Location Data: ");
       console.log(data);
-      return fetch(`${URI_PREFIX}forecast?q=${search}&APPID=${API_KEY}&units=imperial`);
+      return fetch(`${URI_PREFIX}forecast?${searchType}&APPID=${API_KEY}&units=imperial`);
     })
     .then(response => response.json())
     .then(data => {
       //get forecast from this response
       parseForecast(data);
-      renderWeather(currWeather, search);
+      renderWeather(currWeather);
       console.log("Forecast Data: ");
       console.log(data);
       console.log("Saved Data: ")
       console.log(JSON.stringify(currWeather));
     }
     )
-    .catch(error => console.error(error))
+    .catch(error => console.error("Failure in getWeatherData: " + error))
 }
 
 //take temp, weather desc, and icon data from passed in data
 //also build storage for forecast
-var parseCurrentDaysWeather = (data, search) => {
+var parseCurrentDaysWeather = (data) => {
   currWeather = {
     temp: data.main ? Math.trunc(data.main.temp) : null,
     weatherType: data.weather ? data.weather[0].main : null,
-    location: search,
+    location: currentSearchArea,
     iconID: data.weather ? data.weather[0].icon : null,
     forecast: build5DayForecastStorage()
   }
@@ -98,8 +119,8 @@ var renderWeather = (currWeather) => {
       )
     ));
   }
-  //display the button only if local storage doesn't match search query
-  if (currentSearchArea !== localStorage.getItem('defaultArea')) {
+  //display the button only if local storage doesn't match search query or if blank (from geo loc)
+  if (currentSearchArea !== "" && currentSearchArea !== localStorage.getItem('defaultArea')) {
     var defaultTemplate = Handlebars.compile($('#default-template').html());
     $defaultDisplay.append(defaultTemplate({ search: currentSearchArea }));
   }
@@ -118,6 +139,11 @@ $('.search').on('click', function () {
   getWeatherData(currentSearchArea);
 });
 
+$('.geosearch').on('click', function () {
+  $("#search-query").val("");
+  getGeoLocWeatherData();
+});
+
 $defaultDisplay.on('click', 'input', function () {
   localStorage.setItem('defaultArea', currentSearchArea);
   alert('Location Saved!');
@@ -125,7 +151,6 @@ $defaultDisplay.on('click', 'input', function () {
 
 //restore local storage value and search
 if (currentSearchArea) {
-  console.log($("#search-query"));
   $("#search-query").val(currentSearchArea);
   getWeatherData(currentSearchArea);
 }
