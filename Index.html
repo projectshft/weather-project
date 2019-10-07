@@ -9,7 +9,9 @@
 	<!-- Bootstrap CSS -->
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
 		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js" type="text/JavaScript"></script>
 	<link rel="stylesheet" href="style.css">
+
 	<title>Current Weather</title>
 </head>
 
@@ -19,7 +21,7 @@
 <form>
 	<div class="form-group">
 		<label for="formGroupExampleInput"></label>
-		<input id="citysearch" type="text" class="form-control" placeholder="Whats the temperature in ....">
+		<input id="citysearch" type="text" class="form-control" placeholder="What's the temperature in ....">
 		<p id="padding"></p>
 		<button id="search" type="button" class="btn btn-primary">Search</button>
 	</div>
@@ -28,6 +30,10 @@
 
 <div id="weatherblurb">
 </div>
+
+<div id="forecast-cards">
+</div>
+
 
 	<!-- Optional JavaScript -->
 	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -49,6 +55,66 @@
 			<h2>{{city}}</h2>
 			<h4>{{condition}}</h4>
 			<img src={{"icon"}} alt="icons">
+		</div>
+	</script>
+	<script id="monday-template" type="text/x-handlebars-template">
+		<div class="card-group">
+			<div class="card">
+				<div class="card-body">
+					<h5 class="card-title">{{condition}}</h5>
+					<img src={{"icon"}} }}class="card-img-top" alt="icon">
+					<h3>{{temperature}}</h3>
+					<h3>{{day}}</h3>
+				</div>
+			</div>
+		</div>
+	</script>
+	<script id="tuesday-template" type="text/x-handlebars-template">
+		<div class="card-group">
+			<div class="card">
+				<div class="card-body">
+					<h5 class="card-title">{{condition}}</h5>
+					<img src={{"icon"}} }}class="card-img-top" alt="...">
+					<h3>{{temperature}}</h3>
+					<h3>{{weekday}}</h3>
+				</div>
+			</div>
+		</div>
+	</script>
+	<script id="wednesday-template" type="text/x-handlebars-template">
+		<div class="card-group">
+			<div class="card">
+				<div class="card-body">
+					<h5 class="card-title">{{condition}}</h5>
+					<img src={{"icon"}} }}class="card-img-top" alt="...">
+					<h3>{{temperature}}</h3>
+					<h3>{{weekday}}</h3>
+				</div>
+			</div>
+		</div>
+	</script>
+	<script id="thursday-template" type="text/x-handlebars-template">
+		<div class="card-group">
+			<div class="card">
+				<div class="card-body">
+					<h5 class="card-title">{{condition}}</h5>
+					<img src={{"icon"}} }}class="card-img-top" alt="...">
+					<h3>{{temperature}}</h3>
+					<h3>{{weekday}}</h3>
+				</div>
+			</div>
+		</div>
+	</script>
+	<script id="friday-template" type="text/x-handlebars-template">
+		<div class="card-group">
+			<div class="card">
+				<div class="card-body">
+					<h5 class="card-title">{{condition}}</h5>
+					<img src={{"icon"}} }}class="card-img-top" alt="...">
+					<h3>{{temperature}}</h3>
+					<h3>{{weekday}}</h3>
+				</div>
+			</div>
 		</div>
 	</script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>

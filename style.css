@@ -1,11 +1,18 @@
 body {
     text-align: center;
 }
+
 .form-control { 
-    width: 50%;
+    width: 30%;
     display: inline-block;
 }
+
 .padding {
     padding: 20px;
 }
 
+#forecast-cards {
+
+    width: 30%;
+    margin: auto;
+}
