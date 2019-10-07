@@ -1,0 +1,37 @@
+body {
+    font-family: monospace, sans-serif;
+}
+
+.top {
+    background-color: white;
+    color: #1f601f;
+}
+
+.top2 {
+    margin-top: 100px;
+}
+
+.weather, .forecast, .current {
+    background-color: #ffcc80;
+}
+
+.current {
+    border-radius: 10px;
+    vertical-align: middle;
+}
+
+.big-img {
+    min-height: 160px;
+    min-width: 160px;
+}
+.city {
+    padding: 5px;
+}
+.forecast {
+    border-radius: 10px;
+    margin-top: 10px;
+    padding-left: 100px;
+    padding-top: 5px;
+    margin-bottom:100px;
+    color: #1f601f;
+}

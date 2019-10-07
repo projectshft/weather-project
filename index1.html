@@ -1,43 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Weather Project</title>
-    <link rel="stylesheet" type="text/css" href="style1.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <meta charset="UTF-8">
+  <title>Weather Project</title>
+  <link rel="stylesheet" type="text/css" href="style1.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
+
 <body>
-    <div class="container">
-        <div class="row top">
-            <div class="col-md-6 offset-md-3 top2">
-                <div class="row">
-                    <form class="search-form col-md-4">
-                        <h1>Weather Project</h1>
-                        <div class="form-group form-group-sm">
-                            <input type="text" id="search-query" class="form-control input-sm" placeholder="Enter City">
-                            </input>
-                        </div>
-
-                        <button type="button" class="btn btn-primary btn-sm search">Search</button>
-                    </form>
-
-                    <div class="current-weather col-md-8">
-
-                    </div>
-                </div>
+  <div class="container">
+    <div class="row top">
+      <div class="col-md-6 offset-md-3 top2">
+        <div class="row">
+          <form class="search-form col-md-4">
+            <h1>Weather Project</h1>
+            <div class="form-group form-group-sm">
+              <input type="text" id="search-query" class="form-control input-sm" placeholder="Enter City">
+              </input>
             </div>
-        </div>
-        <div class="row bottom">
-            <div class="col-md-6 offset-md-3">
-                <div class="forecast row"></div>
 
+            <button type="button" class="btn btn-primary btn-sm search">Search</button>
+          </form>
 
-            </div>
+          <div class="current-weather col-md-8">
+
+          </div>
         </div>
+      </div>
     </div>
+    <div class="row bottom">
+      <div class="col-md-6 offset-md-3">
+        <div class="forecast row"></div>
 
-    <script id="current-weather-template" type="text/x-handlebars-template">
-        <div class="current">
+
+      </div>
+    </div>
+  </div>
+
+  <script id="current-weather-template" type="text/x-handlebars-template">
+    <div class="current">
             <div class="row">
                 <div class="offset-md-1">
                     <h3 class="text-center city">{{ city }}</h3>
@@ -56,17 +58,18 @@
     </script>
 
 
-    <script id="forecast-template" type="text/x-handlebars-template">
-        <div class="col-md-2">
+  <script id="forecast-template" type="text/x-handlebars-template">
+    <div class="col-md-2">
             <h6 class="text-center">{{ weekday }}</h6>
             <h5 class="text-center">{{ temperature }}&deg;F</h5>
-            <img src="{{ icon }}" alt="" class="grayscale offset-md-2">
+            <img src="{{ icon }}" alt="" class="offset-md-2">
             <h6 class="text-center">{{ condition }}</h6>
         </div>
     </script>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.4.0/handlebars.js" type="text/javascript"></script>
-    <script src="main1.js" type="text/javascript"></script>
+  <script src="https://cdn.jsdelivr.net/npm/moment@2.24.0/moment.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.4.0/handlebars.js" type="text/javascript"></script>
+  <script src="main1.js" type="text/javascript"></script>
 </body>
+
 </html>
