@@ -1,0 +1,20 @@
+.card-body{
+  border: 3px solid black;
+  background-color: lightblue;
+}
+
+.row{
+  padding: 25px;
+}
+
+body, html {
+  height: 100%;
+
+  background-image: url(https://media.heartlandtv.com/images/thunderstorm_flashes_night_weather_sky_forward_nature_storm-1438107.jpg!d8.jpeg);
+
+  height: 100%;
+
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
