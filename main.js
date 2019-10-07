@@ -41,7 +41,21 @@ var fetchFiveDayForecast = function (query) {
 
 // API for the weather currently
 
-var currentConditions = function (data) {
+
+var renderWeather = function () {
+  $('.weather').empty();
+  var $weather = $('.weather-template');
+  for (var i = 0; i < currentConditions.length; i++) {
+    var image = weather.hasOwnProperty('imageLinks') ? weather.imageLinks.smallThumbnail : null;
+    var newHTML = template({ temp, city, weather, weatherConditions, icon });
+    $currentConditions.append(newHTML);
+  }
+ 
+  renderWeather();
+ };
+ 
+
+ var currentConditions = function (data) {
   weather = [{
     temp: ((data.main.temp)),
     city: data.name,
@@ -49,5 +63,5 @@ var currentConditions = function (data) {
     icon: 'http://openweathermap.org/img/w/' + data.weather[0].icon + '.png'
   }];
   renderWeather();
-};
-
+}
+;
