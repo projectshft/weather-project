@@ -1,98 +1,60 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <link
-      rel="stylesheet"
-      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-      crossorigin="anonymous"
-    />
-    <link rel="stylesheet" href="style.css" />
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
     <title>Document</title>
   </head>
   <body>
-    <div class="container m-auto shadow row">
-      <div
-        class="container justify-content-center p-4 mx-auto my-2 rounded drop-shadow col-sm-9 col-md-8 col-lg-7"
-      >
-        <h3 class="display-4 text-center mt-3">Check the Weather!</h3>
-        <small class="text-muted text-center d-inline-block mb-3"
-          >Enter your city or choose current location</small
-        >
-        <div class="input-group mb-3">
-          <input
-            type="text"
-            class="form-control shadow"
-            placeholder="City"
-            aria-label="City"
-            autofocus="true"
-          />
-          <div class="input-group-append">
-            <button class="btn" type="button" id="search">Search</button>
+      <h1 font-color="white">Check the Weather!</h1>
+      <div class="container" id='input' style="display:flex;justify-content:center;align-items:center;">
+        <div class="form-group">
+          <div class="col-md-8">
+            <input id="search-query" type="text" class="form-control" placeholder="Enter City Name"></input>
+          </div>
+          <div class="col-md-2">
+            <button id="find-weather" class="btn btn-primary">Search</button>
           </div>
         </div>
-        <div class="d-flex justify-content-center m-auto p-3">
-          <button class="btn btn-dark btn-sm mx-1" id="current-location">
-            Your current location
-          </button>
-          <button class="btn btn-info btn-sm mx-1" id="change-country-code">
-            Change country
-          </button>
         </div>
-        <div id="country-codes">
-          <select id="country-code-select" class="w-50 m-auto"></select>
-        </div>
-      </div>
-      <div
-        id="weather-data"
-        class="bg-warning text-dark border-dark drop-shadow"
-      ></div>
-    </div>
+        <div id="todays-weather"></div>
+        <div id="weeks-forecast" class="row" style="align-items: center"></div>
 
-    <script id="weather-template" type="text/x-handlebars-template">
-      <div id="main-weather-container" class="shadow p-3">
 
-         <h3 class="display-4 text-center">Displaying weather for <strong>{{name}}, {{time.country}}</strong></h3>
-         <hr/>
-         <div id="current-weather-header">
-            <img src="http://openweathermap.org/img/w/{{weatherDescription.icon}}.png" alt="icon" id="weather-icon">
-            <p>{{weatherDescription.description}}</p>
-         </div>
-         <ul id="current-weather-details" class="drop-shadow">
-            <li><strong>Temperature: </strong> {{temperature.temp}}℉</li>
-         </ul>
-         <button class="btn btn-lg btn-info btn-block" id="toggle-forecast">See 5 day forecast</button>
-         <div id="weather-forecast" class="container-fluid p-3 m-auto">
-            <div class="card-group">
-               {{#filteredForecastData}}
-               <div class="card">
-                     <img class="card-img-top" src="http://openweathermap.org/img/w/{{weather.[0].icon}}.png" alt="Card image cap" />
-                     <div class="card-body">
-                       <h5 class="card-title">{{formatDate dt_txt}}</h5>
-                       <ul class="card-text" id="weather-forecast-ul">
-                   </div>
-            </div>
-
-               {{/filteredForecastData}}
-
-         </div>
-      </div>
-    </script>
-    <script id="country-code-template" type="text/x-handlebars-template">
-      <option value="US" selected>United States: US</option>
-      {{#each codes}}
-      <option value="{{code}}">{{name}}: {{code}}</option>
-      {{/each}}
-    </script>
-
-    <script src="handlebars.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
+    <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.12/handlebars.js" charset="utf-8"></script>
     <script src="main.js"></script>
-  </body>
+
+
+
+ 
+    <script id="current-weather-template" type="text/x-handlebars-template" class="col-sm-2">
+      <div id="current-weather-display" class="card2" style="display:flex;justify-content:center;align-items:center">
+        <div class="col-sm-2" id="current-weather-information" style="align-items: center">
+          <h3>{{ temp }}˚</h3>
+          <div>{{ location }}</div>
+          <div>{{ weather }}</div>
+          <div>{{ date }}</div>
+        </div>
+        <div class="col-md-5" id="icon-display" style="align-items: center">
+          <img src="http://openweathermap.org/img/w/{{ icon }}.png" alt="">
+        </div>
+      </div>
+    </script>
+
+ 
+    <script id="weeks-forecast-template" type="text/x-handlebars-template">
+      <div class="col-sm-2">
+        <div class="card" style="width: 18rem;">
+          <div>{{ weather }}</div>
+          <div> <strong>{{ temp }}˚</strong></div>
+          <img src="http://openweathermap.org/img/w/{{ icon }}.png" alt="">
+          <div>{{ date }}</div>
+        </div>
+      </div>
+    </script>
+
+</body>
 </html>
-
-
-
-
