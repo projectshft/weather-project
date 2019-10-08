@@ -1,0 +1,87 @@
+h1 {
+  text-align: center;
+  color: black;
+}
+
+h2 {
+  box-sizing: border-box;
+  margin-bottom: 0px;
+  color: black
+
+}
+
+body {
+  line-height: .5;
+  font-size: 20px;
+  font-weight: 500;
+  padding: 0;
+  background: url("https://ryanmartinproductions.com/image/94734-full_tropical-background-images-wallpapertag.jpg")
+}
+
+h4 {
+  margin: 0px;
+  padding: 0px;
+  color: black
+}
+
+img {
+  height: 65px;
+  width: 65px;
+}
+
+#weather {
+  margin-top: 0px;
+  padding-top: 0px;
+  padding-bottom: 50px;
+  text-align: center
+}
+
+.weather-form {
+  margin-top: 50px;
+  margin-bottom: 0px;
+}
+
+.forecast {
+  display: inline-block;
+  border: 2px;
+  border-style: dotted solid;
+  border-color: black;
+  border-width: 2px
+  text-align: center;
+  margin-left: 1px;
+  padding: 15px;
+}
+
+html,
+body {
+  margin: 0px;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+}
+
+#map-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+#map {
+  position: absolute;
+  height: 130px;
+  width: 130px;
+  margin-top: 18%;
+  margin-left: 22%;
+  background-color: black;
+}
+
+#center-text {
+  text-align: center
+}
+
+.row {
+  text-align: center
+}
+
+span {
+  color: black
+}
