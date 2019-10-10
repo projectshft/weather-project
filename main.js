@@ -1,5 +1,5 @@
 var currentWeather = [];
-var forecast = [];
+var currentForecast = [];
 //need to make these non global but still work somehow
 
 //handlebars
@@ -65,25 +65,29 @@ $('#search').on('click', function () {
 //create a dynamic object for each day with temp, condition and day name
 
 var addCurrentForecast = function (data) {
-    for (var i = 0; i < currentForecast.length; i++) {
-
-        currentForecast = {
-            condition: data.list.weather[1].main,
-            temperature: data.list.main.temp,
-            day: moment(data.list.dt).format('dddd')
-        };
+    for (var i = 0; i < data.list.length; i += 8) {
+        currentForecast.push(data.list[i]);
     }
 
+    // for (var i = 0; i < currentForecast.length; i++) {
 
-forecast.push(currentForecast);
-console.log(currentForecast);
+    //     currentForecast = {
+    //         condition: data.list.weather[1].main,
+    //         temperature: data.list.main.temp,
+    //         day: moment(data.list.dt).format('dddd')
+    //     };
+    // }
+
+
+    // forecast.push(currentForecast);
+    // console.log(currentForecast);
 
 };
 
 var fetchForecast = function (query) {
     $.ajax({
         method: "GET",
-        url: "https://api.openweathermap.org/data/2.5/forecast?id=" + query + "&units=imperial&APPID=bb9deb8f222b9d0972270d0b7ea6fed4",
+        url: "https://api.openweathermap.org/data/2.5/forecast?q=" + query + "&units=imperial&APPID=bb9deb8f222b9d0972270d0b7ea6fed4",
         dataType: "json",
         success: function (data) {
             console.log(data);
@@ -98,7 +102,7 @@ var fetchForecast = function (query) {
 };
 
 var renderFiveDay = function () {
-
+    debugger;
     
 
     $('#city').html(currentForecast); //for now just add to the same div as current weather
