@@ -2,6 +2,7 @@ var currentWeather = [];
 
 //handlebars
 var addCurrentWeather = function (data) {
+    
     currentWeather = {
         cityName: data.name,
         temperature: data.main.temp,
@@ -30,7 +31,7 @@ var fetchCurrentWeather = function (query) {
 };
 
 var renderCurrentWeather = function () {
-
+   
     var weather = currentWeather;
     var source = $('#weather-template').html();
     var template = Handlebars.compile(source)
@@ -48,9 +49,56 @@ $('#search').on('click', function () {
     console.log("city name is now", search);//test console.log here to make sure form is working 
 
 
-    fetchCurrentWeather(search);//pass city name into fetch function and invoke it
+    fetchCurrentWeather(search);
+    fetchForecast(search)//pass city name into fetch functions and invoke them
 
 });
+
+var addForecast = function (data) {
+    
+    currentWeather = {
+        condition: data.list.weather[1].main,
+        temperature: data.list.main.temp,
+        day: data.list.dt//convert using  moment().format('dddd');    
+    }
+
+};
+
+var fetchForecast = function (query) {
+    $.ajax({
+        method: "GET",
+        url: "https://api.openweathermap.org/data/2.5/forecast?id=" + query + "&units=imperial&APPID=bb9deb8f222b9d0972270d0b7ea6fed4",
+        dataType: "json",
+        success: function (data) {
+
+            addCurrentWeather(data);
+            renderForecast();
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            console.log(textStatus);
+        }
+    });
+};
+
+var renderCurrentWeather = function () {
+
+    var weather = currentWeather;
+    var source = $('#weather-template').html();
+    var template = Handlebars.compile(source)
+    var weatherHTML = template(currentWeather);
+
+    $('#city').html(weatherHTML);
+    //.html here instead of .append replaces the current div contents instead of adding to it
+
+
+};
+
+
+
+
+
+
+
 renderCurrentWeather();
 
 //use user input to grab data from api and display it in handlebars template
@@ -62,10 +110,12 @@ renderCurrentWeather();
 //5. erase first city data on second search
 
 
+//Part 2:in addition to steps above, display a container with five cards each with a day's conditions for the selected city
 
-
-//Part Two:
-//1. after city input, grab 5 day forecast from api and 
-
-fetchForeCast = function
-renderForeCast = 
+//1.use new fetchForecast function to use new url to grab forecast api.openweathermap.org/data/2.5/forecast?id=524901 plus my key (dont forget imperial units)
+//2.renderForecast to display that container (maybe use method.js here to convert date stamp into weekday)
+//3.use css to make containers look decent, have border, etc
+//4. attempt to have weather icon for each day
+// where to call render and fetch? connect to the click listener somehow
+//edge cases to return specific message instead of 404
+// let's define currentWeather inside a function instead of global
