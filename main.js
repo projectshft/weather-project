@@ -1,8 +1,10 @@
 var currentWeather = [];
+var forecast = [];
+//need to make these non global but still work somehow
 
 //handlebars
 var addCurrentWeather = function (data) {
-    
+
     currentWeather = {
         cityName: data.name,
         temperature: data.main.temp,
@@ -31,7 +33,7 @@ var fetchCurrentWeather = function (query) {
 };
 
 var renderCurrentWeather = function () {
-   
+
     var weather = currentWeather;
     var source = $('#weather-template').html();
     var template = Handlebars.compile(source)
@@ -46,21 +48,35 @@ var renderCurrentWeather = function () {
 //click listener grabs the value from user's input 
 $('#search').on('click', function () {
     var search = $('#search-query').val();
-    console.log("city name is now", search);//test console.log here to make sure form is working 
-
+    console.log("city name is now", search); //test console.log here to make sure form is working 
+    //maybe add edge case check here, if/else statement with typeof??
 
     fetchCurrentWeather(search);
-    fetchForecast(search)//pass city name into fetch functions and invoke them
-
+    fetchForecast(search) //pass city name into fetch functions and invoke them
+    console.log(currentForecast);
 });
 
-var addForecast = function (data) {
-    
-    currentWeather = {
-        condition: data.list.weather[1].main,
-        temperature: data.list.main.temp,
-        day: data.list.dt//convert using  moment().format('dddd');    
+
+
+
+
+
+//loop through here and get a time for each day
+//create a dynamic object for each day with temp, condition and day name
+
+var addCurrentForecast = function (data) {
+    for (var i = 0; i < currentForecast.length; i++) {
+
+        currentForecast = {
+            condition: data.list.weather[1].main,
+            temperature: data.list.main.temp,
+            day: moment(data.list.dt).format('dddd')
+        };
     }
+
+
+forecast.push(currentForecast);
+console.log(currentForecast);
 
 };
 
@@ -70,9 +86,10 @@ var fetchForecast = function (query) {
         url: "https://api.openweathermap.org/data/2.5/forecast?id=" + query + "&units=imperial&APPID=bb9deb8f222b9d0972270d0b7ea6fed4",
         dataType: "json",
         success: function (data) {
+            console.log(data);
 
-            addCurrentWeather(data);
-            renderForecast();
+            addCurrentForecast(data);
+            renderFiveDay();
         },
         error: function (jqXHR, textStatus, errorThrown) {
             console.log(textStatus);
@@ -80,14 +97,11 @@ var fetchForecast = function (query) {
     });
 };
 
-var renderCurrentWeather = function () {
+var renderFiveDay = function () {
 
-    var weather = currentWeather;
-    var source = $('#weather-template').html();
-    var template = Handlebars.compile(source)
-    var weatherHTML = template(currentWeather);
+    
 
-    $('#city').html(weatherHTML);
+    $('#city').html(currentForecast); //for now just add to the same div as current weather
     //.html here instead of .append replaces the current div contents instead of adding to it
 
 
@@ -98,14 +112,14 @@ var renderCurrentWeather = function () {
 
 
 
-
+renderFiveDay();
 renderCurrentWeather();
 
 //use user input to grab data from api and display it in handlebars template
 
 //1. user clicks button
 //2. we grab city name input from form
-//3. use fetch on api to collect City Name, Temperature, ad condition data 
+//3. use fetch on api to collect City Name, Temperature, and condition data 
 //4. display data on webpage
 //5. erase first city data on second search
 
