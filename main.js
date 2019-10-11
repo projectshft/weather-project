@@ -78,7 +78,6 @@ var addCurrentForecast = function (data) {
 
     };
 
-
 };
 
        
@@ -101,7 +100,16 @@ var fetchForecast = function (query) {
 };
 
  var renderFiveDay = function () {
-    $('#forecastDiv').html(currentForecast);
+    //maybe a for loop to get all indexes(days) of currentForecast array?
+    for (var i = 0; i < currentForecast.length; i += 1) {
+
+        var forecast = currentForecast[i];
+        var source = $('#forecast-template').html();
+        var template = Handlebars.compile(source);
+        var forecastHTML = template(forecast);
+     
+        $('#forecastDiv').append(forecastHTML);
+    }
 };
 
 
@@ -110,20 +118,3 @@ var fetchForecast = function (query) {
 renderFiveDay();
 renderCurrentWeather();
 
-//use user input to grab data from api and display it in handlebars template
-
-//1. user clicks button
-//2. we grab city name input from form
-//3. use fetch on api to collect City Name, Temperature, and condition data 
-//4. display data on webpage
-//5. erase first city data on second search
-
-
-//Part 2:in addition to steps above, display a container with five cards each with a day's conditions for the selected city
-
-//1.use new fetchForecast function to use new url to grab forecast api.openweathermap.org/data/2.5/forecast?id=524901 plus my key (dont forget imperial units)
-//2.renderForecast to display that container (maybe use method.js here to convert date stamp into weekday)
-//3.use css to make containers look decent, have border, etc
-//4. attempt to have weather icon for each day
-// where to call render and fetch? connect to the click listener somehow
-//edge cases to return specific message instead of 404
