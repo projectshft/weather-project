@@ -1,6 +1,5 @@
 var currentWeather = [];
 var currentForecast = [];
-//need to make these non global but still work somehow
 
 //handlebars
 var addCurrentWeather = function (data) {
@@ -67,12 +66,12 @@ $('#search').on('click', function () {
 var addCurrentForecast = function (data) {
     for (var i = 0; i < data.list.length; i += 8) {
     
-
-
+// var add CurrentForecast = data.forEach (var i = 0; i < data.list.length)
+        // data.list.forEach(item) {
             currentForecastobj = {
             condition: data.list[i].weather[0].main,
             temperature: data.list[i].main.temp,
-            day:data.list[1].dt
+            day: moment(data.list[i].dt_txt).format('dddd')
         };
         currentForecast.push(currentForecastobj);
         console.log(currentForecast);
@@ -81,6 +80,8 @@ var addCurrentForecast = function (data) {
 
 
 };
+
+       
 
 var fetchForecast = function (query) {
     $.ajax({
@@ -99,19 +100,9 @@ var fetchForecast = function (query) {
     });
 };
 
-var renderFiveDay = function () {
-
-    
-
-    $('#forecastDiv').html( `<p>${currentForecast}</p>`); //for now just add to the same div as current weather
-    //.html here instead of .append replaces the current div contents instead of adding to it
-
- 
-    
-
+ var renderFiveDay = function () {
+    $('#forecastDiv').html(currentForecast);
 };
-
-
 
 
 
