@@ -8,25 +8,26 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
+
     <title>Weather</title>
 </head>
 
 <body class="text-center">
     <h1>Current Weather</h1>
-   
 
 
 
-        <form class="city-form">
-            <div class="form-group">
-                <input type="text" id="search-query" class="form-control" placeholder="Enter City Name">
-                </input>
-            </div>
 
-            <button type=button id="search" class="btn btn-primary">Search</button>
-        </form>
-        <div id="city"> 
-            </div>
+    <form class="city-form">
+        <div class="form-group">
+            <input type="text" id="search-query" class="form-control" placeholder="Enter City Name">
+            </input>
+        </div>
+
+        <button type=button id="search" class="btn btn-primary">Search</button>
+    </form>
+    <div id="city">
+    </div>
     <script id="weather-template" type="text/x-handlebars-template">
         <div class="weather">
               <div>City: <strong>{{ cityName }}</strong></div>
@@ -35,9 +36,11 @@
 
             </div>
           </script>
-         
-    
-    
+    <div id="forecastDiv">
+
+    </div>
+
+
 
     <script src="main.js"></script>
 </body>

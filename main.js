@@ -66,21 +66,19 @@ $('#search').on('click', function () {
 
 var addCurrentForecast = function (data) {
     for (var i = 0; i < data.list.length; i += 8) {
-        currentForecast.push(data.list[i]);
-    }
-
-    // for (var i = 0; i < currentForecast.length; i++) {
-
-    //     currentForecast = {
-    //         condition: data.list.weather[1].main,
-    //         temperature: data.list.main.temp,
-    //         day: moment(data.list.dt).format('dddd')
-    //     };
-    // }
+    
 
 
-    // forecast.push(currentForecast);
-    // console.log(currentForecast);
+            currentForecastobj = {
+            condition: data.list[i].weather[0].main,
+            temperature: data.list[i].main.temp,
+            day:data.list[1].dt
+        };
+        currentForecast.push(currentForecastobj);
+        console.log(currentForecast);
+
+    };
+
 
 };
 
@@ -102,12 +100,14 @@ var fetchForecast = function (query) {
 };
 
 var renderFiveDay = function () {
-    debugger;
+
     
 
-    $('#city').html(currentForecast); //for now just add to the same div as current weather
+    $('#forecastDiv').html( `<p>${currentForecast}</p>`); //for now just add to the same div as current weather
     //.html here instead of .append replaces the current div contents instead of adding to it
 
+ 
+    
 
 };
 
@@ -136,4 +136,3 @@ renderCurrentWeather();
 //4. attempt to have weather icon for each day
 // where to call render and fetch? connect to the click listener somehow
 //edge cases to return specific message instead of 404
-// let's define currentWeather inside a function instead of global
