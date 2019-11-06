@@ -172,4 +172,3 @@ var renderWeeksForecastWithHandlebars = function(dailyForecastObject) {
   return newHTML;
 };
 
-//test for commit
