@@ -11,6 +11,7 @@
 <hether>
     <h2 class="text-center"> Current Weather</h2>
 </hether>
+
 <body>
     <div class="row justify-content-center"></div>
     <div class="search-main  justify-content-center">
@@ -29,7 +30,15 @@
 
         </div>
         <div class="col w-auto p-3" style="background-color: brown;">2
-
+            <script id="main-template" type="text/x-handlebars-template">
+                <div class="book col-md-6">
+                  <h4>{{ title }}</h4>
+                  <div>temperature: <strong>{{  }}</strong></div>
+                  <div>city: <strong>{{  }}</strong></div>
+                  <div>weather: <strong>{{  }}</strong></div>
+                  <img src="{{imageURL}}" alt="">
+                </div>
+              </script>
         </div>
         <div class="col w-auto p-3" style="background-color:gray;">3
 
@@ -39,43 +48,48 @@
         <div class="card " style="width: 18rem;">
             <img src="" class="card-img-top" alt="...">
             <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              <a href="#" class="btn btn-primary">Go somewhere</a>
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
+                    card's content.</p>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
             </div>
-          </div>
-          <div class="card" style="width: 18rem;">
+        </div>
+        <div class="card" style="width: 18rem;">
             <img src="" class="card-img-top" alt="...">
             <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              <a href="#" class="btn btn-primary">Go somewhere</a>
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
+                    card's content.</p>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
             </div>
-          </div>
-          <div class="card" style="width: 18rem;">
+        </div>
+        <div class="card" style="width: 18rem;">
             <img src="" class="card-img-top" alt="...">
             <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              <a href="#" class="btn btn-primary">Go somewhere</a>
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
+                    card's content.</p>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
             </div>
-          </div>
-          <div class="card" style="width: 18rem;">
+        </div>
+        <div class="card" style="width: 18rem;">
             <img src="" class="card-img-top" alt="...">
             <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              <a href="#" class="btn btn-primary">Go somewhere</a>
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
+                    card's content.</p>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
             </div>
-          </div>
-          <div class="card" style="width: 18rem;">
+        </div>
+        <div class="card" style="width: 18rem;">
             <img src="" class="card-img-top" alt="...">
             <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              <a href="#" class="btn btn-primary">Go somewhere</a>
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
+                    card's content.</p>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
             </div>
-          </div>
+        </div>
     </div>
 
     <!-- jQuery first, then Tether, then Bootstrap JS. -->
