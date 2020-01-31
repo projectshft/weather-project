@@ -15,6 +15,7 @@ var weatherModel = {
             url: `${this.apiURL} + ${query} + ${this.apiKey}`,
             dataType: "json",
             success: function (data) {
+                //Calling addWeather func with the datat retrieved from the API
                 addWeather(data);
     
             },
@@ -22,25 +23,30 @@ var weatherModel = {
                 console.log(textStatus);
             }
         });
-    },
-    addWeather: function addWeather(data) {
-        // Grab the Temp, city name & Weathe main description
-        var tempFahrenheit = Math.round((data.main.temp - 273.15) * 9/5 + 32);
-        var cityName = data.name;
-        var weatherMain = data.weather.main;
-        // store data variables in an Object 
-        var newCityWeather = {
-            temp: tempFahrenheit,
-            name: cityName,
-            weather: weatherMain
-        }
-        //push object to an array called city weather
-        this.cityWeather.push(newCityWeather);
-    
     }
 }
 
+// A function that will be callled within the weatherModel
+function addWeather(data) {
+    //Empty the citWeather Array before adding a new city
+    weatherModel.cityWeather = [];
+    // Grab the Temp, city name & Weathe main description
+    var tempFahrenheit = Math.round((data.main.temp - 273.15) * 9/5 + 32);
+    var cityName = data.name;
+    var weatherMain = data.weather[0].main;
+    var iconID = data.weather[0].icon;
+    // store data variables in an Object 
+    var newCityWeather = {
+        temp: tempFahrenheit,
+        name: cityName,
+        weather: weatherMain,
+        imageURL: `http://openweathermap.org/img/w/${iconID}.png`
+    }
+    //push object to an array called city weather
+    weatherModel.cityWeather.push(newCityWeather);
+    renderWeather();
 
+}
 
 
 
@@ -53,8 +59,8 @@ $(window).on('load', function() {
 });
 
 function renderWeather() {
-    $('.weatherCity').empty()
-    var source = $('.weather-template').html();
+    $('.weatherCity').empty();
+    var source = $('#weather-template').html();
     var template = Handlebars.compile(source);
 
     for(var i = 0; i < weatherModel.cityWeather.length; i++) {
@@ -62,11 +68,6 @@ function renderWeather() {
         $('.weatherCity').append(newHTML);
     }
 }
-
-
-
-
-
 
 
 
