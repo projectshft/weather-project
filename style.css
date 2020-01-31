@@ -8,5 +8,14 @@
 }
 
 .weather{
-  
+
+}
+
+.fivedayweather {
+  border: 5px;
+  border-color: #000;
+}
+
+.col-md-2 {
+  border: 1px solid black;
 }

@@ -28,16 +28,17 @@
             </input>
             <button type="button" class="btn btn-primary search">Search</button>
           </div>
-          ​
 
         </form>
         ​
         <hr />
-        ​
+
         <div class="weatherrow row">
         </div>
+        <hr/>
         <div class="fivedayweatherrow row">
         </div>
+
       </div>
     </div>
   </div>
@@ -54,11 +55,11 @@
     </div>
   </script>
   <script id="fivedayweather-template" type="text/x-handlebars-template">
-    <div class="fivedayweather col-md-6">
-      <div> {{ weatherDescription }} </div>
-      <div>{{ temperature }} &deg;</div>
+    <div class="fivedayweather col-md-2 border border-dark" >
+      <div > {{ weatherDescription }} </div>
+      <div >{{ temperature }} &deg;</div>
       <img src="{{icon}}" alt="">
-      <div>{{ date }}</div>
+      <div >{{ date }}</div>
 
     </div>
   </script>
