@@ -5,17 +5,19 @@
 
 /////////////////////////// Model ///////////////////////
 var weatherModel = {
-    apiURL: 'http://api.openweathermap.org/data/2.5/weather?q=',
-    apiKey: '&APPID=21653f29a7d16fbade1183b04d4783c1',
+    apiWeatherURL: 'http://api.openweathermap.org/data/2.5/weather?q=',
+    apiForecastURL: 'http://api.openweathermap.org/data/2.5/forecast?q=',
+    apiKey: '&units=imperial&APPID=21653f29a7d16fbade1183b04d4783c1',
     cityWeather: [],
+    cityForecast: [],
     fetch:  function fetch(query) {
-        //This function retrieves the data from the API
+        //This function retrieves the data from the API for the weather
         $.ajax({
             method: "GET",
-            url: `${this.apiURL} + ${query} + ${this.apiKey}`,
+            url: `${this.apiWeatherURL} + ${query} + ${this.apiKey}`,
             dataType: "json",
             success: function (data) {
-                //Calling addWeather func with the datat retrieved from the API
+                //Calling addWeather func with the data retrieved from the API
                 addWeather(data);
     
             },
@@ -23,14 +25,30 @@ var weatherModel = {
                 console.log(textStatus);
             }
         });
+        //This function retrieves the data from the API for the forecast
+        $.ajax({
+            method: "GET",
+            url: `${this.apiForecastURL} + ${query} + ${this.apiKey}`,
+            dataType: "json",
+            success: function (data) {
+                //Calling addForecast func with the data retrieved from the API
+                // addForecast(data);
+                console.log(data)
+    
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log(textStatus);
+            }
+        });
+
     }
 }
 
-// A function that will be callled within the weatherModel
+// A function that will add an object about the city's weather to the cityWeather Array
 function addWeather(data) {
     //Empty the citWeather Array before adding a new city
     weatherModel.cityWeather = [];
-    // Grab the Temp, city name & Weathe main description
+    // Grab the Temp, city name, weather main description, iconId
     var tempFahrenheit = Math.round((data.main.temp - 273.15) * 9/5 + 32);
     var cityName = data.name;
     var weatherMain = data.weather[0].main;
@@ -46,9 +64,23 @@ function addWeather(data) {
     weatherModel.cityWeather.push(newCityWeather);
     renderWeather();
 
+};
+
+
+// A function that will add multiple objects about the city's weekly forecast to the cityForecast Array
+function addForecast(data) {
+    //Empty the cityForecast Array before searching another city
+    weatherModel.cityForecast = [];
+    // Grab the Temp, weather main description, iconID, & Day of the week
+    // Set a variable equal to the the list of forecasts 
+    var forecastList = data.list;
+
+
+
 }
 
-
+var currentTime = moment().format('MMMM Do YYYY, h:mm:ss a');
+console.log(currentTime)
 
 
 /////////////////////////// View ///////////////////////
