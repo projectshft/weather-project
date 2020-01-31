@@ -13,11 +13,11 @@
           <div class="weather-details">
             <h4>{{tempF}}°<h4>
             <h5 class="weather-type">{{weatherType}}<h5>
-            <h5>{{city}}, {{country}}<h5>
+            <h5 >{{city}}, {{country}}<h5>
           </div>
           <div>
             <img class="current-weather-image" src={{weatherIconURL}} alt=""></img>
-            <button type="button" class="btn btn-secondary add-default">Add a default</button>
+            <button data-name="{{city}}" type="button" class="btn btn-secondary add-default">Add a default</button>
           </div>
         </div>
     </script>
@@ -36,10 +36,9 @@
         <h2 class="header">Weather! Now!</h2>
         <br>
         <form class="search-form">
-          <h4>Get the Weather! Now!</h4>
 
           <div class="form-group">
-            <input type="text" id="search-query" class="form-control">
+            <input type="text" id="search-query" class="form-control" default="Enter City Name">
             </input>
             <button type="button" class="btn btn-primary search">Weather! Now!</button>
           </div>

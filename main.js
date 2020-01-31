@@ -1,7 +1,6 @@
 const apiKey = '7b10c8efbac69baa1a5df4f162794c1d'
 const apiRequestForm = 'api.openweathermap.org/data/2.5/weather?q='
-var myBookShelf = [];
-localStorage.setItem("myBookShelf", JSON.stringify(myBookShelf))
+defaultCity = JSON.parse(localStorage.getItem("defaultCity"))
 
 const apiRequest = async function(city) {
   let weatherData = "";
@@ -13,14 +12,13 @@ const apiRequest = async function(city) {
       dataType: "json",
       success: function(data) {
         weatherData = data;
-        console.log(weatherData)
       },
       error: function(jqXHR, textStatus, errorThrown) {
         if (errorThrown == "Not Found") {
           if (city.indexOf("+") != 0) {
             city = city.replace(/\++/g, ' ');
           };
-          alert(`${city} ${errorThrown}!`)
+          alert(`${city} not found!`)
         } else {
           alert(errorThrown);
         }
@@ -44,7 +42,6 @@ const apiRequest = async function(city) {
           }
         }
       });
-      console.log(weatherData)
       dataCleaner(weatherData, forecastData)
 }
 
@@ -55,7 +52,7 @@ const dataCleaner = function(weatherData, forecastData) {
   let country = weatherData.sys.country;
   let weatherType = weatherData.weather[0].main;
   let weatherIcon = weatherData.weather[0].icon;
-  let weatherIconURL = `https://openweathermap.org/img/wn/${weatherIcon}@2x.png`
+  let weatherIconURL = `https://openweathermap.org/img/wn/${weatherIcon}@2x.png`;
 
   currentWeather = {
     tempF: tempF,
@@ -74,7 +71,7 @@ const dataCleaner = function(weatherData, forecastData) {
     let forecastType = forecastData.list[(i*8)+5].weather[0].main;
     let forecastIcon = forecastData.list[(i*8)+5].weather[0].icon;
     let forecastIconURL = `https://openweathermap.org/img/wn/${forecastIcon}@2x.png`
-    let forecastDay = moment(forecastData.list[(i*8)+4].dt_txt.slice(0,10)).format('dddd')
+    let forecastDay = moment(forecastData.list[(i*8)+5].dt_txt.slice(0,10)).format('dddd')
 
     let forecast = {
       forecastTempF: forecastTempF,
@@ -86,12 +83,7 @@ const dataCleaner = function(weatherData, forecastData) {
     forecastWeather.forecast.push(forecast)
   }
 
-  console.log(forecastWeather)
   renderForecast(currentWeather, forecastWeather)
-}
-
-const addDefault = function() {
-
 }
 
 const renderForecast = function(currentWeather, forecastWeather) {
@@ -111,9 +103,21 @@ const renderForecast = function(currentWeather, forecastWeather) {
   $('.forecast').append(forecastHTML)
 
   $(".add-default").click(function(){
-    alert(`${currentWeather.city} added as your default city!`)
+    addDefault($(this).attr('data-name'))
   })
 }
+
+const addDefault = function(city) {
+  alert(`${city} added as your default city!`)
+  let defaultCity = [];
+  defaultCity.push(city)
+  localStorage.setItem("defaultCity", JSON.stringify(defaultCity))
+}
+
+if (defaultCity.length != 0) {
+  apiRequest(defaultCity[0])
+}
+
 
 $(".btn").click(function() {
   searchVal = $("#search-query").val();
