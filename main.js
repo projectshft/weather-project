@@ -28,4 +28,14 @@ const dataCleaner = function(data) {
   }
 
   console.log(currentWeather)
+  renderForecast(currentWeather)
+}
+
+const renderForecast = function(currentWeather) {
+  $('.forecast').empty();
+  let source = $("current-weather-template").html();
+  let template Handlebars.compile(source);
+  let newHTML = template(currentWeather);
+
+  $('.forecast').append(newHTML)
 }

@@ -5,9 +5,34 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-
+    <title>Weather! Now!</title>
   </head>
   <body>
+    <script class="current-weather-template" type="text/x-handlebars-template">
+        <div class='weather col-md-6 offset-md-1'>
+          <h3>{{tempF}}<h3>
+          <h4>{{weatherType}}<h4>
+          <h4>{{city}}<h4>
+        </div>
+    </script>
+    <div class="row">
+      <div class="col-md-6 offset-md-1">
+        <h2 class="header">Weather! Now!</h2>
+        <br>
+        <form class="search-form">
+          <h4>Get the Weather! Now!</h4>
+
+          <div class="form-group">
+            <input type="text" id="search-query" class="form-control">
+            </input>
+          </div>
+
+          <button type="button" class="btn btn-primary search">Weather! Now!</button>
+        </form>
+        <div class="forecast">
+        <div>
+      </div>
+    </div>
 
   <!-- jQuery first, then Tether, then Bootstrap JS. -->
   <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
