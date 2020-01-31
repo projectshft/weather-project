@@ -1,0 +1,38 @@
+1. Figure out API call
+
+2. Set up HTML using bootstrapn (first 3 col-6 offset-3)
+    -Need to bring in: bootstrap, json, jquery, handlebars, moment
+    -link styles and main
+    -Header: current Weather
+    -Form: search:Enter City Name button: search
+    -Individual day: Temp, location, condition(cloudy)
+        Has no boarders align text left in coloumn
+    -5 day blocks 
+        Boarders around individual day
+        Condition, temp, pic, day (centered)
+        Center page (centered under content above)
+
+3. Make sure click button is working and receiving info
+    ? may want to think about a different function that handels
+    Edge case scenarios? blank...but should accept city & city/country
+
+4. Receive Data
+    -Click sends data to fetch
+    -Fetch gathers data and sends to a function to display data
+    -5 Day will need some sort of container so handlbars can create a template
+    -HandleBars 2 temps: 1 day and 5 day
+    -Post data to view
+    -Way to render page with new search info
+    1. hard code to see if data is working
+
+
+CheckList for completion
+1. bootstrap/handlebars/jquery
+2. can search and display searched City
+3. Replaces info with new search
+4. Edge Case scenarios
+5. Easy to read
+6. Sufficient comments.....and commits
+7. Concise code
+8. Patterns
+9. Ability to re-utilize code
