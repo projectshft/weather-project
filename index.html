@@ -24,6 +24,17 @@
         </div>
         </div>
       </script>
+      <script id="five-template" type="text/x-handlebars-template">
+        <div id="cityWeather" class="form-inline col-md-6">
+          
+          <div>temperature: <strong>{{ temperature }}</strong></div>
+          <div>city: <strong>{{ cityName }}</strong></div>
+          <div>weather: <strong>{{ weather }}</strong></div>
+        <div class="col ">
+          <img id="dayPicture" class="col sticky-right" src={{ icon }}>
+        </div>
+        </div>
+      </script>
     <div class="row justify-content-center"></div>
     <div class="search-main  justify-content-center">
         <form class="form-inline   justify-content-center" onsubmit="event.preventDefault();">
@@ -47,11 +58,12 @@
 
         </div>
     </div>
+    <div class="fiveDay">
     <div id="day1" class="row justify-content-center">
         <div class="card " style="width: 18rem;">
             <img src="" class="card-img-top" alt="...">
             <div class="card-body">
-                <h5 class="card-title">Card title 1</h5>
+                <h5 class="card-title"> 1</h5>
                 <p class="card-text"></p>
 
             </div>
@@ -59,7 +71,7 @@
         <div id="day2" class="card" style="width: 18rem;">
             <img src="" class="card-img-top" alt="...">
             <div class="card-body">
-                <h5 class="card-title">Card title 2</h5>
+                <h5 class="card-title"> 2</h5>
                 <p class="card-text"></p>
 
             </div>
@@ -67,7 +79,7 @@
         <div id="day3" class="card" style="width: 18rem;">
             <img src="" class="card-img-top" alt="...">
             <div class="card-body">
-                <h5 class="card-title">Card title 3</h5>
+                <h5 class="card-title"> 3</h5>
                 <p class="card-text"></p>
 
             </div>
@@ -75,19 +87,20 @@
         <div id="day4" class="card" style="width: 18rem;">
             <img src="" class="card-img-top" alt="...">
             <div class="card-body">
-                <h5 class="card-title">Card title 4</h5>
+                <h5 class="card-title"> 4</h5>
                 <p class="card-text"></p>
 
             </div>
         </div>
         <div id="day5" class="card" style="width: 18rem;">
             <img src="" class="card-img-top" alt="...">
-            <div  class="card-body">
-                <h5 class="card-title">Card title 5</h5>
+            <div class="card-body">
+                <h5 class="card-title"> 5</h5>
                 <p class="card-text"></p>
 
             </div>
         </div>
+    </div>
     </div>
 
     <!-- jQuery first, then Tether, then Bootstrap JS. -->
@@ -99,6 +112,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"
         integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous">
     </script>
+    <script src="https://momentjs.com/downloads/moment.js"></script>
 
     <script src="script.js" type="text/javascript"></script>
 </body>

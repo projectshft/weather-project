@@ -1,4 +1,5 @@
 let weatherModel = [];
+let weatherModel5 = [];
 
 // search button event listener
 $('#search').click(function () {
@@ -22,15 +23,15 @@ var apiCall = function (searchVal) {
             dataType: "json",
 
             success: function (data) {
-                console.log(data)
-                console.log(data.weather[0].main) // rain
-                console.log('description ', data.weather[0].description)
-                //console.log('name ',data.name)
-                console.log('temperature ', data.main.temp) // kalvin to F  (280.24K − 273.15) × 9/5 + 32 = 44.762°F
-                console.log('icon search ', data.weather[0].icon)
+                // console.log(data)
+                // console.log(data.weather[0].main) // rain
+                // console.log('description ', data.weather[0].description)
+                // //console.log('name ',data.name)
+                // console.log('temperature ', data.main.temp) // kalvin to F  (280.24K − 273.15) × 9/5 + 32 = 44.762°F
+                // console.log('icon search ', data.weather[0].icon)
 
                 filteredData(data);
-                //apiCallFiveDay(searchVal)
+                apiCallFiveDay(searchVal)
                 renderView(weatherModel)
 
                 //     for (var i = 0; i < data.items.length; i++) {
@@ -58,13 +59,17 @@ var apiCallFiveDay = function (searchVal) {
         $.ajax({
             method: "GET",
             // url: "https://api.openweathermap.org/data/2.5/weather?q=" + searchVal + "&APPID=096f3282b86fa805756f58092f5d2481",
-            url: "http://api.openweathermap.org/data/2.5/forecast?appid=096f3282b86fa805756f58092f5d2481&q=" + searchVal + "&cnt=5&units=imperial",
+            url: "http://api.openweathermap.org/data/2.5/forecast?appid=096f3282b86fa805756f58092f5d2481&q=" + searchVal + "&units=imperial",
             dataType: "json",
 
-            success: function (data) {
-                console.log('inside five call!! ', data)
+            success: function (dataFive) {
+                console.log('inside five call!! ', dataFive)
 
+                var time = dataFive.list[0].dt_txt;
+                const dayToFind = new Date(time)
+                console.log(dayToFind.getDay())
 
+                filterFiveDay(dataFive)
                 //filteredData(data);
 
                 //renderView(weatherModel)
@@ -87,7 +92,7 @@ var apiCallFiveDay = function (searchVal) {
 
 // need function to convert kalvin to farenhaight 
 var kelvinToFar = function (temp) {
-    return parseInt((temp - 273.15) * 9 / 5 + 32) // kalvin to F  (280.24K − 273.15) × 9/5 + 32 = 44.762°F
+    return parseInt((temp - 273.15) * 9 / 5 + 32)       // kalvin to F  (280.24K − 273.15) × 9/5 + 32 = 44.762°F
 };
 
 // way to store returned information and Model set up
@@ -97,23 +102,62 @@ const filteredData = function (mainData) {
     weatherObj["weather"] = mainData.weather[0].description;
     weatherObj["cityName"] = mainData.name;
     weatherObj["temperature"] = kelvinToFar(mainData.main.temp);
-    
-    
-    weatherObj["icon"] = "http://openweathermap.org/img/wn/"+ mainData.weather[0].icon +"@2x.png",
-    console.log(mainData.weather[0].icon)
-
-    // weatherObj["imageURL"] = "./notFound.PNG"
+    weatherObj["icon"] = "http://openweathermap.org/img/wn/" + mainData.weather[0].icon + "@2x.png";
 
     weatherModel.push(weatherObj);
     console.log('weather model inside filteredData ', weatherModel)
 
 }
-// function to sort out information and get only the one to display
+// function to sort out information and get only the one to display for 5 day forecast
+const filterFiveDay = function (dataFive) {
+    
+
+    console.log(dataFive.list.length);
+    console.log('time: ', dataFive.list[0].dt_txt)
+    console.log('temperature : ', dataFive.list[0].main.temp)               
+    console.log('weather : ', dataFive.list[0].weather[0].main)
+    console.log('icon: ', dataFive.list[0].weather[0].icon)
+    var dataTemp = [];
+    for (var a=4; a<dataFive.list.length; a= (a+8)) {
+        
+        console.log(dataFive.list[a])
+        dataTemp.push(dataFive.list[a])
+    };
+    //dataTemp.push(dataFive.list[a])
+    console.log(dataTemp.length)
+
+    for (var i=0; i<dataTemp.length; i++) { 
+        var weatherObjFive = {};
+        //console.log(dataFive.list[i].dt_txt)
+        weatherObjFive["time"] = dataTemp[i].dt_txt; 
+        weatherObjFive["temperature"] = dataTemp[i].main.temp;
+        weatherObjFive["weather"] = dataTemp[i].weather[0].main;
+        weatherObjFive["icon"] = "http://openweathermap.org/img/wn/" + dataTemp[i].weather[0].icon + "@2x.png";
+
+        weatherModel5.push(weatherObjFive);
+    }
+    console.log(weatherModel5)
+};
+
+let renderViewFive = function (weatherModel5) {
+    $('.fiveDay').empty();
+    for (var i = 0; i < weatherModel.length; i++) {
+        var source = $('#five-template').html();
+        var template = Handlebars.compile(source);
+        var newHTML = template(weatherModel[i]);
+        $('.mainWeather').append(newHTML);
+    }
+
+}
+
+
+
+
 
 // function or call to display information to view
 let renderView = function (weatherModel) {
     $('.mainWeather').empty();
-    console.log('renderView mainData value ', weatherModel)
+    //console.log('renderView mainData value ', weatherModel)
     for (var i = 0; i < weatherModel.length; i++) {
         var source = $('#main-template').html();
         var template = Handlebars.compile(source);
@@ -121,3 +165,11 @@ let renderView = function (weatherModel) {
         $('.mainWeather').append(newHTML);
     }
 };
+
+// date formating, find day of the week
+const getDay = function () {
+
+}
+
+
+//console.log(moment(1580526000).format('ddd'))
