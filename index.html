@@ -14,12 +14,14 @@
 
 <body>
     <script id="main-template" type="text/x-handlebars-template">
-        <div id="cityWeather" class=" col-md-6">
+        <div id="cityWeather" class="form-inline col-md-6">
           
           <div>temperature: <strong>{{ temperature }}</strong></div>
           <div>city: <strong>{{ cityName }}</strong></div>
           <div>weather: <strong>{{ weather }}</strong></div>
-          
+        <div class="col ">
+          <img id="dayPicture" class="col sticky-right" src={{ icon }}>
+        </div>
         </div>
       </script>
     <div class="row justify-content-center"></div>
@@ -35,60 +37,55 @@
         <div id="currentDay">
 
         </div>
-        <div class="col w-auto p-3" style="background-color: blue;">1
+        <div class="col w-auto p-3" style="background-color: 0">1
 
         </div>
-        <div class="mainWeather col w-auto p-3" style="background-color: brown;">
-           
+        <div class="mainWeather col w-auto p-3" style="background-color: 0">
+
         </div>
-        <div class="col w-auto p-3" style="background-color:gray;">3
+        <div class="col w-auto p-3" style="background-color: 0">
 
         </div>
     </div>
-    <div class="row justify-content-center">
+    <div id="day1" class="row justify-content-center">
         <div class="card " style="width: 18rem;">
             <img src="" class="card-img-top" alt="...">
             <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                    card's content.</p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
+                <h5 class="card-title">Card title 1</h5>
+                <p class="card-text"></p>
+
             </div>
         </div>
-        <div class="card" style="width: 18rem;">
+        <div id="day2" class="card" style="width: 18rem;">
             <img src="" class="card-img-top" alt="...">
             <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                    card's content.</p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
+                <h5 class="card-title">Card title 2</h5>
+                <p class="card-text"></p>
+
             </div>
         </div>
-        <div class="card" style="width: 18rem;">
+        <div id="day3" class="card" style="width: 18rem;">
             <img src="" class="card-img-top" alt="...">
             <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                    card's content.</p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
+                <h5 class="card-title">Card title 3</h5>
+                <p class="card-text"></p>
+
             </div>
         </div>
-        <div class="card" style="width: 18rem;">
+        <div id="day4" class="card" style="width: 18rem;">
             <img src="" class="card-img-top" alt="...">
             <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                    card's content.</p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
+                <h5 class="card-title">Card title 4</h5>
+                <p class="card-text"></p>
+
             </div>
         </div>
-        <div class="card" style="width: 18rem;">
+        <div id="day5" class="card" style="width: 18rem;">
             <img src="" class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                    card's content.</p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
+            <div  class="card-body">
+                <h5 class="card-title">Card title 5</h5>
+                <p class="card-text"></p>
+
             </div>
         </div>
     </div>
@@ -102,7 +99,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"
         integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous">
     </script>
-    
+
     <script src="script.js" type="text/javascript"></script>
 </body>
 
