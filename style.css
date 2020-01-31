@@ -1,0 +1,16 @@
+img {
+    width: 100%;
+    margin-top: 30px;
+  }
+  
+  .card {
+    max-width: 250px;
+  }
+  
+  .default-button {
+    display: none;
+  }
+  
+  #weather-container {
+    width: 100%
+  }
