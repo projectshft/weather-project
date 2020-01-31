@@ -36,3 +36,25 @@ CheckList for completion
 7. Concise code
 8. Patterns
 9. Ability to re-utilize code
+
+Templates from bookshelf project
+    <script id="book-template" type="text/x-handlebars-template">
+      <div class="book col-md-6">
+        <h4>{{ title }}</h4>
+        <div>Author: <strong>{{author}}</strong></div>
+        <div>Pages: <strong>{{pageCount}}</strong></div>
+        <div>ISBN: <strong>{{isbn}}</strong></div>
+        <div><img src="{{imageURL}}" alt=""></div>
+        <button type="button" class="library-button btn-primary">Add To Library</button>
+      </div>
+    </script>
+    <script id="library-template" type="text/x-handlebars-template">
+      <div class="library col-sm-2">
+        <h4>{{ title }}</h4>
+        <div>Author: <strong>{{author}}</strong></div>
+        <div>Pages: <strong>{{pageCount}}</strong></div>
+        <div>ISBN: <strong>{{isbn}}</strong></div>
+        <div><img src="{{imageURL}}" alt=""></div>
+        <button type="button" class="library-button btn-primary">Add To Library</button>
+      </div>
+    </script>
