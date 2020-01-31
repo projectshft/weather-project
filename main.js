@@ -9,6 +9,7 @@ var weatherModel = {
     apiKey: '&APPID=21653f29a7d16fbade1183b04d4783c1',
     cityWeather: [],
     fetch:  function fetch(query) {
+        //This function retrieves the data from the API
         $.ajax({
             method: "GET",
             url: `${this.apiURL} + ${query} + ${this.apiKey}`,
@@ -28,13 +29,13 @@ var weatherModel = {
         var cityName = data.name;
         var weatherMain = data.weather.main;
         // store data variables in an Object 
-        var addCityWeather = {
+        var newCityWeather = {
             temp: tempFahrenheit,
             name: cityName,
             weather: weatherMain
         }
         //push object to an array called city weather
-        this.cityWeather.push(addCityWeather);
+        this.cityWeather.push(newCityWeather);
     
     }
 }
@@ -46,6 +47,21 @@ var weatherModel = {
 
 /////////////////////////// View ///////////////////////
 
+//When the wendow loads it calls the renderWeather function
+$(window).on('load', function() {
+    renderWeather();
+});
+
+function renderWeather() {
+    $('.weatherCity').empty()
+    var source = $('.weather-template').html();
+    var template = Handlebars.compile(source);
+
+    for(var i = 0; i < weatherModel.cityWeather.length; i++) {
+        var newHTML = template(weatherModel.cityWeather[i]);
+        $('.weatherCity').append(newHTML);
+    }
+}
 
 
 
