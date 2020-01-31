@@ -39,7 +39,7 @@
 
   <script id="current-weather-template" type="text x-handlebars-template">
     <div class=col-md-5>
-      <h4>{{ temperature }}&deg</h4>
+      <h2>{{ temperature }}&deg</h2>
       <div>{{ city }}</div>
       <div>{{ description }}</div>
     </div>
@@ -49,9 +49,10 @@
   </script>
 
   <script id="forcast-template" type="text x-handlebars-template">
+
     <div class=col-md-2 forcast-box>
       <div>{{ description }}</div>
-      <h4>{{ temperature }}&deg</h4>
+      <h4>{{ temperature }}&#8457</h4>
       <div><img src="{{imageURL}}" alt="{{ description }}"><div>
       <div>{{ dayOfWeek }}</div>      
     </div>
