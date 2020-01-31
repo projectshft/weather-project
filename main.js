@@ -1,5 +1,7 @@
 const apiKey = '7b10c8efbac69baa1a5df4f162794c1d'
 const apiRequestForm = 'api.openweathermap.org/data/2.5/weather?q='
+var myBookShelf = [];
+localStorage.setItem("myBookShelf", JSON.stringify(myBookShelf))
 
 const apiRequest = async function(city) {
   let weatherData = "";
@@ -68,15 +70,11 @@ const dataCleaner = function(weatherData, forecastData) {
   }
 
   for (let i = 0; i < 5; i++) {
-    console.log((i*8)+5)
     let forecastTempF = Math.round((forecastData.list[(i*8)+5].main.temp*(9/5))-459.67);
     let forecastType = forecastData.list[(i*8)+5].weather[0].main;
     let forecastIcon = forecastData.list[(i*8)+5].weather[0].icon;
     let forecastIconURL = `https://openweathermap.org/img/wn/${forecastIcon}@2x.png`
-    let forecastDay = moment.weekdays(moment(forecastData.list[(i*8)+5].dt))
-    console.log(moment.weekdays(moment(forecastData.list[(i*8)+5].dt)))
-
-
+    let forecastDay = moment(forecastData.list[(i*8)+4].dt_txt.slice(0,10)).format('dddd')
 
     let forecast = {
       forecastTempF: forecastTempF,
@@ -90,6 +88,10 @@ const dataCleaner = function(weatherData, forecastData) {
 
   console.log(forecastWeather)
   renderForecast(currentWeather, forecastWeather)
+}
+
+const addDefault = function() {
+
 }
 
 const renderForecast = function(currentWeather, forecastWeather) {
@@ -107,6 +109,10 @@ const renderForecast = function(currentWeather, forecastWeather) {
   let forecastHTML = forecastTemplate(forecastWeather);
 
   $('.forecast').append(forecastHTML)
+
+  $(".add-default").click(function(){
+    alert(`${currentWeather.city} added as your default city!`)
+  })
 }
 
 $(".btn").click(function() {
@@ -116,48 +122,3 @@ $(".btn").click(function() {
   };
   apiRequest(searchVal);
 })
-
-
-
-
-
-
-
-
-
-
-
-// const apiForecastRequest = function(city) {
-//   $.ajax({
-//       method: "GET",
-//       url: `https://api.openweathermap.org/data/2.5/forecast?q=${city}&APPID=${apiKey}`,
-//       dataType: "json",
-//       success: function(data) {
-//         forecastDataCleaner(data);
-//       },
-//       error: function(jqXHR, textStatus, errorThrown) {
-//         if (errorThrown == "Not Found") {
-//           if (city.indexOf("+") != 0) {
-//             city = city.replace(/\++/g, ' ');
-//           };
-//           alert(`${city} ${errorThrown}!`)
-//         } else {
-//           alert(errorThrown);
-//         }
-//       }
-//     })
-// }
-//
-// const forecastDataCleaner = function(data) {
-//   let time0 = moment(data.list[0].dt)
-//   let time8 = moment(data.list[8].dt)
-//   let time16 = moment(data.list[16].dt)
-//   let time24 = moment(data.list[24].dt)
-//   let time32 = moment(data.list[32].dt)
-//
-//   console.log(time0)
-//   console.log(time8)
-//   console.log(time16)
-//   console.log(time24)
-//   console.log(time32)
-// }

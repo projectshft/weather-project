@@ -9,13 +9,16 @@
   </head>
   <body>
     <script class="current-weather-template" type="text/x-handlebars-template">
-        <div class='weather'>
+        <div class='weather justify-content-center'>
           <div class="weather-details">
             <h4>{{tempF}}°<h4>
             <h5 class="weather-type">{{weatherType}}<h5>
             <h5>{{city}}, {{country}}<h5>
           </div>
-          <div><img class="current-weather-image" src={{weatherIconURL}} alt=""></img></div>
+          <div>
+            <img class="current-weather-image" src={{weatherIconURL}} alt=""></img>
+            <button type="button" class="btn btn-secondary add-default">Add a default</button>
+          </div>
         </div>
     </script>
     <script class="forecast-template" type="text/x-handlebars-template">
@@ -23,7 +26,7 @@
         <div class="card-body">
           <div>{{forecastType}}</div>
           <div>{{forecastTempF}}°</div>
-          <img src={{forecastIconURL}} alt=""></img>
+          <img class="forecast-icon" src={{forecastIconURL}} alt=""></img>
           <div>{{forecastDay}}</div>
         </div>
       {{/each}}
@@ -41,13 +44,13 @@
             <button type="button" class="btn btn-primary search">Weather! Now!</button>
           </div>
         </form>
-        <div class="current-weather">
+        <div class="current-weather justify-content-center">
         </div>
       </div>
     </div>
-    <div class="container">
+    <div class="container col col-md-8 offset-md-3">
       <div class="forecast-row row">
-        <div id="forecast" class="forecast col col-md-6 offset-md-3">
+        <div id="forecast" class="forecast">
         </div>
       </div>
     </div>
