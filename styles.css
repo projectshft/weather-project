@@ -1,0 +1,20 @@
+.page-header {
+  margin-top: 40px;
+}
+
+.search-form {
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+
+.form-group {
+	display: inline-flex;
+}
+
+.search {
+	margin-left: 15px;
+}
+
+.forcast-box {
+	border: 1.5px solid #eee;
+}
