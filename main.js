@@ -1,11 +1,7 @@
 var weekForcast = [];
 
-// HandleBars
-
-// rendersPage with new search
-
 // fetch API
-var fetch = function (query) {
+var fetchCurrentWeather = function (query) {
     $.ajax({
     method: "GET",
     url: "https://api.openweathermap.org/data/2.5/weather?q=" + query +"&units=imperial&APPID=5e1097f8226b90c97d310fff36fe3e88",
@@ -19,6 +15,21 @@ var fetch = function (query) {
     }
   });
   };
+
+var fetchWeekForcast = function (query) {
+    $.ajax({
+        method: "GET",
+        url: "https://api.openweathermap.org/data/2.5/forecast?q=" + query +"&units=imperial&APPID=5e1097f8226b90c97d310fff36fe3e88",
+        dataType: "json",
+        success: function(data) {
+            console.log(data)
+        //   addCurrentWeather(data);
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+          console.log(textStatus);
+        }
+      });
+}
 
 
 // Gathers data from API to send to template
@@ -48,7 +59,8 @@ $('#search-button').on('click', function(){
     if(searchLocation === ''){
         alert('Please Fill in Enter City Name Before Clicking Search.')
     }else{
-        fetch(searchLocation)
+        fetchCurrentWeather(searchLocation)
+        fetchWeekForcast(searchLocation)
     }
     
 })

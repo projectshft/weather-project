@@ -24,24 +24,58 @@
         </form>
         <hr/>
         <div class="current-weather">
-
         </div>
         </div>
-    </div>
-        <div class="week-forcast">
+        <div class="row offset-md-1">
+            <div class="week-forcast col-md-2">
+                <div><h5 class="font-weight-light">{{ condition }}</h5></div>
+                <div><h5 class="font-weight-light">{{ temperature }}</h5></div>
+                <div><img src="{{imageURL}}"></div>
+                <div><h5 class="font-weight-light">{{ day }}</h5></div>
+            </div>
+            <div class="week-forcast col-md-2">
+                <div><h5 class="font-weight-light">{{ condition }}</h5></div>
+                <div><h5 class="font-weight-light">{{ temperature }}</h5></div>
+                <div><img src="{{imageURL}}"></div>
+                <div><h5 class="font-weight-light">{{ day }}</h5></div>
+            </div>
+            <div class="week-forcast col-md-2">
+                <div><h5 class="font-weight-light">{{ condition }}</h5></div>
+                <div><h5 class="font-weight-light">{{ temperature }}</h5></div>
+                <div><img src="{{imageURL}}"></div>
+                <div><h5 class="font-weight-light">{{ day }}</h5></div>
+            </div>
+            <div class="week-forcast col-md-2">
+                <div><h5 class="font-weight-light">{{ condition }}</h5></div>
+                <div><h5 class="font-weight-light">{{ temperature }}</h5></div>
+                <div><img src="{{imageURL}}"></div>
+                <div><h5 class="font-weight-light">{{ day }}</h5></div>
+            </div>
+            <div class="week-forcast col-md-2">
+                <div><h5 class="font-weight-light">{{ condition }}</h5></div>
+                <div><h5 class="font-weight-light">{{ temperature }}</h5></div>
+                <div><img src="{{imageURL}}"></div>
+                <div><h5 class="font-weight-light">{{ day }}</h5></div>
+            </div>
         </div>
-    </div>
     </div>
     <script id="current-weather-template" type="text/x-handlebars-template">
-            <h3 class="font-weight-bold">{{ temperature }} &deg</h3>
-            <h5 class="font-weight-light">{{ location }}</h5>
-            <h5 class="font-weight-light">{{ conditions }}</h5>
+         <div><h3 class="font-weight-bold">{{ temperature }} &deg</h3></div>
+        <div><h5 class="font-weight-light">{{ location }}</h5></div>
+        <div><h5 class="font-weight-light">{{ conditions }}</h5></div>
+    </script>
+    <script id="week-forcast" type="text/x-handlebars-template">
+        <div><h5 class="font-weight-light">{{ condition }}</h5></div>
+        <div><h5 class="font-weight-light">{{ temperature }}</h5></div>
+        <div><img src="{{imageURL}}"></div>
+        <div><h5 class="font-weight-light">{{ day }}</h5></div>
     </script>
   <!-- jQuery first, then Tether, then Bootstrap JS. -->
   <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
   <script type="text/javascript" src="main.js"></script>
   </body>
 </html>
