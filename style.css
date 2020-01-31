@@ -7,15 +7,11 @@
   margin-bottom: 40px;
 }
 
-.weather{
-
-}
-
-.fivedayweather {
-  border: 5px;
-  border-color: #000;
-}
-
 .col-md-2 {
+  padding: 10px;
   border: 1px solid black;
 }
+
+/* .currentweathericon img{
+  display: inline-block;
+}; */
