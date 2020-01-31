@@ -9,14 +9,27 @@
   </head>
   <body>
     <script class="current-weather-template" type="text/x-handlebars-template">
-        <div class='weather col-md-6 offset-md-1'>
-          <h3>{{tempF}}<h3>
-          <h4>{{weatherType}}<h4>
-          <h4>{{city}}<h4>
+        <div class='weather'>
+          <div class="weather-details">
+            <h4>{{tempF}}°<h4>
+            <h5 class="weather-type">{{weatherType}}<h5>
+            <h5>{{city}}, {{country}}<h5>
+          </div>
+          <div><img class="current-weather-image" src={{weatherIconURL}} alt=""></img></div>
         </div>
     </script>
+    <script class="forecast-template" type="text/x-handlebars-template">
+      {{#each forecast}}
+        <div class="card-body">
+          <div>{{forecastType}}</div>
+          <div>{{forecastTempF}}°</div>
+          <img src={{forecastIconURL}} alt=""></img>
+          <div>{{forecastDay}}</div>
+        </div>
+      {{/each}}
+    </script>
     <div class="row">
-      <div class="col-md-6 offset-md-1">
+      <div class="col-md-6 offset-md-3">
         <h2 class="header">Weather! Now!</h2>
         <br>
         <form class="search-form">
@@ -25,16 +38,22 @@
           <div class="form-group">
             <input type="text" id="search-query" class="form-control">
             </input>
+            <button type="button" class="btn btn-primary search">Weather! Now!</button>
           </div>
-
-          <button type="button" class="btn btn-primary search">Weather! Now!</button>
         </form>
-        <div class="forecast">
-        <div>
+        <div class="current-weather">
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="forecast-row row">
+        <div id="forecast" class="forecast col col-md-6 offset-md-3">
+        </div>
       </div>
     </div>
 
   <!-- jQuery first, then Tether, then Bootstrap JS. -->
+  <script src="https://momentjs.com/downloads/moment.js"></script>
   <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>

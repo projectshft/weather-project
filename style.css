@@ -1,4 +1,59 @@
 .header {
   text-align: center;
-  margin-top: 50px;
+  margin-top: 20px;
+}
+
+.forecast {
+  margin-top: 100px;
+}
+
+.card-body {
+  border: solid;
+  float: left;
+  display: inline;
+  width: 95px;
+}
+
+.current-weather-image {
+  height: 100px;
+  float: left;
+}
+
+.current-weather {
+  margin-left: 50px;
+}
+
+.weather-details {
+  float: left;
+}
+
+button {
+  display: inline-block;
+}
+
+#search-query {
+  display: inline-block;
+  width: 300px;
+}
+
+h4 {
+  margin: 0px;
+}
+
+h5 {
+  margin: 0px;
+  margin-bottom: 0px;
+}
+
+.col-md-6 {
+  text-align: center;
+}
+
+.weather-type {
+  margin: 0px;
+}
+
+#forecast {
+    margin-top: 0px;
+    margin-left: 0px;
 }
