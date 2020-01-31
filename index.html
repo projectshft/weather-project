@@ -1,13 +1,14 @@
 <!DOCTYPE html>
-  <html lang="en">
-  <head>
+ <html lang="en">
+ <head>
     <!-- Required meta tags -->
     <link rel="stylesheet" href="styles.css">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
-  </head>
+  <title>Weather Project</title>
+</head>
 <body>
     <div class="container-fluid">
         <div class="col-md-6 offset-md-3">
@@ -15,21 +16,27 @@
           <h1>Current Weather</h1>
           <hr/>
         </div>
-        <form class="form-inline">
+        <form class="form-inline" onsubmit="event.preventDefault();">
             <div class="form-group mx-sm-3 mb-2">
-              <input type="type" class="form-control" id="entered-city" placeholder="Enter City Name">
+              <input type="type" class="form-control" id="submitted-city" placeholder="Enter City Name">
             </div>
-            <button type="submit" class="btn btn-primary mb-2">Search</button>
+            <button type="submit" id="search-button" class="btn btn-primary mb-2">Search</button>
         </form>
         <hr/>
-        </div>
-        </div>
         <div class="current-weather">
+
         </div>
+        </div>
+    </div>
         <div class="week-forcast">
         </div>
     </div>
     </div>
+    <script id="current-weather-template" type="text/x-handlebars-template">
+            <h3 class="font-weight-bold">{{ temperature }} &deg</h3>
+            <h5 class="font-weight-light">{{ location }}</h5>
+            <h5 class="font-weight-light">{{ conditions }}</h5>
+    </script>
   <!-- jQuery first, then Tether, then Bootstrap JS. -->
   <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
