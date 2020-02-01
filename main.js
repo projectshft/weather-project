@@ -19,13 +19,15 @@ let WeatherProject = function() {
 
 	let timeOfDay = '';
 
+	let state= '';
+
 	//after the weather API call we format data for later use 
 	let formatCurrentData = function(result) {	
 		forcast = [];
 		forcastObj = {};
 
 		forcastObj.city = result.name;
-		forcastObj.state = '';
+		forcastObj.state = state;
 		forcastObj.country = result.sys.country;
 		forcastObj.temperature = Math.round(result.main.temp); //temperatureConversion(result.main.temp);
 		forcastObj.description = result.weather[0].main;
@@ -91,7 +93,7 @@ let WeatherProject = function() {
 				if (dayOfWeek === 'Wednesday') {
 					dayOfWeek = 'Wed';
 				}
-				
+
 				forcastObj.dayOfWeek = dayOfWeek;
 
 				forcast.push(forcastObj);
@@ -144,6 +146,11 @@ const fetchCurrentWeather = async(query) => {
 	const json = await res.json();
 
   	console.log(json);
+
+  	//get state based on logtitud and latitude
+	state = getState(json.coord.lat, json.coord.lon);
+	console.log(state);
+
 	app.formatCurrentData(json);
 	app.renderCurrentWeather();
 
@@ -167,12 +174,35 @@ const fetchFiveDaysForcast = async(query) => {
 
 
 $('.search').on('click', function () {
-  let search = $('#search-query').val();
+	let search = $('#search-query').val();
 
-  fetchCurrentWeather(search);
-  $('#search-query').val('');
+	fetchCurrentWeather(search);
+	$('#search-query').val('');
+
+  	//test of the getState function
+	//getState(41.85, -87.65);
 
 });
+
+//get the state by the coordinates using opencagedate API
+//API: 6c75c2c5ea264615ab072b2ebf5fad83
+let getState = async(lat, long) => {
+
+	const res = await fetch(
+		'https://api.opencagedata.com/geocode/v1/json?q='+lat+'+'+long+'&key=6c75c2c5ea264615ab072b2ebf5fad83'
+	  )
+	.catch((error) => {
+		console.error('Error:', error);
+  	});
+
+	const json = await res.json();
+
+  	console.log(json);
+  	console.log(json.results[0].components.state_code);
+//debugger
+	return json.results[0].components.state_code;
+}
+
 
 //function to conver temp measurements
 let temperatureConversion = function(value, measurements) {
