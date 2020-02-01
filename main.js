@@ -49,12 +49,14 @@ let WeatherProject = function() {
 	}
 
 	let formatForcastData = function(result) {
+		forcast = [];
+
 		for(let i = 0; i < result.list.length; i++) {
 			forcastObj = {};
 			forcastObj.city = result.city.name;
 			forcastObj.state = '';
 			forcastObj.country = result.city.country;
-			forcastObj.temperature = result.list[i].main.temp;
+			forcastObj.temperature = Math.round(result.list[i].main.temp);
 			forcastObj.description = result.list[i].weather[0].main;
 
 			let iconCode = result.list[i].weather[0].icon;
@@ -62,7 +64,7 @@ let WeatherProject = function() {
 			let iconURL = "http://openweathermap.org/img/w/" + iconCode + ".png"
 			forcastObj.imageURL = iconURL;
 
-			let timestamp = moment.unix(result.list[i].dt_txt);
+			let timestamp = moment.unix(result.list[i].dt);
 			let dayOfWeek = moment(timestamp).format('dddd');
 			console.log(dayOfWeek);
 			forcastObj.dayOfWeek = dayOfWeek;
@@ -84,6 +86,7 @@ let WeatherProject = function() {
 			let forcastTemplate = Handlebars.compile($('#forcast-template').html());
 			let forcastView = forcastTemplate(forcast[i]);
 			$forcast.append(forcastView);
+			$('.col-md-2').attr('class', 'forcast-box');
 		}
 	}
 
