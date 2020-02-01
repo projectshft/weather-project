@@ -29,6 +29,9 @@ const apiRequest = async function(city) {
         }
       });
       dataCleaner(weatherData, forecastData)
+      let lat = weatherData.coord.lat
+      let long = weatherData.coord.lon
+      weatherMap(lat, long)
 }
 
 const latLongApiRequest = async function(geoLocationObj) {
@@ -61,6 +64,7 @@ const latLongApiRequest = async function(geoLocationObj) {
         }
       });
       dataCleaner(weatherData, forecastData)
+      weatherMap(lat, long)
 }
 
 const dataCleaner = function(weatherData, forecastData) {
@@ -108,6 +112,7 @@ const addDefault = function(city) {
   alert(`${city} added as your default city!`)
   let defaultCity = [];
   defaultCity.push(city)
+  console.log(defaultCity)
   localStorage.setItem("defaultCity", JSON.stringify(defaultCity))
 }
 
@@ -138,6 +143,13 @@ const renderForecast = function(currentWeather, forecastWeather) {
   $(".add-default").click(function(){
     addDefault($(this).attr('data-name'))
   })
+}
+
+const weatherMap = function(lat, long) {
+    var uluru = {lat: lat, lng: long};
+    var map = new google.maps.Map(
+        document.getElementById('map'), {zoom: 8, center: uluru});
+    var marker = new google.maps.Marker({position: uluru, map: map});
 }
 
 let errorAlert = function(error) {
