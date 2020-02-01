@@ -1,9 +1,9 @@
-var Collection = function (config) {
+var Collection = function(config) {
   var models = []
 
-  var init = function () {
+  var init = function() {
     if (Array.isArray(config)) {
-      config.forEach(function (m) {
+      config.forEach(function(m) {
         models.push(m)
       })
     }
@@ -11,7 +11,7 @@ var Collection = function (config) {
 
   var changeCallback = null
 
-  var add = function (item) {
+  var add = function(item) {
     if (!_.includes(models, item) || _.isEmpty(models)) {
       models.push(item)
 
@@ -22,18 +22,11 @@ var Collection = function (config) {
     }
   }
 
-  var remove = function (item) {
+  var remove = function(item) {
     if (typeof item === "object") {
-      models.forEach(function (m, i) {
-        for (prop in item) {
-          if (item[prop] === m.get(prop)) {
-            models.splice(i, 1)
+      models.forEach(function(m, i) {
+        models.splice(0)
 
-            if (changeCallback) {
-              changeCallback()
-            }
-          }
-        }
       })
     } else if (typeof item === "number") {
       models.splice(item, 1)
@@ -46,7 +39,7 @@ var Collection = function (config) {
     }
   }
 
-  var change = function (func) {
+  var change = function(func) {
     changeCallback = func;
   }
 
@@ -60,16 +53,16 @@ var Collection = function (config) {
   }
 }
 
-var Model = function (config) {
+var Model = function(config) {
   var attributes = {}
 
   var changeCallback = null
 
-  var init = function () {
+  var init = function() {
     Object.assign(attributes, config)
   }
 
-  var set = function (prop, value) {
+  var set = function(prop, value) {
     var tempObj = Object.assign({}, attributes)
 
     tempObj[prop] = value
@@ -82,15 +75,15 @@ var Model = function (config) {
     }
   };
 
-  var get = function (prop) {
+  var get = function(prop) {
     return attributes[prop]
   };
 
-  var change = function (func) {
+  var change = function(func) {
     return changeCallback = func;
   }
 
-  var getAttributes = function () {
+  var getAttributes = function() {
     return attributes;
   }
 
@@ -98,13 +91,13 @@ var Model = function (config) {
 
   return {
     set: set,
-    get:get,
+    get: get,
     getAttributes: getAttributes,
     change: change
   }
 };
 
-var View = function (model, template) {
+var View = function(model, template) {
   var render = function() {
     var attrs = model.getAttributes()
 

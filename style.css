@@ -1,0 +1,37 @@
+
+.col-md-2{
+  border-style: solid;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  height:200px;
+  vertical-align: auto;
+  display: inline-block;
+  padding:auto;
+  padding-top: 20px;
+}
+
+h1{
+  text-align: center;
+}
+
+.col-md-6{
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.five-day-weather{
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+img{
+      display: block;
+      margin-left: auto;
+      margin-right: auto }
+}
+.weather{
+  display:inline-block;
+  float:left;
+}

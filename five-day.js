@@ -6,7 +6,7 @@ var FiveDayWeather = function() {
   var dataFiveDayWeather = function(data) {
     for (let i = 0; i < data.list.length; i = i + 8) {
       var day = data.list[i].dt_txt
-      var temp = data.list[i].main.temp
+      var temp = Math.round(data.list[i].main.temp)
       var description = data.list[i].weather[0].main
       var iconURL = 'http://openweathermap.org/img/w/' + data.list[i].weather[0].icon+ '.png'
       console.log(data.list[i])
@@ -20,12 +20,16 @@ var FiveDayWeather = function() {
       discription: description,
       iconURL: iconURL
     })
+    console.log('this is the length of models: ' + fiveDayWeather.models.length )
 
-    fiveDayModel.change(function() {
+   fiveDayModel.change(function() {
       this.renderFiveDayWeather();
     });
     fiveDayWeather.add(fiveDayModel)
-    //renderFiveDayWeather()
+  //  fiveDayWeather.remove(0)
+  if (fiveDayWeather.models.length>4){
+    fiveDayWeather.remove(fiveDayWeather.models)
+  }
   };
 
   var renderFiveDayWeather = function() {
