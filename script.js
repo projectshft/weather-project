@@ -4,12 +4,23 @@ let weatherModel5 = [];
 // on-load function to set default city
 // need to trigger apiCall
 // need to check if local storage has any value stored for default city
-
+$(document).ready(function() {
+    if (localStorage.defaultCity != undefined) {
+        apiCall(localStorage.defaultCity)
+    } else {
+        return
+    }
+});
 
 // search button event listener
 $('#search').click(function () {
     let searchValue = $('#searchInput').val();
+    console.log(searchValue.length)
+    if (searchValue.length > 0) {
     apiCall(searchValue)
+    } else {
+        alert ('search bar can not be left empty before submitting')
+    }
 })
 
 $(document).on('click', '.mainWeather', function () {
@@ -47,7 +58,13 @@ var apiCall = function (searchVal) {
                 renderView(weatherModel)
             },
             error: function (jqXHR, textStatus, errorThrown) {
-                console.log(textStatus);
+                console.log(errorThrown);
+                if (errorThrown == "Not Found") {
+                alert ('City not found. Please try another city')
+                } else {
+                    console.log('error returned ', jqXHR, textStatus);
+                    
+                }
             }
         });
     }, 0);
