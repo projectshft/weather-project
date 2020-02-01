@@ -19,6 +19,9 @@ let WeatherProject = function() {
 
 	//after the weather API call we format data for later use 
 	let formatCurrentData = function(result) {	
+		forcast = [];
+		forcastObj = {};
+		
 		forcastObj.city = result.name;
 		forcastObj.state = '';
 		forcastObj.country = result.sys.country;
