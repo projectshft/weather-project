@@ -14,14 +14,7 @@ const apiRequest = async function(city) {
         weatherData = data;
       },
       error: function(jqXHR, textStatus, errorThrown) {
-        if (errorThrown == "Not Found") {
-          if (city.indexOf("+") != 0) {
-            city = city.replace(/\++/g, ' ');
-          };
-          alert(`${city} not found!`)
-        } else {
-          alert(errorThrown);
-        }
+        errorAlert(errorThrown)
       }
     });
     await $.ajax({
@@ -32,14 +25,39 @@ const apiRequest = async function(city) {
           forecastData = data
         },
         error: function(jqXHR, textStatus, errorThrown) {
-          if (errorThrown == "Not Found") {
-            if (city.indexOf("+") != 0) {
-              city = city.replace(/\++/g, ' ');
-            };
-            alert(`${city} ${errorThrown}!`)
-          } else {
-            alert(errorThrown);
-          }
+          errorAlert(errorThrown)
+        }
+      });
+      dataCleaner(weatherData, forecastData)
+}
+
+const latLongApiRequest = async function(geoLocationObj) {
+  let lat = geoLocationObj.coords.latitude
+  let long = geoLocationObj.coords.longitude
+
+  let weatherData = "";
+  let forecastData = "";
+
+  await $.ajax({
+      method: "GET",
+      url: `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&APPID=${apiKey}`,
+      dataType: "json",
+      success: function(data) {
+        weatherData = data;
+      },
+      error: function(jqXHR, textStatus, errorThrown) {
+        errorAlert(errorThrown)
+      }
+    });
+    await $.ajax({
+        method: "GET",
+        url: `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${long}&&APPID=${apiKey}`,
+        dataType: "json",
+        success: function(data) {
+          forecastData = data
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+          errorAlert(errorThrown)
         }
       });
       dataCleaner(weatherData, forecastData)
@@ -86,6 +104,21 @@ const dataCleaner = function(weatherData, forecastData) {
   renderForecast(currentWeather, forecastWeather)
 }
 
+const addDefault = function(city) {
+  alert(`${city} added as your default city!`)
+  let defaultCity = [];
+  defaultCity.push(city)
+  localStorage.setItem("defaultCity", JSON.stringify(defaultCity))
+}
+
+function getLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(latLongApiRequest, errorAlert);
+  } else {
+    alert("Geolocation is not supported by this browser.");
+  }
+}
+
 const renderForecast = function(currentWeather, forecastWeather) {
   $('.forecast').empty();
   $('.current-weather').empty();
@@ -107,17 +140,17 @@ const renderForecast = function(currentWeather, forecastWeather) {
   })
 }
 
-const addDefault = function(city) {
-  alert(`${city} added as your default city!`)
-  let defaultCity = [];
-  defaultCity.push(city)
-  localStorage.setItem("defaultCity", JSON.stringify(defaultCity))
+let errorAlert = function(error) {
+  if (error.code) {
+    if (error.POSITION_UNAVAILABLE==true) {
+      alert("Cannot locate your position. \nPlease use the search bar to find your city")
+    } else if (error.TIMEOUT==true) {
+      alert("Position locator timed out. \nPlease use the search bar to find your city")
+    }
+  } else {
+    alert(error)
+  }
 }
-
-if (defaultCity.length != 0) {
-  apiRequest(defaultCity[0])
-}
-
 
 $(".btn").click(function() {
   searchVal = $("#search-query").val();
@@ -126,3 +159,9 @@ $(".btn").click(function() {
   };
   apiRequest(searchVal);
 })
+
+if (defaultCity.length != 0) {
+  apiRequest(defaultCity[0])
+}
+
+getLocation();
