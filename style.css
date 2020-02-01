@@ -1,37 +1,42 @@
-
-.col-md-2{
+.col-md-2 {
   border-style: solid;
   text-align: center;
   margin-left: auto;
   margin-right: auto;
-  height:200px;
+  height: 200px;
   vertical-align: auto;
   display: inline-block;
-  padding:auto;
+  padding: auto;
   padding-top: 20px;
 }
+.col-md-3{
+  text-align: left;
+  margin-left: auto;
+  margin-right: auto;
+  vertical-align: auto;
+  display: inline-block;
+  padding: auto;
+}
 
-h1{
+h1 {
   text-align: center;
 }
 
-.col-md-6{
-  margin-left: auto;
-  margin-right: auto;
-}
 
-.five-day-weather{
+.five-day-weather, .current-weather{
   margin-left: auto;
   margin-right: auto;
   text-align: center;
 }
 
-img{
-      display: block;
-      margin-left: auto;
-      margin-right: auto }
+img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto
 }
-.weather{
-  display:inline-block;
-  float:left;
-}
+
+
+/* .weather {
+  display: inline-block;
+  float: left;
+} */

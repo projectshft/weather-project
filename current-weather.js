@@ -4,7 +4,7 @@ var CurrentWeather = function() {
   var $currentWeather = $('.current-weather');
 
   var dataCurrentWeather = function(data) {
-    var city = data.name
+    var city = data.name + ', ' + data.sys.country
     var temp = Math.round(data.main.temp)
     var description = data.weather[0].main
     var iconURL = 'http://openweathermap.org/img/w/' + data.weather[0].icon+ '.png'

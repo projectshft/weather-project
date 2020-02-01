@@ -32,29 +32,29 @@
         <hr />
       </div>
     </div>
-    <div class= card-container>
-      <div class = "row">
-        <div class="current-weather col-md-4 offset-md-4">
+    <div>
+      <div class="row">
+        <div class="current-weather col-md-6 offset-md-3">
         </div>
       </div>
       <div class="row">
         <div class="col-md-6 offset-md-3">
-        <div class="five-day-weather">
+          <div class="five-day-weather">
+          </div>
         </div>
       </div>
-      </div>
+    </div>
   </div>
-</div>
   ​
   <!-- jQuery first, then Tether, then Bootstrap JS. -->
   <script id="current-weather-template" type="text/x-handlebars-template">
-    <div class="weather col-md-4 words">
+    <div class= "col-md-3">
       <h2>{{ temp }}˚</h2>
       <h5>{{ city }}</h5>
       <p>{{discription}}</p>
     </div>
-    <div class ="col-md-1">
-      <img src="{{iconURL}}" alt="" class="float-right">
+    <div class ="col-md-3">
+      <img src="{{iconURL}}" alt="" width="100" height="100">
     </div>
   </script>
   <script id="five-day-weather-template" type="text/x-handlebars-template">
