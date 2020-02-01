@@ -34,11 +34,7 @@ var apiCall = function (searchVal) {
                 apiCallFiveDay(searchVal)
                 renderView(weatherModel)
 
-                //     for (var i = 0; i < data.items.length; i++) {
-                //         addBook(data.items[i].volumeInfo)
-                //         console.log(data.items[i].volumeInfo)
-                //     }
-                //     booksRender(books)
+                
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.log(textStatus);
@@ -70,29 +66,18 @@ var apiCallFiveDay = function (searchVal) {
                 console.log(dayToFind.getDay())
 
                 filterFiveDay(dataFive)
-                //filteredData(data);
-
-                //renderView(weatherModel)
-
-                //     for (var i = 0; i < data.items.length; i++) {
-                //         addBook(data.items[i].volumeInfo)
-                //         console.log(data.items[i].volumeInfo)
-                //     }
-                //     booksRender(books)
+                renderView(weatherModel)
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.log(textStatus);
             }
-
         });
-
     }, 0);
 };
-// create function to convert date from API to current day.
 
 // need function to convert kalvin to farenhaight 
 var kelvinToFar = function (temp) {
-    return parseInt((temp - 273.15) * 9 / 5 + 32)       // kalvin to F  (280.24K − 273.15) × 9/5 + 32 = 44.762°F
+    return parseInt((temp - 273.15) * 9 / 5 + 32) // kalvin to F  (280.24K − 273.15) × 9/5 + 32 = 44.762°F
 };
 
 // way to store returned information and Model set up
@@ -110,50 +95,40 @@ const filteredData = function (mainData) {
 }
 // function to sort out information and get only the one to display for 5 day forecast
 const filterFiveDay = function (dataFive) {
-    
 
     console.log(dataFive.list.length);
-    console.log('time: ', dataFive.list[0].dt_txt)
-    console.log('temperature : ', dataFive.list[0].main.temp)               
-    console.log('weather : ', dataFive.list[0].weather[0].main)
-    console.log('icon: ', dataFive.list[0].weather[0].icon)
+    console.log('time5: ', dataFive.list[0].dt_txt)
+    console.log('temperature5: ', dataFive.list[0].main.temp)
+    console.log('weather5: ', dataFive.list[0].weather[0].main)
+    console.log('icon5: ', dataFive.list[0].weather[0].icon)
     var dataTemp = [];
-    for (var a=4; a<dataFive.list.length; a= (a+8)) {
-        
+    for (var a = 4; a < dataFive.list.length; a = (a + 8)) {
         console.log(dataFive.list[a])
         dataTemp.push(dataFive.list[a])
     };
-    //dataTemp.push(dataFive.list[a])
     console.log(dataTemp.length)
 
-    for (var i=0; i<dataTemp.length; i++) { 
+    for (var i = 0; i < dataTemp.length; i++) {
         var weatherObjFive = {};
-        //console.log(dataFive.list[i].dt_txt)
-        weatherObjFive["time"] = dataTemp[i].dt_txt; 
-        weatherObjFive["temperature"] = dataTemp[i].main.temp;
-        weatherObjFive["weather"] = dataTemp[i].weather[0].main;
-        weatherObjFive["icon"] = "http://openweathermap.org/img/wn/" + dataTemp[i].weather[0].icon + "@2x.png";
+        weatherObjFive["time5"] = getDay(dataTemp[i].dt_txt);
+        weatherObjFive["temperature5"] = dataTemp[i].main.temp;
+        weatherObjFive["weather5"] = dataTemp[i].weather[0].main;
+        weatherObjFive["icon5"] = "http://openweathermap.org/img/wn/" + dataTemp[i].weather[0].icon + "@2x.png";
 
         weatherModel5.push(weatherObjFive);
     }
-    console.log(weatherModel5)
+    renderViewFive(weatherModel5)
 };
 
 let renderViewFive = function (weatherModel5) {
-    $('.fiveDay').empty();
-    for (var i = 0; i < weatherModel.length; i++) {
+    $('#five-day').empty();
+    for (var i = 0; i < weatherModel5.length; i++) {
         var source = $('#five-template').html();
         var template = Handlebars.compile(source);
-        var newHTML = template(weatherModel[i]);
-        $('.mainWeather').append(newHTML);
+        var newHTML = template(weatherModel5[i]);
+        $('#five-day').append(newHTML);
     }
-
 }
-
-
-
-
-
 // function or call to display information to view
 let renderView = function (weatherModel) {
     $('.mainWeather').empty();
@@ -165,11 +140,22 @@ let renderView = function (weatherModel) {
         $('.mainWeather').append(newHTML);
     }
 };
-
+// create function to convert date from API to current day.
 // date formating, find day of the week
-const getDay = function () {
+const getDay = function (dateToConvert) {
+    var gsDayNames = [
+        'Sunday',
+        'Monday',
+        'Tuesday',
+        'Wednesday',
+        'Thursday',
+        'Friday',
+        'Saturday'
+    ];
 
+    var d = new Date(dateToConvert);
+    var dayName = gsDayNames[d.getDay()];
+    //dayName will return the name of day
+    console.log(dayName)
+    return dayName
 }
-
-
-//console.log(moment(1580526000).format('ddd'))
