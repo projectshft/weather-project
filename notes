@@ -37,28 +37,18 @@ CheckList for completion
 8. Patterns
 9. Ability to re-utilize code
 
-            <h3 class="font-weight-bold">46</h3>
-            <h5 class="font-weight-light">Raleigh, NC</h5>
-            <h5 class="font-weight-light">cloudy</h5>
-
-Templates from bookshelf project
-    <script id="book-template" type="text/x-handlebars-template">
-      <div class="book col-md-6">
-        <h4>{{ title }}</h4>
-        <div>Author: <strong>{{author}}</strong></div>
-        <div>Pages: <strong>{{pageCount}}</strong></div>
-        <div>ISBN: <strong>{{isbn}}</strong></div>
-        <div><img src="{{imageURL}}" alt=""></div>
-        <button type="button" class="library-button btn-primary">Add To Library</button>
-      </div>
-    </script>
-    <script id="library-template" type="text/x-handlebars-template">
-      <div class="library col-sm-2">
-        <h4>{{ title }}</h4>
-        <div>Author: <strong>{{author}}</strong></div>
-        <div>Pages: <strong>{{pageCount}}</strong></div>
-        <div>ISBN: <strong>{{isbn}}</strong></div>
-        <div><img src="{{imageURL}}" alt=""></div>
-        <button type="button" class="library-button btn-primary">Add To Library</button>
-      </div>
-    </script>
+// var fetchWeekForcast = function (query) {
+//     $.ajax({
+//         method: "GET",
+//         url: "https://api.openweathermap.org/data/2.5/forecast?q=" + query +"&units=imperial&APPID=5e1097f8226b90c97d310fff36fe3e88",
+//         dataType: "json",
+//         success: function(data) {
+//             console.log(data.list[0].main.temp)
+//             console.log(data.list[0][4].main.temp)
+//         //   addWeekForcast(data);
+//         },
+//         error: function(jqXHR, textStatus, errorThrown) {
+//             console.log(textStatus)
+//         }
+//       });
+// }

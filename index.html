@@ -26,49 +26,20 @@
         <div class="current-weather">
         </div>
         </div>
-        <div class="row offset-md-1">
-            <div class="week-forcast col-md-2">
-                <div><h5 class="font-weight-light">{{ condition }}</h5></div>
-                <div><h5 class="font-weight-light">{{ temperature }}</h5></div>
-                <div><img src="{{imageURL}}"></div>
-                <div><h5 class="font-weight-light">{{ day }}</h5></div>
-            </div>
-            <div class="week-forcast col-md-2">
-                <div><h5 class="font-weight-light">{{ condition }}</h5></div>
-                <div><h5 class="font-weight-light">{{ temperature }}</h5></div>
-                <div><img src="{{imageURL}}"></div>
-                <div><h5 class="font-weight-light">{{ day }}</h5></div>
-            </div>
-            <div class="week-forcast col-md-2">
-                <div><h5 class="font-weight-light">{{ condition }}</h5></div>
-                <div><h5 class="font-weight-light">{{ temperature }}</h5></div>
-                <div><img src="{{imageURL}}"></div>
-                <div><h5 class="font-weight-light">{{ day }}</h5></div>
-            </div>
-            <div class="week-forcast col-md-2">
-                <div><h5 class="font-weight-light">{{ condition }}</h5></div>
-                <div><h5 class="font-weight-light">{{ temperature }}</h5></div>
-                <div><img src="{{imageURL}}"></div>
-                <div><h5 class="font-weight-light">{{ day }}</h5></div>
-            </div>
-            <div class="week-forcast col-md-2">
-                <div><h5 class="font-weight-light">{{ condition }}</h5></div>
-                <div><h5 class="font-weight-light">{{ temperature }}</h5></div>
-                <div><img src="{{imageURL}}"></div>
-                <div><h5 class="font-weight-light">{{ day }}</h5></div>
-            </div>
-        </div>
+        <div class="week-forcast row offset-md-1"></div>
     </div>
     <script id="current-weather-template" type="text/x-handlebars-template">
-         <div><h3 class="font-weight-bold">{{ temperature }} &deg</h3></div>
+        <div><h3 class="font-weight-bold">{{ temperature }} &deg</h3></div>
         <div><h5 class="font-weight-light">{{ location }}</h5></div>
         <div><h5 class="font-weight-light">{{ conditions }}</h5></div>
     </script>
     <script id="week-forcast" type="text/x-handlebars-template">
-        <div><h5 class="font-weight-light">{{ condition }}</h5></div>
-        <div><h5 class="font-weight-light">{{ temperature }}</h5></div>
-        <div><img src="{{imageURL}}"></div>
-        <div><h5 class="font-weight-light">{{ day }}</h5></div>
+        <div class="forcast col-md-2 text-center">
+            <div><h5 class="font-weight-light">{{ condition }}</h5></div>
+            <div><h5 class="font-weight-light">{{ temperature }} &deg</h5></div>
+            <div><img src="{{iconURL}}"></div>
+            <div><h5 class="font-weight-light">{{ weekDay }}</h5></div>
+        </div>
     </script>
   <!-- jQuery first, then Tether, then Bootstrap JS. -->
   <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
