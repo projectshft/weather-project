@@ -15,6 +15,7 @@ var Collection = function (config) {
     if (!_.includes(models, item) || _.isEmpty(models)) {
       models.push(item)
 
+
       if (changeCallback) {
         changeCallback()
       }
@@ -75,7 +76,6 @@ var Model = function (config) {
 
     if (!_.isEqual(attributes, tempObj)) {
       attributes[prop] = value
-
       if (changeCallback) {
         changeCallback()
       }

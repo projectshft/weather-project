@@ -1,46 +1,17 @@
-var Weather = function() {
-  var currentWeather = Collection();
 
-  var $currentWeather = $('.current-weather');
+var app = CurrentWeather()
+app.currentWeather.change(function() {
+  app.renderCurrentWeather();
+});
 
-  var dataCurrentWeather = function(data) {
-    var city = data.name
-    var temp = Math.round(data.main.temp)
-    var description = data.weather[0].main
-    addCurrentWeather(city, temp, description)
-  }
+app.renderCurrentWeather();
 
-  var addCurrentWeather = function(city, temp, description) {
-    var currentWeatherModel = Model({
-      city: city,
-      temp: temp,
-      discription: description
-    })
-    currentWeatherModel.change(function() {
+var app2 = FiveDayWeather()
+  app2.fiveDayWeather.change(function() {
+    app2.renderFiveDayWeather();
+  });
 
-      this.renderCurrentWeather();
-    });
-    currentWeather.add(currentWeatherModel)
-    renderCurrentWeather()
-  };
-
-  var renderCurrentWeather = function() {
-    $('.search').html('<span></span> Search')
-    $currentWeather.empty();
-    var currentWeatherModel = currentWeather.models[currentWeather.models.length-1];
-    var currentWeatherTemplate = Handlebars.compile($('#current-weather-template').html());
-    var currentWeatherView = View(currentWeatherModel, currentWeatherTemplate)
-    // append our new html to the page
-    $currentWeather.append(currentWeatherView.render());
-  }
-  return {
-    dataCurrentWeather: dataCurrentWeather,
-    currentWeather: currentWeather,
-    addCurrentWeather: addCurrentWeather,
-    renderCurrentWeather: renderCurrentWeather
-  }
-
-}
+  app2.renderFiveDayWeather()
 
 //events
 $('.search').on('click', function() {
@@ -48,6 +19,6 @@ $('.search').on('click', function() {
   $(this).html(
     '<span class="spinner-border spinner-border-sm"></span> Loading...'
   );
-  fetchCurrentWeather(cityNameSearched)
-  fetchFiveDayForecast(cityNameSearched);
+  app.fetchCurrentWeather(cityNameSearched)
+  app2.fetchFiveDayForecast(cityNameSearched);
 });
