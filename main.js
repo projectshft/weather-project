@@ -32,8 +32,8 @@ var weatherModel = {
             dataType: "json",
             success: function (data) {
                 //Calling addForecast func with the data retrieved from the API
-                // addForecast(data);
-                console.log(data)
+                addForecast(data);
+               
     
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -49,7 +49,7 @@ function addWeather(data) {
     //Empty the citWeather Array before adding a new city
     weatherModel.cityWeather = [];
     // Grab the Temp, city name, weather main description, iconId
-    var tempFahrenheit = Math.round((data.main.temp - 273.15) * 9/5 + 32);
+    var tempFahrenheit = Math.round(data.main.temp);
     var cityName = data.name;
     var weatherMain = data.weather[0].main;
     var iconID = data.weather[0].icon;
@@ -74,13 +74,34 @@ function addForecast(data) {
     // Grab the Temp, weather main description, iconID, & Day of the week
     // Set a variable equal to the the list of forecasts 
     var forecastList = data.list;
+    // //Create a for loop that iterates over every 9th item in the array
+    //Problem went wrong in the for loop
+    for(var i = 0; i <= forecastList.length; i++) {
+        // This will give us the forecast for each day thats at 9:00am
+        if(i === 4 || i === 12 || i === 20 || i === 28 || i === 36) {
+            var epochTime = forecastList[i]['dt'];
+            //This converts the epochTime to the day of the week
+            var dayOfWeek = moment.unix(epochTime).format('dddd');
+            var forecastDiscription = forecastList[i].weather[0].main;
+            var forecastIcon = forecastList[i].weather[0].icon;
+            var forecastTemp = Math.round(forecastList[i].main.temp);
+            //Created an object that will hold the forecast data for each day
+            var forecastDay = {
+                description: forecastDiscription,
+                temp: forecastTemp,
+                icon: forecastIcon,
+                day: dayOfWeek
+            };
+            // push the forecast obj to the cityForecast array
+            weatherModel.cityForecast.push(forecastDay);
+        }
+       
+    }
 
-
-
+   
 }
 
-var currentTime = moment().format('MMMM Do YYYY, h:mm:ss a');
-console.log(currentTime)
+
 
 
 /////////////////////////// View ///////////////////////
@@ -114,3 +135,14 @@ $('.search').on('click', function () {
    weatherModel.fetch(userText);
 });
 
+
+
+// var arr1 = [1, 2, 3, 4, 5, 6, 7, 8, 8, 10, 11, 12];
+
+// var func1 = function() {
+//     for(j = 4; j <= arr1.length; j + 3) {
+//         console.log('hey it worked');
+//     }
+// };
+
+// func1();
