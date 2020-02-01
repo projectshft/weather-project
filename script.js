@@ -1,14 +1,28 @@
 let weatherModel = [];
 let weatherModel5 = [];
 
+// on-load function to set default city
+// need to trigger apiCall
+// need to check if local storage has any value stored for default city
+
+
 // search button event listener
 $('#search').click(function () {
     let searchValue = $('#searchInput').val();
     apiCall(searchValue)
 })
 
-//local storage feature for saving favorite city
+$(document).on('click', '.mainWeather', function () {
+    console.log('click')
+    let defaultCity = weatherModel[0].cityName;
+    console.log(defaultCity);
+    setDefaultCity(defaultCity);
+})
 
+//local storage feature for saving favorite city
+const setDefaultCity = function(defaultCity) {
+    localStorage.setItem('defaultCity', defaultCity)
+}
 
 // API call for current weather with key
 // key  096f3282b86fa805756f58092f5d2481   4102008879dcae5fa2ce2d42e5bf66ba
@@ -148,3 +162,4 @@ const getDay = function (dateToConvert) {
     //getDay will return the name of day
     return dayName
 }
+
