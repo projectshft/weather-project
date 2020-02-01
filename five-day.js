@@ -5,20 +5,20 @@ var FiveDayWeather = function() {
 
   var dataFiveDayWeather = function(data) {
     for (let i = 0; i < data.list.length; i = i + 8) {
-      var city = data.city.name
       var day = data.list[i].dt_txt
       var temp = data.list[i].main.temp
       var description = data.list[i].weather[0].main
+      var iconURL = 'http://openweathermap.org/img/w/' + data.list[i].weather[0].icon+ '.png'
       console.log(data.list[i])
-      addFiveDayWeather(city, day, temp, description)
+      addFiveDayWeather(day, temp, description, iconURL)
     }
   }
-  var addFiveDayWeather = function(city, day, temp, description) {
+  var addFiveDayWeather = function(day, temp, description, iconURL) {
     var fiveDayModel = Model({
-      city: city,
-      day: day,
+      day: moment(day).format('dddd'),
       temp: temp,
-      discription: description
+      discription: description,
+      iconURL: iconURL
     })
 
     fiveDayModel.change(function() {

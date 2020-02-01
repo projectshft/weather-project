@@ -7,14 +7,16 @@ var CurrentWeather = function() {
     var city = data.name
     var temp = Math.round(data.main.temp)
     var description = data.weather[0].main
-    addCurrentWeather(city, temp, description)
+    var iconURL = 'http://openweathermap.org/img/w/' + data.weather[0].icon+ '.png'
+    addCurrentWeather(city, temp, description, iconURL)
   }
 
-  var addCurrentWeather = function(city, temp, description) {
+  var addCurrentWeather = function(city, temp, description, iconURL) {
     var currentWeatherModel = Model({
       city: city,
       temp: temp,
-      discription: description
+      discription: description,
+      iconURL: iconURL
     })
     currentWeatherModel.change(function() {
       this.renderCurrentWeather();

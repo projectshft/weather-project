@@ -1,17 +1,17 @@
 
-var app = CurrentWeather()
-app.currentWeather.change(function() {
-  app.renderCurrentWeather();
+var appCurrent = CurrentWeather()
+appCurrent.currentWeather.change(function() {
+  appCurrent.renderCurrentWeather();
 });
 
-app.renderCurrentWeather();
+appCurrent.renderCurrentWeather();
 
-var app2 = FiveDayWeather()
-  app2.fiveDayWeather.change(function() {
-    app2.renderFiveDayWeather();
+var appFive = FiveDayWeather()
+  appFive.fiveDayWeather.change(function() {
+    appFive.renderFiveDayWeather();
   });
 
-  app2.renderFiveDayWeather()
+  appFive.renderFiveDayWeather()
 
 //events
 $('.search').on('click', function() {
@@ -19,6 +19,6 @@ $('.search').on('click', function() {
   $(this).html(
     '<span class="spinner-border spinner-border-sm"></span> Loading...'
   );
-  app.fetchCurrentWeather(cityNameSearched)
-  app2.fetchFiveDayForecast(cityNameSearched);
+  appCurrent.fetchCurrentWeather(cityNameSearched)
+  appFive.fetchFiveDayForecast(cityNameSearched);
 });
