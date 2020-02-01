@@ -16,12 +16,23 @@
 	margin-left: 15px;
 }
 
+.current-weather {
+	text-align: center;
+
+}
+
+.city {
+	font-size: 16px;
+	margin-bottom: 10px;
+}
+
 .col-md-5 {
 	width: 20%;
 }
 
 .forcast {
 	margin-top: 50px;
+	margin-left: -10%;
 }
 
 .forcast-box {

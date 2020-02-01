@@ -88,6 +88,10 @@ let WeatherProject = function() {
 				
 				let dayOfWeek = moment(timestamp).format('dddd');
 				//console.log(dayOfWeek);
+				if (dayOfWeek === 'Wednesday') {
+					dayOfWeek = 'Wed';
+				}
+				
 				forcastObj.dayOfWeek = dayOfWeek;
 
 				forcast.push(forcastObj);
