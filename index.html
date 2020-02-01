@@ -14,15 +14,25 @@
 
 <body>
     <script id="main-template" type="text/x-handlebars-template">
-        <div class="col">
-            <div id="temperature"><strong> {{ temperature }} </strong></div>
-            <div id="city"><strong>{{ cityName }}</strong></div>
-            <div id="weather"><strong>{{ weather }}</strong></div>
-        </div>  
-        <div class="col">
-            <img id="dayPicture" class="col sticky-right" src="cloudy.png" >
+    <div class="container"> 
+        <div class="row">
+            <div class="col">
+                <div  id="temperature"><strong> {{ temperature }} F</strong></div>
+                <div id="city"><strong>{{ cityName }},  {{ country }}</strong></div>
+                <div id="weather"><strong>{{ weather }}</strong></div>    
+            </div>
+            <div class="col">
+                <img @media (max-width: 900.98px) id="dayPicture" class="col sticky-right" src={{ icon }} >
+            </div>
         </div>
+        <div class="row form-inline">
+            <div class="col form-inline">
+                <p>to set {{cityName }} <br>as default press: </p><span id="setDefault" class="btn badge badge-pill badge-secondary">set Default</span>
+            </div>
+        </div>
+    </div>
     </script>
+         
     <div class="row justify-content-center"></div>
     <div class="search-main  justify-content-center">
         <form class="form-inline   justify-content-center" onsubmit="event.preventDefault();">
@@ -42,6 +52,7 @@
         <div class="mainWeather row w-auto p-3" style="background-color: 0">
 
         </div>
+        
         <div class="col w-auto p-1" style="background-color: 0">
 
         </div>
@@ -49,10 +60,10 @@
     <script id="five-template" type="text/x-handlebars-template">
         <div id="cityWeather" class="form-inline col-md-2 ">
             <div class="col mb-2">
-                <div class="card">
+                <div class="card shadow  bg-white rounded">
                   <div class="card-body">
                     <h5 class="card-title">{{ weather5 }}</h5>
-                    <h5>{{ temperature5 }}</h5>
+                    <h5>{{ temperature5 }} F</h5>
                     <img src={{ icon5 }} class="card-img-top" alt="...">
                     <p>{{ time5 }}</p>
                   </div>
