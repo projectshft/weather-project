@@ -89,7 +89,7 @@ function addForecast(data) {
             var forecastDay = {
                 description: forecastDiscription,
                 temp: forecastTemp,
-                icon: forecastIcon,
+                iconURL: `http://openweathermap.org/img/w/${forecastIcon}.png`,
                 day: dayOfWeek
             };
             // push the forecast obj to the cityForecast array
