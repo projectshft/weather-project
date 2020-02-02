@@ -4,7 +4,7 @@ let weatherModel5 = [];
 // on-load function to set default city
 // need to trigger apiCall
 // need to check if local storage has any value stored for default city
-$(document).ready(function() {
+$(document).ready(function () {
     if (localStorage.defaultCity != undefined) {
         apiCall(localStorage.defaultCity)
     } else {
@@ -17,22 +17,21 @@ $('#search').click(function () {
     let searchValue = $('#searchInput').val();
     console.log(searchValue.length)
     if (searchValue.length > 0) {
-    apiCall(searchValue)
+        apiCall(searchValue)
     } else {
-        alert ('search bar can not be left empty before submitting')
+        alert('search bar can not be left empty before submitting')
     }
 })
-
+// event listener fpr dinaicaly created button (set default city)
 $(document).on('click', '.mainWeather', function () {
-    console.log('click')
     let defaultCity = weatherModel[0].cityName;
-    console.log(defaultCity);
     setDefaultCity(defaultCity);
 })
 
 //local storage feature for saving favorite city
-const setDefaultCity = function(defaultCity) {
+const setDefaultCity = function (defaultCity) {
     localStorage.setItem('defaultCity', defaultCity)
+    renderView(weatherModel)
 }
 
 // API call for current weather with key
@@ -60,10 +59,10 @@ var apiCall = function (searchVal) {
             error: function (jqXHR, textStatus, errorThrown) {
                 console.log(errorThrown);
                 if (errorThrown == "Not Found") {
-                alert ('City not found. Please try another city')
+                    alert('City not found. Please try another city')
                 } else {
                     console.log('error returned ', jqXHR, textStatus);
-                    
+                    alert('system error ', textStatus)
                 }
             }
         });
@@ -87,7 +86,7 @@ var apiCallFiveDay = function (searchVal) {
                 const dayToFind = new Date(time)
 
                 filterFiveDay(dataFive)
-                renderView(weatherModel)
+                //renderView(weatherModel)
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.log(textStatus);
@@ -103,7 +102,7 @@ var kelvinToFar = function (temp) {
 
 // way to store returned information and Model set up
 const filteredData = function (mainData) {
-    console.log('filter data mainData ',mainData.sys.country)
+    console.log('filter data mainData ', mainData.sys.country)
     var weatherObj = {};
     weatherObj["weather"] = mainData.weather[0].description;
     weatherObj["cityName"] = mainData.name;
@@ -122,7 +121,8 @@ const filterFiveDay = function (dataFive) {
     console.log('weather5: ', dataFive.list[0].weather[0].main)
     console.log('icon5: ', dataFive.list[0].weather[0].icon)
     var dataTemp = [];
-    for (var a = 4; a < dataFive.list.length; a = (a + 8)) {
+    //added for loop to get same time of the day for each day in 5 day foprecats display
+    for (var a = 0; a < dataFive.list.length; a = (a + 8)) {
         // console.log('inside five day filter ', dataFive.list[a])
         dataTemp.push(dataFive.list[a])
     };
@@ -151,19 +151,28 @@ let renderViewFive = function (weatherModel5) {
 // function or call to display information to view for single day
 let renderView = function (weatherModel) {
     $('.mainWeather').empty();
-    //console.log('renderView mainData value ', weatherModel)
+    console.log('renderView mainData value ', weatherModel[0].cityName)
     for (var i = 0; i < weatherModel.length; i++) {
         var source = $('#main-template').html();
         var template = Handlebars.compile(source);
         var newHTML = template(weatherModel[i]);
         $('.mainWeather').append(newHTML);
     }
-  
+    // set show and hide for default city
+    if (localStorage.defaultCity != weatherModel[0].cityName) {
+        // boothstrap classes to set hidden and show elements
+        $('#DefCityMessage').addClass("d-block");
+        $('#DefCitySet').addClass("d-none");
+    } else {
+        $('#DefCitySet').addClass("d-block");
+        $('#DefCityMessage').addClass("d-none");
+    }
 };
 
 // create function to convert date from API to current day.
 // date formating, find day of the week
 const getDay = function (dateToConvert) {
+    console.log(dateToConvert)
     var gsDayNames = [
         'Sunday',
         'Monday',
@@ -180,3 +189,14 @@ const getDay = function (dateToConvert) {
     return dayName
 }
 
+
+// google maps API key   "key=API_KEY"  AIzaSyBjunVQe2A8mt0sISCk88UOztGzh7D-OJw
+// https://www.google.com/maps/embed/v1/MODE?key=YOUR_API_KEY&parameters
+var map;
+function initMap() {
+      map = new google.maps.Map(document.getElementById('map'),  {
+        center: {lat: -34.397, lng: 150.644},
+        zoom: 10
+      });
+}
+//initMap(map)

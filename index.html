@@ -10,11 +10,12 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 <hether>
     <h2 class="text-center"> Current Weather</h2>
+    
 </hether>
 
 <body>
     <script id="main-template" type="text/x-handlebars-template">
-    <div class="container"> 
+        <div class="container"> 
         <div class="row">
             <div class="col">
                 <div  id="temperature"><strong> {{ temperature }} F</strong></div>
@@ -26,13 +27,16 @@
             </div>
         </div>
         <div class="row form-inline">
-            <div class="col form-inline">
-                <p>to set {{cityName }} <br>as default press : &#160; &#160; &#160; &#160 </p><button id="set" class="btn float-right badge badge-pill badge-success">set Default</button>
+            <div id="DefCityMessage" class="col form-inline d-none">
+                <p class="">to set {{cityName }} <br>as default press : &#160; &#160; &#160; &#160 </p><button id="set" class="btn float-right badge badge-pill btn-outline-success">set Default</button>
+            </div>
+            <div id="DefCitySet" class="col form-inline d-none">
+                <p>Default city is set to {{ cityName }}</p>
             </div>
         </div>
     </div>
     </script>
-         
+
     <div class="row justify-content-center"></div>
     <div class="search-main  justify-content-center">
         <form class="form-inline   justify-content-center" onsubmit="event.preventDefault();">
@@ -52,19 +56,19 @@
         <div class="mainWeather row w-auto p-3" style="background-color: 0">
 
         </div>
-        
+
         <div class="col w-auto p-1" style="background-color: 0">
 
         </div>
     </div>
     <script id="five-template" type="text/x-handlebars-template">
-        <div id="cityWeather" class="form-inline col-md-2 ">
+        <div id="cityWeather" class="form-inline col-md-2 text-center">
             <div class="col mb-2">
                 <div class="card shadow  bg-white rounded">
                   <div class="card-body">
                     <h5 class="card-title">{{ weather5 }}</h5>
                     <h5>{{ temperature5 }} F</h5>
-                    <img src={{ icon5 }} class="card-img-top" alt="...">
+                    <img  src={{ icon5 }} class="card-img-top" alt="...">
                     <p>{{ time5 }}</p>
                   </div>
                 </div>
@@ -75,6 +79,9 @@
         <div id="five-day" class="row row-cols-1 row-cols-md-2 justify-content-center">
 
         </div>
+    <div id="map" >
+
+    </div>
     </div>
 
     <!-- jQuery first, then Tether, then Bootstrap JS. -->
@@ -87,8 +94,12 @@
         integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous">
     </script>
     <script src="https://momentjs.com/downloads/moment.js"></script>
-
+    
     <script src="script.js" type="text/javascript"></script>
+    
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAYIBoAvtg9TGtxc5cS9AcW34odFHpizHA&callback=initMap">
+    </script>
 </body>
 
 </html>

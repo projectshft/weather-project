@@ -1,0 +1,17 @@
+img{
+    width:100%;
+    max-width:100px;
+}
+#set {
+    position: relative;
+    margin-top: -4vh;
+}
+p {
+    text-shadow: darkgreen;
+    font-size: smaller;
+    color: darkgreen;
+}
+#map {
+    height: 400px;
+    width: 100%;
+}
