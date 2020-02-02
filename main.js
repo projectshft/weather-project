@@ -39,7 +39,6 @@ const WeatherProject = () => {
       dataType: "json",
       success: function(data) {
         //if the call is successful the current weather function is invoked with the data
-        console.log(data);
         addCurrentWeather(data);
       },
       error: function(jqXHR, textStatus, errorThrown) {
@@ -66,13 +65,12 @@ const WeatherProject = () => {
       lat: data.coord.lat,
       lon: data.coord.lon
     });
-
-initMap(currentWeatherArray[0].lat, currentWeatherArray[0].lon);
+    //takes the lat and lon to initialize a map
+    initMap(currentWeatherArray[0].lat, currentWeatherArray[0].lon);
     //renders the weather to the page
     renderCurrentWeather();
 
   };
-
   // Initialize and add the map
   function initMap(lat, lng) {
     // The location of cityCoordinates
@@ -80,10 +78,8 @@ initMap(currentWeatherArray[0].lat, currentWeatherArray[0].lon);
       lat: lat,
       lng: lng
     };
-
-  // The map, centered at cityCoordinates
-
-     var map = new google.maps.Map(
+    // The map, centered at cityCoordinates
+    var map = new google.maps.Map(
       document.getElementById('map'), {
         zoom: 10,
         center: cityCoordinates
@@ -93,10 +89,7 @@ initMap(currentWeatherArray[0].lat, currentWeatherArray[0].lon);
       position: cityCoordinates,
       map: map
     });
-
   }
-
-
   //this function renders the current weather to the page
   var renderCurrentWeather = () => {
     //changes the search from loading back to search
@@ -163,21 +156,41 @@ initMap(currentWeatherArray[0].lat, currentWeatherArray[0].lon);
     }
   };
 
+  function geoFindMe() {
 
+    const status = document.querySelector('#status');
+    const mapLink = document.querySelector('#map-link');
 
-  //   const proxyurl = "https://cors-anywhere.herokuapp.com/";
-  //   const url = "https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=" + cityName + "&inputtype=textquery&fields=geometry/location&key=" + googleMapsKey; // site that doesn’t send Access-Control-*
-  //   fetch(proxyurl + url) // https://cors-anywhere.herokuapp.com/https://example.com
-  //   .then(response => response.json())
-  //   .then(contents => console.log(contents))
-  //   .catch(() => console.log("Can’t access " + url + " response. Blocked by browser?"))
-  //   // map = new google.maps.Map(document.getElementById("map"), {cityName});
-  // };
+    mapLink.href = '';
+    mapLink.textContent = '';
 
-  // var postMapToPage = () => {
-  //
-  // }
+    const options = {
+    enableHighAccuracy: true,
+    timeout: 5000,
+    maximumAge: 0
+    };
 
+    function success(position) {
+      const latitude = position.coords.latitude;
+      const longitude = position.coords.longitude;
+      //locates the latitude and longitude on the page
+      status.textContent = '';
+      mapLink.href = `https://www.openstreetmap.org/#map=18/${latitude}/${longitude}`;
+      mapLink.textContent = `Latitude: ${latitude} °, Longitude: ${longitude} °`;
+    }
+    //edge cases
+    function error() {
+      status.textContent = 'Unable to retrieve your location';
+    }
+    //edge cases
+    if (!navigator.geolocation) {
+      status.textContent = 'Geolocation is not supported by your browser';
+    } else {
+      status.textContent = 'Locating…';
+      navigator.geolocation.getCurrentPosition(success, error, options);
+    }
+  }
+  document.querySelector('#find-me').addEventListener('click', geoFindMe);
 };
 
 WeatherProject();
