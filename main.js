@@ -1,6 +1,6 @@
 const apiKey = '7b10c8efbac69baa1a5df4f162794c1d'
-const apiRequestForm = 'api.openweathermap.org/data/2.5/weather?q='
 defaultCity = JSON.parse(localStorage.getItem("defaultCity"))
+let mapData = [];
 
 //Function for handling requests to openweathermap api - called after search button clicked
 const apiRequest = async function(city) {
@@ -43,19 +43,37 @@ const apiRequest = async function(city) {
       //If both calls are successful call run dataCleaner with the current weather data and the 5 daty forecast data
       dataCleaner(weatherData, forecastData)
 
-      //Get longitude and latitude data from current weather data
+      //Get longitude, latitude and icon data from current weather data
       let lat = weatherData.coord.lat
       let long = weatherData.coord.lon
+      let icon = weatherData.weather[0].icon
 
-      //Create a google map with the longitude and latitude from the weather data
-      weatherMap(lat, long)
+      //Create neigbor city list to be placed on map
+      neighborCities(lat,long)
+
+      currentWeatherMapData = {
+        lat: lat,
+        long: long,
+        icon: icon
+      }
+
+      mapData = [];
+      mapData.push(currentWeatherMapData)
 }
 
 //Function for handling requests to openweathermap api - called after user coordinates found through geolocator
-const latLongApiRequest = async function(geoLocationObj) {
-  //set variables for latitude and longitude using geolocation data
-  let lat = geoLocationObj.coords.latitude
-  let long = geoLocationObj.coords.longitude
+const latLongApiRequest = async function(locationObj) {
+  let long = "";
+  let lat = "";
+  //If locationObj comes from geolocator use coords key to set lat and longitude
+  //Otherwise locationObj comes from google maps marker, use lat and long keys to set lat and long
+  if (locationObj.coords) {
+    lat = locationObj.coords.latitude
+    long = locationObj.coords.longitude
+  } else {
+    lat = locationObj.lat;
+    long = locationObj.long;
+  }
 
   // create variables where weather and forecast data returned from openweathermap api will be stored
   let weatherData = "";
@@ -89,11 +107,102 @@ const latLongApiRequest = async function(geoLocationObj) {
           errorAlert(errorThrown)
         }
       });
-      //Get longitude and latitude data from current weather data
+      //Get longitude, latitude icon data from current weather data
       dataCleaner(weatherData, forecastData)
 
-      //Create a google map
-      weatherMap(lat, long)
+      //Get longitude, latitude and icon data from current weather data
+      lat = weatherData.coord.lat
+      long = weatherData.coord.lon
+      icon = weatherData.weather[0].icon
+
+      //Create neigbor city list to be placed on map
+      neighborCities(lat,long)
+
+      //Add latitude, longitude and icon data to array used to make google map
+      currentWeatherMapData = {
+        lat: lat,
+        long: long,
+        icon: icon
+      }
+
+      mapData.push(currentWeatherMapData)
+
+}
+
+//Create object of neighbor neighbor neighbor cities
+const neighborCities = async function(lat, long) {
+  let neighborCitiesData = '';
+
+  //Create a geonames for cities of pop. greater than 15000 near latitude and longitude returned by openweathermap api
+  await $.ajax({
+      method: "GET",
+      url: `http://api.geonames.org/findNearbyPlaceNameJSON?lat=${lat}&lng=${long}&username=paulwwstorm&maxrows=100&radius=300&cities=cities15000`,
+      dataType: "json",
+      //If the call is successful return data into weatherData variable
+      success: function(data) {
+        neighborCitiesData = data;
+      },
+      //If an error occurs call the errorAlert function
+      error: function(jqXHR, textStatus, errorThrown) {
+        console.log(errorThrown)
+      }
+    });
+
+  //Make a api requests for each city in the data returned from geonames api
+  neighborCitiesWeather(neighborCitiesData)
+}
+
+const neighborCitiesWeather = async function(neighborCities)  {
+  const neighborCitiesWeatherData = [];
+  const errors = [];
+
+  for (var i = 1; i<neighborCities.geonames.length; i++) {
+    try {
+      await $.ajax({
+        method: "GET",
+        url: `https://api.openweathermap.org/data/2.5/weather?q=${neighborCities.geonames[i].name}&APPID=${apiKey}`,
+        dataType: "json",
+        //If the call is successful return data into weatherData variable
+        success: function(data) {
+          neighborCitiesWeatherData.push(data);
+        },
+        //If an error occurs call the errorAlert function
+        error: function(jqXHR, textStatus, errorThrown) {
+          console.log(errorThrown)
+        }
+      });
+    } catch(error) {
+        console.log(error)
+      }
+  }
+
+  cleanNeighborCitiesWeatherData(neighborCitiesWeatherData)
+}
+
+//Function for taking data returned from neighborCitiesWeather and returning objects to be displayed on google maps
+const cleanNeighborCitiesWeatherData = function(neighborCitiesWeatherData) {
+  cleanedNeighborCitiesWeatherData = [];
+
+  for (var i = 0; i < neighborCitiesWeatherData.length; i++) {
+    cleanedNeighborCityWeatherData = {}
+
+    let weatherIcon = neighborCitiesWeatherData[i].weather[0].icon;
+    let weatherIconURL = `https://openweathermap.org/img/wn/${weatherIcon}@2x.png`;
+    let cityLat = neighborCitiesWeatherData[i].coord.lat;
+    let cityLong = neighborCitiesWeatherData[i].coord.lon;
+
+    cleanedNeighborCityWeatherData = {
+      weatherIconURL: weatherIconURL,
+      cityLat: cityLat,
+      cityLong: cityLong
+    }
+
+    cleanedNeighborCitiesWeatherData.push(cleanedNeighborCityWeatherData)
+
+  }
+
+  mapData.push(cleanedNeighborCitiesWeatherData)
+  weatherMap(mapData)
 }
 
 //Function for taking data returned from openweather api and returning objects to be displayed on webpage
@@ -155,7 +264,6 @@ const addDefault = function(city) {
   //Add default city to local storage
   let defaultCity = [];
   defaultCity.push(city)
-  console.log(defaultCity)
   localStorage.setItem("defaultCity", JSON.stringify(defaultCity))
 }
 
@@ -170,7 +278,7 @@ function getLocation() {
 }
 
 //Takes data from data cleaner and uses handlesbars templates to append it to the webpage
-const renderForecast = function(currentWeather, forecastWeather) {
+const renderForecast = function(currentWeather, forecastWeather, icon) {
   //Clear out the forecast html and the current weather html
   $('.forecast').empty();
   $('.current-weather').empty();
@@ -198,13 +306,61 @@ const renderForecast = function(currentWeather, forecastWeather) {
 }
 
 //Add google map to webpage
-const weatherMap = function(lat, long) {
+const weatherMap = function(mapData) {
     //Create a new google map object with city longitude and latitude data
-    let uluru = {lat: lat, lng: long};
+    let uluru = {lat: mapData[0].lat, lng: mapData[0].long};
     let map = new google.maps.Map(
-        document.getElementById('map'), {zoom: 8, center: uluru});
+        document.getElementById('map'), {zoom: 9, center: uluru});
     //Add marker for current city to the map
-    let marker = new google.maps.Marker({position: uluru, map: map});
+    mapWeatherIcon = new google.maps.MarkerImage(
+      `https://openweathermap.org/img/wn/${mapData[0].icon}@2x.png`,
+      null, /* size is determined at runtime */
+      null,
+      null, /* anchor is bottom center of the scaled image */
+      new google.maps.Size(50, 50)
+    );
+    let marker = new google.maps.Marker({position: uluru, map: map, icon:  mapWeatherIcon})
+
+    for (var i = 0; i<mapData[1].length; i++) {
+      let lat = mapData[1][i].cityLat;
+      let long = mapData[1][i].cityLong;
+      uluru = {lat: mapData[1][i].cityLat, lng: mapData[1][i].cityLong};
+      pinIcon = new google.maps.MarkerImage(
+        mapData[1][i].weatherIconURL,
+        null, /* size is determined at runtime */
+        null,
+        null, /* anchor is bottom center of the scaled image */
+        new google.maps.Size(50, 50)
+      );
+
+
+      let cityMarker = new google.maps.Marker({position: uluru, map: map, icon: pinIcon});
+
+      google.maps.event.addListener(cityMarker, 'click', function() {
+        let lat = cityMarker.position.lat();
+        let long = cityMarker.position.lng();
+
+        locationObj = {
+          lat: lat,
+          long: long
+        }
+
+        latLongApiRequest(locationObj)
+      });
+    }
+
+    //Add a click listener to marker, if marker clicked call with latLongApiRequest with the coordinates of the marker
+    google.maps.event.addListener(marker, 'click', function() {
+      let lat = marker.position.lat();
+      let long = marker.position.lng();
+
+      locationObj = {
+        lat: lat,
+        long: long
+      }
+
+      latLongApiRequest(locationObj)
+    });
 }
 
 // Function for handling errors that come from geolocator and api requests
