@@ -33,25 +33,32 @@
           <div class="weather row">
           </div>
         <div class="fiveDayWeather row">
+          </div>
+
+        <div class ="default">
+          <button type="button" class="btn btn-primary">Set Default</button>
         </div>
       </div>
     </div>
   </div>
   <!-- jQuery first, then Tether, then Bootstrap JS. -->
   <script id="weather-template" type="text/x-handlebars-template">
-    <div class = "weathericon col-md-6">
-    <img src="{{weatherIcon}}" alt="" class="rounded-float-right">
     <div class="weather col-md-6 offset-md-3">
       <h1>{{ temperature }}°</h1>
       <h4>{{ cityName }}</h4>
       <h4>{{ weatherDescription }}</h4>
+    </div>
+    <div class = "row">
+      <div class= "weathericon text-center">
+        <img src="{{weatherIcon}}" alt="" class="img-size">
+      </div>
     </div>
   </script>
   <script id="fiveDayWeather-template" type="text/x-handlebars-template">
           <div class="col-md-2">
           <h1>{{ temperature }}°</h1>
           <h4>{{ weatherDescription }}</h4>
-          <img src="{{weatherIcon}}" alt="">
+          <img src="{{weatherIcon}}" alt="" class= "text-center">
           <h4>{{ time }}</h4>
         </div>
   </script>

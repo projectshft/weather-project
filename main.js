@@ -1,13 +1,7 @@
+
+// Model
 var weather = [];
 var fiveDayWeather = [];
-
-$('.search').on('click', function () {
-  var search = $('#search-query').val();
-  $(this).html('<span class="spinner-border spinner-border-sm"></span> Loading...');
-
-  fetch(search);
-  fetchFiveDayWeather(search);
-});
 
 var fetch = function (query) {
 
@@ -35,30 +29,6 @@ var populateWeather = function (data) {
     })
   renderWeather()
 };
-
-var renderWeather = function() {
-  $('.search').html('<span></span> Search')
-  $('.weather').empty();
-
-  for (var i = 0; i < weather.length; i++) {
-    var source = $('#weather-template').html();
-    var template = Handlebars.compile(source);
-    var newHTML = template(weather[i]);
-    $('.weather').append(newHTML);
-
-  }
-};
-
-var renderFiveDayWeather = function() {
-  $('.fiveDayWeather').empty();
-
-  for (var i = 0; i < fiveDayWeather.length; i++) {
-    var source = $('#fiveDayWeather-template').html();
-    var template = Handlebars.compile(source);
-    var newHTML = template(fiveDayWeather[i]);
-    $('.fiveDayWeather').append(newHTML)
-  }
-}
 
 var fetchFiveDayWeather = function (query2) {
 
@@ -90,3 +60,36 @@ var populateFiveDayWeather = function (data) {
   }
   renderFiveDayWeather()
 };
+
+// View
+var renderWeather = function() {
+  $('.search').html('<span></span> Search')
+  $('.weather').empty();
+
+  for (var i = 0; i < weather.length; i++) {
+    var source = $('#weather-template').html();
+    var template = Handlebars.compile(source);
+    var newHTML = template(weather[i]);
+    $('.weather').append(newHTML);
+  }
+};
+
+var renderFiveDayWeather = function() {
+  $('.fiveDayWeather').empty();
+
+  for (var i = 0; i < fiveDayWeather.length; i++) {
+    var source = $('#fiveDayWeather-template').html();
+    var template = Handlebars.compile(source);
+    var newHTML = template(fiveDayWeather[i]);
+    $('.fiveDayWeather').append(newHTML)
+  }
+}
+
+// Controller
+$('.search').on('click', function () {
+  var search = $('#search-query').val();
+  $(this).html('<span class="spinner-border spinner-border-sm"></span> Loading...');
+
+  fetch(search);
+  fetchFiveDayWeather(search);
+});

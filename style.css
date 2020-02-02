@@ -3,3 +3,10 @@
   padding: 30px;
   margin: auto;
 }
+
+.img-size {
+  width: 200%;
+  height: 200px
+  image-rendering: auto;
+  display: inline-block;
+}
