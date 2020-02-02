@@ -131,6 +131,8 @@ const STORAGE_ID = 'weather-project';
 let defaultCity = '';
 let defaultInfo = [];
 let app = WeatherProject();
+let currentPosition = $('#status')[0];
+let mapDisplay = $('#mapholder')[0];
 
 let saveToLocalStorage = function (defaultData) {
   localStorage.setItem(STORAGE_ID, JSON.stringify(defaultData));
@@ -203,12 +205,6 @@ const fetchWeatherOfCurrentLocation = async(query) => {
 	saveToLocalStorage(json);
 }
 
-//current location section
-//API KEY: AIzaSyCue4XtYUuHjzIl0ZFncALl9an08JNIWUw
-
-let currentPosition = $('#status')[0];
-let mapDisplay = $('#mapholder')[0];
-
 function getLocation() {
 	if (navigator.geolocation) {
 		navigator.geolocation.getCurrentPosition(showPosition);
@@ -267,11 +263,9 @@ $('.search').on('click', function () {
 		fetchCurrentWeather(search);
 		$('#search-query').val('');
 	}
-  	//test of the getState function
-	//getState(41.85, -87.65);
-
 });
 
+//save or retrive the current location from the local storage
 $('#defaultLocation').on('click', function () {	
 	getDefaultInfoFromLocalStorage();
 });
