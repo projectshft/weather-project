@@ -128,18 +128,13 @@ let WeatherProject = function() {
 }
 
 const STORAGE_ID = 'weather-project';
-const defaultCity = 'Durham';
+let defaultCity = '';
 let defaultInfo = [];
-
-//8349ad5e6bba395d3c4a42b77ef38130
-
 let app = WeatherProject();
-
 
 let saveToLocalStorage = function (defaultData) {
   localStorage.setItem(STORAGE_ID, JSON.stringify(defaultData));
 }
-
 
 let getFromLocalStorage = function () {
   return JSON.parse(localStorage.getItem(STORAGE_ID) || '[]');
@@ -187,6 +182,77 @@ const fetchFiveDaysForcast = async(query) => {
 	app.renderForcast();
 }
 
+const fetchWeatherOfCurrentLocation = async(query) => {
+	const res = await fetch(
+	    'https://api.openweathermap.org/data/2.5/weather?'+query+'&units=imperial&appid=8349ad5e6bba395d3c4a42b77ef38130'
+	  )
+	.catch((error) => {
+  		console.error('Error:', error);
+  	});
+  		
+	const json = await res.json();
+
+  	console.log(json);
+
+	app.formatCurrentData(json);
+	app.renderCurrentWeather();
+
+	//get data for 5 days forcast
+	defaultCity = json.name;
+	fetchFiveDaysForcast(defaultCity);
+	saveToLocalStorage(json);
+}
+
+//current location section
+//API KEY: AIzaSyCue4XtYUuHjzIl0ZFncALl9an08JNIWUw
+
+let currentPosition = $('#status')[0];
+let mapDisplay = $('#mapholder')[0];
+
+function getLocation() {
+	if (navigator.geolocation) {
+		navigator.geolocation.getCurrentPosition(showPosition);
+	} else { 
+		currentPosition.val("Geolocation is not supported by this browser.");
+	}
+}
+
+function showPosition(position) {
+	let mapKey = 'AIzaSyCue4XtYUuHjzIl0ZFncALl9an08JNIWUw';
+	let lat = position.coords.latitude;
+	let long = position.coords.longitude
+	let latlong = `${lat},${long}`;
+	let maplink = `https://www.openstreetmap.org/#map=18/${lat}/${long}`;
+	let query = `lat=${lat}&lon=${long}`;
+
+  	currentPosition.innerHTML = `<a href="${maplink}" target="_blank">Latitude: ${lat} <br>Longitude: ${long}</a>`;
+  	fetchWeatherOfCurrentLocation(query);
+
+  	let img_url = `https://www.google.com/maps/embed/v1/view?key=${mapKey}&center=${latlong}&zoom=13`;
+  	mapDisplay.innerHTML =`<iframe width="450" height="250" frameborder="0" style="border:0" src=${img_url}></iframe>`;
+}
+
+let getDefaultInfoFromLocalStorage = function() {
+	//get default city info from the local storage if  we have it
+	defaultInfo = getFromLocalStorage();
+
+	//if nothing in local storage get the info from API 
+	if(defaultInfo.length === 0) {
+		defaultInfo = fetchCurrentWeather(defaultCity);
+	}
+
+	app.formatCurrentData(defaultInfo);
+	app.renderCurrentWeather();
+
+	//clear the search input field
+	$('#search-query').val('');
+
+	getLocation();
+
+	//get data for 5 days forcast
+	//fetchFiveDaysForcast(defaultCity);
+}
+
 //get info about default city weather and 5 days forcast from local storage 
 $(document).ready(() => {
 	getDefaultInfoFromLocalStorage();
@@ -206,56 +272,14 @@ $('.search').on('click', function () {
 
 });
 
-$('#defaultLocation').on('click', function () {
-
+$('#defaultLocation').on('click', function () {	
 	getDefaultInfoFromLocalStorage();
 });
 
-let getDefaultInfoFromLocalStorage = function() {
-	//get default city info from the local storage if  we have it
-	defaultInfo = getFromLocalStorage();
-
-	//if nothing in local storage get the info from API 
-	if(defaultInfo.length === 0) {
-		defaultInfo = fetchCurrentWeather(defaultCity);
-	}
-
-	app.formatCurrentData(defaultInfo);
-	app.renderCurrentWeather();
-
-	//get data for 5 days forcast
-	$('#search-query').val('');
-
-	//get data for 5 days forcast
-	fetchFiveDaysForcast(defaultCity);
-}
-
-//current location section
-//API KEY: AIzaSyCue4XtYUuHjzIl0ZFncALl9an08JNIWUw
-
-let currentPosition = $('#status')[0];
-let mapDisplay = $('#mapholder')[0];
-
-function getLocation() {
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(showPosition);
-  } else { 
-    currentPosition.val("Geolocation is not supported by this browser.");
-  }
-}
-
-function showPosition(position) {
-	let mapKey = 'AIzaSyCue4XtYUuHjzIl0ZFncALl9an08JNIWUw';
-	let lat = position.coords.latitude;
-	let long = position.coords.longitude
-	let latlong = `${lat},${long}`;
-	let maplink = `https://www.openstreetmap.org/#map=18/${lat}/${long}`;
-
-  	currentPosition.innerHTML = `<a href="${maplink}" target="_blank">Latitude: ${lat} <br>Longitude: ${long}</a>`;
-
-  	let img_url = `https://www.google.com/maps/embed/v1/view?key=${mapKey}&center=${latlong}&zoom=13`;
-  	mapDisplay.innerHTML =`<iframe width="450" height="250" frameborder="0" style="border:0" src=${img_url}></iframe>`;
-}
+$('#find-me').on('click', function() {
+	getLocation();
+	$('#status, #maplink').toggle('slow');
+})
 
 //get the state by the coordinates using opencagedate API
 //API: 6c75c2c5ea264615ab072b2ebf5fad83
