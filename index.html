@@ -10,16 +10,16 @@
   <title>Weather Project</title>
 </head>
 <body>
-    <!-- Container for bootstrap to reognize-->
-  <div class="container-fluid">
-    <div class="row">
+<!-- Container for bootstrap to reognize-->
+<div class="container-fluid">
+    <div class="row text-center">
       <div class="col-md-6 offset-md-3">
         <div class="page-header">
           <h1>Current Weather</h1>
           <hr/>
         </div>
       </div>
-      <div class="col-md-6 offset-md-3">
+    <div class="col-md-6 offset-md-3">
         <form class="form-inline" onsubmit="event.preventDefault();">
           <div class="form-group mx-sm-3 mb-2">
             <input type="type" class="form-control" id="submitted-city" placeholder="Enter City Name">
@@ -33,7 +33,7 @@
       <div class="col-md-1">
         <div class="current-weather"></div>
       </div>
-      <div class="col-md-5">
+      <div class="col-md-1">
         <div class="current-icon text-left"></div>
       </div>
     </div>
@@ -47,13 +47,13 @@
       <div><h5 class="font-weight-light">{{ conditions }}</h5></div>
     </script>
     <script id="current-icon-template" type="text/x-handlebars-template">
-      <div><img src="{{iconURL}}"></div>
+        <div><img src="{{ iconURL }}"></div>
     </script>
     <script id="week-forcast" type="text/x-handlebars-template">
       <div class="forcast col-md-2.5 text-center">
         <div><h5 class="font-weight-light">{{ condition }}</h5></div>
         <div><h5 class="font-weight-light">{{ temperature }} &deg</h5></div>
-        <div><img src="{{iconURL}}"></div>
+        <div><img src="{{ iconURL }}"></div>
         <div><h5 class="font-weight-light">{{ weekDay }}</h5></div>
       </div>
     </script>

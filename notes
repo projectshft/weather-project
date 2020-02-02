@@ -13,8 +13,8 @@
         Center page (centered under content above)
 
 3. Make sure click button is working and receiving info
-    ? may want to think about a different function that handels
-    Edge case scenarios? blank...but should accept city & city/country
+    ? may want to think about a different functions to handle different
+    Edge case scenarios? maybe click handles blank...api handles invalid city?
 
 4. Receive Data
     -Click sends data to fetch
@@ -23,8 +23,6 @@
     -HandleBars 2 temps: 1 day and 5 day
     -Post data to view
     -Way to render page with new search info
-    1. hard code to see if data is working
-
 
 CheckList for completion
 1. bootstrap/handlebars/jquery

@@ -1,8 +1,9 @@
+//5 day week array
 var weekForcast = [];
 
 // fetch APIs
-var fetchCurrentWeather = function (query) {
-    //Current Weather
+var fetchWeather = function (query) {
+    //Current Weather API
     $.ajax({
     method: "GET",
     url: "https://api.openweathermap.org/data/2.5/weather?q=" + query +"&units=imperial&APPID=5e1097f8226b90c97d310fff36fe3e88",
@@ -18,7 +19,7 @@ var fetchCurrentWeather = function (query) {
     }
   });
 
-  //Weekly forcast (5day)
+  //Weekly forcast (5day) API
   $.ajax({
     method: "GET",
     url: "https://api.openweathermap.org/data/2.5/forecast?q=" + query +"&units=imperial&APPID=5e1097f8226b90c97d310fff36fe3e88",
@@ -34,22 +35,28 @@ var fetchCurrentWeather = function (query) {
   });
   };
 
-// Gathers data from API to send to template
+// gather data from API to send to template
 var addCurrentWeather = function(data){
+    //current weather obj from search - use to render html through template
     var currentWeather = {
         temperature: Math.round(data.main.temp),
         location: data.name,
         conditions: data.weather[0].main,
         icon: data.weather[0].icon
     }
-    //Hanndle Bar Template for current weather
+
+    //handlebar sources for current weather and current weather icon
     var currentWeatherSource = $('#current-weather-template').html();
     var currentIconSource = $('#current-icon-template').html()
+
+    //compile templates from sources
     var currentWeatherTemplate = Handlebars.compile(currentWeatherSource);
     var currentIconTemplate = Handlebars.compile(currentIconSource);
+
+    //render function to empty divs and append new weather
     var renderCurrentWeather = function () {
         $('.current-weather').empty();
-        var newHTMLText = currentWeatherTemplate({temperature: currentWeather.temperature, location: data.name, conditions: data.weather[0].main})
+        var newHTMLText = currentWeatherTemplate({temperature: currentWeather.temperature, location: currentWeather.location, conditions: currentWeather.conditions})
         $('.current-weather').append(newHTMLText)
         $('.current-icon').empty();
         var newHTMLIcon = currentIconTemplate({iconURL: "http://openweathermap.org/img/wn/"+currentWeather.icon+"@2x.png"})
@@ -59,10 +66,11 @@ var addCurrentWeather = function(data){
   renderCurrentWeather()
 };
 
+//gather data from API and send to the week forcast array
 var addWeekForcast = function(data){
     //Empties WeekForcast Array to push new location's forcast
     weekForcast = [];
-    //Is the time stamps dynmaic when you search it? I looked at midnight vs looking at 6?
+    //Cycle every 8 because it gives you 40 for a 5 day span.
     for(let i = 0; i < data.list.length; i+=8 ){
         var forcast = {
             condition: data.list[i].weather[0].main,
@@ -73,15 +81,18 @@ var addWeekForcast = function(data){
         }
         weekForcast.push(forcast)
     }
+    //Call render week forcast to display the week forcast array.
     renderWeekForcast();
 }
 
+//render week forcast array.
 var renderWeekForcast = function () {
     //Empties html div for new location
     $('.week-forcast').empty();
     //Handlebar template for weekly forcast
     var weekForcastSource = $('#week-forcast').html();
     var weekForcastTemplate = Handlebars.compile(weekForcastSource);
+    //loop through week forcast array and display in html div
     for(let i=0; i < weekForcast.length; i++){
     var newHTML = weekForcastTemplate({condition: weekForcast[i].condition, temperature: weekForcast[i].temperature, iconURL: "http://openweathermap.org/img/wn/"+weekForcast[i].icon+"@2x.png", weekDay: weekForcast[i].weekDay})
     $('.week-forcast').append(newHTML)
@@ -94,25 +105,12 @@ var renderWeekForcast = function () {
 $('#search-button').on('click', function(){
     //Value of searched city
     var searchLocation = $('#submitted-city').val()
-    //Checking for edge cases if it is blank
+    //Checking for edge case of blank, checking for invalid city is in API for current weather.
     if(searchLocation === ''){
         alert('Please Fill in Enter City Name Before Clicking Search.')
     }else{
-        fetchCurrentWeather(searchLocation)
+        fetchWeather(searchLocation)
         // fetchWeekForcast(searchLocation)
     }
     
 })
-
-
-// Make sure click button is working and receiving info
-// ? may want to think about a different function that handels
-// Edge case scenarios? blank...but should accept city & city/country
-
-// 1. Click sends data to fetch
-// 2. Fetch gathers data and sends to a function to display data
-// 3. 5 Day will need some sort of container so handlbars can create a template
-//     -HandleBars 2 temps: 1 day and 5 day
-//     -Post data to view
-//     -Way to render page with new search info
-// 4. Think about hard coding first to see if code is working

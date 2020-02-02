@@ -5,10 +5,14 @@
 .forcast {
     border: 1px solid black;
     display: inline-block;
-    padding: 20px;
+    padding: 50px;
     margin: 1px;
 }
 
 .current-weather-row {
-    margin: 5px
+    margin: 5px;
+}
+
+#submitted-city {
+    width: 500px;
 }
