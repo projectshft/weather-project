@@ -18,13 +18,12 @@ const WeatherProject = () => {
       //then it invokes this function with the
       //search term which gets the current weather
       getCurrentWeather(search);
-       //then it invokes this function with the
-        //search term which gets the five day forecast
+      //then it invokes this function with the
+      //search term which gets the five day forecast
       getFiveDayForecast(search);
-      // if the google map function works
-      // getMapLocation(search);
+
     } else {
-            //edge cases alerts the user that they submitted an empty form
+      //edge cases alerts the user that they submitted an empty form
       alert("you can't submit an empty search! Please, enter a city and continue")
     }
   });
@@ -40,6 +39,7 @@ const WeatherProject = () => {
       dataType: "json",
       success: function(data) {
         //if the call is successful the current weather function is invoked with the data
+        console.log(data);
         addCurrentWeather(data);
       },
       error: function(jqXHR, textStatus, errorThrown) {
@@ -49,6 +49,7 @@ const WeatherProject = () => {
         console.log(textStatus);
       }
     });
+
   };
   //this function takes the data from the openweathermap api and pushes the data we want
   //into the currentWeatherArray as an object
@@ -62,12 +63,42 @@ const WeatherProject = () => {
       temperature: (Math.round(data.main.temp)) || null,
       weatherDescription: data.weather[0].main || null,
       icon: iconurl || null,
-    })
+      lat: data.coord.lat,
+      lon: data.coord.lon
+    });
+
+initMap(currentWeatherArray[0].lat, currentWeatherArray[0].lon);
     //renders the weather to the page
     renderCurrentWeather();
+
   };
+
+  // Initialize and add the map
+  function initMap(lat, lng) {
+    // The location of cityCoordinates
+    var cityCoordinates = {
+      lat: lat,
+      lng: lng
+    };
+
+  // The map, centered at cityCoordinates
+
+     var map = new google.maps.Map(
+      document.getElementById('map'), {
+        zoom: 10,
+        center: cityCoordinates
+      });
+    // The marker, positioned at cityCoordinates
+    var marker = new google.maps.Marker({
+      position: cityCoordinates,
+      map: map
+    });
+
+  }
+
+
   //this function renders the current weather to the page
-  var renderCurrentWeather = () =>{
+  var renderCurrentWeather = () => {
     //changes the search from loading back to search
     $('.search').html('<span></span> Search')
     //empties the the current HTML div
@@ -102,7 +133,7 @@ const WeatherProject = () => {
   var addFiveDayForecast = (data) => {
     //
     fiveDayWeatherArray = [];
-//loops through the data every 8 times (or 24 hours) to get the daily weather
+    //loops through the data every 8 times (or 24 hours) to get the daily weather
     for (var i = 0; i < data.list.length; i = i + 8) {
       fiveDayWeatherArray.push({
         city: data.city.name || null,
@@ -116,7 +147,7 @@ const WeatherProject = () => {
       renderFiveDayForecast();
     }
   };
-//renders the five day forecast to the page
+  //renders the five day forecast to the page
   var renderFiveDayForecast = () => {
     $('.search').html('<span></span> Search')
     //empties the current html
@@ -132,22 +163,20 @@ const WeatherProject = () => {
     }
   };
 
-  // var getMapLocation = function(cityName) {
-  //     //my API key
-  //     var googleMapsKey = 'AIzaSyDhcRQvPZgKQMxT8-RIxsO9nCHsEku_Rkc';
-  //     //
-  //     $.ajax({
-  //       method: "GET",
-  //       url: "https://www.google.com/maps/embed/v1/search?q= + cityName + &key= + googleMapsKey",
-  //       dataType: "json",
-  //       success: function(data) {
-  //         console.log(data);
-  //       },
-  //       error: function(jqXHR, textStatus, errorThrown) {
-  //         console.log(textStatus);
-  //       }
-  //     });
-  //   };
+
+
+  //   const proxyurl = "https://cors-anywhere.herokuapp.com/";
+  //   const url = "https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=" + cityName + "&inputtype=textquery&fields=geometry/location&key=" + googleMapsKey; // site that doesn’t send Access-Control-*
+  //   fetch(proxyurl + url) // https://cors-anywhere.herokuapp.com/https://example.com
+  //   .then(response => response.json())
+  //   .then(contents => console.log(contents))
+  //   .catch(() => console.log("Can’t access " + url + " response. Blocked by browser?"))
+  //   // map = new google.maps.Map(document.getElementById("map"), {cityName});
+  // };
+
+  // var postMapToPage = () => {
+  //
+  // }
 
 };
 
