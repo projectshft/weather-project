@@ -230,8 +230,11 @@ let getDefaultInfoFromLocalStorage = function() {
 	fetchFiveDaysForcast(defaultCity);
 }
 
+//current location section
+//API KEY: AIzaSyCue4XtYUuHjzIl0ZFncALl9an08JNIWUw
 
 let currentPosition = $('#status')[0];
+let mapDisplay = $('#mapholder')[0];
 
 function getLocation() {
   if (navigator.geolocation) {
@@ -242,7 +245,16 @@ function getLocation() {
 }
 
 function showPosition(position) {
-  	currentPosition.innerHTML = `<a target="_blank">Latitude: ${position.coords.latitude} <br>Longitude: ${position.coords.longitude}</a>`;
+	let mapKey = 'AIzaSyCue4XtYUuHjzIl0ZFncALl9an08JNIWUw';
+	let lat = position.coords.latitude;
+	let long = position.coords.longitude
+	let latlong = `${lat},${long}`;
+	let maplink = `https://www.openstreetmap.org/#map=18/${lat}/${long}`;
+
+  	currentPosition.innerHTML = `<a href="${maplink}" target="_blank">Latitude: ${lat} <br>Longitude: ${long}</a>`;
+
+  	let img_url = `https://www.google.com/maps/embed/v1/view?key=${mapKey}&center=${latlong}&zoom=13`;
+  	mapDisplay.innerHTML =`<iframe width="450" height="250" frameborder="0" style="border:0" src=${img_url}></iframe>`;
 }
 
 //get the state by the coordinates using opencagedate API
