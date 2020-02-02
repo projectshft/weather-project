@@ -1,5 +1,6 @@
 let weatherModel = [];
 let weatherModel5 = [];
+var geoLocation = [];
 
 // on-load function to set default city
 // need to trigger apiCall
@@ -22,11 +23,17 @@ $('#search').click(function () {
         alert('search bar can not be left empty before submitting')
     }
 })
-// event listener fpr dinaicaly created button (set default city)
+// event listener for dynaicaly created button (set default city)
+// function to set default city in the local storage
 $(document).on('click', '.mainWeather', function () {
     let defaultCity = weatherModel[0].cityName;
     setDefaultCity(defaultCity);
 })
+// button listener for "get Location" feature
+$('#location').click(function () {
+    locationCall();
+})
+
 
 //local storage feature for saving favorite city
 const setDefaultCity = function (defaultCity) {
@@ -82,11 +89,13 @@ var apiCallFiveDay = function (searchVal) {
             success: function (dataFive) {
                 console.log('inside five call!! ', dataFive)
 
-                var time = dataFive.list[0].dt_txt;
-                const dayToFind = new Date(time)
+                let currentLatitude = dataFive.city.coord.lat;
+                let currentLongitude = dataFive.city.coord.lon;
+                console.log(currentLatitude, currentLongitude)
 
                 filterFiveDay(dataFive)
                 //renderView(weatherModel)
+                locationCallForCurrentSearch(currentLatitude, currentLongitude);
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.log(textStatus);
@@ -126,7 +135,7 @@ const filterFiveDay = function (dataFive) {
         // console.log('inside five day filter ', dataFive.list[a])
         dataTemp.push(dataFive.list[a])
     };
-
+    console.log('inside filter5 ', weatherObjFive)
     for (var i = 0; i < dataTemp.length; i++) {
         var weatherObjFive = {};
         weatherObjFive["time5"] = getDay(dataTemp[i].dt_txt);
@@ -147,6 +156,7 @@ let renderViewFive = function (weatherModel5) {
         var newHTML = template(weatherModel5[i]);
         $('#five-day').append(newHTML);
     }
+    console.log('inside renderWievFive weatherModel5 ', weatherModel5)
 }
 // function or call to display information to view for single day
 let renderView = function (weatherModel) {
@@ -193,10 +203,42 @@ const getDay = function (dateToConvert) {
 // google maps API key   "key=API_KEY"  AIzaSyBjunVQe2A8mt0sISCk88UOztGzh7D-OJw
 // https://www.google.com/maps/embed/v1/MODE?key=YOUR_API_KEY&parameters
 var map;
-function initMap() {
-      map = new google.maps.Map(document.getElementById('map'),  {
-        center: {lat: -34.397, lng: 150.644},
-        zoom: 10
-      });
-}
-//initMap(map)
+// geolocation function need to get current location 
+// geoLocation varible created and placed on top with global variables
+var locationCall = function () {
+    var gps = navigator.geolocation.getCurrentPosition(
+        function (position) {
+
+            geoLocation.push(position.coords.latitude);
+            geoLocation.push(position.coords.longitude)
+
+            console.log('GeoPosition ', geoLocation)
+            let latitude = geoLocation[0];
+            let longitude = geoLocation[1]
+
+            function initMap() {
+                map = new google.maps.Map(document.getElementById('map'), {
+                    center: {
+                        lat: latitude,
+                        lng: longitude
+                    },
+                    zoom: 13
+                });
+            }
+            initMap();
+        })
+};
+// second call for current "searched" location
+var locationCallForCurrentSearch = function (latitude, longitude) {
+    function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+            center: {
+                lat: latitude,
+                lng: longitude
+                },
+                zoom: 9
+            });
+            }
+            initMap();
+        
+};
