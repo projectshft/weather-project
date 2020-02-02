@@ -76,12 +76,11 @@ var renderForecast = function () {
   var source = $('#weather-template').html();
   var template = Handlebars.compile(source);
   var displayTemp = Math.round(currentWeather.main.temp)
- // console.log(currentWeather.weather[0].description)
-  console.log()
-  console.log(currentWeather.main.temp)
+  var imageIcon = 'http://openweathermap.org/img/wn/' + currentWeather.weather[0].icon + '@2x.png'
 
-  var newHTML = template({ city: currentWeather.name, temp: displayTemp, description: currentWeather.weather[0].description })
+  var newHTML = template({ city: currentWeather.name, temp: displayTemp, conditions: currentWeather.weather[0].description, imageIconURL: imageIcon })
  
   // append our new html to the page
   $('.city-weather').append(newHTML);
 }
+

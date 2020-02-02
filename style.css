@@ -23,6 +23,14 @@ header {
  
 }
 
+.city {
+  font-size: 20px;
+}
+
+.conditions {
+  font-size: 20px;
+}
+
 .temperature {
   font-size: 50px;
   span {
