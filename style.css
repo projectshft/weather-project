@@ -13,16 +13,6 @@ header {
   text-align: center;
 }
 
-.post-remove {
-    color: blue;
-    
-}
-
-.post-comments {
-  color: blue;
- 
-}
-
 .city {
   font-size: 20px;
 }
@@ -31,8 +21,19 @@ header {
   font-size: 20px;
 }
 
+.forecast-condition {
+  font-size: 15px;
+}
+
 .temperature {
   font-size: 50px;
+  span {
+    content: "\00B0";
+  } 
+}
+
+.forecast-temp {
+  font-size: 30px;
   span {
     content: "\00B0";
   } 
