@@ -11,6 +11,7 @@ let WeatherProject = function() {
 		imageURL: '',
 		dayOfWeek: ''
 	}
+
 	//div to display current weather
 	let $currentWeather = $('.current-weather');
 
@@ -19,15 +20,13 @@ let WeatherProject = function() {
 
 	let timeOfDay = '';
 
-	let state= '';
-
 	//after the weather API call we format data for later use 
 	let formatCurrentData = function(result) {	
 		forcast = [];
 		forcastObj = {};
 
 		forcastObj.city = result.name;
-		forcastObj.state = state;
+		forcastObj.state = '';
 		forcastObj.country = result.sys.country;
 		forcastObj.temperature = Math.round(result.main.temp); //temperatureConversion(result.main.temp);
 		forcastObj.description = result.weather[0].main;
@@ -60,7 +59,7 @@ let WeatherProject = function() {
 
 		for(let i = 0; i < result.list.length; i++) {
 			//we need the time to match with the time of the forcast
-			timeOfDay = moment.unix(result.list[1].dt).format('h:mm:ss a');
+			timeOfDay = moment.unix(result.list[0].dt).format('h:mm:ss a');
 			//console.log('Time of day: ' + timeOfDay);
 
 			//we get the time of the data element to match with the time of forcast
@@ -128,11 +127,23 @@ let WeatherProject = function() {
 	}
 }
 
-//8349ad5e6bba395d3c4a42b77ef38130
-//https://api.openweathermap.org/data/2.5/weather?q=London&appid=8349ad5e6bba395d3c4a42b77ef38130
+const STORAGE_ID = 'weather-project';
+const defaultCity = 'Durham';
+let defaultInfo = [];
 
+//8349ad5e6bba395d3c4a42b77ef38130
 
 let app = WeatherProject();
+
+
+let saveToLocalStorage = function (defaultData) {
+  localStorage.setItem(STORAGE_ID, JSON.stringify(defaultData));
+}
+
+
+let getFromLocalStorage = function () {
+  return JSON.parse(localStorage.getItem(STORAGE_ID) || '[]');
+}
 
 //use async await with fetch()
 const fetchCurrentWeather = async(query) => {
@@ -148,20 +159,27 @@ const fetchCurrentWeather = async(query) => {
   	console.log(json);
 
   	//get state based on logtitud and latitude
-	state = getState(json.coord.lat, json.coord.lon);
-	console.log(state);
-
+	// state = getState(json.coord.lat, json.coord.lon);
+	// console.log(state);
+	
 	app.formatCurrentData(json);
 	app.renderCurrentWeather();
 
 	//get data for 5 days forcast
 	fetchFiveDaysForcast(query);
+
+	if(query == defaultCity) {
+		saveToLocalStorage(json);
+	}
 }
 
 const fetchFiveDaysForcast = async(query) => {
 	const res = await fetch(
 	    'https://api.openweathermap.org/data/2.5/forecast?q='+query+'&units=imperial&appid=8349ad5e6bba395d3c4a42b77ef38130'
-	  );
+	  )
+	.catch((error) => {
+		console.error('Error:', error);
+  	});
 	const json = await res.json();
 
   	console.log(json);
@@ -169,20 +187,48 @@ const fetchFiveDaysForcast = async(query) => {
 	app.renderForcast();
 }
 
-
-//openweathermap.org/data/2.5/forecast?q=München,DE&appid=
-
+//get info about default city weather and 5 days forcast from local storage 
+$(document).ready(() => {
+	getDefaultInfoFromLocalStorage();
+})
 
 $('.search').on('click', function () {
 	let search = $('#search-query').val();
 
-	fetchCurrentWeather(search);
-	$('#search-query').val('');
-
+	if(search == '') {
+		alert('Please Enter the City name');
+	} else {
+		fetchCurrentWeather(search);
+		$('#search-query').val('');
+	}
   	//test of the getState function
 	//getState(41.85, -87.65);
 
 });
+
+$('#defaultLocation').on('click', function () {
+
+	getDefaultInfoFromLocalStorage();
+});
+
+let getDefaultInfoFromLocalStorage = function() {
+	//get default city info from the local storage if  we have it
+	defaultInfo = getFromLocalStorage();
+
+	//if nothing in local storage get the info from API 
+	if(defaultInfo.length === 0) {
+		defaultInfo = fetchCurrentWeather(defaultCity);
+	}
+
+	app.formatCurrentData(defaultInfo);
+	app.renderCurrentWeather();
+
+	//get data for 5 days forcast
+	$('#search-query').val('');
+
+	//get data for 5 days forcast
+	fetchFiveDaysForcast(defaultCity);
+}
 
 //get the state by the coordinates using opencagedate API
 //API: 6c75c2c5ea264615ab072b2ebf5fad83
@@ -202,7 +248,6 @@ let getState = async(lat, long) => {
 //debugger
 	return json.results[0].components.state_code;
 }
-
 
 //function to conver temp measurements
 let temperatureConversion = function(value, measurements) {

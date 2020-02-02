@@ -16,6 +16,10 @@
 	margin-left: 15px;
 }
 
+#defaultLocation {
+	margin-left: 15px;
+}
+
 .current-weather {
 	text-align: center;
 
@@ -32,7 +36,6 @@
 
 .forcast {
 	margin-top: 50px;
-	margin-left: -10%;
 }
 
 .forcast-box {

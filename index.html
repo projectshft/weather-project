@@ -24,6 +24,7 @@
               <span><input type="text" id="search-query" class="form-control" placeholder="Enter City Name">
               </input></span>
               <span><button type="button" class="btn btn-primary search">Search</button></span>
+              <span><button type="button" id="defaultLocation" class="btn btn-info">Default</button></span>
             </div>
           </form>
 
@@ -38,12 +39,12 @@
     </div>   
 
   <script id="current-weather-template" type="text x-handlebars-template">
-    <div class=col-md-5>
+    <div class=col-md-6>
       <h2>{{ temperature }}&deg</h2>
-      <div class=city>{{ city }}, {{ state }} </div>
+      <div class=city>{{ city }}, {{ country }} </div>
       <div>{{ description }}</div>
     </div>
-    <div class=col-md-4>
+    <div class=col-md-3>
       <img src="{{imageURL}}" alt="{{ description }}">
     </div>
   </script>
