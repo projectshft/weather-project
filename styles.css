@@ -48,3 +48,11 @@
 img {
 	margin-top: 15%;
 }
+
+.currentLocation {
+	margin-left: 20%;
+}
+
+#find-me {
+	margin-top: 40px;
+}

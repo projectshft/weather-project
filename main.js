@@ -230,6 +230,40 @@ let getDefaultInfoFromLocalStorage = function() {
 	fetchFiveDaysForcast(defaultCity);
 }
 
+let geoFindMe = function() {
+
+  const status = $('#status').val();
+  const mapLink = $('#map-link').val();
+
+  mapLink.href = '';
+  mapLink.textContent = '';
+
+  function success(position) {
+    const latitude  = position.coords.latitude;
+    const longitude = position.coords.longitude;
+
+    status.textContent = '';
+    mapLink.href = `https://www.openstreetmap.org/#map=18/${latitude}/${longitude}`;
+    mapLink.textContent = `Latitude: ${latitude} °, Longitude: ${longitude} °`;
+  }
+
+  function error() {
+    status.textContent = 'Unable to retrieve your location';
+  }
+
+  if (!navigator.geolocation) {
+    status.textContent = 'Geolocation is not supported by your browser';
+  } else {
+    status.textContent = 'Locating…';
+    navigator.geolocation.getCurrentPosition(success, error);
+  }
+
+}
+
+$('#find-me').on('click', function() {
+	geoFindMe();
+});
+
 //get the state by the coordinates using opencagedate API
 //API: 6c75c2c5ea264615ab072b2ebf5fad83
 let getState = async(lat, long) => {
