@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 ​
+
 <head>
   <!-- Required meta tags -->
   <link rel="stylesheet" href="style.css">
@@ -10,6 +11,7 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
 </head>
 ​
+
 <body>
   <div class="container-fluid">
     <div class="row">
@@ -18,36 +20,42 @@
           <h1 class="text-center">Current Weather</h1>
           <hr />
         </div>
-​
+        ​
         <form class="search-form">
           <h3>Search City</h3>
-​
+          ​
           <div class="form-group">
+            <div class="input-container row">
             <input type="text" id="search-query" class="form-control">
             </input>
-          </div>
-​
-          <button type="button" class="btn btn-primary search">Search</button>
-        </form>
-        <hr />
-          <div class="weather row">
-          </div>
-        <div class="fiveDayWeather row">
+            <button type="button" class="btn btn-primary search">Search</button>
+            </div>
           </div>
 
-        <div class ="default">
-          <button type="button" class="btn btn-primary">Set Default</button>
+        </form>
+        <hr />
+        <div class="weather row">
         </div>
+        <div class="fiveDayWeather row">
+        </div>
+        <div class="setdefault">
+        </div>
+        <div class="default-weather row">
+        </div>
+        <div class="default-fiveDayWeather row">
+        </div>
+          <br>
+        <hr />
+          <br>
       </div>
     </div>
   </div>
   <!-- jQuery first, then Tether, then Bootstrap JS. -->
   <script id="weather-template" type="text/x-handlebars-template">
-    <div class="weather col-md-6 offset-md-3">
+    <div class="weatherContainer col-md-6 offset-md-3">
       <h1>{{ temperature }}°</h1>
       <h4>{{ cityName }}</h4>
       <h4>{{ weatherDescription }}</h4>
-    </div>
     <div class = "row">
       <div class= "weathericon text-center">
         <img src="{{weatherIcon}}" alt="" class="img-size">
@@ -62,6 +70,27 @@
           <h4>{{ time }}</h4>
         </div>
   </script>
+
+  <script id="defaultWeather-template" type="text/x-handlebars-template">
+    <div class="defaultContainer col-md-6 offset-md-3">
+      <h1>{{ temperature }}°</h1>
+      <h4>{{ cityName }}</h4>
+      <h4>{{ weatherDescription }}</h4>
+    <div class = "row">
+      <div class= "weathericon text-center">
+        <img src="{{weatherIcon}}" alt="" class="img-size">
+      </div>
+    </div>
+  </script>
+  <script id="defaultFiveDayWeather-template" type="text/x-handlebars-template">
+          <div class="col-md-2">
+          <h1>{{ temperature }}°</h1>
+          <h4>{{ weatherDescription }}</h4>
+          <img src="{{weatherIcon}}" alt="" class= "text-center">
+          <h4>{{ time }}</h4>
+        </div>
+  </script>
+
   <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"</script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>

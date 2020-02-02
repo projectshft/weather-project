@@ -1,9 +1,8 @@
-
 // Model
 var weather = [];
 var fiveDayWeather = [];
 
-var fetch = function (query) {
+var fetch = function(query) {
 
   $.ajax({
     method: "GET",
@@ -18,19 +17,19 @@ var fetch = function (query) {
   });
 };
 
-var populateWeather = function (data) {
+var populateWeather = function(data) {
   weather = [];
 
-    weather.push({
-      temperature: Math.round(data.main.temp),
-      cityName: data.name,
-      weatherDescription: data.weather[0].main,
-      weatherIcon: "http://openweathermap.org/img/w/" + data.weather[0].icon + ".png"
-    })
+  weather.push({
+    temperature: Math.round(data.main.temp),
+    cityName: data.name,
+    weatherDescription: data.weather[0].main,
+    weatherIcon: "http://openweathermap.org/img/w/" + data.weather[0].icon + ".png"
+  })
   renderWeather()
 };
 
-var fetchFiveDayWeather = function (query2) {
+var fetchFiveDayWeather = function(query2) {
 
   $.ajax({
     method: "GET",
@@ -45,10 +44,10 @@ var fetchFiveDayWeather = function (query2) {
   });
 };
 
-var populateFiveDayWeather = function (data) {
+var populateFiveDayWeather = function(data) {
   fiveDayWeather = [];
 
- for (var i = 0; i < data.list.length; i = i + 8) {
+  for (var i = 0; i < data.list.length; i = i + 8) {
 
     fiveDayWeather.push({
       time: moment(data.list[i].dt_txt).format('dddd'),
@@ -61,6 +60,7 @@ var populateFiveDayWeather = function (data) {
   renderFiveDayWeather()
 };
 
+
 // View
 var renderWeather = function() {
   $('.search').html('<span></span> Search')
@@ -71,6 +71,7 @@ var renderWeather = function() {
     var template = Handlebars.compile(source);
     var newHTML = template(weather[i]);
     $('.weather').append(newHTML);
+    $('.setdefault').append('<button type="button" class="btn btn-secondary btn-sm setDefault col-md-2">Set as Default</button>')
   }
 };
 
@@ -85,11 +86,41 @@ var renderFiveDayWeather = function() {
   }
 }
 
+var renderDefault = function() {
+  let weatherArray = localStorage.getItem('weather') ? JSON.parse(localStorage.getItem('weather')) : []
+  let fiveDayWeatherArray = localStorage.getItem('fiveDayWeather') ? JSON.parse(localStorage.getItem('fiveDayWeather')) : []
+
+  for (var i = 0; i < weatherArray.length; i++) {
+    var source = $('#defaultWeather-template').html();
+    var template = Handlebars.compile(source);
+    var newHTML = template(weatherArray[i]);
+    $('.default-weather').append(newHTML);
+  }
+  for (var i = 0; i < fiveDayWeatherArray.length; i++) {
+    var source = $('#defaultFiveDayWeather-template').html();
+    var template = Handlebars.compile(source);
+    var newHTML = template(fiveDayWeatherArray[i]);
+    $('.default-fiveDayWeather').append(newHTML)
+  }
+}
+renderDefault();
+
+
+
 // Controller
-$('.search').on('click', function () {
+$('.search').on('click', function() {
   var search = $('#search-query').val();
   $(this).html('<span class="spinner-border spinner-border-sm"></span> Loading...');
+  $('.setdefault').empty()
 
   fetch(search);
   fetchFiveDayWeather(search);
 });
+
+$('.setdefault').click(function() {
+  localStorage.removeItem('weather');
+  localStorage.removeItem('fiveDayWeather');
+
+  localStorage.setItem('weather', JSON.stringify(weather))
+  localStorage.setItem('fiveDayWeather', JSON.stringify(fiveDayWeather))
+})
