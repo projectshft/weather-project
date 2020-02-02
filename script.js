@@ -1,5 +1,7 @@
 let weatherModel = [];
+// model for 5 day forecast 
 let weatherModel5 = [];
+//model for location features
 var geoLocation = [];
 
 // on-load function to set default city
@@ -16,7 +18,7 @@ $(document).ready(function () {
 // search button event listener
 $('#search').click(function () {
     let searchValue = $('#searchInput').val();
-    console.log(searchValue.length)
+    // check for empty search bar
     if (searchValue.length > 0) {
         apiCall(searchValue)
     } else {
@@ -29,11 +31,11 @@ $(document).on('click', '.mainWeather', function () {
     let defaultCity = weatherModel[0].cityName;
     setDefaultCity(defaultCity);
 })
+
 // button listener for "get Location" feature
 $('#location').click(function () {
     locationCall();
 })
-
 
 //local storage feature for saving favorite city
 const setDefaultCity = function (defaultCity) {
@@ -42,7 +44,7 @@ const setDefaultCity = function (defaultCity) {
 }
 
 // API call for current weather with key
-// key  096f3282b86fa805756f58092f5d2481   4102008879dcae5fa2ce2d42e5bf66ba
+// key  096f3282b86fa805756f58092f5d2481----4102008879dcae5fa2ce2d42e5bf66ba
 var apiCall = function (searchVal) {
     weatherModel = [];
     setTimeout(function () {
@@ -52,13 +54,10 @@ var apiCall = function (searchVal) {
             dataType: "json",
 
             success: function (data) {
-                // console.log(data)
-                // console.log(data.weather[0].main) // rain
-                // console.log('description ', data.weather[0].description)
-                // //console.log('name ',data.name)
                 // console.log('temperature ', data.main.temp) // kalvin to F  (280.24K − 273.15) × 9/5 + 32 = 44.762°F
                 // console.log('icon search ', data.weather[0].icon)
 
+                // data returned from APi call to be filtered -> filteredData
                 filteredData(data);
                 apiCallFiveDay(searchVal)
                 renderView(weatherModel)
@@ -88,14 +87,14 @@ var apiCallFiveDay = function (searchVal) {
 
             success: function (dataFive) {
                 console.log('inside five call!! ', dataFive)
-
+                // creating variables to pass in to locationCall -- to show map and pin on the map
                 let currentLatitude = dataFive.city.coord.lat;
                 let currentLongitude = dataFive.city.coord.lon;
-                console.log(currentLatitude, currentLongitude)
-
+                let cityName = dataFive.city.name;
+                
                 filterFiveDay(dataFive)
                 //renderView(weatherModel)
-                locationCallForCurrentSearch(currentLatitude, currentLongitude);
+                locationCallForCurrentSearch(currentLatitude, currentLongitude, cityName);
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.log(textStatus);
@@ -109,9 +108,9 @@ var kelvinToFar = function (temp) {
     return parseInt((temp - 273.15) * 9 / 5 + 32) // kalvin to F  (280.24K − 273.15) × 9/5 + 32 = 44.762°F
 };
 
-// way to store returned information and Model set up
+// way to store returned information and Model set up for separate call later that updates view
 const filteredData = function (mainData) {
-    console.log('filter data mainData ', mainData.sys.country)
+    // console.log('filter data mainData ', mainData.sys.country)
     var weatherObj = {};
     weatherObj["weather"] = mainData.weather[0].description;
     weatherObj["cityName"] = mainData.name;
@@ -125,17 +124,17 @@ const filteredData = function (mainData) {
 // function to sort out information and get only the one to display for 5 day forecast
 const filterFiveDay = function (dataFive) {
 
-    console.log('time5: ', dataFive.list[0].dt_txt)
-    console.log('temperature5: ', dataFive.list[0].main.temp)
-    console.log('weather5: ', dataFive.list[0].weather[0].main)
-    console.log('icon5: ', dataFive.list[0].weather[0].icon)
+    // console.log('time5: ', dataFive.list[0].dt_txt)
+    // console.log('temperature5: ', dataFive.list[0].main.temp)
+    // console.log('weather5: ', dataFive.list[0].weather[0].main)
+    // console.log('icon5: ', dataFive.list[0].weather[0].icon)
     var dataTemp = [];
     //added for loop to get same time of the day for each day in 5 day foprecats display
     for (var a = 0; a < dataFive.list.length; a = (a + 8)) {
         // console.log('inside five day filter ', dataFive.list[a])
         dataTemp.push(dataFive.list[a])
     };
-    console.log('inside filter5 ', weatherObjFive)
+    // console.log('inside filter5 ', weatherObjFive)
     for (var i = 0; i < dataTemp.length; i++) {
         var weatherObjFive = {};
         weatherObjFive["time5"] = getDay(dataTemp[i].dt_txt);
@@ -156,12 +155,12 @@ let renderViewFive = function (weatherModel5) {
         var newHTML = template(weatherModel5[i]);
         $('#five-day').append(newHTML);
     }
-    console.log('inside renderWievFive weatherModel5 ', weatherModel5)
+    // console.log('inside renderWievFive weatherModel5 ', weatherModel5)
 }
 // function or call to display information to view for single day
 let renderView = function (weatherModel) {
     $('.mainWeather').empty();
-    console.log('renderView mainData value ', weatherModel[0].cityName)
+    // console.log('renderView mainData value ', weatherModel[0].cityName)
     for (var i = 0; i < weatherModel.length; i++) {
         var source = $('#main-template').html();
         var template = Handlebars.compile(source);
@@ -182,7 +181,7 @@ let renderView = function (weatherModel) {
 // create function to convert date from API to current day.
 // date formating, find day of the week
 const getDay = function (dateToConvert) {
-    console.log(dateToConvert)
+    
     var gsDayNames = [
         'Sunday',
         'Monday',
@@ -200,7 +199,7 @@ const getDay = function (dateToConvert) {
 }
 
 
-// google maps API key   "key=API_KEY"  AIzaSyBjunVQe2A8mt0sISCk88UOztGzh7D-OJw
+// google maps API key   "key=API_KEY"--AIzaSyBjunVQe2A8mt0sISCk88UOztGzh7D-OJw
 // https://www.google.com/maps/embed/v1/MODE?key=YOUR_API_KEY&parameters
 var map;
 // geolocation function need to get current location 
@@ -224,21 +223,33 @@ var locationCall = function () {
                     },
                     zoom: 13
                 });
+                // pin for "get Location" need to pass data from geolocation to marker 
+                var marker = new google.maps.Marker({
+                    position: {lat: latitude, lng: longitude},
+                    map: map,
+                    });
             }
             initMap();
         })
 };
 // second call for current "searched" location
-var locationCallForCurrentSearch = function (latitude, longitude) {
+var locationCallForCurrentSearch = function (latitude, longitude, cityName) {
     function initMap() {
         map = new google.maps.Map(document.getElementById('map'), {
             center: {
                 lat: latitude,
                 lng: longitude
-                },
-                zoom: 9
-            });
-            }
-            initMap();
-        
+            },
+            zoom: 9
+        });
+        // pin feature, pass data from weather API call for 5 days in to map
+        var marker = new google.maps.Marker({
+            position: {lat: latitude, lng: longitude},
+            map: map,
+            title: cityName
+          });
+    }
+    initMap();
 };
+
+
