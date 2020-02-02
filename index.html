@@ -18,19 +18,20 @@
         <div class="page-header">
           <h1>Current Weather</h1>
         </div>
-        ​
+        ​<div class='error'>
+          <p class="error-bad-request d-none">You left the search input empty. Please enter a city.</p>
+          <p class="error-not-found d-none">Request could not be found. Please enter a new city. Examples: 'Pittsburgh' or 'Pitsburgh, US'</p>
+          <p class="error-else d-none">Error, please enter another city.</p>
+        </div>
         <form class="search-form">
-          ​
           <div class="form-group">
             <input type="text" id="search-query" class="form-control" placeholder="Enter City Name">
             </input>
           </div>
-          ​
           <button type="button" class="btn btn-primary search">Search</button>
         </form>
-        ​
-        <hr />
       </div>
+
     </div>
     <div>
       <div class="row">
@@ -46,7 +47,6 @@
     </div>
   </div>
   ​
-  <!-- jQuery first, then Tether, then Bootstrap JS. -->
   <script id="current-weather-template" type="text/x-handlebars-template">
     <div class= "col-md-3">
       <h2>{{ temp }}˚</h2>

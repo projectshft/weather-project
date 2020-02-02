@@ -1,3 +1,4 @@
+//Used as a Template
 var Collection = function(config) {
   var models = []
 

@@ -35,8 +35,6 @@ img {
   margin-right: auto
 }
 
-
-/* .weather {
-  display: inline-block;
-  float: left;
-} */
+.error{
+  color: red;
+}
