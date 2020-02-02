@@ -1,5 +1,5 @@
 //declares the variables that point to the FiveDayWeather() and CurrentWeather()
-//calls the render functions
+//calling the render functions
 var appCurrent = CurrentWeather()
 appCurrent.currentWeather.change(function() {
   appCurrent.renderCurrentWeather();
@@ -25,7 +25,6 @@ var errorMessage = function(errorThrown) {
     $('.error-else').removeClass('d-none')
   }
 }
-
 //events
 //click on the search button and the search input sends the info to the fetch functions
 //if statements to hide the error messages
