@@ -224,8 +224,8 @@ function showPosition(position) {
   	currentPosition.innerHTML = `<a href="${maplink}" target="_blank">Latitude: ${lat} <br>Longitude: ${long}</a>`;
   	fetchWeatherOfCurrentLocation(query);
 
-  	let img_url = `https://www.google.com/maps/embed/v1/view?key=${mapKey}&center=${latlong}&zoom=13`;
-  	mapDisplay.innerHTML =`<iframe width="450" height="250" frameborder="0" style="border:0" src=${img_url}></iframe>`;
+  	// let img_url = `https://www.google.com/maps/embed/v1/view?key=${mapKey}&center=${latlong}&zoom=13`;
+  	// mapDisplay.innerHTML =`<iframe width="450" height="250" frameborder="0" style="border:0" src=${img_url}></iframe>`;
 }
 
 let getDefaultInfoFromLocalStorage = function() {
