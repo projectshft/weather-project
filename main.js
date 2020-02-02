@@ -265,36 +265,14 @@ $('.search').on('click', function () {
 	}
 });
 
-//save or retrive the current location from the local storage
+//retrive the current location from the local storage
 $('#defaultLocation').on('click', function () {	
 	getDefaultInfoFromLocalStorage();
 });
 
+//show my location request
 $('#find-me').on('click', function() {
 	getLocation();
 	$('#status, #maplink').toggle('slow');
 })
 
-//get the state by the coordinates using opencagedate API
-//API: 6c75c2c5ea264615ab072b2ebf5fad83
-let getState = async(lat, long) => {
-
-	const res = await fetch(
-		'https://api.opencagedata.com/geocode/v1/json?q='+lat+'+'+long+'&key=6c75c2c5ea264615ab072b2ebf5fad83'
-	  )
-	.catch((error) => {
-		console.error('Error:', error);
-  	});
-
-	const json = await res.json();
-
-  	console.log(json);
-  	console.log(json.results[0].components.state_code);
-//debugger
-	return json.results[0].components.state_code;
-}
-
-//function to conver temp measurements
-let temperatureConversion = function(value, measurements) {
-	return ((value - 273.15)*1.8) + 32;
-}
