@@ -50,9 +50,14 @@ img {
 }
 
 .currentLocation {
-	margin-left: 20%;
+	margin-top: 15px;
+	width: 100%;
 }
 
 #find-me {
 	margin-top: 40px;
+}
+
+#status, #map-link {
+
 }
