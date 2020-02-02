@@ -155,25 +155,23 @@ const WeatherProject = () => {
       $('.fivedayweatherrow').append(newHTML);
     }
   };
-
+//uses geolocation api to find the exact latitude and longitude and maps them on openstreetmap
   function geoFindMe() {
-
     const status = document.querySelector('#status');
     const mapLink = document.querySelector('#map-link');
-
     mapLink.href = '';
     mapLink.textContent = '';
-
+    //enables more accurate position but also can have slower response and uses more resources could delete later
     const options = {
     enableHighAccuracy: true,
     timeout: 5000,
     maximumAge: 0
     };
-
+    //if the function is successful
     function success(position) {
       const latitude = position.coords.latitude;
       const longitude = position.coords.longitude;
-      //locates the latitude and longitude on the page
+      //locates the latitude and longitude links to the openstreetmap
       status.textContent = '';
       mapLink.href = `https://www.openstreetmap.org/#map=18/${latitude}/${longitude}`;
       mapLink.textContent = `Latitude: ${latitude} °, Longitude: ${longitude} °`;
@@ -192,5 +190,5 @@ const WeatherProject = () => {
   }
   document.querySelector('#find-me').addEventListener('click', geoFindMe);
 };
-
+//calls the weather project and could be used for transition to MVC later on
 WeatherProject();
