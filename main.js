@@ -32,8 +32,6 @@ var fetchCurrentWeather = function (query) {
         console.log(textStatus)
     }
   });
-
-
   };
 
 // Gathers data from API to send to template
@@ -41,25 +39,31 @@ var addCurrentWeather = function(data){
     var currentWeather = {
         temperature: Math.round(data.main.temp),
         location: data.name,
-        conditions: data.weather[0].main
+        conditions: data.weather[0].main,
+        icon: data.weather[0].icon
     }
     //Hanndle Bar Template for current weather
-    var source = $('#current-weather-template').html();
-    var template = Handlebars.compile(source);
+    var currentWeatherSource = $('#current-weather-template').html();
+    var currentIconSource = $('#current-icon-template').html()
+    var currentWeatherTemplate = Handlebars.compile(currentWeatherSource);
+    var currentIconTemplate = Handlebars.compile(currentIconSource);
     var renderCurrentWeather = function () {
         $('.current-weather').empty();
-        var newHTML = template({temperature: currentWeather.temperature, location: data.name, conditions: data.weather[0].main})
-        $('.current-weather').append(newHTML)
+        var newHTMLText = currentWeatherTemplate({temperature: currentWeather.temperature, location: data.name, conditions: data.weather[0].main})
+        $('.current-weather').append(newHTMLText)
+        $('.current-icon').empty();
+        var newHTMLIcon = currentIconTemplate({iconURL: "http://openweathermap.org/img/wn/"+currentWeather.icon+"@2x.png"})
+        $('.current-icon').append(newHTMLIcon);
     };
+
   renderCurrentWeather()
 };
-
 
 var addWeekForcast = function(data){
     //Empties WeekForcast Array to push new location's forcast
     weekForcast = [];
-
-    for(let i =6; i < data.list.length; i+=8 ){
+    //Is the time stamps dynmaic when you search it? I looked at midnight vs looking at 6?
+    for(let i = 0; i < data.list.length; i+=8 ){
         var forcast = {
             condition: data.list[i].weather[0].main,
             temperature: Math.round(data.list[i].main.temp),
@@ -71,7 +75,6 @@ var addWeekForcast = function(data){
     }
     renderWeekForcast();
 }
-
 
 var renderWeekForcast = function () {
     //Empties html div for new location

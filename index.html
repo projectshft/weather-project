@@ -10,36 +10,52 @@
   <title>Weather Project</title>
 </head>
 <body>
-    <div class="container-fluid">
-        <div class="col-md-6 offset-md-3">
+    <!-- Container for bootstrap to reognize-->
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-6 offset-md-3">
         <div class="page-header">
           <h1>Current Weather</h1>
           <hr/>
         </div>
+      </div>
+      <div class="col-md-6 offset-md-3">
         <form class="form-inline" onsubmit="event.preventDefault();">
-            <div class="form-group mx-sm-3 mb-2">
-              <input type="type" class="form-control" id="submitted-city" placeholder="Enter City Name">
-            </div>
+          <div class="form-group mx-sm-3 mb-2">
+            <input type="type" class="form-control" id="submitted-city" placeholder="Enter City Name">
+           </div>
             <button type="submit" id="search-button" class="btn btn-primary mb-2">Search</button>
         </form>
         <hr/>
-        <div class="current-weather">
-        </div>
-        </div>
-        <div class="week-forcast row offset-md-1"></div>
+      </div>
     </div>
+    <div class="row current-weather-row justify-content-center">
+      <div class="col-md-1">
+        <div class="current-weather"></div>
+      </div>
+      <div class="col-md-5">
+        <div class="current-icon text-left"></div>
+      </div>
+    </div>
+    <div class="row justify-content-center">
+      <div class="week-forcast"></div>
+    </div>
+  </div>
     <script id="current-weather-template" type="text/x-handlebars-template">
-        <div><h3 class="font-weight-bold">{{ temperature }} &deg</h3></div>
-        <div><h5 class="font-weight-light">{{ location }}</h5></div>
-        <div><h5 class="font-weight-light">{{ conditions }}</h5></div>
+      <div><h3 class="font-weight-bold">{{ temperature }} &deg</h3></div>
+      <div><h5 class="font-weight-light">{{ location }}</h5></div>
+      <div><h5 class="font-weight-light">{{ conditions }}</h5></div>
+    </script>
+    <script id="current-icon-template" type="text/x-handlebars-template">
+      <div><img src="{{iconURL}}"></div>
     </script>
     <script id="week-forcast" type="text/x-handlebars-template">
-        <div class="forcast col-md-2 text-center">
-            <div><h5 class="font-weight-light">{{ condition }}</h5></div>
-            <div><h5 class="font-weight-light">{{ temperature }} &deg</h5></div>
-            <div><img src="{{iconURL}}"></div>
-            <div><h5 class="font-weight-light">{{ weekDay }}</h5></div>
-        </div>
+      <div class="forcast col-md-2.5 text-center">
+        <div><h5 class="font-weight-light">{{ condition }}</h5></div>
+        <div><h5 class="font-weight-light">{{ temperature }} &deg</h5></div>
+        <div><img src="{{iconURL}}"></div>
+        <div><h5 class="font-weight-light">{{ weekDay }}</h5></div>
+      </div>
     </script>
   <!-- jQuery first, then Tether, then Bootstrap JS. -->
   <script src="https://code.jquery.com/jquery-3.3.1.js"></script>

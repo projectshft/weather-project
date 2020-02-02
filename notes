@@ -37,18 +37,11 @@ CheckList for completion
 8. Patterns
 9. Ability to re-utilize code
 
-// var fetchWeekForcast = function (query) {
-//     $.ajax({
-//         method: "GET",
-//         url: "https://api.openweathermap.org/data/2.5/forecast?q=" + query +"&units=imperial&APPID=5e1097f8226b90c97d310fff36fe3e88",
-//         dataType: "json",
-//         success: function(data) {
-//             console.log(data.list[0].main.temp)
-//             console.log(data.list[0][4].main.temp)
-//         //   addWeekForcast(data);
-//         },
-//         error: function(jqXHR, textStatus, errorThrown) {
-//             console.log(textStatus)
-//         }
-//       });
-// }
+Optional
+1. Add current day weather icon
+    -Adjust html template
+    -Find icon number in API
+    -See if you can use the same function for template (probably need different template and source and div) 
+    and add the icon to a different divide...
+
+  
