@@ -12,6 +12,9 @@
   border: 1px solid black;
 }
 
-/* .currentweathericon img{
-  display: inline-block;
-}; */
+.weathericon {
+    height: auto;
+    width: auto;
+    max-width: 300px;
+    max-height: 300px;
+}

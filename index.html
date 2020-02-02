@@ -14,7 +14,7 @@
 <body>
 
   <div class="container-fluid">
-     <!-- <div id="map"></div> -->
+    <!-- <div id="map"></div> -->
     <div class="row">
       <div class="col-md-6 offset-md-3">
         <div class="page-header text-center">
@@ -33,11 +33,11 @@
         </form>
         ​
         <hr />
-        <!-- <button id="find-me">Show my location</button><br />
+        <!-- <button id="find-me">Show my location</button><br/>
         <p id="status"></p>
         <a id="map-link" target="_blank"></a> -->
         <div class="container">
-          <div class="weatherrow row">
+          <div class="weatherrow text-center row">
           </div>
         </div>
         <hr />
@@ -51,15 +51,15 @@
 
   <!-- jQuery first, then Tether, then Bootstrap JS. -->
   <script id="weather-template" type="text/x-handlebars-template">
-    <div class="weather col-md-6 offset-md-1">
+    <div class="weather col-md-6 offset-md-3">
       <div>
       <h2>{{ temperature }} &deg;</h2>
       <div>{{ city }}</div>
       <div>{{ day }}</div>
       <div> {{ weatherDescription }} </div>
     </div>
-      <div class="currentweathericon float-right">
-      <img src="{{icon}}" alt="">
+      <div class="currentweathericon">
+      <img class="weathericon" src="{{icon}}" alt="">
     </div>
     </div>
   </script>
