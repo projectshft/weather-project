@@ -152,6 +152,7 @@ const neighborCities = async function(lat, long) {
   neighborCitiesWeather(neighborCitiesData)
 }
 
+//Take in list of neighbor cities get and get the current weather data from openweathermap
 const neighborCitiesWeather = async function(neighborCities)  {
   const neighborCitiesWeatherData = [];
   const errors = [];
@@ -179,7 +180,8 @@ const neighborCitiesWeather = async function(neighborCities)  {
   cleanNeighborCitiesWeatherData(neighborCitiesWeatherData)
 }
 
-//Function for taking data returned from neighborCitiesWeather and returning objects to be displayed on google maps
+//Function for taking data returned from neighborCitiesWeather and returning city longitude, latitude and current weather pinIcon
+//to be displayed on google maps
 const cleanNeighborCitiesWeatherData = function(neighborCitiesWeatherData) {
   cleanedNeighborCitiesWeatherData = [];
 
@@ -367,6 +369,7 @@ const weatherMap = function(mapData) {
 let errorAlert = function(error) {
   //Errors from the geolocator have a "code" key
   //If the error has an error code print a message relevant to the error code
+  console.log("Here")
   if (error.code) {
     if (error.POSITION_UNAVAILABLE==true) {
       alert("Cannot locate your position. \nPlease use the search bar to find your city")
