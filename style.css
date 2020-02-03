@@ -19,11 +19,20 @@ header {
 
 .conditions {
   font-size: 20px;
+ }
+
+.conditions::first-letter {
+  text-transform: uppercase;
 }
 
-.forecast-condition {
+
+.forecast-conditions {
   font-size: 15px;
 }
+.forecast-conditions::first-letter {
+  text-transform: uppercase;
+}
+
 
 .temperature {
   font-size: 50px;

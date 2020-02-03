@@ -95,17 +95,17 @@ var renderCurrentConditions = function () {
 
 //Function: render the forecast on the page
 var renderForecast = function () {
-  //loop through forcast and build html to display empty previous 
-  $('.forecast-list').empty();
+  //loop through forcast and build html to display
   for (i = 0; i < city5DayForecast.length; i++) {
     var source = $('#forecast-template').html();
     var template = Handlebars.compile(source);
     var displayTemp = Math.round(city5DayForecast[i].main.temp)
-    var imageIcon = 'http://openweathermap.org/img/wn/' + city5DayForecast[i].weather.icon + '@2x.png'
+    var imageIcon = 'http://openweathermap.org/img/wn/' + city5DayForecast[i].weather[0].icon + '@2x.png'
 
-    var newHTML = template({ temp: displayTemp, condition: city5DayForecast[i].weather.description, imageIconURL: imageIcon })
+    var newHTML = template({ temp: displayTemp, condition: city5DayForecast[i].weather[0].description, imageIconURL: imageIcon })
  
     // append our new html to the page
-    $('.forecast-list').append(newHTML);
+    $('.forecasts').append(newHTML);
+    console.log(newHTML)
   }
 }

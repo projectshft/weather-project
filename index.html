@@ -23,20 +23,14 @@
           </div>
         </form>
 
-        <div class="container">
-          <div class="row">
-            <div class="city-weather"> </div>
-          </div>
-        </div>
-       
-        <div class="container forcasts">
-          <div class="row">
-             <div class="col-md-5"
-               <div class="forecast-list">
-                 <div class="forecast"></div>
-              </div>
-            </div>
-          </div>
+        <div class="city-weather"> <div>
+
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="row">
+        <div class="forecasts" >
         </div>
       </div>
     </div>
@@ -50,8 +44,8 @@
    </script>
 
    <script id="forecast-template" type="text/x-handlebars-template">
-    <div class="forecast">
-      <div class="forecast-condition">{{ condition }}</div>
+    <div class="forecast col-sm>">
+      <div class="forecast-conditions">{{ condition }}</div>
       <div class="forecast-temp">{{ temp }} &#176; </div>
       <div <img src="{{imageIconURL}}" alt=""></div>
       <div class="forecast-dayOfWeek">{{ day }}</div>
