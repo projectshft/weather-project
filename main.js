@@ -97,7 +97,8 @@ function addForecast(data) {
         }
        
     }
-
+    //call the renderForecast function once the loop is done pushing foreCastDay objects to the cityForecast Array
+    renderForecast();
    
 }
 
@@ -107,10 +108,12 @@ function addForecast(data) {
 /////////////////////////// View ///////////////////////
 
 //When the wendow loads it calls the renderWeather function
-$(window).on('load', function() {
-    renderWeather();
-});
+// $(window).on('load', function() {
+//     renderWeather();
+//     renderForecast();
+// });
 
+//This function below will render the page using Handlebars based on the cityWeather Array
 function renderWeather() {
     $('.weatherCity').empty();
     var source = $('#weather-template').html();
@@ -120,6 +123,21 @@ function renderWeather() {
         var newHTML = template(weatherModel.cityWeather[i]);
         $('.weatherCity').append(newHTML);
     }
+}
+
+//This function below will render the page using Handlebars based on the cityForcast Array
+function renderForecast() {
+    console.log(weatherModel)
+    $('.weatherWeekly').empty();
+    var source = $('#forecast-template').html();
+    var template = Handlebars.compile(source);
+    var newHTML = template(weatherModel.cityForecast);
+    $('.weatherWeekly').append(newHTML);
+    
+
+    // for(var i = 0; i < weatherModel.cityWeather.length; i++) {
+    //    
+    // }
 }
 
 
@@ -137,12 +155,3 @@ $('.search').on('click', function () {
 
 
 
-// var arr1 = [1, 2, 3, 4, 5, 6, 7, 8, 8, 10, 11, 12];
-
-// var func1 = function() {
-//     for(j = 4; j <= arr1.length; j + 3) {
-//         console.log('hey it worked');
-//     }
-// };
-
-// func1();

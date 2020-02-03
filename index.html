@@ -63,15 +63,16 @@
     </script>
     <!-- Handlebars Template for forecast in the City searched for -->
     <script id="forecast-template" type="text/x-handlebars-template">
-        <div class="book col-md-6">
-            <!-- &#8457 adds degree Fahrenheit -->
-            {{#each cityForecast}}
-                <div><strong>{{ description }}</strong></div>
-                <div><strong>{{ temp }}</strong> &#8457;</div>
-                <img src="{{iconURL}}" alt="">
-                <div><strong>{{ day }}</strong></div>
-            {{/each}}
-        </div>
+        {{#each this}}
+            <div class="row">
+                <div class="book col-lg-5">
+                    <div><strong>{{ description }}</strong></div>
+                    <div><strong>{{ temp }}</strong> &#8457;</div>
+                    <img src="{{iconURL}}" alt="">
+                    <div><strong>{{ day }}</strong></div>
+                </div>
+            </div>
+        {{/each}}
     </script>
 
     <!-- jQuery first, then Tether then Bootstrap JS, then Handlebars Js. -->
