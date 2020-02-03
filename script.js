@@ -1,3 +1,4 @@
+// model for current day weather
 let weatherModel = [];
 // model for 5 day forecast 
 let weatherModel5 = [];
