@@ -62,3 +62,59 @@ const renderWeather = function () {
   })
   $('.default-button').css("display", "inline")
 }
+
+// Requests current weather from OpenweatherAPI using given API key
+// Feeds API response to setCurrentWeather function
+const fetchCurrentWeather = function (query) {
+  const searchURL =
+    `https://api.openweathermap.org/data/2.5/weather?units=imperial&q=${query},US&APPID=${APIkey}`
+  $.ajax({
+    method: "GET",
+    url: searchURL,
+    dataType: "json",
+    success: function (data) {
+      setCurrentWeather(data);
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+      console.log(textStatus);
+    }
+  });
+}
+
+// Requests 5 day forecast from OpenweatherAPI using given API key
+// Feeds API response to setCurrentForecast function
+const fetchForecastedWeather = function (query) {
+  const searchURL =
+    `https://api.openweathermap.org/data/2.5/forecast?units=imperial&q=${query},US&APPID=${APIkey}`
+  $.ajax({
+    method: "GET",
+    url: searchURL,
+    dataType: "json",
+    success: function (data) {
+      setCurrentForecast(data);
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+      console.log(textStatus);
+    }
+  });
+}
+
+// Search click listener
+$('.search-button').on('click', function () {
+  const location = $('input').val()
+  fetchCurrentWeather(location);
+  fetchForecastedWeather(location);
+})
+// Set default listener using localStorage to store your city
+$('.default-button').on('click', function () {
+  localStorage.setItem("current-weather", JSON.stringify(currentCityWeather))
+  localStorage.setItem("current-forecast", JSON.stringify(currentForecast))
+  alert("Your location is now set.  You should see it every time you come to this page.")
+})
+
+// Checks localStorage on page load and renders weather values if defaults are found
+if (localStorage.length > 0) {
+  currentCityWeather = JSON.parse(localStorage.getItem("current-weather"))
+  currentForecast = JSON.parse(localStorage.getItem("current-forecast"))
+  renderWeather();
+}
