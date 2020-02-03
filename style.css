@@ -5,8 +5,8 @@
 }
 
 .img-size {
-  width: 200%;
-  height: 200px
+  height: 200px;
+  width: 225px;
+  text-align: center;
   image-rendering: auto;
-  display: inline-block;
 }
