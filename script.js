@@ -15,7 +15,7 @@ $(document).ready(function () {
     }
 });
 
-// search button event listener
+// search button event listener. city search
 $('#search').click(function () {
     let searchValue = $('#searchInput').val();
     // check for empty search bar
@@ -86,12 +86,12 @@ var apiCallFiveDay = function (searchVal) {
             dataType: "json",
 
             success: function (dataFive) {
-                console.log('inside five call!! ', dataFive)
+                // console.log('inside five call!! ', dataFive)
                 // creating variables to pass in to locationCall -- to show map and pin on the map
                 let currentLatitude = dataFive.city.coord.lat;
                 let currentLongitude = dataFive.city.coord.lon;
                 let cityName = dataFive.city.name;
-                
+
                 filterFiveDay(dataFive)
                 //renderView(weatherModel)
                 locationCallForCurrentSearch(currentLatitude, currentLongitude, cityName);
@@ -124,10 +124,6 @@ const filteredData = function (mainData) {
 // function to sort out information and get only the one to display for 5 day forecast
 const filterFiveDay = function (dataFive) {
 
-    // console.log('time5: ', dataFive.list[0].dt_txt)
-    // console.log('temperature5: ', dataFive.list[0].main.temp)
-    // console.log('weather5: ', dataFive.list[0].weather[0].main)
-    // console.log('icon5: ', dataFive.list[0].weather[0].icon)
     var dataTemp = [];
     //added for loop to get same time of the day for each day in 5 day foprecats display
     for (var a = 0; a < dataFive.list.length; a = (a + 8)) {
@@ -181,7 +177,7 @@ let renderView = function (weatherModel) {
 // create function to convert date from API to current day.
 // date formating, find day of the week
 const getDay = function (dateToConvert) {
-    
+
     var gsDayNames = [
         'Sunday',
         'Monday',
@@ -196,14 +192,12 @@ const getDay = function (dateToConvert) {
     var dayName = gsDayNames[d.getDay()];
     //getDay will return the name of day
     return dayName
-}
-
+};
 
 // google maps API key   "key=API_KEY"--AIzaSyBjunVQe2A8mt0sISCk88UOztGzh7D-OJw
-// https://www.google.com/maps/embed/v1/MODE?key=YOUR_API_KEY&parameters
-var map;
 // geolocation function need to get current location 
 // geoLocation varible created and placed on top with global variables
+var map;
 var locationCall = function () {
     var gps = navigator.geolocation.getCurrentPosition(
         function (position) {
@@ -214,7 +208,7 @@ var locationCall = function () {
             console.log('GeoPosition ', geoLocation)
             let latitude = geoLocation[0];
             let longitude = geoLocation[1]
-
+            // new map to render on view
             function initMap() {
                 map = new google.maps.Map(document.getElementById('map'), {
                     center: {
@@ -225,14 +219,18 @@ var locationCall = function () {
                 });
                 // pin for "get Location" need to pass data from geolocation to marker 
                 var marker = new google.maps.Marker({
-                    position: {lat: latitude, lng: longitude},
+                    position: {
+                        lat: latitude,
+                        lng: longitude
+                    },
                     map: map,
-                    });
+                });
             }
             initMap();
+            apiCallCoordinates(latitude, longitude)
         })
 };
-// second call for current "searched" location
+// call for current "searched" location from search button
 var locationCallForCurrentSearch = function (latitude, longitude, cityName) {
     function initMap() {
         map = new google.maps.Map(document.getElementById('map'), {
@@ -244,12 +242,45 @@ var locationCallForCurrentSearch = function (latitude, longitude, cityName) {
         });
         // pin feature, pass data from weather API call for 5 days in to map
         var marker = new google.maps.Marker({
-            position: {lat: latitude, lng: longitude},
+            position: {
+                lat: latitude,
+                lng: longitude
+            },
             map: map,
             title: cityName
-          });
+        });
     }
     initMap();
 };
+// get local coordinates Lat and Lomg from "get Location" 
+// will need another call from weather API
+// this API call is for Get Location button. Separate call using latitude and longitude based on user location
+var apiCallCoordinates = function (latitude, longitude) {
+    weatherModel = [];
+    setTimeout(function () {
+        $.ajax({
+            method: "GET",
+            url: "https://api.openweathermap.org/data/2.5/weather?lat=" + latitude + "&lon=" + longitude + "&APPID=096f3282b86fa805756f58092f5d2481",
+            dataType: "json",
+            // api.openweathermap.org/data/2.5/forecast?lat=35&lon=139
+            success: function (data) {
+                // console.log('temperature ', data.main.temp) // kalvin to F  (280.24K − 273.15) × 9/5 + 32 = 44.762°F
+                console.log('location name ', data.name)
 
-
+                // data returned from APi call to be filtered -> filteredData
+                filteredData(data);
+                apiCallFiveDay(data.name)
+                renderView(weatherModel)
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log(errorThrown);
+                if (errorThrown == "Not Found") {
+                    alert('location not found. Please try another city')
+                } else {
+                    console.log('error returned ', jqXHR, textStatus);
+                    alert('system error ', textStatus)
+                }
+            }
+        });
+    }, 0);
+};
