@@ -1,6 +1,5 @@
-// Sample API Call with my API Key 
 
-// http://api.openweathermap.org/data/2.5/weather?q=London,uk&APPID=21653f29a7d16fbade1183b04d4783c1
+
 
 
 /////////////////////////// Model ///////////////////////
@@ -108,10 +107,10 @@ function addForecast(data) {
 /////////////////////////// View ///////////////////////
 
 //When the wendow loads it calls the renderWeather function
-// $(window).on('load', function() {
-//     renderWeather();
-//     renderForecast();
-// });
+$(window).on('load', function() {
+    renderWeather();
+    renderForecast();
+});
 
 //This function below will render the page using Handlebars based on the cityWeather Array
 function renderWeather() {
@@ -134,10 +133,6 @@ function renderForecast() {
     var newHTML = template(weatherModel.cityForecast);
     $('.weatherWeekly').append(newHTML);
     
-
-    // for(var i = 0; i < weatherModel.cityWeather.length; i++) {
-    //    
-    // }
 }
 
 
