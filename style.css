@@ -1,0 +1,23 @@
+.page-header {
+  text-align: center;
+}
+
+/* .city-form {
+  text-align: center;
+} */
+
+#weather {
+  margin-top: 50px;
+  /* text-align: center; */
+}
+
+
+#city {
+  font-style: bold;
+  font-size: 25px
+}
+
+#conditions {
+  font-style: bold;
+  font-size: 20px
+}
