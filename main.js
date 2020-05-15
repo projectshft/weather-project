@@ -23,10 +23,10 @@ var setCurrentWeather = function(data) {
   var currentWeather = {tempImperial: null, location: '', conditions: ''};
 
   // set the conditions here.
-  currentWeather.tempImperial = data.main.temp;
+  currentWeather.tempImperial = data.main.temp; // create a round function at some point
   console.log(currentWeather.tempImperial);
-  currentWeather.location = 'Here';
-  currentWeather.conditions = 'Purty nice';
+  currentWeather.location = data.name; // can i get state name from API?
+  currentWeather.conditions = data.weather[0].main;
 
   currentWeatherContainer.push(currentWeather);
 
@@ -61,7 +61,7 @@ var fetch = function (query) {
     method: "GET",
     //hardcoding API query for testing purposes. Note I've chosen to use imperial units haha.
     // Also, the query will only replace city,state for the time being.
-    url: "http://api.openweathermap.org/data/2.5/weather?q=Durham,nc,us&units=imperial&appid=baa280a65d9a5786919fda92ca7532a8",
+    url: `http://api.openweathermap.org/data/2.5/weather?q=${query},us&units=imperial&appid=baa280a65d9a5786919fda92ca7532a8`,
     dataType: "json",
           // Commenting out loading icon for the time being
     // beforeSend: function() {
