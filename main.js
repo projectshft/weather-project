@@ -20,13 +20,13 @@ var fiveDayForecastContainer = [];
 var setCurrentWeather = function(data) {
 
   currentWeatherContainer = [];
-  var currentWeather = {tempImperial: null, location: '', condition: ''};
+  var currentWeather = {tempImperial: null, location: '', conditions: ''};
 
   // set the conditions here.
   currentWeather.tempImperial = data.main.temp;
   console.log(currentWeather.tempImperial);
   currentWeather.location = 'Here';
-  currentWeather.condition = 'Purty nice';
+  currentWeather.conditions = 'Purty nice';
 
   currentWeatherContainer.push(currentWeather);
 
@@ -43,10 +43,10 @@ renderWeather();
 var renderWeather = function() {
   $('.weather').empty();
 
-  var source = $('#weather-template').html();
+  var source = $('#current-weather-template').html();
   var template = Handlebars.compile(source);
 
-  for (var i = 0; i < currentWeather.length; i++) {
+  for (var i = 0; i < currentWeatherContainer.length; i++) {
     var displayCurrentWeather = template(currentWeatherContainer[i]);
     $('.weather').append(displayCurrentWeather);
   }
