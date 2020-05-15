@@ -1,5 +1,7 @@
 var weather = []
-forecast = []
+var forecast = [
+  {forecastconditions: "sunny", forecasttemperature: 75, forecastimg: "http://openweathermap.org/img/wn/10d@2x.png", forecastday: "friday"}
+]
 
 // getting temp, city name, and current conditions based on location in api
 var addCityWeather = function (data) {
@@ -14,6 +16,8 @@ var addCityWeather = function (data) {
   // setting weather array equal to weatherSearched data
   weather = weatherSearched
 }
+
+
 // taking data and using the handlebars template to display the data on the page
 var renderWeather = function () {
 
@@ -22,6 +26,16 @@ var renderWeather = function () {
   var weatherHTML = template(weather)
 
   $('#weather').append(weatherHTML)
+};
+
+// taking forecast data and using the forecast handlebars template to display the data on the page
+var renderForecast = function () {
+
+  var forecastSource = $('#forecast-template').html();
+  var forecastTemplate = Handlebars.compile(forecastSource);
+  var forecastWeatherHTML = forecastTemplate(forecast[0])
+
+  $('#forecast').append(forecastWeatherHTML)
 };
 
 
@@ -41,17 +55,20 @@ var fetchData = function (citySelected) {
   }
   })
 
+}
+
+var fetchForecastData = function (citySelected){
   $.ajax({
     method: "GET",
     url: "http://api.openweathermap.org/data/2.5/forecast?q=Raleigh&units=imperial&appid=4645922fe189303f0fecf37e1c8e16d3",
     dataType: "json",
     success: function(data) {
-      addCityWeather(data)
-      renderWeather();
-  },
+      // addCityWeather(data)
+      renderForecast();
+    },
     error: function(jqXHR, textStatus, errorThrown) {
-    console.log(textStatus);
-  }
+      console.log(textStatus);
+    }
   })
 }
 // invoking a click function on the search button that invokes the fetchData function with the input on the search box
@@ -59,4 +76,7 @@ $('#search').on('click', function () {
   var citySelected = $('#city-input').val()
 
   fetchData(citySelected)
+  // fetchForecastData(citySelected)
+
+  renderForecast();
 })
