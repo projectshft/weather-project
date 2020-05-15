@@ -1,3 +1,18 @@
 .current-weather-details {
   font-family: Candara,Calibri,Segoe,Segoe UI,Optima,Arial,sans-serif; 
 }
+
+.current-weather {
+  padding: 3% 1% 1% 1%;
+}
+
+.current-weather-details {
+  vertical-align: center;
+}
+
+.icon{
+  max-height:150px;
+  max-width:150px;
+  height:auto;
+  width:auto;
+}
