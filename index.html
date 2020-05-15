@@ -5,34 +5,32 @@
     <link rel="stylesheet" href="style.css">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <title>Weather Project</title>
   </head>
   <body>
     <div class="container-fluid">
       <div class="row">
         <div class="col-md-6 offset-md-3">
         <div class="page-header">
-          <h1>Weather Project</h1>
+          <h1>Current Weather</h1>
           <hr/>
-        </div>
-
-        <!-- where serach content is stored -->
-        <div id="current-weather">
-
         </div>
 
         <!-- search bar content -->
         <form class="search-form">
-          <h3>Search</h3>
-
-          <div class="form-group">
-            <input type="text" id="search-query" class="form-control" placeholder="Search">
-          </input>
+          <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Enter City Name" aria-label="City Name" aria-describedby="basic-addon2">
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary search" type="button">Search</button>
+            </div>
           </div>
-          <button type="button" class="btn btn-primary search">Search</button>
         </form>
+
+        <!-- where search content is stored -->
+        <div id="current-weather">
+
+        </div>
 
       </div>
     </div>
@@ -40,7 +38,11 @@
 
     <!-- handlebars scipt for new search data that gets added to "search-content" above -->
     <script id="search-template" type="text/x-handlebars-template">
-
+      <div class="weather-content">
+        <h2>{{ temp }}</h2>
+        <p class="city-name">{{ name }}</p>
+        <p class="weather-description">{{ description }}<p>
+      </div>
     </script>
   <!-- jQuery first, then Tether, then Bootstrap JS. -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
