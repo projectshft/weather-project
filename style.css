@@ -1,0 +1,21 @@
+h1 {
+  text-align: center;
+}
+
+.form-group {
+  width: 80%;
+}
+
+#city-input {
+  width: 100%;
+}
+
+button {
+  width: 19%;
+}
+
+@media only screen and (max-width: 750px) {
+  /* .form-inline {
+    margin: auto;
+  } */
+}
