@@ -1,8 +1,6 @@
 /*
 1. set up the html page with style.css, bootstrap, handlebars, jquery and ajax in the head and main.js at body bottom
 
-
-
 2. Hard code the current weather div, search form and button (type=button) and 5 day forecast into html for placement, 
   a)Current Weather Heading
   Current Weather:
@@ -19,6 +17,7 @@
 
 
 3. Adjust the formatting with bootstrap and style.css to get the look and layout how we want, play around with row and col attributes of bootstrap
+  -choose a cool font to use!
 
 4. Turn our hard coded current and 5 day forecast into 2 handlebars templates, one for the current weather and one template for one day of the 5 day forecast
 
