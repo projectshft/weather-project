@@ -5,18 +5,26 @@ var addCity = function(data) {
   currentCity = []
   // take data and format it
   temp = Math.round(Number(data.main.temp));
-  var newCity = {temperature: temp, city: data.name, country: data.sys.country , weather: data.weather[0].main}
+  var newCity = {temperature: temp, city: data.name, country: data.sys.country , weather: data.weather[0].main, icon: data.weather[0].icon}
   // push it to currentCity
   currentCity.push(newCity);
-  renderCity()
-}
+  renderCity();
+  renderIcon();
+};
 
 var renderCity = function() {
+  $('#stat-container').empty();
   var source = $('#stats-template').html();
   var template = Handlebars.compile(source);
   var newHTML = template(currentCity[0]);
   $('#stat-container').append(newHTML);
-}
+};
+
+var renderIcon = function() {
+  $('icon-container').empty()
+  var iconURL = `http://openweathermap.org/img/wn/${currentCity[0].icon}@2x.png`
+  $('#icon-container').append(`<img src="${iconURL}">`)
+};
 
 // fetch data with city input as query
 var fetch = function(query) {

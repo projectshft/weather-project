@@ -14,6 +14,10 @@ button {
   width: 19%;
 }
 
+img {
+  margin-top: 25px;
+}
+
 @media only screen and (max-width: 750px) {
   /* .form-inline {
     margin: auto;
