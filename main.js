@@ -12,32 +12,24 @@ template. and so forth.
 
 // Should I make this an array or an object?
 // I'll do an array for now... good practice for future forecast.
-var currentWeather = [];
-var fiveDayForecast = [];
+var currentWeatherContainer = [];
+var fiveDayForecastContainer = [];
 
+// this function will get the temperature, the location (and state!),
+// and the weather conditions.
 var setCurrentWeather = function(data) {
 
-  currentWeather = [];
+  currentWeatherContainer = [];
+  var currentWeather = {tempImperial: null, location: '', condition: ''};
 
-  for (var i = 0; i < data.items.length; i++) {
+  // set the conditions here.
+  currentWeather.tempImperial = data.main.temp;
+  console.log(currentWeather.tempImperial);
+  currentWeather.location = 'Here';
+  currentWeather.condition = 'Purty nice';
 
-    var book = {title: "", author: '', imageURL: '', isbn: '', pageCount: null};
+  currentWeatherContainer.push(currentWeather);
 
-    book.title = data.items[i].volumeInfo.title;
-
-    book.author = data.items[i].volumeInfo.authors;
-
-    book.pageCount = data.items[i].volumeInfo.pageCount;
-
-    //book.isbn = data.items[i].volumeInfo.industryIdentifiers[0].identifier;
-
-    book.isbn = data.items[i].volumeInfo.industryIdentifiers ? data.items[i].volumeInfo.industryIdentifiers[0].identifier : null;
-
-
-    book.imageURL = data.items[i].volumeInfo.imageLinks ? data.items[i].volumeInfo.imageLinks.thumbnail : null;
-
-    books.push(book);
-  }
 
 renderWeather();
 
@@ -55,7 +47,7 @@ var renderWeather = function() {
   var template = Handlebars.compile(source);
 
   for (var i = 0; i < currentWeather.length; i++) {
-    var displayCurrentWeather = template(currentWeather[i]);
+    var displayCurrentWeather = template(currentWeatherContainer[i]);
     $('.weather').append(displayCurrentWeather);
   }
 };
@@ -78,7 +70,7 @@ var fetch = function (query) {
     success: function(data) {
       alert('I worked!')
       // $(".text-center").hide();
-      addCurrentWeather(data);
+      setCurrentWeather(data);
     },
     error: function(jqXHR, textStatus, errorThrown) {
       console.log(textStatus);
