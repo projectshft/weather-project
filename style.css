@@ -1,0 +1,54 @@
+/* #wrapper {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+#wrapper td {
+  vertical-align: middle;
+  text-align: center;
+} */
+
+.loader-image {
+  display: none;
+}
+/* 
+#current-conditions-text {
+  width: 75%;
+  float: left;
+  border: 1px solid red;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.current-conditions-box {
+  display: flex;
+}
+
+#current-conditions-logo {
+  width: 25%;
+  float: left;
+}
+
+#current-conditions-logo {
+  vertical-align: middle;
+  margin: 0 auto;
+  border: 1px solid black;
+  text-align: center;
+}
+
+#current-conditions-logo-wrap {
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+}
+
+#current-conditions-logo img {
+  height: 100px;
+  vertical-align: middle;
+} */
+
+.current-conditions-logo {
+  height: 80px;
+}
