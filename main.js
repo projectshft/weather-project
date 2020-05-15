@@ -48,7 +48,7 @@ var renderWeather = function() {
 
   for (var i = 0; i < currentWeatherContainer.length; i++) {
     var displayCurrentWeather = template(currentWeatherContainer[i]);
-    $('.weather').append(displayCurrentWeather);
+    $('.weather-display').append(displayCurrentWeather);
   }
 };
 
