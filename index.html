@@ -33,7 +33,7 @@
         </form>
       
         <!-- container for API current weather API results -->
-        <div class="current-weather-results row ml-2">
+        <div class="current-weather-results row ml-2 pt-3">
         </div>
 
       </div>
@@ -45,17 +45,22 @@
   <!-- handlebars and handlebars template -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
   
+  <!-- handlebars template for current weather -->
   <script id="current-weather-template" type="text/x-handlebars-template">
     <div class="current-weather w-100 col-md-4 " style="padding: 1%">
-      <div class="current-weather-details p-1">
-        <h4 class="text-left"><strong>{{ temp }} &#8457</strong></h4>
-        <h5 class="text-left">{{ city }}</h5>       
+      <div class="current-weather-details pl-4">
+        <h3 class="text-left"><strong>{{ temp }} &#8457</strong></h3>
+        <h4 class="text-left">{{ city }}</h4>       
         <p class="text-left">{{ weather }}</p>
       </div>
     </div>
-    <div class="weather-icon col-md-3">
-      <img class="icon w-100" src="http://openweathermap.org/img/wn/{{ icon }}.png">
+    <div class="weather-icon col-md-3 pl-0">
+      <img class="icon w-100 pl-0" src="http://openweathermap.org/img/wn/{{ icon }}.png">
     </div>
+  </script>
+
+  <!-- handlebars template for 5 day forecast -->
+  <script id="current-weather-template" type="text/x-handlebars-template">
   </script>
 
   <!-- jQuery first, then Tether, then Bootstrap JS. -->
