@@ -9,32 +9,82 @@
 </head>
 
 <body>
-  <div class="row">
-    <div class="col-md-8 offset-md-2">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 offset-md-2">
 
-      <header>
-        <h1>Weather</h1>
-      </header>
+        <header>
+          <h1>Weather Forecast</h1>
+        </header>
 
-      <hr>
-
-      <main>
+        <hr>
 
         <form id="weather-search" class="form-inline">
-          <div class="form-group ">
-            <input id="search-input" class="form-control " placeholder="City Name">
-          </div>
-          <button type="button" class="btn btn-primary">Search</button>
+          <input id="search-input" class="form-control" placeholder="Enter City Name">
+          <button id="search-button" type="button" class="btn btn-primary">Search</button>
         </form>
 
-        <div id="weather-results">
+        <hr>
+
+        <div id="search-results">
+
+          <div id="current-weather">
+            <h2>Current Weather:</h2>
+            <p class="temp">80°</p>
+            <p class="city-state">West Palm Beach, FL</p>
+            <p class="condition">Sunny</p>
+          </div>
+
+          <hr>
 
         </div>
-
-
-      </main>
+      </div>
     </div>
+
+    <div class="row">
+      <div id="five-day-forecast" class="col-md-12">
+        <div id="week" class="offset-md-1">
+
+          <h2>5 Day Forecast:</h2>
+
+          <div id="day-1" class="week-days col-md-2">
+            <p class="condition">Cloudy</p>
+            <p class="temp">75°</p>
+            <p class="day">Monday</p>
+          </div>
+
+          <div id="day-2" class="week-days col-md-2 ">
+            <p class="condition">Cloudy</p>
+            <p class="temp">75°</p>
+            <p class="day">Tuesday</p>
+          </div>
+
+          <div id="day-3" class="week-days col-md-2">
+            <p class="condition">Cloudy</p>
+            <p class="temp">75°</p>
+            <p class="day">Wednesday</p>
+          </div>
+
+          <div id="day-4" class="week-days col-md-2">
+            <p class="condition">Cloudy</p>
+            <p class="temp">75°</p>
+            <p class="day">Thursday</p>
+          </div>
+
+          <div id="day-5" class="week-days col-md-2">
+            <p class="condition">Cloudy</p>
+            <p class="temp">75°</p>
+            <p class="day">Friday</p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
   </div>
+
+
+
 
   <script src="main.js" type="text/javascript"></script>
 </body>

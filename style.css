@@ -1,0 +1,38 @@
+h1 {
+  text-align: center;
+}
+
+form {
+  margin: 20px auto;
+}
+
+#search-input {
+  width: 80%;
+}
+
+button {
+  margin: 0 auto;
+}
+
+.week-days {
+  display: inline-block;
+  /* width: 15%; */
+  box-sizing: border-box;
+  border: solid black 1px;
+  margin: 5px;
+  padding: 5px;
+  text-align: center;
+}
+
+#current-weather {
+  margin: 0 auto;
+}
+
+h2 {
+  margin: 20px 0;
+}
+
+.temp {
+  font-weight: bold;
+  font-size: 30px;
+}
