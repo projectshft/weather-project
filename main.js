@@ -6,9 +6,7 @@ var weatherModel = {
 
 
   //store API key for openweather API
-  getApiKey() {
-    return '2f39d6282bde1fde1a7949c43e939422';
-  },
+  apiKey: '2f39d6282bde1fde1a7949c43e939422',
 
   addData() {
 
@@ -22,29 +20,34 @@ var fetchCurrentWeather = function (query) {
     method: "GET",
     //REPLACE BOSTON WITH INPUT QUERY ONCE CLICK FUNCTION FOR SEARCH IS COMPLETED
     //REPLACE HARD CODED API KEY WITH WEATHERMODEL GETAPIKEY() FUNCTION;
-    url: "https://api.openweathermap.org/data/2.5/weather?q=boston&units=imperial&appid=2f39d6282bde1fde1a7949c43e939422",
+    url: "https://api.openweathermap.org/data/2.5/weather?q=" + query + "&units=imperial&appid=" + weatherModel.apiKey,
     dataType: "json",
     success: function(data) {
-      //ADD RETURN DATA TO WEATHER DATA MODEL EX: addFaces(data);
-      //RENDER DATA AFTER ADDED TO DATA MODEL EX: renderFaces(data);
+      controller.addCurrentWeather(data);
+      view.renderCurrentWeather();
     },
     error: function(jqXHR, textStatus, errorThrown) {
       console.log(textStatus);
+      alert('Unable to locate city, please reenter')
     },
   });
 };
 
 //object to add results of query to model
 var controller = {
+  
+  
   addCurrentWeather(data) {
+    weatherModel.currentWeatherData = [];
     //gather needed data from API return
     var weather = {
-      temp: data.main.temp,
+      temp: Math.round(data.main.temp),
       city: data.name,
-      weather: data.weather[0].main
+      weather: data.weather[0].description,
+      icon: data.weather[0].icon
     }
     //push API data to data model
-    weather.push(weatherModel.currentWeatherData);
+    weatherModel.currentWeatherData.push(weather)
     
   }
 
@@ -55,7 +58,15 @@ var view = {
   renderCurrentWeather() {
     $('.current-weather-results').empty();
 
-    
+    for (var i=0; i<weatherModel.currentWeatherData.length; i++) {
+      
+      var source = $('#current-weather-template').html();
+      var template = Handlebars.compile(source);
+      var newCurrentWeatherHTML = template({temp: weatherModel.currentWeatherData[i].temp, city: weatherModel.currentWeatherData[i].city, weather: weatherModel.currentWeatherData[i].weather, icon: weatherModel.currentWeatherData[i].icon})
+
+      $('.current-weather-results').append(newCurrentWeatherHTML);
+    }
+
   }
 }
 
