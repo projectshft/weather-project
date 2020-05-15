@@ -1,5 +1,9 @@
 var weather = []
 var forecast = [
+  {forecastconditions: "sunny", forecasttemperature: 75, forecastimg: "http://openweathermap.org/img/wn/10d@2x.png", forecastday: "friday"},
+  {forecastconditions: "sunny", forecasttemperature: 75, forecastimg: "http://openweathermap.org/img/wn/10d@2x.png", forecastday: "friday"},
+  {forecastconditions: "sunny", forecasttemperature: 75, forecastimg: "http://openweathermap.org/img/wn/10d@2x.png", forecastday: "friday"},
+  {forecastconditions: "sunny", forecasttemperature: 75, forecastimg: "http://openweathermap.org/img/wn/10d@2x.png", forecastday: "friday"},
   {forecastconditions: "sunny", forecasttemperature: 75, forecastimg: "http://openweathermap.org/img/wn/10d@2x.png", forecastday: "friday"}
 ]
 
@@ -7,6 +11,7 @@ var forecast = [
 var addCityWeather = function (data) {
   // clearing weather div
   $('#weather').empty()
+  // adding weather data from api to weatherSearched
   var weatherSearched = {
     // rounding temp to whole number
     temperature: Math.round(data.main.temp),
@@ -28,14 +33,31 @@ var renderWeather = function () {
   $('#weather').append(weatherHTML)
 };
 
+// creating a function to take the 40 objects from the weather api and "compressing" them down to 5
+var compressData = function (forecastData) {
+  var oneDay = (forecastData.length / 5)
+
+  for (var i = 0; i < forecastData.length; i+=oneDay) {
+    var oneDayInfo = forecastData[i]
+
+    for (var i = 0; i < oneDayInfo.length; i++) {
+      oneDayInfo[i]
+    }
+  }
+}
+
 // taking forecast data and using the forecast handlebars template to display the data on the page
 var renderForecast = function () {
 
-  var forecastSource = $('#forecast-template').html();
-  var forecastTemplate = Handlebars.compile(forecastSource);
-  var forecastWeatherHTML = forecastTemplate(forecast[0])
+  for (var i = 0; i < forecast.length; i++) {
+    var singleDay = forecast[i]
+    var forecastSource = $('#forecast-template').html();
+    var forecastTemplate = Handlebars.compile(forecastSource);
+    var forecastWeatherHTML = forecastTemplate(singleDay)
 
-  $('#forecast').append(forecastWeatherHTML)
+    $('#forecast').append(forecastWeatherHTML)
+  }
+
 };
 
 
@@ -62,7 +84,8 @@ var fetchForecastData = function (citySelected){
     method: "GET",
     url: "http://api.openweathermap.org/data/2.5/forecast?q=Raleigh&units=imperial&appid=4645922fe189303f0fecf37e1c8e16d3",
     dataType: "json",
-    success: function(data) {
+    success: function(forecastData) {
+      compressData(forecastData);
       // addCityWeather(data)
       renderForecast();
     },
