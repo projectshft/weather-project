@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <head>
+    <!-- Required meta tags -->
+    <link rel="stylesheet" href="style.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <title>Weather Search</title>
+  </head>
+</head>
+<body>
+
+  <div class="container-fluid">
+    <row class="row">
+      <div class="col-md-6 offset-md-3 pt-5">
+        <div class="page-header text-center">
+          <h1>Current Weather</h1>
+          <!-- <hr/> -->
+        </div>
+      
+        <form class="search-form mt-4 pt-5">
+          <div class="input-group">
+            <input type="text" id="search-query" class=" mr-1 form-control" placeholder="Enter City Name Here">
+            <span class="input-group-btn">
+              <button type="button" class="btn btn-primary search">Search</button>
+            </span>
+          </div>
+          
+        </form>
+
+      <div class="row">
+
+      </div>
+
+      </div>
+    </row>
+  </div>
+  
+  
+  
+  <!-- handlebars and handlebars template -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
+  
+  <script id="current-weather-template" type="text/x-handlebars-template">
+    <div class="current-weather col-md-4" style="padding: 1%">
+      <h4 class="text-center">Login: {{ login }}</h4>
+      <div><img class="rounded mw-100" src="{{ imageURL }}" alt="face-image"></div>
+    </div>
+  </script>
+
+  <!-- jQuery first, then Tether, then Bootstrap JS. -->
+  <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+  <script src="main.js" type="text/javascript"></script>
+</body>
+</html>
