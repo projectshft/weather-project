@@ -27,10 +27,20 @@
             <button type="button" id="search" class="btn btn-primary">Search</button>
           </div>
 
-
-
           <div id="weather">
-
+            <div class="current-weather">
+              <h1 id="temperature">{{temperature}}°</h1>
+              <p id="city">{{city}}</p>
+              <p id="conditions">{{conditions}}</p>
+            </div>
+            <div class="row">
+              <div class="forecast">
+                <p id="conditions">Sunny</p>
+                <p>75</p>
+                <img src="http://openweathermap.org/img/wn/10d@2x.png">
+                <p>Friday</p>
+              </div>
+            </div>
           </div>
 
         </form>
@@ -39,11 +49,23 @@
 
     </div>
 
+
+
     <script id="current-weather-template" type="text/x-handlebars-template">
       <div class="current-weather">
-        <h1 id="temperature">{{temperature}}</h1>
+        <h1 id="temperature">{{temperature}}°</h1>
         <p id="city">{{city}}</p>
         <p id="conditions">{{conditions}}</p>
+      </div>
+    </script>
+    <script id="forecast-template" type="text/x-handlebars-template">
+      <div class="row">
+        <div class="forecast">
+          <p id="conditions">{{forecast-conditions}}</p>
+          <p>{{forecast-temperature}}</p>
+          <img src="{{forecast-img}}">
+          <p>{{forecast-day}}</p>
+        </div>
       </div>
     </script>
 

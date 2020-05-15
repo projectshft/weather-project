@@ -5,6 +5,10 @@
 /* .city-form {
   text-align: center;
 } */
+.current-weather {
+  margin: 10px
+}
+
 
 #weather {
   margin-top: 50px;
@@ -20,4 +24,12 @@
 #conditions {
   font-style: bold;
   font-size: 20px
+}
+
+.forecast {
+  border: 1px solid black;
+  display: inline-block;
+  padding: 5px;
+  text-align: center;
+  margin: 10px
 }
