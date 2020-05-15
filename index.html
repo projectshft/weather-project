@@ -28,9 +28,13 @@
         </form>
         <br>
 
-        <!-- where search content is stored -->
-        <div id="current-weather">
 
+        <div id="current-weather">
+          <!-- where main city weather is stored -->
+        </div>
+
+        <div id="forecast-container">
+          <!-- where 5 day forecast is stored -->
         </div>
 
       </div>
@@ -41,10 +45,21 @@
     <script id="search-template" type="text/x-handlebars-template">
       <div class="weather-content">
         <h2>{{ temp }}</h2>
-        <p class="city-name">{{ name }}</p>
+        <p class="city-name icon">{{ name }}
+          <img src="http://openweathermap.org/img/wn/{{ icon }}@2x.png"></img>
+        </p>
         <p class="weather-description">{{ description }}<p>
       </div>
     </script>
+    <script id="search-template" type="text/x-handlebars-template">
+      <div class="forecast">
+        <h3>Cloudy</h3>
+        <p>46°</p>
+        <p>image here</p>
+        <p>day of the week</p>
+      </div>
+    </script>
+
   <!-- jQuery first, then Tether, then Bootstrap JS. -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.3.1.js"></script>

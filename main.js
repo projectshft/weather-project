@@ -8,6 +8,7 @@ var addWeather = function (data) {
   var weather = {
     temp: Math.round(data.main.temp) + "°",
     name: data.name,
+    icon: data.weather[0].icon,
     description: data.weather[0].description
   }
 
@@ -27,7 +28,7 @@ renderWeather = function () {
 };
 
 // function that gets data from the API and if successful, invokes addWeather
-//(where the data will be added to the array) and invokes renderWeather, where the new data will show up as HTML
+// (where the data will be added to the array) and invokes renderWeather, where the new data will show up as HTML
 var fetchData = function (city) {
   $.ajax({
     method: "GET",
@@ -36,10 +37,26 @@ var fetchData = function (city) {
     success: function(data) {
       addWeather(data);
       renderWeather();
+      // console.log(data);//will take out
     },
     error: function(jqXHR, testStatus, errorThrown){
       console.log(testStatus);
-      alert("Please enter valid US city in text field")
+      alert("Please enter valid US city in text field, no state required")
+    }
+  });
+};
+
+var fetchForecast = function (city) {
+  $.ajax({
+    method: "GET",
+    url: "https://api.openweathermap.org/data/2.5/forecast?q="+ city +"&appid=2fa3bf852e1baf47ec1a2ca2ecc407f2",
+    dataType: "json",
+    success: function(data) {
+      console.log(data);//will take out
+    },
+    error: function(jqXHR, testStatus, errorThrown){
+      console.log(testStatus);
+      alert("Please enter valid US city in text field, no state required")
     }
   });
 };
@@ -50,4 +67,6 @@ $('.search').on('click', function () {
   var city = $('.city-input').val();
 
   fetchData(city);
+  fetchForecast(city);
+
 });

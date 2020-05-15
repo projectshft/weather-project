@@ -1,6 +1,18 @@
 .page-header {
   text-align: center;
 }
+
 .weather-description {
   text-transform: capitalize;
+}
+
+img {
+  max-width: 10%;
+}
+
+.forecast {
+  border: 1px solid black;
+  display: inline-block;
+  text-align: center;
+
 }
