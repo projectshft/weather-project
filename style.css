@@ -14,9 +14,8 @@ button {
   margin: 0 auto;
 }
 
-.week-days {
+.week-day {
   display: inline-block;
-  /* width: 15%; */
   box-sizing: border-box;
   border: solid black 1px;
   margin: 5px;
@@ -35,4 +34,12 @@ h2 {
 .temp {
   font-weight: bold;
   font-size: 30px;
+}
+
+#five-day-forecast h2 {
+  text-align: center;
+}
+
+.hide {
+  display: none;
 }
