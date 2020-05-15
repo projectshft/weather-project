@@ -39,7 +39,7 @@ var setCurrentWeather = function(data) {
     books.push(book);
   }
 
-renderBooks();
+renderWeather();
 
 };
 
@@ -76,6 +76,7 @@ var fetch = function (query) {
     //   $(".text-center").show();
     // },
     success: function(data) {
+      alert('I worked!')
       // $(".text-center").hide();
       addCurrentWeather(data);
     },
@@ -87,8 +88,7 @@ var fetch = function (query) {
 
 // This is controller.
 $('.search').on('click', function () {
-  alert('Im working')
-  // var search = $('#search-query').val();
-  //
-  // fetch(search);
+  var search = $('#search-query').val();
+
+  fetch(search);
 });
