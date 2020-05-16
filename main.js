@@ -1,8 +1,7 @@
 const weatherData = {
   currentData: {},
 
-  forecastData: [
-    {
+  forecastData: [{
       day: 'Monday',
       temp: '80',
       condition: 'Sunny'
@@ -30,34 +29,33 @@ const weatherData = {
   ]
 };
 
-
-
 const fetchWeather = (city) => {
-  $.ajax ({
+  //get data for current weather
+  let fetchCurrent = $.ajax({
     method: "GET",
-    url: "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial&appid=e67216f1d8d59d8c6c67f7fbb818fc1b" ,
+    url: "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial&appid=e67216f1d8d59d8c6c67f7fbb818fc1b",
     dataType: "json",
     success: (data) => {
-      addCurrentWeather(data);
-      renderWeather();
+      addCurrentWeather(data); //add data to current weather data
     },
     error: (jqXHR, textStatus, errorThrown) => {
       console.log(textStatus);
     }
-  });
+  })
 
-  $.ajax ({
+  //then get data for 5 day forecast
+  $.when(fetchCurrent).then($.ajax({
     method: "GET",
-    url: "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&units=imperial&appid=e67216f1d8d59d8c6c67f7fbb818fc1b" ,
+    url: "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&units=imperial&appid=e67216f1d8d59d8c6c67f7fbb818fc1b",
     dataType: "json",
     success: (data) => {
-      addWeatherForecast(data);
-      renderWeather();
+      addWeatherForecast(data); //add data to weather forecast data
+      renderWeather(); //render current weather and forecast to page
     },
     error: (jqXHR, textStatus, errorThrown) => {
       console.log(textStatus);
     }
-  });
+  }));
 };
 
 //store returned weather results
@@ -69,12 +67,13 @@ const addCurrentWeather = (data) => {
     condition: data.weather[0].main
   }
 
-//add current weather object to weatherData object
-weatherData.currentData = currentWeather;
+  //add current weather object to weatherData object
+  weatherData.currentData = currentWeather;
 };
 
+//need to take (40) 3 hour forecasts and store them in array of objects with date/temp/condition
 const addWeatherForecast = (data) => {
-  //need to take (40) 3 hour forecasts and store them in array of objects with date/temp/condition
+  //arrays to store weather forecast data for sorting and filtering
   let allForecastData = [];
   let groupedForecastData = [];
 
@@ -89,11 +88,11 @@ const addWeatherForecast = (data) => {
   });
 
   //split forecast data into 5 groups of 8, in order by time
-  for(let i = 0; i < 5; i++) {
+  for (let i = 0; i < 5; i++) {
     groupedForecastData.push(allForecastData.splice(0, 8));
   }
-  console.log(groupedForecastData);
 
+  //average temps && find most common weather condition && most common day/week for each grouped array
 
   /*
   //need to take (40) 3 hour forecasts and store them in array of objects with date/temp/condition
@@ -127,7 +126,7 @@ const renderWeather = () => {
 
   //render final html to page
   $('#current-weather').append(currentHtml);
-
+console.log(`render current: ${weatherData.currentData}`);
   //render each forecast result to page with template
   weatherData.forecastData.forEach(result => {
     // get forecast weather template
@@ -157,16 +156,22 @@ $('#search-button').click(() => {
 
 //function to convert date string to weekday to display in forecast
 const getWeekDay = (dateString) => {
-  let someDate = new Date(dateString);
-  let dayOfWeek = someDate.getDay();
+  let dayOfWeek = new Date(dateString).getDay();
 
-  switch(dayOfWeek) {
-    case 0: return "Sunday";
-    case 1: return "Monday";
-    case 2: return "Tuesday";
-    case 3: return "Wednesday";
-    case 4: return "Thursday";
-    case 5: return "Friday";
-    case 6: return "Saturday";
+  switch (dayOfWeek) {
+    case 0:
+      return "Sunday";
+    case 1:
+      return "Monday";
+    case 2:
+      return "Tuesday";
+    case 3:
+      return "Wednesday";
+    case 4:
+      return "Thursday";
+    case 5:
+      return "Friday";
+    case 6:
+      return "Saturday";
   }
 }
