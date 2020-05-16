@@ -58,6 +58,9 @@
 18. Weather api returns temperature in K. In the addCurrentWeather function, convert K to F before the value on the forecast object. Test. 
 
 19. Study the weather api for 5 day forecast, figure out how to get timestamp to date format. Figure out how to get one temp for each day when there are 8 temp properties (3 hour blocks) returned per day. Daily average or just pick the time that is in 24 hr increments. 
+  -first we want to figure out how to skip ahead to the next day
+  -then take then grab the temp data for the 8 timestamps of that day and average them
+  -repeat for the next 4 days
 
 20. Add a second .ajax request to the fetch function. The url for the 5 day forecast api will be different from the current weather api. Add city variable and API key to url. Test that request works using devtools.
 
@@ -67,6 +70,8 @@ addWeeklyWeatherToForecastObject(data) and renderPage();
 22. Create the addWeeklyWeatherToForecastObject(data) function that accepts the data from the ajax request. Add the functionality to get one temp per day. Create an object that will hold the keys that match the handlebars template and values from the data. Push each day's object into the forecastObject array.
 
 23. Get weather icons provided by weather api to works
+
+24. Tweak the CSS
 
 24. Test, test, test
 
