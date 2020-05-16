@@ -1,11 +1,5 @@
 //create an object that will hold the data from the weather api for the current day and weekly forecast
-const forecastObj = {
-  currentForecast: {
-    temperature: 50,
-    city: "Durham",
-    condition: "Cloudy",
-    weatherIconURL: "cloud_PNG27.png"
-  },
+const forecastObject = {
 
   weekdayForecast: [
     {
@@ -36,11 +30,11 @@ const renderWeather = () => {
 
   currentSource = $('#current-day-template').html();
   const currentTemplate = Handlebars.compile(currentSource);
-  const newCurrentHTML = currentTemplate(forecastObj.currentForecast);
+  const newCurrentHTML = currentTemplate(forecastObject.currentForecast);
   $('.current-weather').append(newCurrentHTML);
 
   //the weekdayForecast will be an array of daily forecasts, so we must loop through that create template/append new html for each day
-  for (let i = 0; i < forecastObj.weekdayForecast.length; i++) {
+  for (let i = 0; i < forecastObject.weekdayForecast.length; i++) {
     weekdaySource = $('#weekday-template').html();
     const weekdayTemplate = Handlebars.compile(weekdaySource);
     const newWeekdayHTML = weekdayTemplate(forecastObj.weekdayForecast[i]);
@@ -48,7 +42,17 @@ const renderWeather = () => {
   }
 }
 
+//this will take the data from the weather api and add it to our Forecast object
+const addDataToForecastObject = data => {
+  forecastObject.currentForecast = {
+    temperature: data.main.temp,
+    city: data.name,
+    condition: data.weather[0].main,
+    weatherIconURL: data.weather[0].icon
+  }
+}
 
+//this will use the jquery to perform an http/ajax request to get the weather data
 const fetch = cityName => {
 
    $.ajax({
@@ -59,7 +63,7 @@ const fetch = cityName => {
       $('#loader').show();
     },
     success: function(data) {
-      //addDataToForecastObject(data);
+      addDataToForecastObject(data);
       renderWeather();
     },
     error: function(jqXHR, textStatus, errorThrown) {
@@ -70,24 +74,24 @@ const fetch = cityName => {
     }
   });
 
-  $.ajax({
-    method: "GET",
-    url: `https://api.openweathermap.org/data/2.5/forecast?q=${cityName},&APPID=59bd6855f51f9bbb1d24f5854ff189f5`,
-    dataType: "json",
-    beforeSend: function() {
-      $('#loader').show();
-    },
-    success: function(data) {
-      //addDataToForecastObject(data);
-      renderWeather();
-    },
-    error: function(jqXHR, textStatus, errorThrown) {
-      console.log(textStatus);
-    },
-    complete: function(data) {
-      $('#loader').hide()
-    }
-  });
+  // $.ajax({
+  //   method: "GET",
+  //   url: `https://api.openweathermap.org/data/2.5/forecast?q=${cityName},&APPID=59bd6855f51f9bbb1d24f5854ff189f5`,
+  //   dataType: "json",
+  //   beforeSend: function() {
+  //     $('#loader').show();
+  //   },
+  //   success: function(data) {
+  //     //addDataToForecastObject(data);
+  //     renderWeather();
+  //   },
+  //   error: function(jqXHR, textStatus, errorThrown) {
+  //     console.log(textStatus);
+  //   },
+  //   complete: function(data) {
+  //     $('#loader').hide()
+  //   }
+  // });
 }
 
 //create a click event that grabs the city name from the html form input and calls the fetch function
@@ -96,3 +100,9 @@ $('.submit').on('click', function() {
   fetch(cityName);
 })
 
+
+/*
+UTC timestamp: 1589652000
+var myDate = new Date(1589652000*1000);
+
+*/
