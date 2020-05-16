@@ -1,3 +1,7 @@
+body {
+  padding: 15px;
+}
+
 h1 {
   text-align: center;
 }
@@ -19,7 +23,7 @@ button {
   box-sizing: border-box;
   border: solid black 1px;
   margin: 5px;
-  padding: 5px;
+  padding: 5px 5px 0 5px;
   text-align: center;
 }
 
@@ -34,6 +38,7 @@ h2 {
 .temp {
   font-weight: bold;
   font-size: 30px;
+
 }
 
 #five-day-forecast h2 {
@@ -42,4 +47,19 @@ h2 {
 
 .hide {
   display: none;
+}
+
+.high-low-temp {
+  font-size: 13px;
+  line-height: .5em;
+}
+
+.condition {
+  text-transform: capitalize;
+}
+
+.equal {
+  display: flex;
+  display: -webkit-flex;
+  flex-wrap: wrap;
 }

@@ -39,7 +39,7 @@ const addCurrentWeather = (data) => {
   let currentWeather = {
     city: data.name,
     temp: Math.round(data.main.temp), //round temperature
-    condition: data.weather[0].main
+    condition: data.weather[0].description
   }
 
   //add current weather object to weatherData object
@@ -57,16 +57,21 @@ const addWeatherForecast = (data) => {
   data.list.forEach(forecast => {
     let forecastData = {
       temp: forecast.main.temp,
-      condition: forecast.weather[0].main,
+      condition: forecast.weather[0].description,
+      icon: forecast.weather[0].icon, //store weather icon for condition
       day: getWeekDay(forecast.dt_txt) //convert timestamp to day of week (integer)
     }
     allForecastData.push(forecastData);
   });
 
+  console.log(allForecastData);
+
   //split forecast data into 5 groups of 8, in order by time
   for (let i = 0; i < 5; i++) {
     groupedForecastData.push(allForecastData.splice(0, 8));
   }
+
+  console.log(groupedForecastData);
 
   //restructuring each sub-array of data objects to one object with array of temps, conditions, and day
   groupedForecastData.forEach((group) => {
@@ -74,29 +79,25 @@ const addWeatherForecast = (data) => {
       allDay.temp.push(hour.temp);
       allDay.condition.push(hour.condition);
       allDay.day.push(hour.day);
+      allDay.icon.push(hour.icon);
       return allDay;
-    },
-    {
+    }, {
       temp: [],
       condition: [],
-      day: []
+      day: [],
+      icon: []
     }));
   });
 
-  //reduce each daily property to one value
+  //reduce each daily property array to one value
   dailyData.forEach(dayWeather => {
 
-    //average the temps in each daily array
-    dayWeather.temp = Math.round(dayWeather.temp.reduce((totalTemp, hourlyTemp) => {
-      totalTemp += hourlyTemp;
-      return totalTemp;
-    }, 0) / dayWeather.temp.length);
-
-    //find starting day for each daily array
+    //find starting weekday for each daily array
     dayWeather.day = dayWeather.day[0];
 
-    //find most common condition for each daily array
-    dayWeather.condition = dayWeather.condition.reduce((frequencyTracker, hourlyCondition) => {
+    //find most common weather condition for each daily array
+    let weatherConditionWithIcon = dayWeather.condition.reduce((frequencyTracker, hourlyCondition, index) => {
+
       //add condition property to tracker or increase count
       if (!frequencyTracker.hasOwnProperty(hourlyCondition)) {
         frequencyTracker.hourlyCondition = 1;
@@ -104,21 +105,49 @@ const addWeatherForecast = (data) => {
         frequencyTracker.hourlyCondition += 1;
       }
 
-      //if current condition is more frequent than previously tracked most frequent condition, replace most frequent with current
+      //if current condition is greater than most frequent, replace most frequent with current
       if (frequencyTracker.hourlyCondition > frequencyTracker.mostFrequent.count) {
         frequencyTracker.mostFrequent.condition = hourlyCondition;
+        frequencyTracker.mostFrequent.icon = dayWeather.icon[index]; //get weather icon at same index as condition
         frequencyTracker.mostFrequent.count = frequencyTracker.hourlyCondition;
       }
 
       return frequencyTracker;
 
-    }, { mostFrequent: { count: 0 } })
-    .mostFrequent.condition; //assign final most frequent condition from tracker to daily condition
+    }, {
+      mostFrequent: {
+        count: 0
+      }
+    });
+
+    //assign returned most common condition to current day's object
+    dayWeather.condition = weatherConditionWithIcon.mostFrequent.condition;
+
+    //assign icon associated with most common condition to current day's object
+    dayWeather.icon = weatherConditionWithIcon.mostFrequent.icon;
+
+    //get daily low temps
+    dayWeather.low = Math.round(dayWeather.temp.sort()[0]);
+
+    //get daily high temps
+    dayWeather.high = Math.round(dayWeather.temp.reverse()[0]);
+
+    //average the temps in each daily array
+    dayWeather.temp = Math.round(dayWeather.temp.reduce((totalTemp, hourlyTemp) => {
+      //get sum of all temps
+      totalTemp += hourlyTemp;
+
+      return totalTemp;
+
+    }, 0) / dayWeather.temp.length); //divide total by number of temps and round to integer
 
   });
 
+
+
   //clear forecastData array
   weatherData.forecastData = [];
+console.log(dailyData);
 
   //add daily forecasts to forecastData array
   weatherData.forecastData.push(...dailyData)
@@ -168,7 +197,7 @@ $('#search-button').click(() => {
   fetchWeather($('#search-input').val());
 
   //clear input field
-  $('search-input').val('');
+  $('#search-input').val('');
 });
 
 //function to convert date string to weekday to display in forecast
@@ -176,7 +205,7 @@ const getWeekDay = (dateString) => {
   //convert date string to date, then get weekday (integer)
   let dayOfWeek = new Date(dateString).getDay();
 
-//convert weekday integer to weekday string
+  //convert weekday integer to weekday string
   switch (dayOfWeek) {
     case 0:
       return "Sunday";
