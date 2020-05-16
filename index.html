@@ -33,8 +33,12 @@
           
         </form>
       
-        <!-- container for API current weather API results -->
+        <!-- container for current weather API results -->
         <div class="current-weather-results row ml-2 pt-3">
+        </div>
+
+        <!-- container for 5 day weather API results -->
+        <div class="five-day-weather-results row ml-2 pt-3">
         </div>
 
       </div>
@@ -61,7 +65,15 @@
   </script>
 
   <!-- handlebars template for 5 day forecast -->
-  <script id="current-weather-template" type="text/x-handlebars-template">
+  <script id="five-day-weather-template" type="text/x-handlebars-template">
+    {{#each fiveDayForecast}}
+    <div class="five-day-container col-md-2">
+      <p class="text-left">{{ weather }}</p>
+      <p class="text-left">{{ temperature }}</p>
+      <p class="text-left">{{ icon }}</p>
+      <p class="text-left">{{ day }}</p>
+    </div>
+    {{/each}}
   </script>
 
   <!-- jQuery first, then Tether, then moment.js, then Bootstrap JS. -->
