@@ -5,11 +5,15 @@ You'll be using http://openweathermap.org/ to build a simple weather application
 It will be your job to read through the API documentation and figure everything out.
 But to get you started, here are a couple of links you'll need:
 
-  __  Get and use an API Key: http://openweathermap.org/appid
+
+  _X_  Get and use an API Key: http://openweathermap.org/appid
+        using 0f9391bf663647fd9cad13780bf4eff1
 
   __  Current Weather Data: http://openweathermap.org/current
+          Durham, NC test: http://api.openweathermap.org/data/2.5/weather?q=Durham&appid=0f9391bf663647fd9cad13780bf4eff1
 
   __  5 Day Forecast Data: http://openweathermap.org/forecast5
+          Duham, NC test: http://api.openweathermap.org/data/2.5/forecast?q=Durham&appid=0f9391bf663647fd9cad13780bf4eff1
 
   __  Weather Conditions and Icons: https://openweathermap.org/weather-conditions
 
@@ -34,7 +38,7 @@ Some Requirements ==============================================================
 
   __  Be conscious of your style and patterns
 
-  __  To get started, fork and clone this repo and submit a pull-request when you're finished.
+  _X_  To get started, fork and clone this repo and submit a pull-request when you're finished.
 
 
 
