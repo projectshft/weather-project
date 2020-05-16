@@ -41,16 +41,16 @@
     </div>
   </div>
 
-  <script id="book-template" type="text/x-handlebars-template">
+  <script id="current-weather-template" type="text/x-handlebars-template">
     <div class="media current-conditions">
       <div class="media-body">
-        <h1>76</h1>
-        <h2>Durham, NC</h2>
-        <p>Sunny</p>
+        <h1>{{temperature}}</h1>
+        <h2>{{location}}</h2>
+        <p>{{description}}</p>
       </div>
       <div class="media-left media-middle">
         <img class="media-object current-conditions-logo" src="https://www.pinclipart.com/picdir/big/5-51534_clipart-of-a-sun-sunny-icon-png-download.png" />
-    </div>
+      </div>
     </div> 
   </script>
 
