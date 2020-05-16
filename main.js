@@ -4,6 +4,14 @@ const Weather = () => {
       temperature: null,
       location: null,
       description: null,
+      icon: null,
+    },
+    future: {
+      "1dayahead": {},
+      "2daysahead": {},
+      "3daysahead": {},
+      "4daysahead": {},
+      "5daysahead": {},
     },
   };
 
@@ -19,10 +27,14 @@ const Weather = () => {
         console.log(openWeatherData);
 
         // grabbing data here to pass into updateWeatherData
+        // passing them rather than whole object so that
+        // setCurrentWeatherData stays clean in case we change APIs
         let temp = openWeatherData.main.temp;
         let location = openWeatherData.name;
         let description = openWeatherData.weather[0].main;
-        updateWeatherData(temp, location, description);
+        let icon = `http://openweathermap.org/img/wn/${openWeatherData.weather[0].icon}@2x.png`;
+
+        setCurrentWeatherData(temp, location, description, icon);
 
         renderCurrentWeather();
       },
@@ -32,11 +44,12 @@ const Weather = () => {
     });
   };
 
-  const updateWeatherData = (temp, location, description) => {
+  const setCurrentWeatherData = (temp, location, description, icon) => {
     // update our weather data with input from API
     weatherData.currentConditions.temperature = temp;
     weatherData.currentConditions.location = location;
     weatherData.currentConditions.description = description;
+    weatherData.currentConditions.icon = icon;
   };
 
   const renderCurrentWeather = () => {
