@@ -43,11 +43,11 @@ const addCurrentWeather = (data) => {
     icon: data.weather[0].icon
   }
 
-  //add current weather object to weatherData object
+  //add current weather object to weatherData
   weatherData.currentData = currentWeather;
 };
 
-//add forecast data to weatherData, with 1 object for each of the 5 days
+//add forecast data to weatherData, reducing results to 1 object for each of the 5 days
 const addWeatherForecast = (data) => {
   //arrays to store weather forecast data for sorting and filtering
   let allForecastData = [];
@@ -65,16 +65,12 @@ const addWeatherForecast = (data) => {
     allForecastData.push(forecastData);
   });
 
-  console.log(allForecastData);
-
   //split forecast data into 5 groups of 8, in order by time
   for (let i = 0; i < 5; i++) {
     groupedForecastData.push(allForecastData.splice(0, 8));
   }
 
-  console.log(groupedForecastData);
-
-  //restructuring each sub-array of data objects to one object with array of temps, conditions, and day
+  //restructuring each sub-array of weather data into single object with array each for temps, conditions, day, and icons
   groupedForecastData.forEach((group) => {
     dailyData.push(group.reduce((allDay, hour) => {
       allDay.temp.push(hour.temp);
@@ -90,9 +86,8 @@ const addWeatherForecast = (data) => {
     }));
   });
 
-  //reduce each daily property array to one value
+  //reduce each property's array for each day to one value
   dailyData.forEach(dayWeather => {
-
     //find starting weekday for each daily array
     dayWeather.day = dayWeather.day[0];
 
@@ -143,17 +138,12 @@ const addWeatherForecast = (data) => {
 
   });
 
-
-
   //clear forecastData array
   weatherData.forecastData = [];
-console.log(dailyData);
 
   //add daily forecasts to forecastData array
   weatherData.forecastData.push(...dailyData)
 };
-
-
 
 //take stored weather data and display it on the page
 const renderWeather = () => {
@@ -175,19 +165,21 @@ const renderWeather = () => {
 
   //render each forecast result to page with template
   weatherData.forecastData.forEach(result => {
-    // get forecast weather template
+    //get forecast weather template
     let forecastSource = $('#forecast-template').html();
 
-    // compile template
+    //compile template
     let forecastTemplate = Handlebars.compile(forecastSource);
 
-    // fill template with data
+    //fill template with data
     let forecastHtml = forecastTemplate(result);
 
-    // render final html to page
+    //render final html to page
     $('#week').append(forecastHtml);
 
+    //show hidden elements
     $('#forecast-header').removeClass('hide');
+    $('#current-section').removeClass('hide');
   });
 };
 
