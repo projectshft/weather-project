@@ -71,13 +71,13 @@ const addCurrentWeather = (data) => {
   weatherData.currentData = currentWeather;
 };
 
-//need to take (40) 3 hour forecasts and store them in array of objects with date/temp/condition
+//add forecast data to weatherData, with 1 object for each of the 5 days
 const addWeatherForecast = (data) => {
   //arrays to store weather forecast data for sorting and filtering
   let allForecastData = [];
   let groupedForecastData = [];
 
-  //iterate through data results and store each 3 hour prediction
+  //iterate through data results and store each 3 hour prediction with relevant information
   data.list.forEach(forecast => {
     let forecastData = {
       temp: Math.round(forecast.main.temp), //round temperature
@@ -91,6 +91,26 @@ const addWeatherForecast = (data) => {
   for (let i = 0; i < 5; i++) {
     groupedForecastData.push(allForecastData.splice(0, 8));
   }
+
+  //restructuring each sub-array of data objects to one object with array of temps, conditions, and day
+  let dailyData = [];
+
+  groupedForecastData.forEach((group) => {
+    dailyData.push(group.reduce((allDay, hour) => {
+      allDay.temp.push(hour.temp);
+      allDay.condition.push(hour.condition);
+      allDay.day.push(hour.day);
+      return allDay;
+    },
+    {
+      temp: [],
+      condition: [],
+      day: []
+    }));
+  });
+
+  //
+
 
   //average temps && find most common weather condition && most common day/week for each grouped array
 
@@ -126,7 +146,7 @@ const renderWeather = () => {
 
   //render final html to page
   $('#current-weather').append(currentHtml);
-console.log(`render current: ${weatherData.currentData}`);
+
   //render each forecast result to page with template
   weatherData.forecastData.forEach(result => {
     // get forecast weather template
