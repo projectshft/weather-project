@@ -78,6 +78,7 @@ weatherData.currentData = currentWeather;
 const addWeatherForecast = (data) => {
   //need to take (40) 3 hour forecasts and store them in array of objects with date/temp/condition
   let allForecastData = [];
+  let groupedForecastData = [];
 
   //iterate through data results and store each 3 hour prediction
   data.list.forEach(forecast => {
@@ -87,8 +88,13 @@ const addWeatherForecast = (data) => {
       day: getWeekDay(forecast.dt_txt) //convert timestamp to day of week (integer)
     }
     allForecastData.push(forecastData);
-    weatherData.forecastData = allForecastData;
   });
+
+  //split forecast data into 5 groups of 8, in order by time
+  for(let i = 0; i < 5; i++) {
+    groupedForecastData.push(allForecastData.splice(0, 8));
+  }
+  console.log(groupedForecastData);
 
 
   /*
