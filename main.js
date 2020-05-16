@@ -20,13 +20,14 @@ var fiveDayForecastContainer = [];
 var setCurrentWeather = function(data) {
 
   currentWeatherContainer = [];
-  var currentWeather = {tempImperial: null, location: '', conditions: ''};
+  var currentWeather = {tempImperial: null, location: '', conditions: '', icon: ''};
 
   // set the conditions here.
   currentWeather.tempImperial = data.main.temp; // create a round function at some point
   console.log(currentWeather.tempImperial);
   currentWeather.location = data.name; // can i get state name from API?
-  currentWeather.conditions = data.weather[0].main;
+  currentWeather.conditions = data.weather[0].description;
+  currentWeather.icon = `http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
 
   currentWeatherContainer.push(currentWeather);
 
@@ -68,7 +69,6 @@ var fetch = function (query) {
     //   $(".text-center").show();
     // },
     success: function(data) {
-      alert('I worked!')
       // $(".text-center").hide();
       setCurrentWeather(data);
     },
