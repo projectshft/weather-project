@@ -1411,4 +1411,10 @@ for (let i = 0; i < dataArray.length; i++) {
   }
 }
 
+const weekdays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
+//this will get the day of the week for the weekday arrays
+finalArray.forEach(day => {
+  var myDate = new Date(day[0][0] * 1000);
+  console.log(weekdays[myDate.getDay()]);
+})
