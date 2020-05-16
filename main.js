@@ -38,7 +38,8 @@ const fetchWeather = (city) => {
     url: "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial&appid=e67216f1d8d59d8c6c67f7fbb818fc1b" ,
     dataType: "json",
     success: (data) => {
-      addWeather(data);
+      addCurrentWeather(data);
+      renderWeather();
     },
     error: (jqXHR, textStatus, errorThrown) => {
       console.log(textStatus);
@@ -57,10 +58,7 @@ const fetchWeather = (city) => {
       console.log(textStatus);
     }
   });
-
 };
-
-
 
 //store returned weather results
 const addCurrentWeather = (data) => {
