@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.6/handlebars.js"></script>
+  <title>A Web Page</title>
+</head>
+<body>
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3">
+      <div class="page-header">
+        <h1>Current Weather</h1>
+      </div>
+
+      <div id="commits">
+      </div>
+
+      <form class="post-form">
+
+        <div class="form-group">
+          <input type="text" id="weather-search" class="form-control" placeholder="Enter City Name">
+          </input>
+          <button type="button" class="btn btn-primary add-post" id="search">Search</button>
+
+      </form>
+
+    </div>
+  </div>
+
+<script id="city-weather-template" type="text/x-handlebars-template">
+  <div class="city-weather">
+    <h5>{{ temperature }}</h5>
+      <div class="city-state">
+        {{ body }}
+      </div>
+      <div class="weather">
+        {{ currentWeather }}
+      </div>
+  </div>
+</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>
