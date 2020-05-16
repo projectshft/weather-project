@@ -5,6 +5,7 @@ var weatherModel = {
   //store "currentWeather" API data
   currentWeatherData: [],
 
+  //store "five day weather" API data
   fiveDayForecast: [
     {
       weather: "Cloudy",
@@ -43,15 +44,17 @@ var weatherModel = {
 
   //accumulate data from API GET request and store in currentWeatherData array
   addCurrentWeather(data) {
+    //clear current data for new city search
     this.currentWeatherData = [];
-    //format the needed data from API return into object
+    //format the needed data from the API return into object
     var weather = {
       temp: Math.round(data.main.temp),
       city: data.name,
+      country: data.sys.country,
       weather: data.weather[0].description,
       icon: data.weather[0].icon
     }
-    //push API data to data model
+    //push formatted object of API data to data model
     this.currentWeatherData.push(weather)
   },
 
@@ -65,7 +68,7 @@ var weatherModel = {
 
 //object to handle API requests based on user input and add results of query to model
 var controller = {
-  //Query openWeather API for current weather in imperial units format
+  //Query openWeather API for "current weather" requests in imperial units format
   fetchCurrentWeather(query) {
     $.ajax({
       method: "GET",
@@ -85,16 +88,13 @@ var controller = {
   },
 
   //Query openWeather API for 5 day forecast in imperial units format
-  fetchCurrentWeather(query) {
+  fetchFiveDayWeather(query) {
     $.ajax({
       method: "GET",
-      url: "https://api.openweathermap.org/data/2.5/weather?q=" + query + "&units=imperial&appid=" + weatherModel.apiKey,
+      url: "https://api.openweathermap.org/data/2.5/forecast?q=" + query + "&units=imperial&appid=" + weatherModel.apiKey,
       dataType: "json",
       success: function(data) {
-        //First add the query data to the "weatherModel" object
-        weatherModel.addCurrentWeather(data);
-        //Second render the new data with the function in the "view" object
-        view.renderCurrentWeather();
+        console.log(data);
       },
       error: function(jqXHR, textStatus, errorThrown) {
         console.log(textStatus);
@@ -119,7 +119,7 @@ var view = {
       //store data in variables for Handlebars compiling
       var source = $('#current-weather-template').html();
       var template = Handlebars.compile(source);
-      var newCurrentWeatherHTML = template({temp: objectData.temp, city: objectData.city, weather: objectData.weather, icon: objectData.icon})
+      var newCurrentWeatherHTML = template({temp: objectData.temp, city: objectData.city, country: objectData.country, weather: objectData.weather, icon: objectData.icon})
 
       //Render Handlebars data to HTML 
       $('.current-weather-results').append(newCurrentWeatherHTML);
@@ -148,8 +148,8 @@ $('.search').on('click', function () {
   //TO-DO ADD ERROR MESSAGE IF USER ATTEMPTS TO SUBMIT A BLANK FORM
   
   var search = $('#search-query').val();
-  //call API query after receiving data
+  //call API queries after user enters data and clicks submit
   controller.fetchCurrentWeather(search);
-  view.renderFiveDayForecast();
+  controller.fetchFiveDayWeather(search);
 });
 
