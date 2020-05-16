@@ -20,16 +20,17 @@ var addWeather = function (data) {
 //adds forecast data to empty cityForecast function
 var addForecast = function (data) {
   var results = data.list;
-  for (var i = 0; i < results.length; i++) {
-      // var forecast = results[i].dt;
-      var forecast =results[i];
+  for (var i = 0; i < results.length; i= i + 8) {
+      var forecast = results[i];
       var forecastArray = {
         description: forecast.weather[0].main,
         temp: forecast.main.temp,
         icon: forecast.weather[0].icon,
         time: forecast.dt,
-
-      }
+      };
+      // var everyEight = forecastArray.filter(function(data){
+      //
+      // })
 
       // }
       // cityForecast.push(data.list);//used to find data paths
