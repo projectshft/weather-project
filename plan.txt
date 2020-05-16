@@ -25,6 +25,8 @@
 
 5.4. Create a temporary object that will hold the variable names we chose in the handlebars template
 
+5.4.1 Test handlebars templates and hardcoded temp objects
+
 5.5 Study the weather api and copy some values to hardcode into our temp obj
 
 6. Create an array that will hold objects of the a city's current weather and 5 day forecast information

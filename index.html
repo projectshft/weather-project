@@ -1,59 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <title>Weather Project</title>
- <!-- Required meta tags -->
- <link rel="stylesheet" href="style.css">
- <meta charset="utf-8">
- <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <!-- Required meta tags -->
+  <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
- <!-- Bootstrap CSS -->
- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
+    integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
 </head>
-<body>   
+
+<body>
   <div class="container">
     <div class="row">
       <div class="col-md-8 offset-md-2">
         <div class="page-header">
           <h1>Weather Project</h1>
-          <hr/>
+          <hr />
         </div>
       </div>
     </div>
     <form class="form-inline search-form">
       <div class="form-row"></div>
-        <div class="form-group col-md-6 offset-md-3">
-          <input type="text" class="form-control" id="city-id" placeholder="Enter City Name Here">
-          <button type="button" class="btn btn-primary submit">Search</button>
-        </div>
+      <div class="form-group col-md-6 offset-md-3">
+        <input type="text" class="form-control" id="city-id" placeholder="Enter City Name Here">
+        <button type="button" class="btn btn-primary submit">Search</button>
       </div>
-    </form>
+  </div>
+  </form>
   </div>
 
- 
-    <div class="current-weather row">
-      <div class="col-md-3 offset-md-3 current-stats">
-        <h2 id="current-temp">46<span>&#176;</span></h2>
-        <h4 id="current-city">Durham</h4>
-        <h5 id="current-conditions">Cloudy</h5> 
-      </div>
-      <div class="col-md-3">
-        <img src="cloud_PNG27.png" style="width:100px;height:75px">
-      </div>
+
+  <div class="current-weather row">
+    <div class="col-md-3 offset-md-3 current-stats">
+      <h2 id="current-temp">46<span>&#176;</span></h2>
+      <h4 id="current-city">Durham</h4>
+      <h5 id="current-conditions">Cloudy</h5>
     </div>
-  
-  
-    <div class="week-forecast row text-center">   
-      <div class="day col-md-2 offset-md-1">
-        <h6>Cloudy</h6>
-        <h4>46<span>&#176;</span></h4>
-        <img src="cloud_PNG27.png" style="width:50px;height:30px">
-        <h6>Monday</h6>
-      </div>
+    <div class="col-md-3">
+      <img src="cloud_PNG27.png" style="width:100px;height:75px">
     </div>
+  </div>
 
 
-  <script id="current-forecast" type="text/x-handlebars-template">
+  <div class="week-forecast row text-center">
+    <div class="day col-md-2 offset-md-1">
+      <h6>Cloudy</h6>
+      <h4>46<span>&#176;</span></h4>
+      <img src="cloud_PNG27.png" style="width:50px;height:30px">
+      <h6>Monday</h6>
+    </div>
+  </div>
+
+
+  <script id="current-day-template" type="text/x-handlebars-template">
     <div class="col-md-3 offset-md-3 current-stats">
       <h2 id="current-temp">{{ temperature }}<span>&#176;</span></h2>
       <h4 id="current-city">{{ city }}</h4>
@@ -64,21 +67,26 @@
     </div>
   </script>
 
-  <script id="one-day-forecast" type="text/x-handlebars-template"> 
+  <script id="weekday-template" type="text/x-handlebars-template">
     <div class="day col-md-2">
       <h6>{{ condition }}</h6>
       <h4>{{ temperature }}<span>&#176;</span></h4>
       <img src="{{weatherIconURL}}" style="width:50px;height:30px">
       <h6>{{ weekday }}</h6>
     </div>
-  </script> 
+  </script>
 
 
-<!-- jQuery first, then Tether, then Bootstrap JS. -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
-<script src="main.js" type="text/javascript"></script>
+  <!-- jQuery first, then Tether, then Bootstrap JS. -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"
+    integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"
+    integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"
+    crossorigin="anonymous"></script>
+  <script src="main.js" type="text/javascript"></script>
 </body>
+
 </html>
