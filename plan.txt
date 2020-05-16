@@ -23,44 +23,56 @@
 
 5. Put the "blanks" in the handlebars template showing the data we'll need to fill in and use descriptive name (that will be the keys of our city weather object)
 
-5.4. Create a temporary object that will hold the variable names we chose in the handlebars template
 
-5.4.1 Test handlebars templates and hardcoded temp objects
+6. Create an object that will hold an object for the current weather and an array of objects for each day of the 5 day forecast, making the keys the same as the handlebars variable
 
-10. Test handlebars to append the current weather AND loop through the daily weather data from the hardcoded object
-
-5.5 Study the weather api and copy some values to hardcode into our temp obj
-
-5.5.1 Sign up for api.openweathermap.org in order to get my API key
-
-6. Create an object that will hold an object for the current weather and an array of objects for each day of the 5 day forecast
+7. Create a function to render the page using the 2 test handlebars templates and hardcoded temp object. One template should use the current weather object and one template should be inside the loop for the array of the weekly forecast objects (still hardcoded). Clear the divs we append to in this function before appending the newHtml from handlebars. 
 
 
-8. Figure out how to get the 5 day forecast from the timestamps in the weather api, they are in 3hr block so there will be 8 per day and add that to our temp object
+8. Add a click event handler to the search button, grab the city name from the input field and test rendering the page with handlebars and test object
 
 
+9. Create a fetch function with a city parameter, add fetch function call to click event with the city name as the argument
 
-11. Add a click event handler to the search button, grab the city name from the input field 
+10. Manipulate the city data to be able to send to the weather api in the appropriate format, if needed
 
-12. Create a fetch function with a city parameter, that will be called in the click event handler with the city as the argument
+11. Study the weather api and copy some values to hardcode into our temp obj
 
-13. Manipulate the city data to be able to send to the weather api in the appropriate format, if needed
+12. Sign up for api.openweathermap.org in order to get my API key
 
-14. Fill out the fetch function with $.ajax method
+
+13. Fill out the fetch function with $.ajax method
   -we might need to make more than one ajax request, tbd
   -NOTE: The endpoints openweather.org provide do not, by default, include an https:// prefix. If you intend to use Javascript's fetch API, you'll need to include this prefix in your endpoint, or else you'll receive a status error of 404.
 
-15. Under ajax.success, send the data to a function called addCityToArray
+14. Start with the ajax request just for the current weather. Add https:// in front of the url for the current weather api (api.openweathermap.org/data/2.5/weather). use the cityname for the query value. Append the API key we received to the end of the url after the query.
 
-16. In same ajax.success, call the renderCityWeather function (still not sure whether to put this function here)(but don't pass the data, the data should already be in the array and that's where we render)
+14.5  Test that our API request works by looking in devtools
 
-17. Create addCityToArray function, create an object inside with only the pertinent data we need and push that object into the city array
+15. Under the success promise resolution, call 2 functions: add the current weather data to the global forecast object, and render the page.(still not sure whether to put the render() here)(but don't pass the data, the data should already be in the forecast object)
 
-18. Create the renderWeather() function where it will first clear the div containing a city's weather, it will grab the data object (which was formatted with just the properties we need) and use handlebars to now fill our html string with blanks into html with blanks filled in
+16. Create addCurrentWeather function that we just added under :success. It should accept the data from the fetch function, create an object inside with only the pertinent data we need, keep the same key as in our hardcoded forecast object.
 
-19. Lastly under renderWeather(), append the newHtml to the divs for current weather and weather forecast
+17. Remove the hardcoded current weather object from our forecast object and test that our AddCurrentWeather function works (is added to forecast object) and then render the page to see if the current weather data appears.
 
-20. ExtensionS, tbd
+18. Weather api returns temperature in K. In the addCurrentWeather function, convert K to F before the value on the forecast object. Test. 
+
+19. Study the weather api for 5 day forecast, figure out how to get timestamp to date format. Figure out how to get one temp for each day when there are 8 temp properties (3 hour blocks) returned per day. Daily average or just pick the time that is in 24 hr increments. 
+
+20. Add a second .ajax request to the fetch function. The url for the 5 day forecast api will be different from the current weather api. Add city variable and API key to url. Test that request works using devtools.
+
+21. Under :success add 2 functions: 
+addWeeklyWeatherToForecastObject(data) and renderPage();
+
+22. Create the addWeeklyWeatherToForecastObject(data) function that accepts the data from the ajax request. Add the functionality to get one temp per day. Create an object that will hold the keys that match the handlebars template and values from the data. Push each day's object into the forecastObject array.
+
+23. Get weather icons provided by weather api to works
+
+24. Test, test, test
+
+25. Look into creating a state/country specific search (not required but would be nice)
+
+26. Extensions, tbd
 
 
 

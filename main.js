@@ -45,6 +45,7 @@ const renderWeather = () => {
 //this will take the data from the weather api, convert temp from Kelvin to Farhenheit, and add it to our Forecast object
 const addCurrentWeatherToForecastObject = data => {
   const tempInFarhenheit = Math.round((data.main.temp - 273.15) * 9/5 + 32);
+  
   forecastObject.currentForecast = {
     temperature: tempInFarhenheit,
     city: data.name,
@@ -66,7 +67,7 @@ const fetch = cityName => {
     url: `https://api.openweathermap.org/data/2.5/weather?q=${cityName},&APPID=59bd6855f51f9bbb1d24f5854ff189f5`,
     dataType: "json",
     beforeSend: function() {
-      $('#loader').show();
+      //$('#loader').show();
     },
     success: function(data) {
       addCurrentWeatherToForecastObject(data); 
@@ -76,7 +77,7 @@ const fetch = cityName => {
       console.log(textStatus);
     },
     complete: function(data) {
-      $('#loader').hide()
+      //$('#loader').hide()
     }
   });
 
