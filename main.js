@@ -35,15 +35,45 @@ var renderWeather = function () {
 
 // creating a function to take the 40 objects from the weather api and "compressing" them down to 5
 var compressData = function (forecastData) {
-  var oneDay = (forecastData.length / 5)
+  var dayOneTemp = 0
+  var dayTwoTemp = 0
+  var dayThreeTemp = 0
+  var dayFourTemp = 0
+  var dayFiveTemp = 0
 
-  for (var i = 0; i < forecastData.length; i+=oneDay) {
-    var oneDayInfo = forecastData[i]
+  for (var i = 0; i < forecastData.list.length; i++) {
 
-    for (var i = 0; i < oneDayInfo.length; i++) {
-      oneDayInfo[i]
+    if (i < 8) {
+      dayOneTemp += forecastData.list[i].main.temp
+
+    } else if (i >= 8 && i < 16) {
+      dayTwoTemp += forecastData.list[i].main.temp
+
+    } else if (i >= 16 && i < 24) {
+      dayThreeTemp += forecastData.list[i].main.temp
+
+    } else if (i >= 24 && i < 32) {
+      dayFourTemp += forecastData.list[i].main.temp
+
+    } else {
+      dayFiveTemp += forecastData.list[i].main.temp
+
     }
+
   }
+
+  dayOneTemp /= 8
+  dayTwoTemp /= 8
+  dayThreeTemp /= 8
+  dayFourTemp /= 8
+  dayFiveTemp /= 8
+
+  console.log(dayOneTemp)
+  console.log(dayTwoTemp)
+  console.log(dayThreeTemp)
+  console.log(dayFourTemp)
+  console.log(dayFiveTemp)
+
 }
 
 // taking forecast data and using the forecast handlebars template to display the data on the page
@@ -82,12 +112,14 @@ var fetchData = function (citySelected) {
 var fetchForecastData = function (citySelected){
   $.ajax({
     method: "GET",
-    url: "http://api.openweathermap.org/data/2.5/forecast?q=Raleigh&units=imperial&appid=4645922fe189303f0fecf37e1c8e16d3",
+    url: "http://api.openweathermap.org/data/2.5/forecast?q=" + citySelected + "&units=imperial&appid=4645922fe189303f0fecf37e1c8e16d3",
     dataType: "json",
     success: function(forecastData) {
+
       compressData(forecastData);
+
       // addCityWeather(data)
-      renderForecast();
+      // renderForecast();
     },
     error: function(jqXHR, textStatus, errorThrown) {
       console.log(textStatus);
@@ -98,8 +130,9 @@ var fetchForecastData = function (citySelected){
 $('#search').on('click', function () {
   var citySelected = $('#city-input').val()
 
-  fetchData(citySelected)
-  // fetchForecastData(citySelected)
+  // fetchData(citySelected)
 
-  renderForecast();
+  fetchForecastData(citySelected)
+
+  // renderForecast();
 })
