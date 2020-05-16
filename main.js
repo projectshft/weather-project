@@ -1,11 +1,17 @@
 var weather = []
-var forecast = [
-  {forecastconditions: "sunny", forecasttemperature: 75, forecastimg: "http://openweathermap.org/img/wn/10d@2x.png", forecastday: "friday"},
-  {forecastconditions: "sunny", forecasttemperature: 75, forecastimg: "http://openweathermap.org/img/wn/10d@2x.png", forecastday: "friday"},
-  {forecastconditions: "sunny", forecasttemperature: 75, forecastimg: "http://openweathermap.org/img/wn/10d@2x.png", forecastday: "friday"},
-  {forecastconditions: "sunny", forecasttemperature: 75, forecastimg: "http://openweathermap.org/img/wn/10d@2x.png", forecastday: "friday"},
-  {forecastconditions: "sunny", forecasttemperature: 75, forecastimg: "http://openweathermap.org/img/wn/10d@2x.png", forecastday: "friday"}
+var fiveDayforecast = [
+  {},
+  {},
+  {},
+  {},
+  {}
 ]
+var fiveDayTemps = []
+var dayOneTemp = 0
+var dayTwoTemp = 0
+var dayThreeTemp = 0
+var dayFourTemp = 0
+var dayFiveTemp = 0
 
 // getting temp, city name, and current conditions based on location in api
 var addCityWeather = function (data) {
@@ -35,12 +41,9 @@ var renderWeather = function () {
 
 // creating a function to take the 40 objects from the weather api and "compressing" them down to 5
 var compressData = function (forecastData) {
-  var dayOneTemp = 0
-  var dayTwoTemp = 0
-  var dayThreeTemp = 0
-  var dayFourTemp = 0
-  var dayFiveTemp = 0
 
+
+  //using a for loop to separate data into 24 hour increments and add total temerature of each 24 hour segment
   for (var i = 0; i < forecastData.list.length; i++) {
 
     if (i < 8) {
@@ -61,32 +64,70 @@ var compressData = function (forecastData) {
     }
 
   }
-
+  // dividing by 8 (number of datapoints per segment) to get average temp for one day
   dayOneTemp /= 8
   dayTwoTemp /= 8
   dayThreeTemp /= 8
   dayFourTemp /= 8
   dayFiveTemp /= 8
 
-  console.log(dayOneTemp)
-  console.log(dayTwoTemp)
-  console.log(dayThreeTemp)
-  console.log(dayFourTemp)
-  console.log(dayFiveTemp)
+  fiveDayTemps = [
+  dayOneTemp,
+  dayTwoTemp,
+  dayThreeTemp,
+  dayFourTemp,
+  dayFiveTemp
+]
+}
 
+var addForecastWeather = function (data) {
+  // clearing weather div
+  $('#forecast').empty()
+
+    // adding weather data from api to weatherSearched
+  var forecastSearched = [
+      // rounding temp to whole number
+    {forecasttemperature: Math.round(dayOneTemp),
+
+
+    },
+    {forecasttemperature: Math.round(dayTwoTemp),
+
+
+    },
+    {forecasttemperature: Math.round(dayThreeTemp),
+
+
+    },
+    {forecasttemperature: Math.round(dayFourTemp),
+
+
+    },
+    {forecasttemperature: Math.round(dayFiveTemp),
+
+
+    }
+
+  ]
+
+  // setting weather array equal to weatherSearched data
+  fiveDayforecast = forecastSearched
 }
 
 // taking forecast data and using the forecast handlebars template to display the data on the page
 var renderForecast = function () {
 
-  for (var i = 0; i < forecast.length; i++) {
-    var singleDay = forecast[i]
+
     var forecastSource = $('#forecast-template').html();
     var forecastTemplate = Handlebars.compile(forecastSource);
-    var forecastWeatherHTML = forecastTemplate(singleDay)
 
-    $('#forecast').append(forecastWeatherHTML)
-  }
+    for (var i = 0; i < fiveDayforecast.length; i++) {
+
+      var forecastWeatherHTML = forecastTemplate(fiveDayforecast[i])
+
+      $('#forecast').append(forecastWeatherHTML)
+    }
+
 
 };
 
@@ -118,8 +159,8 @@ var fetchForecastData = function (citySelected){
 
       compressData(forecastData);
 
-      // addCityWeather(data)
-      // renderForecast();
+      addForecastWeather(forecastData)
+      renderForecast();
     },
     error: function(jqXHR, textStatus, errorThrown) {
       console.log(textStatus);
@@ -130,7 +171,7 @@ var fetchForecastData = function (citySelected){
 $('#search').on('click', function () {
   var citySelected = $('#city-input').val()
 
-  // fetchData(citySelected)
+  fetchData(citySelected)
 
   fetchForecastData(citySelected)
 
