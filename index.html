@@ -30,34 +30,28 @@
         </div>
       </div>
       <div class="col-md-1">
-        <button type="button" class="btn btn-primary">Search</button>
+        <button type="button" class="btn btn-primary search-location">Search</button>
       </div>
     </form>
   </div>
 
   <div class="row">
     <div class="col-sm-4 col-sm-offset-4 current-conditions-box">
-      <div class="media">
-        <div class="media-body">
-          <h1>76</h1>
-          <h2>Durham, NC</h2>
-          <p>Sunny</p>
-        </div>
-        <div class="media-left media-middle">
-          <img class="media-object current-conditions-logo" src="https://www.pinclipart.com/picdir/big/5-51534_clipart-of-a-sun-sunny-icon-png-download.png" />
-       </div>
-      </div>  
+
     </div>
   </div>
 
-<script id="book-template" type="text/x-handlebars-template">
-    <div class="book col-md-6">
-      <h4>{{ title }}</h4>
-      <div>Author: <strong>{{ author }}</strong></div>
-      <div>Pages: <strong>{{ pageCount }}</strong></div>
-      <div>ISBN: <strong>{{ isbn }}</strong></div>
-      <img src="{{imageURL}}" alt="">
+  <script id="book-template" type="text/x-handlebars-template">
+    <div class="media current-conditions">
+      <div class="media-body">
+        <h1>76</h1>
+        <h2>Durham, NC</h2>
+        <p>Sunny</p>
+      </div>
+      <div class="media-left media-middle">
+        <img class="media-object current-conditions-logo" src="https://www.pinclipart.com/picdir/big/5-51534_clipart-of-a-sun-sunny-icon-png-download.png" />
     </div>
+    </div> 
   </script>
 
   <!-- jQuery first, then Tether, then Bootstrap JS. -->
