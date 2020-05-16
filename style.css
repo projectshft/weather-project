@@ -1,4 +1,4 @@
-.current-weather-details {
+.current-weather-details, .five-day-container {
   font-family: Candara,Calibri,Segoe,Segoe UI,Optima,Arial,sans-serif; 
 }
 
@@ -15,4 +15,12 @@
   max-width:150px;
   height:auto;
   width:auto;
+} 
+
+.five-day-container {
+  border: 5px inset #178AB0;
+}
+
+h3, h4, p {
+  overflow-wrap: break-word;
 }

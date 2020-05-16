@@ -17,7 +17,7 @@
 
   <div class="container-fluid">
     <row class="row">
-      <div class="col-md-6 offset-md-3 pt-5">
+      <div class="col-md-8 offset-md-2 pt-5">
         <div class="page-header text-center">
           <h1 class="pb-3">Current Weather</h1>
           <hr/>
@@ -34,11 +34,11 @@
         </form>
       
         <!-- container for current weather API results -->
-        <div class="current-weather-results row ml-2 pt-3">
+        <div class="current-weather-results row pt-3">
         </div>
 
         <!-- container for 5 day weather API results -->
-        <div class="five-day-weather-results row ml-2 pt-3">
+        <div class="five-day-weather-results offset-md-1 row pt-3">
         </div>
 
       </div>
@@ -52,26 +52,26 @@
   
   <!-- handlebars template for current weather -->
   <script id="current-weather-template" type="text/x-handlebars-template">
-    <div class="current-weather w-100 col-md-3">
+    <div class="current-weather w-100 col-md-3 offset-md-3 ">
       <div class="current-weather-details pl-2">
-        <h3 class="text-left"><strong>{{ temp }}&#8457</strong></h3>
-        <h4 class="text-left">{{ city }}</h4>       
-        <p class="text-left">{{ weather }}</p>
+        <h3 class="text-center"><strong>{{ temp }}&#8457</strong></h3>
+        <h4 class="text-center">{{ city }}</h4>       
+        <p class="text-center">{{ weather }}</p>
       </div>
     </div>
-    <div class="weather-icon col-md-3 pl-0">
-      <img class="icon w-100 pl-0" src="http://openweathermap.org/img/wn/{{ icon }}.png">
+    <div class="weather-icon col-md-3">
+      <img class="icon w-100 mx-auto d-block pl-0" src="http://openweathermap.org/img/wn/{{ icon }}.png">
     </div>
   </script>
 
   <!-- handlebars template for 5 day forecast -->
   <script id="five-day-weather-template" type="text/x-handlebars-template">
     {{#each fiveDayForecast}}
-    <div class="five-day-container col-md-2">
-      <p class="text-left">{{ weather }}</p>
-      <p class="text-left">{{ temperature }}</p>
-      <p class="text-left">{{ icon }}</p>
-      <p class="text-left">{{ day }}</p>
+    <div class="five-day-container col-md-2  m-1 rounded">
+      <p class="text-center">{{ weather }}</p>
+      <p class="text-center">{{ temperature }}</p>
+      <img class="icon mx-auto d-block w-100" src="{{ icon }}">
+      <p class="text-center">{{ day }}</p>
     </div>
     {{/each}}
   </script>

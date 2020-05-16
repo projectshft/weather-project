@@ -116,7 +116,7 @@ var view = {
       //each loop in Handlebars template will display each of the fiveDayForecast array objects
       var source = $('#five-day-weather-template').html();
       var template = Handlebars.compile(source);
-      var newFiveDayForecastHTML = template({fiveDayForecast})
+      var newFiveDayForecastHTML = template(weatherModel)
 
       //Render Handlebars data to HTML 
       $('.five-day-weather-results').append(newFiveDayForecastHTML);
@@ -131,6 +131,6 @@ $('.search').on('click', function () {
   var search = $('#search-query').val();
   //call API query after receiving data
   controller.fetchCurrentWeather(search);
+  view.renderFiveDayForecast();
 });
-
 
