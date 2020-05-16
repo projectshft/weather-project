@@ -1,5 +1,6 @@
 h1 {
   text-align: center;
+  margin-bottom: 10%;
 }
 
 .form-group {
@@ -14,8 +15,9 @@ button {
   width: 19%;
 }
 
-img {
-  margin-top: 25px;
+#large {
+  margin: 0;
+  width: 188px;
 }
 
 @media only screen and (max-width: 750px) {
