@@ -43,33 +43,8 @@
     </div>
   
   
-
     <div class="week-forecast row text-center">   
       <div class="day col-md-2 offset-md-1">
-        <h6>Cloudy</h6>
-        <h4>46<span>&#176;</span></h4>
-        <img src="cloud_PNG27.png" style="width:50px;height:30px">
-        <h6>Monday</h6>
-      </div>
-      <div class="day col-md-2">
-        <h6>Cloudy</h6>
-        <h4>46<span>&#176;</span></h4>
-        <img src="cloud_PNG27.png" style="width:50px;height:30px">
-        <h6>Monday</h6>
-      </div>
-      <div class="day col-md-2">
-        <h6>Cloudy</h6>
-        <h4>46<span>&#176;</span></h4>
-        <img src="cloud_PNG27.png" style="width:50px;height:30px">
-        <h6>Monday</h6>
-      </div>
-      <div class="day col-md-2">
-        <h6>Cloudy</h6>
-        <h4>46<span>&#176;</span></h4>
-        <img src="cloud_PNG27.png" style="width:50px;height:30px">
-        <h6>Monday</h6>
-      </div>
-      <div class="day col-md-2">
         <h6>Cloudy</h6>
         <h4>46<span>&#176;</span></h4>
         <img src="cloud_PNG27.png" style="width:50px;height:30px">
@@ -78,15 +53,26 @@
     </div>
 
 
- <script id="book-template" type="text/x-handlebars-template">
-   <div class="book col-md-6">
-     <h4>{{ title }}</h4>
-     <div>Author: <strong>{{ author }}</strong></div>
-     <div>Pages: <strong>{{ pageCount }}</strong></div>
-     <div>ISBN: <strong>{{ isbn }}</strong></div>
-     <img src="{{imageURL}}" alt="">
-   </div>
- </script>
+  <script id="current-forecast" type="text/x-handlebars-template">
+    <div class="col-md-3 offset-md-3 current-stats">
+      <h2 id="current-temp">{{ temperature }}<span>&#176;</span></h2>
+      <h4 id="current-city">{{ city }}</h4>
+      <h5 id="current-conditions">{{ condition }}</h5> 
+    </div>
+    <div class="col-md-3">
+      <img src="{{weatherIconURL}}" style="width:100px;height:75px">
+    </div>
+  </script>
+
+  <script id="one-day-forecast" type="text/x-handlebars-template"> 
+    <div class="day col-md-2">
+      <h6>{{ condition }}</h6>
+      <h4>{{ temperature }}<span>&#176;</span></h4>
+      <img src="{{weatherIconURL}}" style="width:50px;height:30px">
+      <h6>{{ weekday }}</h6>
+    </div>
+  </script> 
+
 
 <!-- jQuery first, then Tether, then Bootstrap JS. -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
