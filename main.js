@@ -80,30 +80,35 @@ var compressData = function (forecastData) {
 ]
 }
 
-var addForecastWeather = function (data) {
+var addForecastWeather = function (forecastData) {
   // clearing weather div
   $('#forecast').empty()
 
     // adding weather data from api to weatherSearched
   var forecastSearched = [
-      // rounding temp to whole number
-    {forecasttemperature: Math.round(dayOneTemp),
+
+    { forecastconditions: forecastData.list[3].weather[0].main,
+      forecasttemperature: Math.round(dayOneTemp),
 
 
     },
-    {forecasttemperature: Math.round(dayTwoTemp),
+    { forecastconditions: forecastData.list[11].weather[0].main,
+      forecasttemperature: Math.round(dayTwoTemp),
 
 
     },
-    {forecasttemperature: Math.round(dayThreeTemp),
+    { forecastconditions: forecastData.list[19].weather[0].main,
+      forecasttemperature: Math.round(dayThreeTemp),
 
 
     },
-    {forecasttemperature: Math.round(dayFourTemp),
+    { forecastconditions: forecastData.list[27].weather[0].main,
+      forecasttemperature: Math.round(dayFourTemp),
 
 
     },
-    {forecasttemperature: Math.round(dayFiveTemp),
+    { forecastconditions: forecastData.list[35].weather[0].main,
+      forecasttemperature: Math.round(dayFiveTemp),
 
 
     }
