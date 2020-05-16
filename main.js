@@ -22,6 +22,7 @@ var addCityWeather = function (data) {
     // rounding temp to whole number
     temperature: Math.round(data.main.temp),
     city: data.name,
+    weatherimg: "http://openweathermap.org/img/wn/" + data.weather[0].icon + "@2x.png",
     conditions: data.weather[0].main
   }
   // setting weather array equal to weatherSearched data
@@ -84,31 +85,35 @@ var addForecastWeather = function (forecastData) {
   // clearing weather div
   $('#forecast').empty()
 
-    // adding weather data from api to weatherSearched
+    // adding forecast data from api to forecastSearched
   var forecastSearched = [
 
     { forecastconditions: forecastData.list[3].weather[0].main,
       forecasttemperature: Math.round(dayOneTemp),
-
-
+      forecastimg: "http://openweathermap.org/img/wn/" + forecastData.list[3].weather[0].icon + "@2x.png",
+      forecastday: moment(2020-05-16T19:21:21-04:00).format('dddd')
     },
     { forecastconditions: forecastData.list[11].weather[0].main,
       forecasttemperature: Math.round(dayTwoTemp),
+      forecastimg: "http://openweathermap.org/img/wn/" + forecastData.list[11].weather[0].icon + "@2x.png"
 
 
     },
     { forecastconditions: forecastData.list[19].weather[0].main,
       forecasttemperature: Math.round(dayThreeTemp),
+      forecastimg: "http://openweathermap.org/img/wn/" + forecastData.list[19].weather[0].icon + "@2x.png"
 
 
     },
     { forecastconditions: forecastData.list[27].weather[0].main,
       forecasttemperature: Math.round(dayFourTemp),
+      forecastimg: "http://openweathermap.org/img/wn/" + forecastData.list[27].weather[0].icon + "@2x.png"
 
 
     },
     { forecastconditions: forecastData.list[35].weather[0].main,
       forecasttemperature: Math.round(dayFiveTemp),
+      forecastimg: "http://openweathermap.org/img/wn/" + forecastData.list[35].weather[0].icon + "@2x.png"
 
 
     }
