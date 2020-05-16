@@ -39,7 +39,8 @@ const addCurrentWeather = (data) => {
   let currentWeather = {
     city: data.name,
     temp: Math.round(data.main.temp), //round temperature
-    condition: data.weather[0].description
+    condition: data.weather[0].description,
+    icon: data.weather[0].icon
   }
 
   //add current weather object to weatherData object
@@ -97,19 +98,18 @@ const addWeatherForecast = (data) => {
 
     //find most common weather condition for each daily array
     let weatherConditionWithIcon = dayWeather.condition.reduce((frequencyTracker, hourlyCondition, index) => {
-
       //add condition property to tracker or increase count
-      if (!frequencyTracker.hasOwnProperty(hourlyCondition)) {
-        frequencyTracker.hourlyCondition = 1;
+      if (frequencyTracker.hasOwnProperty(hourlyCondition)) {
+        frequencyTracker[hourlyCondition] += 1;
       } else {
-        frequencyTracker.hourlyCondition += 1;
+        frequencyTracker[hourlyCondition] = 1;
       }
 
       //if current condition is greater than most frequent, replace most frequent with current
-      if (frequencyTracker.hourlyCondition > frequencyTracker.mostFrequent.count) {
+      if (frequencyTracker[hourlyCondition] > frequencyTracker.mostFrequent.count) {
         frequencyTracker.mostFrequent.condition = hourlyCondition;
         frequencyTracker.mostFrequent.icon = dayWeather.icon[index]; //get weather icon at same index as condition
-        frequencyTracker.mostFrequent.count = frequencyTracker.hourlyCondition;
+        frequencyTracker.mostFrequent.count = frequencyTracker[hourlyCondition];
       }
 
       return frequencyTracker;
@@ -124,7 +124,7 @@ const addWeatherForecast = (data) => {
     dayWeather.condition = weatherConditionWithIcon.mostFrequent.condition;
 
     //assign icon associated with most common condition to current day's object
-    dayWeather.icon = weatherConditionWithIcon.mostFrequent.icon;
+    dayWeather.icon = weatherConditionWithIcon.mostFrequent.icon.slice(0, -1) + 'd'; //saving all icons as day version for consistency
 
     //get daily low temps
     dayWeather.low = Math.round(dayWeather.temp.sort()[0]);

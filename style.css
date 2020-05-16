@@ -6,12 +6,12 @@ h1 {
   text-align: center;
 }
 
-form {
-  margin: 20px auto;
+h2 {
+  margin: 20px 0;
 }
 
-#search-input {
-  width: 80%;
+form {
+  margin: 20px auto;
 }
 
 button {
@@ -27,22 +27,10 @@ button {
   text-align: center;
 }
 
-#current-weather {
-  margin: 0 auto;
-}
-
-h2 {
-  margin: 20px 0;
-}
-
 .temp {
   font-weight: bold;
   font-size: 30px;
 
-}
-
-#five-day-forecast h2 {
-  text-align: center;
 }
 
 .hide {
@@ -62,4 +50,25 @@ h2 {
   display: flex;
   display: -webkit-flex;
   flex-wrap: wrap;
+}
+
+#five-day-forecast h2 {
+  text-align: center;
+}
+
+#current-result {
+  display: inline-block;
+}
+
+#current-icon {
+  display: inline-block;
+}
+
+#current-icon img {
+
+}
+
+
+#search-input {
+  width: 80%;
 }
