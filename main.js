@@ -48,5 +48,51 @@ const renderWeather = () => {
   }
 }
 
-renderWeather();
+
+const fetch = cityName => {
+
+   $.ajax({
+    method: "GET",
+    url: `https://api.openweathermap.org/data/2.5/weather?q=${cityName},&APPID=59bd6855f51f9bbb1d24f5854ff189f5`,
+    dataType: "json",
+    beforeSend: function() {
+      $('#loader').show();
+    },
+    success: function(data) {
+      //addDataToForecastObject(data);
+      renderWeather();
+    },
+    error: function(jqXHR, textStatus, errorThrown) {
+      console.log(textStatus);
+    },
+    complete: function(data) {
+      $('#loader').hide()
+    }
+  });
+
+  $.ajax({
+    method: "GET",
+    url: `https://api.openweathermap.org/data/2.5/forecast?q=${cityName},&APPID=59bd6855f51f9bbb1d24f5854ff189f5`,
+    dataType: "json",
+    beforeSend: function() {
+      $('#loader').show();
+    },
+    success: function(data) {
+      //addDataToForecastObject(data);
+      renderWeather();
+    },
+    error: function(jqXHR, textStatus, errorThrown) {
+      console.log(textStatus);
+    },
+    complete: function(data) {
+      $('#loader').hide()
+    }
+  });
+}
+
+//create a click event that grabs the city name from the html form input and calls the fetch function
+$('.submit').on('click', function() {
+  const cityName = $('#city-id').val();
+  fetch(cityName);
+})
 

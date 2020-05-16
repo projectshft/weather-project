@@ -27,15 +27,18 @@
 
 5.4.1 Test handlebars templates and hardcoded temp objects
 
+10. Test handlebars to append the current weather AND loop through the daily weather data from the hardcoded object
+
 5.5 Study the weather api and copy some values to hardcode into our temp obj
 
-6. Create an array that will hold objects of the a city's current weather and 5 day forecast information
+5.5.1 Sign up for api.openweathermap.org in order to get my API key
 
-7. Test the handlebars with our hardcoded city object, using the current weather only
+6. Create an object that will hold an object for the current weather and an array of objects for each day of the 5 day forecast
+
 
 8. Figure out how to get the 5 day forecast from the timestamps in the weather api, they are in 3hr block so there will be 8 per day and add that to our temp object
 
-10. Test handlebars to append the current weather AND loop through the daily weather data from the hardcoded object
+
 
 11. Add a click event handler to the search button, grab the city name from the input field 
 
