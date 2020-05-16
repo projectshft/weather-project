@@ -21,8 +21,27 @@
           </div>
         </div>
       </div>
-
     </div>
+    <div class="row">
+      <div class="col-md-6 offset-md-3 weather-display mt-5">
+
+      </div>
+    </div>
+
+    <script id="weather-template" type="text/x-handlebars-tenplate">
+      {{#each weather}}
+        <div class="forecast">
+          <h5>{{forecast}}</h5>
+          <h4>{{temperature}}°</h4>
+          <img class="weather-img" src={{imgURL}}>
+          <h5 class="weekDay">{{weekDay}}</h5>
+        </div>
+      {{/each}}
+    </script>
+    <script
+  src="https://code.jquery.com/jquery-3.5.1.js"
+  integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+  crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.6/handlebars.js"></script>
     <script type="text/javascript" src="moment.js"></script>
     <script type="text/javascript" src="main.js"></script>

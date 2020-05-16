@@ -1,3 +1,15 @@
 .title-container {
   text-align: center;
 }
+
+.forecast {
+  text-align: center;
+  width: 19%;
+  display: inline-block;
+  box-sizing: border-box;
+  border: solid black 5px;
+}
+
+.weather-display {
+  text-align: center;
+}
