@@ -37,19 +37,25 @@ const renderWeather = () => {
   for (let i = 0; i < forecastObject.weekdayForecast.length; i++) {
     weekdaySource = $('#weekday-template').html();
     const weekdayTemplate = Handlebars.compile(weekdaySource);
-    const newWeekdayHTML = weekdayTemplate(forecastObj.weekdayForecast[i]);
+    const newWeekdayHTML = weekdayTemplate(forecastObject.weekdayForecast[i]);
     $('.week-forecast').append(newWeekdayHTML);
   }
 }
 
-//this will take the data from the weather api and add it to our Forecast object
-const addDataToForecastObject = data => {
+//this will take the data from the weather api, convert temp from Kelvin to Farhenheit, and add it to our Forecast object
+const addCurrentWeatherToForecastObject = data => {
+  const tempInFarhenheit = Math.round((data.main.temp - 273.15) * 9/5 + 32);
   forecastObject.currentForecast = {
-    temperature: data.main.temp,
+    temperature: tempInFarhenheit,
     city: data.name,
     condition: data.weather[0].main,
     weatherIconURL: data.weather[0].icon
   }
+  
+}
+//this will take the weekly forecast from the weather api, convert temp/timestap units and add to Forecast object
+const addWeeklyWeatherToForecastObject = data => {
+
 }
 
 //this will use the jquery to perform an http/ajax request to get the weather data
@@ -63,7 +69,7 @@ const fetch = cityName => {
       $('#loader').show();
     },
     success: function(data) {
-      addDataToForecastObject(data);
+      addCurrentWeatherToForecastObject(data); 
       renderWeather();
     },
     error: function(jqXHR, textStatus, errorThrown) {
@@ -82,7 +88,7 @@ const fetch = cityName => {
   //     $('#loader').show();
   //   },
   //   success: function(data) {
-  //     //addDataToForecastObject(data);
+  //     //addWeeklyWeatherToForecastObject(data);
   //     renderWeather();
   //   },
   //   error: function(jqXHR, textStatus, errorThrown) {
