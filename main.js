@@ -83,6 +83,25 @@ var controller = {
       },
     });
   },
+
+  //Query openWeather API for 5 day forecast in imperial units format
+  fetchCurrentWeather(query) {
+    $.ajax({
+      method: "GET",
+      url: "https://api.openweathermap.org/data/2.5/weather?q=" + query + "&units=imperial&appid=" + weatherModel.apiKey,
+      dataType: "json",
+      success: function(data) {
+        //First add the query data to the "weatherModel" object
+        weatherModel.addCurrentWeather(data);
+        //Second render the new data with the function in the "view" object
+        view.renderCurrentWeather();
+      },
+      error: function(jqXHR, textStatus, errorThrown) {
+        console.log(textStatus);
+        alert('Unable to locate city. Please re-enter a different city')
+      },
+    });
+  },
 }
 
 //object to render model data to html
@@ -113,12 +132,12 @@ var view = {
     $('.five-day-weather-results').empty();
       
       //store data in variables for Handlebars compiling
-      //each loop in Handlebars template will display each of the fiveDayForecast array objects
+      //"each" loop in Handlebars template in html script will display each of the fiveDayForecast array objects
       var source = $('#five-day-weather-template').html();
       var template = Handlebars.compile(source);
       var newFiveDayForecastHTML = template(weatherModel)
 
-      //Render Handlebars data to HTML 
+      //Render Handlebars data from weatherModel.fiveDayForecast to HTML 
       $('.five-day-weather-results').append(newFiveDayForecastHTML);
     }
 

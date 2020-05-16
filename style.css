@@ -1,3 +1,11 @@
+body {
+  background-color:#d4d4d4;
+}
+
+h3, h4, p {
+  overflow-wrap: break-word;
+}
+
 .current-weather-details, .five-day-container {
   font-family: Candara,Calibri,Segoe,Segoe UI,Optima,Arial,sans-serif; 
 }
@@ -21,6 +29,3 @@
   border: 5px inset #178AB0;
 }
 
-h3, h4, p {
-  overflow-wrap: break-word;
-}
