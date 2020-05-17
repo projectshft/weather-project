@@ -6,7 +6,10 @@ var fiveDayforecast = [
   {},
   {}
 ]
+
+// setting an array to hold temps for five day forecast and declaring variable for each day
 var fiveDayTemps = []
+
 var dayOneTemp = 0
 var dayTwoTemp = 0
 var dayThreeTemp = 0
@@ -25,7 +28,7 @@ var addCityWeather = function (data) {
     weatherimg: "http://openweathermap.org/img/wn/" + data.weather[0].icon + "@2x.png",
     conditions: data.weather[0].main
   }
-  // setting weather array equal to weatherSearched data
+  // setting weather array equal to weatherSearched data to make accessible from global scope
   weather = weatherSearched
 }
 
@@ -66,21 +69,17 @@ var compressData = function (forecastData) {
 
   }
   // dividing by 8 (number of datapoints per segment) to get average temp for one day
-  dayOneTemp /= 8
-  dayTwoTemp /= 8
-  dayThreeTemp /= 8
-  dayFourTemp /= 8
-  dayFiveTemp /= 8
-
   fiveDayTemps = [
-  dayOneTemp,
-  dayTwoTemp,
-  dayThreeTemp,
-  dayFourTemp,
-  dayFiveTemp
-]
+    dayOneTemp /= 8,
+    dayTwoTemp /= 8,
+    dayThreeTemp /= 8,
+    dayFourTemp /= 8,
+    dayFiveTemp /= 8
+  ]
+
 }
 
+// getting forecast info for conditions, temp, and day based on location in api
 var addForecastWeather = function (forecastData) {
   // clearing weather div
   $('#forecast').empty()
@@ -91,36 +90,32 @@ var addForecastWeather = function (forecastData) {
     { forecastconditions: forecastData.list[3].weather[0].main,
       forecasttemperature: Math.round(dayOneTemp),
       forecastimg: "http://openweathermap.org/img/wn/" + forecastData.list[3].weather[0].icon + "@2x.png",
-      forecastday: moment(2020-05-16T19:21:21-04:00).format('dddd')
+      forecastday: moment(forecastData.list[0].dt_txt).format('dddd')
     },
     { forecastconditions: forecastData.list[11].weather[0].main,
       forecasttemperature: Math.round(dayTwoTemp),
-      forecastimg: "http://openweathermap.org/img/wn/" + forecastData.list[11].weather[0].icon + "@2x.png"
-
-
+      forecastimg: "http://openweathermap.org/img/wn/" + forecastData.list[11].weather[0].icon + "@2x.png",
+      forecastday: moment(forecastData.list[8].dt_txt).format('dddd')
     },
     { forecastconditions: forecastData.list[19].weather[0].main,
       forecasttemperature: Math.round(dayThreeTemp),
-      forecastimg: "http://openweathermap.org/img/wn/" + forecastData.list[19].weather[0].icon + "@2x.png"
-
-
+      forecastimg: "http://openweathermap.org/img/wn/" + forecastData.list[19].weather[0].icon + "@2x.png",
+      forecastday: moment(forecastData.list[16].dt_txt).format('dddd')
     },
     { forecastconditions: forecastData.list[27].weather[0].main,
       forecasttemperature: Math.round(dayFourTemp),
-      forecastimg: "http://openweathermap.org/img/wn/" + forecastData.list[27].weather[0].icon + "@2x.png"
-
-
+      forecastimg: "http://openweathermap.org/img/wn/" + forecastData.list[27].weather[0].icon + "@2x.png",
+      forecastday: moment(forecastData.list[24].dt_txt).format('dddd')
     },
     { forecastconditions: forecastData.list[35].weather[0].main,
       forecasttemperature: Math.round(dayFiveTemp),
-      forecastimg: "http://openweathermap.org/img/wn/" + forecastData.list[35].weather[0].icon + "@2x.png"
-
-
+      forecastimg: "http://openweathermap.org/img/wn/" + forecastData.list[35].weather[0].icon + "@2x.png",
+      forecastday: moment(forecastData.list[32].dt_txt).format('dddd')
     }
 
   ]
 
-  // setting weather array equal to weatherSearched data
+  // setting fiveDayforecast array equal to forecastSearched data to make accessible from global scope
   fiveDayforecast = forecastSearched
 }
 
@@ -142,7 +137,6 @@ var renderForecast = function () {
 };
 
 
-
 //retreiving data from openweather api with given input in the search box
 var fetchData = function (citySelected) {
   $.ajax({
@@ -160,15 +154,14 @@ var fetchData = function (citySelected) {
 
 }
 
+//retreiving data from openweather  forecast api with given input in the search box
 var fetchForecastData = function (citySelected){
   $.ajax({
     method: "GET",
     url: "http://api.openweathermap.org/data/2.5/forecast?q=" + citySelected + "&units=imperial&appid=4645922fe189303f0fecf37e1c8e16d3",
     dataType: "json",
     success: function(forecastData) {
-
       compressData(forecastData);
-
       addForecastWeather(forecastData)
       renderForecast();
     },
@@ -177,7 +170,8 @@ var fetchForecastData = function (citySelected){
     }
   })
 }
-// invoking a click function on the search button that invokes the fetchData function with the input on the search box
+
+// invoking a click function on the search button that invokes the fetchData and fetch forecast data function with the input on the search box
 $('#search').on('click', function () {
   var citySelected = $('#city-input').val()
 
@@ -185,5 +179,4 @@ $('#search').on('click', function () {
 
   fetchForecastData(citySelected)
 
-  // renderForecast();
 })
