@@ -110,6 +110,7 @@ const Weather = () => {
     // reduce the data points for each subset of the overall forecast
     dividedForecasts.forEach((dayArray) => {
       let totalTemp = null;
+      let descriptions = {};
 
       // construct an object to be stored in our model
       let singleDayObj = dayArray.reduce(
@@ -132,7 +133,25 @@ const Weather = () => {
           ];
           dayForecast.day = days[day.getDay()];
 
-          // determine the most frequent description
+          // determine the most common description
+
+          // first we need to store the description counts
+          let currentDescription = threeHourChunk.weather[0].description;
+          descriptions[currentDescription] += 1;
+
+          // then we'll figure out which one has highest
+          for (const description in descriptions) {
+            // use a property ("mostFrequent") in descriptions for comparing counts
+            if (
+              !descriptions.hasOwnProperty("mostFrequent") ||
+              descriptions.description > descriptions.mostFrequent
+            ) {
+              descriptions.mostFrequent = description;
+            }
+          }
+
+          // based on what is most frequent, store in accumulator
+          dayForecast.description = descriptions.mostFrequent;
 
           // determine the midday icon
           return dayForecast;
