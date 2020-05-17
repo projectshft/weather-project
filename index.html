@@ -5,6 +5,7 @@
   <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="style.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.6/handlebars.js"></script>
   <title>Weather Project</title>
 </head>
 
@@ -15,18 +16,8 @@
         <h1>Current Weather</h1>
       </div>
 
-      <!-- <form class="form-inline">
 
-        <div class="form-group">
-          <input type="text" id="locationName" class="form-control" placeholder="Enter City Name" width="auto">
-          </input>
-
-        </div>
-
-        <button id="search" class="btn btn-primary">SEARCH</button>
-      </form> -->
-
-      <form class="form-search">
+      <form class="location-search">
         <div class="input-group">
           <input type="text" id="locationName" class="form-control" placeholder="Enter City Name">
           <span class="input-group-btn">
@@ -36,18 +27,28 @@
       </form>
 
 
-
-
       <div id="weatherInfo">
-        <div class="current-city">
-
+        <!-- <div class="current-city">
 
           <h1>72*</h1>
           <h4>CITY, STATE</h4>
-          <h3>CURRENT CONDITION</h3>
+          <img src="{{weather-icon}}"/>
 
         </div>
-      </div>
+      </div> -->
+
+
+      <script id="weather-template" type="text/x-handlebars-template">
+        <div class="forecast">
+          <h1>{{temperature}}</h1>
+          <h4>{{city}} + "," + {{state}}</h4>
+          <img src="{{weather-icon}}"/>
+        </div>
+      </script>
+
+
+
+
 
     </div>
   </div>
