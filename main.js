@@ -48,7 +48,7 @@ const Weather = () => {
       method: "GET",
       url: `http://api.openweathermap.org/data/2.5/weather?q=${locationInput}&units=imperial&appid=4a88c029caa1e00e6735e625a0ee4cad`,
       dataType: "json",
-      success: function (currentJSON) {
+      success: function (currentWeatherJSON) {
         let unpackedWeather = unpackCurrentWeatherOfAPI(currentWeatherJSON);
         setCurrentWeatherData(unpackedWeather);
       },
