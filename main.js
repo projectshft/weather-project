@@ -15,6 +15,8 @@ var weatherData = function() {
     }
   };
 
+  var currentWeather = weather();
+
 
   var fetchData = function(query) {
 
@@ -38,26 +40,24 @@ var weatherData = function() {
   // and the weather conditions.
   var setCurrentWeather = function(data) {
 
-    var currentWeather = weather();
 
     currentWeather.tempImperial = data.main.temp; // create a round function at some point
     currentWeather.location = data.name;
     currentWeather.conditions = data.weather[0].description;
     currentWeather.icon = `http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
 
-    renderCurrentWeather(currentWeather);
+    renderCurrentWeather();
   };
 
 
+  // Takes value
+  var renderCurrentWeather = function() {
 
-  var renderCurrentWeather = function(current) {
-
-    $('.weather-display').empty();
-    $('.icon-display').empty();
+    $('.current').empty();
 
     var sourceCurrentWeather = $('#current-weather-template').html();
     var templateCurrentWeather = Handlebars.compile(sourceCurrentWeather);
-    var displayCurrentWeather = templateCurrentWeather(current);
+    var displayCurrentWeather = templateCurrentWeather(currentWeather);
     $('.current').append(displayCurrentWeather);
 
   };
