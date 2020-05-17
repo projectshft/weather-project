@@ -45,7 +45,7 @@ const renderWeather = () => {
 //this will take the data from the weather api, convert temp from Kelvin to Farhenheit, and add it to our Forecast object
 const addCurrentWeatherToForecastObject = data => {
   const tempInFarhenheit = Math.round((data.main.temp - 273.15) * 9/5 + 32);
-  
+
   forecastObject.currentForecast = {
     temperature: tempInFarhenheit,
     city: data.name,
@@ -56,7 +56,7 @@ const addCurrentWeatherToForecastObject = data => {
 }
 //this will take the weekly forecast from the weather api, convert temp/timestap units and add to Forecast object
 const addWeeklyWeatherToForecastObject = data => {
-
+  
 }
 
 //this will use the jquery to perform an http/ajax request to get the weather data

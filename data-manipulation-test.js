@@ -1413,8 +1413,57 @@ for (let i = 0; i < dataArray.length; i++) {
 
 const weekdays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
-//this will get the day of the week for the weekday arrays
-finalArray.forEach(day => {
-  var myDate = new Date(day[0][0] * 1000);
-  console.log(weekdays[myDate.getDay()]);
-})
+const weekArray = [];
+
+//this will get the average temperature for each day in the forecast
+const getAverageDailyTemperature = () => {
+  finalArray.forEach(day => {
+    const dailyObject = {};
+    let sum = 0;
+    day.forEach(timeBlock => {
+      sum += timeBlock[1];
+    })
+    let avgTemp = sum/day.length;
+    const myDate = new Date(day[0][0]*1000);
+    dailyObject.weekday = weekdays[myDate.getDay()];
+    dailyObject.avgTemp = Math.round((avgTemp - 273.15) * 9/5 + 32);
+    weekArray.push(dailyObject);
+  })
+}
+
+//this will count the conditions for each time block in each day
+const weekConditions = [];
+const getDailyConditions = () => {
+  finalArray.forEach(day => {
+    const countObj = {};
+    day.forEach(timeBlock => {
+      if (countObj.hasOwnProperty(timeBlock[2])){
+        countObj[timeBlock[2]]++
+      } else {
+        countObj[timeBlock[2]] = 1;
+      }
+    })
+    weekConditions.push(countObj);
+  })
+}
+console.log(finalArray);
+getDailyCondition();
+console.log(weekConditions);
+
+
+//this will find the most common condition per day and set that as the final forecast condition for each day
+const getMostCommonConditionPerDay = () => {
+  
+  weekConditions.forEach(day => {
+    let conditionCount = 0;
+    for (let condition in day) {
+      if (day[condition] > conditionCount) {
+        conditionCount = day[condition];
+        day.avgCondition = condition;
+      }
+    }
+  })
+}
+
+getMostCommonConditionPerDay();
+console.log(weekConditions);
