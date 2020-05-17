@@ -77,8 +77,19 @@ var weatherData = function() {
 var weather = weatherData();
 
 // This is a controller.
-$('.search').on('click', function() {
+$('.search').on('click', function(e) {
+  e.preventDefault();
+
   var search = $('#search-query').val();
 
   weather.fetch(search);
+});
+
+$('.search').on('keypress', function(e) {
+  e.preventDefault();
+
+  var search = $('#search-query').val();
+
+  weather.fetch(search);
+
 });
