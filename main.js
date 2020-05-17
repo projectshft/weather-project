@@ -175,8 +175,12 @@ var fetchForecastData = function (citySelected){
 $('#search').on('click', function () {
   var citySelected = $('#city-input').val()
 
-  fetchData(citySelected)
+  //prompting user to select a city if seach bar is empty
+  if (citySelected) {
+    fetchData(citySelected)
+    fetchForecastData(citySelected)
 
-  fetchForecastData(citySelected)
-
+  } else {
+    alert("Please enter a city in the search bar")
+  }
 })
