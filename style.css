@@ -3,7 +3,6 @@ body {
 }
 
 h3, h4, p {
-  /* overflow-wrap: break-word; */
   overflow: hidden;
 }
 

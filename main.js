@@ -1,43 +1,10 @@
-
-
 //object to model data
 var weatherModel = {
   //store "currentWeather" API data
   currentWeatherData: [],
 
   //store "five day weather" API data
-  fiveDayForecast: [
-    {
-      weather: "Cloudy",
-      temp: 46,
-      icon: "http://openweathermap.org/img/wn/10d@2x.png",
-      day: "Monday"
-    },
-    {
-      weather: "Cloudy",
-      temp: 46,
-      icon: "http://openweathermap.org/img/wn/10d@2x.png",
-      day: "Monday"
-    },
-    {
-      weather: "Cloudy",
-      temp: 46,
-      icon: "http://openweathermap.org/img/wn/10d@2x.png",
-      day: "Monday"
-    },
-    {
-      weather: "Cloudy",
-      temp: 46,
-      icon: "http://openweathermap.org/img/wn/10d@2x.png",
-      day: "Monday"
-    },
-    {
-      weather: "Cloudy",
-      temp: 46,
-      icon: "http://openweathermap.org/img/wn/10d@2x.png",
-      day: "Monday"
-    },
-  ],
+  fiveDayForecast: [],
 
   //store API key for openweather API
   apiKey: '2f39d6282bde1fde1a7949c43e939422',
@@ -62,11 +29,11 @@ var weatherModel = {
   addFiveDayForecast(data) {
     //clear current data for new city search
     this.fiveDayForecast = [];
-    
+
     //format the needed data from the API return into object
     var dataCopy = data;
 
-    for(i=0; i<dataCopy.list.length; i+=8) {
+    for (i = 0; i < dataCopy.list.length; i += 8) {
       //create object for each individual day to be stored as data is iterated through
       var weatherObj = {}
       weatherObj.weather = (dataCopy.list[i].weather[0].description).toUpperCase();
@@ -81,7 +48,7 @@ var weatherModel = {
 
 };
 
-//object to handle API requests based on user input and add results of query to model
+//object to handle API requests based on user input and add results of query to data model (weatherModel object)
 var controller = {
   //Query openWeather API for "current weather" requests in imperial units format
   fetchCurrentWeather(query) {
@@ -89,13 +56,13 @@ var controller = {
       method: "GET",
       url: "https://api.openweathermap.org/data/2.5/weather?q=" + query + "&units=imperial&appid=" + weatherModel.apiKey,
       dataType: "json",
-      success: function(data) {
+      success: function (data) {
         //1. add the query data to the "weatherModel" object
         weatherModel.addCurrentWeather(data);
         //2. render the new data with the function in the "view" object
         view.renderCurrentWeather();
       },
-      error: function(jqXHR, textStatus, errorThrown) {
+      error: function (jqXHR, textStatus, errorThrown) {
         console.log(textStatus);
         alert('Unable to locate city. Please re-enter a different city')
       },
@@ -108,66 +75,64 @@ var controller = {
       method: "GET",
       url: "https://api.openweathermap.org/data/2.5/forecast?q=" + query + "&units=imperial&appid=" + weatherModel.apiKey,
       dataType: "json",
-      success: function(data) {
+      success: function (data) {
         //1. add the query data to the "weatherModel" object
         weatherModel.addFiveDayForecast(data);
         //2. render the new data with the function in the "view" object
         view.renderFiveDayForecast();
       },
-      error: function(jqXHR, textStatus, errorThrown) {
+      error: function (jqXHR, textStatus, errorThrown) {
         console.log(textStatus);
-        alert('Unable to locate city. Please re-enter a different city')
       },
     });
   },
 }
 
-//object to render model data to html
+//object to render model data (weatherModel object) to html
 var view = {
-  
+
   //render the "current weather" data to html from weatherModel object
   renderCurrentWeather() {
-    //empty forecast data from previous search (if any exists)
+    //empty current weather forecast div from previous search
     $('.current-weather-results').empty();
-    //render all objects if there is ever a need to store more than one current city weather
-    for (var i=0; i<weatherModel.currentWeatherData.length; i++) {
-      //store array we are iterating through for readability in HTML template
-      var objectData = weatherModel.currentWeatherData[i];
-      
-      //store data in variables for Handlebars compiling
-      var source = $('#current-weather-template').html();
-      var template = Handlebars.compile(source);
-      var newCurrentWeatherHTML = template({temp: objectData.temp, city: objectData.city, country: objectData.country, weather: objectData.weather, icon: objectData.icon})
 
-      //Render Handlebars data to HTML 
-      $('.current-weather-results').append(newCurrentWeatherHTML);
-    }
+    //store data in variables for Handlebars compiling
+    var source = $('#current-weather-template').html();
+    var template = Handlebars.compile(source);
+    var newCurrentWeatherHTML = template(weatherModel)
+
+    //Render Handlebars data to HTML 
+    $('.current-weather-results').append(newCurrentWeatherHTML);
+
   },
 
   //render the "fiveDayForecast" data to html from weatherModel object
   renderFiveDayForecast() {
-    //empty forecast data from previous search (if any exists)
+    //empty forecast data from previous search
     $('.five-day-weather-results').empty();
-      
-      //store data in variables for Handlebars compiling
-      //"each" loop in Handlebars template in html script will display each of the fiveDayForecast array objects
-      var source = $('#five-day-weather-template').html();
-      var template = Handlebars.compile(source);
-      var newFiveDayForecastHTML = template(weatherModel)
 
-      //Render Handlebars data from weatherModel.fiveDayForecast to HTML 
-      $('.five-day-weather-results').append(newFiveDayForecastHTML);
-    }
+    //store data in variables for Handlebars compiling
+    //"each" loop in Handlebars template in index.html will display each of the fiveDayForecast array objects
+    var source = $('#five-day-weather-template').html();
+    var template = Handlebars.compile(source);
+    var newFiveDayForecastHTML = template(weatherModel)
 
-}
+    //Render Handlebars data from weatherModel.fiveDayForecast to HTML 
+    $('.five-day-weather-results').append(newFiveDayForecastHTML);
+  }
+
+};
 
 //Add user's input values to API query
 $('.search').on('click', function () {
-  //TO-DO ADD ERROR MESSAGE IF USER ATTEMPTS TO SUBMIT A BLANK FORM
-  
+
   var search = $('#search-query').val();
+  //alert user if no value was entered into input element
+  if (!search) {
+    return alert('No input value detected. Please enter a city, then click search');
+  }
+
   //call API queries after user enters data and clicks submit
   controller.fetchCurrentWeather(search);
   controller.fetchFiveDayWeather(search);
 });
-
