@@ -3,7 +3,8 @@ body {
 }
 
 h3, h4, p {
-  overflow-wrap: break-word;
+  /* overflow-wrap: break-word; */
+  overflow: hidden;
 }
 
 .current-weather-details, .five-day-container {

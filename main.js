@@ -9,31 +9,31 @@ var weatherModel = {
   fiveDayForecast: [
     {
       weather: "Cloudy",
-      temperature: 46,
+      temp: 46,
       icon: "http://openweathermap.org/img/wn/10d@2x.png",
       day: "Monday"
     },
     {
       weather: "Cloudy",
-      temperature: 46,
+      temp: 46,
       icon: "http://openweathermap.org/img/wn/10d@2x.png",
       day: "Monday"
     },
     {
       weather: "Cloudy",
-      temperature: 46,
+      temp: 46,
       icon: "http://openweathermap.org/img/wn/10d@2x.png",
       day: "Monday"
     },
     {
       weather: "Cloudy",
-      temperature: 46,
+      temp: 46,
       icon: "http://openweathermap.org/img/wn/10d@2x.png",
       day: "Monday"
     },
     {
       weather: "Cloudy",
-      temperature: 46,
+      temp: 46,
       icon: "http://openweathermap.org/img/wn/10d@2x.png",
       day: "Monday"
     },
@@ -58,13 +58,28 @@ var weatherModel = {
     this.currentWeatherData.push(weather)
   },
 
-  //accumulate data from API GET request and store in FiveDayForecast array
+  // accumulate data from API GET request and store in FiveDayForecast array
   addFiveDayForecast(data) {
-
+    //clear current data for new city search
+    this.fiveDayForecast = [];
     
+    //format the needed data from the API return into object
+    var dataCopy = data;
+
+    for(i=0; i<dataCopy.list.length; i+=8) {
+      //create object for each individual day to be stored as data is iterated through
+      var weatherObj = {}
+      weatherObj.weather = (dataCopy.list[i].weather[0].description).toUpperCase();
+      weatherObj.temp = Math.round(dataCopy.list[i].main.temp_max);
+      weatherObj.icon = dataCopy.list[i].weather[0].icon;
+      weatherObj.day = dataCopy.list[i].dt;
+
+      //push each day to data model variable for storage
+      this.fiveDayForecast.push(weatherObj);
+    };
   }
-  
-}
+
+};
 
 //object to handle API requests based on user input and add results of query to model
 var controller = {
@@ -75,9 +90,9 @@ var controller = {
       url: "https://api.openweathermap.org/data/2.5/weather?q=" + query + "&units=imperial&appid=" + weatherModel.apiKey,
       dataType: "json",
       success: function(data) {
-        //First add the query data to the "weatherModel" object
+        //1. add the query data to the "weatherModel" object
         weatherModel.addCurrentWeather(data);
-        //Second render the new data with the function in the "view" object
+        //2. render the new data with the function in the "view" object
         view.renderCurrentWeather();
       },
       error: function(jqXHR, textStatus, errorThrown) {
@@ -94,7 +109,10 @@ var controller = {
       url: "https://api.openweathermap.org/data/2.5/forecast?q=" + query + "&units=imperial&appid=" + weatherModel.apiKey,
       dataType: "json",
       success: function(data) {
-        console.log(data);
+        //1. add the query data to the "weatherModel" object
+        weatherModel.addFiveDayForecast(data);
+        //2. render the new data with the function in the "view" object
+        view.renderFiveDayForecast();
       },
       error: function(jqXHR, textStatus, errorThrown) {
         console.log(textStatus);

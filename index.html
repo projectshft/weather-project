@@ -70,8 +70,8 @@
     {{#each fiveDayForecast}}
     <div class="five-day-container col-md-2  m-1 rounded">
       <p class="text-center">{{ weather }}</p>
-      <p class="text-center">{{ temperature }}</p>
-      <img class="icon mx-auto d-block w-100" src="{{ icon }}">
+      <h4 class="text-center"><strong>{{ temp }}&#8457</strong></h4>
+      <img class="icon mx-auto d-block w-100" src="http://openweathermap.org/img/wn/{{ icon }}.png">
       <p class="text-center">{{ day }}</p>
     </div>
     {{/each}}
