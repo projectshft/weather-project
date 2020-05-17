@@ -29,6 +29,8 @@ const fetchWeather = (city) => {
     },
     error: (jqXHR, textStatus, errorThrown) => {
       console.log(textStatus);
+      alert(errorThrown);
+      resetData(); //clear data and reset page
     }
   }));
 };
@@ -40,7 +42,7 @@ const addCurrentWeather = (data) => {
     city: data.name,
     temp: Math.round(data.main.temp), //round temperature
     condition: data.weather[0].description,
-    icon: data.weather[0].icon
+    icon: data.weather[0].icon.slice(0, -1) + 'd' //store day version of icons for consistency
   }
 
   //add current weather object to weatherData
@@ -191,6 +193,21 @@ $('#search-button').click(() => {
   //clear input field
   $('#search-input').val('');
 });
+
+//function to clear data and reset page in case of search errors
+const resetData = () => {
+  //clear html from page
+  $('#week').empty()
+  $('#current-weather').empty()
+
+  //re-hide unhidden elements
+  $('#forecast-header').addClass('hide');
+  $('#current-section').addClass('hide');
+
+  //clear weather data
+  weatherData.forecastData = [];
+  weatherData.currentData = {};
+}
 
 //function to convert date string to weekday to display in forecast
 const getWeekDay = (dateString) => {

@@ -51,7 +51,7 @@
   <script id="current-template" type="text/x-handlebars-template">
     <div id="current-result">
       <p class="temp">{{temp}}°</p>
-      <p class="city-state">{{city}}</p>
+      <p class="city">{{city}}</p>
       <p class="condition">{{condition}}</p>
     </div>
     <div id="current-icon">
@@ -61,12 +61,16 @@
 
   <script id="forecast-template" type="text/x-handlebars-template">
     <div class="week-day col-md-2">
+      <div class="condition-container">
       <p class="condition">{{condition}}</p>
+    </div>
+    <div class="forecast-info-container">
       <img src="http://openweathermap.org/img/wn/{{icon}}@2x.png" alt="weather condition">
       <p class="temp">{{temp}}°</p>
       <p class="high-low-temp">High: <strong>{{high}}</strong></p>
       <p class="high-low-temp">Low: <strong>{{low}}</strong></p>
       <p class="day">{{day}}</p>
+    </div>
     </div>
   </script>
 

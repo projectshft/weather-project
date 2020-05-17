@@ -1,9 +1,9 @@
 body {
   padding: 5px;
   font-family: 'Josefin Sans', sans-serif;
-  font-size: 20px;
+  font-size: 25px;
   background-color: #A3FFF5;
-  color: #303636;
+  color: #4A4F4F;
 }
 
 h1 {
@@ -27,10 +27,11 @@ form {
   box-sizing: border-box;
   border: solid rgba(0, 0, 0, .5) 3px;
   margin: 5px;
-  padding: 5px 5px 0 5px;
+  padding: 5px;
   text-align: center;
   border-radius: 10px;
   background-color: #FFF5A3;
+  overflow: hidden;
 }
 
 .temp {
@@ -91,6 +92,7 @@ form {
 
 #search-input {
   width: 80%;
+  margin: auto;
   border: #7E8181 3px solid;
 }
 
@@ -98,5 +100,18 @@ form {
   margin: 0 auto;
   background-color: #FFF5A3;
   border: solid 3px #7E8181;
-  color: #303636;
+  color: #4A4F4F;
+}
+
+#search-button:hover {
+  color: #FFF;
+  background-color: #FFA3AD;
+}
+
+.condition-container {
+  height: 15%;
+}
+
+#week {
+  padding: 20px;
 }
