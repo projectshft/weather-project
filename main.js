@@ -1,4 +1,4 @@
-//object to model data
+//object to store/model data
 var weatherModel = {
   //store "currentWeather" API data
   currentWeatherData: [],
@@ -13,7 +13,7 @@ var weatherModel = {
   addCurrentWeather(data) {
     //clear current data for new city search
     this.currentWeatherData = [];
-    //format the needed data from the API return into object
+    //format the needed data from the API return into an object
     var weather = {
       temp: Math.round(data.main.temp),
       city: data.name,
@@ -33,12 +33,17 @@ var weatherModel = {
     //format the needed data from the API return into object
     var dataCopy = data;
 
-    for (i = 0; i < dataCopy.list.length; i += 8) {
-      //create object for each individual day to be stored as data is iterated through
+    //Add 8 to each iteration to get the next day's data
+    //data from 5 day forecast API query returns in 40 three hour data sets
+    //40 divided by 8 would equal 5 separate days worth of data
+    for (i = 7; i <= dataCopy.list.length; i += 8) {
+      //create object for each individual day to be stored as query data is iterated through
       var weatherObj = {}
       weatherObj.weather = (dataCopy.list[i].weather[0].description).toUpperCase();
       weatherObj.temp = Math.round(dataCopy.list[i].main.temp_max);
       weatherObj.icon = dataCopy.list[i].weather[0].icon;
+      //date is returned in unix time code from API
+      //using moment.js to convert unix time code to day of the week 
       weatherObj.day = moment.unix(dataCopy.list[i].dt).format('dddd');
 
       //push each day to data model variable for storage
@@ -69,7 +74,7 @@ var controller = {
     });
   },
 
-  //Query openWeather API for 5 day forecast in imperial units format
+  //Query openWeather API for five day forecast request in imperial units format
   fetchFiveDayWeather(query) {
     $.ajax({
       method: "GET",
@@ -85,8 +90,9 @@ var controller = {
         console.log(textStatus);
       },
     });
-  },
-}
+  }
+
+};
 
 //object to render model data (weatherModel object) to html
 var view = {

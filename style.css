@@ -6,6 +6,14 @@ h3, h4, p {
   overflow: hidden;
 }
 
+.icon{
+  max-height:150px;
+  max-width:150px;
+  height:auto;
+  width:auto;
+} 
+
+/* current weather container */
 .current-weather-details, .five-day-container {
   font-family: Candara,Calibri,Segoe,Segoe UI,Optima,Arial,sans-serif; 
 }
@@ -18,13 +26,7 @@ h3, h4, p {
   vertical-align: center;
 }
 
-.icon{
-  max-height:150px;
-  max-width:150px;
-  height:auto;
-  width:auto;
-} 
-
+/* five day weather container */
 .five-day-container {
   border: 5px inset #178AB0;
 }
