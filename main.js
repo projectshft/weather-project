@@ -48,24 +48,9 @@ const Weather = () => {
       method: "GET",
       url: `http://api.openweathermap.org/data/2.5/weather?q=${locationInput}&units=imperial&appid=4a88c029caa1e00e6735e625a0ee4cad`,
       dataType: "json",
-      success: function (openWeatherData) {
-        console.log(openWeatherData);
-
-        // grabbing current weather data from API and storing
-        // storing into variables in case we change APIs
-        let currentWeatherFromAPI = {
-          temp: openWeatherData.main.temp,
-          location: openWeatherData.name,
-          description: openWeatherData.weather[0].main,
-          icon: `http://openweathermap.org/img/wn/${openWeatherData.weather[0].icon}@2x.png`,
-        };
-
-        // store data from API in our model
-        setCurrentWeatherData(currentWeatherFromAPI);
-
-        // now that data is stored in model, we can render again
-        renderCurrentWeather();
-        renderForecastWeather();
+      success: function (currentJSON) {
+        let unpackedWeather = unpackCurrentWeatherOfAPI(currentWeatherJSON);
+        setCurrentWeatherData(unpackedWeather);
       },
       error: function (jqXHR, textStatus, errorThrown) {
         console.log(textStatus);
@@ -73,13 +58,54 @@ const Weather = () => {
     });
   };
 
-  const setCurrentWeatherData = (currentWeatherFromAPI) => {
+  const getForecastWeather = (locationInput) => {
+    console.log(`The json openWeather data for ${locationInput} is`);
+
+    $.ajax({
+      method: "GET",
+      url: `api.openweathermap.org/data/2.5/forecast?q=${locationInput}&appid={your api key}`,
+      dataType: "json",
+      success: function (data) {
+        let unpackedForecast = unpackForecastFromAPI(forecastWeatherJSON);
+        setForeCastWeatherData(unpackedForecast);
+      },
+      error: function (jqXHR, textStatus, errorThrown) {
+        console.log(textStatus);
+      },
+    });
+  };
+
+  const unpackCurrentWeatherOfAPI = (currentWeatherJSON) => {
+    // grabbing current weather data from API and storing
+    // storing into variables here in case we change APIs
+    return {
+      temp: currentWeatherJSON.main.temp,
+      location: currentWeatherJSON.name,
+      description: currentWeatherJSON.weather[0].main,
+      icon: `http://openweathermap.org/img/wn/${currentWeatherJSON.weather[0].icon}@2x.png`,
+    };
+  };
+
+  const unpackForecastFromAPI = (forecastJSON) => {
+    // divide the days
+  };
+
+  const setCurrentWeatherData = (unpackedCurrentWeather) => {
     // set the data for our model (Weather Data)
-    weatherData.currentConditions.temperature = currentWeatherFromAPI.temp;
-    weatherData.currentConditions.location = currentWeatherFromAPI.location;
+    weatherData.currentConditions.temperature = unpackedCurrentWeather.temp;
+    weatherData.currentConditions.location = unpackedCurrentWeather.location;
     weatherData.currentConditions.description =
-      currentWeatherFromAPI.description;
-    weatherData.currentConditions.icon = currentWeatherFromAPI.icon;
+      unpackedCurrentWeather.description;
+    weatherData.currentConditions.icon = unpackedCurrentWeather.icon;
+
+    renderCurrentWeather();
+  };
+
+  const setForeCastWeatherData = (unpackedForecast) => {
+    // reset our model's 5-day forecast data
+    weatherData.future = [];
+
+    renderForecastWeather();
   };
 
   const renderCurrentWeather = () => {
