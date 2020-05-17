@@ -262,12 +262,19 @@ const Weather = () => {
     });
   };
 
-  return {
-    searchButtonListener,
-    searchBarEnterKeyListener,
-  };
+  searchButtonListener();
+  searchBarEnterKeyListener();
+
+  // if local storage has been set
+  // get the weather conditions based on what has been set
+  // render the weather conditions
+  if (localStorage.defaultLocation) {
+    getCurrentWeather(localStorage.defaultLocation);
+    getForecastWeather(localStorage.defaultLocation);
+  }
+
+  return {};
 };
 
 let weatherApp = Weather();
-weatherApp.searchBarEnterKeyListener();
-weatherApp.searchButtonListener();
+localStorage.setItem("defaultLocation", "Raleigh");
