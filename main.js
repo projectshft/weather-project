@@ -65,7 +65,7 @@ var weatherData = function() {
 
   };
 
-  // The only public function is fetchData,
+  // The only public function is fetchData
   return {
     fetch: fetchData
   }
