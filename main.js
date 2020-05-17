@@ -15,10 +15,11 @@ var weatherData = function() {
     }
   };
 
-  var currentWeather = weather();
+  var currentWeather = {};
 
+  var fiveDayForecast = [{}, {}, {}, {}, {}];
 
-  var fetchData = function(query) {
+  var fetchCurrentWeather = function(query) {
 
     $.ajax({
       method: "GET",
@@ -36,10 +37,11 @@ var weatherData = function() {
 
   };
 
-  // this function will get the temperature, the location,
-  // and the weather conditions.
+  // This model function sets currentWeather and then invokes
+  // renderCurrentWeather to change user view.
   var setCurrentWeather = function(data) {
 
+    currentWeather = weather();
 
     currentWeather.tempImperial = data.main.temp; // create a round function at some point
     currentWeather.location = data.name;
@@ -48,6 +50,14 @@ var weatherData = function() {
 
     renderCurrentWeather();
   };
+
+  var setFiveDayForecast = function(data) {
+
+    fiveDayForecast.forEach((day, i) => {
+      day[i] = weather();
+    });
+
+  }
 
 
   // Takes value
@@ -79,7 +89,7 @@ $('.search').on('click', function(e) {
 
   var search = $('#search-query').val();
 
-  data.fetch(search);
+  data.fetchCurrentWeather(search);
 });
 
 // Keystroke handler
@@ -88,5 +98,5 @@ $('.search').on('keypress', function(e) {
 
   var search = $('#search-query').val();
 
-  data.fetch(search);
+  data.fetchCurrentWeather(search);
 });
