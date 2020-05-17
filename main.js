@@ -56,12 +56,12 @@ var weatherData = function() {
     var sourceCurrentWeather = $('#current-weather-template').html();
     var templateCurrentWeather = Handlebars.compile(sourceCurrentWeather);
     var displayCurrentWeather = templateCurrentWeather(render.currentWeather);
-    $('.weather-display').append(displayCurrentWeather);
+    $('.current').append(displayCurrentWeather);
 
     var sourceCurrentWeatherIcon = $('#current-weather-icon-template').html();
     var templateCurrentWeatherIcon = Handlebars.compile(sourceCurrentWeatherIcon);
     var displayCurrentWeatherIcon = templateCurrentWeatherIcon(render.currentWeatherIcon);
-    $('.icon-display').append(displayCurrentWeatherIcon);
+    $('.icon').append(displayCurrentWeatherIcon);
 
   };
 
@@ -76,7 +76,7 @@ var weatherData = function() {
 // Use of closure
 var weather = weatherData();
 
-// This is a controller.
+// Click handler
 $('.search').on('click', function(e) {
   e.preventDefault();
 
@@ -85,6 +85,7 @@ $('.search').on('click', function(e) {
   weather.fetch(search);
 });
 
+// Keystroke handler
 $('.search').on('keypress', function(e) {
   e.preventDefault();
 
