@@ -13,11 +13,11 @@ h3, h4, p {
   width:auto;
 } 
 
-/* current weather container */
 .current-weather-details, .five-day-container {
   font-family: Candara,Calibri,Segoe,Segoe UI,Optima,Arial,sans-serif; 
 }
 
+/* current weather container */
 .current-weather {
   padding: 3%;
 }
