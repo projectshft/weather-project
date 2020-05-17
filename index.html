@@ -69,9 +69,11 @@
   <script id="forecast-template" type="text/x-handlebars-template">
     <div class="col-sm-2 forecast-wrapper">
       <div class="forecast-day-box">
-        <p>{{description}}</p>
-        <h1>{{avgTemp}}</h1>
-        <img src="{{icon}}" />
+        <div class="forecast-description">
+          <p>{{description}}</p>
+        </div>
+        <h1>{{avgTemp}}&deg;</h1>
+        <div class="forecast-icon" style="background-image: url('{{icon}}');"></div>
         <p class="forecast-day">{{day}}</p>
       </div>
     </div>

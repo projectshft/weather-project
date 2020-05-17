@@ -49,7 +49,7 @@ const Weather = () => {
     // grabbing current weather data from API and storing
     // storing into variables here in case we change APIs
     return {
-      temp: currentWeatherJSON.main.temp,
+      temp: Math.round(currentWeatherJSON.main.temp),
       location: currentWeatherJSON.name,
       description: currentWeatherJSON.weather[0].main,
       icon: `http://openweathermap.org/img/wn/${currentWeatherJSON.weather[0].icon}@2x.png`,
