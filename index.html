@@ -26,6 +26,9 @@
           <div id="commits">
           </div>
 
+          <div id="forecast-commits">
+          </div>
+
       </form>
 
     </div>
@@ -45,7 +48,7 @@
         </div>
    <script id="city-forecast-template" type="text/x-handlebars-template">
      <div class="city-weather forecast">
-       <h5>{{ temperature }}° </h5>
+       <h5>{{ forecastTemperature }}° </h5>
          </div>
          <div>
           <img src="http://openweathermap.org/img/wn/{{ icon }}@2x.png"></img>
@@ -59,7 +62,7 @@
 
   </div>
 </script>
-
+  <script src="https://cdn.jsdelivr.net/npm/moment@2.25.3/moment.js"></script>
   <script src="main.js" type="text/javascript"></script>
 </body>
 
