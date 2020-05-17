@@ -2,17 +2,39 @@
   text-align: center;
 }
 
-.weather-description {
-  text-transform: capitalize;
+
+
+#content {
+  display: inline-block;
 }
 
 #main-icon {
   max-width: 10%;
+  display: inline-block;
+  position: relative;
+  bottom: 57px;
+}
+
+.text-size-one {
+  font-size: 15px;
+}
+
+.text-size-two {
+  font-size: 20px;
+  text-transform: capitalize;
+}
+
+.text-size-three {
+  font-size: 25px;
+  font-weight: bold;
 }
 
 .forecast {
+  align-items: center;
   border: 1px solid black;
   display: inline-block;
   text-align: center;
+  padding: 2px;
+  margin: 5px;
 
 }

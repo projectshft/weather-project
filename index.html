@@ -36,6 +36,7 @@
         <div id="forecast-container">
           <!-- where 5 day forecast is stored -->
         </div>
+        <br>
 
       </div>
     </div>
@@ -44,19 +45,21 @@
     <!-- handlebars scipt for new search data that gets added to "search-content" above -->
     <script id="search-template" type="text/x-handlebars-template">
       <div class="weather-content">
-        <h2>{{ temp }}</h2>
-        <p class="city-name icon">{{ name }}
-          <img id="main-icon" src="http://openweathermap.org/img/wn/{{ icon }}@2x.png"></img>
-        </p>
-        <p class="weather-description">{{ description }}<p>
+        <div id="content">
+          <h2>{{ temp }}</h2>
+          <p class="text-size-three">{{ name }}</p>
+          <p class="text-size-two">{{ description }}<p>
+        </div>
+        <div id="main-icon"><img src="http://openweathermap.org/img/wn/{{ icon }}@2x.png"></img></div>
       </div>
     </script>
+
     <script id="forecast-template" type="text/x-handlebars-template">
       <div class="forecast">
-        <h3>{{ description }}</h3>
-        <p>{{ temp }}</p>
+        <h4>{{ description }}</h4>
+        <p class="text-size-two">{{ temp }}</p>
         <p><img src="http://openweathermap.org/img/wn/{{ icon }}@2x.png"></img></p>
-        <p>{{ time }}</p>
+        <p class="text-size-two">{{ time }}</p>
       </div>
     </script>
 
