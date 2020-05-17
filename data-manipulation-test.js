@@ -1395,6 +1395,7 @@ for (let i = 0; i < slicedArray.length; i++) {
   tempArray.push(slicedArray[i].main.temp);
   tempArray.push(slicedArray[i].weather[0].main);
   tempArray.push(slicedArray[i].dt_txt);
+  tempArray.push(slicedArray[i].weather[0].icon);
   dataArray.push(tempArray);
 }
 //console.log(dataArray);
@@ -1419,7 +1420,7 @@ for (let i = 0; i < dataArray.length; i++) {
 
 }
 
-console.log(finalArray);
+//console.log(finalArray);
 
 
 
@@ -1451,18 +1452,23 @@ const getAverageDailyTemperature = () => {
 const weekConditions = [];
 
 const getDailyConditions = () => {
+  const weekConditions = [];
   finalArray.forEach(day => {
     const countObj = {};
     day.forEach(timeBlock => {
       if (countObj.hasOwnProperty(timeBlock[2])){
-        countObj[timeBlock[2]]++
+        countObj[timeBlock[2]].count++;
       } else {
-        countObj[timeBlock[2]] = 1;
+        countObj[timeBlock[2]] = {};
+        countObj[timeBlock[2]].count = 1;
+        countObj[timeBlock[2]].iconCode = timeBlock[4];
       }
     })
     weekConditions.push(countObj);
   })
+  console.log(weekConditions);
 }
+getDailyConditions();
 //console.log(finalArray);
 // getDailyConditions();
 // console.log(weekConditions);
@@ -1474,13 +1480,16 @@ const getMostCommonConditionPerDay = () => {
   weekConditions.forEach(day => {
     let conditionCount = 0;
     for (let condition in day) {
-      if (day[condition] > conditionCount) {
-        conditionCount = day[condition];
+      if (day[condition].count > conditionCount) {
+        conditionCount = day[condition].count;
         day.avgCondition = condition;
+        day.avgIcon = day[condition].iconCode;
       }
     }
   })
 }
 
-// getMostCommonConditionPerDay();
-// console.log(weekConditions);
+getMostCommonConditionPerDay();
+console.log(weekConditions);
+
+console.log(finalArray);

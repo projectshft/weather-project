@@ -23,11 +23,11 @@
         </div>
       </div>
     </div>
-    <form class="form-inline search-form">
+    <form class="form-inline search-form" onsubmit="event.preventDefault();">
       <div class="form-row"></div>
-      <div class="form-group col-md-6 offset-md-3">
-        <input type="text" class="form-control" id="city-id" placeholder="Enter City Name Here">
-        <button type="button" class="btn btn-primary submit">Search</button>
+      <div class="form-group col-md-8 offset-md-2">
+        <input type="text" class="form-control" id="city-id" placeholder="Enter City Name Here" required>
+        <button type="submit" class="btn btn-primary submit">Search</button>
       </div>
   </div>
   </form>
@@ -43,22 +43,22 @@
 
 
   <script id="current-day-template" type="text/x-handlebars-template">
-    <div class="col-md-3 offset-md-3 current-stats">
+    <div class="col-md-3 offset-md-3 align-self-center current-stats">
       <h2 id="current-temp">{{ temperature }}<span>&#176;</span></h2>
       <h4 id="current-city">{{ city }}</h4>
       <h5 id="current-conditions">{{ condition }}</h5> 
     </div>
     <div class="col-md-3">
-      <img src="{{weatherIconURL}}" style="width:100px;height:75px">
+      <img src="{{weatherIconURL}}" style="width:150px;height:150px">
     </div>
   </script>
 
   <script id="weekday-template" type="text/x-handlebars-template">
     <div class="day col-md-2">
-      <h6>{{ condition }}</h6>
+      <h5>{{ condition }}</h5>
       <h4>{{ avgTemp }}<span>&#176;</span></h4>
-      <img src="{{weatherIconURL}}" style="width:50px;height:30px">
-      <h6>{{ weekday }}</h6>
+      <img src="{{weatherIconURL}}" style="width:75px;height:75px">
+      <h5>{{ weekday }}</h5>
     </div>
   </script>
 

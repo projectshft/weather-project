@@ -24,6 +24,7 @@ const forecastObject = {
   // ]
 }
 
+
 //create a function that will use handlebars to take the infomation in the forecastObject and append it to the page
 const renderWeather = () => {
   $('.current-weather').empty();
@@ -39,9 +40,8 @@ const renderWeather = () => {
     weekdaySource = $('#weekday-template').html();
     const weekdayTemplate = Handlebars.compile(weekdaySource);
     const newWeekdayHTML = weekdayTemplate(forecastObject.weekdayForecast[i]);
-    // if (i === 0) {
-    //   newWeekdayHTML.setAttribute('class', 'day col-md-2 offset-md-1');
-    // }
+  
+    
     $('.week-forecast').append(newWeekdayHTML);
   }
 
@@ -51,12 +51,11 @@ const renderWeather = () => {
 //this will take the data from the weather api, convert temp from Kelvin to Farhenheit, and add it to our Forecast object
 const addCurrentWeatherToForecastObject = data => {
   const tempInFarhenheit = Math.round((data.main.temp - 273.15) * 9 / 5 + 32);
-
   forecastObject.currentForecast = {
     temperature: tempInFarhenheit,
     city: data.name,
     condition: data.weather[0].main,
-    weatherIconURL: "cloud_PNG27.png"
+    weatherIconURL: `http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`
   }
 
 }
@@ -64,13 +63,14 @@ const addCurrentWeatherToForecastObject = data => {
 
 //this will find the most common condition per day 
 const getMostCommonConditionPerDay = (weekConditions) => {
-
+  
   weekConditions.forEach(day => {
     let conditionCount = 0;
     for (let condition in day) {
-      if (day[condition] > conditionCount) {
-        conditionCount = day[condition];
+      if (day[condition].count > conditionCount) {
+        conditionCount = day[condition].count;
         day.avgCondition = condition;
+        day.avgIcon = day[condition].iconCode;
       }
     }
   })
@@ -83,10 +83,12 @@ const getDailyConditions = (finalArray) => {
   finalArray.forEach(day => {
     const countObj = {};
     day.forEach(timeBlock => {
-      if (countObj.hasOwnProperty(timeBlock[2])) {
-        countObj[timeBlock[2]]++
+      if (countObj.hasOwnProperty(timeBlock[2])){
+        countObj[timeBlock[2]].count++;
       } else {
-        countObj[timeBlock[2]] = 1;
+        countObj[timeBlock[2]] = {};
+        countObj[timeBlock[2]].count = 1;
+        countObj[timeBlock[2]].iconCode = timeBlock[4];
       }
     })
     weekConditions.push(countObj);
@@ -124,7 +126,7 @@ const getAverageDailyTemperature = (finalArray) => {
 }
 
 
-//this function will accept the data from the api and return the weekly data as an array of days, each day array will hold 3hr blocks of data (timestamp, temp, condition, date)
+//this function will accept the data from the api and return the weekly data as an array of days, each day array will hold 3hr blocks of data (timestamp, temp, condition, date, iconcode)
 // [
 //   [
 //     [ 1589673600, 298.52, 'Clouds', '2020-05-17 00:00:00' ],
@@ -150,6 +152,7 @@ const extractRevelantInfoFromData = data => {
     tempArray.push(slicedArray[i].main.temp);
     tempArray.push(slicedArray[i].weather[0].main);
     tempArray.push(slicedArray[i].dt_txt);
+    tempArray.push(slicedArray[i].weather[0].icon);
     dataArray.push(tempArray);
   }
 
@@ -202,7 +205,8 @@ const addWeeklyWeatherToForecastObject = data => {
   //now add the average condition to the arrayOfDayObjects
   arrayOfDayObjectsWithAvgTemp.forEach((day, index) => {
     day.condition = arrayOfDailyConditions[index].avgCondition;
-    day.weatherIconURL = "cloud_PNG27.png";
+    const iconCode = arrayOfDailyConditions[index].avgIcon;
+    day.weatherIconURL = `http://openweathermap.org/img/wn/${iconCode}@2x.png`;
   })
 
 
@@ -260,7 +264,12 @@ const fetch = cityName => {
 //create a click event that grabs the city name from the html form input and calls the fetch function
 $('.submit').on('click', function () {
   const cityName = $('#city-id').val();
-  fetch(cityName);
+  if (cityName) {
+    fetch(cityName);
+  }
+  
+  $('#city-id').val('');
+  
 })
 
 
