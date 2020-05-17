@@ -26,11 +26,10 @@ var weatherData = function() {
     $.ajax({ //${query}
       method: "GET",
       //Using imperial units
-      url: `http://api.openweathermap.org/data/2.5/weather?q=durham,nc,us&units=imperial&appid=baa280a65d9a5786919fda92ca7532a8`,
+      url: `http://api.openweathermap.org/data/2.5/weather?q=Durham,nc,us&units=imperial&appid=baa280a65d9a5786919fda92ca7532a8`,
       dataType: "json",
       success: function(data) {
         setCurrentWeather(data);
-        setFiveDayForecast(data);
       },
       error: function(jqXHR, textStatus, errorThrown) {
         console.log(textStatus);
@@ -54,19 +53,6 @@ var weatherData = function() {
     renderCurrentWeather();
   };
 
-  var setFiveDayForecast = function(data) {
-
-    fiveDayForecast.forEach((day, i) => {
-      day[i] = weather();
-      day[i].tempImperial = data.main.temp; // create a round function at some point
-      day[i].conditions = data.weather[0].description;
-      day[i].icon = `http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
-      day[i].day = 'today';
-    });
-
-    renderFiveDayForecast();
-  }
-
 
   // Takes value
   var renderCurrentWeather = function() {
@@ -79,6 +65,39 @@ var weatherData = function() {
     $('.current').append(displayCurrentWeather);
 
   };
+
+  var fetchFiveDayForecast = function(query) {
+
+    $.ajax({
+      method: "GET",
+      //Using imperial units
+      url: `http://api.openweathermap.org/data/2.5/forecast?q=Durham,nc,us&units=imperial&appid=baa280a65d9a5786919fda92ca7532a8`,
+      dataType: "json",
+      success: function(data) {
+          setFiveDayForecast(data);
+      },
+      error: function(jqXHR, textStatus, errorThrown) {
+        console.log(textStatus);
+      }
+
+    });
+
+  };
+
+  var setFiveDayForecast = function(data) {
+
+    fiveDayForecast.forEach((day, i) => {
+      day[i] = weather();
+
+
+      day[i].tempImperial = data.list[0].main.temp; // create a round function at some point
+      day[i].conditions = data.list[0].weather[0].description;
+      day[i].icon = `http://openweathermap.org/img/wn/${data.list[0].weather[0].icon}@2x.png`;
+      day[i].day = moment.unix(data.list[0].dt).format("dddd");
+    });
+
+    renderFiveDayForecast();
+  }
 
   var renderFiveDayForecast = function() {
     $('.five-day').empty();
@@ -94,7 +113,8 @@ var weatherData = function() {
 
   // The only public function is fetchData
   return {
-    fetchCurrentWeather: fetchCurrentWeather
+    fetchCurrentWeather: fetchCurrentWeather,
+    fetchFiveDayForecast: fetchFiveDayForecast
   }
 
 
@@ -109,6 +129,7 @@ $('.search').on('click', function(e) {
 
   var search = $('#search-query').val();
   data.fetchCurrentWeather(search);
+  data.fetchFiveDayForecast(search);
 });
 
 // Keystroke handler
@@ -117,4 +138,5 @@ $('.search').on('keypress', function(e) {
 
   var search = $('#search-query').val();
   data.fetchCurrentWeather(search);
+  data.fetchFiveDayForecast(search);
 });
