@@ -26,11 +26,13 @@ const fetchWeather = (city) => {
     success: (data) => {
       addWeatherForecast(data); //add data to weather forecast data
       renderWeather(); //render current weather and forecast to page
+      $('#loading-weather').addClass('hide'); //hide loading spinner
     },
     error: (jqXHR, textStatus, errorThrown) => {
       console.log(textStatus);
       alert(errorThrown);
       resetData(); //clear data and reset page
+      $('#loading-weather').addClass('hide'); //hide loading spinner
     }
   }));
 };
@@ -187,6 +189,9 @@ const renderWeather = () => {
 
 //add click event to search button to get data and render results
 $('#search-button').click(() => {
+  //show loading spinner
+  $('#loading-weather').removeClass('hide');
+  
   //fetch data with value of search input
   fetchWeather($('#search-input').val());
 

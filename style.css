@@ -115,3 +115,12 @@ form {
 #week {
   padding: 20px;
 }
+
+#loading-weather {
+  margin: 0 auto;
+  text-align: center;
+}
+
+.spinner-grow {
+  margin: 15px;
+}
