@@ -120,7 +120,19 @@ const Weather = () => {
           // recalculate average temperature; index starts at 0 so we increment
           dayForecast.avgTemp = Math.round(totalTemp / (numberOfChunk + 1));
 
-          // determine the midday description
+          // Determine the day
+          let day = new Date(threeHourChunk.dt * 1000);
+          const days = [
+            "Sunday",
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+          ];
+          dayForecast.day = days[day.getDay()];
+
+          // determine the most frequent description
 
           // determine the midday icon
           return dayForecast;
