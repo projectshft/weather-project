@@ -14,3 +14,22 @@
 .current-conditions p {
   font-size: 18px;
 }
+
+.forecast-row {
+  position: relative;
+  margin-top: 50px;
+}
+
+.forecast-wrapper {
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  padding: 10px;
+  margin: 0 2px;
+}
+
+.forecast-day-box {
+  text-align: center;
+}
+
+p.forecast-day {
+  font-size: 16px;
+}

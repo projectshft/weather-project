@@ -35,7 +35,10 @@ const Weather = () => {
           icon: `http://openweathermap.org/img/wn/${openWeatherData.weather[0].icon}@2x.png`,
         };
 
+        // store data from API in our model
         setCurrentWeatherData(currentWeatherFromAPI);
+
+        // now that data is stored in model, we can render again
         renderCurrentWeather();
       },
       error: function (jqXHR, textStatus, errorThrown) {
