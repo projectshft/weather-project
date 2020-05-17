@@ -45,51 +45,9 @@
       <div class="row">
         <div class="col-sm-1"></div>
         
-        <div class="col-sm-2 forecast-wrapper">
-          <div class="forecast-day-box">
-            <p>Cloudy</p>
-            <h1>76</h1>
-            <img src="http://openweathermap.org/img/wn/04n@2x.png" />
-            <p class="forecast-day">Monday</p>
-          </div>
+        <div class="five-day-grid">
+        <!-- this is where handlebars will insert each day-->
         </div>
-        
-        <div class="col-sm-2 forecast-wrapper">
-          <div class="forecast-day-box">
-            <p>Cloudy</p>
-            <h1>76</h1>
-            <img src="http://openweathermap.org/img/wn/04n@2x.png" />
-            <p class="forecast-day">Monday</p>
-          </div>
-        </div>
-        
-        <div class="col-sm-2 forecast-wrapper">
-          <div class="forecast-day-box">
-            <p>Cloudy</p>
-            <h1>76</h1>
-            <img src="http://openweathermap.org/img/wn/04n@2x.png" />
-            <p class="forecast-day">Monday</p>
-          </div>
-        </div>
-
-        <div class="col-sm-2 forecast-wrapper">
-          <div class="forecast-day-box">
-            <p>Cloudy</p>
-            <h1>76</h1>
-            <img src="http://openweathermap.org/img/wn/04n@2x.png" />
-            <p class="forecast-day">Monday</p>
-          </div>
-        </div>
-
-        <div class="col-sm-2 forecast-wrapper">
-          <div class="forecast-day-box">
-            <p>Cloudy</p>
-            <h1>76</h1>
-            <img src="http://openweathermap.org/img/wn/04n@2x.png" />
-            <p class="forecast-day">Monday</p>
-          </div>
-        </div>
-
       </div>
     </div>
   </div>
@@ -106,6 +64,17 @@
         <img class="media-object current-conditions-logo" src="{{icon}}" />
       </div>
     </div> 
+  </script>
+
+  <script id="forecast-template" type="text/x-handlebars-template">
+    <div class="col-sm-2 forecast-wrapper">
+      <div class="forecast-day-box">
+        <p>{{description}}</p>
+        <h1>{{temperature}}</h1>
+        <img src="{{icon}}" />
+        <p class="forecast-day">{{day}}</p>
+      </div>
+    </div>
   </script>
 
   <!-- jQuery first, then Tether, then Bootstrap JS. -->

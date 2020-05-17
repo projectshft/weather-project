@@ -6,13 +6,38 @@ const Weather = () => {
       description: null,
       icon: null,
     },
-    future: {
-      "1dayahead": {},
-      "2daysahead": {},
-      "3daysahead": {},
-      "4daysahead": {},
-      "5daysahead": {},
-    },
+    future: [
+      {
+        description: "cloudy",
+        temperature: 76,
+        icon: "http://openweathermap.org/img/wn/03n@2x.png",
+        day: "Monday",
+      },
+      {
+        description: "cloudy",
+        temperature: 76,
+        icon: "http://openweathermap.org/img/wn/03n@2x.png",
+        day: "Tuesday",
+      },
+      {
+        description: "cloudy",
+        temperature: 76,
+        icon: "http://openweathermap.org/img/wn/03n@2x.png",
+        day: "Wednesday",
+      },
+      {
+        description: "cloudy",
+        temperature: 76,
+        icon: "http://openweathermap.org/img/wn/03n@2x.png",
+        day: "Thursday",
+      },
+      {
+        description: "cloudy",
+        temperature: 76,
+        icon: "http://openweathermap.org/img/wn/03n@2x.png",
+        day: "Friday",
+      },
+    ],
   };
 
   // We need to invoke the API with the search-button being clicked
@@ -40,6 +65,7 @@ const Weather = () => {
 
         // now that data is stored in model, we can render again
         renderCurrentWeather();
+        renderForecastWeather();
       },
       error: function (jqXHR, textStatus, errorThrown) {
         console.log(textStatus);
@@ -67,6 +93,21 @@ const Weather = () => {
 
     // actually update the page
     $(".current-conditions-box").append(currentWeatherHTML);
+  };
+
+  const renderForecastWeather = () => {
+    // empty the current contents of div
+    $(".five-day-grid").empty();
+
+    weatherData.future.forEach((futureDay) => {
+      // we'll grab the forecast weather to plug into the template & page
+      let source = $("#forecast-template").html();
+      let template = Handlebars.compile(source);
+      let forecastHTML = template(futureDay);
+
+      // actually update the page
+      $(".five-day-grid").append(forecastHTML);
+    });
   };
 
   // If someone presses enter in search field, we need to fire event
