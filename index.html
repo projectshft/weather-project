@@ -15,8 +15,8 @@
 </head>
 
 <body>
-  <div class="container-fluid">
-    <div class="top row">
+  <div class="top container-fluid">
+    <div class="row">
       <div class="col-md-6 offset-md-3">
         <div class="page-header">
           <h1>Current Weather</h1>
@@ -41,8 +41,8 @@
           <div class="spinner-grow text-primary" role="status"></div>
         </div> -->
 
-  <div class="container-fluid">
-    <div class="middle row">
+  <div class="middle container-fluid">
+    <div class="row">
       <div class="col-md-6 offset-md-3">
         <div class="current">
 
@@ -52,14 +52,12 @@
   </div>
 
   <div class="container-fluid">
-    <div class="bottom row">
-      <div class="col-md-9 offset-md-2">
-        <div class="weather fiveday">
-
-        </div>
+    <div class="row bottom">
+      <div class="d-flex justify-content-center five-day">
       </div>
     </div>
   </div>
+
 
   <script id="current-weather-template" type="text/x-handlebars-template">
     <div class="weather">
@@ -72,13 +70,15 @@
       </div>
   </script>
 
-  <!-- <script id="current-weather-icon-template" type="text/x-handlebars-template">
-  </script> -->
-
-  <script id="fiveday-weather-template" type="text/x-handlebars-template">
-    <img src="{{icon}}" alt="">
+  <script id="five-day-weather-template" type="text/x-handlebars-template">
+    <div class="col-sm-2 day">
+    <h6>{{conditions}}</h6>
+    <h6>{{tempImperial}}&#176</h6>
+    <img id="forecast-icon" src="{{icon}}" alt="">
+    <h6>{{day}}</h6>
+    </div>
+    </div>
   </script>
-
 
   <!-- CDNs -->
   <script src="https://code.jquery.com/jquery-3.3.1.js"></script>

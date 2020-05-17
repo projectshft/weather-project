@@ -1,5 +1,5 @@
 .page-header {
-  margin-top: 40px;
+  margin-top: 30px;
 }
 
 .search-form {
@@ -7,8 +7,28 @@
   margin-bottom: 20px;
 }
 
+.middle {
+  margin-bottom: 20px;
+}
+
 .weather {
   float: left;
+}
+
+.bottom {
+  justify-content: center;
+}
+
+.day {
+  padding: 10px;
+  border-style: solid;
+  margin: 5px;
+  text-align: center;
+}
+
+#forecast-icon {
+  width: 50px;
+  height: 50px;
 }
 
 .text-center {
