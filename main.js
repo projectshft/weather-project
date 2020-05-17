@@ -72,7 +72,7 @@ var weatherModel = {
       weatherObj.weather = (dataCopy.list[i].weather[0].description).toUpperCase();
       weatherObj.temp = Math.round(dataCopy.list[i].main.temp_max);
       weatherObj.icon = dataCopy.list[i].weather[0].icon;
-      weatherObj.day = dataCopy.list[i].dt;
+      weatherObj.day = moment.unix(dataCopy.list[i].dt).format('dddd');
 
       //push each day to data model variable for storage
       this.fiveDayForecast.push(weatherObj);
