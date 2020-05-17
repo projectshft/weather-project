@@ -110,7 +110,8 @@ const Weather = () => {
     // reduce the data points for each subset of the overall forecast
     dividedForecasts.forEach((dayArray) => {
       let totalTemp = null;
-      let descriptions = {};
+      const descriptions = {};
+      const icons = {};
 
       // construct an object to be stored in our model
       let singleDayObj = dayArray.reduce(
@@ -134,7 +135,6 @@ const Weather = () => {
           dayForecast.day = days[day.getDay()];
 
           // determine the most common description
-
           // first we need to store the description counts
           let currentDescription = threeHourChunk.weather[0].description;
           descriptions[currentDescription] += 1;
@@ -153,9 +153,27 @@ const Weather = () => {
           // based on what is most frequent, store in accumulator
           dayForecast.description = descriptions.mostFrequent;
 
+          // determine the most common ICON
+          // first we need to store the icon URL counts
+          let currentIcon = threeHourChunk.weather[0].icon;
+          icons[currentIcon] += 1;
+
+          // then we'll figure out which one has highest
+          for (const icon in icons) {
+            // use a property ("mostFrequent") in descriptions for comparing counts
+            if (
+              !icons.hasOwnProperty("mostFrequent") ||
+              icons.description > icons.mostFrequent
+            ) {
+              icons.mostFrequent = icon;
+            }
+          }
+
+          // based on what is most frequent, store in accumulator
+          dayForecast.icon = `http://openweathermap.org/img/wn/${icons.mostFrequent}@2x.png`;
+
           // determine the midday icon
           return dayForecast;
-          // see which
         },
         {}
       );
