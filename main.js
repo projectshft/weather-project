@@ -1,6 +1,10 @@
 var weatherSearchArray = [];
 var weatherForecastArray = [];
 
+emptyArray = function() {
+  weatherForecastArray.length = 0;
+}
+
 var addSearch = function(data) {
   weatherSearchArray.pop();
   var weatherConditions = {
@@ -14,7 +18,7 @@ var addSearch = function(data) {
 }
 
 var addForecast = function(data) {
-  weatherForecastArray.pop();
+  emptyArray(weatherForecastArray);
   var forecastInfo = data.list;
 
   for (var i = 0; i < forecastInfo.length; i = i + 8) {
