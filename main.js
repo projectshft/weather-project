@@ -86,10 +86,15 @@ var weatherData = function() {
 
   var setFiveDayForecast = function(data) {
 
+    data.list.reduce(function(accumulator, currentValue) {
+      // while it's not midnight
+      while (moment.unix(data.list[0].dt).format("h") === "0") {
+
+      }
+    });
+
     fiveDayForecast.forEach((day, i) => {
       day[i] = weather();
-
-
       day[i].tempImperial = data.list[0].main.temp; // create a round function at some point
       day[i].conditions = data.list[0].weather[0].description;
       day[i].icon = `http://openweathermap.org/img/wn/${data.list[0].weather[0].icon}@2x.png`;
