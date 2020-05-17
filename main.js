@@ -3,6 +3,8 @@
 cityWeather = [];
 // Empty array to hold forecast data
 cityForecast=[];
+
+// function that empties the cityForecast array
 function empty() {
   cityForecast = [];
 };
@@ -20,7 +22,9 @@ var addWeather = function (data) {
   cityWeather.push(weather);//adds the new data to the cityWeather array
 };
 
-//adds forecast data to empty cityForecast function. Increased by 8 to account for 3 hour increments of data
+//function that empties the forecast array, and then adds data returned from the API to the array.
+//Adds every 8th piece of data. API records data every 3 hours. 24/3 = 8. Every 8th piece of data represents a day
+//uses momentJS to translate API date to day format
 var addForecast = function (data) {
   empty(cityForecast);
   var results = data.list;
@@ -41,7 +45,6 @@ var addForecast = function (data) {
   };
 
 
-
 // function responsible for taking data in cityWeather array and passing
 // it through Handlebars and appending to current-weather div
 renderWeather = function () {
@@ -54,6 +57,9 @@ renderWeather = function () {
   $('#current-weather').append(weatherHTML);
 };
 
+
+//function that takes data returned from API and passes it through handlebars template.
+//appends to forecast-container div
 renderForecast = function () {
   $('#forecast-container').empty();
   for (var i = 0; i < cityForecast.length; i++) {
@@ -67,6 +73,7 @@ renderForecast = function () {
 
 // function that gets data from the API and if successful, invokes addWeather
 // (where the data will be added to the array) and invokes renderWeather, where the new data will show up as HTML
+//if not successful, will issue alert
 var fetchData = function (city) {
   $.ajax({
     method: "GET",
@@ -75,7 +82,6 @@ var fetchData = function (city) {
     success: function(data) {
       addWeather(data);
       renderWeather();
-      // console.log(data);//will take out
     },
     error: function(jqXHR, testStatus, errorThrown){
       console.log(testStatus);
@@ -84,7 +90,8 @@ var fetchData = function (city) {
   });
 };
 
-// function that returns forecast data through API
+// function that gets forecast data from API. If successful, it passes this data through add forecast function, and calls renderforecast.
+//if not successful, console logs error status.
 var fetchForecast = function (city) {
   $.ajax({
     method: "GET",
@@ -101,15 +108,11 @@ var fetchForecast = function (city) {
 };
 
 //function invoked when the search button is clicked that takes the user's input city
-//and passes it as an argument to the fetchData function
+//and passes it as an argument to the fetchData, and fetchForecast  function,
 $('.search').on('click', function () {
   var city = $('.city-input').val();
 
-  var test = moment("2020-05-16").format("dddd");
-
   fetchData(city);
   fetchForecast(city);
-  console.log(cityForecast);
-  console.log(test)
 
 });
