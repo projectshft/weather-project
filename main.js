@@ -1,9 +1,11 @@
 var weatherSearchArray = [];
 
 var addSearch = function(data) {
+  weatherSearchArray.pop();
   var weatherConditions = {
-    temperature: data.main.temp,
+    temperature: Math.round(data.main.temp),
     cityName: data.name,
+    icon: data.weather[0].icon,
     currentWeather: data.weather[0].main,
   }
 
@@ -24,11 +26,6 @@ var renderWeatherSearch = function() {
   }
 };
 
-$('#search').on('click', function() {
-  var weatherSearch = $('#weather-search').val();
-  fetchWeather(weatherSearch);
-});
-
 var fetchWeather = function(query) {
   $.ajax({
     method: "GET",
@@ -43,5 +40,10 @@ var fetchWeather = function(query) {
     }
   });
 };
+
+$('#search').on('click', function() {
+  var weatherSearch = $('#weather-search').val();
+  fetchWeather(weatherSearch);
+});
 
 renderWeatherSearch();
