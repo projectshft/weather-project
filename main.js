@@ -1,14 +1,20 @@
 var weatherData = function() {
 
-  var currentWeather = {
-    tempImperial: null,
-    location: '',
-    conditions: ''
+  var weather = function() {
+
+    var tempImperial = null;
+    var location = '';
+    var conditions = '';
+    var icon = '';
+
+    return {
+      tempImperial: tempImperial,
+      location: location,
+      conditions: conditions,
+      icon: icon,
+    }
   };
 
-  var currentWeatherIcon = {
-    icon: ''
-  };
 
   var fetchData = function(query) {
 
@@ -32,36 +38,27 @@ var weatherData = function() {
   // and the weather conditions.
   var setCurrentWeather = function(data) {
 
+    var currentWeather = weather();
+
     currentWeather.tempImperial = data.main.temp; // create a round function at some point
     currentWeather.location = data.name;
     currentWeather.conditions = data.weather[0].description;
-    currentWeatherIcon.icon = `http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
+    currentWeather.icon = `http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
 
-    renderCurrentWeather();
+    renderCurrentWeather(currentWeather);
   };
 
-  var getCurrentWeather = function() {
-    return {
-      currentWeather: currentWeather,
-      currentWeatherIcon: currentWeatherIcon
-    }
-  };
 
-  var renderCurrentWeather = function() {
+
+  var renderCurrentWeather = function(current) {
 
     $('.weather-display').empty();
     $('.icon-display').empty();
-    var render = getCurrentWeather();
 
     var sourceCurrentWeather = $('#current-weather-template').html();
     var templateCurrentWeather = Handlebars.compile(sourceCurrentWeather);
-    var displayCurrentWeather = templateCurrentWeather(render.currentWeather);
+    var displayCurrentWeather = templateCurrentWeather(current);
     $('.current').append(displayCurrentWeather);
-
-    var sourceCurrentWeatherIcon = $('#current-weather-icon-template').html();
-    var templateCurrentWeatherIcon = Handlebars.compile(sourceCurrentWeatherIcon);
-    var displayCurrentWeatherIcon = templateCurrentWeatherIcon(render.currentWeatherIcon);
-    $('.icon').append(displayCurrentWeatherIcon);
 
   };
 
@@ -74,7 +71,7 @@ var weatherData = function() {
 }
 
 // Use of closure
-var weather = weatherData();
+var data = weatherData();
 
 // Click handler
 $('.search').on('click', function(e) {
@@ -82,7 +79,7 @@ $('.search').on('click', function(e) {
 
   var search = $('#search-query').val();
 
-  weather.fetch(search);
+  data.fetch(search);
 });
 
 // Keystroke handler
@@ -91,6 +88,5 @@ $('.search').on('keypress', function(e) {
 
   var search = $('#search-query').val();
 
-  weather.fetch(search);
-
+  data.fetch(search);
 });

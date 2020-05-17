@@ -44,27 +44,36 @@
   <div class="container-fluid">
     <div class="middle row">
       <div class="col-md-6 offset-md-3">
-        <div class="weather current"></div>
-        <div class="weather icon"></div>
+        <div class="weather current">
+
+        </div>
+      </div>
     </div>
-  </div>
   </div>
 
   <div class="container-fluid">
     <div class="bottom row">
       <div class="col-md-9 offset-md-2">
-        <div class="weather five-day"></div>
+        <div class="weather fiveday">
+
+        </div>
+      </div>
     </div>
-  </div>
   </div>
 
   <script id="current-weather-template" type="text/x-handlebars-template">
-    <h3><strong>{{tempImperial}} &#176</strong></h3>
+    <h3><strong>{{tempImperial}}&#176</strong></h3>
       <h4>{{location}}</h4>
       <h5>{{conditions}}</h5>
-
+      <div class="weather icon">
+      <img src="{{icon}}" alt="">
+      </div>
   </script>
-  <script id="current-weather-icon-template" type="text/x-handlebars-template">
+
+  <!-- <script id="current-weather-icon-template" type="text/x-handlebars-template">
+  </script> -->
+
+  <script id="fiveday-weather-template" type="text/x-handlebars-template">
     <img src="{{icon}}" alt="">
   </script>
 
