@@ -4,10 +4,10 @@ var addSearch = function(data) {
   var weatherConditions = {
     temperature: data.main.temp,
     cityName: data.name,
-    currentWeather: data.weather[0].main
+    currentWeather: data.weather[0].main,
   }
 
-  weatherSearchArray.push(cityWeather);
+  weatherSearchArray.push(weatherConditions);
 }
 
 var renderWeatherSearch = function() {
@@ -16,7 +16,7 @@ var renderWeatherSearch = function() {
   for (var i = 0; i < weatherSearchArray.length; i++) {
     var cityWeather = weatherSearchArray[i];
 
-    var source = $('city-weather-template').html();
+    var source = $('#city-weather-template').html();
     var template = Handlebars.compile(source);
     var weatherSearchHTML = template(cityWeather);
 
@@ -24,10 +24,15 @@ var renderWeatherSearch = function() {
   }
 };
 
+$('#search').on('click', function() {
+  var weatherSearch = $('#weather-search').val();
+  fetchWeather(weatherSearch);
+});
+
 var fetchWeather = function(query) {
   $.ajax({
     method: "GET",
-    url: "https://api.openweathermap.org/data/2.5/weather?q=" + query + "&units=imperial&appid=1d939674b94b71730098a065534e1081",
+    url: 'https://api.openweathermap.org/data/2.5/weather?units=imperial&q=' + query + '&appid=1d939674b94b71730098a065534e1081',
     dataType: "json",
     success: function(data) {
       addSearch(data);
@@ -38,11 +43,5 @@ var fetchWeather = function(query) {
     }
   });
 };
-
-$('#search').on('click', function() {
-  var weatherSearch = $('#weather-search').val();
-
-  fetchWeather(weatherSearch);
-});
 
 renderWeatherSearch();
