@@ -1,6 +1,7 @@
 var weatherModule = function() {
   //imgURLStart is prexif to url for weather icon
   var imgURLStart = "http://openweathermap.org/img/wn/";
+  //cityTimeZone holds timezone difference from unix timestamp
   var cityTimeZone = 0;
 
   var weatherData = {
@@ -22,15 +23,25 @@ var weatherModule = function() {
     //arrays- dayTemperatures- for gathering all temperatures for a day, averageTemperatures- stores average temperatures for day
     var averageTemperatures = [];
     var dayTemperatures = [];
-    //looping through weather data, calculating average every 8 indexes (24 hours) and pushing to averageTemperatures
+    //startDay is used to find out when a day has ended
+    var startDay = moment.unix(data[0].dt).day();
+    //counter counts how many 3 hour intervals there are for a day of the week
+    var counter = 0;
+    //looping through weather data, calculating average each time a day ends, and pushing to averageTemperatures
     for (let i = 0; i < data.length; i++) {
+      counter += 1;
       dayTemperatures.push(data[i].main.temp);
       //if statement to exectue every 8 indexes (24 hours)
-      if ((i + 1) % 8 === 0) {
-        averageTemperatures.push(Math.round(dayTemperatures.reduce((acc, curr) => acc + curr) / 8));
+      var currentDay = moment.unix(data[i].dt).day();
+      if (currentDay !== startDay) {
+        console.log(dayTemperatures);
+        startDay = currentDay;
+        averageTemperatures.push(Math.round(dayTemperatures.reduce((acc, curr) => acc + curr) / counter));
         dayTemperatures = [];
+        counter = 0;
       }
     }
+    console.log(averageTemperatures);
     return averageTemperatures;
   }
 
@@ -43,7 +54,6 @@ var weatherModule = function() {
     weatherData.currentWeather.temperature = data.main.temp;
     //url contains @2x for full sized icon
     weatherData.currentWeather.imgURL = imgURLStart + data.weather[0].icon + "@2x.png";
-    console.log(weatherData.currentWeather);
     buildCurrentWeatherTemplate();
   }
 
@@ -51,7 +61,6 @@ var weatherModule = function() {
     var source = $('#current-weather-template').html();
     var template = Handlebars.compile(source);
     var newHTML = template(weatherData.currentWeather);
-    console.log(newHTML);
     $('.current-weather').empty();
     $('.current-weather').append(newHTML);
   }
@@ -95,12 +104,11 @@ $(".btn-primary").click(function() {
   //caling 5 day forecast weather api with cityName
   fetch('https://api.openweathermap.org/data/2.5/forecast?q=' + cityName + '&appid=094c0f37c693e9aa814d7b6b5368f063&units=imperial')
     .then(response => response.json())
-    .then(data => weather.buildForecastData(data));
+    .then(data => weather.buildForecastData(data))
+    .catch((err) => alert("Invalid City Name"));
 
-  //callig current weather api with cityName
+  //calling current weather api with cityName
   fetch('https://api.openweathermap.org/data/2.5/weather?q=' + cityName + '&appid=094c0f37c693e9aa814d7b6b5368f063&units=imperial')
     .then(response => response.json())
     .then(data => weather.buildCurrentData(data));
-
-
 })
