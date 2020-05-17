@@ -56,8 +56,8 @@
   <script id="card-template" type="text/x-handlebars">
     <div class="cards">
       <h4>{{weather}}</h4>
-      <h3>{{temperature}}</h3>
-      <img src="{{icon}}">
+      <h3>{{temperature}}&deg;</h3>
+      <div className="tiny-icons"><img src="{{icon}}" alt="{{weather}}"></div>
       <h4>{{day}}</h4>
     </div>
   </script>

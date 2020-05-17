@@ -20,8 +20,43 @@ button {
   width: 188px;
 }
 
+.cards {
+  display: inline-block;
+  box-sizing: border-box;
+  width: 19.5%;
+  background-color: lightblue;
+  border-radius: 4px;
+}
+
+.cards h3, .cards h4 {
+  text-align: center;
+}
+
+.cards img {
+  display: block;
+  margin: auto;
+}
+
 @media only screen and (max-width: 750px) {
-  /* .form-inline {
+  .cards {
+    width: 30%;
+    margin-bottom: 25px;
+  }
+
+  .form-group {
+    width: 100%;
+  }
+
+  h2, h3, h4 {
+    text-align: center;
+  }
+
+  #large {
+    display: block;
     margin: auto;
-  } */
+  }
+
+  button {
+    margin-left: 40.25%;
+  }
 }
