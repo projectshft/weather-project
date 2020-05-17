@@ -16,6 +16,8 @@ const Weather = () => {
       url: `http://api.openweathermap.org/data/2.5/weather?q=${locationInput}&units=imperial&appid=4a88c029caa1e00e6735e625a0ee4cad`,
       dataType: "json",
       success: function (currentWeatherJSON) {
+        console.log("The current weather JSON object is: ");
+        console.log(currentWeatherJSON);
         // first we want to scrape the data we want
         let unpackedWeather = unpackCurrentWeatherOfAPI(currentWeatherJSON);
 
@@ -136,7 +138,7 @@ const Weather = () => {
 
           // determine the most common description
           // first we need to store the description counts
-          let currentDescription = threeHourChunk.weather[0].description;
+          let currentDescription = threeHourChunk.weather[0].main;
           descriptions[currentDescription] += 1;
 
           // then we'll figure out which one has highest
@@ -192,6 +194,7 @@ const Weather = () => {
       unpackedCurrentWeather.description;
     weatherData.currentConditions.icon = unpackedCurrentWeather.icon;
 
+    // now that model is updated, we'll render
     renderCurrentWeather();
   };
 
@@ -204,6 +207,7 @@ const Weather = () => {
       weatherData.future.push(dayForecast);
     });
 
+    // now that model is updated, we'll render
     renderForecastWeather();
   };
 
@@ -235,25 +239,19 @@ const Weather = () => {
     });
   };
 
-  // If someone presses enter in search field, we need to fire event
+  // If someone presses enter in search field, we need to fire the search button event
   const searchBarEnterKeyListener = () => {
     $("#search-input").on("keypress", function (event) {
       if (event.which == 13) {
         event.preventDefault();
-        let locationInput = $("#search-input").val();
-
-        getCurrentWeather(locationInput);
-        getForecastWeather(locationInput);
-
-        // reset the search input once complete
-        $("#search-input").val("");
+        $(".search-button").click();
       }
     });
   };
 
   // if someone clicks the button to search
   const searchButtonListener = () => {
-    $(".search-location").click(function () {
+    $(".search-button").click(function () {
       let locationInput = $("#search-input").val();
 
       getCurrentWeather(locationInput);
