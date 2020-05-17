@@ -1,3 +1,4 @@
+/* Tags */
 body {
   padding: 5px;
   font-family: 'Josefin Sans', sans-serif;
@@ -22,6 +23,7 @@ form {
   margin: 20px auto;
 }
 
+/* .Classes */
 .week-day {
   display: inline-block;
   box-sizing: border-box;
@@ -59,6 +61,15 @@ form {
   flex-wrap: wrap;
 }
 
+.condition-container {
+  height: 15%;
+}
+
+.spinner-grow {
+  margin: 15px;
+}
+
+/* #ID's */
 #five-day-forecast {
   margin: 0 0 30px;
 }
@@ -108,10 +119,6 @@ form {
   background-color: #FFA3AD;
 }
 
-.condition-container {
-  height: 15%;
-}
-
 #week {
   padding: 20px;
 }
@@ -119,8 +126,4 @@ form {
 #loading-weather {
   margin: 0 auto;
   text-align: center;
-}
-
-.spinner-grow {
-  margin: 15px;
 }

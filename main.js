@@ -37,7 +37,7 @@ const fetchWeather = (city) => {
   }));
 };
 
-//store returned weather results
+//store returned current weather results
 const addCurrentWeather = (data) => {
   //store current weather in object
   let currentWeather = {
@@ -64,7 +64,7 @@ const addWeatherForecast = (data) => {
       temp: forecast.main.temp,
       condition: forecast.weather[0].description,
       icon: forecast.weather[0].icon, //store weather icon for condition
-      day: getWeekDay(forecast.dt_txt) //convert timestamp to day of week (integer)
+      day: getWeekDay(forecast.dt_txt) //convert timestamp to day of week
     }
     allForecastData.push(forecastData);
   });
@@ -74,7 +74,7 @@ const addWeatherForecast = (data) => {
     groupedForecastData.push(allForecastData.splice(0, 8));
   }
 
-  //restructuring each sub-array of weather data into single object with array each for temps, conditions, day, and icons
+  //restructuring each sub-array of weather data into single object (per day) with array each for temps, conditions, day, and icons
   groupedForecastData.forEach((group) => {
     dailyData.push(group.reduce((allDay, hour) => {
       allDay.temp.push(hour.temp);
@@ -90,7 +90,7 @@ const addWeatherForecast = (data) => {
     }));
   });
 
-  //reduce each property's array for each day to one value
+  //for each day's data object, reduce each property's array to one value
   dailyData.forEach(dayWeather => {
     //find starting weekday for each daily array
     dayWeather.day = dayWeather.day[0];
@@ -119,7 +119,7 @@ const addWeatherForecast = (data) => {
       }
     });
 
-    //assign returned most common condition to current day's object
+    //assign the returned most common condition to current day's object
     dayWeather.condition = weatherConditionWithIcon.mostFrequent.condition;
 
     //assign icon associated with most common condition to current day's object
@@ -146,7 +146,7 @@ const addWeatherForecast = (data) => {
   weatherData.forecastData = [];
 
   //add daily forecasts to forecastData array
-  weatherData.forecastData.push(...dailyData)
+  weatherData.forecastData.push(...dailyData);
 };
 
 //take stored weather data and display it on the page
@@ -191,7 +191,7 @@ const renderWeather = () => {
 $('#search-button').click(() => {
   //show loading spinner
   $('#loading-weather').removeClass('hide');
-  
+
   //fetch data with value of search input
   fetchWeather($('#search-input').val());
 
@@ -216,7 +216,7 @@ const resetData = () => {
 
 //function to convert date string to weekday to display in forecast
 const getWeekDay = (dateString) => {
-  //convert date string to date, then get weekday (integer)
+  //convert date string to date, then get day of week (integer)
   let dayOfWeek = new Date(dateString).getDay();
 
   //convert weekday integer to weekday string
