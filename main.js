@@ -1,4 +1,6 @@
 var weatherModule = function() {
+  //imgURLStart is prexif to url for weather icon
+  var imgURLStart = "http://openweathermap.org/img/wn/";
   var cityTimeZone = 0;
 
   var weatherData = {
@@ -6,9 +8,9 @@ var weatherModule = function() {
     currentWeather: {}
   }
 
-  var buildWeatherTemplate = function() {
+  var buildForecastTemplate = function() {
     //using handelbars.js to create template from weatherData
-    var source = $('#weather-template').html();
+    var source = $('#five-day-forecast-template').html();
     var template = Handlebars.compile(source);
     var newHTML = template(weatherData);
     //appending template to weather-display div
@@ -33,8 +35,25 @@ var weatherModule = function() {
   }
 
   var buildCurrentData = function(data) {
-    var weatherObj = {};
-    console.log(data);
+    //setting current weather data values
+    weatherData.currentWeather = {};
+    weatherData.currentWeather.city = data.name;
+    weatherData.currentWeather.country = data.sys.country;
+    weatherData.currentWeather.weather = data.weather[0].main;
+    weatherData.currentWeather.temperature = data.main.temp;
+    //url contains @2x for full sized icon
+    weatherData.currentWeather.imgURL = imgURLStart + data.weather[0].icon + "@2x.png";
+    console.log(weatherData.currentWeather);
+    buildCurrentWeatherTemplate();
+  }
+
+  var buildCurrentWeatherTemplate = function() {
+    var source = $('#current-weather-template').html();
+    var template = Handlebars.compile(source);
+    var newHTML = template(weatherData.currentWeather);
+    console.log(newHTML);
+    $('.current-weather').empty();
+    $('.current-weather').append(newHTML);
   }
 
   var buildForecastData = function(totalData) {
@@ -43,8 +62,6 @@ var weatherModule = function() {
     var data = totalData.list;
     //setting city time zone for getting day of week
     cityTimeZone = totalData.city.timezone;
-    //imgURLStart is prexif to url for weather icon
-    var imgURLStart = "http://openweathermap.org/img/wn/";
     var averageTemperatures = calculateAverageTemperatures(data);
     //looping through data, 8 (24 hours) at a time
     for (var i = 0; i < data.length; i += 8) {
@@ -59,7 +76,7 @@ var weatherModule = function() {
       weatherObj.temperature = averageTemperatures[(i / 8)];
       weatherData.fiveDayForecast.push(weatherObj);
     }
-    buildWeatherTemplate();
+    buildForecastTemplate();
   }
 
   return {
@@ -75,11 +92,12 @@ var weather = weatherModule();
 $(".btn-primary").click(function() {
   //grabbing inputed city name from search bar
   var cityName = $(".form-control").val();
-  //caling weather api with cityName
+  //caling 5 day forecast weather api with cityName
   fetch('https://api.openweathermap.org/data/2.5/forecast?q=' + cityName + '&appid=094c0f37c693e9aa814d7b6b5368f063&units=imperial')
     .then(response => response.json())
     .then(data => weather.buildForecastData(data));
 
+  //callig current weather api with cityName
   fetch('https://api.openweathermap.org/data/2.5/weather?q=' + cityName + '&appid=094c0f37c693e9aa814d7b6b5368f063&units=imperial')
     .then(response => response.json())
     .then(data => weather.buildCurrentData(data));

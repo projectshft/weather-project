@@ -23,20 +23,35 @@
       </div>
     </div>
     <div class="row">
+      <div class="col-md-6 offset-md-3 current-weather mt-5">
+
+      </div>
+    </div>
+    <div class="row">
       <div class="col-md-6 offset-md-3 five-day-forecast mt-5">
 
       </div>
     </div>
 
-    <script id="weather-template" type="text/x-handlebars-tenplate">
-      {{#each weather}}
+    <script id="five-day-forecast-template" type="text/x-handlebars-tenplate">
+      {{#each fiveDayForecast}}
         <div class="forecast">
           <h5>{{forecast}}</h5>
           <h4>{{temperature}}°</h4>
-          <img class="weather-img" src={{imgURL}}>
+          <img class="forecast-img" src={{imgURL}}>
           <h5 class="weekDay">{{weekDay}}</h5>
         </div>
       {{/each}}
+    </script>
+    <script id="current-weather-template" type="text/x-handlebars-tenplate">
+      <div class="current-weather">
+        <h2>{{temperature}}°</h2>
+        <h3>{{city}}, {{country}}</h3>
+        <h4>{{weather}}</h4>
+      </div>
+      <div class="current-image-container">
+        <img src={{imgURL}} class="current-image">
+      </div>
     </script>
     <script
   src="https://code.jquery.com/jquery-3.5.1.js"
