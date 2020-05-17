@@ -11,7 +11,7 @@ var weatherData = function() {
       tempImperial: tempImperial,
       location: location,
       conditions: conditions,
-      icon: icon,
+      icon: icon
     }
   };
 
