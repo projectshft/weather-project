@@ -2,7 +2,7 @@ var weatherModule = function() {
   var cityTimeZone = 0;
 
   var weatherData = {
-    fiveDayForecase: [],
+    fiveDayForecast: [],
     currentWeather: {}
   }
 
@@ -12,8 +12,8 @@ var weatherModule = function() {
     var template = Handlebars.compile(source);
     var newHTML = template(weatherData);
     //appending template to weather-display div
-    $('.weather-display').empty();
-    $('.weather-display').append(newHTML);
+    $('.five-day-forecast').empty();
+    $('.five-day-forecast').append(newHTML);
   }
 
   var calculateAverageTemperatures = function(data) {
@@ -32,9 +32,14 @@ var weatherModule = function() {
     return averageTemperatures;
   }
 
-  var buildWeatherData = function(totalData) {
+  var buildCurrentData = function(data) {
+    var weatherObj = {};
+    console.log(data);
+  }
+
+  var buildForecastData = function(totalData) {
     //resetting weather data to empty array to prevent duplicates
-    weatherData.weather = [];
+    weatherData.fiveDayForecast = [];
     var data = totalData.list;
     //setting city time zone for getting day of week
     cityTimeZone = totalData.city.timezone;
@@ -52,14 +57,15 @@ var weatherModule = function() {
       weatherObj.imgURL = imgURLStart + data[i].weather[0].icon + ".png";
       //getting average temperature using index/8 to correspond with averageTemperatures index for each day
       weatherObj.temperature = averageTemperatures[(i / 8)];
-      weatherData.weather.push(weatherObj);
+      weatherData.fiveDayForecast.push(weatherObj);
     }
     buildWeatherTemplate();
   }
 
   return {
     weatherData: weatherData,
-    buildWeatherData: buildWeatherData
+    buildForecastData: buildForecastData,
+    buildCurrentData: buildCurrentData
   }
 }
 
@@ -72,5 +78,11 @@ $(".btn-primary").click(function() {
   //caling weather api with cityName
   fetch('https://api.openweathermap.org/data/2.5/forecast?q=' + cityName + '&appid=094c0f37c693e9aa814d7b6b5368f063&units=imperial')
     .then(response => response.json())
-    .then(data => weather.buildWeatherData(data));
+    .then(data => weather.buildForecastData(data));
+
+  fetch('https://api.openweathermap.org/data/2.5/weather?q=' + cityName + '&appid=094c0f37c693e9aa814d7b6b5368f063&units=imperial')
+    .then(response => response.json())
+    .then(data => weather.buildCurrentData(data));
+
+
 })
