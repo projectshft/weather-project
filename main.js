@@ -42,14 +42,15 @@ const Weather = () => {
 
   // We need to invoke the API with the search-button being clicked
   const getCurrentWeather = (locationInput) => {
-    console.log(`The json openWeather data for ${locationInput} is`);
-
     $.ajax({
       method: "GET",
       url: `http://api.openweathermap.org/data/2.5/weather?q=${locationInput}&units=imperial&appid=4a88c029caa1e00e6735e625a0ee4cad`,
       dataType: "json",
       success: function (currentWeatherJSON) {
+        // first we want to scrape the data we want
         let unpackedWeather = unpackCurrentWeatherOfAPI(currentWeatherJSON);
+
+        // and then we'll change our model with just that data
         setCurrentWeatherData(unpackedWeather);
       },
       error: function (jqXHR, textStatus, errorThrown) {
@@ -59,15 +60,14 @@ const Weather = () => {
   };
 
   const getForecastWeather = (locationInput) => {
-    console.log(`The json openWeather data for ${locationInput} is`);
-
     $.ajax({
       method: "GET",
-      url: `api.openweathermap.org/data/2.5/forecast?q=${locationInput}&appid={your api key}`,
+      url: `http://api.openweathermap.org/data/2.5/forecast?q=${locationInput}&appid=4a88c029caa1e00e6735e625a0ee4cad`,
       dataType: "json",
       success: function (data) {
-        let unpackedForecast = unpackForecastFromAPI(forecastWeatherJSON);
-        setForeCastWeatherData(unpackedForecast);
+        console.log(data);
+        // let unpackedForecast = unpackForecastFromAPI(forecastWeatherJSON);
+        // setForeCastWeatherData(unpackedForecast);
       },
       error: function (jqXHR, textStatus, errorThrown) {
         console.log(textStatus);
@@ -104,6 +104,13 @@ const Weather = () => {
   const setForeCastWeatherData = (unpackedForecast) => {
     // reset our model's 5-day forecast data
     weatherData.future = [];
+
+    /* {
+      description: "cloudy",
+      temperature: 76,
+      icon: "http://openweathermap.org/img/wn/03n@2x.png",
+      day: "Monday",
+    }, */
 
     renderForecastWeather();
   };
@@ -144,6 +151,7 @@ const Weather = () => {
         let locationInput = $("#search-input").val();
 
         getCurrentWeather(locationInput);
+        getForecastWeather(locationInput);
 
         // reset the search input once complete
         $("#search-input").val("");
@@ -157,6 +165,7 @@ const Weather = () => {
       let locationInput = $("#search-input").val();
 
       getCurrentWeather(locationInput);
+      getForecastWeather(locationInput);
 
       // reset the search input once complete
       $("#search-input").val("");
