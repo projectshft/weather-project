@@ -67,7 +67,7 @@
 21. Under :success add 2 functions: 
 addWeeklyWeatherToForecastObject(data) and renderPage();
 
-22. Create the addWeeklyWeatherToForecastObject(data) function that accepts the data from the ajax request. Add the functionality to get one temp per day. Create an object that will hold the keys that match the handlebars template and values from the data. Push each day's object into the forecastObject array.
+22. Create the addWeeklyWeatherToForecastObject(data) function that accepts the data from the ajax request. Add the functionality to get each day of the forecast, one avg temp per day, and avg weather condition per day. Create an object that will hold the keys that match the handlebars template and values from the data. Push each day's object into the forecastObject array.
 
 23. Get weather icons provided by weather api to works
 

@@ -1382,12 +1382,12 @@ var obj =
 // }
 
 
-//first slice off the data in the list for the current day
+//first remove the data in the list for the current day
 const slicedArray = obj.list.slice(obj.list.findIndex((el) => {
   return el.dt_txt.includes(('00:00:00'));
 }))
 
-//console.log(slicedArray);
+//creating an array that will only hold our desired properties (date, temp, condition)
 const dataArray = [];
 for (let i = 0; i < slicedArray.length; i++) {
   const tempArray = []
@@ -1399,17 +1399,30 @@ for (let i = 0; i < slicedArray.length; i++) {
 }
 //console.log(dataArray);
 
+
 const finalArray = [];
 let dayArray = [];
 for (let i = 0; i < dataArray.length; i++) {
   dayArray.push(dataArray[i]);
 
+  if (finalArray.length === 4 && i === dataArray.length - 1) {
+    const clonedArray = dayArray.slice();
+    finalArray.push(clonedArray);
+  }
+
   if (dataArray[i][3].includes('21:00:00')) {
     const clonedArray = dayArray.slice();
     finalArray.push(clonedArray);
     dayArray.length = 0;
-  }
+  } 
+
+
 }
+
+console.log(finalArray);
+
+
+
 
 const weekdays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
@@ -1430,9 +1443,13 @@ const getAverageDailyTemperature = () => {
     weekArray.push(dailyObject);
   })
 }
+// getAverageDailyTemperature();
+// console.log(weekArray);
+
 
 //this will count the conditions for each time block in each day
 const weekConditions = [];
+
 const getDailyConditions = () => {
   finalArray.forEach(day => {
     const countObj = {};
@@ -1446,9 +1463,9 @@ const getDailyConditions = () => {
     weekConditions.push(countObj);
   })
 }
-console.log(finalArray);
-getDailyCondition();
-console.log(weekConditions);
+//console.log(finalArray);
+// getDailyConditions();
+// console.log(weekConditions);
 
 
 //this will find the most common condition per day and set that as the final forecast condition for each day
@@ -1465,5 +1482,5 @@ const getMostCommonConditionPerDay = () => {
   })
 }
 
-getMostCommonConditionPerDay();
-console.log(weekConditions);
+// getMostCommonConditionPerDay();
+// console.log(weekConditions);
