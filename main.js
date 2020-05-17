@@ -16,7 +16,7 @@ const Weather = () => {
   };
 
   // We need to invoke the API with the search-button being clicked
-  const searchWeatherAPI = (locationInput) => {
+  const getCurrentWeather = (locationInput) => {
     console.log(`The json openWeather data for ${locationInput} is`);
 
     $.ajax({
@@ -26,16 +26,16 @@ const Weather = () => {
       success: function (openWeatherData) {
         console.log(openWeatherData);
 
-        // grabbing data here to pass into updateWeatherData
-        // passing them rather than whole object so that
-        // setCurrentWeatherData stays clean in case we change APIs
-        let temp = openWeatherData.main.temp;
-        let location = openWeatherData.name;
-        let description = openWeatherData.weather[0].main;
-        let icon = `http://openweathermap.org/img/wn/${openWeatherData.weather[0].icon}@2x.png`;
+        // grabbing current weather data from API and storing
+        // storing into variables in case we change APIs
+        let currentWeatherFromAPI = {
+          temp: openWeatherData.main.temp,
+          location: openWeatherData.name,
+          description: openWeatherData.weather[0].main,
+          icon: `http://openweathermap.org/img/wn/${openWeatherData.weather[0].icon}@2x.png`,
+        };
 
-        setCurrentWeatherData(temp, location, description, icon);
-
+        setCurrentWeatherData(currentWeatherFromAPI);
         renderCurrentWeather();
       },
       error: function (jqXHR, textStatus, errorThrown) {
@@ -44,12 +44,13 @@ const Weather = () => {
     });
   };
 
-  const setCurrentWeatherData = (temp, location, description, icon) => {
-    // update our weather data with input from API
-    weatherData.currentConditions.temperature = temp;
-    weatherData.currentConditions.location = location;
-    weatherData.currentConditions.description = description;
-    weatherData.currentConditions.icon = icon;
+  const setCurrentWeatherData = (currentWeatherFromAPI) => {
+    // set the data for our model (Weather Data)
+    weatherData.currentConditions.temperature = currentWeatherFromAPI.temp;
+    weatherData.currentConditions.location = currentWeatherFromAPI.location;
+    weatherData.currentConditions.description =
+      currentWeatherFromAPI.description;
+    weatherData.currentConditions.icon = currentWeatherFromAPI.icon;
   };
 
   const renderCurrentWeather = () => {
@@ -71,7 +72,9 @@ const Weather = () => {
       if (event.which == 13) {
         event.preventDefault();
         let locationInput = $("#search-input").val();
-        searchWeatherAPI(locationInput);
+
+        getCurrentWeather(locationInput);
+
         // reset the search input once complete
         $("#search-input").val("");
       }
@@ -82,7 +85,9 @@ const Weather = () => {
   const searchButtonListener = () => {
     $(".search-location").click(function () {
       let locationInput = $("#search-input").val();
-      searchWeatherAPI(locationInput);
+
+      getCurrentWeather(locationInput);
+
       // reset the search input once complete
       $("#search-input").val("");
     });

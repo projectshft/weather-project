@@ -10,3 +10,7 @@
   font-size: 50px;
   font-family: "Comic Sans", sans-serif;
 }
+
+.current-conditions p {
+  font-size: 18px;
+}
