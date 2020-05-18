@@ -10,6 +10,7 @@
 </head>
 
 <body>
+  <div class="container">
   <div class="row">
     <div class="col-md-6 col-md-offset-3">
       <div class="page-header">
@@ -19,7 +20,7 @@
 
       <form class="location-search">
 
-        <div class="input-group col-md-6 col-md-offset-3">
+        <div class="input-group col-md-8 col-md-offset-2">
           <input type="text" id="locationName" class="form-control" placeholder="Enter City Name">
           <span class="input-group-btn">
             <button type="button" id="searchCity" class="btn btn-primary">Search</button>
@@ -27,58 +28,92 @@
 
         </div>
       </form>
+    </div>
+  </div>
+</div>
 
 
-      <div id="weatherInfo" class="col-md-6 col-md-offset-3">
+      <div class="container">
+          <div class="row">
+              <div id="weatherInfo" class="col-md-8 col-md-offset-5">
+              </div>
+          </div>
       </div>
 
-      <div id="fiveDayForecastInfo" class="col-md-6 col-md-offset-3">
-      </div>
+      <div class="container">
+          <div class="row">
+              <br />
+              <br />
+              </div>
+          </div>
+
+
+<div class="container">
+<div class="row">
+      <div id="fiveDayForecastInfo">
+  </div>
+  </div>
+</div>
 
 
       <script id="weather-template" type="text/x-handlebars-template">
-        <div class="forecastInfo">
+        <div class="forecastInfo col-sm-1">
           <h1>{{temp}}</h1>
-          <h4>{{city}} &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<img src= "http://openweathermap.org/img/wn/{{icon}}@2x.png"/></h4>
+          <h4>{{city}}</h4>
           <h5>{{description}}</h5>
         </div>
+
+        <div class="forecastInfo col-sm-2">
+          <img src= "http://openweathermap.org/img/wn/{{icon}}@2x.png"/>
+        </div>
+
       </script>
 
       <script id="forecast-template" type="text/x-handlebars-template">
 
-        <div class="fiveDayForecastInfo01">
-          <h5>{{fiveDayDescription01}}</h5>
+        <div class="fiveDayForecastInfo01 col-sm-2">
+          <center>
+          <h4>{{fiveDayDescription01}}</h4>
           <h1>{{fiveDayTemp01}}</h1>
           <img src= "http://openweathermap.org/img/wn/{{fiveDayIcon01}}@2x.png"/>
           <h4>{{fiveDayDate01}}</h4>
+        </center>
         </div>
 
-        <div class="fiveDayForecastInfo02">
-          <h5>{{fiveDayDescription02}}</h5>
+        <div class="fiveDayForecastInfo02 col-sm-2">
+          <center>
+          <h4>{{fiveDayDescription02}}</h4>
           <h1>{{fiveDayTemp02}}</h1>
           <img src= "http://openweathermap.org/img/wn/{{fiveDayIcon02}}@2x.png"/>
           <h4>{{fiveDayDate02}}</h4>
+          </center>
         </div>
 
-        <div class="fiveDayForecastInfo03">
-          <h5>{{fiveDayDescription03}}</h5>
+        <div class="fiveDayForecastInfo03 col-sm-2">
+          <center>
+          <h4>{{fiveDayDescription03}}</h4>
           <h1>{{fiveDayTemp03}}</h1>
           <img src= "http://openweathermap.org/img/wn/{{fiveDayIcon03}}@2x.png"/>
           <h4>{{fiveDayDate03}}</h4>
+        </center>
         </div>
 
-        <div class="fiveDayForecastInfo04">
-          <h5>{{fiveDayDescription04}}</h5>
+        <div class="fiveDayForecastInfo04 col-sm-2">
+          <center>
+          <h4>{{fiveDayDescription04}}</h4>
           <h1>{{fiveDayTemp04}}</h1>
           <img src= "http://openweathermap.org/img/wn/{{fiveDayIcon04}}@2x.png"/>
           <h4>{{fiveDayDate04}}</h4>
+        </center>
         </div>
 
-        <div class="fiveDayForecastInfo05">
-          <h5>{{fiveDayDescription05}}</h5>
+        <div class="fiveDayForecastInfo05 col-sm-2">
+          <center>
+          <h4>{{fiveDayDescription05}}</h4>
           <h1>{{fiveDayTemp05}}</h1>
           <img src= "http://openweathermap.org/img/wn/{{fiveDayIcon05}}@2x.png"/>
           <h4>{{fiveDayDate05}}</h4>
+        </center>
         </div>
 
       </script>
