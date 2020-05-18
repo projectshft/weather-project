@@ -19,7 +19,7 @@ var weatherData = function() {
 
   var currentWeather = {};
 
-  var fiveDayForecast = [{}, {}, {}, {}, {}];
+  var forecast = [];
 
   var fetchCurrentWeather = function(query) {
 
@@ -66,7 +66,7 @@ var weatherData = function() {
 
   };
 
-  var fetchFiveDayForecast = function(query) {
+  var fetchForecast = function(query) {
 
     $.ajax({
       method: "GET",
@@ -84,16 +84,31 @@ var weatherData = function() {
 
   };
 
-  var setFiveDayForecast = function(data) {
+  var setForecast = function(data) {
 
-    data.list.reduce(function(accumulator, currentValue) {
-      // while it's not midnight
-      while (moment.unix(data.list[0].dt).format("h") === "0") {
+    var fiveDayArray = [];
 
-      }
+    data.list.forEach((item, i) => {
+      if (moment.unix(item.dt).format("h") ==! 0) {
+        var day  = [];
+        array.push(item);
     });
 
-    fiveDayForecast.forEach((day, i) => {
+    //use reduce bellow
+
+
+      // while it's not midnight
+      while (moment.unix(data.list[0].dt).format("h") ==! "0") {
+        var array = [];
+        array.push(data.list[i]);
+
+
+      }
+
+
+    });
+
+    forecast.forEach((day, i) => {
       day[i] = weather();
       day[i].tempImperial = data.list[0].main.temp; // create a round function at some point
       day[i].conditions = data.list[0].weather[0].description;
@@ -101,13 +116,13 @@ var weatherData = function() {
       day[i].day = moment.unix(data.list[0].dt).format("dddd");
     });
 
-    renderFiveDayForecast();
+    renderForecast();
   }
 
   var renderFiveDayForecast = function() {
     $('.five-day').empty();
 
-    fiveDayForecast.forEach((day, i) => {
+    forecast.forEach((day, i) => {
       var sourceFiveDayForecast = $('#five-day-weather-template').html();
       var templateFiveDayForecast = Handlebars.compile(sourceFiveDayForecast);
       var displayFiveDayForecast = templateFiveDayForecast(day[i]);
@@ -143,5 +158,5 @@ $('.search').on('keypress', function(e) {
 
   var search = $('#search-query').val();
   data.fetchCurrentWeather(search);
-  data.fetchFiveDayForecast(search);
+  data.fetchForecast(search);
 });
