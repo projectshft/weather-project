@@ -49,9 +49,6 @@ const WeatherModule = () => {
 
     //this uses a bootstrap column to center the 5-day forecast section
     $('.week-forecast').prepend($('<div class="col-md-1"></div>'));
-
-    //this clears the input field without triggering the browser form validation
-    $('#city-id').val('');
   }
 
 
@@ -259,7 +256,7 @@ const WeatherModule = () => {
   const fetch = cityName => {
 
     //this request will get the weather stats for the current day
-    const ajaxRequest1 = $.ajax({
+   const ajaxRequest1 = $.ajax({
       method: "GET",
       url: `https://api.openweathermap.org/data/2.5/weather?q=${cityName},&APPID=59bd6855f51f9bbb1d24f5854ff189f5`,
       dataType: "json",
@@ -281,7 +278,9 @@ const WeatherModule = () => {
       console.log(`Error code: ${err.responseJSON.cod}, message: ${err.responseJSON.message}`)
       alert(`Error: ${err.responseJSON.message}`)
       });
+
   }
+
 
   return {
     fetch
@@ -297,9 +296,8 @@ $('.submit').on('click', function (event) {
   if (cityName) {
     myWeatherApp.fetch(cityName);
   }
+  event.preventDefault();
 
-  
-
-  
+  $('#city-id').val('');
 
 })
