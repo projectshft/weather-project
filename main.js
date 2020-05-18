@@ -275,7 +275,7 @@ const Weather = () => {
     localStorage.setItem("defaultLocation", location);
 
     // we need a visual affordance so that they know it was done
-    $(".set-default-button").html("Done!");
+    $(".set-default-button").html(`Done! Default is now ${location}`);
   });
 
   // if local storage has been set
