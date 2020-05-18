@@ -35,7 +35,6 @@ let addWeather = (data) => {
 
 
 // Creating a function to request weather data from OpenWeatherMap API using AJAX
-// Placing static data for Durham to test
 
 let fetchWeather = (locationWeatherData) => {
 
