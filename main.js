@@ -1,17 +1,18 @@
 // Creating an array for weather data
-// Creating test template to verify data is shown in web page
+
 
 let weatherDataFromAPI = [
 
-    // Commenting out static data temporarily to test functionality
-    // {
-    //
-    //   temp: "72*",
-    //   city: "Durham, NC",
-    //   description: "Sunny",
-    //   icon: "http://openweathermap.org/img/wn/01d@2x.png"}
+];
+
+
+
+// Creating array for 5-day forecast dataType
+
+let forecastDataFromAPI = [
 
 ];
+
 
 
 // Extracting data from the Search input and storing it in an array.
@@ -29,6 +30,25 @@ let addWeather = (data) => {
   weatherDataFromAPI.push(tempWeatherDataFromAPI);
 
   console.log('WEATHER DATA!')
+};
+
+
+
+// Extracting data from the Search input for 5 day forecast and storing it in an array.
+
+let addForecast = (data) => {
+
+  let tempForecastDataFromAPI = {
+    temp: Math.round(data.list[9].temp)+"°",
+    city: data.city.name,
+    description: data.list[9].weather[0].main,
+    icon: data.list[9].weather[0].icon
+
+  }
+
+  forecastDataFromAPI.push(tempForecastDataFromAPI);
+
+  console.log('FORECAST DATA!')
 };
 
 
@@ -56,6 +76,7 @@ let fetchWeather = (locationWeatherData) => {
 };
 
 
+
 // Creating render function to display weather array in web page
 
 let renderWeather = () => {
@@ -74,7 +95,6 @@ let renderWeather = () => {
 
     console.log(weatherDataHTML)
 };
-
 
 
 // Listening for a click to submit form data
