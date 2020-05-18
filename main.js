@@ -286,8 +286,6 @@ const Weather = () => {
     getCurrentWeather(localStorage.defaultLocation);
     getForecastWeather(localStorage.defaultLocation);
   }
-
-  return {};
 };
 
 let weatherApp = Weather();
