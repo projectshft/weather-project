@@ -17,8 +17,9 @@ var weatherData = function() {
     }
   };
 
+  // both of these variable have scope throughout the weatherData function
+  // and are utilized in both model and view functions. Not ideal design.
   var currentWeather = {};
-
   var forecast = [];
 
   var fetchCurrentWeather = function(query) {
@@ -33,37 +34,10 @@ var weatherData = function() {
       },
       error: function(jqXHR, textStatus, errorThrown) {
         console.log(textStatus);
-        renderError();
+        renderErrorCurrentWeather();
       }
 
     });
-
-  };
-
-  // This model function sets currentWeather and then invokes
-  // renderCurrentWeather to change user view.
-  var setCurrentWeather = function(data) {
-
-    currentWeather = weather();
-
-    currentWeather.tempImperial = Math.round(data.main.temp);
-    currentWeather.location = data.name;
-    currentWeather.conditions = data.weather[0].description;
-    currentWeather.icon = `http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
-
-    renderCurrentWeather();
-  };
-
-
-  // Utilizes currentWeather variable to display to viewer
-  var renderCurrentWeather = function() {
-
-    $('.current').empty();
-
-    var sourceCurrentWeather = $('#current-weather-template').html();
-    var templateCurrentWeather = Handlebars.compile(sourceCurrentWeather);
-    var displayCurrentWeather = templateCurrentWeather(currentWeather);
-    $('.current').append(displayCurrentWeather);
 
   };
 
@@ -79,19 +53,37 @@ var weatherData = function() {
       },
       error: function(jqXHR, textStatus, errorThrown) {
         console.log(textStatus);
+        renderErrorForecast();
       }
 
     });
+  }
 
-  };
+  // This modeling function sets currentWeather and then invokes
+  // renderCurrentWeather to change user view.
+  var setCurrentWeather = function(data) {
 
+    currentWeather = weather();
+
+    currentWeather.tempImperial = Math.round(data.main.temp);
+    currentWeather.location = data.name;
+    currentWeather.conditions = data.weather[0].description;
+    currentWeather.icon = `http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
+
+    renderCurrentWeather();
+  }
+
+  // This large modeling function groups data, sets forecast by reducing those
+  // data groups, and finally calls renderForecast to change user view.
   var setForecast = function(data) {
 
     var forecastDataGroups = [[]];
     var day = 0;
 
+    // This section of the function groups data based on timestamp
+    // into periods demarcated by midnight ("00"). These data groups
+    // will be reduced into objects in the next section.
     for (var period = 0; period < data.list.length; period++) {
-
       // Must use "HH" to evaluate moment properly. The comparison in line 105
       // goes digit by digit - like comparing strings, not numbers.
       var currentHour = moment.unix(data.list[period].dt).format("HH");
@@ -102,8 +94,9 @@ var weatherData = function() {
       } else {
         var previousHour = moment.unix(data.list[period - 1].dt).format("HH");
       }
-        // The heart of the function, grouping data based on timestamp
-        // into periods demarcated by midnight ("00")
+
+      // Creates a new data group and increases "day" counter
+      // when the midnight threshold is crossed
         if (previousHour && previousHour > currentHour) {
           var newDataGroup = [];
           forecastDataGroups.push(newDataGroup);
@@ -114,7 +107,8 @@ var weatherData = function() {
         }
       }
 
-    //using reduce to turn each data grouping into an object
+    //using reduce to turn each data grouping into an object corresponding
+    //to each day of the week to be modeled
     forecast = forecastDataGroups.reduce(function(forecast, currentDataGroup) {
 
       var temperature = 0;
@@ -123,18 +117,19 @@ var weatherData = function() {
       var iconsArray = [];
 
       var currentDay = currentDataGroup.reduce(function(day, currentPeriod) {
-        // gets temperature across the day as average
+        // gets temperature from data group as mean
         temperature += currentPeriod.main.temp;
         counter++;
-        // gets conditions across the day as object. In case of tie, picks first.
+
+        // gets conditions and icon from data group as mode in return statement
         conditionsArray.push(currentPeriod.weather[0].description);
         iconsArray.push(currentPeriod.weather[0].icon);
 
         return day = {
           tempImperial: Math.round(temperature/counter),
-          conditions: conditionsArray, // reducing and finding Max in next step
-          icon: iconsArray, // reducing and finding Max in next step
-          dayOfWeek: moment.unix(currentPeriod.dt).format("dddd")
+          conditions: getMax(conditionsArray),
+          icon: `http://openweathermap.org/img/wn/${getMax(iconsArray)}@2x.png`,
+          dayOfWeek: moment.unix(currentPeriod.dt).format("ddd")
         };
       }, {});
 
@@ -143,14 +138,7 @@ var weatherData = function() {
       return forecast;
     }, []);
 
-
-    for (var i = 0; i < forecast.length; i++) {
-      var modeConditions = getMax(forecast[i].conditions);
-      var modeIcon = getMax(forecast[i].icon);
-      forecast[i].conditions = modeConditions;
-      forecast[i].icon = `http://openweathermap.org/img/wn/${modeIcon}@2x.png`;
-    }
-
+    // Making sure only five days are shown
     while (forecast.length > 5) {
       forecast.pop();
     }
@@ -158,10 +146,22 @@ var weatherData = function() {
     renderForecast();
   }
 
+  // Utilizes currentWeather variable to display to viewer
+  var renderCurrentWeather = function() {
+
+    $('.current').empty();
+
+    var sourceCurrentWeather = $('#current-weather-template').html();
+    var templateCurrentWeather = Handlebars.compile(sourceCurrentWeather);
+    var displayCurrentWeather = templateCurrentWeather(currentWeather);
+    $('.current').append(displayCurrentWeather);
+
+  }
+
+  // Utilizes forecast variable to display to viewer. Currently renders
+  // asynchronously with renderCurrentWeather.
   var renderForecast = function() {
     $('.five-day').empty();
-
-    console.log(forecast);
 
     forecast.forEach((day) => {
       var sourceFiveDayForecast = $('#five-day-weather-template').html();
@@ -172,16 +172,29 @@ var weatherData = function() {
 
   }
 
-  var renderError = function() {
-    
+  var renderErrorCurrentWeather = function() {
+      $('.current').empty();
+
+      var sourceError = $('#error1-template').html();
+      var templateError = Handlebars.compile(sourceError);
+      var displayError = templateError();
+      $('.current').append(displayError);
   }
 
-  // The only public function is fetchData
+  var renderErrorForecast = function() {
+      $('.five-day').empty();
+
+      var sourceError = $('#error2-template').html();
+      var templateError = Handlebars.compile(sourceError);
+      var displayError = templateError();
+      $('.five-day').append(displayError);
+  }
+
+  // The only public function is fetchCurrentWeather and fetchForecast
   return {
     fetchCurrentWeather: fetchCurrentWeather,
     fetchForecast: fetchForecast
   }
-
 
 }
 

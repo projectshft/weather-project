@@ -1,3 +1,6 @@
+
+// Modified from my solutions to the Project Shift code challenge
+
 var getCount = function (arr) {
   var countedItems = arr.reduce(function (total, currentInstance) {
     if (currentInstance in total) {
@@ -12,7 +15,6 @@ var getCount = function (arr) {
     return countedItems;
 }
 
-// Consulted documentation for use of Object.getOwnPropertyNames
 var getMax = function(arr) {
 
   var obj = getCount(arr);
@@ -22,6 +24,7 @@ var getMax = function(arr) {
   var maxItem = '';
   counter = 0;
 
+  // In case of a tie, the last shall be first ...
   for (var prop in obj) {
     if (obj[prop] >= max) {
       max = obj[prop];
