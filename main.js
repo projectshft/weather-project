@@ -3,17 +3,17 @@ var weatherData = function() {
   var weather = function() {
 
     var tempImperial = null;
-    var location = '';
-    var conditions = '';
-    var icon = '';
-    var day = '';
+    var location = null;
+    var conditions = null;
+    var icon = null;
+    var dayOfWeek = null;
 
     return {
       tempImperial: tempImperial,
       location: location,
       conditions: conditions,
       icon: icon,
-      day: day
+      dayOfWeek: dayOfWeek
     }
   };
 
@@ -23,10 +23,10 @@ var weatherData = function() {
 
   var fetchCurrentWeather = function(query) {
 
-    $.ajax({ //${query}
+    $.ajax({
       method: "GET",
       //Using imperial units
-      url: `http://api.openweathermap.org/data/2.5/weather?q=Durham,nc,us&units=imperial&appid=baa280a65d9a5786919fda92ca7532a8`,
+      url: `http://api.openweathermap.org/data/2.5/weather?q=${query},us&units=imperial&appid=baa280a65d9a5786919fda92ca7532a8`,
       dataType: "json",
       success: function(data) {
         setCurrentWeather(data);
@@ -45,7 +45,7 @@ var weatherData = function() {
 
     currentWeather = weather();
 
-    currentWeather.tempImperial = data.main.temp; // create a round function at some point
+    currentWeather.tempImperial = Math.round(data.main.temp);
     currentWeather.location = data.name;
     currentWeather.conditions = data.weather[0].description;
     currentWeather.icon = `http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
@@ -54,7 +54,7 @@ var weatherData = function() {
   };
 
 
-  // Takes value
+  // Utilizes currentWeather variable to display to viewer
   var renderCurrentWeather = function() {
 
     $('.current').empty();
@@ -71,7 +71,7 @@ var weatherData = function() {
     $.ajax({
       method: "GET",
       //Using imperial units
-      url: `http://api.openweathermap.org/data/2.5/forecast?q=Durham,nc,us&units=imperial&appid=baa280a65d9a5786919fda92ca7532a8`,
+      url: `http://api.openweathermap.org/data/2.5/forecast?q=${query},us&units=imperial&appid=baa280a65d9a5786919fda92ca7532a8`,
       dataType: "json",
       success: function(data) {
           setForecast(data);
@@ -91,42 +91,65 @@ var weatherData = function() {
 
     for (var period = 0; period < data.list.length; period++) {
 
-      // Must use "HH" to evaluate time properly
+      // Must use "HH" to evaluate moment properly. The comparison in line 105
+      // goes digit by digit - like comparing strings, not numbers.
       var currentHour = moment.unix(data.list[period].dt).format("HH");
 
+      // Accounting for period = 0
       if (period < 1) {
         var previousHour = null;
       } else {
         var previousHour = moment.unix(data.list[period - 1].dt).format("HH");
       }
-        console.log(currentHour);
-        console.log(previousHour);
-        console.log(previousHour && previousHour > currentHour);
+        // The heart of the function, grouping data based on timestamp
+        // into periods demarcated by midnight ("00")
         if (previousHour && previousHour > currentHour) {
           var newDataGroup = [];
           forecastDataGroups.push(newDataGroup);
           day++;
           forecastDataGroups[day].push(data.list[period]);
-          console.log("new array")
-          console.log(forecastDataGroups);
         } else {
           forecastDataGroups[day].push(data.list[period]);
-          console.log("status quo")
         }
       }
 
-      console.log(forecastDataGroups);
+    //using reduce to turn each data grouping into an object
+    forecast = forecastDataGroups.reduce(function(forecast, currentDataGroup) {
 
-    //use reduce bellow
+      var temperature = 0;
+      var counter = 0;
+      var conditionsArray = [];
+      var iconsArray = [];
+
+      var currentDay = currentDataGroup.reduce(function(day, currentPeriod) {
+        // gets temperature across the day as average
+        temperature += currentPeriod.main.temp;
+        counter++;
+        // gets conditions across the day as object. In case of tie, picks first.
+        conditionsArray.push(currentPeriod.weather[0].description);
+        iconsArray.push(currentPeriod.weather[0].icon);
+
+        return day = {
+          tempImperial: Math.round(temperature/counter),
+          conditions: conditionsArray, // reducing and finding Max in next step
+          icon: iconsArray, // reducing and finding Max in next step
+          dayOfWeek: moment.unix(currentPeriod.dt).format("dddd")
+        };
+      }, {});
+
+      forecast.push(currentDay);
+
+      return forecast;
+    }, []);
 
 
-    forecast.forEach((forecastDay, i) => {
-      forecastDay[i] = weather();
-      forecastDay[i].tempImperial = data.list[0].main.temp; // create a round function at some point
-      forecastDay[i].conditions = data.list[0].weather[0].description;
-      forecastDay[i].icon = `http://openweathermap.org/img/wn/${data.list[0].weather[0].icon}@2x.png`;
-      forecastDay[i].day = moment.unix(data.list[0].dt).format("dddd");
-    });
+    for (var i = 0; i < forecast.length; i++) {
+      var modeConditions = getMax(forecast[i].conditions);
+      var modeIcon = getMax(forecast[i].icon);
+      forecast[i].conditions = modeConditions;
+      forecast[i].icon = `http://openweathermap.org/img/wn/${modeIcon}@2x.png`;
+    }
+
 
     renderForecast();
   }
@@ -134,10 +157,12 @@ var weatherData = function() {
   var renderForecast = function() {
     $('.five-day').empty();
 
-    forecast.forEach((day, i) => {
+    console.log(forecast);
+
+    forecast.forEach((day) => {
       var sourceFiveDayForecast = $('#five-day-weather-template').html();
       var templateFiveDayForecast = Handlebars.compile(sourceFiveDayForecast);
-      var displayFiveDayForecast = templateFiveDayForecast(day[i]);
+      var displayFiveDayForecast = templateFiveDayForecast(day);
       $('.five-day').append(displayFiveDayForecast);
     });
 
