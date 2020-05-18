@@ -5,7 +5,7 @@ let weatherDataFromAPI = [
     {
       temp: "72*",
       city: "Durham, NC",
-      weatherMain: "Sunny",
+      description: "Sunny",
       icon: "http://openweathermap.org/img/wn/01d@2x.png"}
 
 ];
