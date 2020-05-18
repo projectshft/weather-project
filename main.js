@@ -39,10 +39,31 @@ let addWeather = (data) => {
 let addForecast = (data) => {
 
   let tempForecastDataFromAPI = {
-    temp: Math.round(data.list[9].temp)+"°",
-    city: data.city.name,
-    description: data.list[9].weather[0].main,
-    icon: data.list[9].weather[0].icon
+
+    fiveDayTemp01: Math.round(data.list[9].main.temp)+"°",
+    fiveDayDescription01: data.list[9].weather[0].main,
+    fiveDayIcon01: data.list[9].weather[0].icon,
+    fiveDayDate01: data.list[9].dt_txt,
+
+    fiveDayTemp02: Math.round(data.list[17].main.temp)+"°",
+    fiveDayDescription02: data.list[17].weather[0].main,
+    fiveDayIcon02: data.list[17].weather[0].icon,
+    fiveDayDate02: data.list[17].dt_txt,
+
+    fiveDayTemp03: Math.round(data.list[25].main.temp)+"°",
+    fiveDayDescription03: data.list[25].weather[0].main,
+    fiveDayIcon03: data.list[25].weather[0].icon,
+    fiveDayDate03: data.list[25].dt_txt,
+
+    fiveDayTemp04: Math.round(data.list[33].main.temp)+"°",
+    fiveDayDescription04: data.list[33].weather[0].main,
+    fiveDayIcon04: data.list[33].weather[0].icon,
+    fiveDayDate04: data.list[33].dt_txt,
+
+    fiveDayTemp05: Math.round(data.list[39].main.temp)+"°",
+    fiveDayDescription05: data.list[39].weather[0].main,
+    fiveDayIcon05: data.list[39].weather[0].icon,
+    fiveDayDate05: data.list[39].dt_txt
 
   }
 
@@ -85,11 +106,13 @@ let fetchFiveDayForecast = (locationWeatherData) => {
 
     method: "GET",
     // url: "http://api.openweathermap.org/data/2.5/forecast?q=" + locationWeatherData + "&units=imperial" + "&appid=0f9391bf663647fd9cad13780bf4eff1",
-    url: "http://api.openweathermap.org/data/2.5/forecast?q=" + "Durham" + "&units=imperial" + "&appid=0f9391bf663647fd9cad13780bf4eff1",
+    url: "http://api.openweathermap.org/data/2.5/forecast?q=Durham&units=imperial&appid=0f9391bf663647fd9cad13780bf4eff1",
     dataType: "json",
     success: function(data) {
       addForecast(data);
       renderForecast();
+
+      console.log('FETCH FIVE DAY');
     },
 
     error: function(jqXHR, textStatus, errorThrown) {
@@ -124,8 +147,8 @@ let renderWeather = () => {
 
 let renderForecast = () => {
 
-// Empty weather div to append new data
-  $('#forecastInfo').empty();
+// Empty foreast div to append new data
+  $('#fiveDayForecastInfo').empty();
 
 
   let forecastData = forecastDataFromAPI[0];
@@ -134,7 +157,7 @@ let renderForecast = () => {
   let template = Handlebars.compile(source);
   let forecastDataHTML = template(forecastData);
 
-  $('#forecastInfo').append(forecastDataHTML)
+  $('#fiveDayForecastInfo').append(forecastDataHTML)
 
     console.log(forecastDataHTML)
 };
