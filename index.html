@@ -13,51 +13,64 @@
 </head>
 
 <body>
-  <div class="row">
-    <div class="col-md-6 col-md-offset-3">
-      <div class="page-header">
-        <h1>Current Weather</h1>
-      </div>
-    </div>
-  </div>
+  <div class="container-fluid">
 
-  <div class="row">
-    <form class="search-form">
-      <div class="col-md-5 col-md-offset-3">
-        <div class="form-group">
-          <input type="text" id="search-input" class="form-control" placeholder="Enter city name">
-          </input>
-        </div>
-      </div>
-      <div class="col-md-1">
-        <button type="button" class="btn btn-primary search-button">Search</button>
-      </div>
-    </form>
-  </div>
-
-  <div class="row">
-    <div class="col-sm-4 col-sm-offset-4 current-conditions-box">
-    </div>
-  </div>
-
-  <div class="row forecast-row">
-    <div class="col-sm-6 col-md-offset-3">
-      <div class="row">
-        <div class="col-sm-1"></div>
-        
-        <div class="five-day-grid">
-        <!-- this is where handlebars will insert each day-->
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3">
+        <div class="page-header">
+          <h1>Current Weather</h1>
         </div>
       </div>
     </div>
+  
+    <div class="row">
+      <form class="search-form">
+        <div class="col-md-5 col-md-offset-3">
+          <div class="form-group">
+            <input type="text" id="search-input" class="form-control" placeholder="Enter city name">
+            </input>
+          </div>
+        </div>
+        <div class="col-md-1">
+          <button type="button" class="btn btn-primary btn-block search-button">Search</button>
+        </div>
+      </form>
+    </div>
+  
+    <div class="row">
+      <div class="col-sm-4 col-sm-offset-4 current-conditions-box">
+      </div>
+    </div>
+  
+    <div class="row forecast-row">
+      <div class="col-md-6 col-md-offset-3">
+        <div class="row">
+          <div class="col-sm-1"></div>
+          
+          <div class="five-day-grid">
+          <!-- this is where handlebars will insert each day-->
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <div class="row set-default-row">
+      <div class="col-sm-2 col-sm-offset-5">
+        <button type="button" class="btn btn-xs btn-default btn-block set-default-button">Set as default</button>
+      </div>
+      
+    </div>
   </div>
+  
+
+  
 
 
   <script id="current-weather-template" type="text/x-handlebars-template">
     <div class="media current-conditions">
       <div class="media-body">
         <h1>{{temperature}}&deg;</h1>
-        <h2>{{location}}</h2>
+        <h2 class="current-location">{{location}}</h2>
         <p>{{description}}</p>
       </div>
       <div class="media-left media-middle">

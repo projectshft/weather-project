@@ -25,6 +25,9 @@ const Weather = () => {
         setCurrentWeatherData(unpackedWeather);
       },
       error: function (jqXHR, textStatus, errorThrown) {
+        alert(
+          "Error -- be sure to input a location. Otherwise, current weather search yielded no results."
+        );
         console.log(textStatus);
       },
     });
@@ -36,12 +39,18 @@ const Weather = () => {
       url: `http://api.openweathermap.org/data/2.5/forecast?q=${locationInput}&units=imperial&appid=4a88c029caa1e00e6735e625a0ee4cad`,
       dataType: "json",
       success: function (forecastWeatherJSON) {
+        // helpful to keep in console to see how organized
         console.log("The forecast weather is: ");
         console.log(forecastWeatherJSON);
+
+        // take out just the data we need before setting
         let unpackedForecast = unpackForecastFromAPI(forecastWeatherJSON);
         setForeCastWeatherData(unpackedForecast);
       },
       error: function (jqXHR, textStatus, errorThrown) {
+        alert(
+          "Error -- be sure to input a location. Otherwise, current weather search yielded no results."
+        );
         console.log(textStatus);
       },
     });
@@ -240,35 +249,40 @@ const Weather = () => {
   };
 
   // If someone presses enter in search field, we need to fire the search button event
-  const searchBarEnterKeyListener = () => {
-    $("#search-input").on("keypress", function (event) {
-      if (event.which == 13) {
-        event.preventDefault();
-        $(".search-button").click();
-      }
-    });
-  };
+  $("#search-input").on("keypress", function (event) {
+    if (event.which == 13) {
+      event.preventDefault();
+      $(".search-button").click();
+    }
+  });
 
   // if someone clicks the button to search
-  const searchButtonListener = () => {
-    $(".search-button").click(function () {
-      let locationInput = $("#search-input").val();
+  $(".search-button").click(function () {
+    let locationInput = $("#search-input").val();
 
-      getCurrentWeather(locationInput);
-      getForecastWeather(locationInput);
+    $(".set-default-row").show();
 
-      // reset the search input once complete
-      $("#search-input").val("");
-    });
-  };
+    getCurrentWeather(locationInput);
+    getForecastWeather(locationInput);
 
-  searchButtonListener();
-  searchBarEnterKeyListener();
+    // reset the search input once complete
+    $("#search-input").val("");
+  });
+
+  $(".set-default-button").on("click", function () {
+    // find the value of the currently displayed city to store
+    let location = $(".current-location").html();
+    localStorage.setItem("defaultLocation", location);
+
+    // we need a visual affordance so that they know it was done
+    $(".set-default-button").html("Done!");
+  });
 
   // if local storage has been set
   // get the weather conditions based on what has been set
   // render the weather conditions
   if (localStorage.defaultLocation) {
+    $(".set-default-row").show();
     getCurrentWeather(localStorage.defaultLocation);
     getForecastWeather(localStorage.defaultLocation);
   }
@@ -277,4 +291,3 @@ const Weather = () => {
 };
 
 let weatherApp = Weather();
-localStorage.setItem("defaultLocation", "Raleigh");

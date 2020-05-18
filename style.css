@@ -49,3 +49,8 @@ p.forecast-day {
   height: 2.5em;
   vertical-align: middle;
 }
+
+.set-default-row {
+  padding: 15px;
+  display: none;
+}
