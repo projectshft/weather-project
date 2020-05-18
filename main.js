@@ -43,27 +43,27 @@ let addForecast = (data) => {
     fiveDayTemp01: Math.round(data.list[9].main.temp) + "°",
     fiveDayDescription01: data.list[9].weather[0].main,
     fiveDayIcon01: data.list[9].weather[0].icon,
-    fiveDayDate01: data.list[9].dt_txt,
+    fiveDayDate01: moment(data.list[9].dt_txt).format("dddd"),
 
     fiveDayTemp02: Math.round(data.list[17].main.temp) + "°",
     fiveDayDescription02: data.list[17].weather[0].main,
     fiveDayIcon02: data.list[17].weather[0].icon,
-    fiveDayDate02: data.list[17].dt_txt,
+    fiveDayDate02: moment(data.list[17].dt_txt).format("dddd"),
 
     fiveDayTemp03: Math.round(data.list[25].main.temp) + "°",
     fiveDayDescription03: data.list[25].weather[0].main,
     fiveDayIcon03: data.list[25].weather[0].icon,
-    fiveDayDate03: data.list[25].dt_txt,
+    fiveDayDate03: moment(data.list[25].dt_txt).format("dddd"),
 
     fiveDayTemp04: Math.round(data.list[33].main.temp) + "°",
     fiveDayDescription04: data.list[33].weather[0].main,
     fiveDayIcon04: data.list[33].weather[0].icon,
-    fiveDayDate04: data.list[33].dt_txt,
+    fiveDayDate04: moment(data.list[33].dt_txt).format("dddd"),
 
     fiveDayTemp05: Math.round(data.list[39].main.temp) + "°",
     fiveDayDescription05: data.list[39].weather[0].main,
     fiveDayIcon05: data.list[39].weather[0].icon,
-    fiveDayDate05: data.list[39].dt_txt
+    fiveDayDate05: moment(data.list[39].dt_txt).format("dddd")
 
   }
 
