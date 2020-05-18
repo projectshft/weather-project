@@ -86,20 +86,36 @@ var weatherData = function() {
 
   var setForecast = function(data) {
 
-    var forecastData = [[]];
+    var forecastDataGroups = [[]];
     var day = 0;
 
-    data.list.forEach((threeHourPeriod, i) => {
-      console.log(moment.unix(threeHourPeriod.dt).format("H"))
-      if (moment.unix(threeHourPeriod.dt).format("H") === 0) {
-        forecastData[day].push(threeHourPeriod);
-        day++;
-        forecastData.push([]);
-      } else
-        forecastData[day].push(threeHourPeriod);
-    });
+    for (var period = 0; period < data.list.length; period++) {
 
-    console.log(forecastData);
+      // Must use "HH" to evaluate time properly
+      var currentHour = moment.unix(data.list[period].dt).format("HH");
+
+      if (period < 1) {
+        var previousHour = null;
+      } else {
+        var previousHour = moment.unix(data.list[period - 1].dt).format("HH");
+      }
+        console.log(currentHour);
+        console.log(previousHour);
+        console.log(previousHour && previousHour > currentHour);
+        if (previousHour && previousHour > currentHour) {
+          var newDataGroup = [];
+          forecastDataGroups.push(newDataGroup);
+          day++;
+          forecastDataGroups[day].push(data.list[period]);
+          console.log("new array")
+          console.log(forecastDataGroups);
+        } else {
+          forecastDataGroups[day].push(data.list[period]);
+          console.log("status quo")
+        }
+      }
+
+      console.log(forecastDataGroups);
 
     //use reduce bellow
 
