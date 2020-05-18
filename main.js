@@ -66,6 +66,7 @@ const Weather = () => {
       "Wednesday",
       "Thursday",
       "Friday",
+      "Saturday",
     ];
     return days[day.getDay()];
   };
