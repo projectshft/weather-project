@@ -21,13 +21,14 @@
         <div class="input-group">
           <input type="text" id="locationName" class="form-control" placeholder="Enter City Name">
           <span class="input-group-btn">
-            <button type="search" class="btn btn-primary">Search</button>
+            <button type="button" id="searchCity" class="btn btn-primary">Search</button>
           </span>
         </div>
       </form>
 
 
       <div id="weatherInfo">
+      </div>
         <!-- <div class="current-city">
 
           <h1>72*</h1>
@@ -39,9 +40,10 @@
 
 
       <script id="weather-template" type="text/x-handlebars-template">
-        <div class="forecast">
-          <h1>{{temperature}}</h1>
-          <h4>{{city}} + "," + {{state}}</h4>
+        <div class="forecastInfo">
+          <h1>TEMP:{{temp}}</h1>
+          <h4>CITY:{{city}}</h4>
+          <h5></h5>
           <img src="{{weather-icon}}"/>
         </div>
       </script>

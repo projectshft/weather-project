@@ -30,7 +30,7 @@ i.e. fetch('https://...').then(function() { //do stuff })
 
 Some Requirements =========================================================================
 
-  __  Use Handlebars
+  __  Use Handlebars to display weather data
 
   __  Use Bootstrap
 
