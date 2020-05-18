@@ -74,7 +74,7 @@ var weatherData = function() {
       url: `http://api.openweathermap.org/data/2.5/forecast?q=Durham,nc,us&units=imperial&appid=baa280a65d9a5786919fda92ca7532a8`,
       dataType: "json",
       success: function(data) {
-          setFiveDayForecast(data);
+          setForecast(data);
       },
       error: function(jqXHR, textStatus, errorThrown) {
         console.log(textStatus);
@@ -86,40 +86,36 @@ var weatherData = function() {
 
   var setForecast = function(data) {
 
-    var fiveDayArray = [];
+    var forecastData = [[]];
+    var day = 0;
 
-    data.list.forEach((item, i) => {
-      if (moment.unix(item.dt).format("h") ==! 0) {
-        var day  = [];
-        array.push(item);
+    data.list.forEach((threeHourPeriod, i) => {
+      console.log(moment.unix(threeHourPeriod.dt).format("H"))
+      if (moment.unix(threeHourPeriod.dt).format("H") === 0) {
+        forecastData[day].push(threeHourPeriod);
+        day++;
+        forecastData.push([]);
+      } else
+        forecastData[day].push(threeHourPeriod);
     });
+
+    console.log(forecastData);
 
     //use reduce bellow
 
 
-      // while it's not midnight
-      while (moment.unix(data.list[0].dt).format("h") ==! "0") {
-        var array = [];
-        array.push(data.list[i]);
-
-
-      }
-
-
-    });
-
-    forecast.forEach((day, i) => {
-      day[i] = weather();
-      day[i].tempImperial = data.list[0].main.temp; // create a round function at some point
-      day[i].conditions = data.list[0].weather[0].description;
-      day[i].icon = `http://openweathermap.org/img/wn/${data.list[0].weather[0].icon}@2x.png`;
-      day[i].day = moment.unix(data.list[0].dt).format("dddd");
+    forecast.forEach((forecastDay, i) => {
+      forecastDay[i] = weather();
+      forecastDay[i].tempImperial = data.list[0].main.temp; // create a round function at some point
+      forecastDay[i].conditions = data.list[0].weather[0].description;
+      forecastDay[i].icon = `http://openweathermap.org/img/wn/${data.list[0].weather[0].icon}@2x.png`;
+      forecastDay[i].day = moment.unix(data.list[0].dt).format("dddd");
     });
 
     renderForecast();
   }
 
-  var renderFiveDayForecast = function() {
+  var renderForecast = function() {
     $('.five-day').empty();
 
     forecast.forEach((day, i) => {
@@ -134,7 +130,7 @@ var weatherData = function() {
   // The only public function is fetchData
   return {
     fetchCurrentWeather: fetchCurrentWeather,
-    fetchFiveDayForecast: fetchFiveDayForecast
+    fetchForecast: fetchForecast
   }
 
 
@@ -149,7 +145,7 @@ $('.search').on('click', function(e) {
 
   var search = $('#search-query').val();
   data.fetchCurrentWeather(search);
-  data.fetchFiveDayForecast(search);
+  data.fetchForecast(search);
 });
 
 // Keystroke handler
