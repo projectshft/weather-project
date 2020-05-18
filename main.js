@@ -5,6 +5,7 @@ const Weather = () => {
       location: null,
       description: null,
       icon: null,
+      day: null,
     },
     future: [],
   };
@@ -59,6 +60,7 @@ const Weather = () => {
   const unpackCurrentWeatherOfAPI = (currentWeatherJSON) => {
     // grabbing current weather data from API and storing
     // storing into variables here in case we change APIs
+
     return {
       temp: Math.round(currentWeatherJSON.main.temp),
       location: currentWeatherJSON.name,
@@ -67,51 +69,36 @@ const Weather = () => {
     };
   };
 
+  
   const unpackForecastFromAPI = (forecastJSON) => {
-    // accessing the midnights in all the forecasts will let us divide the days
-    let midnights = forecastJSON.list.filter((threeHourChunk) => {
-      // each object in forecast has a date string as text with the second half
-      // after a space as the hour. I'm only concerned with the hour...
-      let dateStr = threeHourChunk.dt_txt.split(" ");
+    // figure out what the day is for first forecast chunk
 
-      // the first time we see midnight should be our next day
-      return dateStr[1] === "00:00:00";
-    });
+    let dividedForecasts = forecastJSON.list.reduce(
+      (objectOfDays, threeHourChunk) => {
+        // figure out which day this three hour chunk refers to
+        let day = new Date(threeHourChunk.dt * 1000);
+        const days = [
+          "Sunday",
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+        ];
+        let dayForThis3HourChunk = days[day.getDay()];
 
-    console.log("The objects in forecast list that start at midnight are: ");
-    console.log(midnights);
+        // make sure that our accumulator has a property for the day
+        if (!objectOfDays.hasOwnProperty(dayForThis3HourChunk)) {
+          objectOfDays[dayForThis3HourChunk] = [];
+        }
 
-    let dividedForecasts = [];
+        // push the three hour chunk of data to the appropriate day
+        objectOfDays[dayForThis3HourChunk].push(threeHourChunk);
 
-    // in order to reduce data points, we need subsets of the original forecast
-    for (let midnight = 0; midnight < midnights.length; midnight++) {
-      // find the spot in forecastJSON where the next day begins
-      let startOfDayIndex = forecastJSON.list.findIndex((threeHourChunk) => {
-        return threeHourChunk.dt == midnights[midnight].dt;
-      });
-
-      // for all the days except the last day, we want to slice from midnight to midnight
-      if (midnight < midnights.length - 1) {
-        // find the spot in forecastJSON where the day after the next day begins
-        let startOfNextDayIndex = forecastJSON.list.findIndex(
-          (threeHourChunk) => {
-            return threeHourChunk.dt === midnights[midnight + 1].dt;
-          }
-        );
-
-        // push an array of all the elements between startOfDayIndex and startOfNextDayIndex
-        dividedForecasts.push(
-          forecastJSON.list.slice(startOfDayIndex, startOfNextDayIndex)
-        );
-      } else {
-        // the last forecast does not necessarily end with a midnight forecast
-        let lastAvailableForecastIndex = forecastJSON.list.length;
-
-        dividedForecasts.push(
-          forecastJSON.list.slice(startOfDayIndex, lastAvailableForecastIndex)
-        );
-      }
-    }
+        return objectOfDays;
+      },
+      {}
+    );
 
     console.log("The sub divided forecasts are");
     console.log(dividedForecasts);
@@ -119,10 +106,13 @@ const Weather = () => {
     let unpackedData = [];
 
     // reduce the data points for each subset of the overall forecast
-    dividedForecasts.forEach((dayArray) => {
+    for (const groupedForecast in dividedForecasts) {
       let totalTemp = null;
       const descriptions = {};
       const icons = {};
+
+      // we'll be iterating over the grouped forecast so making a copy
+      let dayArray = dividedForecasts[groupedForecast].slice();
 
       // construct an object to be stored in our model
       let singleDayObj = dayArray.reduce(
@@ -142,6 +132,7 @@ const Weather = () => {
             "Wednesday",
             "Thursday",
             "Friday",
+            "Saturday",
           ];
           dayForecast.day = days[day.getDay()];
 
@@ -190,7 +181,9 @@ const Weather = () => {
       );
 
       unpackedData.push(singleDayObj);
-    });
+    }
+    // dividedForecasts.forEach((dayArray) => {
+    // });
 
     return unpackedData;
   };
