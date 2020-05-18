@@ -33,6 +33,7 @@ var weatherData = function() {
       },
       error: function(jqXHR, textStatus, errorThrown) {
         console.log(textStatus);
+        renderError();
       }
 
     });
@@ -150,6 +151,9 @@ var weatherData = function() {
       forecast[i].icon = `http://openweathermap.org/img/wn/${modeIcon}@2x.png`;
     }
 
+    while (forecast.length > 5) {
+      forecast.pop();
+    }
 
     renderForecast();
   }
@@ -166,6 +170,10 @@ var weatherData = function() {
       $('.five-day').append(displayFiveDayForecast);
     });
 
+  }
+
+  var renderError = function() {
+    
   }
 
   // The only public function is fetchData
