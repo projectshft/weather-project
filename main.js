@@ -76,6 +76,29 @@ let fetchWeather = (locationWeatherData) => {
 };
 
 
+// Creating a function similar to fetchWeather that requests 5-day forecast weather data from OpenWeatherMap
+
+
+let fetchFiveDayForecast = (locationWeatherData) => {
+
+  $.ajax({
+
+    method: "GET",
+    // url: "http://api.openweathermap.org/data/2.5/forecast?q=" + locationWeatherData + "&units=imperial" + "&appid=0f9391bf663647fd9cad13780bf4eff1",
+    url: "http://api.openweathermap.org/data/2.5/forecast?q=" + "Durham" + "&units=imperial" + "&appid=0f9391bf663647fd9cad13780bf4eff1",
+    dataType: "json",
+    success: function(data) {
+      addForecast(data);
+      renderForecast();
+    },
+
+    error: function(jqXHR, textStatus, errorThrown) {
+      console.log(textStatus);
+    }
+  });
+};
+
+
 
 // Creating render function to display weather array in web page
 
