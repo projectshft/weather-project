@@ -9,13 +9,13 @@ But to get you started, here are a couple of links you'll need:
   _X_  Get and use an API Key: http://openweathermap.org/appid
         using 0f9391bf663647fd9cad13780bf4eff1
 
-  __  Current Weather Data: http://openweathermap.org/current
+  _X_  Current Weather Data: http://openweathermap.org/current
           Durham, NC test: http://api.openweathermap.org/data/2.5/weather?q=Durham&appid=0f9391bf663647fd9cad13780bf4eff1
 
-  __  5 Day Forecast Data: http://openweathermap.org/forecast5
+  _X_  5 Day Forecast Data: http://openweathermap.org/forecast5
           Duham, NC test: http://api.openweathermap.org/data/2.5/forecast?q=Durham&appid=0f9391bf663647fd9cad13780bf4eff1
 
-  __  Weather Conditions and Icons: https://openweathermap.org/weather-conditions
+  _X_  Weather Conditions and Icons: https://openweathermap.org/weather-conditions
 
 NOTE: The endpoints openweather.org provide do not, by default, include an https:// prefix.
 If you intend to use Javascript's fetch API, you'll need to include this prefix in your endpoint,
@@ -30,13 +30,13 @@ i.e. fetch('https://...').then(function() { //do stuff })
 
 Some Requirements =========================================================================
 
-  __  Use Handlebars to display weather data
+  _X_  Use Handlebars to display weather data
 
-  __  Use Bootstrap
+  _X_  Use Bootstrap
 
   __  Use Local Storage (for Pt. 3)
 
-  __  Be conscious of your style and patterns
+  _X_  Be conscious of your style and patterns
 
   _X_  To get started, fork and clone this repo and submit a pull-request when you're finished.
 
@@ -52,19 +52,19 @@ https://camo.githubusercontent.com/58ec65ded9e453b8a9d8ebf30e413c63d58203fb/6874
 
 And here are the following scenarios we want your project to be able to handle or accomplish:
 
-  __  A user should be able to:
+  _X_  A user should be able to:
 
-      __  Enter a city into the url
+      _X_  Enter a city into the url
 
-      __  Click "Search"
+      _X_  Click "Search"
 
-      __  Get weather data on the city they entered
+      _X_  Get weather data on the city they entered
 
-  __  A user should be able to see the current temperature (in imperial units).
+  _X_  A user should be able to see the current temperature (in imperial units).
 
-  __  A user should be able to see the current conditions (whether it's cloudy, raining, etc).
+  _X_  A user should be able to see the current conditions (whether it's cloudy, raining, etc).
 
-  __  When a user does another search, their first search should be replaced.
+  _X_  When a user does another search, their first search should be replaced.
 
 
 
@@ -78,19 +78,19 @@ https://camo.githubusercontent.com/87a2888ca08d16881255ce54ad93508a4852f9a3/6874
 
 And here are the next scenarios your weather app should account for:
 
-  __  A user should be able to do all he/she could do in the first part.
+  _X_  A user should be able to do all he/she could do in the first part.
 
-  __  When a user searches, they should additionally see a 5-day forecast
+  _X_  When a user searches, they should additionally see a 5-day forecast
 
-  __  Each of the five days should have an associated:
+  _X_  Each of the five days should have an associated:
 
-    __  Day of the week
+    _X_  Day of the week
 
-    __  Weather condition
+    _X_  Weather condition
 
-    __  Temperature
+    _X_  Temperature
 
-  __  Converting timestamps to days of the week may prove to be difficult. You may (but don't have to) use Moment.js.
+  _X_  Converting timestamps to days of the week may prove to be difficult. You may (but don't have to) use Moment.js.
 
 
 
@@ -99,7 +99,7 @@ And here are the next scenarios your weather app should account for:
 
 User Stories Pt. 3 (Optional Extension) =========================================================================
 
-  __  In addition to all the previous stories, a user should be able to see an icon that's associated with the current weather and one for
+  _X_  In addition to all the previous stories, a user should be able to see an icon that's associated with the current weather and one for
       each day in the 5 day forecast.
 
   __  After a user has searched a city (and that city's weather information is currently displaying), the user should see a "Set as Default" button.

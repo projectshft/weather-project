@@ -12,53 +12,53 @@
 
 <body>
   <div class="container">
-  <div class="row">
-    <div class="col-md-6 col-md-offset-3">
-      <div class="page-header">
-        <h1>Current Weather</h1>
-      </div>
-
-
-      <form class="location-search">
-
-        <div class="input-group col-md-8 col-md-offset-2">
-          <input type="text" id="locationName" class="form-control" placeholder="Enter City Name">
-          <span class="input-group-btn">
-            <button type="button" id="searchCity" class="btn btn-primary search">Search</button>
-          </span>
-
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3">
+        <div class="page-header">
+          <h1>Current Weather</h1>
         </div>
-      </form>
+
+
+        <form class="location-search">
+
+          <div class="input-group col-md-8 col-md-offset-2">
+            <input type="text" id="locationName" class="form-control" placeholder="Enter City Name">
+            <span class="input-group-btn">
+              <button type="button" id="searchCity" class="btn btn-primary search">Search</button>
+            </span>
+
+          </div>
+        </form>
+      </div>
     </div>
   </div>
-</div>
 
 
-      <div class="container">
-          <div class="row">
-              <div id="weatherInfo" class="col-md-8 col-md-offset-5">
-              </div>
-          </div>
+  <div class="container">
+    <div class="row">
+      <div id="weatherInfo" class="col-md-8 col-md-offset-5">
       </div>
+    </div>
+  </div>
 
-      <div class="container">
-          <div class="row">
-              <br />
-              <br />
-              </div>
-          </div>
+  <div class="container">
+    <div class="row">
+      <br />
+      <br />
+    </div>
+  </div>
 
 
-<div class="container-fluid">
-<div class="row col-md-offset-4">
+  <div class="container-fluid">
+    <div class="row col-md-offset-4">
       <div id="fiveDayForecastInfo">
+      </div>
+    </div>
   </div>
-  </div>
-</div>
 
 
-      <script id="weather-template" type="text/x-handlebars-template">
-        <div class="forecastInfo col-sm-1">
+  <script id="weather-template" type="text/x-handlebars-template">
+    <div class="forecastInfo col-sm-1">
           <h1>{{temp}}</h1>
           <h4>{{city}}</h4>
           <h5>{{description}}</h5>
@@ -70,9 +70,9 @@
 
       </script>
 
-      <script id="forecast-template" type="text/x-handlebars-template">
+  <script id="forecast-template" type="text/x-handlebars-template">
 
-        <div class="fiveDayForecastInfo01 forecastBorder col-sm-1 col-md-offset-3">
+    <div class="fiveDayForecastInfo01 forecastBorder col-sm-1 col-md-offset-3">
           <center>
           <h4>{{fiveDayDescription01}}</h4>
           <h1>{{fiveDayTemp01}}</h1>
@@ -119,7 +119,7 @@
 
       </script>
 
-    </div>
+  </div>
   </div>
 
   <script src="main.js"></script>

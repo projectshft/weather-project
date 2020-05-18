@@ -147,7 +147,7 @@ let renderWeather = () => {
 
 let renderForecast = () => {
 
-  // Empty foreast div to append new data
+  // Empty forecast div to append new data
   $('#fiveDayForecastInfo').empty();
 
 
