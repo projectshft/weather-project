@@ -29,7 +29,6 @@ let addWeather = (data) => {
 
   weatherDataFromAPI.push(tempWeatherDataFromAPI);
 
-  console.log('WEATHER DATA!')
 };
 
 
@@ -69,7 +68,6 @@ let addForecast = (data) => {
 
   forecastDataFromAPI.push(tempForecastDataFromAPI);
 
-  console.log('FORECAST DATA!')
 };
 
 
@@ -112,7 +110,6 @@ let fetchFiveDayForecast = (locationWeatherData) => {
       addForecast(data);
       renderForecast();
 
-      console.log('FETCH FIVE DAY');
     },
 
     error: function(jqXHR, textStatus, errorThrown) {
@@ -139,7 +136,6 @@ let renderWeather = () => {
 
   $('#weatherInfo').append(weatherDataHTML)
 
-  console.log(weatherDataHTML)
 };
 
 
@@ -159,7 +155,6 @@ let renderForecast = () => {
 
   $('#fiveDayForecastInfo').append(forecastDataHTML)
 
-  console.log(forecastDataHTML)
 };
 
 
