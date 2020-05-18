@@ -277,4 +277,4 @@ const Weather = () => {
   }
 };
 
-let weatherApp = Weather();
+Weather();
