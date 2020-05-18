@@ -57,43 +57,48 @@ const Weather = () => {
     });
   };
 
+  const figureOutDayFromUnixTimeStamp = (timestamp) => {
+    let day = new Date(timestamp * 1000);
+    const days = [
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+    ];
+    return days[day.getDay()];
+  };
+
   const unpackCurrentWeatherOfAPI = (currentWeatherJSON) => {
     // grabbing current weather data from API and storing
     // storing into variables here in case we change APIs
-
     return {
       temp: Math.round(currentWeatherJSON.main.temp),
       location: currentWeatherJSON.name,
       description: currentWeatherJSON.weather[0].main,
       icon: `http://openweathermap.org/img/wn/${currentWeatherJSON.weather[0].icon}@2x.png`,
+      day: figureOutDayFromUnixTimeStamp(currentWeatherJSON.dt),
     };
   };
 
-  
   const unpackForecastFromAPI = (forecastJSON) => {
-    // figure out what the day is for first forecast chunk
-
+    // we want to divide the forecasts up into different arrays to reduce later
     let dividedForecasts = forecastJSON.list.reduce(
       (objectOfDays, threeHourChunk) => {
         // figure out which day this three hour chunk refers to
-        let day = new Date(threeHourChunk.dt * 1000);
-        const days = [
-          "Sunday",
-          "Monday",
-          "Tuesday",
-          "Wednesday",
-          "Thursday",
-          "Friday",
-        ];
-        let dayForThis3HourChunk = days[day.getDay()];
+        dayForThis3HourChunk = figureOutDayFromUnixTimeStamp(threeHourChunk.dt);
 
-        // make sure that our accumulator has a property for the day
-        if (!objectOfDays.hasOwnProperty(dayForThis3HourChunk)) {
-          objectOfDays[dayForThis3HourChunk] = [];
+        // we don't want to include any data from current day
+        if (dayForThis3HourChunk !== weatherData.currentConditions.day) {
+          // make sure that our accumulator has a property for the day
+          if (!objectOfDays.hasOwnProperty(dayForThis3HourChunk)) {
+            objectOfDays[dayForThis3HourChunk] = [];
+          }
+
+          // for other days, push the three hour chunk of data to the appropriate day
+          objectOfDays[dayForThis3HourChunk].push(threeHourChunk);
         }
-
-        // push the three hour chunk of data to the appropriate day
-        objectOfDays[dayForThis3HourChunk].push(threeHourChunk);
 
         return objectOfDays;
       },
@@ -124,17 +129,7 @@ const Weather = () => {
           dayForecast.avgTemp = Math.round(totalTemp / (numberOfChunk + 1));
 
           // Determine the day
-          let day = new Date(threeHourChunk.dt * 1000);
-          const days = [
-            "Sunday",
-            "Monday",
-            "Tuesday",
-            "Wednesday",
-            "Thursday",
-            "Friday",
-            "Saturday",
-          ];
-          dayForecast.day = days[day.getDay()];
+          dayForecast.day = figureOutDayFromUnixTimeStamp(threeHourChunk.dt);
 
           // determine the most common description
           // first we need to store the description counts
@@ -195,6 +190,7 @@ const Weather = () => {
     weatherData.currentConditions.description =
       unpackedCurrentWeather.description;
     weatherData.currentConditions.icon = unpackedCurrentWeather.icon;
+    weatherData.currentConditions.day = unpackedCurrentWeather.day;
 
     // now that model is updated, we'll render
     renderCurrentWeather();
