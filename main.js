@@ -1,8 +1,12 @@
 // Creating an array for weather data
 // Creating test template to verify data is shown in web page
 
-let weatherData = [
-    { temp: "72*", city: "Durham, NC", weatherMain: "Sunny", icon: "http://openweathermap.org/img/wn/01d@2x.png"}
+let weatherDataFromAPI = [
+    {
+      temp: "72*",
+      city: "Durham, NC",
+      weatherMain: "Sunny",
+      icon: "http://openweathermap.org/img/wn/01d@2x.png"}
 
 ];
 
@@ -12,10 +16,10 @@ let weatherData = [
 let renderWeather = () => {
 
 // Empty weather array to append new data
-  $('#weatherInfo').empty()
+  $('#weatherInfo').empty();
 
 
-  let weatherData = [0];
+  let weatherData = weatherDataFromAPI[0];
 
   let source = $('#weather-template').html();
   let template = Handlebars.compile(source);
