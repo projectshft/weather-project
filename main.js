@@ -1,9 +1,9 @@
 var weatherModule = function() {
-  //imgURLStart is prexif to url for weather icon
-  var imgURLStart = "http://openweathermap.org/img/wn/";
+  //imgURLPrefix is prexif to url for weather icon
+  var imgURLPrefix = "http://openweathermap.org/img/wn/";
   //cityTimeZone holds timezone difference from unix timestamp
   var cityTimeZone = 0;
-
+  //object to hold parsed data from api
   var weatherData = {
     fiveDayForecast: [],
     currentWeather: {}
@@ -20,19 +20,19 @@ var weatherModule = function() {
   }
 
   var calculateAverageTemperatures = function(data) {
-    //arrays- dayTemperatures- for gathering all temperatures for a day, averageTemperatures- stores average temperatures for day
+    //arrays- dayTemperatures- for gathering all temperatures for a day, averageTemperatures- stores average temperatures for each day
     var averageTemperatures = [];
     var dayTemperatures = [];
-    //startDay is used to find out when a day has ended
+    //startDay is used to find out when a day has ended (number corresponding with day of week 0-sunday, 1-monday etc.)
     var startDay = moment.unix(data[0].dt).day();
-    //counter counts how many 3 hour intervals there are for a day of the week
+    //counter counts how many 3 hour intervals there are for a day of the week for calculating average temperature
     var counter = 0;
     //looping through weather data, calculating average each time a day ends, and pushing to averageTemperatures
     for (let i = 0; i < data.length; i++) {
       counter += 1;
       dayTemperatures.push(data[i].main.temp);
-      //if statement to exectue every 8 indexes (24 hours)
       var currentDay = moment.unix(data[i].dt).day();
+      //if statement executes once a new day has started
       if (currentDay !== startDay) {
         console.log(dayTemperatures);
         startDay = currentDay;
@@ -53,7 +53,7 @@ var weatherModule = function() {
     weatherData.currentWeather.weather = data.weather[0].main;
     weatherData.currentWeather.temperature = data.main.temp;
     //url contains @2x for full sized icon
-    weatherData.currentWeather.imgURL = imgURLStart + data.weather[0].icon + "@2x.png";
+    weatherData.currentWeather.imgURL = imgURLPrefix + data.weather[0].icon + "@2x.png";
     buildCurrentWeatherTemplate();
   }
 
@@ -80,8 +80,8 @@ var weatherModule = function() {
       weatherObj.weekDay = moment.weekdays(moment.unix(data[i].dt).day());
       //setting weather for day with weather from each 24 hour increment
       weatherObj.forecast = data[i].weather[0].main;
-      weatherObj.imgURL = imgURLStart + data[i].weather[0].icon + ".png";
-      //getting average temperature using index/8 to correspond with averageTemperatures index for each day
+      weatherObj.imgURL = imgURLPrefix + data[i].weather[0].icon + ".png";
+      //getting average temperature using index/8 to correspond with averageTemperatures array index for each day
       weatherObj.temperature = averageTemperatures[(i / 8)];
       weatherData.fiveDayForecast.push(weatherObj);
     }

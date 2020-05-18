@@ -1,50 +1,52 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="stylesheet" href="style.css">
-    <title>Weather Project</title>
-  </head>
-  <body>
-    <div class="row title-container">
-      <div class="col-md-6 offset-md-3 mb-5">
-        <h1>Current Weather</h1>
-      </div>
+
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <link rel="stylesheet" href="style.css">
+  <title>Weather Project</title>
+</head>
+
+<body>
+  <div class="row title-container">
+    <div class="col-md-6 offset-md-3 mb-5">
+      <h1>Current Weather</h1>
     </div>
-    <div class="row searchbar-container">
-      <div class="col-md-6 offset-md-3">
-        <div class="input-group">
-          <input class="form-control" type="text" name="searchbar" placeholder="Enter City Name">
-          <div class="input-group-append">
-            <span class="btn btn-primary">Search</span>
-          </div>
+  </div>
+  <div class="row searchbar-container">
+    <div class="col-md-6 offset-md-3">
+      <div class="input-group">
+        <input class="form-control" type="text" name="searchbar" placeholder="Enter City Name">
+        <div class="input-group-append">
+          <span class="btn btn-primary">Search</span>
         </div>
       </div>
     </div>
-    <div class="row">
-      <div class="col-md-6 offset-md-3 current-weather mt-5">
+  </div>
+  <div class="row">
+    <div class="col-md-6 offset-md-3 current-weather mt-5">
 
-      </div>
     </div>
-    <div class="row">
-      <div class="col-md-6 offset-md-3 five-day-forecast mt-5">
+  </div>
+  <div class="row">
+    <div class="col-md-6 offset-md-3 five-day-forecast mt-5">
 
-      </div>
     </div>
+  </div>
 
-    <script id="five-day-forecast-template" type="text/x-handlebars-tenplate">
-      {{#each fiveDayForecast}}
-        <div class="forecast">
-          <h5>{{forecast}}</h5>
-          <h4>{{temperature}}°</h4>
-          <img class="forecast-img" src={{imgURL}}>
-          <h5 class="weekDay">{{weekDay}}</h5>
-        </div>
-      {{/each}}
-    </script>
-    <script id="current-weather-template" type="text/x-handlebars-tenplate">
-      <div class="current-weather">
+  <script id="five-day-forecast-template" type="text/x-handlebars-tenplate">
+    {{#each fiveDayForecast}}
+      <div class="forecast">
+        <h5>{{forecast}}</h5>
+        <h4>{{temperature}}°</h4>
+        <img class="forecast-img" src={{imgURL}}>
+        <h5 class="weekDay">{{weekDay}}</h5>
+      </div>
+    {{/each}}
+  </script>
+  <script id="current-weather-template" type="text/x-handlebars-tenplate">
+    <div class="current-weather">
         <h2>{{temperature}}°</h2>
         <h3>{{city}}, {{country}}</h3>
         <h4>{{weather}}</h4>
@@ -52,13 +54,11 @@
       <div class="current-image-container">
         <img src={{imgURL}} class="current-image">
       </div>
-    </script>
-    <script
-  src="https://code.jquery.com/jquery-3.5.1.js"
-  integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
-  crossorigin="anonymous"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.6/handlebars.js"></script>
-    <script type="text/javascript" src="moment.js"></script>
-    <script type="text/javascript" src="main.js"></script>
-  </body>
+  </script>
+  <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.6/handlebars.js"></script>
+  <script type="text/javascript" src="moment.js"></script>
+  <script type="text/javascript" src="main.js"></script>
+</body>
+
 </html>
