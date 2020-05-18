@@ -20,7 +20,7 @@ let forecastDataFromAPI = [
 let addWeather = (data) => {
 
   let tempWeatherDataFromAPI = {
-    temp: Math.round(data.main.temp)+"°",
+    temp: Math.round(data.main.temp) + "°",
     city: data.name,
     description: data.weather[0].main,
     icon: data.weather[0].icon
@@ -40,27 +40,27 @@ let addForecast = (data) => {
 
   let tempForecastDataFromAPI = {
 
-    fiveDayTemp01: Math.round(data.list[9].main.temp)+"°",
+    fiveDayTemp01: Math.round(data.list[9].main.temp) + "°",
     fiveDayDescription01: data.list[9].weather[0].main,
     fiveDayIcon01: data.list[9].weather[0].icon,
     fiveDayDate01: data.list[9].dt_txt,
 
-    fiveDayTemp02: Math.round(data.list[17].main.temp)+"°",
+    fiveDayTemp02: Math.round(data.list[17].main.temp) + "°",
     fiveDayDescription02: data.list[17].weather[0].main,
     fiveDayIcon02: data.list[17].weather[0].icon,
     fiveDayDate02: data.list[17].dt_txt,
 
-    fiveDayTemp03: Math.round(data.list[25].main.temp)+"°",
+    fiveDayTemp03: Math.round(data.list[25].main.temp) + "°",
     fiveDayDescription03: data.list[25].weather[0].main,
     fiveDayIcon03: data.list[25].weather[0].icon,
     fiveDayDate03: data.list[25].dt_txt,
 
-    fiveDayTemp04: Math.round(data.list[33].main.temp)+"°",
+    fiveDayTemp04: Math.round(data.list[33].main.temp) + "°",
     fiveDayDescription04: data.list[33].weather[0].main,
     fiveDayIcon04: data.list[33].weather[0].icon,
     fiveDayDate04: data.list[33].dt_txt,
 
-    fiveDayTemp05: Math.round(data.list[39].main.temp)+"°",
+    fiveDayTemp05: Math.round(data.list[39].main.temp) + "°",
     fiveDayDescription05: data.list[39].weather[0].main,
     fiveDayIcon05: data.list[39].weather[0].icon,
     fiveDayDate05: data.list[39].dt_txt
@@ -82,8 +82,8 @@ let fetchWeather = (locationWeatherData) => {
   $.ajax({
 
     method: "GET",
-    // url: "http://api.openweathermap.org/data/2.5/weather?q=" + locationWeatherData + "&units=imperial" + "&appid=0f9391bf663647fd9cad13780bf4eff1",
-    url: "http://api.openweathermap.org/data/2.5/weather?q=" + "Durham" + "&units=imperial" + "&appid=0f9391bf663647fd9cad13780bf4eff1",
+    url: "http://api.openweathermap.org/data/2.5/weather?q=" + locationWeatherData + "&units=imperial" + "&appid=0f9391bf663647fd9cad13780bf4eff1",
+    // url: "http://api.openweathermap.org/data/2.5/weather?q=" + "Durham" + "&units=imperial" + "&appid=0f9391bf663647fd9cad13780bf4eff1",
     dataType: "json",
     success: function(data) {
       addWeather(data);
@@ -105,8 +105,8 @@ let fetchFiveDayForecast = (locationWeatherData) => {
   $.ajax({
 
     method: "GET",
-    // url: "http://api.openweathermap.org/data/2.5/forecast?q=" + locationWeatherData + "&units=imperial" + "&appid=0f9391bf663647fd9cad13780bf4eff1",
-    url: "http://api.openweathermap.org/data/2.5/forecast?q=Durham&units=imperial&appid=0f9391bf663647fd9cad13780bf4eff1",
+    url: "http://api.openweathermap.org/data/2.5/forecast?q=" + locationWeatherData + "&units=imperial" + "&appid=0f9391bf663647fd9cad13780bf4eff1",
+    // url: "http://api.openweathermap.org/data/2.5/forecast?q=Durham&units=imperial&appid=0f9391bf663647fd9cad13780bf4eff1",
     dataType: "json",
     success: function(data) {
       addForecast(data);
@@ -127,7 +127,7 @@ let fetchFiveDayForecast = (locationWeatherData) => {
 
 let renderWeather = () => {
 
-// Empty weather div to append new data
+  // Empty weather div to append new data
   $('#weatherInfo').empty();
 
 
@@ -139,7 +139,7 @@ let renderWeather = () => {
 
   $('#weatherInfo').append(weatherDataHTML)
 
-    console.log(weatherDataHTML)
+  console.log(weatherDataHTML)
 };
 
 
@@ -147,7 +147,7 @@ let renderWeather = () => {
 
 let renderForecast = () => {
 
-// Empty foreast div to append new data
+  // Empty foreast div to append new data
   $('#fiveDayForecastInfo').empty();
 
 
@@ -159,7 +159,7 @@ let renderForecast = () => {
 
   $('#fiveDayForecastInfo').append(forecastDataHTML)
 
-    console.log(forecastDataHTML)
+  console.log(forecastDataHTML)
 };
 
 

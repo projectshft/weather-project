@@ -23,7 +23,7 @@
         <div class="input-group col-md-8 col-md-offset-2">
           <input type="text" id="locationName" class="form-control" placeholder="Enter City Name">
           <span class="input-group-btn">
-            <button type="button" id="searchCity" class="btn btn-primary">Search</button>
+            <button type="button" id="searchCity" class="btn btn-primary search">Search</button>
           </span>
 
         </div>
@@ -48,8 +48,8 @@
           </div>
 
 
-<div class="container">
-<div class="row">
+<div class="container-fluid">
+<div class="row col-md-offset-4">
       <div id="fiveDayForecastInfo">
   </div>
   </div>
@@ -71,7 +71,7 @@
 
       <script id="forecast-template" type="text/x-handlebars-template">
 
-        <div class="fiveDayForecastInfo01 col-sm-2">
+        <div class="fiveDayForecastInfo01 forecastBorder col-sm-1 col-md-offset-3">
           <center>
           <h4>{{fiveDayDescription01}}</h4>
           <h1>{{fiveDayTemp01}}</h1>
@@ -80,7 +80,7 @@
         </center>
         </div>
 
-        <div class="fiveDayForecastInfo02 col-sm-2">
+        <div class="fiveDayForecastInfo02 forecastBorder col-sm-1">
           <center>
           <h4>{{fiveDayDescription02}}</h4>
           <h1>{{fiveDayTemp02}}</h1>
@@ -89,7 +89,7 @@
           </center>
         </div>
 
-        <div class="fiveDayForecastInfo03 col-sm-2">
+        <div class="fiveDayForecastInfo03 forecastBorder col-sm-1">
           <center>
           <h4>{{fiveDayDescription03}}</h4>
           <h1>{{fiveDayTemp03}}</h1>
@@ -98,7 +98,7 @@
         </center>
         </div>
 
-        <div class="fiveDayForecastInfo04 col-sm-2">
+        <div class="fiveDayForecastInfo04 forecastBorder col-sm-1">
           <center>
           <h4>{{fiveDayDescription04}}</h4>
           <h1>{{fiveDayTemp04}}</h1>
@@ -107,7 +107,7 @@
         </center>
         </div>
 
-        <div class="fiveDayForecastInfo05 col-sm-2">
+        <div class="fiveDayForecastInfo05 forecastBorder col-sm-1">
           <center>
           <h4>{{fiveDayDescription05}}</h4>
           <h1>{{fiveDayTemp05}}</h1>

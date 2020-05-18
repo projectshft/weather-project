@@ -1,9 +1,15 @@
+
 div.page-header {
   text-align: center;
 }
 
-.style12 {
-	height: 6px;
-	background: url(http://ibrahimjabbari.com/english/images/hr-12.png) repeat-x 0 0;
-    border: 0;
+div.forecastBorder {
+  border-width: 2px;
+  border-style: solid;
+  margin-left: 10px;
+}
+
+img {
+    max-width: 100%;
+    max-height: 100%;
 }
