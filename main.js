@@ -120,6 +120,28 @@ let renderWeather = () => {
 };
 
 
+// Creating render function to display 5 day forecast
+
+let renderForecast = () => {
+
+// Empty weather div to append new data
+  $('#forecastInfo').empty();
+
+
+  let forecastData = forecastDataFromAPI[0];
+
+  let source = $('#forecast-template').html();
+  let template = Handlebars.compile(source);
+  let forecastDataHTML = template(forecastData);
+
+  $('#forecastInfo').append(forecastDataHTML)
+
+    console.log(forecastDataHTML)
+};
+
+
+
+
 // Listening for a click to submit form data
 $('#searchCity').on('click', () => {
 
@@ -128,7 +150,9 @@ $('#searchCity').on('click', () => {
   console.log(locationWeatherData);
 
   fetchWeather(locationWeatherData);
+  fetchFiveDayForecast(locationWeatherData);
 
   weatherDataFromAPI.pop();
+  forecastDataFromAPI.pop();
 
 });
