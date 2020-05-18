@@ -21,8 +21,8 @@ let addWeather = (data) => {
   let tempWeatherDataFromAPI = {
     temp: data.main.temp,
     city: data.name,
-    description: data.weather.main,
-    icon: data.weather.icon
+    description: data.weather[0].main,
+    icon: data.weather[0].icon
 
   }
 
@@ -42,7 +42,7 @@ let fetchWeather = (locationWeatherData) => {
   $.ajax({
 
     method: "GET",
-    url: "http://api.openweathermap.org/data/2.5/weather?q=Durham&appid=0f9391bf663647fd9cad13780bf4eff1",
+    url: "http://api.openweathermap.org/data/2.5/weather?q=" + locationWeatherData + "&units=imperial" + "&appid=0f9391bf663647fd9cad13780bf4eff1",
     dataType: "json",
     success: function(data) {
       addWeather(data);
