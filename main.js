@@ -19,27 +19,34 @@ let weatherDataFromAPI = [
 let addWeather = (data) => {
 
   let tempWeatherDataFromAPI = {
-    temp: data.name,
+    temp: data.main.temp,
+    city: data.name,
+    description: data.weather.main,
+    icon: data.weather.icon
 
   }
 
+  weatherDataFromAPI.push(tempWeatherDataFromAPI);
 
+  console.log('WEATHER DATA!')
 };
 
 
 
 
 // Creating a function to request weather data from OpenWeatherMap API using AJAX
+// Placing static data for Durham to test
 
-let fetchWeather = (query) => {
+let fetchWeather = (locationWeatherData) => {
 
   $.ajax({
 
     method: "GET",
-    url: "api.openweathermap.org/data/2.5/weather?q={city name}&appid=0f9391bf663647fd9cad13780bf4eff1",
+    url: "http://api.openweathermap.org/data/2.5/weather?q=Durham&appid=0f9391bf663647fd9cad13780bf4eff1",
     dataType: "json",
     success: function(data) {
       addWeather(data);
+      renderWeather();
     },
 
     error: function(jqXHR, textStatus, errorThrown) {
@@ -77,6 +84,6 @@ $('#searchCity').on('click', () => {
 
   console.log(locationWeatherData);
 
-  renderWeather();
+  fetchWeather(locationWeatherData);
 
 });
