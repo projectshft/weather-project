@@ -18,16 +18,18 @@
 
 
       <form class="location-search">
-        <div class="input-group">
+
+        <div class="input-group col-md-6 col-md-offset-3">
           <input type="text" id="locationName" class="form-control" placeholder="Enter City Name">
           <span class="input-group-btn">
             <button type="button" id="searchCity" class="btn btn-primary">Search</button>
           </span>
+
         </div>
       </form>
 
 
-      <div id="weatherInfo">
+      <div id="weatherInfo" class= "col-md-6 col-md-offset-3">
       </div>
         <!-- <div class="current-city">
 
@@ -41,10 +43,9 @@
 
       <script id="weather-template" type="text/x-handlebars-template">
         <div class="forecastInfo">
-          <h1>TEMP:  {{temp}}</h1>
-          <h4>CITY:  {{city}}</h4>
-          <h5>CURRENTLY:  {{description}}</h5>
-          <h5>ICON:<img src= "http://openweathermap.org/img/wn/{{icon}}@2x.png" /></h5>
+          <h1>{{temp}}</h1>
+          <h4>{{city}} &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<img src= "http://openweathermap.org/img/wn/{{icon}}@2x.png"/></h4>
+          <h5>{{description}}</h5>
         </div>
       </script>
 
