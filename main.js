@@ -17,6 +17,7 @@ spinner .sk-fold (via spinkit)
 .current-info for div for current weather
 .forecast for row for forecast
 .currentweather-template handlebars
+.forecastweekday-template handlebars
 
 
 */
@@ -30,8 +31,14 @@ my openweathermap key:  3e31940f7e296490f329375344b9bf68
 // the plan is to fill an array with objects for next 5 days
 var weatherForecast = [];
 const owmApiKey = `3e31940f7e296490f329375344b9bf68`;
-//want to get this out of global scope at some point?
+//want to get these out of global scope at some point?
 var currentData = {};
+var forecastData = {};
+var secsInDay = 86400;
+var dayOfWeek = new Date();
+console.log('DayOfWeek: ', dayOfWeek.getDay());
+var weekday =['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
 
 // parse the weather json, starting with current
 
@@ -46,18 +53,25 @@ var addWeatherDay = function (data) {
 }
 
 //upon success of getting current conditions, build an object for it
-var formatCurrent = function (data) {
+var formatCurrent = function (currentData) {
   console.log('formatCurrent() called');
   currentData = {
-    currentTemp: parseInt(data.main.temp),
-    cityName: data.name,
-    conditions: data.weather[0].main,
-    icon: data.weather[0].icon
+    currentTemp: parseInt(currentData.main.temp),
+    cityName: currentData.name,
+    conditions: currentData.weather[0].main,
+    icon: currentData.weather[0].icon
   }
   //maybe return object to be called in renderWeather()?
   //for now, let's just send to renderWeather then prep for forecast data
   renderWeather();
 }
+
+var formatForecast = function (forecastData) {
+  console.log('formatForecast() called');
+  startingPoint = forecastData.list[0].dt;
+  console.log('---->DT<-----', startingPoint);
+}
+
 var renderWeather = function () {
   console.log('renderWeather() called');
   $('.current-info').empty();
@@ -87,18 +101,30 @@ var renderWeather = function () {
   // TODO add spinner from prev project
 var fetchWeather = function (cityQuery) {
   console.log('fetchWeather() called');
-  var apiQuery = `http://api.openweathermap.org/data/2.5/weather?q=${cityQuery}&appid=${owmApiKey}&units=imperial`;
-  console.log('sending', apiQuery);
+  var currentApiQuery = `http://api.openweathermap.org/data/2.5/weather?q=${cityQuery}&appid=${owmApiKey}&units=imperial`;
+  var forecastApiQuery = `http://api.openweathermap.org/data/2.5/forecast?q=${cityQuery}&appid=${owmApiKey}&units=imperial`;
+  console.log('sending forecast request', forecastApiQuery);
+  // get current conditions JSON
   $.ajax({
     method: "GET",
-    url: apiQuery,
+    url: currentApiQuery,
     dataType: "json",
-    success: function (data) {
-      formatCurrent(data);
-      //formatForecast(data);
-      //addWeatherDay(data);
-      console.log('receiving: ', data);
-      //renderWeather();
+    success: function (currentData) {
+      formatCurrent(currentData);
+      console.log('receiving current: ', currentData);
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+      console.log(textStatus);
+    }
+  });
+  // get forecast JSON
+  $.ajax({
+    method: "GET",
+    url: forecastApiQuery,
+    dataType: "json",
+    success: function (forecastData) {
+      formatForecast(forecastData);
+      console.log('receiving forecast: ', forecastData);
     },
     error: function (jqXHR, textStatus, errorThrown) {
       console.log(textStatus);
