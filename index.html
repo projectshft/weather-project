@@ -16,16 +16,39 @@
           <div class="page-header">
             <h1>Current Weather</h1>
           </div>
-    
+
+          <!-- Search Bar -->
           <form class="form-inline">
                 <div class="form-group mx-sm-3 mb-2">
-                    <input type="password" class="form-control" id="inputPassword2" placeholder="Enter City Name">
+                    <input type="text" class="form-control" id="inputCity" placeholder="Enter City Name">
                 </div>
                 <button type="submit" class="btn btn-primary mb-2">Search</button>
           </form>
 
-          <div class="city">
-          </div>
+          <div>
+            <p id="temp">
+                <h2>48 degrees</h2>
+            </p>
+            <p id="city-name">
+                <h4>Durham</h4>
+            </p>
+            <p id="condition">
+                <h5>Cloudy</h5>
+            </p>
+        </div>
+
+          <!-- Info Display -->
+          <!-- <script id="day-template" type="text/x-handlebars-template">
+            <p id="temp">
+                <h2>{{temperature}}</h2>
+            </p>
+            <p id="city-name">
+                <h4>{{city}}</h4>
+            </p>
+            <p id="condition">
+                <h5>{{condition}}</h5>
+            </p>
+          </script> -->
 
         </div>
       </div>
