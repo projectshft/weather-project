@@ -20,6 +20,7 @@ spinner .sk-fold (via spinkit)
 .forecastweekday-template handlebars
 
 
+
 */
 /* example http://api.openweathermap.org/data/2.5/forecast?id=524901&APPID={YOUR API KEY}
 api.openweathermap.org/data/2.5/weather?q={city name},{state code},{country code}&appid={your api key}
@@ -37,7 +38,7 @@ var forecastData = {};
 var secsInDay = 86400;
 var dayOfWeek = new Date();
 console.log('DayOfWeek: ', dayOfWeek.getDay());
-var weekday =['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+var weekday = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
 
 // parse the weather json, starting with current
@@ -45,9 +46,10 @@ var weekday =['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 
 var addWeatherDay = function (data) {
   console.log('addWeatherDay() called');
   var weatherDay = {
-    currentTemp: 'tbd',
-    cityName: 'tbd2',
-    conditions: 'tbd3'
+    futureTemp: 'tbd',
+    futureConditions: 'tbd2',
+    futureIcon: 'tbd3',
+    dayName: 'tbd4'
   }
   weatherForecast.push(weatherDay);
 }
@@ -68,9 +70,30 @@ var formatCurrent = function (currentData) {
 
 var formatForecast = function (forecastData) {
   console.log('formatForecast() called');
-  startingPoint = forecastData.list[0].dt;
+  var forecastsRead = 0;
+  // set up with some general info
+  var numOfEntries = forecastData.cnt;
+  var startingPoint = forecastData.list[0].dt;
   console.log('---->DT<-----', startingPoint);
+  // skip first one because we don't need it
+  for (var i = 1; i < numOfEntries; i++) {
+    //I don't know a faster way to traverse the JSON...yet
+    if (forecastData.list[i].dt === startingPoint + secsInDay) {
+      if (forecastsRead >= 4) {
+        break;
+      } 
+      var futureTemp = forecastData.list[i].main.temp;
+      console.log('futureTemp: ', futureTemp);
+      var futureConditions = forecastData.list[i].weather[0].main;
+      console.log('futureConditions: ', futureConditions);
+      var futureIcon = forecastData.list[i].weather[0].icon;
+      console.log('futureIcon: ', futureIcon);
+      secsInDay += secsInDay;
+      forecastsRead++;
+    }
+  }
 }
+
 
 var renderWeather = function () {
   console.log('renderWeather() called');
@@ -81,24 +104,24 @@ var renderWeather = function () {
   console.log('currentSource', currentSource);
   var templateCurrent = Handlebars.compile(currentSource);
   var currentWeatherHTML = templateCurrent(currentData);
-  
+
   // for (var i = 0; i < weatherForecast.length; i++) {
-   
-    //var forecastSource = $('.forecastweather-template').html();
-    // DONE split off forecast from current
-   
-    //var templateForecast = Handlebars.compile()
-    // for future use
-    // var templateForecast = templateForecast(weatherForecast[i]);
-    $('.current-info').append(currentWeatherHTML);
-    console.log('leaving renderWeather');
+
+  //var forecastSource = $('.forecastweather-template').html();
+  // DONE split off forecast from current
+
+  //var templateForecast = Handlebars.compile()
+  // for future use
+  // var templateForecast = templateForecast(weatherForecast[i]);
+  $('.current-info').append(currentWeatherHTML);
+  console.log('leaving renderWeather');
   // }
 
 
 
 }
 // probably JUST get JSON and pass along here
-  // TODO add spinner from prev project
+// TODO add spinner from prev project
 var fetchWeather = function (cityQuery) {
   console.log('fetchWeather() called');
   var currentApiQuery = `http://api.openweathermap.org/data/2.5/weather?q=${cityQuery}&appid=${owmApiKey}&units=imperial`;
@@ -140,6 +163,8 @@ $('.search').on('click', function () {
   console.log('click event');
   var cityQuery = $('#city-query').val();
   console.log(cityQuery);
+  //reset the counter
+  secsInDay = 86400;
   fetchWeather(cityQuery);
 });
 
