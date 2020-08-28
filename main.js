@@ -25,58 +25,85 @@ api.openweathermap.org/data/2.5/weather?q={city name},{state code},{country code
 
 Parameters:
 https needed for fetch()
-my key:  3e31940f7e296490f329375344b9bf68
+my openweathermap key:  3e31940f7e296490f329375344b9bf68
 */
 // the plan is to fill an array with objects for next 5 days
 var weatherForecast = [];
+const owmApiKey = `3e31940f7e296490f329375344b9bf68`;
+//want to get this out of global scope at some point?
+var currentData = {};
 
 // parse the weather json, starting with current
-var addWeatherday = function (data) {
+
+var addWeatherDay = function (data) {
+  console.log('addWeatherDay() called');
   var weatherDay = {
-    current-temp: 'tbd',
-    city-name: 'tbd2',
+    currentTemp: 'tbd',
+    cityName: 'tbd2',
     conditions: 'tbd3'
   }
   weatherForecast.push(weatherDay);
 }
 
+//upon success of getting current conditions, build an object for it
+var formatCurrent = function (data) {
+  console.log('formatCurrent() called');
+  currentData = {
+    currentTemp: data.main.temp,
+    cityName: data.main.name,
+    conditions: data.weather.main,
+    icon: data.weather.icon
+  }
+  //maybe return object to be called in renderWeather()?
+  //for now, let's just send to renderWeather then prep for forecast data
+  renderWeather();
+}
 var renderWeather = function () {
-  console.log(.renderWeather() called);
-  $('.current').empty();
+  console.log('renderWeather() called');
+  $('.current-info').empty();
   $('.forecast').empty();
-  // TODO add spinner from prev project
-  for (var i = 0; i < weatherForecast.length; i++) {
-    var currentSource = $('#currentweather-template').html();
+  console.log('currentData', currentData);
+  var currentSource = $('#currentweather-template').html();
+  console.log('currentSource', currentSource);
+  var templateCurrent = Handlebars.compile(currentSource);
+  var currentWeatherHTML = templateCurrent(currentData);
+  
+  // for (var i = 0; i < weatherForecast.length; i++) {
+   
     //var forecastSource = $('.forecastweather-template').html();
-    // TODO split off forecast from current
-    var templateCurrent = Handlebars.compile(currentSource);
+    // DONE split off forecast from current
+   
     //var templateForecast = Handlebars.compile()
-    var currentWeatherHTML = templateCurrent(weatherForecast[i]); // guaranteed to be wrong
     // for future use
     // var templateForecast = templateForecast(weatherForecast[i]);
     $('.current-info').append(currentWeatherHTML);
-  }
+    console.log('leaving renderWeather');
+  // }
 
 
 
 }
 // probably JUST get JSON and pass along here
-
+  // TODO add spinner from prev project
 var fetchWeather = function (cityQuery) {
-  console.log(.fetchWeather() called);
-/*   $.ajax({
+  console.log('fetchWeather() called');
+  var apiQuery = `http://api.openweathermap.org/data/2.5/weather?q=${cityQuery}&appid=${owmApiKey}&units=imperial`;
+  console.log('sending', apiQuery);
+  $.ajax({
     method: "GET",
-    url: "" + cityQuery,
+    url: apiQuery,
     dataType: "json",
     success: function (data) {
-      addWeatherday(data);
-      console.log(data);
-      renderWeather();
+      formatCurrent(data);
+      //formatForecast(data);
+      //addWeatherDay(data);
+      console.log('receiving: ', data);
+      //renderWeather();
     },
     error: function (jqXHR, textStatus, errorThrown) {
       console.log(textStatus);
     }
-  }); */
+  });
 };
 
 // parse info between current and forecast
@@ -90,5 +117,6 @@ $('.search').on('click', function () {
   fetchWeather(cityQuery);
 });
 
-
+// this will be impressive once local storage is enabled, maybe
+// getStoredCity()
 renderWeather();

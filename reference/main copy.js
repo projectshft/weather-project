@@ -1,19 +1,19 @@
-var weatherForecast = [];
+var contributors = [];
 
-var addWeatherday = function (data) {
+var addContributor = function (data) {
   var contributor = { 
     img: data.author.avatar_url,
     login: data.author.login
   }
-  weatherForecast.push(contributor);
+  contributors.push(contributor);
 }
 
-var renderWeather = function () {
+var renderContributors = function () {
   $('#commits').empty();
-  for (var i = 0; i < weatherForecast.length; i++){
+  for (var i = 0; i < contributors.length; i++){
     var source = $('#contributor-template').html();
     var template = Handlebars.compile(source);
-    var contributorHTML = template(weatherForecast[i]);
+    var contributorHTML = template(contributors[i]);
     $('.commits').append(contributorHTML);
   }
 
@@ -21,15 +21,15 @@ var renderWeather = function () {
 
 }
 
-var fetchWeather = function (sha) {
+var fetchData = function (sha) {
   $.ajax({
     method: "GET",
     url: "https://api.github.com/repos/facebook/react/commits/" + sha,
     dataType: "json",
     success: function(data) {
-      addWeatherday(data);
+      addContributor(data);
       console.log(data);
-      renderWeather();
+      renderContributors();
     },
     error: function(jqXHR, textStatus, errorThrown) {
       console.log(textStatus);
@@ -42,8 +42,8 @@ $('#search').on('click', function (){
   console.log('click');
   var sha = $('#sha').val();
   console.log(sha);
-  fetchWeather(sha);
+  fetchData(sha);
 });
 
 
-renderWeather();
+renderContributors();
