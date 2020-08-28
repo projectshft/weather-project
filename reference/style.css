@@ -1,0 +1,18 @@
+.page-header {
+  margin-top: 40px;
+}
+
+.search-form {
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+
+.contributor {
+  border: 1px solid black;
+  display: inline-block;
+  padding: 10px;
+  margin: 5px;
+}
+.contributor img {
+  max-width: 150px;
+}

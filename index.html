@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Required / helpful meta tags for bootstrap -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="spinkit/spinkit.min.css">
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+</head>
+
+<body>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-6 offset-md-3">
+        <div class="page-header">
+          <h1 class="text-center">Current Weather</h1>
+          <hr />
+        </div>
+
+        <form class="face-form">
+          <div class="form-group">
+            <input type="text" id="city-query" class="form-control" placeholder="Enter City Name"></input>
+          </div>
+
+          <button type="button" class="btn btn-primary search">Search</button>
+        </form>
+
+        <hr />
+        <div class="sk-fold sk-center" hidden="">
+          <div class="sk-fold-cube"></div>
+          <div class="sk-fold-cube"></div>
+          <div class="sk-fold-cube"></div>
+          <div class="sk-fold-cube"></div>
+        </div>
+        <div class="current row">
+          <div class="col"></div>
+          <div class="col-3">
+            <div class="current-info">
+              <h1>88&deg;</h1>
+              <h2>Durham, NC</h2><span class="">:-)</span>
+              <h3>Humid</h3>
+            </div>
+          </div>
+          <div class="col"></div>
+        </div>
+        <div class="forecast row">
+        </div>
+      </div>
+    </div>
+
+    <!-- Handlebars first, then jQuery, then Tether(?), then Bootstrap JS(?). -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"
+      integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+      integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous">
+    </script> -->
+    <!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+      integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"> </script> -->
+
+
+    <script id="currentweather-template" type="text/x-handlebars-template">
+      <h1>{{current-temp}}&deg;</h1>
+      <h2>{{city-name}}</h2><span class="">&nbsp;ICON-TBD</span>
+      <h3>{{conditions}}</h3>
+    </script>
+
+    <script src="main.js" type="text/javascript"></script>
+</body>
+
+</html>
