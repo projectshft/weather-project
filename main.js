@@ -24,23 +24,51 @@
         //Try Moment.js to convert Unix to days of the week
 //
 
-const weatherProject = () => {
-    let days = Collection();
+// const weatherProject = () => {
+//     let days = Collection();
 
-    let $days = $('.days')
+//     let $days = $('.days')
 
-    const renderDays = () => {
-        $days.empty();
+//     const renderDays = () => {
+//         $days.empty();
 
-        for (let i = 0; i <days.models.length; i ++) {
-            let daysModel = days.models
+//         for (let i = 0; i <days.models.length; i ++) {
+//             let daysModel = days.models[i]
         
-            let daysTemplate = Handlebars.compile($('#day-template').html());
+//             let daysTemplate = Handlebars.compile($('#day-template').html());
     
-            let daysView = View(daysModel, daysTemplate)
+//             let daysView = View(daysModel, daysTemplate)
 
-            $days.append(daysView.render());
-        }
+//             $days.append(daysView.render());
+//         }
       
-    }
-}
+//     }
+
+//     return {
+//         renderDays,
+//     }
+
+// }
+
+var fetchInfo = (query) => {
+    $.ajax({
+      method: "GET",
+      url: `https://api.openweathermap.org/data/2.5/weather?q=${query}&appid=22ef8f05e874e286b2f628c4dbc76cc6`,
+      dataType: "json",
+      success: (data) => {
+        console.log(data);
+      },
+      error: (textStatus, errorThrown) => {
+        console.log(textStatus);
+      }
+    });
+};
+
+
+
+$('.search').on('click', function (e) {
+    e.preventDefault();
+    var search = $('#input-city').val();
+    
+    fetchInfo(search);
+});

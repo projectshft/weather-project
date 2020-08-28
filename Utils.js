@@ -1,13 +1,13 @@
 const Collection = (config) => {
     const models = []
 
+    let changeCallback = null;
+
     const init = () => {
         if (config) {
             models.push(config)
         }
     };
-
-    let changeCallback = null;
 
     const add = (day) => {
         if (!_.includes(models, day) || _.isEmpty(models)) {
@@ -54,6 +54,8 @@ const Model = (config) => {
     const getAttributes = () => attributes;
     const get = (prop) => attributes[prop];
     const change = (fx) => changeCallback = fx;
+
+    init();
 
     return {
         set,
