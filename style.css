@@ -1,0 +1,41 @@
+body {
+  padding: 50px;
+  font-family: 'Balsamiq Sans';
+  font-size: 50px;
+}
+
+h1 {
+  font-family: 'Balsamiq Sans';
+  font-style: normal;
+  font-weight: 400;
+  padding: 50px;
+}
+
+#cityName {
+  font-family: 'Balsamiq Sans';
+  font-style: normal;
+  font-weight: 400;
+  padding-right: 200px;    
+}
+
+.form-inlin{
+  display: block
+}
+
+.search {
+  font-family: 'Balsamiq Sans';
+  font-style: normal;
+  font-weight: 400;
+}
+
+.weather-data {
+  padding-top: 20px;
+}
+
+.weather-description {
+  text-transform: lowercase;
+}
+
+.weather-description::first-letter {
+  text-transform: capitalize;
+}
