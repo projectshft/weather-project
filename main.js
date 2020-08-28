@@ -49,10 +49,10 @@ var addWeatherDay = function (data) {
 var formatCurrent = function (data) {
   console.log('formatCurrent() called');
   currentData = {
-    currentTemp: data.main.temp,
-    cityName: data.main.name,
-    conditions: data.weather.main,
-    icon: data.weather.icon
+    currentTemp: parseInt(data.main.temp),
+    cityName: data.name,
+    conditions: data.weather[0].main,
+    icon: data.weather[0].icon
   }
   //maybe return object to be called in renderWeather()?
   //for now, let's just send to renderWeather then prep for forecast data
