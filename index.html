@@ -11,53 +11,54 @@
     <title>Hello, world!</title>
   </head>
   <body>
-    <div class="row">
-        <div class="col-md-6 col-md-offset-3">
-          <div class="page-header">
-            <h1>Current Weather</h1>
-          </div>
-
-          <!-- Search Bar -->
-          <form class="form-inline">
-                <div class="form-group mx-sm-3 mb-2">
-                    <input type="text" class="form-control" id="inputCity" placeholder="Enter City Name">
+       <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <div class="page-header">
+                    <h1>Current Weather</h1>
                 </div>
-                <button type="submit" class="btn btn-primary mb-2">Search</button>
-          </form>
 
-          <div>
-            <p id="temp">
-                <h2>48 degrees</h2>
-            </p>
-            <p id="city-name">
-                <h4>Durham</h4>
-            </p>
-            <p id="condition">
-                <h5>Cloudy</h5>
-            </p>
-        </div>
+                <!-- Search Bar -->
+                <form class="form-inline">
+                    <div class="form-group mx-sm-3 mb-2">
+                        <input type="text" class="form-control" id="inputCity" placeholder="Enter City Name">
+                    </div>
+                    <button type="submit" class="btn btn-primary mb-2">Search</button>
+                </form>
 
-          <!-- Info Display -->
-          <!-- <script id="day-template" type="text/x-handlebars-template">
-            <p id="temp">
-                <h2>{{temperature}}</h2>
-            </p>
-            <p id="city-name">
-                <h4>{{city}}</h4>
-            </p>
-            <p id="condition">
-                <h5>{{condition}}</h5>
-            </p>
-          </script> -->
+                <div class="days"></div>
+                <!-- <div>
+                    <p id="temp">
+                    <h2>48 degrees</h2>
+                    </p>
+                    <p id="city-name">
+                    <h4>Durham</h4>
+                    </p>
+                    <p id="condition">
+                    <h5>Cloudy</h5>
+                    </p>
+                </div> -->
 
-        </div>
-      </div>
+                <!-- Info Display -->
+                <script id="day-template" type="text/x-handlebars-template">
+                    <p id="temp">
+                        <h2>{{temperature}}</h2>
+                    </p>
+                    <p id="city-name">
+                        <h4>{{city}}</h4>
+                    </p>
+                    <p id="condition">
+                        <h5>{{condition}}</h5>
+                    </p>
+                </script>
+
+            </div>
+       </div>
 
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
-    <script src="utils.js"></script>
-    <script src="main.js"></script>
-  </body>
+      <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+      <script src="utils.js"></script>
+      <script src="main.js"></script>
+    </body>
 </html>

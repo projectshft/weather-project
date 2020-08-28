@@ -25,12 +25,22 @@
 //
 
 const weatherProject = () => {
+    let days = Collection();
+
+    let $days = $('.days')
 
     const renderDays = () => {
-        // let daysModel =
-        
-        // let daysTemplate = Handlebars.compile($('#day-template').html());
+        $days.empty();
 
-        // let daysView = View()
+        for (let i = 0; i <days.models.length; i ++) {
+            let daysModel = days.models
+        
+            let daysTemplate = Handlebars.compile($('#day-template').html());
+    
+            let daysView = View(daysModel, daysTemplate)
+
+            $days.append(daysView.render());
+        }
+      
     }
 }
