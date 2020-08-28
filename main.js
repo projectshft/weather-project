@@ -24,39 +24,62 @@
         //Try Moment.js to convert Unix to days of the week
 //
 
-// const weatherProject = () => {
-//     let days = Collection();
+const weatherProject = () => {
+    let days = Collection();
 
-//     let $days = $('.days')
+    let $days = $('.days')
 
-//     const renderDays = () => {
-//         $days.empty();
+    const createDay = (data) => {
+        let farenheit = Math.round((data.main.temp - 273.15) * (9/5) + 32);
+        let day = {
+            temperature: `${farenheit}°`,
+            city: data.name,
+            condition: data.weather[0].description 
+        }
 
-//         for (let i = 0; i <days.models.length; i ++) {
-//             let daysModel = days.models[i]
+        let dayModel = Model(day)
+
+        // dayModel.change(() => {
+        //     app.renderDays();
+        //     console.log('hello')
+        // });
+
+        days.add(dayModel);
+        //console.log(day);
+        renderDays();
+    }
+
+    const renderDays = () => {
+        $days.empty();
+
+        for (let i = 0; i <days.models.length; i ++) {
+            let daysModel = days.models[i]
         
-//             let daysTemplate = Handlebars.compile($('#day-template').html());
+            let daysTemplate = Handlebars.compile($('#day-template').html());
     
-//             let daysView = View(daysModel, daysTemplate)
+            let daysView = View(daysModel, daysTemplate)
 
-//             $days.append(daysView.render());
-//         }
+            $days.append(daysView.render());
+        }
       
-//     }
+    }
 
-//     return {
-//         renderDays,
-//     }
+    return {
+        renderDays,
+        createDay
+    }
 
-// }
+}
 
-var fetchInfo = (query) => {
+const app = weatherProject();
+
+const fetchInfo = (query) => {
     $.ajax({
       method: "GET",
       url: `https://api.openweathermap.org/data/2.5/weather?q=${query}&appid=22ef8f05e874e286b2f628c4dbc76cc6`,
       dataType: "json",
       success: (data) => {
-        console.log(data);
+        app.createDay(data);
       },
       error: (textStatus, errorThrown) => {
         console.log(textStatus);
@@ -64,11 +87,9 @@ var fetchInfo = (query) => {
     });
 };
 
-
-
 $('.search').on('click', function (e) {
     e.preventDefault();
-    var search = $('#input-city').val();
+    let search = $('#input-city').val();
     
     fetchInfo(search);
 });
