@@ -3,12 +3,16 @@
 2. test even handler for search button and getting of input
 3. create handlebars template for current weather of city
  PT 1 REQs -
-A user should be able to enter a city into the url, click "Search" and get weather data on the city they entered.
-A user should be able to see the current temperature (in imperial units).
-A user should be able to see the current conditions (whether it's cloudy, raining, etc).
-When a user does another search, their first search should be replaced.
+DONE A user should be able to enter a city into the url, click "Search" and get weather data on the city they entered.
+DONE A user should be able to see the current temperature (in imperial units).
+DONE A user should be able to see the current conditions (whether it's cloudy, raining, etc).
+DONE When a user does another search, their first search should be replaced.
 */
 
+/* PT 2 REQS -
+ 5-day forecast, and each of the five days should have an associated day of the week, 
+ weather condition and temperature
+*/
 /* html classes and id's and templates of note:
 
 text input id #city-query
@@ -26,7 +30,7 @@ spinner .sk-fold (via spinkit)
 api.openweathermap.org/data/2.5/weather?q={city name},{state code},{country code}&appid={your api key}
 
 Parameters:
-https needed for fetch()
+N/A https needed for fetch()
 my openweathermap key:  3e31940f7e296490f329375344b9bf68
 */
 // the plan is to fill an array with objects for next 5 days
@@ -72,18 +76,33 @@ var formatForecast = function (forecastData) {
   console.log('formatForecast() called');
   var forecastsRead = 0;
   // set up with some general info
+  // it should always be '40', but for now I'm testing for it
   var numOfEntries = forecastData.cnt;
-  console.log('numOfEntries: ', numOfEntries);
+  // console.log('numOfEntries: ', numOfEntries);
+  // Get timestamp of first (index 0) forecast data
+  
   var startingPoint = forecastData.list[0].dt;
-  console.log('---->DT<-----', startingPoint);
-  // skip first one because we don't need it
+  
+  // console.log('---->DT<-----', startingPoint);
+  
+  //  Loop through obj, and get each subsequent day's info
+    // until we run out of entries.  (But we really should limit to
+    // 5 days regardless
+    
   for (var i = 0; i < numOfEntries; i++) {
     //I don't know a faster way to traverse the JSON...yet
+    // secsInDay counter starts at 0, then adds 86400 per interation 
+    // to find next day's forecast.  Weakness at this point is that
+    // it will always report the forecast for approx the same TOD
+    // that this is launched rather than a daily high/low.  
+    
+    
     if (forecastData.list[i].dt === startingPoint + secsInDay) {
       console.log('sID: ', secsInDay);
-      // if (forecastsRead >= 4) {
+      // if (forecastsRead === 4) {
       //   break;
-      // } 
+      // } // TODO limit to 5 days?
+      
       var futureTemp = forecastData.list[i].main.temp;
       console.log('futureTemp: ', futureTemp);
       var futureConditions = forecastData.list[i].weather[0].main;

@@ -1,3 +1,4 @@
 DONE bootstrap col's for current weather
 bootstrap col's for forecast
 search on return?
+initial state kinda sucks
