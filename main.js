@@ -1,27 +1,28 @@
 let cityCurrentWeather = [];
+let cityFiveDayWeather = [];
 
-const addWeatherDataToArray = (data) => {
+const addCurrentWeatherDataToArray = (data) => {
   const fahrenheitFromKelvin = Math.floor(data.main.temp / 3.493);
-  const newCityAndWeatherData = {
+  const newCityAndWeatherCurrentData = {
     city: data.name,
     temp: fahrenheitFromKelvin,
     description: data.weather[0].description,
   };
-  cityCurrentWeather.push(newCityAndWeatherData);
+  cityCurrentWeather.push(newCityAndWeatherCurrentData);
 };
 
 const renderCurrentWeather = () => {
-  $('#weatherData').empty();
+  $('#currentWeatherData').empty();
   // console.log(cityCurrentWeather);
 
   for (let i = 0; i < cityCurrentWeather.length; i++) {
     let weather = cityCurrentWeather[i];
 
-    const source = $('#weather-template').html();
+    const source = $('#current-weather-template').html();
     const template = Handlebars.compile(source);
     const weatherHTML = template(weather);
 
-    $('#weatherData').append(weatherHTML);
+    $('#currentWeatherData').append(weatherHTML);
     $('#cityName').val('');
     cityCurrentWeather = [];
   }
@@ -37,7 +38,7 @@ const fetchData = (cityName) => {
     dataType: 'json',
     success: function (data) {
       console.log(data);
-      addWeatherDataToArray(data);
+      addCurrentWeatherDataToArray(data);
       renderCurrentWeather();
     },
     error: function (jqXHR, textStatus, errorThrown) {
@@ -50,7 +51,7 @@ const fetchData = (cityName) => {
 };
 
 $('.search').on('click', function () {
-  $('#weatherData').empty();
+  $('#currentWeatherData').empty();
   console.log('clicked');
   const cityName = $('#cityName').val();
   fetchData(cityName);
