@@ -1,34 +1,44 @@
 let cityCurrentWeather = [];
 let cityFiveDayWeather = [];
 
-const addCurrentWeatherDataToArray = (data) => {
-  const fahrenheitFromKelvin = Math.floor(data.main.temp / 3.493);
+const addCurrentWeatherDataToArray = (currentData) => {
+  //Convert temp returned in Kelvin to F
+  const fahrenheitFromKelvin = Math.floor(currentData.main.temp / 3.493);
+  //Create current weather object
   const newCityAndWeatherCurrentData = {
-    city: data.name,
+    city: currentData.name,
     temp: fahrenheitFromKelvin,
-    description: data.weather[0].description,
+    description: currentData.weather[0].description,
   };
+  //Push to array
   cityCurrentWeather.push(newCityAndWeatherCurrentData);
+  //send data to a function to be rendered on the page
+  renderCurrentWeather(cityCurrentWeather);
 };
 
-const renderCurrentWeather = () => {
+const renderCurrentWeather = (aCurrentWeatherArrayToRender) => {
+  //Clear the existing data on the page
   $('#currentWeatherData').empty();
-  // console.log(cityCurrentWeather);
+  //We know our array contains only 1 item for current weather, so no loop is necessary
+  let weather = aCurrentWeatherArrayToRender[0];
+  //Prepare handlebars template
+  const source = $('#current-weather-template').html();
+  const template = Handlebars.compile(source);
+  const weatherHTML = template(weather);
+  //Push data to handlebars template, clear entry form, empty the array.
+  $('#currentWeatherData').append(weatherHTML);
+  $('#cityName').val('');
+  aCurrentWeatherArrayToRender = [];
+};
 
-  for (let i = 0; i < cityCurrentWeather.length; i++) {
-    let weather = cityCurrentWeather[i];
-
-    const source = $('#current-weather-template').html();
-    const template = Handlebars.compile(source);
-    const weatherHTML = template(weather);
-
-    $('#currentWeatherData').append(weatherHTML);
-    $('#cityName').val('');
-    cityCurrentWeather = [];
-  }
+const addFiveDayWeatherDataToArray = (fiveDayData) => {
+  const newCityAndWeatherFiveDay = {
+    city: fiveDayData.city.name,
+  };
 };
 
 const fetchData = (cityName) => {
+  //Run first ajax GET method for current weather data
   $.ajax({
     method: 'GET',
     url:
@@ -36,16 +46,32 @@ const fetchData = (cityName) => {
       cityName +
       '&appid=1223294114fb8930caf177ea3451f02c',
     dataType: 'json',
-    success: function (data) {
-      console.log(data);
-      addCurrentWeatherDataToArray(data);
-      renderCurrentWeather();
+    success: function (currentData) {
+      //If successful, send results to a function that will add them
+      //to a current weather array
+      addCurrentWeatherDataToArray(currentData);
+
+      $.ajax({
+        method: 'GET',
+        url:
+          'https://api.openweathermap.org/data/2.5/forecast?q=durham&appid=1223294114fb8930caf177ea3451f02c',
+        dataType: 'json',
+        success: function (fiveDayData) {
+          // debugger;
+
+          console.log(fiveDayData);
+          //addFiveDayWeatherDataToArray(fiveDayData);
+          //renderFiveDayWeather();
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+          alert('Unable to retrieve 5-day forecast for this city');
+        },
+      });
     },
     error: function (jqXHR, textStatus, errorThrown) {
       alert(
         'Please enter a city name with correct spelling and spacing. \nYou can use upper or lower case.'
       );
-      console.log(textStatus);
     },
   });
 };
@@ -57,6 +83,4 @@ $('.search').on('click', function () {
   fetchData(cityName);
 });
 
-
-
-// api.openweathermap.org/data/2.5/forecast?q={city name}&appid={your api key}
+// https://api.openweathermap.org/data/2.5/forecast?q=durham&appid=1223294114fb8930caf177ea3451f02c
