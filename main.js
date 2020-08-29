@@ -53,8 +53,11 @@ const renderCurrentWeather = (cityCurrentWeather) => {
 
   //Clear the existing data on the page
   $('#currentWeatherData').empty();
+
   //We know our array contains only 1 item for current weather, so no loop is necessary
   let weather = cityCurrentWeather[0];
+  // console.log(weather);
+
   //Prepare handlebars template
   const source = $('#current-weather-template').html();
   const template = Handlebars.compile(source);
@@ -103,6 +106,7 @@ const addFiveDayWeatherDataToArray = (fiveDayData, todayNumber) => {
 
 const renderFiveDayWeather = (aFiveDayWeatherArray, currentDayNumber) => {
   console.log('rendering five day weather!');
+  let fiveDaysOfWeather = [];
 
   var dayOne = aFiveDayWeatherArray.find(function (days) {
     if (currentDayNumber === 6) {
@@ -112,6 +116,7 @@ const renderFiveDayWeather = (aFiveDayWeatherArray, currentDayNumber) => {
     }
   });
   console.log(dayOne);
+  fiveDaysOfWeather.push(dayOne);
 
   var dayTwo = aFiveDayWeatherArray.find(function (days) {
     if (currentDayNumber === 5) {
@@ -123,6 +128,7 @@ const renderFiveDayWeather = (aFiveDayWeatherArray, currentDayNumber) => {
     }
   });
   console.log(dayTwo);
+  fiveDaysOfWeather.push(dayTwo);
 
   var dayThree = aFiveDayWeatherArray.find(function (days) {
     if (currentDayNumber === 4) {
@@ -136,6 +142,7 @@ const renderFiveDayWeather = (aFiveDayWeatherArray, currentDayNumber) => {
     }
   });
   console.log(dayThree);
+  fiveDaysOfWeather.push(dayThree);
 
   var dayFour = aFiveDayWeatherArray.find(function (days) {
     if (currentDayNumber === 3) {
@@ -151,6 +158,7 @@ const renderFiveDayWeather = (aFiveDayWeatherArray, currentDayNumber) => {
     }
   });
   console.log(dayFour);
+  fiveDaysOfWeather.push(dayFour);
 
   var dayFive = aFiveDayWeatherArray.find(function (days) {
     if (currentDayNumber === 2) {
@@ -168,6 +176,19 @@ const renderFiveDayWeather = (aFiveDayWeatherArray, currentDayNumber) => {
     }
   });
   console.log(dayFive);
+  fiveDaysOfWeather.push(dayFive);
+
+  //Clear the existing data on the page
+  $('#fiveDayWeatherData').empty();
+  const source = $('#five-day-weather-template').html();
+  const template = Handlebars.compile(source);
+
+  for (let i = 0; i < fiveDaysOfWeather.length; i++) {
+    const weatherHTML = template(fiveDaysOfWeather[i]);
+    $('#fiveDayWeatherData').append(weatherHTML);
+  }
+
+  $('#cityName').val('');
 };
 
 const fetchData = (cityName, todayUNIXStamp) => {
@@ -215,9 +236,9 @@ const fetchData = (cityName, todayUNIXStamp) => {
 $('.search').on('click', function () {
   //clear out existing arrays and displayed data
   cityCurrentWeather = [];
-  // cityFiveDayWeather = [];
+  cityFiveDayWeather = [];
   $('#currentWeatherData').empty();
-  // $('#fiveDayWeatherData').empty();
+  $('#fiveDayWeatherData').empty();
   console.log('clicked');
   const todayUNIXStamp = Date.now();
   const userInputCity = $('#cityName').val();

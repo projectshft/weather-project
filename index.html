@@ -40,43 +40,11 @@
         <div id="currentWeatherData">
         </div>
 
-        <div id="fiveDayWeatherData">
-          <div class="row five-day-row">
-              <div class="col col-one-day-weather">
-                <h6>Cloudy</h6>
-                <h5><strong>47&#176;F</strong></h5>
-                <img src="http://openweathermap.org/img/wn/10d.png">
-                <h6>Monday</h6>
-              </div>
-              <div class="col col-one-day-weather">
-                <h6>Cloudy</h6>
-                <h5><strong>47&#176;F</strong></h5>
-                <img src="http://openweathermap.org/img/wn/10d.png">
-                <h6>Tuesday</h6>
-              </div>
-              <div class="col col-one-day-weather">
-                <h6>Cloudy</h6>
-                <h5><strong>47&#176;F</strong></h5>
-                <img src="http://openweathermap.org/img/wn/10d.png">
-                <h6>Wednesday</h6>
-              </div>
-              <div class="col col-one-day-weather">
-                <h6>Cloudy</h6>
-                <h5><strong>47&#176;F</strong></h5>
-                <img src="http://openweathermap.org/img/wn/10d.png">
-                <h6>Thursday</h6>
-              </div>
-              <div class="col col-one-day-weather">
-                <h6>Cloudy</h6>
-                <h5><strong>47&#176;F</strong></h5>
-                <img src="http://openweathermap.org/img/wn/02d.png">
-                <h6>Friday</h6>
-              </div>  
-            </div>
+        <div id="fiveDayWeatherData" class="row five-day-row">
         </div>
  
 
-    <script id="current-weather-template">
+    <script id="current-weather-template" type="x-handlebars-template">
       <div class="row row-current-weather-data">
         <div class="col col-city-weather-data">
           <h3><strong>{{ temp }}&#176;F</strong></h3>
@@ -88,6 +56,41 @@
         </div>
       </div>
     </script>
+
+    <script id="five-day-weather-template" type='x-handlebars-template'>
+        <div id="dayOne" class="col col-one-day-weather">
+          <h6>{{ briefDescription }}</h6>
+          <h5><strong>{{ temperature }}&#176;F</strong></h5>
+          <img src={{ weatherIconSrc }}>
+          <h6>{{ weekdayFull }}</h6>
+        </div>
+     </script> 
+
+         <!-- <div id="dayTwo"  class="col col-day-two-weather">
+           <h6>Cloudy</h6>
+           <h5><strong>47&#176;F</strong></h5>
+           <img src="http://openweathermap.org/img/wn/10d.png">
+           <h6>Tuesday</h6>
+         </div>
+          <div id="dayThree" class="col col-day-three-weather">
+            <h6>Cloudy</h6>
+           <h5><strong>47&#176;F</strong></h5>
+           <img src="http://openweathermap.org/img/wn/10d.png">
+           <h6>Wednesday</h6>
+         </div>
+         <div id="dayFour" class="col col-day-four-weather">
+           <h6>Cloudy</h6>
+           <h5><strong>47&#176;F</strong></h5>
+           <img src="http://openweathermap.org/img/wn/10d.png">
+           <h6>Thursday</h6>
+         </div>
+         <div id="dayFive" class="col col-day-five-weather">
+           <h6>Cloudy</h6>
+           <h5><strong>47&#176;F</strong></h5>
+           <img src="http://openweathermap.org/img/wn/02d.png">
+           <h6>Friday</h6>
+         </div>   -->
+  
     
     <!-- jQuery first, then Tether, then Bootstrap JS. -->
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
