@@ -215,9 +215,9 @@ const fetchData = (cityName, todayUNIXStamp) => {
 $('.search').on('click', function () {
   //clear out existing arrays and displayed data
   cityCurrentWeather = [];
-  cityFiveDayWeather = [];
+  // cityFiveDayWeather = [];
   $('#currentWeatherData').empty();
-  $('#fiveDayWeatherData').empty();
+  // $('#fiveDayWeatherData').empty();
   console.log('clicked');
   const todayUNIXStamp = Date.now();
   const userInputCity = $('#cityName').val();
