@@ -22,8 +22,7 @@ const projectWeatherAPI = () => {
             
     };
         
-
-    let renderWeather = () => {
+  let renderWeather = () => {
         // ensure that the weather div is cleared out before every render 
         $('.weather').empty();
         // loop through the weather array and append the info into our HTML file using handlebars
@@ -37,7 +36,9 @@ const projectWeatherAPI = () => {
          // empty out the weather array in order to not have duplicate posts on the page when search is clicked again
          weatherArray = [];
     };
-    // utilize the weather API to get the current weather based on the search parameters
+
+    
+    // utilize the weather and forecast endpoints to get the current weather/5 day forecast based on the search parameters
     const fetch = function (query) {
         $.ajax({
             method: "GET",
@@ -51,6 +52,20 @@ const projectWeatherAPI = () => {
             alert('Please enter a valid city name')
             }
         });
+        $.ajax({
+            method: "GET",
+            url: `http://api.openweathermap.org/data/2.5/forecast?q=${query}&APPID=5a31d79a77b97402b850d4f7196d3274`,
+            dataType: "json",
+            success: function(info) {
+            // addForecastEntries(info);
+            // renderForecast();
+            console.log(info)
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+            alert('Please enter a valid city name')
+            }
+        });
+
     };
 
     return {
