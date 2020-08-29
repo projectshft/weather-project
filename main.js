@@ -18,8 +18,9 @@ const findToday = (aUnixStamp, fiveDayData) => {
   //day of the week and (in loop in addFiveDayWeatherDataToArray function)
   // add to each five day weather object.
   const aDateAndTimeStamp = new Date(aUnixStamp);
-  const today = days[aDateAndTimeStamp.getDay()];
-  addFiveDayWeatherDataToArray(fiveDayData, today);
+  // const today = days[aDateAndTimeStamp.getDay()];
+  const todayNumber = aDateAndTimeStamp.getDay();
+  addFiveDayWeatherDataToArray(fiveDayData, todayNumber);
 };
 
 const addCurrentWeatherDataToArray = (currentData) => {
@@ -52,13 +53,14 @@ const renderCurrentWeather = (aCurrentWeatherArrayToRender) => {
   aCurrentWeatherArrayToRender = [];
 };
 
-const addFiveDayWeatherDataToArray = (fiveDayData, today) => {
-  console.log('adding five day to array!');
+const addFiveDayWeatherDataToArray = (fiveDayData, todayNumber) => {
+  console.log('adding five day data to array!');
   // console.log(today);
   for (let i = 0; i < fiveDayData.list.length; i++) {
     //convert the imported date-time stamp to a day of the week
     const dateLongFormatText = new Date(fiveDayData.list[i].dt_txt);
-    const dayOfTheWeek = days[dateLongFormatText.getDay()];
+    // const dayOfTheWeek = days[dateLongFormatText.getDay()];
+    const dayNumberOfTheWeek = dateLongFormatText.getDay();
 
     //Convert temp returned in Kelvin to F
     const fahrenheitFromKelvinFiveDay = Math.floor(
@@ -69,7 +71,7 @@ const addFiveDayWeatherDataToArray = (fiveDayData, today) => {
     const briefWeatherDesc = fiveDayData.list[i].weather[0].main;
 
     const newCityAndWeatherFiveDay = {
-      weekday: dayOfTheWeek,
+      weekdayNumber: dayNumberOfTheWeek,
       temperature: fahrenheitFromKelvinFiveDay,
       briefDescription: briefWeatherDesc,
     };
@@ -78,15 +80,20 @@ const addFiveDayWeatherDataToArray = (fiveDayData, today) => {
     cityFiveDayWeather.push(newCityAndWeatherFiveDay);
   }
   // console.log('outofloop');
-  renderFiveDayWeather(cityFiveDayWeather, today);
+  renderFiveDayWeather(cityFiveDayWeather, todayNumber);
 };
 
-const renderFiveDayWeather = (aFiveDayWeatherObject, currentDay) => {
+const renderFiveDayWeather = (aFiveDayWeatherArray, currentDayNumber) => {
   console.log('rendering five day weather!');
-  console.log(aFiveDayWeatherObject);
+  console.log(aFiveDayWeatherArray);
+  console.log(currentDayNumber);
+  const dayOne = aFiveDayWeatherArray.find(function () {
+
+  });
 
 
-}
+
+};
 
 
 const fetchData = (cityName, todayUNIXStamp) => {
