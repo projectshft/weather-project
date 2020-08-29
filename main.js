@@ -35,7 +35,7 @@ const owmApiKey = `3e31940f7e296490f329375344b9bf68`;
 //want to get these out of global scope at some point?
 var currentData = {};
 var forecastData = {};
-var secsInDay = 86400;
+var secsInDay = 0;  // start at 0, increment in loop
 var dayOfWeek = new Date();
 console.log('DayOfWeek: ', dayOfWeek.getDay());
 var weekday = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -73,25 +73,28 @@ var formatForecast = function (forecastData) {
   var forecastsRead = 0;
   // set up with some general info
   var numOfEntries = forecastData.cnt;
+  console.log('numOfEntries: ', numOfEntries);
   var startingPoint = forecastData.list[0].dt;
   console.log('---->DT<-----', startingPoint);
   // skip first one because we don't need it
-  for (var i = 1; i < numOfEntries; i++) {
+  for (var i = 0; i < numOfEntries; i++) {
     //I don't know a faster way to traverse the JSON...yet
     if (forecastData.list[i].dt === startingPoint + secsInDay) {
-      if (forecastsRead >= 4) {
-        break;
-      } 
+      console.log('sID: ', secsInDay);
+      // if (forecastsRead >= 4) {
+      //   break;
+      // } 
       var futureTemp = forecastData.list[i].main.temp;
       console.log('futureTemp: ', futureTemp);
       var futureConditions = forecastData.list[i].weather[0].main;
       console.log('futureConditions: ', futureConditions);
       var futureIcon = forecastData.list[i].weather[0].icon;
       console.log('futureIcon: ', futureIcon);
-      secsInDay += secsInDay;
+      secsInDay += 86400;
       forecastsRead++;
     }
   }
+  console.log('final sID: ', secsInDay);
 }
 
 
@@ -134,7 +137,7 @@ var fetchWeather = function (cityQuery) {
     dataType: "json",
     success: function (currentData) {
       formatCurrent(currentData);
-      console.log('receiving current: ', currentData);
+      // console.log('receiving current: ', currentData);
     },
     error: function (jqXHR, textStatus, errorThrown) {
       console.log(textStatus);
@@ -147,7 +150,7 @@ var fetchWeather = function (cityQuery) {
     dataType: "json",
     success: function (forecastData) {
       formatForecast(forecastData);
-      console.log('receiving forecast: ', forecastData);
+      // console.log('receiving forecast: ', forecastData);
     },
     error: function (jqXHR, textStatus, errorThrown) {
       console.log(textStatus);
@@ -164,7 +167,7 @@ $('.search').on('click', function () {
   var cityQuery = $('#city-query').val();
   console.log(cityQuery);
   //reset the counter
-  secsInDay = 86400;
+  secsInDay = 0;
   fetchWeather(cityQuery);
 });
 
