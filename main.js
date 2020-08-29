@@ -1,4 +1,4 @@
-let cityWeather = [];
+let cityCurrentWeather = [];
 
 const addWeatherDataToArray = (data) => {
   const fahrenheitFromKelvin = Math.floor(data.main.temp / 3.493);
@@ -7,15 +7,15 @@ const addWeatherDataToArray = (data) => {
     temp: fahrenheitFromKelvin,
     description: data.weather[0].description,
   };
-  cityWeather.push(newCityAndWeatherData);
+  cityCurrentWeather.push(newCityAndWeatherData);
 };
 
 const renderCurrentWeather = () => {
   $('#weatherData').empty();
-  // console.log(cityWeather);
+  // console.log(cityCurrentWeather);
 
-  for (let i = 0; i < cityWeather.length; i++) {
-    let weather = cityWeather[i];
+  for (let i = 0; i < cityCurrentWeather.length; i++) {
+    let weather = cityCurrentWeather[i];
 
     const source = $('#weather-template').html();
     const template = Handlebars.compile(source);
@@ -23,7 +23,7 @@ const renderCurrentWeather = () => {
 
     $('#weatherData').append(weatherHTML);
     $('#cityName').val('');
-    cityWeather = [];
+    cityCurrentWeather = [];
   }
 };
 
@@ -56,3 +56,6 @@ $('.search').on('click', function () {
   fetchData(cityName);
 });
 
+
+
+// api.openweathermap.org/data/2.5/forecast?q={city name}&appid={your api key}

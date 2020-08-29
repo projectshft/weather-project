@@ -23,6 +23,8 @@
             <h1>Current Weather</h1>
           </div>
         </div>
+      </div>
+    </div>
 
         <div class="col-sm-6 offset-sm-3">
           <form class="form-inline">
@@ -35,20 +37,58 @@
           </form>
         </div>
 
-        <div id="weatherData" class="col-sm-6 offset-sm-3">
+        <div id="weatherData">
         </div>
 
-      </div>
-    </div>
+        <div id="fiveDayWeatherData">
+          <div class="row five-day-row">
+              <div class="col col-one-day-weather">
+                <h6>Cloudy</h6>
+                <h5><strong>47&#176;F</strong></h5>
+                <img src="http://openweathermap.org/img/wn/10d.png">
+                <h6>Monday</h6>
+              </div>
+              <div class="col col-one-day-weather">
+                <h6>Cloudy</h6>
+                <h5><strong>47&#176;F</strong></h5>
+                <img src="http://openweathermap.org/img/wn/10d.png">
+                <h6>Tuesday</h6>
+              </div>
+              <div class="col col-one-day-weather">
+                <h6>Cloudy</h6>
+                <h5><strong>47&#176;F</strong></h5>
+                <img src="http://openweathermap.org/img/wn/10d.png">
+                <h6>Wednesday</h6>
+              </div>
+              <div class="col col-one-day-weather">
+                <h6>Cloudy</h6>
+                <h5><strong>47&#176;F</strong></h5>
+                <img src="http://openweathermap.org/img/wn/10d.png">
+                <h6>Thursday</h6>
+              </div>
+              <div class="col col-one-day-weather">
+                <h6>Cloudy</h6>
+                <h5><strong>47&#176;F</strong></h5>
+                <img src="http://openweathermap.org/img/wn/02d.png">
+                <h6>Friday</h6>
+              </div>  
+            </div>
+        </div>
+ 
 
     <script id="weather-template">
-      <div class="weather-data">
-        <h4>{{ temp }}&#176;F</h4>
-        <h5>{{ city }}</h5>
-        <h5 class='weather-description'>{{ description }}</h5>
+      <div class="row row-current-weather-data">
+        <div class="col col-city-weather-data">
+          <h3><strong>{{ temp }}&#176;F</strong></h3>
+          <h5>{{ city }}</h5>
+          <h6 class='weather-description'>{{ description }}</h6>
+        </div>
+        <div class="col col-city-weather-image">
+          <img src="http://openweathermap.org/img/wn/10d@2x.png"></img>
+        </div>
       </div>
     </script>
-
+    
     <!-- jQuery first, then Tether, then Bootstrap JS. -->
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
