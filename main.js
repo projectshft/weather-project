@@ -61,13 +61,16 @@ var weekday = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday',
 
 
 //upon success of getting current conditions, build an object for it
+
 var formatCurrent = function (currentData) {
   console.log('formatCurrent() called');
+  // create icon var separately for ease of use in object creation
+  var iconCode = currentData.weather[0].icon;
   currentWeather = {
     currentTemp: parseInt(currentData.main.temp),
     cityName: currentData.name,
     conditions: currentData.weather[0].main,
-    icon: currentData.weather[0].icon
+    iconUrl: `http://openweathermap.org/img/wn/${iconCode}@2x.png`
   }
   //maybe return object to be called in renderWeather()?
   //for now, let's just send to renderWeather then prep for forecast data
@@ -113,10 +116,12 @@ var formatForecast = function (forecastData) {
       } else {
         var forecastDay = weekday[(dayOfWeek.getDay()+dayPlus)];
       };
+      // snag icon name now for easier insertion into object
+      var futureIcon = forecastData.list[i].weather[0].icon;
       var forecastDay = {
         futureTemp: parseInt(forecastData.list[i].main.temp),
         futureConditions: forecastData.list[i].weather[0].main,
-        futureIcon: forecastData.list[i].weather[0].icon,
+        futureIconUrl: `http://openweathermap.org/img/wn/${futureIcon}.png`,
         futureDay: forecastDay
       }
       // this is just a test
@@ -124,11 +129,11 @@ var formatForecast = function (forecastData) {
 
       var futureConditions = forecastData.list[i].weather[0].main;
 
-      var futureIcon = forecastData.list[i].weather[0].icon;
+      
       console.log('forecastsRead', forecastsRead);
       console.log('futureTemp: ', futureTemp);
       console.log('futureConditions: ', futureConditions);
-      console.log('futureIcon: ', futureIcon);
+      console.log('futureIconUrl: ', `http://openweathermap.org/img/wn/${futureIcon}@2x.png`);
       console.table(forecastDay);
       // test ending
       secsInDay += 86400;

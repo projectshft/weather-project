@@ -67,7 +67,7 @@
     <script id="currentweather-template" type="text/x-handlebars-template">
       <div class="current-cell">
       <h1>{{currentTemp}}&deg;</h1>
-      <h2>{{cityName}}</h2><span class="">&nbsp;ICON-TBD</span>
+      <h2>{{cityName}}</h2><span class=""><img src="{{iconUrl}}"></span>
       <h3>{{conditions}}</h3>
       </div>
     </script>
@@ -75,7 +75,7 @@
       <div class="forecast-cell">
       <h3>{{futureConditions}}</h3>
       <h1>{{futureTemp}}&deg;</h1>
-      <span class="">{{futureIcon}}</span>
+      <span class=""><img src="{{futureIconUrl}}"></span>
       <h2>{{futureDay}}</h2>
     </div>
     </script>
