@@ -26,7 +26,7 @@ const projectWeatherAPI = () => {
     let renderWeather = () => {
         // ensure that the weather div is cleared out before every render 
         $('.weather').empty();
-
+        // loop through the weather array and append the info into our HTML file using handlebars
         for (let i=0; i<weatherArray.length; i++) {
             let weatherInfo = weatherArray[i];
             let source = $('#weather-template').html();
@@ -65,7 +65,6 @@ const app = projectWeatherAPI();
 $('.search').on('click', function () {
     const search = $('#search-query').val();
    
-
     app.fetch(search);
     
 });
