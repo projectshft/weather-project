@@ -1,8 +1,26 @@
-const moment = require('moment');
-console.log(moment().format('dddd'));
-
 let cityCurrentWeather = [];
 let cityFiveDayWeather = [];
+const days = [
+  'Sunday',
+  'Monday',
+  'Tuesday',
+  'Wednesday',
+  'Thursday',
+  'Friday',
+  'Saturday',
+];
+
+const findToday = (aUnixStamp, fiveDayData) => {
+  console.log('finding today!');
+  // console.log(fiveDayData); //along for the ride
+
+  //Convert the UNIX stamp that was generated on button click to
+  //day of the week and (in loop in addFiveDayWeatherDataToArray function)
+  // add to each five day weather object.
+  const aDateAndTimeStamp = new Date(aUnixStamp);
+  const today = days[aDateAndTimeStamp.getDay()];
+  addFiveDayWeatherDataToArray(fiveDayData, today);
+};
 
 const addCurrentWeatherDataToArray = (currentData) => {
   //Convert temp returned in Kelvin to F
@@ -34,13 +52,47 @@ const renderCurrentWeather = (aCurrentWeatherArrayToRender) => {
   aCurrentWeatherArrayToRender = [];
 };
 
-const addFiveDayWeatherDataToArray = (fiveDayData) => {
-  const newCityAndWeatherFiveDay = {
-    city: fiveDayData.city.name,
-  };
+const addFiveDayWeatherDataToArray = (fiveDayData, today) => {
+  console.log('adding five day to array!');
+  // console.log(today);
+  for (let i = 0; i < fiveDayData.list.length; i++) {
+    //convert the imported date-time stamp to a day of the week
+    const dateLongFormatText = new Date(fiveDayData.list[i].dt_txt);
+    const dayOfTheWeek = days[dateLongFormatText.getDay()];
+
+    //Convert temp returned in Kelvin to F
+    const fahrenheitFromKelvinFiveDay = Math.floor(
+      fiveDayData.list[i].main.temp / 3.493
+    );
+
+    //add brief weather description
+    const briefWeatherDesc = fiveDayData.list[i].weather[0].main;
+
+    const newCityAndWeatherFiveDay = {
+      weekday: dayOfTheWeek,
+      temperature: fahrenheitFromKelvinFiveDay,
+      briefDescription: briefWeatherDesc,
+    };
+
+    // Add the object to the five day weather array
+    cityFiveDayWeather.push(newCityAndWeatherFiveDay);
+  }
+  // console.log('outofloop');
+  renderFiveDayWeather(cityFiveDayWeather, today);
 };
 
-const fetchData = (cityName) => {
+const renderFiveDayWeather = (aFiveDayWeatherObject, currentDay) => {
+  console.log('rendering five day weather!');
+  console.log(aFiveDayWeatherObject);
+
+
+}
+
+
+const fetchData = (cityName, todayUNIXStamp) => {
+  console.log('fetching data!');
+  // console.log(todayUNIXStamp); //along for the ride
+
   //Run first ajax GET method for current weather data
   $.ajax({
     method: 'GET',
@@ -53,18 +105,16 @@ const fetchData = (cityName) => {
       //If successful, send results to a function that will add them
       //to a current weather array
       addCurrentWeatherDataToArray(currentData);
-
+      //If successful, retrieve five day forecast
       $.ajax({
         method: 'GET',
         url:
-          'https://api.openweathermap.org/data/2.5/forecast?q=durham&appid=1223294114fb8930caf177ea3451f02c',
+          'https://api.openweathermap.org/data/2.5/forecast?q=' + cityName + '&appid=1223294114fb8930caf177ea3451f02c',
         dataType: 'json',
-        success: function (fiveDayData) {
-          // debugger;
-
-          console.log(fiveDayData);
-          //addFiveDayWeatherDataToArray(fiveDayData);
-          //renderFiveDayWeather();
+        success: function (fiveDayDataReturned) {
+          console.log('successfully retrieved five day data!');
+          //decode unix stamp for today before processing data
+          findToday(todayUNIXStamp, fiveDayDataReturned);
         },
         error: function (jqXHR, textStatus, errorThrown) {
           alert('Unable to retrieve 5-day forecast for this city');
@@ -82,8 +132,10 @@ const fetchData = (cityName) => {
 $('.search').on('click', function () {
   $('#currentWeatherData').empty();
   console.log('clicked');
-  const cityName = $('#cityName').val();
-  fetchData(cityName);
+  const todayUNIXStamp = Date.now();
+  const userInputCity = $('#cityName').val();
+  //send both values to fetchData function (todayUNIXstamp is along for the ride)
+  fetchData(userInputCity, todayUNIXStamp);
 });
 
 // https://api.openweathermap.org/data/2.5/forecast?q=durham&appid=1223294114fb8930caf177ea3451f02c
