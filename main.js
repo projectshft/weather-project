@@ -19,7 +19,7 @@ const findToday = (aUnixStamp, fiveDayData) => {
   // add to each five day weather object.
   const aDateAndTimeStamp = new Date(aUnixStamp);
   // const today = days[aDateAndTimeStamp.getDay()];
-  const todayNumber = aDateAndTimeStamp.getDay();
+  const todayNumber = Number(aDateAndTimeStamp.getDay());
   addFiveDayWeatherDataToArray(fiveDayData, todayNumber);
 };
 
@@ -59,8 +59,8 @@ const addFiveDayWeatherDataToArray = (fiveDayData, todayNumber) => {
   for (let i = 0; i < fiveDayData.list.length; i++) {
     //convert the imported date-time stamp to a day of the week
     const dateLongFormatText = new Date(fiveDayData.list[i].dt_txt);
-    // const dayOfTheWeek = days[dateLongFormatText.getDay()];
-    const dayNumberOfTheWeek = dateLongFormatText.getDay();
+    const dayOfTheWeekLong = days[dateLongFormatText.getDay()];
+    const dayNumberOfTheWeek = Number(dateLongFormatText.getDay());
 
     //Convert temp returned in Kelvin to F
     const fahrenheitFromKelvinFiveDay = Math.floor(
@@ -72,6 +72,7 @@ const addFiveDayWeatherDataToArray = (fiveDayData, todayNumber) => {
 
     const newCityAndWeatherFiveDay = {
       weekdayNumber: dayNumberOfTheWeek,
+      weekdayFull: dayOfTheWeekLong,
       temperature: fahrenheitFromKelvinFiveDay,
       briefDescription: briefWeatherDesc,
     };
@@ -85,16 +86,74 @@ const addFiveDayWeatherDataToArray = (fiveDayData, todayNumber) => {
 
 const renderFiveDayWeather = (aFiveDayWeatherArray, currentDayNumber) => {
   console.log('rendering five day weather!');
-  console.log(aFiveDayWeatherArray);
-  console.log(currentDayNumber);
-  const dayOne = aFiveDayWeatherArray.find(function () {
 
+  var dayOne = aFiveDayWeatherArray.find(function (days) {
+    if (currentDayNumber === 6) {
+      return days.weekdayNumber === 0;
+    } else {
+      return days.weekdayNumber === currentDayNumber + 1;
+    }
   });
+  console.log(dayOne);
 
+  var dayTwo = aFiveDayWeatherArray.find(function (days) {
+    if (currentDayNumber === 5) {
+      return days.weekdayNumber === 0;
+    } else if (currentDayNumber === 6) {
+      return days.weekdayNumber === 1;
+    } else {
+      return days.weekdayNumber === currentDayNumber + 2;
+    }
+  });
+  console.log(dayTwo);
 
+  var dayThree = aFiveDayWeatherArray.find(function (days) {
+    if (currentDayNumber === 4) {
+      return days.weekdayNumber === 0;
+    } else if (currentDayNumber === 5) {
+      return days.weekdayNumber === 1;
+    } else if (currentDayNumber === 6) {
+      return days.weekdayNumber === 2;
+    } else {
+      return days.weekdayNumber === currentDayNumber + 3;
+    }
+  });
+  console.log(dayThree);
 
+  var dayFour = aFiveDayWeatherArray.find(function (days) {
+    if (currentDayNumber === 3) {
+      return days.weekdayNumber === 0;
+    } else if (currentDayNumber === 4) {
+      return days.weekdayNumber === 1;
+    } else if (currentDayNumber === 5) {
+      return days.weekdayNumber === 2;
+    } else if (currentDayNumber === 6) {
+      return days.weekdayNumber === 3;
+    } else {
+      return days.weekdayNumber === currentDayNumber + 4;
+    }
+  });
+  console.log(dayFour);
+
+  var dayFive = aFiveDayWeatherArray.find(function (days) {
+    if (currentDayNumber === 2) {
+      return days.weekdayNumber === 0;
+    } else if (currentDayNumber === 3) {
+      return days.weekdayNumber === 1;
+    } else if (currentDayNumber === 4) {
+      return days.weekdayNumber === 2;
+    } else if (currentDayNumber === 5) {
+      return days.weekdayNumber === 3;
+    } else if (currentDayNumber === 6) {
+      return days.weekdayNumber === 4;
+    } else {
+      return days.weekdayNumber === currentDayNumber + 5;
+    }
+  });
+  console.log(dayFive);
+
+  
 };
-
 
 const fetchData = (cityName, todayUNIXStamp) => {
   console.log('fetching data!');
@@ -116,7 +175,9 @@ const fetchData = (cityName, todayUNIXStamp) => {
       $.ajax({
         method: 'GET',
         url:
-          'https://api.openweathermap.org/data/2.5/forecast?q=' + cityName + '&appid=1223294114fb8930caf177ea3451f02c',
+          'https://api.openweathermap.org/data/2.5/forecast?q=' +
+          cityName +
+          '&appid=1223294114fb8930caf177ea3451f02c',
         dataType: 'json',
         success: function (fiveDayDataReturned) {
           console.log('successfully retrieved five day data!');
