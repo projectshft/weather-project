@@ -46,8 +46,8 @@ var weekday = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday',
 
 
 // parse the weather json, starting with current
-
-var addWeatherDay = function (data) {
+// this is going to be wrapped in the formatForecast() func
+/* var addWeatherDay = function (data) {
   console.log('addWeatherDay() called');
   var weatherDay = {
     futureTemp: 'tbd',
@@ -56,7 +56,7 @@ var addWeatherDay = function (data) {
     dayName: 'tbd4'
   }
   weatherForecast.push(weatherDay);
-}
+} */
 
 //upon success of getting current conditions, build an object for it
 var formatCurrent = function (currentData) {
@@ -102,18 +102,29 @@ var formatForecast = function (forecastData) {
       // if (forecastsRead === 4) {
       //   break;
       // } // TODO limit to 5 days?
-      
+      var forecastDay = {
+        futureTemp: parseInt(forecastData.list[i].main.temp),
+        futureConditions: forecastData.list[i].weather[0].main,
+        futureIcon: forecastData.list[i].weather[0].icon
+      };
+      // this is just a test
       var futureTemp = forecastData.list[i].main.temp;
-      console.log('futureTemp: ', futureTemp);
+   
       var futureConditions = forecastData.list[i].weather[0].main;
-      console.log('futureConditions: ', futureConditions);
+      
       var futureIcon = forecastData.list[i].weather[0].icon;
+      console.log('forecastsRead', forecastsRead);  
+      console.log('futureTemp: ', futureTemp);
+      console.log('futureConditions: ', futureConditions);
       console.log('futureIcon: ', futureIcon);
+      console.table(forecastDay);
+      // test ending
       secsInDay += 86400;
       forecastsRead++;
+      weatherForecast.push(forecastDay);
     }
   }
-  console.log('final sID: ', secsInDay);
+  // console.log('final sID: ', secsInDay);
 }
 
 
