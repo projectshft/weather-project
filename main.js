@@ -42,8 +42,8 @@ const weatherProject = () => {
 
         let dayModel = Model(day);
 
-        days.add(null , dayModel)
-        renderDay(); //Change to renderDay after you create the function
+        days.add2(dayModel)
+        renderDay(); 
     };
 
     const createWeek = (weekData) => {
@@ -77,18 +77,15 @@ const weatherProject = () => {
     const renderDay = () => {
         $today.empty();
 
-        for (let i = 0; i < days.models.length; i++) {
-            let todayModel = days.models[i]
+        let todaysModel = days.todayModel[0]
 
-            let todayTemplate = Handlebars.compile($('#today-template').html());
+        let todayTemplate = Handlebars.compile($('#today-template').html());
 
-            let todayView = View(todayModel, todayTemplate);
+        let todayView = View(todaysModel, todayTemplate);
 
-            $today.append(todayView.render());
-
-        }
-        
+        $today.append(todayView.render());    
     }
+
     const renderWeek = () => {
         $days.empty();
 
@@ -135,7 +132,7 @@ const fetchWeek = (query) => {
         url: `https://api.openweathermap.org/data/2.5/forecast?q=${query}&appid=22ef8f05e874e286b2f628c4dbc76cc6`,
         dataType: "json",
         success: (weekData) => {
-            console.log(weekData)
+            //console.log(weekData)
             app.createWeek(weekData);
         },
         error: (textStatus) => {
