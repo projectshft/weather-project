@@ -1,5 +1,6 @@
 const Collection = (config) => {
-    let models = []
+    let models = [];
+    let todayModel = [];
 
     let changeCallback = null;
 
@@ -9,13 +10,13 @@ const Collection = (config) => {
         }
     };
 
-    const add = (day) => {
-        if (!_.includes(models, day) || _.isEmpty(models)) {
-            models.push(day);
-            // console.log(models);
-            if (changeCallback) {
-                changeCallback();
-            }
+    const add = (week, day) => { {
+        models.push(week);
+        todayModel.push(day)    ////Added this
+        // models.push(week);
+        console.log(models);
+        if (changeCallback) {
+            changeCallback();
         }
     };
     
@@ -25,6 +26,7 @@ const Collection = (config) => {
 
     return {
         models,
+        todayModel,
         add,
         change
     }
@@ -32,9 +34,8 @@ const Collection = (config) => {
 
 const Model = (config) => {
     let attributes = {}
-    //console.log(attributes)
     let changeCallback = null
-    //console.log(changeCallback)
+
     const init = () => Object.assign(attributes, config)
 
     const set = (prop, value) => {
