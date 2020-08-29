@@ -24,6 +24,9 @@ const findToday = (aUnixStamp, fiveDayData) => {
 };
 
 const addCurrentWeatherDataToArray = (currentData) => {
+  console.log('adding current data to array!');
+  // console.log(currentData);
+
   //Convert temp returned in Kelvin to F
   const fahrenheitFromKelvin = Math.floor(currentData.main.temp / 3.493);
   //Create current weather object
@@ -31,26 +34,34 @@ const addCurrentWeatherDataToArray = (currentData) => {
     city: currentData.name,
     temp: fahrenheitFromKelvin,
     description: currentData.weather[0].description,
+    weatherIconSrc:
+      'http://openweathermap.org/img/wn/' +
+      currentData.weather[0].icon +
+      '@2x.png',
   };
+
   //Push to array
   cityCurrentWeather.push(newCityAndWeatherCurrentData);
+
   //send data to a function to be rendered on the page
   renderCurrentWeather(cityCurrentWeather);
 };
 
-const renderCurrentWeather = (aCurrentWeatherArrayToRender) => {
+const renderCurrentWeather = (cityCurrentWeather) => {
+  console.log('rendering current weather!');
+  console.log(cityCurrentWeather);
+
   //Clear the existing data on the page
   $('#currentWeatherData').empty();
   //We know our array contains only 1 item for current weather, so no loop is necessary
-  let weather = aCurrentWeatherArrayToRender[0];
+  let weather = cityCurrentWeather[0];
   //Prepare handlebars template
   const source = $('#current-weather-template').html();
   const template = Handlebars.compile(source);
   const weatherHTML = template(weather);
-  //Push data to handlebars template, clear entry form, empty the array.
+  //Push data to handlebars template, clear entry form.
   $('#currentWeatherData').append(weatherHTML);
   $('#cityName').val('');
-  aCurrentWeatherArrayToRender = [];
 };
 
 const addFiveDayWeatherDataToArray = (fiveDayData, todayNumber) => {
@@ -67,20 +78,26 @@ const addFiveDayWeatherDataToArray = (fiveDayData, todayNumber) => {
       fiveDayData.list[i].main.temp / 3.493
     );
 
-    //add brief weather description
+    // add brief weather description
     const briefWeatherDesc = fiveDayData.list[i].weather[0].main;
 
     const newCityAndWeatherFiveDay = {
       weekdayNumber: dayNumberOfTheWeek,
       weekdayFull: dayOfTheWeekLong,
       temperature: fahrenheitFromKelvinFiveDay,
-      briefDescription: briefWeatherDesc,
+      briefDescription: fiveDayData.list[i].weather[0].main,
+      weatherIcon: fiveDayData.list[i].weather[0].icon,
+      weatherIconSrc:
+        'http://openweathermap.org/img/wn/' +
+        fiveDayData.list[i].weather[0].icon +
+        '.png',
     };
 
     // Add the object to the five day weather array
     cityFiveDayWeather.push(newCityAndWeatherFiveDay);
   }
-  // console.log('outofloop');
+  console.log('outofloop');
+  console.log(cityFiveDayWeather);
   renderFiveDayWeather(cityFiveDayWeather, todayNumber);
 };
 
@@ -151,8 +168,6 @@ const renderFiveDayWeather = (aFiveDayWeatherArray, currentDayNumber) => {
     }
   });
   console.log(dayFive);
-
-  
 };
 
 const fetchData = (cityName, todayUNIXStamp) => {
@@ -198,7 +213,11 @@ const fetchData = (cityName, todayUNIXStamp) => {
 };
 
 $('.search').on('click', function () {
+  //clear out existing arrays and displayed data
+  cityCurrentWeather = [];
+  cityFiveDayWeather = [];
   $('#currentWeatherData').empty();
+  $('#fiveDayWeatherData').empty();
   console.log('clicked');
   const todayUNIXStamp = Date.now();
   const userInputCity = $('#cityName').val();
