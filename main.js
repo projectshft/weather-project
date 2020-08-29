@@ -1,3 +1,6 @@
+const moment = require('moment');
+console.log(moment().format('dddd'));
+
 let cityCurrentWeather = [];
 let cityFiveDayWeather = [];
 
