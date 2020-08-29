@@ -40,14 +40,13 @@
           <div class="col"></div>
           <div class="col-3">
             <div class="current-info">
-              <!-- <h1>88&deg;</h1>
-              <h2>Durham, NC</h2><span class="">:-)</span>
-              <h3>Humid</h3> -->
+              <!--handlebars inserts current weather here-->
             </div>
           </div>
           <div class="col"></div>
         </div>
         <div class="forecast row">
+          <!-- handlebars inserts forecast cells here-->
         </div>
       </div>
     </div>
@@ -66,15 +65,19 @@
 
 
     <script id="currentweather-template" type="text/x-handlebars-template">
+      <div class="current-cell">
       <h1>{{currentTemp}}&deg;</h1>
       <h2>{{cityName}}</h2><span class="">&nbsp;ICON-TBD</span>
       <h3>{{conditions}}</h3>
+      </div>
     </script>
     <script id="forecastweekday-template" type="text/x-handlebars-template">
+      <div class="forecast-cell">
       <h3>{{futureConditions}}</h3>
       <h1>{{futureTemp}}&deg;</h1>
       <span class="">{{futureIcon}}</span>
-      <h2>{{dayName}}</h2>
+      <h2>{{futureDay}}</h2>
+    </div>
     </script>
     <script src="main.js" type="text/javascript"></script>
 </body>

@@ -47,29 +47,18 @@ N/A https needed for fetch()
 my openweathermap key:  3e31940f7e296490f329375344b9bf68
 */
 // the plan is to fill an array with objects for next 5 days
-var weatherForecast = [];
+
 const owmApiKey = `3e31940f7e296490f329375344b9bf68`;
 //want to get these out of global scope at some point?
-var currentData = {};
-var forecastData = {};
+var currentWeather = {};  // formatted current weather for hb compile
+var currentData = {};  // holds json reply
+var forecastData = {}; // holds json reply
+var weatherForecast = [];  // array of forecast days for hb compile
 var secsInDay = 0; // start at 0, increment in loop
 var dayOfWeek = new Date();
 console.log('DayOfWeek: ', dayOfWeek.getDay());
 var weekday = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
-
-// parse the weather json, starting with current
-// this is going to be wrapped in the formatForecast() func
-/* var addWeatherDay = function (data) {
-  console.log('addWeatherDay() called');
-  var weatherDay = {
-    futureTemp: 'tbd',
-    futureConditions: 'tbd2',
-    futureIcon: 'tbd3',
-    dayName: 'tbd4'
-  }
-  weatherForecast.push(weatherDay);
-} */
 
 //upon success of getting current conditions, build an object for it
 var formatCurrent = function (currentData) {
@@ -88,6 +77,8 @@ var formatCurrent = function (currentData) {
 var formatForecast = function (forecastData) {
   console.log('formatForecast() called');
   var forecastsRead = 0;
+  // var for taking current DoW and adding tomorrows to it
+  var dayPlus = 1;
   // set up with some general info
   // it should always be '40', but for now I'm testing for it
   var numOfEntries = forecastData.cnt;
@@ -115,10 +106,18 @@ var formatForecast = function (forecastData) {
       // if (forecastsRead === 4) {
       //   break;
       // } // TODO limit to 5 days?
+
+      // make day of week text
+      if (dayOfWeek.getDay()+dayPlus >6){
+        var forecastDay = weekday[(dayOfWeek.getDay()+dayPlus)-7];
+      } else {
+        var forecastDay = weekday[(dayOfWeek.getDay()+dayPlus)];
+      };
       var forecastDay = {
         futureTemp: parseInt(forecastData.list[i].main.temp),
         futureConditions: forecastData.list[i].weather[0].main,
-        futureIcon: forecastData.list[i].weather[0].icon
+        futureIcon: forecastData.list[i].weather[0].icon,
+        futureDay: forecastDay
       }
       // this is just a test
       var futureTemp = forecastData.list[i].main.temp;
@@ -134,6 +133,7 @@ var formatForecast = function (forecastData) {
       // test ending
       secsInDay += 86400;
       forecastsRead++;
+      dayPlus++;
       weatherForecast.push(forecastDay);
     }
   }

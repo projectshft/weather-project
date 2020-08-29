@@ -7,13 +7,9 @@
   margin-bottom: 40px;
 }
 
-.current-info {
+.current-cell, .forecast-cell {
   border: 1px solid black;
   display: inline-block;
   padding: 10px;
   margin: 5px;
-}
-
-.forecast {
-
 }
