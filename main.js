@@ -70,7 +70,7 @@ var formatCurrent = function (currentData) {
     currentTemp: parseInt(currentData.main.temp),
     cityName: currentData.name,
     conditions: currentData.weather[0].main,
-    iconUrl: `http://openweathermap.org/img/wn/${iconCode}@2x.png`
+    iconUrl: `https://openweathermap.org/img/wn/${iconCode}@2x.png`
   }
   //maybe return object to be called in renderWeather()?
   //for now, let's just send to renderWeather then prep for forecast data
@@ -121,7 +121,7 @@ var formatForecast = function (forecastData) {
       var forecastDay = {
         futureTemp: parseInt(forecastData.list[i].main.temp),
         futureConditions: forecastData.list[i].weather[0].main,
-        futureIconUrl: `http://openweathermap.org/img/wn/${futureIcon}.png`,
+        futureIconUrl: `https://openweathermap.org/img/wn/${futureIcon}.png`,
         futureDay: forecastDay
       }
       // this is just a test
@@ -133,7 +133,7 @@ var formatForecast = function (forecastData) {
       console.log('forecastsRead', forecastsRead);
       console.log('futureTemp: ', futureTemp);
       console.log('futureConditions: ', futureConditions);
-      console.log('futureIconUrl: ', `http://openweathermap.org/img/wn/${futureIcon}@2x.png`);
+      console.log('futureIconUrl: ', `https://openweathermap.org/img/wn/${futureIcon}@2x.png`);
       console.table(forecastDay);
       // test ending
       secsInDay += 86400;

@@ -3,3 +3,5 @@ bootstrap col's for forecast
 search on return?
 initial state kinda sucks
 center forecast
+reset vars at end of loop
+place all actions inside of event and add returns to each step?
