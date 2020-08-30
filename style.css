@@ -11,7 +11,11 @@ body {
   margin-bottom: 40px;
 }
 
-.current-cell, .forecast-cell {
+.current-cell {
+  
+}
+
+.forecast-cell {
   border: 1px solid black;
   display: inline-block;
   padding: 10px;

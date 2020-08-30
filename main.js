@@ -1,12 +1,12 @@
 /*
 Flow thoughts
-(pt3 grab saved data)
+[pt3 grab saved data]
 Render initial screen
 wait for search event
-(test if valid)
+[todo test if valid]
 Fetch feeds. 
 Success of each feed formats data into objects for handlebars
-Trigger render again (where is best)
+Trigger render again (where is best?)
 reset applicable vars
 wait for events
 */
@@ -23,9 +23,10 @@ DONE When a user does another search, their first search should be replaced.
 */
 
 /* PT 2 REQS -
- 5-day forecast, and each of the five days should have an associated day of the week, 
+ DONE 5-day forecast, and each of the five days should have an associated day of the week, 
  weather condition and temperature
 */
+
 /* html classes and id's and templates of note:
 
 text input id #city-query
@@ -35,192 +36,189 @@ spinner .sk-fold (via spinkit)
 .forecast for row for forecast
 .currentweather-template handlebars
 .forecastweekday-template handlebars
-
-
-
 */
+
 /* example http://api.openweathermap.org/data/2.5/forecast?id=524901&APPID={YOUR API KEY}
 api.openweathermap.org/data/2.5/weather?q={city name},{state code},{country code}&appid={your api key}
 
 Parameters:
-N/A https needed for fetch()
+N/A - https needed for fetch()
 my openweathermap key:  3e31940f7e296490f329375344b9bf68
 */
+
 // the plan is to fill an array with objects for next 5 days
 
 const owmApiKey = `3e31940f7e296490f329375344b9bf68`;
 //want to get these out of global scope at some point?
-var currentWeather = {};  // formatted current weather for hb compile
-var currentData = {};  // holds json reply
-var forecastData = {}; // holds json reply
-var weatherForecast = [];  // array of forecast days for hb compile
-var secsInDay = 0; // start at 0, increment in loop
-var dayOfWeek = new Date();
-console.log('DayOfWeek: ', dayOfWeek.getDay());
-var weekday = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
+var Weather = function() {
+  var currentWeather = {};  // formatted current weather for hb compile
+  var currentData = {};  // holds json reply for current weather
+  var forecastData = {}; // holds json reply for 5 day forecast
+  var weatherForecast = [];  // array of forecast days as objs for hb compile
+  var secsInDay = 0; // start at 0, increment by 86400 in loop
+  var dayOfWeek = new Date();
+  var weekday = ['Sunday', 'Monday', 'Tuesday', 'Weds', 'Thursday', 'Friday', 'Saturday'];
 
-//upon success of getting current conditions, build an object for it
-
-var formatCurrent = function (currentData) {
-  console.log('formatCurrent() called');
-  // create icon var separately for ease of use in object creation
-  var iconCode = currentData.weather[0].icon;
-  currentWeather = {
-    currentTemp: parseInt(currentData.main.temp),
-    cityName: currentData.name,
-    conditions: currentData.weather[0].main,
-    iconUrl: `https://openweathermap.org/img/wn/${iconCode}@2x.png`
-  }
-  //maybe return object to be called in renderWeather()?
-  //for now, let's just send to renderWeather then prep for forecast data
-  // renderWeather();
-}
-
-var formatForecast = function (forecastData) {
-  console.log('formatForecast() called');
-  var forecastsRead = 0;
-  // var for taking current DoW and adding tomorrows to it
-  var dayPlus = 1;
-  // set up with some general info
-  // it should always be '40', but for now I'm testing for it
-  var numOfEntries = forecastData.cnt;
-  // console.log('numOfEntries: ', numOfEntries);
-  // Get timestamp of first (index 0) forecast data
-
-  var startingPoint = forecastData.list[0].dt;
-
-  // console.log('---->DT<-----', startingPoint);
-
-  //  Loop through obj, and get each subsequent day's info
-  // until we run out of entries.  (But we really should limit to
-  // 5 days regardless
-
-  for (var i = 0; i < numOfEntries; i++) {
-    //I don't know a faster way to traverse the JSON...yet
-    // secsInDay counter starts at 0, then adds 86400 per interation 
-    // to find next day's forecast.  Weakness at this point is that
-    // it will always report the forecast for approx the same TOD
-    // that this is launched rather than a daily high/low.  
-
-
-    if (forecastData.list[i].dt === startingPoint + secsInDay) {
-      console.log('sID: ', secsInDay);
-      // if (forecastsRead === 4) {
-      //   break;
-      // } // TODO limit to 5 days?
-
-      // make day of week text
-      if (dayOfWeek.getDay()+dayPlus >6){
-        var forecastDay = weekday[(dayOfWeek.getDay()+dayPlus)-7];
-      } else {
-        var forecastDay = weekday[(dayOfWeek.getDay()+dayPlus)];
-      };
-      // snag icon name now for easier insertion into object
-      var futureIcon = forecastData.list[i].weather[0].icon;
-      var forecastDay = {
-        futureTemp: parseInt(forecastData.list[i].main.temp),
-        futureConditions: forecastData.list[i].weather[0].main,
-        futureIconUrl: `https://openweathermap.org/img/wn/${futureIcon}.png`,
-        futureDay: forecastDay
+  var fetchWeather = function (cityQuery) {
+    console.log('fetchWeather() called');
+    var currentApiQuery = `http://api.openweathermap.org/data/2.5/weather?q=${cityQuery}&appid=${owmApiKey}&units=imperial`;
+    var forecastApiQuery = `http://api.openweathermap.org/data/2.5/forecast?q=${cityQuery}&appid=${owmApiKey}&units=imperial`;
+    console.log('sending forecast request', forecastApiQuery);
+    // get current conditions JSON
+    $.ajax({
+      method: "GET",
+      url: currentApiQuery,
+      dataType: "json",
+      success: function (currentData) {
+        formatCurrent(currentData);
+        // console.log('receiving current: ', currentData);
+      },
+      error: function (jqXHR, textStatus, errorThrown) {
+        console.log(textStatus);
       }
-      // this is just a test
-      var futureTemp = forecastData.list[i].main.temp;
-
-      var futureConditions = forecastData.list[i].weather[0].main;
-
-      
-      console.log('forecastsRead', forecastsRead);
-      console.log('futureTemp: ', futureTemp);
-      console.log('futureConditions: ', futureConditions);
-      console.log('futureIconUrl: ', `https://openweathermap.org/img/wn/${futureIcon}@2x.png`);
-      console.table(forecastDay);
-      // test ending
-      secsInDay += 86400;
-      forecastsRead++;
-      dayPlus++;
-      weatherForecast.push(forecastDay);
+    });
+    // get forecast JSON
+    $.ajax({
+      method: "GET",
+      url: forecastApiQuery,
+      dataType: "json",
+      success: function (forecastData) {
+        formatForecast(forecastData);
+        // console.log('receiving forecast: ', forecastData);
+      },
+      error: function (jqXHR, textStatus, errorThrown) {
+        console.log(textStatus);
+      }
+    });
+  };
+  
+  var formatCurrent = function (currentData) {
+    console.log('formatCurrent() called');
+    // create icon var separately for ease of use in object creation
+    var iconCode = currentData.weather[0].icon;
+    currentWeather = {
+      currentTemp: parseInt(currentData.main.temp),
+      cityName: currentData.name,
+      conditions: currentData.weather[0].main,
+      iconUrl: `https://openweathermap.org/img/wn/${iconCode}@2x.png`
     }
+    
+  };
+  var formatForecast = function (forecastData) {
+    console.log('formatForecast() called');
+    var forecastsRead = 0;
+    // var for taking current day of week and adding tomorrows to it
+    var dayPlus = 1;
+    // set up with some general info
+    // it should always be '40', but for now I'm testing for it
+    var numOfEntries = forecastData.cnt;
+    // console.log('numOfEntries: ', numOfEntries);
+    // Get timestamp of first (index 0) forecast data
+  
+    var startingPoint = forecastData.list[0].dt;
+  
+    // console.log('---->DT<-----', startingPoint);
+  
+    //  Loop through obj, and get each subsequent day's info
+    // until we run out of entries.  (But we really should limit to
+    // 5 days regardless
+  
+    for (var i = 0; i < numOfEntries; i++) {
+      //I don't know a faster way to traverse the JSON...yet
+      // secsInDay counter starts at 0, then adds 86400 per interation 
+      // to find next day's forecast.  Weakness at this point is that
+      // it will always report the forecast for approx the same TOD
+      // that this is launched rather than a daily high/low.  
+  
+  
+      if (forecastData.list[i].dt === startingPoint + secsInDay) {
+        console.log('sID: ', secsInDay);
+        // if (forecastsRead === 4) {
+        //   break;
+        // } // TODO limit to 5 days?
+  
+        // make day of week text
+        if (dayOfWeek.getDay()+dayPlus >6){
+          var forecastDay = weekday[(dayOfWeek.getDay()+dayPlus)-7];
+        } else {
+          var forecastDay = weekday[(dayOfWeek.getDay()+dayPlus)];
+        };
+        // snag icon name now for easier insertion into object
+        var futureIcon = forecastData.list[i].weather[0].icon;
+        var forecastDay = {
+          futureTemp: parseInt(forecastData.list[i].main.temp),
+          futureConditions: forecastData.list[i].weather[0].main,
+          futureIconUrl: `https://openweathermap.org/img/wn/${futureIcon}.png`,
+          futureDay: forecastDay
+        }
+        // this is just a test
+        var futureTemp = forecastData.list[i].main.temp;
+  
+        var futureConditions = forecastData.list[i].weather[0].main;
+  
+        
+        console.log('forecastsRead', forecastsRead);
+        console.log('futureTemp: ', futureTemp);
+        console.log('futureConditions: ', futureConditions);
+        console.log('futureIconUrl: ', `https://openweathermap.org/img/wn/${futureIcon}@2x.png`);
+        console.table(forecastDay);
+        // test ending
+        secsInDay += 86400;
+        forecastsRead++;
+        dayPlus++;
+        weatherForecast.push(forecastDay);
+      }
+    }
+    // is this the best place for this?  
+    renderWeather();
+    
   }
-  // is this the best place for this?  Still haven't decided.
-  renderWeather();
-  // console.log('final sID: ', secsInDay);
+  
+  var renderWeather = function () {
+    console.log('renderWeather() called');
+    $('.current-info').empty();
+    $('.forecast').empty();
+  
+    console.table('currentWeather', currentWeather);
+  
+    var currentSource = $('#currentweather-template').html();
+    var templateCurrent = Handlebars.compile(currentSource);
+    var currentWeatherHTML = templateCurrent(currentWeather);
+    $('.current-info').append(currentWeatherHTML);
+    // do as a forEach() for fancy points?
+    for (var i = 0; i < weatherForecast.length; i++) {
+  
+      var forecastSource = $('#forecastweekday-template').html();
+      var templateForecast = Handlebars.compile(forecastSource);
+      var forecastDayHTML = templateForecast(weatherForecast[i]);
+      $('.forecast').append(forecastDayHTML);
+  
+      console.log('leaving renderWeather');
+    }  
+  };
+  
+  return {
+    fetchWeather: fetchWeather,
+    formatCurrent: formatCurrent,
+    formatForecast: formatForecast,
+    renderWeather: renderWeather
+  }
 }
 
-
-var renderWeather = function () {
-  console.log('renderWeather() called');
-  $('.current-info').empty();
-  $('.forecast').empty();
-
-  console.table('currentWeather', currentWeather);
-
-  var currentSource = $('#currentweather-template').html();
-  var templateCurrent = Handlebars.compile(currentSource);
-  var currentWeatherHTML = templateCurrent(currentWeather);
-  $('.current-info').append(currentWeatherHTML);
-  // do as a forEach() for fancy points?
-  for (var i = 0; i < weatherForecast.length; i++) {
-
-    var forecastSource = $('#forecastweekday-template').html();
-    var templateForecast = Handlebars.compile(forecastSource);
-    var forecastDayHTML = templateForecast(weatherForecast[i]);
-    $('.forecast').append(forecastDayHTML);
-
-    console.log('leaving renderWeather');
-  }
-
-
-
-}
-// probably JUST get JSON and pass along here
-// TODO add spinner from prev project
-var fetchWeather = function (cityQuery) {
-  console.log('fetchWeather() called');
-  var currentApiQuery = `http://api.openweathermap.org/data/2.5/weather?q=${cityQuery}&appid=${owmApiKey}&units=imperial`;
-  var forecastApiQuery = `http://api.openweathermap.org/data/2.5/forecast?q=${cityQuery}&appid=${owmApiKey}&units=imperial`;
-  console.log('sending forecast request', forecastApiQuery);
-  // get current conditions JSON
-  $.ajax({
-    method: "GET",
-    url: currentApiQuery,
-    dataType: "json",
-    success: function (currentData) {
-      formatCurrent(currentData);
-      // console.log('receiving current: ', currentData);
-    },
-    error: function (jqXHR, textStatus, errorThrown) {
-      console.log(textStatus);
-    }
-  });
-  // get forecast JSON
-  $.ajax({
-    method: "GET",
-    url: forecastApiQuery,
-    dataType: "json",
-    success: function (forecastData) {
-      formatForecast(forecastData);
-      // console.log('receiving forecast: ', forecastData);
-    },
-    error: function (jqXHR, textStatus, errorThrown) {
-      console.log(textStatus);
-    }
-  });
-};
-
-// parse info between current and forecast
-
+var weather = Weather();
+// this will be impressive once local storage is enabled, maybe
+// getStoredCity()
+weather.renderWeather();
 
 // Events setup
 $('.search').on('click', function () {
-  console.log('click event');
+  // console.log('click event');
   var cityQuery = $('#city-query').val();
-  console.log(cityQuery);
+  // console.log(cityQuery);
   //reset the counter
   secsInDay = 0;
-  fetchWeather(cityQuery);
+  weather.fetchWeather(cityQuery);
+
 });
 
-// this will be impressive once local storage is enabled, maybe
-// getStoredCity()
-renderWeather();
