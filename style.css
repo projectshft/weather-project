@@ -37,14 +37,21 @@ h1 {
 }
 
 .row-current-weather-data {
+  height: 120px;
   margin-left: 320px;
-  margin-right: 700px;
+  margin-right: 280px;
   margin-top: 15px;
   }
 
 .col-city-weather-image {
   padding: 0px;
 }  
+
+iframe {
+  padding: 0px;
+  border-style: solid;
+  border-width: 2px;
+}
 
 .five-day-row {
   height: 150px;
@@ -69,5 +76,5 @@ h1 {
 }
 
 .col-one-day-weather img {
-  padding-left: 15px;
+  padding-left: 0px;
 }

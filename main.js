@@ -74,19 +74,17 @@ const WeatherProject = function () {
     const fahrenheitFromKelvin = Math.floor(
       currentWeatherJSONData.main.temp / 3.493
     );
-    //Create current weather object and add to array
+    //Create current weather object, including google map embed link, and add to array
     const newCityAndWeatherCurrentDataObject = {
       city: currentWeatherJSONData.name,
       temp: fahrenheitFromKelvin,
       description: currentWeatherJSONData.weather[0].description,
-      weatherIconSrc:
-        'http://openweathermap.org/img/wn/' +
-        currentWeatherJSONData.weather[0].icon +
-        '@2x.png',
+      weatherIconSrc: `http://openweathermap.org/img/wn/${currentWeatherJSONData.weather[0].icon}@2x.png`,
+      googleMapEmbedSrc: `https://www.google.com/maps/embed/v1/view?key=AIzaSyA7Psn-v_cbiWLDMaWS04XEgjMUdZjx3g4&center=${currentWeatherJSONData.coord.lat},${currentWeatherJSONData.coord.lon}&zoom=10`,
     };
     cityCurrentWeatherArray.push(newCityAndWeatherCurrentDataObject);
 
-    // send data to be rendered on the page
+    //Send data to be rendered on the page
     renderCurrentWeather(cityCurrentWeatherArray);
   };
 
@@ -107,7 +105,7 @@ const WeatherProject = function () {
   const addFiveDayWeatherDataToArray = (fiveDayWeatherJSONData) => {
     console.log('adding five day data to array!');
 
-    //convert the retrieved five day weather's date-time stamp to a numeric day of the week (0-6)
+    //Convert the retrieved five day weather's date-time stamp to a numeric day of the week (0-6)
     //and to full text day (Sun-Sat)
     for (let i = 0; i < fiveDayWeatherJSONData.list.length; i++) {
       const dateLongFormatText = new Date(
@@ -133,8 +131,7 @@ const WeatherProject = function () {
           fiveDayWeatherJSONData.list[i].weather[0].icon +
           '.png',
       };
-
-      // Add the object to the five day weather array
+      //Add the object to the five day weather array
       cityFiveDayWeatherArray.push(newCityAndWeatherFiveDay);
     }
     console.log('out of five day object creation loop!');
@@ -147,7 +144,7 @@ const WeatherProject = function () {
     const fiveDaysOfWeather = [];
 
     //Find upcoming 5 days by comparing day numbers (0-6) against 'today' value
-    //to grab, essentially, today+1 = tomorrow, etc.
+    //to grab. For example: today+1 = tomorrow, etc.
     const dayOne = cityFiveDayWeatherArray.find(function (days) {
       if (todayNumber === 6) {
         return days.weekdayNumber === 0;
@@ -222,12 +219,6 @@ const WeatherProject = function () {
     }
   };
 
-  // const renderGoogleMapEmbed = (currentWeatherJSONData) => {
-
-  //   `https://www.google.com/maps/embed/v1/view?key=AIzaSyA7Psn-v_cbiWLDMaWS04XEgjMUdZjx3g4&center=${currentWeatherJSONData.coord.lat},${currentWeatherJSONData.coord.lon}&zoom=18&maptype=satellite`;
-
-  // }
-
   return {
     clearDataArraysAndDisplay: clearDataArraysAndDisplay,
     findTodayNumber: findTodayNumber,
@@ -254,12 +245,3 @@ $('.search').on('click', function () {
   const userInputCity = $('#cityName').val();
   app.fetchData(userInputCity);
 });
-
-//API Key for google map embed: AIzaSyA7Psn-v_cbiWLDMaWS04XEgjMUdZjx3g4
-
-// https://www.google.com/maps/embed/v1/place
-//   ?key=AIzaSyA7Psn-v_cbiWLDMaWS04XEgjMUdZjx3g4
-//   &q=Eiffel+Tower,Paris+France
-
-// currentWeatherJSONData.coord.lat
-// currentWeatherJSONData.coord.lon
