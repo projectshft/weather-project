@@ -36,8 +36,7 @@ const WeatherProject = function () {
     //Run first ajax GET method to retrieve current weather data
     $.ajax({
       method: 'GET',
-      url:
-        `https://api.openweathermap.org/data/2.5/weather?q=${userInputCity}&appid=1223294114fb8930caf177ea3451f02c`,
+      url: `https://api.openweathermap.org/data/2.5/weather?q=${userInputCity}&appid=1223294114fb8930caf177ea3451f02c`,
       dataType: 'json',
       success: function (currentWeatherJSONData) {
         //If successful, send results to be parsed, added to an array
@@ -47,8 +46,7 @@ const WeatherProject = function () {
         //If successful, retrieve five day forecast
         $.ajax({
           method: 'GET',
-          url:
-            `https://api.openweathermap.org/data/2.5/forecast?q=${userInputCity}&appid=1223294114fb8930caf177ea3451f02c`,
+          url: `https://api.openweathermap.org/data/2.5/forecast?q=${userInputCity}&appid=1223294114fb8930caf177ea3451f02c`,
           dataType: 'json',
           success: function (fiveDayWeatherJSONData) {
             console.log('successfully retrieved five day data!');
@@ -224,6 +222,12 @@ const WeatherProject = function () {
     }
   };
 
+  // const renderGoogleMapEmbed = (currentWeatherJSONData) => {
+
+  //   `https://www.google.com/maps/embed/v1/view?key=AIzaSyA7Psn-v_cbiWLDMaWS04XEgjMUdZjx3g4&center=${currentWeatherJSONData.coord.lat},${currentWeatherJSONData.coord.lon}&zoom=18&maptype=satellite`;
+
+  // }
+
   return {
     clearDataArraysAndDisplay: clearDataArraysAndDisplay,
     findTodayNumber: findTodayNumber,
@@ -252,3 +256,10 @@ $('.search').on('click', function () {
 });
 
 //API Key for google map embed: AIzaSyA7Psn-v_cbiWLDMaWS04XEgjMUdZjx3g4
+
+// https://www.google.com/maps/embed/v1/place
+//   ?key=AIzaSyA7Psn-v_cbiWLDMaWS04XEgjMUdZjx3g4
+//   &q=Eiffel+Tower,Paris+France
+
+// currentWeatherJSONData.coord.lat
+// currentWeatherJSONData.coord.lon
