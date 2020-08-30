@@ -1,3 +1,5 @@
+
+
 const WeatherProject = function () {
   let cityCurrentWeatherArray = [];
   let cityFiveDayWeatherArray = [];
@@ -13,6 +15,13 @@ const WeatherProject = function () {
     'Saturday',
   ];
 
+  const clearDataArraysAndDisplay = () => {
+    cityCurrentWeatherArray = [];
+    cityFiveDayWeatherArray = [];
+    $('#currentWeatherData').empty();
+    $('#fiveDayWeatherData').empty();
+  };
+    
   const findTodayNumber = (todayUNIXStamp) => {
     console.log('finding today!');
     // console.log(fiveDayData); //along for the ride
@@ -29,7 +38,9 @@ const WeatherProject = function () {
     // console.log(currentData);
 
     //Convert temp returned in Kelvin to F
-    const fahrenheitFromKelvin = Math.floor(currentWeatherJSONData.main.temp / 3.493);
+    const fahrenheitFromKelvin = Math.floor(
+      currentWeatherJSONData.main.temp / 3.493
+    );
     //Create current weather object
     const newCityAndWeatherCurrentData = {
       city: currentWeatherJSONData.name,
@@ -56,16 +67,15 @@ const WeatherProject = function () {
     $('#currentWeatherData').empty();
 
     //We know our array contains only 1 item for current weather, so no loop is necessary
-    let weather = cityCurrentWeatherArray[0];
-    // console.log(weather);
-
     //Prepare handlebars template
+    let weather = cityCurrentWeatherArray[0];
     const source = $('#current-weather-template').html();
     const template = Handlebars.compile(source);
     const weatherHTML = template(weather);
-    //Push data to handlebars template; clear data entry field
+    //Push data to handlebars template; clear data entry field and weather array
     $('#currentWeatherData').append(weatherHTML);
     $('#cityName').val('');
+    cityCurrentWeatherArray = [];
   };
 
   const addFiveDayWeatherDataToArray = (fiveDayWeatherJSONData) => {
@@ -73,7 +83,9 @@ const WeatherProject = function () {
     // console.log(today);
     for (let i = 0; i < fiveDayWeatherJSONData.list.length; i++) {
       //convert the imported date-time stamp to a day of the week
-      const dateLongFormatText = new Date(fiveDayWeatherJSONData.list[i].dt_txt);
+      const dateLongFormatText = new Date(
+        fiveDayWeatherJSONData.list[i].dt_txt
+      );
       const dayOfTheWeekLong = days[dateLongFormatText.getDay()];
       const dayNumberOfTheWeek = Number(dateLongFormatText.getDay());
 
@@ -110,70 +122,70 @@ const WeatherProject = function () {
     let fiveDaysOfWeather = [];
 
     const dayOne = cityFiveDayWeatherArray.find(function (days) {
-      if (currentDayNumber === 6) {
+      if (todayNumber === 6) {
         return days.weekdayNumber === 0;
       } else {
-        return days.weekdayNumber === currentDayNumber + 1;
+        return days.weekdayNumber === todayNumber + 1;
       }
     });
     console.log(dayOne);
     fiveDaysOfWeather.push(dayOne);
 
     const dayTwo = cityFiveDayWeatherArray.find(function (days) {
-      if (currentDayNumber === 5) {
+      if (todayNumber === 5) {
         return days.weekdayNumber === 0;
-      } else if (currentDayNumber === 6) {
+      } else if (todayNumber === 6) {
         return days.weekdayNumber === 1;
       } else {
-        return days.weekdayNumber === currentDayNumber + 2;
+        return days.weekdayNumber === todayNumber + 2;
       }
     });
     console.log(dayTwo);
     fiveDaysOfWeather.push(dayTwo);
 
     const dayThree = cityFiveDayWeatherArray.find(function (days) {
-      if (currentDayNumber === 4) {
+      if (todayNumber === 4) {
         return days.weekdayNumber === 0;
-      } else if (currentDayNumber === 5) {
+      } else if (todayNumber === 5) {
         return days.weekdayNumber === 1;
-      } else if (currentDayNumber === 6) {
+      } else if (todayNumber === 6) {
         return days.weekdayNumber === 2;
       } else {
-        return days.weekdayNumber === currentDayNumber + 3;
+        return days.weekdayNumber === todayNumber + 3;
       }
     });
     console.log(dayThree);
     fiveDaysOfWeather.push(dayThree);
 
     const dayFour = cityFiveDayWeatherArray.find(function (days) {
-      if (currentDayNumber === 3) {
+      if (todayNumber === 3) {
         return days.weekdayNumber === 0;
-      } else if (currentDayNumber === 4) {
+      } else if (todayNumber === 4) {
         return days.weekdayNumber === 1;
-      } else if (currentDayNumber === 5) {
+      } else if (todayNumber === 5) {
         return days.weekdayNumber === 2;
-      } else if (currentDayNumber === 6) {
+      } else if (todayNumber === 6) {
         return days.weekdayNumber === 3;
       } else {
-        return days.weekdayNumber === currentDayNumber + 4;
+        return days.weekdayNumber === todayNumber + 4;
       }
     });
     console.log(dayFour);
     fiveDaysOfWeather.push(dayFour);
 
     const dayFive = cityFiveDayWeatherArray.find(function (days) {
-      if (currentDayNumber === 2) {
+      if (todayNumber === 2) {
         return days.weekdayNumber === 0;
-      } else if (currentDayNumber === 3) {
+      } else if (todayNumber === 3) {
         return days.weekdayNumber === 1;
-      } else if (currentDayNumber === 4) {
+      } else if (todayNumber === 4) {
         return days.weekdayNumber === 2;
-      } else if (currentDayNumber === 5) {
+      } else if (todayNumber === 5) {
         return days.weekdayNumber === 3;
-      } else if (currentDayNumber === 6) {
+      } else if (todayNumber === 6) {
         return days.weekdayNumber === 4;
       } else {
-        return days.weekdayNumber === currentDayNumber + 5;
+        return days.weekdayNumber === todayNumber + 5;
       }
     });
     console.log(dayFive);
@@ -184,13 +196,13 @@ const WeatherProject = function () {
     //Prepare handlebars template
     const source = $('#five-day-weather-template').html();
     const template = Handlebars.compile(source);
-    
-    //Push data to handlebars template, clear data entry field.
+
+    //Push data to handlebars template, clear data array.
     for (let i = 0; i < fiveDaysOfWeather.length; i++) {
       const weatherHTML = template(fiveDaysOfWeather[i]);
       $('#fiveDayWeatherData').append(weatherHTML);
     }
-    // $('#cityName').val('');
+    cityFiveDayWeatherArray = [];
   };
 
   const fetchData = (userInputCity) => {
@@ -234,6 +246,7 @@ const WeatherProject = function () {
   };
 
   return {
+    clearDataArraysAndDisplay: clearDataArraysAndDisplay,
     findTodayNumber: findTodayNumber,
     addCurrentWeatherDataToArray: addCurrentWeatherDataToArray,
     renderCurrentWeather: renderCurrentWeather,
@@ -247,13 +260,12 @@ const app = WeatherProject();
 
 $('.search').on('click', function () {
   //clear existing arrays and displayed data
-  cityCurrentWeather = [];
-  cityFiveDayWeather = [];
-  $('#currentWeatherData').empty();
-  $('#fiveDayWeatherData').empty();
+  app.clearDataArraysAndDisplay();
+
   //grab timestamp to convert to 'today'
   const todayUNIXStamp = Date.now();
   app.findTodayNumber(todayUNIXStamp);
+  
   //grab user's city input and send it to fetch weather data
   const userInputCity = $('#cityName').val();
   app.fetchData(userInputCity);
