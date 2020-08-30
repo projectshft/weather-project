@@ -38,7 +38,7 @@ const weatherProject = () => {
             temperature: `${farenheit}°`,
             city: data.name,
             condition: data.weather[0].description,
-        }
+        };
 
         let dayModel = Model(day);
 
@@ -98,11 +98,12 @@ const weatherProject = () => {
 
             $days.append(daysView.render());
         }
-      
     };
 
     return {
+        days,
         renderWeek,
+        renderDay,
         createDay,
         createWeek
     }
@@ -111,13 +112,17 @@ const weatherProject = () => {
 
 const app = weatherProject();
 
+app.days.change(() => {
+    app.renderDay();
+    app.renderWeek();
+});
+
 const fetchCurrent = (query) => {
     $.ajax({
       method: "GET",
       url: `https://api.openweathermap.org/data/2.5/weather?q=${query}&appid=22ef8f05e874e286b2f628c4dbc76cc6`,
       dataType: "json",
       success: (data) => {
-          //console.log(data)
           app.createDay(data);
         },
       error: (textStatus) => {
@@ -132,20 +137,24 @@ const fetchWeek = (query) => {
         url: `https://api.openweathermap.org/data/2.5/forecast?q=${query}&appid=22ef8f05e874e286b2f628c4dbc76cc6`,
         dataType: "json",
         success: (weekData) => {
-            //console.log(weekData)
             app.createWeek(weekData);
         },
         error: (textStatus) => {
             console.log(textStatus);
         }
-      });
+    });
 }
 
-$('.search').on('click', function (e) { 
+
+$('.search').click((e) => { 
     e.preventDefault();
-
     let search = $('#input-city').val();
-
+    if(app.days.models.length > 0) {
+        // location.reload();
+        fetchCurrent(search);
+        fetchWeek(search);
+    }
     fetchCurrent(search);
     fetchWeek(search);
+    //console.log(app.days.models);
 });

@@ -2,13 +2,13 @@ const Collection = (config) => {
     let models = [];
     let todayModel = [];
 
-    let changeCallback = null;
-
     const init = () => {
         if (config) {
             models.push(config)
         }
     };
+
+    let changeCallback = null;
 
     const add = (week) => { 
         models.push(week);
@@ -74,7 +74,7 @@ const Model = (config) => {
 
 const View = (model, template) => {
     const render = () => {
-        console.log(model);
+        //console.log(model);
         let attrs = model.getAttributes();
 
         return template(attrs);
