@@ -11,8 +11,11 @@ body {
   margin-bottom: 40px;
 }
 
-.current-cell {
-
+.current-cell h1 {
+  line-height: .8;
+}
+.current-cell img {
+  margin: -25px 0;
 }
 .forecast {
   

@@ -36,6 +36,8 @@ var Weather = function() {
 
   var fetchWeather = function (cityQuery) {
     console.log('fetchWeather() called');
+    //reveal spinner
+    // $('.sk-circle').removeAttr('hidden');
     var currentApiQuery = `http://api.openweathermap.org/data/2.5/weather?q=${cityQuery}&appid=${owmApiKey}&units=imperial`;
     var forecastApiQuery = `http://api.openweathermap.org/data/2.5/forecast?q=${cityQuery}&appid=${owmApiKey}&units=imperial`;
     // console.log('sending forecast request', forecastApiQuery);
@@ -65,6 +67,8 @@ var Weather = function() {
         console.log(textStatus);
       }
     });
+    //hide spinner
+    // $('.sk-circle').attr('hidden', '');
   };
   
   var formatCurrent = function (currentData) {

@@ -38,13 +38,21 @@
           </div>
           <div class="col"></div>
         </div>
-        <div class="row">
-          <div class="col-12 sk-fold sk-center" hidden="">
-            <div class="sk-fold-cube"></div>
-            <div class="sk-fold-cube"></div>
-            <div class="sk-fold-cube"></div>
-            <div class="sk-fold-cube"></div>
-          </div>
+        <div class="spinner row">
+            <div class="col-12 sk-circle sk-center">
+              <div class="sk-circle1 sk-child"></div>
+              <div class="sk-circle2 sk-child"></div>
+              <div class="sk-circle3 sk-child"></div>
+              <div class="sk-circle4 sk-child"></div>
+              <div class="sk-circle5 sk-child"></div>
+              <div class="sk-circle6 sk-child"></div>
+              <div class="sk-circle7 sk-child"></div>
+              <div class="sk-circle8 sk-child"></div>
+              <div class="sk-circle9 sk-child"></div>
+              <div class="sk-circle10 sk-child"></div>
+              <div class="sk-circle11 sk-child"></div>
+              <div class="sk-circle12 sk-child"></div>
+            </div>
         </div>
 
         <div class="current row">
@@ -77,13 +85,15 @@
 
     <script id="currentweather-template" type="text/x-handlebars-template">
       <div class="current-cell">
-      <h1>{{currentTemp}}&deg;</h1>
-      <h2>{{cityName}}</h2>
-      <h3 class="float-left">{{conditions}}</h3>
-      </div>
-      <div class="col-1">
-      <img class="float-right" src="{{iconUrl}}">
-      </div>
+      <table>
+        <tbody>
+          <tr><td><h1>{{currentTemp}}&deg;</h1></td><td></td></tr>
+          <tr><td><h2>{{cityName}}</h2></td><td><img src="{{iconUrl}}"></td></tr>
+          <tr><td><h3>{{conditions}}</h3></td><td></td></tr>
+    </tbody>
+    </table>
+    </div>
+      
     </script>
     <script id="forecastweekday-template" type="text/x-handlebars-template">
       <div class="forecast-cell col-2" >
