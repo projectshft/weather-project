@@ -244,3 +244,4 @@ $('.search').on('click', function () {
   //send both values to fetchData function (todayUNIXstamp is along for the ride)
   fetchData(userInputCity, todayUNIXStamp);
 });
+
