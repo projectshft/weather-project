@@ -28,36 +28,48 @@ const projectWeatherAPI = () => {
 
     // function to sort desired info from API and push it into the correct forecast array
     let addForecastEntries = (info) => {
-
+        // create variables inorder to properly calculate day of the week from timestamp
+        const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+        let x1 = new Date(info.list[0].dt*1000);
+        let x2 = new Date(info.list[8].dt*1000);
+        let x3 = new Date(info.list[16].dt*1000);
+        let x4 = new Date(info.list[24].dt*1000);
+        let x5 = new Date(info.list[32].dt*1000);
+        let dayOfWeek1 = days[x1.getDay()]
+        let dayOfWeek2 = days[x2.getDay()]
+        let dayOfWeek3 = days[x3.getDay()]
+        let dayOfWeek4 = days[x4.getDay()]
+        let dayOfWeek5 = days[x5.getDay()]
+        // create 5 objects to seperate each forecast day of the week
         let forecastInfo1 = {
             conditions: info.list[0].weather[0].main,
             degrees: Math.round((info.list[0].main.temp - 273.15) * 9/5 + 32),
             weatherIcon: `http://openweathermap.org/img/wn/${info.list[0].weather[0].icon}@2x.png`,
-            day: info.list[0].dt
+            day: dayOfWeek1
         }    
         let forecastInfo2 = {
             conditions: info.list[8].weather[0].main,
             degrees: Math.round((info.list[8].main.temp - 273.15) * 9/5 + 32),
             weatherIcon: `http://openweathermap.org/img/wn/${info.list[8].weather[0].icon}@2x.png`,
-            day: info.list[8].dt            
+            day: dayOfWeek2          
         }
         let forecastInfo3 = {
             conditions: info.list[16].weather[0].main,
             degrees: Math.round((info.list[16].main.temp - 273.15) * 9/5 + 32),
             weatherIcon: `http://openweathermap.org/img/wn/${info.list[16].weather[0].icon}@2x.png`,
-            day: info.list[16].dt     
+            day: dayOfWeek3   
         }
         let forecastInfo4 = {
             conditions: info.list[24].weather[0].main,
             degrees: Math.round((info.list[24].main.temp - 273.15) * 9/5 + 32),
             weatherIcon: `http://openweathermap.org/img/wn/${info.list[24].weather[0].icon}@2x.png`,
-            day: info.list[24].dt           
+            day: dayOfWeek4        
         }
         let forecastInfo5 = {
             conditions: info.list[32].weather[0].main,
             degrees: Math.round((info.list[32].main.temp - 273.15) * 9/5 + 32),
             weatherIcon: `http://openweathermap.org/img/wn/${info.list[32].weather[0].icon}@2x.png`,
-            day: info.list[32].dt          
+            day: dayOfWeek5       
         }
         forecastArray1.push(forecastInfo1);
         forecastArray2.push(forecastInfo2);
