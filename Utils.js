@@ -1,4 +1,5 @@
 const Collection = (config) => {
+    //Hold models for curent day and week days
     let models = [];
     let todayModel = [];
 
@@ -10,22 +11,24 @@ const Collection = (config) => {
 
     let changeCallback = null;
 
+    //adds week day models
     const add = (week) => { 
         models.push(week);
-        //console.log(models);
         if (changeCallback) {
             changeCallback();
         }
     };
 
+    //adds current day model
     const add2 = (day) => {
         todayModel.push(day);
         if(changeCallback) {
             changeCallback();
         }
+
     }
     
-    const change = (fx) => changeCallback = fx;
+    const change = (func) => changeCallback = func;
 
     init();
 
@@ -34,7 +37,8 @@ const Collection = (config) => {
         todayModel,
         add,
         add2,
-        change
+        change,
+        init
     }
 };
 
@@ -44,11 +48,13 @@ const Model = (config) => {
 
     const init = () => Object.assign(attributes, config)
 
+    //Set properties to models
     const set = (prop, value) => {
         let tempObj = Object.assign({}, attributes)
 
         tempObj[prop] = value
 
+        //Checks for duplicates and assigns only unique properties
         if (!_.isEqual(attributes, tempObj)) {
             attributes[prop] = value
 
@@ -59,7 +65,9 @@ const Model = (config) => {
     };
 
     const getAttributes = () => attributes;
+
     const get = (prop) => attributes[prop];
+
     const change = (fx) => changeCallback = fx;
 
     init();
@@ -72,14 +80,15 @@ const Model = (config) => {
     }
 };
 
+//Render models to browser
 const View = (model, template) => {
     const render = () => {
-        //console.log(model);
-        let attrs = model.getAttributes();
+        if (model) {
+            let attrs = model.getAttributes();
 
-        return template(attrs);
+            return template(attrs);
+        }
     };
-
     return {
         render
     };

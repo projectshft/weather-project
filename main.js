@@ -1,39 +1,14 @@
-//Set up HTML 
-    //Add display for one day 
-    //Add display for one week
-//
-
-//Set up CSS as needed    
-
-//Set up JS
-    //Setup VMC separations according to rules of data flow 
-        //Model holds data to be rendered and any changes called by controller
-        //View holds render info and re-renders when changes to the model occur
-        //Controller holds functions that model takes in to make changes
-
-    //Link API
-        //AJAX
-
-    //Input field takes a city as an argument
-        //Search weather data on-click
-    
-    //Display current temperature
-    //Display current weather conditions
-    //Replace data from first search after new search
-    //Display 5-day weather forecast
-        //Try Moment.js to convert Unix to days of the week
-        //Push into the days array one element per day for 4 days after current  
-        //Each day as a different array element
-
-//
-
 const weatherProject = () => {
     let days = Collection();
     let $days = $('.days');
     let $today = $('.today');
 
+    //Create model for the current day
     const createDay = (data) => {
+        $today.empty();
+        //convert Kelvin to Farenheit
         let farenheit = Math.round((data.main.temp - 273.15) * (9/5) + 32);
+
         let day = {
             temperature: `${farenheit}°`,
             city: data.name,
@@ -41,39 +16,54 @@ const weatherProject = () => {
         };
 
         let dayModel = Model(day);
-
-        days.add2(dayModel)
-        renderDay(); 
+        //add2 is used for the current day
+        days.add2(dayModel);
     };
 
+    //Create model for 5 days after current day
     const createWeek = (weekData) => {
+        $days.empty();
+        
+        //get UTC of current time and convert to date for comparison
         let currentUnix = new Date(Date.now());
         let currentDate = currentUnix.toLocaleDateString("en-US")
+
+        //stores formatted dates for every day of the upcoming week for comparison 
         let datesOfWeek = [];
 
-        let week = {
-            city: weekData.city.name
-        }
+        //stores data to be modeled for each separate day
+        let weekDays = [];
 
         weekData.list.forEach ((item) => {
             let date = new Date(item.dt * 1000).toLocaleDateString("en-US");
 
+            let dayOfWeek = moment.utc(item.dt * 1000).format('dddd');
+
             let farenheit = Math.round((item.main.temp - 273.15) * (9/5) + 32);
 
             let conditions = item.weather[0].description;
-            
+
+            //compares dates and only pushes data for separate days
             if (date != currentDate && !datesOfWeek.includes(date)) {
-                week.temperature = farenheit;
-                week.condition = conditions;
-    
-                let weekModel = Model(week)
-                days.add(weekModel)
+                
+                let week = {
+                    temperature: `${farenheit}°`,
+                    condition: conditions,
+                    weekDay: dayOfWeek
+                }
+                weekDays.push(week) 
             }
             datesOfWeek.push(date)
         })
-      renderWeek();
+
+        //models data in weekDays array
+        weekDays.forEach((element) => {
+            let weekModel = Model(element)  
+            days.add(weekModel)
+        })
     }
 
+    //Compiles and appends model for current day
     const renderDay = () => {
         $today.empty();
 
@@ -83,9 +73,11 @@ const weatherProject = () => {
 
         let todayView = View(todaysModel, todayTemplate);
 
-        $today.append(todayView.render());    
+        
+        $today.append(todayView.render());
     }
 
+    //Compiles and appends model for days of the week following current day
     const renderWeek = () => {
         $days.empty();
 
@@ -105,7 +97,7 @@ const weatherProject = () => {
         renderWeek,
         renderDay,
         createDay,
-        createWeek
+        createWeek,
     }
 
 }
@@ -117,20 +109,27 @@ app.days.change(() => {
     app.renderWeek();
 });
 
+app.renderDay();
+app.renderWeek();
+
+
+// Fetch data for current day
 const fetchCurrent = (query) => {
     $.ajax({
       method: "GET",
       url: `https://api.openweathermap.org/data/2.5/weather?q=${query}&appid=22ef8f05e874e286b2f628c4dbc76cc6`,
       dataType: "json",
       success: (data) => {
+          //console.log(data); ////////
           app.createDay(data);
         },
-      error: (textStatus) => {
+      error: (jqXHR, textStatus, errorThrown) => {
           console.log(textStatus);
         }
     });
 };
 
+//Fetch data for upcoming week
 const fetchWeek = (query) => {
     $.ajax({
         method: "GET",
@@ -139,22 +138,21 @@ const fetchWeek = (query) => {
         success: (weekData) => {
             app.createWeek(weekData);
         },
-        error: (textStatus) => {
+        error: (jqXHR, textStatus, errorThrown) => {
             console.log(textStatus);
         }
     });
 }
 
-
+//Events
 $('.search').click((e) => { 
     e.preventDefault();
+     
     let search = $('#input-city').val();
-    if(app.days.models.length > 0) {
-        // location.reload();
+
+    if(search) {
         fetchCurrent(search);
         fetchWeek(search);
-    }
-    fetchCurrent(search);
-    fetchWeek(search);
-    //console.log(app.days.models);
+    };
+
 });
