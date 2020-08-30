@@ -29,7 +29,7 @@ const projectWeatherAPI = () => {
     // function to sort desired info from API and push it into the correct forecast array
     let addForecastEntries = (info) => {
         // create variables inorder to properly calculate day of the week from timestamp
-        const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+        const days = ['Sunday', 'Monday', 'Tuesday', 'Wed', 'Thursday', 'Friday', 'Saturday']
         let x1 = new Date(info.list[0].dt*1000);
         let x2 = new Date(info.list[8].dt*1000);
         let x3 = new Date(info.list[16].dt*1000);
