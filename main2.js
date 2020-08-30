@@ -250,3 +250,5 @@ $('.search').on('click', function () {
   const userInputCity = $('#cityName').val();
   app.fetchData(userInputCity);
 });
+
+//API Key for google map embed: AIzaSyA7Psn-v_cbiWLDMaWS04XEgjMUdZjx3g4
