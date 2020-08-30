@@ -1,9 +1,9 @@
 DONE bootstrap col's for current weather
 DONE bootstrap col's for forecast
-search on return?
-initial state kinda sucks
+FAIL search on return?  
+DONE initial state kinda sucks
 DONE center forecast
-reset vars at end of loop
-place all actions inside of event and add returns to each step?
+DONE reset vars at end of loop
+DONE place all actions inside of event and add returns to each step?
 nice fade-in effects?
 spinner effects

@@ -38,7 +38,7 @@ var Weather = function() {
     console.log('fetchWeather() called');
     var currentApiQuery = `http://api.openweathermap.org/data/2.5/weather?q=${cityQuery}&appid=${owmApiKey}&units=imperial`;
     var forecastApiQuery = `http://api.openweathermap.org/data/2.5/forecast?q=${cityQuery}&appid=${owmApiKey}&units=imperial`;
-    console.log('sending forecast request', forecastApiQuery);
+    // console.log('sending forecast request', forecastApiQuery);
     // get current conditions JSON
     $.ajax({
       method: "GET",
@@ -68,7 +68,7 @@ var Weather = function() {
   };
   
   var formatCurrent = function (currentData) {
-    console.log('formatCurrent() called');
+    // console.log('formatCurrent() called');
     // create icon var separately for ease of use in object creation
     var iconCode = currentData.weather[0].icon;
     currentWeather = {
@@ -81,6 +81,7 @@ var Weather = function() {
   };
   var formatForecast = function (forecastData) {
     console.log('formatForecast() called');
+    weatherForecast = []; 
     var secsInDay = 0; // start at 0, increment by 86400 in loop
     var dayOfWeek = new Date();
     var weekday = ['Sunday', 'Monday', 'Tuesday', 'Weds', 'Thursday', 'Friday', 'Saturday'];
@@ -106,7 +107,7 @@ var Weather = function() {
       // that this is launched rather than a daily high/low.  
   
       if (forecastData.list[i].dt === startingPoint + secsInDay) {
-        console.log('sID: ', secsInDay);
+        // console.log('sID: ', secsInDay);
         if (forecastsRead === 5) {
            break;
          }   
@@ -139,10 +140,11 @@ var Weather = function() {
   
   var renderWeather = function () {
     console.log('renderWeather() called');
+    $('.intro').empty();
     $('.current-info').empty();
     $('.forecast').empty();
   
-    console.table('currentWeather', currentWeather);
+    // console.table('currentWeather', currentWeather);
   
     var currentSource = $('#currentweather-template').html();
     var templateCurrent = Handlebars.compile(currentSource);
@@ -155,9 +157,11 @@ var Weather = function() {
       var templateForecast = Handlebars.compile(forecastSource);
       var forecastDayHTML = templateForecast(weatherForecast[i]);
       $('.forecast').append(forecastDayHTML);
+     
   
-      console.log('leaving renderWeather');
+      // console.log('leaving renderWeather');
     }  
+  
   };
   
   return {
@@ -169,18 +173,31 @@ var Weather = function() {
 }
 
 var weather = Weather();
-// this will be impressive once local storage is enabled, maybe
-// getStoredCity()
-weather.renderWeather();
 
 // Events setup
 $('.search').on('click', function () {
   // console.log('click event');
   var cityQuery = $('#city-query').val();
   // console.log(cityQuery);
-  //reset the counter
-  secsInDay = 0;
+  localStorage.setItem('defaultCity', cityQuery);
   weather.fetchWeather(cityQuery);
-
 });
 
+if (localStorage.defaultCity) {
+  weather.fetchWeather(localStorage.defaultCity);
+  $('#city-query').val(localStorage.defaultCity);
+};
+
+
+/* $('text').keyup(function(e){
+  if(e.keyCode == 13)
+  {
+      $(this).trigger("enterKey");
+  }
+});
+$('text').bind("enterKey",function(){
+   var cityQuery = $('#city-query').val();
+   weather.fetchWeather(cityQuery);
+});
+
+ */

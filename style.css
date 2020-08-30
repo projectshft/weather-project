@@ -12,9 +12,11 @@ body {
 }
 
 .current-cell {
+
+}
+.forecast {
   
 }
-
 .forecast-cell {
   border: 1px solid black;
   display: inline-block;

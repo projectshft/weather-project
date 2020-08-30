@@ -30,12 +30,22 @@
         </form>
 
         <hr />
-        <div class="sk-fold sk-center" hidden="">
-          <div class="sk-fold-cube"></div>
-          <div class="sk-fold-cube"></div>
-          <div class="sk-fold-cube"></div>
-          <div class="sk-fold-cube"></div>
+        <div class="intro row">
+          <div class="col"></div>
+          <div class="col-10">
+            <p> Please enter a city name to get current weather and the 5-day forecast.</p>
+          </div>
+          <div class="col"></div>
         </div>
+        <div class="row">
+          <div class="col-12 sk-fold sk-center" hidden="">
+            <div class="sk-fold-cube"></div>
+            <div class="sk-fold-cube"></div>
+            <div class="sk-fold-cube"></div>
+            <div class="sk-fold-cube"></div>
+          </div>
+        </div>
+
         <div class="current row">
           <div class="col"></div>
           <div class="col-4">
@@ -75,7 +85,7 @@
       </div>
     </script>
     <script id="forecastweekday-template" type="text/x-handlebars-template">
-      <div class="forecast-cell col-2">
+      <div class="forecast-cell col-2" >
       <h3 class="text-center">{{futureConditions}}</h3>
       <h1 class="text-center">{{futureTemp}}&deg;</h1>
       <div class="text-center"><img src="{{futureIconUrl}}"></div>
