@@ -179,13 +179,27 @@ $('.search').on('click', function () {
   // console.log('click event');
   var cityQuery = $('#city-query').val();
   // console.log(cityQuery);
-  localStorage.setItem('defaultCity', cityQuery);
   weather.fetchWeather(cityQuery);
+  if (localStorage.defaultCity !== $('#city-query').val()) {
+    $('.make-default').removeAttr('hidden');
+  };
 });
+
+$('.make-default').on('click', function () {
+  var cityQuery = $('#city-query').val();
+  localStorage.setItem('defaultCity', cityQuery);
+  $('.make-default').attr('hidden', '');
+});
+
+// localStorage functions
 
 if (localStorage.defaultCity) {
   weather.fetchWeather(localStorage.defaultCity);
   $('#city-query').val(localStorage.defaultCity);
+};
+
+if (localStorage.defaultCity !== $('#city-query').val()) {
+  $('.make-default').removeAttr('hidden');
 };
 
 
