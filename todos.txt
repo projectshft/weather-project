@@ -5,5 +5,5 @@ DONE initial state kinda sucks
 DONE center forecast
 DONE reset vars at end of loop
 DONE place all actions inside of event and add returns to each step?
-nice fade-in effects?
-spinner effects
+FAIL nice fade-in effects?
+FAIL spinner effects
