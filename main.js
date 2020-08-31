@@ -120,7 +120,6 @@ const fetchCurrent = (query) => {
       url: `https://api.openweathermap.org/data/2.5/weather?q=${query}&appid=22ef8f05e874e286b2f628c4dbc76cc6`,
       dataType: "json",
       success: (data) => {
-          //console.log(data); ////////
           app.createDay(data);
         },
       error: (jqXHR, textStatus, errorThrown) => {
