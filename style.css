@@ -12,7 +12,7 @@ header {
     margin-top:         20px;
     margin-bottom:      4.5rem;
 }
-.location-input-form {
+.location-input-form, .input-group {
     display:            flex;
     align-items:        center;
     justify-content:    center;
@@ -24,15 +24,22 @@ header {
     margin-top:         2rem;
     margin-bottom:      0;
 }
-#search-query-cap {
-    width:                      3rem;
-    height:                     2.25rem;
+#search-query-cap, #erase-button {
+    width:                      2.25rem;
+    height:                     2.15;
     border-style:               none;
     border-top-left-radius:     1.5rem;
     border-bottom-left-radius:  1.5rem;
+    border-top-right-radius:    0px;
+    border-bottom-right-radius: 0px;
     margin-right:               0px;
     margin-left:                0px;
-    background-color:           whitesmoke
+    background-color:           whitesmoke;
+    color:                      gray;
+}
+#erase-button:hover {
+    background-color:           rgb(245, 245, 255);
+    color:                      cyan;
 }
 #search-query {
     width:                      100%;
@@ -41,24 +48,30 @@ header {
     margin-left:                0px;
     margin-right:               3px;
     background-color:           whitesmoke;
-    font-size:                  1.00rem;
+    font-size:                  0.90rem;
     font-weight:                200;
-    color:                      slategrey;
-
+    color:                      rgb(127, 127, 127);
 }
+#search-query:hover {
+    color:                      black;
+}
+
 #search-button {
     height:                     2.25rem;
-    width:                      25%;
+    width:                      6rem;
     background-color:           #DE7957;
     color:                      white;
     font-weight:                500;
-    border-width:               0px;
     border-top-right-radius:    1.5rem;
     border-bottom-right-radius: 1.5rem;
     border-top-left-radius:     0;
     border-bottom-left-radius:  0;
     border-style:               none;
 }
+#search-button:hover {
+    background-color:           orange;
+}
+
 .weather-report {
     width:              70%;
     max-width:          320px;
@@ -108,17 +121,16 @@ header {
 .icon-now {
     width:              100.0%;
     height:             100.0%;
-
 }
 
 .forecast-5day {
-    width: 60%;
-    max-width: 960px;
-    min-width: 220px;
-    margin: 3rem auto;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
+    width:              60%;
+    max-width:          960px;
+    min-width:          220px;
+    margin:             3rem auto;
+    display:            flex;
+    align-items:        center;
+    justify-content:    space-around;
 }
 .forecast-day {
     height:             240px;
@@ -158,5 +170,4 @@ header {
     margin-top:         0.75rem;
     margin-bottom:      0.25rem;
     font-variant-caps:  all-petite-caps;
-
 }

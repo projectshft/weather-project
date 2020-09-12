@@ -9,7 +9,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
 
-    <title>Weather & Traffic on the Ten</title>
+    <title>The 5ive Day Forecast</title>
 </head>
 
 <body>
@@ -17,12 +17,16 @@
         <div class="app-title">
             <p>Current Weather</p>
         </div>
-        <form class="location-input-form">
-            <output id="search-query-cap" name="result"></output>
-            <input type="text" class="editable-text" id="search-query" placeholder="Enter City Name"></input>
-            <button type="button" class="search btn" id="search-button">Search</button>
-        </form>
-        
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <button class="btn btn-outline-secondary" type="button" id="erase-button">x</button>
+            </div>
+            <input type="text" class="erase form-control" id="search-query" placeholder="Enter City Name" value="">
+            <div class="input-group-append">
+                <button class="search btn btn-outline-secondary" type="button" id="search-button">Search</button>
+            </div>
+
+        </form>   
     </header>
 
     <div class="weather-report">
@@ -38,31 +42,31 @@
 
     <div class="forecast-5day" id="forecast-5day" >
 
-        <div class="forecast-day" id="forecast-day1" style="box-shadow: 0 0 transparent;">
+        <div class="forecast-day" id="forecast-day1" style="box-shadow: 0 0 transparent">
             <p class="weather-day" id="weather-day1"></p>
             <p class="temp-day" id="temp-day1"></p>
             <img class="icon-day" id="icon-day1" src='weather-icons/null@4x.png'>
             <p class="name-day" id="name-day1"></p>
         </div>
-        <div class="forecast-day" id="forecast-day2" style="box-shadow: 0 0 transparent;">
+        <div class="forecast-day" id="forecast-day2" style="box-shadow: 0 0 transparent">
             <p class="weather-day" id="weather-day2"></p>
             <p class="temp-day" id="temp-day2"></p>
             <img class="icon-day" id="icon-day2" src='weather-icons/null@4x.png'>
             <p class="name-day" id="name-day2"></p>
         </div>
-        <div class="forecast-day" id="forecast-day3"style="box-shadow: 0 0 transparent;">
+        <div class="forecast-day" id="forecast-day3"style="box-shadow: 0 0 transparent">
             <p class="weather-day" id="weather-day3"></p>
             <p class="temp-day" id="temp-day3"></p>
             <img class="icon-day" id="icon-day3" src='weather-icons/null@4x.png'>
             <p class="name-day" id="name-day3"></p>
         </div>
-        <div class="forecast-day" id="forecast-day4"style="box-shadow: 0 0 transparent;">
+        <div class="forecast-day" id="forecast-day4"style="box-shadow: 0 0 transparent">
             <p class="weather-day" id="weather-day4"></p>
             <p class="temp-day" id="temp-day4"></p>
             <img class="icon-day" id="icon-day4" src='weather-icons/null@4x.png'>
             <p class="name-day" id="name-day4"></p>
         </div>
-        <div class="forecast-day" id="forecast-day5" style="box-shadow: 0 0 transparent;">
+        <div class="forecast-day" id="forecast-day5" style="box-shadow: 0 0 transparent">
             <p class="weather-day" id="weather-day5"></p>
             <p class="temp-day" id="temp-day5"></p>
             <img class="icon-day" id="icon-day5" src='weather-icons/null@4x.png'>

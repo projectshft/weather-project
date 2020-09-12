@@ -8,101 +8,134 @@ const exclude = '&exclude=hourly,minutely';
 const units   = '&units=imperial';   
 const dayName = ['s u n d a y', 'm o n d a y', 't u e s d a y', 'w e d n e s d a y', 't h u r s d a y', 'f r i d a y', 's a t u r d a y'];
 
-let displayUpdateStack = [];
+let showForecastFrames = true;
+let weatherReportUpdateList = [];
 
+// ******** Controller **************************************************************
+//
+// All changes to Model's data and then an updated display are initiated by button click events
+// Search button events send a list of weather data updates to Model
+// Errors in the retrieval of data alert Model.  Model has View display an error message.
+// Erase button instructs the View to clear the input line.
 
-// The One Call Forecast callback is invoked after the request for the 7-day forcast successfully returns 
-// the forecast json.  Relevent data for the next five days is pushed onto the display update list and
-// the viewer is invoked after the update requests are complete. 
+// searchFormHandler - MVC Controller
+// On Search button press, submit API request for current weather conditions 
+// at the user specified location.
 
-const oneCallForecastCallback = function (oneCallForecastJson) {
-    
-    for (let i = 0; i < 5; i++) {
-        displayUpdateStack.push({ id: `weather-day${i + 1}`,  attributeName: "innerHTML", value: oneCallForecastJson.daily[i].weather[0].main });
-        displayUpdateStack.push({ id: `temp-day${i + 1}`,     attributeName: "innerHTML", value: Math.round(oneCallForecastJson.daily[i].temp.max) + "&deg" });
-        displayUpdateStack.push({ id: `icon-day${i + 1}`,     attributeName: "src",       value: `weather-icons/${oneCallForecastJson.daily[i].weather[0].icon}@4x.png` });
+const searchFormHandler = function () {
+    $('.search').on('click', function () {
+        var search = $('#search-query').val();
 
-        let dayOfWeek = new Date(oneCallForecastJson.daily[i].dt * 1000);
-        displayUpdateStack.push({ id: `name-day${i + 1}`, attributeName: "innerHTML", value: dayName[dayOfWeek.getDay()] });
-    }
-    renderBoy(displayUpdateStack);
+        const currentWeatherAPI = `https://api.openweathermap.org/data/2.5/weather?q=${search}${units}&appid=${apiKey}`;
+        if (search.length > 0) { fetchBoy(currentWeatherAPI, processCurrentWeatherJson, errorHandler); }
+    });
+}
+// eraseButtonHandler - MVC Controller
+// On X button press, alert View to erase any entered text in the location entry field
+// Redisplay standard input instructions
+
+const eraseButtonHandler = function () {
+    $('#erase-button').on('click', function () {
+
+        // Queue up instructions to erase the text field and redisplay instructions
+
+        let eraseStack = [
+            { id: "search-query", attributeName: "value", value: "" },
+            { id: "search-query", attributeName: "placeholder", value: "Enter City Name" }
+        ];  
+        renderBoy(eraseStack);    // pass this to View for immediate update
+    });
+    return;
 }
 
-// This function and the MAIN code comprise the MVC Controller 
-// It makes an API call with the queryAPI string. 
-// Invokes the callback function on success to process the retrieved data 
-// and the errorCallback function on a error
+// fetchBoy - MVC Controller
+// Submit OW API request for current weather conditions and forecast at the specified location 
 
-const fetchBoy = function (queryAPI, callback, errorCallback) {
-    
+const fetchBoy = function (queryAPI, successCallback, errorCallback) {
     $.ajax(
         {
         method:     "GET",
         url:        queryAPI,
         dataType:   "json",
-        success: function (data) {
-                // Update the form's text box input prompt.
-                displayUpdateStack.push({ id: "search-query", attributeName: "placeholder", value: " Enter City Name." });
-                callback(data);
-        },
-        error:   function (jqXHR, textStatus, errorThrown) { errorCallback(jqXHR, textStatus, errorThrown) }
+        success:    function (data) { successCallback(data)},
+        error:      function (jqXHR, textStatus, errorThrown) { errorCallback(jqXHR, textStatus, errorThrown)}
         }
     );
 }
 
+// errorHandler - MVC Controller
+// Inform Model of error. Include error message to be displayed
 
-// The OW current weather API takes a city name and returns a json with longitude/latitude geo-coordinates for 
-// that location as well as pushing current weather condition data onto the display update list.  The query also 
-// sets imperial units for returned json data.   
-
-const currentWeatherCallback = function (currentWeather) {
-
-    displayUpdateStack.push( { id: "search-query",  attributeName: "placeholder", value: "Enter City Name" } );
-    displayUpdateStack.push( { id: "location-now1", attributeName: "innerHTML", value: currentWeather.name } );
-    displayUpdateStack.push( { id: "temp-now1",     attributeName: "innerHTML", value: Math.round(currentWeather.main.temp) + "&deg"} );
-    displayUpdateStack.push( { id: "weather-now1",  attributeName: "innerHTML", value: currentWeather.weather[0].description } );
-    displayUpdateStack.push( { id: "icon-now1",     attributeName: "src",       value: `weather-icons/${currentWeather.weather[0].icon}@4x.png`} );
-
-    // The 7-day forecast API takes geo-location coordinates for the location from the current weather conditions json 
-    // to set up a query for the 7-day forecast. The query also sets imperial units for returned data. Unnecessary 
-    // sections of the the data set, such as hourly forecasts, are also omitted from the request to save space-time.
-
-    const oneCallForecastAPI = `https://api.openweathermap.org/data/2.5/onecall?lat=${currentWeather.coord.lat}&lon=${currentWeather.coord.lon}${exclude}${units}&appid=${apiKey}`;
-    fetchBoy (oneCallForecastAPI, oneCallForecastCallback, errorCallback);
+const errorHandler = function (jqXHR, textStatus, errorThrown) {
+    // Queue up error message update records
+    let errorMessageStack = [
+        { id: "search-query", attributeName: "placeholder", value: "Hmmmm... No luck with that. Enter Another City." } ,
+        { id: "search-query", attributeName: "value", value: "" }];
+    alertModel(errorMessageStack);
 }
 
-// Hide the graphic enclosures for five-day forecast data. 
+// processCurrentWeatherJson -  MVC Controller
+// Invoked when the json for current weather conditions at the given location is returned.
+// Longitude/latitude geo-coordinates from the json are used in the API request for the 7-day forecast.
+// The weather report data for is queued up to be sent to the model.
+// the 7-Day Forecast request API is sent.
 
-const hide5DayForecast = function () {
+const processCurrentWeatherJson = function (rawCurrentWeatherJson) {
 
-    displayUpdateStack.push({ id: `forecast-day1`, attributeName: "style", value: `box-shadow: -20px 15px 20px rgba(220, 220, 220, 32);` });
-    displayUpdateStack.push({ id: `forecast-day2`, attributeName: "style", value: `box-shadow: -10px 15px 10px rgba(220, 220, 220, 32);` });
-    displayUpdateStack.push({ id: `forecast-day3`, attributeName: "style", value: `box-shadow:   0px 15px 10px rgba(220, 220, 220, 32);` });
-    displayUpdateStack.push({ id: `forecast-day4`, attributeName: "style", value: `box-shadow:  10px 15px 10px rgba(220, 220, 220, 32);` });
-    displayUpdateStack.push({ id: `forecast-day5`, attributeName: "style", value: `box-shadow:  20px 15px 20px rgba(220, 220, 220, 32);` });
+    // Queue up the current weather data for this location
+    weatherReportUpdateList.push({ id: "search-query", attributeName: "placeholder", value: "Enter City Name" });
+    weatherReportUpdateList.push({ id: "location-now1", attributeName: "innerHTML", value: rawCurrentWeatherJson.name });
+    weatherReportUpdateList.push({ id: "temp-now1", attributeName: "innerHTML", value: Math.round(rawCurrentWeatherJson.main.temp) + "&deg" });
+    weatherReportUpdateList.push({ id: "weather-now1", attributeName: "innerHTML", value: rawCurrentWeatherJson.weather[0].description });
+    weatherReportUpdateList.push({ id: "icon-now1", attributeName: "src", value: `weather-icons/${rawCurrentWeatherJson.weather[0].icon}@4x.png` });
+
+    // Use the longitude and latitude coordinates of the location from the 
+    // current weather json to populate the 7-day forecast Open Weather API
+    const sevenDayForecastAPI = `https://api.openweathermap.org/data/2.5/onecall?lat=${rawCurrentWeatherJson.coord.lat}&lon=${rawCurrentWeatherJson.coord.lon}${exclude}${units}&appid=${apiKey}`;
+    fetchBoy(sevenDayForecastAPI, process7DayForecastJson, errorHandler);
 }
 
+// process7DayForecast - MVC Controller
+// Callback processes the 7-day forecast json into weather data update records
+// and sends them to the model
 
-// This function immediately displays an error message in the search box
-// It passes a single entry stack to renderBoy to display immediately and 
-// doesn't alter the display update list under construction 
+const process7DayForecastJson = function (raw7DayForecastJson) {
+   
+    // Extract data and process update records for a new 5-day forecast from the 7-day forecast json
+    // Each value in the json that will be updated on the forecast page is formatted and pushed onto
+    // the weather report update list along with the its Element ID and the attribute of the field to be updated.
 
-const errorCallback = function (jqXHR, textStatus, errorThrown) {
+    for (let i = 0; i < 5; i++) {
+        weatherReportUpdateList.push({ id: `weather-day${i + 1}`,  attributeName: "innerHTML", value: raw7DayForecastJson.daily[i].weather[0].main });
+        weatherReportUpdateList.push({ id: `temp-day${i + 1}`,     attributeName: "innerHTML", value: Math.round(raw7DayForecastJson.daily[i].temp.max) + "&deg" });
+        weatherReportUpdateList.push({ id: `icon-day${i + 1}`,     attributeName: "src",       value: `weather-icons/${raw7DayForecastJson.daily[i].weather[0].icon}@4x.png` });
 
-    let errorMessageStack = [];
-    errorMessageStack.push({ id: "search-query", attributeName: "placeholder", value: "Hmmmm... Please Enter Another City Name." });
-    renderBoy(errorMessageStack);
+        let dayOfWeek = new Date(raw7DayForecastJson.daily[i].dt * 1000);
+        weatherReportUpdateList.push({ id: `name-day${i + 1}`, attributeName: "innerHTML", value: dayName[dayOfWeek.getDay()] });
+    }
+    if (showForecastFrames) {
+        // show the daily forecast frames if the update flag is set
+        weatherReportUpdateList.push({ id: `forecast-day1`, attributeName: "style", value: `box-shadow: -20px 15px 20px rgba(220, 220, 220, 32)` });
+        weatherReportUpdateList.push({ id: `forecast-day2`, attributeName: "style", value: `box-shadow: -10px 15px 10px rgba(220, 220, 220, 32)` });
+        weatherReportUpdateList.push({ id: `forecast-day3`, attributeName: "style", value: `box-shadow:   0px 15px 10px rgba(220, 220, 220, 32)` });
+        weatherReportUpdateList.push({ id: `forecast-day4`, attributeName: "style", value: `box-shadow:  10px 15px 10px rgba(220, 220, 220, 32)` });
+        weatherReportUpdateList.push({ id: `forecast-day5`, attributeName: "style", value: `box-shadow:  20px 15px 20px rgba(220, 220, 220, 32)` });
+        showForecastFrames = false; // and clear the display flag
+    }
+    updateModel(weatherReportUpdateList);
 }
 
-// RenderBoy is the MVC Viewer.  
-// Modifications to the HTML are made via a display list array of objects, each a single change to an element. 
-// Each object in the display list holds an element id, the attribute to be updated, and the new value.
+// ******** View **************************************************************
 
-const renderBoy = function (displayList) {
+// renderBoy - MVC View  
+// Update the view from the queue of update records.
+// Each record in the queue holds an element id, an attribute to be updated, and a formatted value.
 
-    while (0 < displayList.length) {
+const renderBoy = function (displayUpdateList) {
+
+    while (0 < displayUpdateList.length) {
         
-        let record = displayList.pop();
+        let record = displayUpdateList.pop();
 
         switch (record.attributeName) {
             case 'innerHTML':
@@ -120,18 +153,31 @@ const renderBoy = function (displayList) {
             case 'placeholder':
                 document.getElementById(record.id).placeholder = record.value;
                 break;
-            }
-    }
-    
+            
+            case 'value':
+                document.getElementById(record.id).value = record.value;
+                break;
+        }
+    } 
+}
+// ******** Model **************************************************************
+
+//  Formatted and tagged data is sent from Controller to Model 
+//  And  Model, finding nothing for it to do, passes it along
+//  to View to be displayed.
+
+const updateModel = function (displayUpdateList) {
+    renderBoy(displayUpdateList);
+    return;
+}
+const alertModel = function (displayUpdateList) {
+    renderBoy(displayUpdateList);
+    return;
 }
 
-//  MAIN
+//  MAIN Initialization
 
-hide5DayForecast();
+showForecastFrames = true;  // display the daily forecast frame graphic
+searchFormHandler();        // init the search button event handler
+eraseButtonHandler();       // init the erase button event handler
 
-$('.search').on('click', function () {
-    var search = $('#search-query').val();
-
-    const currentWeatherAPI = `https://api.openweathermap.org/data/2.5/weather?q=${search}${units}&appid=${apiKey}`;
-    if (search.length > 0) { fetchBoy(currentWeatherAPI, currentWeatherCallback, errorCallback); }
-} );
