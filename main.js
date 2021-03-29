@@ -24,10 +24,11 @@ var addWeather = function (data) {
   cityTest = [];
   console.log(data.name);
   var conditionLink = data.weather[0].icon
+  var roundedTemp = Math.round((data.main.temp * 1.8) + 32) + "\xB0";
   var conditionLinkURL = 'http://openweathermap.org/img/wn/' + conditionLink + '@2x.png';
   var newCity = {
     currentCity: data.name,
-    currentTemp: (data.main.temp * 1.8) + 32,
+    currentTemp: roundedTemp,
     currentCondition: data.weather[0].main,
     imageURL: conditionLinkURL
   }
