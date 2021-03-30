@@ -1,4 +1,4 @@
-var cityTest = [];
+var weatherToday = [];
 var forecast = [];
 var forecastDataComputed = [[],[],[],[],[]];
 var daysOfWeekData = [[],[],[],[],[]];
@@ -43,7 +43,7 @@ var fetchForecast = function (query) {
   };
 
 var addWeather = function (data) {
-  cityTest = [];
+  weatherToday = [];
   var conditionLink = data.weather[0].icon
   var roundedTemp = Math.round(data.main.temp) + "\xB0";
   var conditionLinkURL = 'http://openweathermap.org/img/wn/' + conditionLink + '@2x.png';
@@ -53,7 +53,7 @@ var addWeather = function (data) {
     currentCondition: data.weather[0].main || null,
     imageURL: conditionLinkURL || null
   }
-  cityTest.push(newCity);
+  weatherToday.push(newCity);
   renderPage(); 
 }
 
@@ -95,7 +95,7 @@ var renderPage = function () {
   $('.weather').empty();
   var source = $('#weather-template').html();
   var template = Handlebars.compile(source);
-  var newHTML = template(cityTest[0]);
+  var newHTML = template(weatherToday[0]);
  $('.weather').append(newHTML);
 };
 
