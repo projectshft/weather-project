@@ -47,10 +47,10 @@
           <div class="weather row"></div>
         </div>
       </div>
+      <div class="weather-two row"></div>
     </div>
 
     <script id="weather-template" type="text/x-handlebars-template">
-
       <div class="container pt-5">
         <div class="row">
           <div class="col">
@@ -70,6 +70,84 @@
             </div>
           </div>
         </div>
+      </div>
+    </script>
+
+    <script id="forecast-template" type="text/x-handlebars-template">
+      <div class="container-fluid">
+        <div class="row pt-5 ml-5 mr-5">
+          <div class="col pt-4 pb-4 border border-dark">
+            <h6>
+              {{firstDayCondition}}
+            </h6>
+            <h4>
+              {{firstDayTemp}}
+            </h4>
+            <div class="weather-img">
+              <img src="{{firstDayimageURL}}" alt="" />
+            </div>
+            <h6>
+              {{firstDay}}
+            </h6>
+          </div>
+          <div class="col pt-4 pb-4 border border-dark">
+            <h6>
+              {{secondDayCondition}}
+            </h6>
+            <h4>
+              {{secondDayTemp}}
+            </h4>
+            <div class="weather-img">
+              <img src="{{secondDayimageURL}}" alt="" />
+            </div>
+            <h6>
+              {{secondDay}}
+            </h6>
+          </div>
+          <div class="col pt-4 pb-4 border border-dark">
+            <h6>
+              {{thirdDayCondition}}
+            </h6>
+            <h4>
+              {{thirdDayTemp}}
+            </h4>
+            <div class="weather-img">
+              <img src="{{thirdDayimageURL}}" alt="" />
+            </div>
+            <h6>
+              {{thirdDay}}
+            </h6>
+          </div>
+          <div class="col pt-4 pb-4 border border-dark">
+            <h6>
+              {{fourthDayCondition}}
+            </h6>
+            <h4>
+              {{fourthDayTemp}}
+            </h4>
+            <div class="weather-img">
+              <img src="{{fourthDayimageURL}}" alt="" />
+            </div>
+            <h6>
+              {{fourthDay}}
+            </h6>
+          </div>
+          <div class="col pt-4 pb-4 border border-dark">
+            <h6>
+              {{fifthDayCondition}}
+            </h6>
+            <h4>
+              {{fifthDayTemp}}
+            </h4>
+            <div class="weather-img">
+              <img src="{{fifthDayimageURL}}" alt="" />
+            </div>
+            <h6>
+              {{fifthDay}}
+            </h6>
+          </div>
+        </div>
+      </div>
     </script>
   </body>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
