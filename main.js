@@ -4,6 +4,9 @@ var forecastDataComputed = [[],[],[],[],[]];
 var daysOfWeekData = [[],[],[],[],[]];
 var daysOfWeek = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
 var theDay = 0;
+var currnetCityName = "";
+//checks if there is a default set
+
 
 //listening for click on search button, passing input into api fetch
 $('#search-button').click(function () {
@@ -12,7 +15,22 @@ $('#search-button').click(function () {
   forecastDataComputed = [[],[],[],[],[]];
   fetch(cityName);
   fetchForecast(cityName);
+  currentCityName = cityName;
+
+  //after a search, display set as default button
+  $('.set-as-default').attr('id', 'display-button') 
 });
+
+$('.set-as-default').click(function () {
+  if (currentCityName === "") {
+    var cityName = $('.city-name-input').val()
+  } else {
+    cityName = currentCityName;
+  }
+ 
+  sessionStorage.setItem('userDefault', cityName);
+  alert('You set ' + cityName + ' as the default.');
+})
 
 //fetching current weather data
 var fetch = function (query) {
@@ -24,7 +42,7 @@ $.ajax({
       addWeather(data)
   },
   error: function () {
-    alert('Bad input. Try again');
+    //alert('Bad input. Try again');
   }
 });
 };
@@ -38,7 +56,7 @@ var fetchForecast = function (query) {
         addForecast(data)
     },
     error: function () {
-      alert('Bad input. Try again');
+      //alert('Bad input. Try again');
     }
   });
   };
@@ -135,17 +153,17 @@ var forecastDataToArrays = function (data) {
 var getEachDayTemp = function () {
   for (i = 0; i < daysOfWeekData.length; i++) {
     var averageTemp = 0;
-  var tempComputed = 0;
+    var tempComputed = 0;
     for (j = 0; j < daysOfWeekData[i].length; j++) {
       averageTemp += daysOfWeekData[i][j].main.temp;
     }
     tempComputed = (Math.round(averageTemp / 8)) + "\xB0";
     forecastDataComputed[i][0] = tempComputed;
-  }
+  };
   averageTemp = 0;
 };
 
-//uses the timestap for the first day of the week to get the weekday as an index number, takes that number and checks it against dayOfWeek array for string value
+//uses the timestmap for the first day of the week to get the weekday as an index number, takes that number and checks it against dayOfWeek array for string value
 var getDayOfWeek = function () {
   var firstDayTimeStamp = daysOfWeekData[0][0].dt
   var xx = new Date();
@@ -172,3 +190,87 @@ var getEachDayConditionIcon = function () {
   };
   dailyConditionURL = "";
 };
+
+var checkIfDefault = function () {
+  if (sessionStorage.hasOwnProperty('userDefault')) {
+    var getDefault = sessionStorage.getItem('userDefault');
+    $('.city-name-input').attr("placeholder", getDefault)
+    fetch(getDefault);
+    fetchForecast(getDefault);
+  }
+}
+checkIfDefault();
+
+
+
+
+
+
+var autolocationLat = 0;
+var autolocationLong = 0;
+
+var options = {
+  enableHighAccuracy: true,
+  timeout: 5000,
+  maximumAge: 0
+};
+
+function success(pos) {
+  var crd = pos.coords;
+  autolocationLat = crd.latitude
+  autolocationLong = crd.longitude
+  console.log('Your current position is:');
+  console.log(`Latitude : ${crd.latitude}`);
+  console.log(`Longitude: ${crd.longitude}`);
+  console.log(`More or less ${crd.accuracy} meters.`);
+  daysOfWeekData = [[],[],[],[],[]];
+  forecastDataComputed = [[],[],[],[],[]];
+  autofetch(autolocationLat, autolocationLong);
+  autofetchForecast(autolocationLat, autolocationLong);
+}
+
+function error(err) {
+  console.warn(`ERROR(${err.code}): ${err.message}`);
+}
+
+
+
+$('.auto-location').click(function () {
+  navigator.geolocation.getCurrentPosition(success, error, options);
+  daysOfWeekData = [[],[],[],[],[]];
+  forecastDataComputed = [[],[],[],[],[]];
+  
+
+  //after a search, display set as default button
+  $('.set-as-default').attr('id', 'display-button') 
+});
+
+
+var autofetch = function (autolocationLat, autolocationLong) {
+  $.ajax({
+    url: "https://api.openweathermap.org/data/2.5/weather?lat=" + autolocationLat +"&lon=" + autolocationLong + "&units=imperial&APPID=df3d2c2d8b73b0874f49b71164c4dcba",
+    type: "GET",
+    dataType: "jsonp",
+    success: function(data){
+        addWeather(data);
+        currentCityName = data.name;
+    },
+    error: function () {
+      //alert('Bad input. Try again');
+    }
+  });
+  };
+
+  var autofetchForecast = function (autolocationLat, autolocationLong)  {
+    $.ajax({
+      url: "https://api.openweathermap.org/data/2.5/forecast?lat=" + autolocationLat +"&lon=" + autolocationLong + "&units=imperial&APPID=df3d2c2d8b73b0874f49b71164c4dcba",
+      type: "GET",
+      dataType: "jsonp",
+      success: function(data){
+          addForecast(data)
+      },
+      error: function () {
+        //alert('Bad input. Try again');
+      }
+    });
+    };
