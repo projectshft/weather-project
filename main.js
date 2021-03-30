@@ -5,15 +5,16 @@ var daysOfWeekData = [[],[],[],[],[]];
 var daysOfWeek = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
 var theDay = 0;
 
+//listening for click on search button, passing input into api fetch
 $('#search-button').click(function () {
-  var cityName = $('.city-name-input').val()
+  var cityName = $('.city-name-input').val();
   daysOfWeekData = [[],[],[],[],[]];
   forecastDataComputed = [[],[],[],[],[]];
-  
   fetch(cityName);
   fetchForecast(cityName);
 });
 
+//fetching current weather data
 var fetch = function (query) {
 $.ajax({
   url: "http://api.openweathermap.org/data/2.5/weather?q=" + query + "&units=imperial&APPID=df3d2c2d8b73b0874f49b71164c4dcba",
@@ -27,7 +28,7 @@ $.ajax({
   }
 });
 };
-
+//fetching 5 day forecast data
 var fetchForecast = function (query) {
   $.ajax({
     url: "http://api.openweathermap.org/data/2.5/forecast?q=" + query + "&units=imperial&APPID=df3d2c2d8b73b0874f49b71164c4dcba",
@@ -42,9 +43,10 @@ var fetchForecast = function (query) {
   });
   };
 
+//puts current weather api data into an obj, push to array
 var addWeather = function (data) {
   weatherToday = [];
-  var conditionLink = data.weather[0].icon
+  var conditionLink = data.weather[0].icon;
   var roundedTemp = Math.round(data.main.temp) + "\xB0";
   var conditionLinkURL = 'http://openweathermap.org/img/wn/' + conditionLink + '@2x.png';
   var newCity = {
@@ -57,6 +59,7 @@ var addWeather = function (data) {
   renderPage(); 
 }
 
+//puts 5 day forecast data into an obj, push to array
 var addForecast = function (data) {
   //take api data, split up into dif arrays for each day of week
   forecastDataToArrays(data);
@@ -89,8 +92,9 @@ var addForecast = function (data) {
   }
   forecast.push(newForecast);
   renderPageForecast();
-}
+};
 
+//renders current weather onto page
 var renderPage = function () {
   $('.weather').empty();
   var source = $('#weather-template').html();
@@ -99,6 +103,7 @@ var renderPage = function () {
  $('.weather').append(newHTML);
 };
 
+//renders forecast onto page
 var renderPageForecast = function () {
   $('.weather-two').empty();
   var source = $('#forecast-template').html();
@@ -107,24 +112,24 @@ var renderPageForecast = function () {
  $('.weather-two').append(newHTML);
 };
 
-//takes all the forecast data and splits into an array for each day of week. hard coded for 40 arrays, could change
+//takes forecast data and splits into array for each day of week
 var forecastDataToArrays = function (data) {
   for (i = 0; i < 8; i++) {
-    daysOfWeekData[0].push(data.list[i])
+    daysOfWeekData[0].push(data.list[i]);
   }
   for (i = 8; i < 16; i++) {
-    daysOfWeekData[1].push(data.list[i])
+    daysOfWeekData[1].push(data.list[i]);
   }
   for (i = 16; i < 24; i++) {
-    daysOfWeekData[2].push(data.list[i])
+    daysOfWeekData[2].push(data.list[i]);
   }
   for (i = 24; i < 32; i++) {
-    daysOfWeekData[3].push(data.list[i])
+    daysOfWeekData[3].push(data.list[i]);
   }
   for (i = 32; i < 40; i++) {
-    daysOfWeekData[4].push(data.list[i])
+    daysOfWeekData[4].push(data.list[i]);
   }
-}
+};
 
 //iterates through data for each day of the week to get an average temp
 var getEachDayTemp = function () {
@@ -132,37 +137,38 @@ var getEachDayTemp = function () {
     var averageTemp = 0;
   var tempComputed = 0;
     for (j = 0; j < daysOfWeekData[i].length; j++) {
-      averageTemp += daysOfWeekData[i][j].main.temp
+      averageTemp += daysOfWeekData[i][j].main.temp;
     }
     tempComputed = (Math.round(averageTemp / 8)) + "\xB0";
     forecastDataComputed[i][0] = tempComputed;
   }
   averageTemp = 0;
-}
+};
 
 //uses the timestap for the first day of the week to get the weekday as an index number, takes that number and checks it against dayOfWeek array for string value
 var getDayOfWeek = function () {
   var firstDayTimeStamp = daysOfWeekData[0][0].dt
   var xx = new Date();
   xx.setTime(firstDayTimeStamp*1000);
-  theDay = xx.getDay()
- 
+  theDay = xx.getDay();
 }
-//not ideal becuase not computing anything, pulling the condition from the middle of the hourly data and displaying that
+
+//gets the condition for each day of forecast, reflects forecast for current time on each day
 var getEachDayCondition = function () {
-  var dailyCondition = ""
+  var dailyCondition = "";
   for (i = 0; i < daysOfWeekData.length; i++) {
-    dailyCondition = daysOfWeekData[i][1].weather[0].main
+    dailyCondition = daysOfWeekData[i][0].weather[0].main;
     forecastDataComputed[i].push(dailyCondition);
-  }
+  };
   dailyCondition = "";
 }
 
+//gets the icon number for each day of forecast
 var getEachDayConditionIcon = function () {
-  var dailyConditionURL = ""
+  var dailyConditionURL = "";
   for (i = 0; i < daysOfWeekData.length; i++) {
-    dailyConditionURL = daysOfWeekData[i][0].weather[0].icon
+    dailyConditionURL = daysOfWeekData[i][0].weather[0].icon;
     forecastDataComputed[i].push(dailyConditionURL);
-  }
+  };
   dailyConditionURL = "";
-}
+};
