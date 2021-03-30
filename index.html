@@ -26,15 +26,33 @@
               type="text"
               id="city"
               class="form-control mr-3"
-              placeholder="City"
+              placeholder="Enter City Name Here"
             />
             <button type="button" class="btn btn-primary search-button">
               Search
             </button>
           </form>
+          <div class="row mt-5 current-weather"></div>
         </div>
       </div>
     </div>
+
+    <script id="current-conditions-template" type="text/x-handlebars-template">
+      <div class="col-md-6 text-center current-weather-text">
+        <h2>
+          {{temperature}}&deg;
+        </h2>
+        <h2>
+          {{city}}
+        </h2>
+        <h3>
+          {{weatherConditions}}
+        </h3>
+      </div>
+      <div class="current-weather-icon col-md-6 text-center">
+        <img src="{{weatherConditionsIcon}}" alt="" />
+      </div>
+    </script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script
