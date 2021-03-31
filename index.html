@@ -16,9 +16,9 @@
   </head>
   <body>
     <div class="container-fluid text-center pt-4">
-      <div class="row justify-content-center">
-        <div class="col-md-5">
-          <div class="page-header">
+      <div class="row justify-content-center ">
+        <div class="col-md-5 white-background">
+          <div class="page-header ">
             <h1>Current Weather</h1>
             <hr />
           </div>
@@ -62,9 +62,9 @@
     
 
     <script id="weather-template" type="text/x-handlebars-template">
-      <div class="container pt-5">
+      <div class="container">
         <div class="row">
-          <div class="col">
+          <div class="col ">
             <h2>
               {{currentTemp}}
             </h2>
@@ -86,8 +86,8 @@
 
     <script id="forecast-template" type="text/x-handlebars-template">
       <div class="container-fluid">
-        <div class="row pt-5 ml-5 mr-5">
-          <div class="col pt-4 pb-4 border border-dark">
+        <div class="row white-background">
+          <div class="col pt-4 pb-4">
             <h6>
               {{firstDayCondition}}
             </h6>
@@ -101,7 +101,7 @@
               {{firstDay}}
             </h6>
           </div>
-          <div class="col pt-4 pb-4 border border-dark">
+          <div class="col pt-4 pb-4">
             <h6>
               {{secondDayCondition}}
             </h6>
@@ -115,7 +115,7 @@
               {{secondDay}}
             </h6>
           </div>
-          <div class="col pt-4 pb-4 border border-dark">
+          <div class="col pt-4 pb-4">
             <h6>
               {{thirdDayCondition}}
             </h6>
@@ -129,7 +129,7 @@
               {{thirdDay}}
             </h6>
           </div>
-          <div class="col pt-4 pb-4 border border-dark">
+          <div class="col pt-4 pb-4">
             <h6>
               {{fourthDayCondition}}
             </h6>
@@ -143,7 +143,7 @@
               {{fourthDay}}
             </h6>
           </div>
-          <div class="col pt-4 pb-4 border border-dark">
+          <div class="col pt-4 pb-4">
             <h6>
               {{fifthDayCondition}}
             </h6>

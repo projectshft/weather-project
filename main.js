@@ -5,6 +5,35 @@ var daysOfWeekData = [[],[],[],[],[]];
 var daysOfWeek = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
 var theDay = 0;
 var currnetCityName = "";
+//set background color based on icon
+var backgroundColors = {
+  "01d":	"clearsky-day",
+  "02d": 	"clouds-day",
+  "03d":	"clouds-day",
+  "04d":	"clouds-day",
+  "09d":	"rain-day",
+  "10d":	"rain-day",
+  "11d":	"thunder-day",
+  "13d":	"snow-day",
+  "50d":	"mist-day",
+  "01n":	"clearsky-night",
+  "02n":	"clouds-night",
+  "03n":	"clouds-night",
+  "04n":	"clouds-night",
+  "09n":	"rain-night",
+  "10n":	"rain-night",
+  "11n":	"thunder-night",
+  "13n":	"snow-night",
+  "50n":	"mist-night"
+};
+//variables for auto look up feature
+var autolocationLat = 0;
+var autolocationLong = 0;
+var options = {
+  enableHighAccuracy: true,
+  timeout: 5000,
+  maximumAge: 0
+};
 //listening for click on search button, passing input into api fetch
 $('#search-button').click(function () {
   var cityName = $('.city-name-input').val();
@@ -61,6 +90,8 @@ var fetchForecast = function (query) {
 var addWeather = function (data) {
   weatherToday = [];
   var conditionLink = data.weather[0].icon;
+  //checks the icon to set corresponding background color
+  setBackgroundColor(conditionLink);
   var roundedTemp = Math.round(data.main.temp) + "\xB0";
   var conditionLinkURL = 'http://openweathermap.org/img/wn/' + conditionLink + '@2x.png';
   var newCity = {
@@ -102,7 +133,7 @@ var addForecast = function (data) {
     fifthDay: daysOfWeek[theDay + 4] || null,
     fifthDayCondition: forecastDataComputed[4][1] || null,
     fifthDayimageURL: 'http://openweathermap.org/img/wn/' + forecastDataComputed[4][2] + '@2x.png' || null
-  };
+  }
   forecast.push(newForecast);
   renderPageForecast();
 };
@@ -147,7 +178,7 @@ var getEachDayTemp = function () {
     var tempComputed = 0;
     for (j = 0; j < daysOfWeekData[i].length; j++) {
       averageTemp += daysOfWeekData[i][j].main.temp;
-    }
+    };
     tempComputed = (Math.round(averageTemp / 8)) + "\xB0";
     forecastDataComputed[i][0] = tempComputed;
   };
@@ -155,7 +186,7 @@ var getEachDayTemp = function () {
 };
 //uses the timestmap for the first day of the week to get the weekday as an index number, takes that number and checks it against dayOfWeek array for string value
 var getDayOfWeek = function () {
-  var firstDayTimeStamp = daysOfWeekData[0][0].dt
+  var firstDayTimeStamp = daysOfWeekData[0][0].dt;
   var xx = new Date();
   xx.setTime(firstDayTimeStamp*1000);
   theDay = xx.getDay();
@@ -182,21 +213,12 @@ var getEachDayConditionIcon = function () {
 var checkIfDefault = function () {
   if (sessionStorage.hasOwnProperty('userDefault')) {
     var getDefault = sessionStorage.getItem('userDefault');
-    $('.city-name-input').attr("placeholder", getDefault)
+    $('.city-name-input').attr("placeholder", getDefault);
     fetch(getDefault);
     fetchForecast(getDefault);
   };
 };
-checkIfDefault();
-//variables for auto look up feature
-var autolocationLat = 0;
-var autolocationLong = 0;
-var options = {
-  enableHighAccuracy: true,
-  timeout: 5000,
-  maximumAge: 0
-};
-
+//success function for auto location lookup
 function success(pos) {
   var crd = pos.coords;
   autolocationLat = crd.latitude;
@@ -205,11 +227,11 @@ function success(pos) {
   forecastDataComputed = [[],[],[],[],[]];
   autofetch(autolocationLat, autolocationLong);
   autofetchForecast(autolocationLat, autolocationLong);
-}
-
+};
+//error function for auto location lookup
 function error(err) {
   console.warn(`ERROR(${err.code}): ${err.message}`);
-}
+};
 //listens for click on auto look up button
 $('.auto-location').click(function () {
   navigator.geolocation.getCurrentPosition(success, error, options);
@@ -217,7 +239,6 @@ $('.auto-location').click(function () {
   forecastDataComputed = [[],[],[],[],[]];
   //after a search, display 'set as default' button
   $('.location-spinner').attr('id', 'display-button');
- 
 });
 //fetch current weather but with lat and long instead of city name
 var autofetch = function (autolocationLat, autolocationLong) {
@@ -236,17 +257,28 @@ var autofetch = function (autolocationLat, autolocationLong) {
     }
   });
   };
-  //fetch forecast but with lat and long instead of city name
-  var autofetchForecast = function (autolocationLat, autolocationLong)  {
-    $.ajax({
-      url: "https://api.openweathermap.org/data/2.5/forecast?lat=" + autolocationLat +"&lon=" + autolocationLong + "&units=imperial&APPID=df3d2c2d8b73b0874f49b71164c4dcba",
-      type: "GET",
-      dataType: "jsonp",
-      success: function(data){
-          addForecast(data)
-      },
-      error: function () {
-        //alert('Bad input. Try again');
-      }
-    });
+//fetch forecast but with lat and long instead of city name
+var autofetchForecast = function (autolocationLat, autolocationLong)  {
+  $.ajax({
+    url: "https://api.openweathermap.org/data/2.5/forecast?lat=" + autolocationLat +"&lon=" + autolocationLong + "&units=imperial&APPID=df3d2c2d8b73b0874f49b71164c4dcba",
+    type: "GET",
+    dataType: "jsonp",
+    success: function(data){
+        addForecast(data)
+    },
+    error: function () {
+      //alert('Bad input. Try again');
+    }
+  });
+  };
+//checks if obj backgroundcolors has property icon and passes in value, then sets cooresponding background image
+var setBackgroundColor = function (icon) {
+    if (backgroundColors.hasOwnProperty(icon)) {
+      var matchedIcon = backgroundColors[icon];
+      $('body').attr('id', matchedIcon);
+    } else {
+      $('body').removeAttr('id', matchedIcon);
     };
+  };
+//checks if a default has been set
+checkIfDefault();

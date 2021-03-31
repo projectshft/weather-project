@@ -13,3 +13,79 @@
 span.location-spinner {
   display: none;
 }
+
+#clearsky-day {
+  background: url("images/clearsky-day.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  
+}
+
+#clouds-day {
+  background: url("images/clouds-day.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+#rain-day {
+  background: url("images/rain-day.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+}
+#thunder-day {
+  background: url("images/thunder-day.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+#snow-day {
+  background: url("images/snow-day.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+#mist-day {
+  background: url("images/mist-day.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+#clearsky-night {
+  background: url("images/clearsky-night.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+#clouds-night {
+  background: url("images/clouds-night.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+#rain-night {
+  background: url("images/rain-night.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+#thunderstorm-night {
+  background: url("images/thunder-night.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+#snow-night {
+  background: url("images/snow-night.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+#mist-night {
+  background: url("images/mist-night.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.white-background {
+  background-color:rgba(255, 255, 255, 0.53);
+  
+}
