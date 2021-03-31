@@ -55,11 +55,14 @@ var renderForecast = function () {
 }
 
 $(".search-button").on('click', function () {
-  var city = $("#city").val();
+  var location = {
+    type: "City Name",
+    city: $("#city").val()
+  };
   $(".set-default-button").toggleClass("d-none", false);
   $(".default-message").toggleClass("d-none", true);
-  fetchCurrentConditions(city);
-  fetchFiveDayForecast(city);
+  fetchCurrentConditions(location);
+  fetchFiveDayForecast(location);
 })
 
 //Allows User to set a default city to be store in local storage
@@ -70,22 +73,48 @@ $(".set-default-button").on("click", function() {
   $(".set-default-button").toggleClass("d-none", true);
 })
 
+$(".location-button").on("click", function () {
+  navigator.geolocation.getCurrentPosition((position) => {
+    var location = {
+      type: "Coordinates",
+      latitude: position.coords.latitude,
+      longitude: position.coords.longitude
+    };
+    fetchCurrentConditions(location);
+    fetchFiveDayForecast(location);
+  });
+})
+
 //Checks if there is a default city and sets the page if so
 var HasDefaultCity = function () {
   var defaultCity = localStorage.getItem('defaultCity');
   if(defaultCity) {
-    fetchCurrentConditions(defaultCity);
-    fetchFiveDayForecast(defaultCity);
+    var location = {
+      type: "City Name",
+      city: defaultCity
+    }
+    fetchCurrentConditions(location);
+    fetchFiveDayForecast(location);
     $(".default-message").html(`<p>Your default city is: ${defaultCity}</p>`)
     $(".default-message").toggleClass("d-none", false);
   }
 }
 
 //Gets needed weather data on current conditions from Open Weather API
-var fetchCurrentConditions = function(city) {
+var fetchCurrentConditions = function(location) {
+  //TODO: make this a switch case statement
+  var searchURL = ''
+  if(location.type === "City Name") {
+    searchURL = `https://api.openweathermap.org/data/2.5/weather?q=${location.city}&appid=59b871a25f174e2019ec1f4fbbe6807c`
+  }
+
+  if(location.type === "Coordinates") {
+    searchURL = `https://api.openweathermap.org/data/2.5/weather?lat=${location.latitude}&lon=${location.longitude}&appid=59b871a25f174e2019ec1f4fbbe6807c`
+  }
+
   $.ajax({
     method: "GET",
-    url: `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=59b871a25f174e2019ec1f4fbbe6807c`,
+    url: searchURL,
     dataType: "json",
     success: function (data) {
       weatherInfo = {};
@@ -99,10 +128,20 @@ var fetchCurrentConditions = function(city) {
 }
 
 //Gets needed weather data from Open Weather API for 5 day forecast
-var fetchFiveDayForecast = function(city) {
+var fetchFiveDayForecast = function(location) {
+  //TODO: Make this a switch case statement
+  var searchURL
+  if(location.type === "City Name") {
+    searchURL = `https://api.openweathermap.org/data/2.5/forecast?q=${location.city}&appid=59b871a25f174e2019ec1f4fbbe6807c`
+  }
+
+  if(location.type === "Coordinates") {
+    searchURL = `https://api.openweathermap.org/data/2.5/forecast?lat=${location.latitude}&lon=${location.longitude}&appid=59b871a25f174e2019ec1f4fbbe6807c`
+  }
+
   $.ajax({
     method: "GET",
-    url: `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=59b871a25f174e2019ec1f4fbbe6807c`,
+    url: searchURL,
     dataType: "json",
     success: function (data) {
       forecastInfo = [{},{},{},{},{}];
