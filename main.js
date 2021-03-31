@@ -57,16 +57,29 @@ var renderForecast = function () {
 $(".search-button").on('click', function () {
   var city = $("#city").val();
   $(".set-default-button").toggleClass("d-none", false);
+  $(".default-message").toggleClass("d-none", true);
   fetchCurrentConditions(city);
   fetchFiveDayForecast(city);
 })
 
 //Allows User to set a default city to be store in local storage
 $(".set-default-button").on("click", function() {
-  $(".default-message").html(`<p>${weatherInfo.city} is now set as your default city</p>`)
+  localStorage.setItem("defaultCity", weatherInfo.city);
+  $(".default-message").html(`<p>Your default city is: ${weatherInfo.city}</p>`)
   $(".default-message").toggleClass("d-none", false);
   $(".set-default-button").toggleClass("d-none", true);
 })
+
+//Checks if there is a default city and sets the page if so
+var HasDefaultCity = function () {
+  var defaultCity = localStorage.getItem('defaultCity');
+  if(defaultCity) {
+    fetchCurrentConditions(defaultCity);
+    fetchFiveDayForecast(defaultCity);
+    $(".default-message").html(`<p>Your default city is: ${defaultCity}</p>`)
+    $(".default-message").toggleClass("d-none", false);
+  }
+}
 
 //Gets needed weather data on current conditions from Open Weather API
 var fetchCurrentConditions = function(city) {
@@ -156,3 +169,5 @@ var setForecastInfo = function(OpenWeatherdata) {
     forecastInfo[i].day = new Intl.DateTimeFormat('en-US', options).format(new Date(forecastsForSelectedDay[0].dt_txt))
   }
 }
+
+HasDefaultCity();
