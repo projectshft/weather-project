@@ -1,4 +1,35 @@
 var weatherInfo = {};
+var forecastInfo = [{
+    day: "Thursday",
+    forecastedTemperature: 60,
+    forecastedWeatherConditions: "Cloudy",
+    forecastedWeatherConditionsIcon: "http://openweathermap.org/img/wn/04d@2x.png",
+  },
+  {
+    day: "Friday",
+    forecastedTemperature: 60,
+    forecastedWeatherConditions: "Cloudy",
+    forecastedWeatherConditionsIcon: "http://openweathermap.org/img/wn/04d@2x.png",
+  },
+  {
+    day: "Saturday",
+    forecastedTemperature: 60,
+    forecastedWeatherConditions: "Cloudy",
+    forecastedWeatherConditionsIcon: "http://openweathermap.org/img/wn/04d@2x.png",
+  },
+  {
+    day: "Sunday",
+    forecastedTemperature: 60,
+    forecastedWeatherConditions: "Cloudy",
+    forecastedWeatherConditionsIcon: "http://openweathermap.org/img/wn/04d@2x.png",
+  },
+  {
+    day: "Monday",
+    forecastedTemperature: 60,
+    forecastedWeatherConditions: "Cloudy",
+    forecastedWeatherConditionsIcon: "http://openweathermap.org/img/wn/04d@2x.png",
+  }
+]
 
 //Displays Current Conditions portion of page
 var renderCurrentConditions = function() {
@@ -8,13 +39,26 @@ var renderCurrentConditions = function() {
   $(".current-weather").html(currentConditionsHTML);
 }
 
+//Displays the 5 day forecast portion of page
+var renderForecast = function () {
+  var source = $("#forecast-template").html();
+  var template = Handlebars.compile(source);
+  var forecastHTML = forecastInfo.reduce(function(htmlString, singleDayForecast, index) {
+    var singleDayForecastHTML = template(singleDayForecast);
+    htmlString += singleDayForecastHTML;
+    return htmlString;
+  }, '');
+  $(".forecast").html(forecastHTML);
+  //Offsets the first day so they will all be centered on the page
+  $(".forecast-day").first().addClass("offset-md-1");
+}
+
 $(".search-button").on('click', function () {
   var city = $("#city").val();
   fetch(city);
 })
 
 //Gets needed weather data from Open Weather API
-//API key: 59b871a25f174e2019ec1f4fbbe6807c
 var fetch = function(city) {
   $.ajax({
     method: "GET",

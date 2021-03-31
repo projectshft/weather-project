@@ -35,6 +35,7 @@
           <div class="row mt-5 current-weather"></div>
         </div>
       </div>
+      <div class="row mt-5 forecast"></div>
     </div>
 
     <script id="current-conditions-template" type="text/x-handlebars-template">
@@ -51,6 +52,21 @@
       </div>
       <div class="current-weather-icon col-md-6 text-center">
         <img src="{{weatherConditionsIcon}}" alt="" />
+      </div>
+    </script>
+
+    <script id="forecast-template" type="text/x-handlebars-template">
+      <div class="col-md-2 text-center p-3 forecast-day">
+        <h4>
+          {{forecastedWeatherConditions}}
+        </h4>
+        <h4>
+          {{forecastedTemperature}}&deg;
+        </h4>
+        <img src="{{forecastedWeatherConditionsIcon}}" alt="" />
+        <h4>
+          {{day}}
+        </h4>
       </div>
     </script>
 
