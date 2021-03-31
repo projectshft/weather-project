@@ -56,8 +56,16 @@ var renderForecast = function () {
 
 $(".search-button").on('click', function () {
   var city = $("#city").val();
+  $(".set-default-button").toggleClass("d-none", false);
   fetchCurrentConditions(city);
   fetchFiveDayForecast(city);
+})
+
+//Allows User to set a default city to be store in local storage
+$(".set-default-button").on("click", function() {
+  $(".default-message").html(`<p>${weatherInfo.city} is now set as your default city</p>`)
+  $(".default-message").toggleClass("d-none", false);
+  $(".set-default-button").toggleClass("d-none", true);
 })
 
 //Gets needed weather data on current conditions from Open Weather API
