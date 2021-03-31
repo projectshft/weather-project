@@ -1,7 +1,19 @@
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
 .set-as-default {
   display: none;
 }
 
+.hide-map {
+  display: none;
+}
+
+#display-map {
+  display: block;
+}
 #display-button {
   display: block;
 }
@@ -14,78 +26,91 @@ span.location-spinner {
   display: none;
 }
 
-#clearsky-day {
+.clearsky-day {
   background: url("images/clearsky-day.jpg");
   background-repeat: no-repeat;
   background-size: cover;
-  
 }
 
-#clouds-day {
+.clouds-day {
   background: url("images/clouds-day.jpg");
   background-repeat: no-repeat;
   background-size: cover;
 }
 
-#rain-day {
+.rain-day {
   background: url("images/rain-day.jpg");
   background-repeat: no-repeat;
   background-size: cover;
 }
-}
-#thunder-day {
+
+.thunder-day {
   background: url("images/thunder-day.jpg");
   background-repeat: no-repeat;
   background-size: cover;
 }
-#snow-day {
+.snow-day {
   background: url("images/snow-day.jpg");
   background-repeat: no-repeat;
   background-size: cover;
 }
-#mist-day {
+.mist-day {
   background: url("images/mist-day.jpg");
   background-repeat: no-repeat;
   background-size: cover;
 }
 
-#clearsky-night {
+.clearsky-night {
   background: url("images/clearsky-night.jpg");
   background-repeat: no-repeat;
   background-size: cover;
 }
 
-#clouds-night {
+.clouds-night {
   background: url("images/clouds-night.jpg");
   background-repeat: no-repeat;
   background-size: cover;
 }
 
-#rain-night {
+.rain-night {
   background: url("images/rain-night.jpg");
   background-repeat: no-repeat;
   background-size: cover;
 }
 
-#thunderstorm-night {
+.thunderstorm-night {
   background: url("images/thunder-night.jpg");
   background-repeat: no-repeat;
   background-size: cover;
 }
 
-#snow-night {
+.snow-night {
   background: url("images/snow-night.jpg");
   background-repeat: no-repeat;
   background-size: cover;
 }
 
-#mist-night {
+.mist-night {
   background: url("images/mist-night.jpg");
   background-repeat: no-repeat;
   background-size: cover;
 }
 
-.white-background {
-  background-color:rgba(255, 255, 255, 0.53);
-  
+.main-content {
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.box {
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+  flex: 1 1 auto;
+}
+
+#map {
+  height: 400px;
+  width: 100%;
+  background-color: grey;
 }

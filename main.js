@@ -5,7 +5,9 @@ var daysOfWeekData = [[],[],[],[],[]];
 var daysOfWeek = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
 var theDay = 0;
 var currnetCityName = "";
-//set background color based on icon
+var currentCityCoords = {};
+
+//set background color/image based on icon
 var backgroundColors = {
   "01d":	"clearsky-day",
   "02d": 	"clouds-day",
@@ -39,7 +41,7 @@ $('#search-button').click(function () {
   var cityName = $('.city-name-input').val();
   if (cityName === null) {
     alert('Enter a city name');
-  }
+  };
   daysOfWeekData = [[],[],[],[],[]];
   forecastDataComputed = [[],[],[],[],[]];
   fetch(cityName);
@@ -48,13 +50,14 @@ $('#search-button').click(function () {
   //after a search, display 'set as default' button
   $('.set-as-default').attr('id', 'display-button') 
 });
-
+//listen for click on set as defualt, if not "" put in session storage
 $('.set-as-default').click(function () {
   if (currentCityName === "") {
+    console.log('in the if')
     var cityName = $('.city-name-input').val()
   } else {
     cityName = currentCityName;
-  }
+  };
   sessionStorage.setItem('userDefault', cityName);
   alert('You set ' + cityName + ' as the default.');
 });
@@ -65,7 +68,12 @@ $.ajax({
   type: "GET",
   dataType: "jsonp",
   success: function(data){
-      addWeather(data)
+      addWeather(data);
+      currentCityCoords.lat = data.coord.lat;
+      currentCityCoords.lon = data.coord.lon;
+      $('#map').removeAttr('class'); 
+      initMap();
+
   },
   error: function () {
     alert('Bad input. Try again');
@@ -184,7 +192,7 @@ var getEachDayTemp = function () {
   };
   averageTemp = 0;
 };
-//uses the timestmap for the first day of the week to get the weekday as an index number, takes that number and checks it against dayOfWeek array for string value
+//uses the timestmap for the first day of the week to get the weekday as an index number, takes that number and checks it against dayOfWeek array for string value to display for each day
 var getDayOfWeek = function () {
   var firstDayTimeStamp = daysOfWeekData[0][0].dt;
   var xx = new Date();
@@ -240,7 +248,7 @@ $('.auto-location').click(function () {
   //after a search, display 'set as default' button
   $('.location-spinner').attr('id', 'display-button');
 });
-//fetch current weather but with lat and long instead of city name
+//fetch current weather but with lat and long instead of city name as that is whats returned from auto location look up
 var autofetch = function (autolocationLat, autolocationLong) {
   $.ajax({
     url: "https://api.openweathermap.org/data/2.5/weather?lat=" + autolocationLat +"&lon=" + autolocationLong + "&units=imperial&APPID=df3d2c2d8b73b0874f49b71164c4dcba",
@@ -250,7 +258,11 @@ var autofetch = function (autolocationLat, autolocationLong) {
       $('.location-spinner').removeAttr('id', 'display-button');
         addWeather(data);
         $('.set-as-default').attr('id', 'display-button');
+        currentCityCoords.lat = data.coord.lat;
+        currentCityCoords.lon = data.coord.lon;
         currentCityName = data.name;
+        $('#map').removeAttr('class'); 
+        initMap();
     },
     error: function () {
       //alert('Bad input. Try again');
@@ -275,10 +287,19 @@ var autofetchForecast = function (autolocationLat, autolocationLong)  {
 var setBackgroundColor = function (icon) {
     if (backgroundColors.hasOwnProperty(icon)) {
       var matchedIcon = backgroundColors[icon];
-      $('body').attr('id', matchedIcon);
+      $('body').attr('class', matchedIcon);
     } else {
-      $('body').removeAttr('id', matchedIcon);
+      $('body').removeAttr('class', matchedIcon);
     };
   };
-//checks if a default has been set
+//pulls in current city data to map
+
+//pull google map using curent city coords
+function initMap () {
+  var map = new google.maps.Map($('#map')[0], {
+      zoom: 9,
+      center: new google.maps.LatLng(currentCityCoords.lat, currentCityCoords.lon)
+    });
+    };
+//check if a deafult has been set on page reload
 checkIfDefault();
