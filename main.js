@@ -28,14 +28,7 @@ var backgroundColors = {
   "13n":	"snow-night",
   "50n":	"mist-night"
 };
-//variables for auto look up feature
-var autolocationLat = 0;
-var autolocationLong = 0;
-var options = {
-  enableHighAccuracy: true,
-  timeout: 5000,
-  maximumAge: 0
-};
+
 //listening for click on search button, passing input into api fetch
 $('#search-button').click(function () {
   var cityName = $('.city-name-input').val();
@@ -228,6 +221,8 @@ var checkIfDefault = function () {
 };
 //success function for auto location lookup
 function success(pos) {
+  var autolocationLat = 0;
+  var autolocationLong = 0;
   var crd = pos.coords;
   autolocationLat = crd.latitude;
   autolocationLong = crd.longitude;
@@ -242,6 +237,11 @@ function error(err) {
 };
 //listens for click on auto look up button
 $('.auto-location').click(function () {
+  var options = {
+    enableHighAccuracy: true,
+    timeout: 5000,
+    maximumAge: 0
+  };
   navigator.geolocation.getCurrentPosition(success, error, options);
   daysOfWeekData = [[],[],[],[],[]];
   forecastDataComputed = [[],[],[],[],[]];
