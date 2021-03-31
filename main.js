@@ -5,10 +5,12 @@ var daysOfWeekData = [[],[],[],[],[]];
 var daysOfWeek = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
 var theDay = 0;
 var currnetCityName = "";
-
 //listening for click on search button, passing input into api fetch
 $('#search-button').click(function () {
   var cityName = $('.city-name-input').val();
+  if (cityName === null) {
+    alert('Enter a city name');
+  }
   daysOfWeekData = [[],[],[],[],[]];
   forecastDataComputed = [[],[],[],[],[]];
   fetch(cityName);
@@ -37,7 +39,7 @@ $.ajax({
       addWeather(data)
   },
   error: function () {
-    //alert('Bad input. Try again');
+    alert('Bad input. Try again');
   }
 });
 };
@@ -51,7 +53,7 @@ var fetchForecast = function (query) {
         addForecast(data)
     },
     error: function () {
-      //alert('Bad input. Try again');
+      alert('Bad input. Try again');
     }
   });
   };
@@ -214,7 +216,8 @@ $('.auto-location').click(function () {
   daysOfWeekData = [[],[],[],[],[]];
   forecastDataComputed = [[],[],[],[],[]];
   //after a search, display 'set as default' button
-  $('.set-as-default').attr('id', 'display-button') 
+  $('.location-spinner').attr('id', 'display-button');
+ 
 });
 //fetch current weather but with lat and long instead of city name
 var autofetch = function (autolocationLat, autolocationLong) {
@@ -223,7 +226,9 @@ var autofetch = function (autolocationLat, autolocationLong) {
     type: "GET",
     dataType: "jsonp",
     success: function(data){
+      $('.location-spinner').removeAttr('id', 'display-button');
         addWeather(data);
+        $('.set-as-default').attr('id', 'display-button');
         currentCityName = data.name;
     },
     error: function () {
@@ -245,4 +250,3 @@ var autofetch = function (autolocationLat, autolocationLong) {
       }
     });
     };
-
