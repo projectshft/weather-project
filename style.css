@@ -1,0 +1,116 @@
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+.set-as-default {
+  display: none;
+}
+
+.hide-map {
+  display: none;
+}
+
+#display-map {
+  display: block;
+}
+#display-button {
+  display: block;
+}
+
+.location-spinner {
+  display: none;
+}
+
+span.location-spinner {
+  display: none;
+}
+
+.clearsky-day {
+  background: url("images/clearsky-day.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.clouds-day {
+  background: url("images/clouds-day.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.rain-day {
+  background: url("images/rain-day.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.thunder-day {
+  background: url("images/thunder-day.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.snow-day {
+  background: url("images/snow-day.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.mist-day {
+  background: url("images/mist-day.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.clearsky-night {
+  background: url("images/clearsky-night.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.clouds-night {
+  background: url("images/clouds-night.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.rain-night {
+  background: url("images/rain-night.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.thunderstorm-night {
+  background: url("images/thunder-night.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.snow-night {
+  background: url("images/snow-night.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.mist-night {
+  background: url("images/mist-night.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.main-content {
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.box {
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+  flex: 1 1 auto;
+}
+
+#map {
+  height: 400px;
+  width: 100%;
+  background-color: grey;
+}
