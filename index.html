@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
+    integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+  <title>Weather App</title>
+
+</head>
+
+<body>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-4 offset-md-4">
+        <div class="page header">
+          <h2>The Weather</h2>
+          <hr />
+        </div>
+
+        <form class="search-form">
+          <div class="col text-center">
+            <h4>Search City</h4>
+          </div>
+
+          <div class="form-group">
+            <input type="text center" id="search-query" class="form-control text-center"></input>
+          </div>
+
+          <div class="col text-center">
+            <button type="button" class="btn btn-primary search">Search</button>
+          </div>
+        </form>
+
+        <hr />
+
+        <div class="cities row">
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script id="weather-template" type="text/x-handlebars-template">
+    <div class="cities col-md-12 text-center">
+      <h3>{{ temp }} °F</h3>
+      <div><strong>{{ city }}</strong></div>
+      <div><strong>{{ conditions }}</strong></div>
+      <img src="http://openweathermap.org/img/wn/{{thumbnailURL}}@2x.png">
+    </div>
+  </script>
+
+  <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
+  <script src="main.js" type="text/javascript"></script>
+</body>
+
+</html>
