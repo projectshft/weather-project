@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BetterWeather</title>
+  </head>
+  <body>
+    <div class="title-box">
+      <h1 class="offset-md-5">BetterWeather</h1>
+    </div>
+    <div class="row">
+      <div class="col-sm-3 offset-md-2">
+        <input
+          type="text"
+          class="rounded"
+          id="location-input"
+          placeholder="location"
+        />
+      </div>
+      <div class="col-sm-1 offset-md-2">
+        <button class="btn btn-primary search-button">Search</button>
+      </div>
+      <div class="col-sm-1">
+        <button class="btn btn-success location-button">
+          current location
+        </button>
+      </div>
+    </div>
+    <div class="weather-container"></div>
+    <div class="row forecast-container"></div>
+
+    <script id="weather-template" type="text/x-handlebars-template">
+      <div class="current-weather">
+        <hr />
+        <div class="row">
+          <div class="col-sm-2 offset-md-3">
+            <div class="weather-box text-center">
+              <h2>
+                {{temp}}°
+              </h2>
+              <h2>
+                {{city}}
+              </h2>
+              <h3>
+                {{weather}}
+              </h3>
+              <img
+                src="http://openweathermap.org/img/wn/{{icon}}@2x.png"
+                alt=""
+              />
+              <button class="btn btn-primary btn-sm set-as-default">
+                set as default
+              </button>
+            </div>
+          </div>
+          <div class="col-sm-2 map-container">
+          </div>
+          <div class="col-sm-1">
+          </div>
+        </div>
+        <hr />
+      </div>
+    </script>
+
+    <script id="forecast-template" type="text/x-handlebars-template">
+      <div class="forecast-item">
+        <div class="col-1">
+          <h3>
+            {{weather}}
+          </h3>
+          <h3>
+            {{temp}}°
+          </h3>
+          <img src="http://openweathermap.org/img/wn/{{icon}}@2x.png" alt="" />
+          <h4>
+            {{day}}
+          </h4>
+        </div>
+      </div>
+    </script>
+
+    <script id="map-template" type="text/x-handlebars-template">
+      <iframe
+        width="425"
+        height="303"
+        frameborder="0"
+        style="border:0"
+        src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCB7tJ-tBzQ7Q7TMAla9CX3pV0FQsPahCs&q={{
+          location
+        }}"
+        allowfullscreen
+      >
+      </iframe>
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"
+    ></script>
+    <script src="backgrounds.js"></script>
+    <script src="core.js"></script>
+  </body>
+</html>
