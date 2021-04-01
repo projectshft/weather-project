@@ -1,8 +1,11 @@
 var cities = [];
 
+$('.search').on('click', function () {
+  var search = $('#search-query').val();
+  fetch(search);
+});
 
 var addCities = function (data) {
-
   cities = [];
   var city = {
     temp: Math.ceil(data.main.temp),
@@ -12,18 +15,9 @@ var addCities = function (data) {
   }
   cities.push(city);
   renderCities();
-  console.log(city);
-}
-
-
-$('.search').on('click', function () {
-  console.log('click');
-  var search = $('#search-query').val();
-  fetch(search);
-});
+};
 
 var fetch = function (query) {
-  console.log(query);
   $.ajax({
     method: "GET",
     url: "https://api.openweathermap.org/data/2.5/weather?q=" + query + "&appid=fde555c101a70d39eb7ec797d3514bce&units=imperial",
@@ -39,7 +33,6 @@ var fetch = function (query) {
 
 var renderCities = function () {
   $('.cities').empty();
-
   for (var i = 0; i < cities.length; i++) {
     var source = $('#weather-template').html();
     var template = Handlebars.compile(source);
@@ -49,3 +42,75 @@ var renderCities = function () {
   }
 };
 renderCities();
+
+var citiesForecast = [];
+$('.search').on('click', function () {
+  var search = $('#search-query').val();
+  fetchForecast(search);
+});
+
+var addCityForecast = function (dataForecast) {
+  citiesForecast = [];
+  for (var i = 0; i < dataForecast.list.length; i = i + 8) {
+
+    var allData = dataForecast.list[i];
+    var weekday = moment(allData.dt_txt, "YYYY-MM-DD HH:mm:ss");
+
+    var cityForecast = {
+      conditions: allData.weather[0].main,
+      temp: Math.ceil(allData.main.temp),
+      thumbnailURL: allData.weather[0].icon,
+      day: weekday.format('dddd')
+    };
+
+    citiesForecast.push(cityForecast);
+    console.log(citiesForecast);
+  };
+  renderCitiesForecast();
+}
+
+// var addCityForecast = function (dataForecast) {
+
+//   for (var i = 0; i < dataForecast.list.length; i = i + 8) {
+//     var allData = dataForecast.list[i];
+//     citiesForecast = [];
+//     var weekday = moment(dataForecast.list[i].dt_txt, "YYYY-MM-DD HH:mm:ss")
+//     var cityForecast = {
+//       conditions: dataForecast.list[i].weather[0].main,
+//       temp: Math.ceil(dataForecast.list[i].main.temp),
+//       thumbnailURL: dataForecast.list[i].weather[0].icon,
+//       day: weekday.format('dddd')
+//     };
+//     citiesForecast.push(cityForecast);
+//     console.log(citiesForecast);
+//   };
+//   renderCitiesForecast();
+// }
+
+
+var fetchForecast = function (queryForecast) {
+  $.ajax({
+    method: "GET",
+    url: "https://api.openweathermap.org/data/2.5/forecast?q=" + queryForecast + "&appid=fde555c101a70d39eb7ec797d3514bce&units=imperial",
+    dataType: 'json',
+    success: function (dataForecast) {
+      addCityForecast(dataForecast);
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+      console.log(textStatus);
+    }
+  });
+};
+
+var renderCitiesForecast = function () {
+  $('.cities-forecast').empty();
+
+  for (var i = 0; i < citiesForecast.length; i++) {
+    var sourceForecast = $('#weather-forecast-template').html();
+    var template = Handlebars.compile(sourceForecast);
+    var newHTML = template(citiesForecast[i]);
+
+    $('.cities-forecast').append(newHTML);
+  };
+};
+renderCitiesForecast();
