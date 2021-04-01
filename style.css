@@ -1,3 +1,26 @@
 .forecast-day {
   border: 2px solid black;
 }
+
+#google-map {
+  position: relative;
+  padding: 0%;
+}
+
+#cities-overlay {
+  position: absolute;
+  top: 205px;
+  left: 285px;
+  z-index: 99;
+}
+
+#cities-overlay-CH {
+  position: absolute;
+  top: 291px;
+  left: 168px;
+  z-index: 98;
+}
+
+iframe {
+  pointer-events: none;
+}

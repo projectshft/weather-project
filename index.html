@@ -48,6 +48,31 @@
         </div>
       </div>
       <div class="row mt-5 forecast"></div>
+      <div class="row mt-5 mb-3 map">
+        <div class="col-md-6 offset-md-3">
+          <!-- Lat: 36.008356 -->
+          <!-- Lon: -78.894601 -->
+          <!-- Chapel Hill Lat 35.9132 -->
+          <!-- Lon: -79.0558 -->
+          <div id="google-map">
+            <iframe
+              width="600"
+              height="450"
+              style="border: 0"
+              loading="lazy"
+              allowfullscreen
+              src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBiu-4x5rZyb66_mgphCiSRIg6E6IsMM_E&q=36.008356,-78.894601&center=36.008356,-78.894601&zoom=10"
+            >
+            </iframe>
+            <div id="cities-overlay">
+              <p>Test</p>
+            </div>
+            <div id="cities-overlay-CH">
+              <p>Test</p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <script id="current-conditions-template" type="text/x-handlebars-template">
@@ -79,6 +104,22 @@
         <h4>
           {{day}}
         </h4>
+      </div>
+    </script>
+
+    <script id="map-template" type="text/x-handlebars-template">
+      <div class="col-md-6 offset-md-3 text-center">
+        <iframe
+          width="600"
+          height="450"
+          style="border: 0"
+          loading="lazy"
+          allowfullscreen
+          src="https://www.google.com/maps/embed/v1/view?key=AIzaSyBiu-4x5rZyb66_mgphCiSRIg6E6IsMM_E&center={{
+            latitude
+          }},{{longitude}}&zoom=10"
+        >
+        </iframe>
       </div>
     </script>
 
