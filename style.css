@@ -7,8 +7,19 @@
   margin-bottom: 30px;
 }
 
-.cities-forecast {
-  margin-top: 20px;
-  margin-bottom: 30px;
+.forecast {
+  display:table-cell;
+  vertical-align:middle;
+  border: 1px solid grey;
+  width: 250px;
+  height: 225px;
 }
 
+.cities {
+  display: inline-flex;
+  align-content: center;
+}
+
+.image img {
+  align-items: right;
+}

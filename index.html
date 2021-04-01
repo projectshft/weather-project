@@ -36,37 +36,58 @@
 
         <hr />
 
-        <div class="cities row">
+        <div class="cities text-center col-sm-4 offset-sm-4">
         </div>
-
-        <div class="cities-forecast row">
-        </div>
-
 
       </div>
     </div>
   </div>
 
+
+  <div class="col">
+    <div class="col-sm-8 offset-sm-2">
+      <hr />
+      <div class="cities-forecast row text-center">
+        <div class="cities-forecast row text-center">
+          <div class="cities-forecast row text-center">
+            <div class="cities-forecast row text-center">
+              <div class="cities-forecast row text-center">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script id="weather-template" type="text/x-handlebars-template">
-    <div class="cities col-md-12 text-center">
+    <div class="cities col-md-12  text-center">
+      <div class="text-center">
       <h3>{{ temp }} °F</h3>
       <h4><strong>{{ city }}</strong></h4>
       <div><strong>{{ conditions }}</strong></div>
-      <img src="http://openweathermap.org/img/wn/{{thumbnailURL}}@2x.png">
+    </div class="text-center">
+      <div class="image"><img src="http://openweathermap.org/img/wn/{{thumbnailURL}}@2x.png">
+      </div>
     </div>
   </script>
 
 
   <script id="weather-forecast-template" type="text/x-handlebars-template">
-      <div class="cities-forecast row-sm-4 text-center">
+    <div class="cities-forecast col justify-content-between">
+        {{#each citiesForecast}}
+        <div class="forecast">
         <div><strong>{{ conditions }}</strong></div>
         <div>{{ temp }} °F</div>
         <img src="http://openweathermap.org/img/wn/{{thumbnailURL}}@2x.png">
         <div>{{ day }}</div>
-        <hr />
       </div>
-      <div></div>
+        {{/each}}
+      </div>
+      <hr />
+    </div> 
   </script>
+
 
 
   <script src="https://code.jquery.com/jquery-3.3.1.js"></script>

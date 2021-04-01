@@ -43,7 +43,10 @@ var renderCities = function () {
 };
 renderCities();
 
+
+
 var citiesForecast = [];
+
 $('.search').on('click', function () {
   var search = $('#search-query').val();
   fetchForecast(search);
@@ -51,7 +54,8 @@ $('.search').on('click', function () {
 
 var addCityForecast = function (dataForecast) {
   citiesForecast = [];
-  for (var i = 0; i < dataForecast.list.length; i = i + 8) {
+
+  for (var i = 7; i < dataForecast.list.length; i = i + 8) {
 
     var allData = dataForecast.list[i];
     var weekday = moment(allData.dt_txt, "YYYY-MM-DD HH:mm:ss");
@@ -62,30 +66,17 @@ var addCityForecast = function (dataForecast) {
       thumbnailURL: allData.weather[0].icon,
       day: weekday.format('dddd')
     };
-
     citiesForecast.push(cityForecast);
-    console.log(citiesForecast);
   };
+
+  console.log(citiesForecast[0]);
+  console.log(citiesForecast[1]);
+  console.log(citiesForecast[2]);
+  console.log(citiesForecast[3]);
+  console.log(citiesForecast[4]);
   renderCitiesForecast();
-}
+};
 
-// var addCityForecast = function (dataForecast) {
-
-//   for (var i = 0; i < dataForecast.list.length; i = i + 8) {
-//     var allData = dataForecast.list[i];
-//     citiesForecast = [];
-//     var weekday = moment(dataForecast.list[i].dt_txt, "YYYY-MM-DD HH:mm:ss")
-//     var cityForecast = {
-//       conditions: dataForecast.list[i].weather[0].main,
-//       temp: Math.ceil(dataForecast.list[i].main.temp),
-//       thumbnailURL: dataForecast.list[i].weather[0].icon,
-//       day: weekday.format('dddd')
-//     };
-//     citiesForecast.push(cityForecast);
-//     console.log(citiesForecast);
-//   };
-//   renderCitiesForecast();
-// }
 
 
 var fetchForecast = function (queryForecast) {
@@ -104,13 +95,43 @@ var fetchForecast = function (queryForecast) {
 
 var renderCitiesForecast = function () {
   $('.cities-forecast').empty();
-
-  for (var i = 0; i < citiesForecast.length; i++) {
-    var sourceForecast = $('#weather-forecast-template').html();
-    var template = Handlebars.compile(sourceForecast);
-    var newHTML = template(citiesForecast[i]);
-
-    $('.cities-forecast').append(newHTML);
-  };
+  var sourceForecast = $('#weather-forecast-template').html();
+  var template = Handlebars.compile(sourceForecast);
+  var newHTML = template(this);
+  $('.cities-forecast').append(newHTML);
 };
 renderCitiesForecast();
+
+
+
+// var renderCitiesForecast = function () {
+//   $('.cities-forecast').empty();
+
+//   for (var i = 0; i < citiesForecast.length; i++) {
+//     var city = citiesForecast[i];
+//     var sourceForecast = $('#weather-forecast-template').html();
+//     var template = Handlebars.compile(sourceForecast);
+//     var newHTML = template(city);
+//     $('.cities-forecast').append(newHTML);
+//   };
+// };
+// renderCitiesForecast();
+
+
+// var addCityForecast = function (dataForecast) {
+
+//   for (var i = 0; i < dataForecast.list.length; i = i + 8) {
+//     var allData = dataForecast.list[i];
+//     citiesForecast = [];
+//     var weekday = moment(dataForecast.list[i].dt_txt, "YYYY-MM-DD HH:mm:ss")
+//     var cityForecast = {
+//       conditions: dataForecast.list[i].weather[0].main,
+//       temp: Math.ceil(dataForecast.list[i].main.temp),
+//       thumbnailURL: dataForecast.list[i].weather[0].icon,
+//       day: weekday.format('dddd')
+//     };
+//     citiesForecast.push(cityForecast);
+//     console.log(citiesForecast);
+//   };
+//   renderCitiesForecast();
+// }
