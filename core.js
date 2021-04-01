@@ -40,9 +40,7 @@ var BetterWeather = {
         },
 
         ()=>{
-          $('.location-button').html('location disabled')
-          $('.location-button').removeClass('btn-success')
-          $('.location-button').addClass('btn-danger')
+          $('.location-button').html('location disabled').removeClass('btn-success').addClass('btn-danger').off();
         }
       );
     })
@@ -138,8 +136,7 @@ var BetterWeather = {
 
   checkCurrent(){
     if (BetterWeather.currentQuery === localStorage.city){
-      $('.set-as-default').html('remove default');
-      $('.set-as-default').off().click(()=>{
+      $('.set-as-default').html('remove default').off().click(()=>{
         BetterWeather.removeLocal()
       })
     } else {
@@ -159,8 +156,7 @@ var BetterWeather = {
 
   removeLocal(){
     localStorage.clear();
-    $('.set-as-default').html('set as default');
-    $('.set-as-default').off().click(() =>{
+    $('.set-as-default').html('set as default').off().click(() =>{
       BetterWeather.storeLocal(BetterWeather.currentQuery);
     })
     
