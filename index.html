@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Weather Check</title>
+  </head>
+  <body>
+    <h1 class="text-center">Weather Project</h1>
+
+    <div class="container">
+      <form>
+        <div class="form-group">
+          <div class="mx-auto clear-fix input">
+            <input
+              type="text"
+              class="form-control city-input"
+              id="search"
+              placeholder="Search By City Name"
+            />
+          </div>
+          <button type="submit" class="btn btn-primary search city-search">
+            SEARCH
+          </button>
+        </div>
+      </form>
+    </div>
+    <h5 class="text-center">OR</h5>
+    <div class="container">
+      <form class="zip">
+        <div class="form-group">
+          <div class="mx-auto clear-fix input zip">
+            <input
+              type="text"
+              class="form-control zip-input"
+              id="search"
+              placeholder="Search By Zip-Code"
+            />
+          </div>
+          <button type="submit" class="btn btn-primary search zip-search">
+            SEARCH
+          </button>
+        </div>
+      </form>
+    </div>
+    <!-- card for current day -->
+    <div class="row current-day"></div>
+    <!-- forecast div -->
+    <div class="container">
+      <div class="row forecast-row"></div>
+    </div>
+
+    <!-- handlebars for current day -->
+    <script id="current-day-template" type="text/x-handlebars-template">
+      <div class="col-sm-6 text-center mt-5 current-day">
+        <div class="d-flex p-2">
+          <div class="card-body">
+            <h4 class="card-title">
+              {{temp}}°
+            </h4>
+            <h4 class="card-text">
+              {{city}}
+            </h4>
+            <h5 class="card-text">
+              {{status}}
+            </h5>
+          </div>
+          <div class="card-body">
+            <img src="{{iconUrl}}" />
+          </div>
+        </div>
+      </div>
+    </script>
+    <!-- Handlebars for forecst -->
+    <script id="forecast-template" type="text/x-handlebars-template">
+      <div class="col forecast">
+        <ul>
+          <li>
+            {{fStatus}}
+          </li>
+          <li>
+            {{fTemp}}°
+          </li>
+          <li>
+            <img src="{{fIconUrl}}" />
+          </li>
+          <li>
+            {{fDate}}
+          </li>
+        </ul>
+      </div>
+    </script>
+    <!-- ajax jquery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!-- bootstrap js -->
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+      integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+      crossorigin="anonymous"
+    ></script>
+    <!-- ajax handlebars -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"
+      integrity="sha512-RNLkV3d+aLtfcpEyFG8jRbnWHxUqVZozacROI4J2F1sTaDqo1dPQYs01OMi1t1w9Y2FdbSCDSQ2ZVdAC8bzgAg=="
+      crossorigin="anonymous"
+    ></script>
+    <!-- local JS -->
+    <script src="main.js"></script>
+  </body>
+</html>

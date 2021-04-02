@@ -1,0 +1,70 @@
+h1 {
+  border-bottom: solid black 5px;
+  color: white;
+  background-color: lightslategray;
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+}
+
+.form-control {
+  float: left;
+  margin-top: 40px;
+}
+
+.input {
+  width: 400px;
+}
+
+.search {
+  margin-top: 40px;
+  margin-left: 10px;
+  transition-duration: 0.4s;
+  background-color: #ff8c00;
+  color: white;
+  letter-spacing: 1.5px;
+  font-weight: bold;
+}
+
+.search:hover {
+  color: white;
+}
+
+h5 {
+  margin-bottom: 0.1rem !important;
+}
+
+.current-day {
+  margin: auto;
+  width: 100%;
+}
+
+.current-day {
+  margin: auto;
+  width: 50%;
+}
+
+.forecast ul li {
+  list-style-type: none;
+}
+
+.forecast ul {
+  text-align: center;
+  padding-inline-start: 10px;
+  font-stretch: semi-expanded;
+  font-family: Arial, Helvetica, sans-serif;
+  color: black;
+}
+
+.forecast {
+  border: 1px solid black;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  background: rgba(4, 8, 75, 0.1);
+}
+
+.forecast ul img {
+  width: 75px;
+  height: 75px;
+}
