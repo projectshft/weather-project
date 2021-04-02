@@ -64,8 +64,6 @@
           </div>
           <div class="col-sm-2 map-container">
           </div>
-          <div class="col-sm-1">
-          </div>
         </div>
         <hr />
       </div>
@@ -100,6 +98,26 @@
         allowfullscreen
       >
       </iframe>
+    </script>
+
+    <script id="error-template" type="text/x-handlebars-template">
+      <hr />
+      <hr />
+      <div class="row">
+        <div class="col-sm-2 offset-md-3">
+          <div class="weather-box text-center">
+            <h2>
+              {{error}}°
+            </h2>
+            <hr />
+            <h4>
+              Sorry, but your search for {{
+                badSearch
+              }} didn't return any results. Try again!
+            </h4>
+          </div>
+        </div>
+      </div>
     </script>
 
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
