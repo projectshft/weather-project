@@ -1,35 +1,40 @@
+// weatherInfo: holds current conditions data and has properties city, country, temperature, currentConditions, and currentConditionsIcon.
+// forecastInfo: holds five day forecast data. Each day object has properties day, forecastedTemperature, forecastedWeatherConditions and forecastedWeatherConditionsIcon.
+// nearbyWeatherInfo: holds current conditions data for 12 nearby cities when user searches for weather at their location. Each city object has properties city, temperature, weatherConditions, weatherConditionsIcon, and coordinates.
+// location: holds data for current location weather information is being stored far. It has properties type, latitude, longitude, and city.
 var appState = {
   weatherInfo: {},
   forecastInfo: [{},{},{},{},{}],
   nearbyWeatherInfo: [],
   location: {},
-  UI: {
-    displayMap: true,
-    displayNearbyCities: true,
-    displayDefaultCityButton: false,
-    displayDefaultCityMessage: true,
-  }
 }
-//TODO: GIve examples of what the data will look like for each key
 
+// Upon click of search button, gathers information for inputted city and displays results
 $(".search-button").on('click', function () {
   var location = {
     type: "City Name",
     city: $("#city").val()
   };
-  $(".set-default-button").html(`Set ${location.city} as Default City`)
-  $(".set-default-button").toggleClass("d-none", false);
   $(".default-message").toggleClass("d-none", true);
+  $(".nearby-cities-section").toggleClass("d-none", true);
   fetchCurrentConditions(location, function(data) {
+    appState.nearbyWeatherInfo = [];
     setLocation(data);
-    setWeatherInfo(data)
+    setWeatherInfo(data);
     renderCurrentConditions(appState);
     createMap(appState);
+    $(".set-default-button").html(`Set ${appState.location.city} as Default City`);
+    $(".set-default-button").toggleClass("d-none", false);
   });
   fetchFiveDayForecast(location, function(data) {
     setForecastInfo(data);
     renderForecast(appState);
   });
+})
+
+$("#city").keyup(function (e) {
+  if(e.key !== "Enter") return;
+  $(".search-button").click();
 })
 
 //Current Conditions Functions
@@ -48,11 +53,12 @@ var fetchCurrentConditions = function(location, successCB) {
     },
     error: function (jqXHR, textStatus, errorThrown) {
       console.log(textStatus);
+      alert("Search did not return valid result. Please try again.")
     },
   })
 }
 
-//Fills the weatherInfo object with the relevant current conditions data
+//Fills the appState.weatherInfo object with the relevant current conditions data
 var setWeatherInfo = function(OpenWeatherdata) {
   appState.weatherInfo = {};
   appState.weatherInfo.city = OpenWeatherdata.name;
@@ -63,7 +69,7 @@ var setWeatherInfo = function(OpenWeatherdata) {
   appState.weatherInfo.weatherConditionsIcon = `http://openweathermap.org/img/wn/${OpenWeatherdata.weather[0].icon}@2x.png`;
 }
 
-//Sets the location in latitude and longitude that weather is being displayed for.
+//Sets the location that weather is being displayed for.
 var setLocation = function(OpenWeatherData) {
   appState.location = {};
   appState.location = {
@@ -112,7 +118,7 @@ var fetchFiveDayForecast = function(location, successCB) {
   })
 }
 
-//Sets the forecastInfo array with the relevant 5 day forecast data
+//Sets the appState.forecastInfo array with the relevant 5 day forecast data
 var setForecastInfo = function(OpenWeatherdata) {
   appState.forecastInfo = [{},{},{},{},{}];
   //Finds the current day of the week
@@ -125,7 +131,7 @@ var setForecastInfo = function(OpenWeatherdata) {
     //Sets the day of the week we are getting forecasts for
     selectedDay = selectedDay === 6 ? 0 : selectedDay + 1;
 
-    //Finds all the forecast points for the day
+    //Finds all the forecast points for the selected day
     var forecastsForSelectedDay = allForecastPoints.filter(function (forecastPoint) {
       var forecastTime = new Date(forecastPoint.dt_txt)
       var forecastDayOfWeek = forecastTime.getDay();
@@ -140,7 +146,7 @@ var setForecastInfo = function(OpenWeatherdata) {
 }
 
 //Finds the highest temperature in a set a forecast points and converts it to fahrenheit
-//TODO: Only find high temperature among times during the day (i.e. A temperature at midnight shouldn't be able to count as the high temp for the day)
+//Future TODO: Only find high temperature among times during the day (i.e. A temperature at midnight shouldn't be able to count as the high temp for the day)
 var findHighTemperature = function (forecastPoints) {
   var highTemperature = forecastPoints.reduce(function(currentHigh, forecastPoint) {
     var temperature = forecastPoint.main.temp
@@ -245,6 +251,7 @@ $(".location-button").on("click", function () {
   });
 })
 
+// Finds current weather conditions for 12 nearby cities to users location
 var fetchWeatherForNearbyCities = function (location, successCB) {
   var searchURL = `https://api.openweathermap.org/data/2.5/find?lat=${location.latitude}&lon=${location.longitude}&cnt=12&appid=59b871a25f174e2019ec1f4fbbe6807c`;
   $.ajax({
@@ -260,6 +267,7 @@ var fetchWeatherForNearbyCities = function (location, successCB) {
   })
 }
 
+// Fills appState.nearbyWeatherInfo with relevant data from OpenWeather API
 var setNearbyWeatherInfo = function (OpenWeatherdata) {
   appState.nearbyWeatherInfo = OpenWeatherdata.list.map(function(cityWeatherData) {
     var cityWeatherObj = {};
@@ -273,9 +281,9 @@ var setNearbyWeatherInfo = function (OpenWeatherdata) {
     }
     return cityWeatherObj
   })
-  // weatherInfo.weatherConditionsIcon = `http://openweathermap.org/img/wn/${OpenWeatherdata.weather[0].icon}@2x.png`;
 }
 
+// Displays the weather conditions for nearby cities
 var renderNearbyCitiesWeather = function (state) {
   var source = $('#nearby-city-template').html();
   var template = Handlebars.compile(source);
@@ -288,6 +296,7 @@ var renderNearbyCitiesWeather = function (state) {
   $(".nearby-cities-section").toggleClass("d-none", false);
 }
 
+// Upon clicking a nearby city icon, page refreshes with weather information for clicked city
 $(".nearby-cities").on("click", ".nearby-city", function(e) {
   var cityClicked = $(e.currentTarget).data().city;
   var cityForecastObj = appState.nearbyWeatherInfo.find(function(cityForecast) {
@@ -295,7 +304,6 @@ $(".nearby-cities").on("click", ".nearby-city", function(e) {
   });
   var newLocation = {
     type: "Coordinates",
-    //TODO: Find location by going back to appState array and looking for this city
     latitude: cityForecastObj.coordinates.latitude,
     longitude: cityForecastObj.coordinates.longitude
   };
@@ -303,6 +311,7 @@ $(".nearby-cities").on("click", ".nearby-city", function(e) {
   $(".default-message").toggleClass("d-none", true);
   $(".nearby-cities-section").toggleClass("d-none", true);
   fetchCurrentConditions(newLocation, function(data) {
+    appState.nearbyWeatherInfo = [];
     setLocation(data);
     setWeatherInfo(data)
     renderCurrentConditions(appState);
@@ -314,48 +323,5 @@ $(".nearby-cities").on("click", ".nearby-city", function(e) {
     renderForecast(appState);
   });
 })
-
-var convertLocationCoordinatesToDisplayPosition = function (location, currentLocation, zoom, center) {
-  // Finds how many degrees of latitude and longitude seperate users current location from location of nearby city
-  var latitudeDistance = location.latitude - currentLocation.latitude;
-  var longitudeDistance = location.longitude - currentLocation.longitude;
-  var distances = convertCoordinateDistancetoMeters(latitudeDistance, longitudeDistance, currentLocation);
-  var pixelDistances = convertMetersToPixels(distances, currentLocation)
-  debugger;
-  // TODO: Places a marker at this location on map
-  return pixelDistances
-   
-}
-
-var myHouse = {
-  latitude: 36.008356,
-  longitude: -78.894601
-}
-
-var chapelHill = {
-  latitude: 35.9132,
-  longitude: -79.0558
-}
-
-// Converts the distance from latitude/longitude degrees to kilometers North/South and East/West
-var convertCoordinateDistancetoMeters = function (latitudeDistance, longitudeDistance, currentLocation) {
-  var northSouthDistance = latitudeDistance * 111.32
-  //Radius of earth is 40075 km. Need to check if cos is radians or degrees
-  var eastWestDistance = longitudeDistance * 111.32 * Math.cos(currentLocation.latitude * Math.PI / 180);
-  console.log([northSouthDistance, eastWestDistance])
-  return [northSouthDistance, eastWestDistance]
-}
-
-// Converts the distance from kilometers to number of pixels seperating current location from location of city on display
-// TODO: Finds the top and left css settings to style the city with to place it correctly on the map
-var convertMetersToPixels = function (distances, currentLocation) {
-  //Math.pow(2, zoom);
-  var kms_per_pixel = 156.54303392 * Math.cos(currentLocation.latitude * Math.PI / 180) / Math.pow(2, 10)
-  var yPixels = distances[0]*(1/kms_per_pixel);
-  var xPixels = distances[1]*(1/kms_per_pixel);
-  debugger;
-  return [yPixels, xPixels]
-
-}
 
 HasDefaultCity();
