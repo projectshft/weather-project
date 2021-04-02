@@ -1,0 +1,24 @@
+.page-header {
+  padding: 25px;
+}
+
+.search-form {
+  margin: 20px auto;
+}
+.search {
+  display: inline-flex;
+  align-content: center;
+}
+
+.cities {
+  display: inline-flex;
+  align-content: center;
+}
+
+.forecast {
+  display:table-cell;
+  vertical-align:middle;
+  border: 1px solid grey;
+  width: 250px;
+  height: 225px;
+}

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
+    integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+  <title>Weather App</title>
+
+</head>
+
+<body>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-4 offset-md-4">
+        <div class="page header">
+          <h2>The Weather</h2>
+          <hr />
+        </div>
+
+        <form class="search-form">
+          <div class="col text-center">
+            <h4>Search City</h4>
+          </div>
+          <div class="search col-sm-12">
+            <div class="form-group col-sm-8">
+              <input type="text center" id="search-query" class="form-control text-center"></input>
+            </div>
+
+            <div class="col text-center">
+              <button type="button" class="btn btn-primary search">Search</button>
+            </div>
+        </form>
+      </div>
+      <hr />
+
+      <div class="cities text-center col-sm-4 offset-sm-4">
+      </div>
+
+    </div>
+  </div>
+  </div>
+
+  <div class="col">
+    <div class="col-sm-8 offset-sm-2">
+      <hr />
+      <div class="cities-forecast row text-center">
+        <div class="cities-forecast row text-center">
+          <div class="cities-forecast row text-center">
+            <div class="cities-forecast row text-center">
+              <div class="cities-forecast row text-center">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script id="weather-template" type="text/x-handlebars-template">
+    <div class="cities">
+      <div class="text-center">
+      <h3>{{ temp }} °F</h3>
+      <h4><strong>{{ city }}</strong></h4>
+      <div><strong>{{ conditions }}</strong></div>
+    </div class="text-center">
+      <div class="image"><img src="http://openweathermap.org/img/wn/{{thumbnailURL}}@2x.png">
+      </div>
+    </div>
+  </script>
+
+  <script id="weather-forecast-template" type="text/x-handlebars-template">
+    <div class="cities-forecast col">
+        {{#each citiesForecast}}
+        <div class="forecast">
+        <div><strong>{{ conditions }}</strong></div>
+        <div>{{ temp }} °F</div>
+        <img src="http://openweathermap.org/img/wn/{{thumbnailURL}}@2x.png">
+        <div>{{ day }}</div>
+      </div>
+        {{/each}}
+      </div>
+      <hr />
+    </div> 
+  </script>
+
+  <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js
+  "></script>
+  <script src="main.js" type="text/javascript"></script>
+</body>
+
+</html>
