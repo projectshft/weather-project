@@ -24,25 +24,24 @@
           <div class="col text-center">
             <h4>Search City</h4>
           </div>
+          <div class="search col-sm-12">
+            <div class="form-group col-sm-8">
+              <input type="text center" id="search-query" class="form-control text-center"></input>
+            </div>
 
-          <div class="form-group">
-            <input type="text center" id="search-query" class="form-control text-center"></input>
-          </div>
-
-          <div class="col text-center">
-            <button type="button" class="btn btn-primary search">Search</button>
-          </div>
+            <div class="col text-center">
+              <button type="button" class="btn btn-primary search">Search</button>
+            </div>
         </form>
-
-        <hr />
-
-        <div class="cities text-center col-sm-4 offset-sm-4">
-        </div>
-
       </div>
+      <hr />
+
+      <div class="cities text-center col-sm-4 offset-sm-4">
+      </div>
+
     </div>
   </div>
-
+  </div>
 
   <div class="col">
     <div class="col-sm-8 offset-sm-2">
@@ -61,7 +60,7 @@
   </div>
 
   <script id="weather-template" type="text/x-handlebars-template">
-    <div class="cities col-md-12  text-center">
+    <div class="cities">
       <div class="text-center">
       <h3>{{ temp }} °F</h3>
       <h4><strong>{{ city }}</strong></h4>
@@ -72,9 +71,8 @@
     </div>
   </script>
 
-
   <script id="weather-forecast-template" type="text/x-handlebars-template">
-    <div class="cities-forecast col justify-content-between">
+    <div class="cities-forecast col">
         {{#each citiesForecast}}
         <div class="forecast">
         <div><strong>{{ conditions }}</strong></div>
@@ -87,8 +85,6 @@
       <hr />
     </div> 
   </script>
-
-
 
   <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>

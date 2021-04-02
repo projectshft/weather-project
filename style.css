@@ -1,10 +1,18 @@
 .page-header {
-  margin-top: 30px;
+  padding: 25px;
 }
 
 .search-form {
-  margin-top: 30px;
-  margin-bottom: 30px;
+  margin: 20px auto;
+}
+.search {
+  display: inline-flex;
+  align-content: center;
+}
+
+.cities {
+  display: inline-flex;
+  align-content: center;
 }
 
 .forecast {
@@ -13,13 +21,4 @@
   border: 1px solid grey;
   width: 250px;
   height: 225px;
-}
-
-.cities {
-  display: inline-flex;
-  align-content: center;
-}
-
-.image img {
-  align-items: right;
 }

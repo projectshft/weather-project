@@ -1,4 +1,5 @@
 var cities = [];
+var citiesForecast = [];
 
 $('.search').on('click', function () {
   var search = $('#search-query').val();
@@ -7,12 +8,13 @@ $('.search').on('click', function () {
 
 var addCities = function (data) {
   cities = [];
+
   var city = {
     temp: Math.ceil(data.main.temp),
     city: data.name,
     conditions: data.weather[0].main,
     thumbnailURL: data.weather[0].icon
-  }
+  };
   cities.push(city);
   renderCities();
 };
@@ -43,10 +45,6 @@ var renderCities = function () {
 };
 renderCities();
 
-
-
-var citiesForecast = [];
-
 $('.search').on('click', function () {
   var search = $('#search-query').val();
   fetchForecast(search);
@@ -56,7 +54,6 @@ var addCityForecast = function (dataForecast) {
   citiesForecast = [];
 
   for (var i = 7; i < dataForecast.list.length; i = i + 8) {
-
     var allData = dataForecast.list[i];
     var weekday = moment(allData.dt_txt, "YYYY-MM-DD HH:mm:ss");
 
@@ -68,16 +65,8 @@ var addCityForecast = function (dataForecast) {
     };
     citiesForecast.push(cityForecast);
   };
-
-  console.log(citiesForecast[0]);
-  console.log(citiesForecast[1]);
-  console.log(citiesForecast[2]);
-  console.log(citiesForecast[3]);
-  console.log(citiesForecast[4]);
   renderCitiesForecast();
 };
-
-
 
 var fetchForecast = function (queryForecast) {
   $.ajax({
@@ -101,37 +90,3 @@ var renderCitiesForecast = function () {
   $('.cities-forecast').append(newHTML);
 };
 renderCitiesForecast();
-
-
-
-// var renderCitiesForecast = function () {
-//   $('.cities-forecast').empty();
-
-//   for (var i = 0; i < citiesForecast.length; i++) {
-//     var city = citiesForecast[i];
-//     var sourceForecast = $('#weather-forecast-template').html();
-//     var template = Handlebars.compile(sourceForecast);
-//     var newHTML = template(city);
-//     $('.cities-forecast').append(newHTML);
-//   };
-// };
-// renderCitiesForecast();
-
-
-// var addCityForecast = function (dataForecast) {
-
-//   for (var i = 0; i < dataForecast.list.length; i = i + 8) {
-//     var allData = dataForecast.list[i];
-//     citiesForecast = [];
-//     var weekday = moment(dataForecast.list[i].dt_txt, "YYYY-MM-DD HH:mm:ss")
-//     var cityForecast = {
-//       conditions: dataForecast.list[i].weather[0].main,
-//       temp: Math.ceil(dataForecast.list[i].main.temp),
-//       thumbnailURL: dataForecast.list[i].weather[0].icon,
-//       day: weekday.format('dddd')
-//     };
-//     citiesForecast.push(cityForecast);
-//     console.log(citiesForecast);
-//   };
-//   renderCitiesForecast();
-// }
