@@ -2,39 +2,29 @@ var appState = {
   weatherInfo: {},
   forecastInfo: [{},{},{},{},{}],
   nearbyWeatherInfo: [],
-  userLocation: {}
+  location: {},
+  UI: {
+    displayMap: true,
+    displayNearbyCities: true,
+    displayDefaultCityButton: false,
+    displayDefaultCityMessage: true,
+  }
 }
 //TODO: GIve examples of what the data will look like for each key
-// var nearbyWeatherInfo = [{
-//   city: "Cary",
-//   temperature: 60,
-//   weatherConditions: "Sunny",
-//   coordinates: {
-//     latitude: 20,
-//     longitude: 30
-//   }
-// },
-// {
-//   city: "Chapel Hill",
-//   temperature: 62,
-//   weatherConditions: "Cloudy",
-//   coordinates: {
-//     latitude: 20,
-//     longitude: 30
-//   }
-// }
-// ];
 
 $(".search-button").on('click', function () {
   var location = {
     type: "City Name",
     city: $("#city").val()
   };
+  $(".set-default-button").html(`Set ${location.city} as Default City`)
   $(".set-default-button").toggleClass("d-none", false);
   $(".default-message").toggleClass("d-none", true);
   fetchCurrentConditions(location, function(data) {
+    setLocation(data);
     setWeatherInfo(data)
     renderCurrentConditions(appState);
+    createMap(appState);
   });
   fetchFiveDayForecast(location, function(data) {
     setForecastInfo(data);
@@ -66,10 +56,22 @@ var fetchCurrentConditions = function(location, successCB) {
 var setWeatherInfo = function(OpenWeatherdata) {
   appState.weatherInfo = {};
   appState.weatherInfo.city = OpenWeatherdata.name;
+  appState.weatherInfo.country = OpenWeatherdata.sys.country;
   //Data from open weather is in Kelvin: Kelvin to Fahrenheit conversion: (temp − 273.15) × 9/5 + 32
   appState.weatherInfo.temperature = Math.round((OpenWeatherdata.main.temp-273.15)*9/5+32);
   appState.weatherInfo.weatherConditions = OpenWeatherdata.weather[0].description;    //weather[0].main;
   appState.weatherInfo.weatherConditionsIcon = `http://openweathermap.org/img/wn/${OpenWeatherdata.weather[0].icon}@2x.png`;
+}
+
+//Sets the location in latitude and longitude that weather is being displayed for.
+var setLocation = function(OpenWeatherData) {
+  appState.location = {};
+  appState.location = {
+    type: "Coordinates",
+    latitude: OpenWeatherData.coord.lat,
+    longitude: OpenWeatherData.coord.lon,
+    city: OpenWeatherData.name
+  }
 }
 
 //Displays Current Conditions portion of page
@@ -79,6 +81,14 @@ var renderCurrentConditions = function(state) {
   var currentConditionsHTML = template(state.weatherInfo);
   $(".current-weather").html(currentConditionsHTML);
   $("#city").val('')
+}
+
+//Creates and Displays a map centered on the location weather is being displayed for
+var createMap = function (state) {
+  var source = $("#map-template").html();
+  var template = Handlebars.compile(source);
+  var mapHTML = template(state.location);
+  $(".map").html(mapHTML);
 }
 
 
@@ -191,8 +201,10 @@ var HasDefaultCity = function () {
       city: defaultCity
     }
     fetchCurrentConditions(location, function(data) {
-      setWeatherInfo(data)
+      setLocation(data);
+      setWeatherInfo(data);
       renderCurrentConditions(appState);
+      createMap(appState);
     });
     fetchFiveDayForecast(location, function(data) {
       setForecastInfo(data);
@@ -213,36 +225,34 @@ $(".location-button").on("click", function () {
       latitude: position.coords.latitude,
       longitude: position.coords.longitude
     };
-    appState.userLocation = location;
     fetchCurrentConditions(location, function(data) {
-      setWeatherInfo(data)
+      setLocation(data);
+      setWeatherInfo(data);
       renderCurrentConditions(appState);
+      $(".default-message").toggleClass("d-none", true);
+      $(".set-default-button").html(`Set ${appState.location.city} as Default City`);
+      $(".set-default-button").toggleClass("d-none", false);
+      createMap(appState);
     });
     fetchFiveDayForecast(location, function(data) {
       setForecastInfo(data);
       renderForecast(appState);
     });
-    createMap(location);
-    fetchWeatherForNearbyCities(location);
+    fetchWeatherForNearbyCities(location, function(data) {
+      setNearbyWeatherInfo(data);
+      renderNearbyCitiesWeather(appState);
+    });
   });
 })
 
-var createMap = function (location) {
-  var source = $("#map-template").html();
-  var template = Handlebars.compile(source);
-  var mapHTML = template(location);
-  $(".map").html(mapHTML);
-}
-
-var fetchWeatherForNearbyCities = function (location) {
-  var searchURL = `https://api.openweathermap.org/data/2.5/find?lat=${location.latitude}&lon=${location.longitude}&cnt=10&appid=59b871a25f174e2019ec1f4fbbe6807c`;
+var fetchWeatherForNearbyCities = function (location, successCB) {
+  var searchURL = `https://api.openweathermap.org/data/2.5/find?lat=${location.latitude}&lon=${location.longitude}&cnt=12&appid=59b871a25f174e2019ec1f4fbbe6807c`;
   $.ajax({
     method: "GET",
     url: searchURL,
     dataType: "json",
     success: function (data) {
-      console.log(data);
-      setNearbyWeatherInfo(data);
+      successCB(data);
     },
     error: function (jqXHR, textStatus, errorThrown) {
       console.log(textStatus);
@@ -256,6 +266,7 @@ var setNearbyWeatherInfo = function (OpenWeatherdata) {
     cityWeatherObj.city = cityWeatherData.name
     cityWeatherObj.temperature = Math.round((cityWeatherData.main.temp-273.15)*9/5+32);
     cityWeatherObj.weatherConditions = cityWeatherData.weather[0].description;
+    cityWeatherObj.weatherConditionsIcon = `http://openweathermap.org/img/wn/${cityWeatherData.weather[0].icon}@2x.png`;
     cityWeatherObj.coordinates = {
       latitude: cityWeatherData.coord.lat,
       longitude: cityWeatherData.coord.lon
@@ -264,6 +275,45 @@ var setNearbyWeatherInfo = function (OpenWeatherdata) {
   })
   // weatherInfo.weatherConditionsIcon = `http://openweathermap.org/img/wn/${OpenWeatherdata.weather[0].icon}@2x.png`;
 }
+
+var renderNearbyCitiesWeather = function (state) {
+  var source = $('#nearby-city-template').html();
+  var template = Handlebars.compile(source);
+  var nearbyCitiesHTML = state.nearbyWeatherInfo.reduce(function(htmlString, nearbyCity) {
+    var nearbyCityHTML = template(nearbyCity);
+    htmlString += nearbyCityHTML;
+    return htmlString
+  }, '')
+  $(".nearby-cities").html(nearbyCitiesHTML);
+  $(".nearby-cities-section").toggleClass("d-none", false);
+}
+
+$(".nearby-cities").on("click", ".nearby-city", function(e) {
+  var cityClicked = $(e.currentTarget).data().city;
+  var cityForecastObj = appState.nearbyWeatherInfo.find(function(cityForecast) {
+    return cityClicked === cityForecast.city
+  });
+  var newLocation = {
+    type: "Coordinates",
+    //TODO: Find location by going back to appState array and looking for this city
+    latitude: cityForecastObj.coordinates.latitude,
+    longitude: cityForecastObj.coordinates.longitude
+  };
+  $(".set-default-button").toggleClass("d-none", false);
+  $(".default-message").toggleClass("d-none", true);
+  $(".nearby-cities-section").toggleClass("d-none", true);
+  fetchCurrentConditions(newLocation, function(data) {
+    setLocation(data);
+    setWeatherInfo(data)
+    renderCurrentConditions(appState);
+    $(".set-default-button").html(`Set ${appState.location.city} as Default City`);
+    createMap(appState);
+  });
+  fetchFiveDayForecast(newLocation, function(data) {
+    setForecastInfo(data);
+    renderForecast(appState);
+  });
+})
 
 var convertLocationCoordinatesToDisplayPosition = function (location, currentLocation, zoom, center) {
   // Finds how many degrees of latitude and longitude seperate users current location from location of nearby city

@@ -48,29 +48,13 @@
         </div>
       </div>
       <div class="row mt-5 forecast"></div>
-      <div class="row mt-5 mb-3 map">
-        <div class="col-md-6 offset-md-3">
-          <!-- Lat: 36.008356 -->
-          <!-- Lon: -78.894601 -->
-          <!-- Chapel Hill Lat 35.9132 -->
-          <!-- Lon: -79.0558 -->
-          <div id="google-map">
-            <iframe
-              width="600"
-              height="450"
-              style="border: 0"
-              loading="lazy"
-              allowfullscreen
-              src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBiu-4x5rZyb66_mgphCiSRIg6E6IsMM_E&q=36.008356,-78.894601&center=36.008356,-78.894601&zoom=10"
-            >
-            </iframe>
-            <div id="cities-overlay">
-              <p>Test</p>
-            </div>
-            <div id="cities-overlay-CH">
-              <p>Test</p>
-            </div>
+      <div class="row mt-5 map"></div>
+      <div class="row mt-3 mb-3 nearby-cities-section d-none">
+        <div class="col-md-10 offset-md-1">
+          <div class="nearby-cities-header">
+            <h2>Nearby Cities:</h2>
           </div>
+          <div class="row nearby-cities"></div>
         </div>
       </div>
     </div>
@@ -81,7 +65,7 @@
           {{temperature}}&deg;
         </h2>
         <h2>
-          {{city}}
+          {{city}}, {{country}}
         </h2>
         <h3>
           {{weatherConditions}}
@@ -123,6 +107,23 @@
       </div>
     </script>
 
+    <script id="nearby-city-template" type="text/x-handlebars-template">
+      <div class="col-md-2 mb-2 text-center nearby-city" data-city="{{city}}">
+        <div class="inner-div rounded">
+          <h3>
+            {{city}}
+          </h3>
+          <h3>
+            {{temperature}}&deg;
+          </h3>
+          <img src={{weatherConditionsIcon}} alt="" />
+          <h4>
+            {{weatherConditions}}
+          </h4>
+        </div>
+      </div>
+    </script>
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"
@@ -132,3 +133,27 @@
     <script src="main.js"></script>
   </body>
 </html>
+<!-- 
+<div class="col-md-6 offset-md-3">
+  Lat: 36.008356
+  Lon: -78.894601
+  Chapel Hill Lat 35.9132
+  Lon: -79.0558
+  <div id="google-map">
+    <iframe
+      width="600"
+      height="450"
+      style="border: 0"
+      loading="lazy"
+      allowfullscreen
+      src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBiu-4x5rZyb66_mgphCiSRIg6E6IsMM_E&q=36.008356,-78.894601&center=36.008356,-78.894601&zoom=10"
+    >
+    </iframe>
+    <div id="cities-overlay">
+      <p>Test</p>
+    </div>
+    <div id="cities-overlay-CH">
+      <p>Test</p>
+    </div>
+  </div>
+</div> -->

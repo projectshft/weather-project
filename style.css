@@ -22,5 +22,10 @@
 }
 
 iframe {
-  pointer-events: none;
+  pointer-events: auto;
+}
+
+.inner-div {
+  border: 2px solid black;
+  cursor: pointer;
 }
