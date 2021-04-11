@@ -1,0 +1,19 @@
+body {
+  margin: 0;
+}
+
+.page-header {
+  margin-bottom: 75px;
+}
+
+.form-group {
+  display: flex;
+}
+
+.form-control {
+  margin-right: 10px;
+}
+
+.current-weather {
+  padding-top: 75px;
+}
