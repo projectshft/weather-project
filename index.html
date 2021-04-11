@@ -38,14 +38,14 @@
             Durham <br>
             Clouds
           </div>
-          <div class="col-sm weather-icon">
-            Weather Icon
+          <div class="col-sm weather-icon-data">
+            <img src="" id="current-weather-icon">
           </div>
         </div>
       </div>
 
     <script id="current-city-weather-template" type="text/x-handlebars-template">
-      <div class="col-md-4">
+      <div class="col-md-3">
         <div class="city-data">
           <h3> {{ temperature }} </h3>
           <h3> {{ city }} </h3>
@@ -53,6 +53,7 @@
         </div>
       </div>
     </script>
+
     <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
     <script src="main.js"></script>

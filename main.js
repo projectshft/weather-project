@@ -9,15 +9,18 @@ $('.search').on('click', function() {
 });
 
 var addCurrentCityWeatherData = function (data) {
-  console.log('data', data);
-  console.log('weather conditions', data.weather[0].main);
+  var currentWeatherImageCode = data.weather[0].icon;
+  console.log(currentWeatherImageCode);
+  var imageSrc = 'http://openweathermap.org/img/wn/' + currentWeatherImageCode +'@2x.png';
+  $('#current-weather-icon').attr('src', imageSrc);
+
   currentCityWeatherData.push({
     temperature: data.main.temp,
     city: data.name,
-    weather_conditions: data.weather[0].main
+    weather_conditions: data.weather[0].main,
   });
 
-  renderCityData();
+  renderCurrentWeatherCityData();
 }
 
 var fetch = function (currentCity) {
@@ -29,12 +32,12 @@ var fetch = function (currentCity) {
       addCurrentCityWeatherData(data);
     },
     error: function (jqXHR, textStatus, errorThrown) {
-      console.log(textStatus);
+      alert(errorThrown);
     }
   })
 }
 
-var renderCityData = function () {
+var renderCurrentWeatherCityData = function () {
   $('.current-city-data').empty();
 
   var source = $('#current-city-weather-template').html();
