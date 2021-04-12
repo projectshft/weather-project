@@ -17,3 +17,25 @@ body {
 .current-weather {
   padding-top: 75px;
 }
+
+.current-city-data {
+  margin-bottom: 75px;
+}
+
+.city-data {
+  text-align: center;
+}
+
+#current-weather-icon {
+  width: 100px;
+}
+
+.weekly-weather .col {
+  border: 1px solid black;
+  text-align: center;
+}
+
+.weekly-weather {
+  margin-left: 50px;
+  margin-right: 50px;
+}

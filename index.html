@@ -33,28 +33,39 @@
           </div>
         </div>
         <div class="row current-weather">
-          <div class="col-sm offset-md-3 current-city-data">
-            66 Degrees <br>
-            Durham <br>
-            Clouds
-          </div>
-          <div class="col-sm weather-icon-data">
+          <div class="col-sm offset-md-2 justify-content-md-center current-city-data"></div>
+          <div class="col-sm justify-content-md-center weather-icon-data">
             <img src="" id="current-weather-icon">
           </div>
+        </div>
+        <div class="row weekly-weather">
+          <div class="col day_1">Day 1</div>
+          <div class="col day_2">Day 2</div>
+          <div class="col day_3">Day 3</div>
+          <div class="col day_4">Day 4</div>
+          <div class="col day_5">Day 5</div>
         </div>
       </div>
 
     <script id="current-city-weather-template" type="text/x-handlebars-template">
-      <div class="col-md-3">
         <div class="city-data">
           <h3> {{ temperature }} </h3>
           <h3> {{ city }} </h3>
-          <h3> {{ weather_conditions }} </h3>
+          <h5> {{ weather_conditions }} </h5>
         </div>
+    </script>
+
+    <script id="five-day-forecast-template" type="text/x-handlebars-template">
+      <div class="city-weekly-data">
+        <h3> {{ weather_conditions }} </h3>
+        <h4> {{ temperature }} </h4>
+        <span> {{ icon }} </span>
+        <h3> {{ day_of_the_week }} </h3>
       </div>
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.15/lodash.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
     <script src="main.js"></script>
   </body>
