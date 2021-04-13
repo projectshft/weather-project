@@ -18,6 +18,12 @@ var addCurrentCityWeatherData = function (data) {
   $('#current-weather-icon').attr('src', imageSrc);
   var weather_condition = data.weather[0].main;
 
+  var city = data.name;
+  var mapSrc = 'https://www.google.com/maps/embed/v1/place?key=AIzaSyCDyFxxpN5RtNUPm8u2aCKZ8XMqc9mfxdE&q=' + city;
+  $('#map').attr('src', mapSrc);
+  $('.map').css('display', 'block');
+  
+
   currentCityWeatherData.push({
     temperature: data.main.temp,
     city: data.name,

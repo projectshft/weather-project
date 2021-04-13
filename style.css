@@ -57,3 +57,13 @@ body {
   margin-left: 50px;
   margin-right: 50px;
 }
+
+.map {
+  padding-top: 50px;
+  text-align: center;
+  display: none;
+}
+
+.map iframe {
+  width: 50%;
+}
