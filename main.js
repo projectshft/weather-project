@@ -16,6 +16,7 @@ var addCurrentCityWeatherData = function (data) {
   var currentWeatherImageCode = data.weather[0].icon;
   var imageSrc = 'http://openweathermap.org/img/wn/' + currentWeatherImageCode +'@2x.png';
   $('#current-weather-icon').attr('src', imageSrc);
+  var weather_condition = data.weather[0].main;
 
   currentCityWeatherData.push({
     temperature: data.main.temp,
@@ -25,6 +26,7 @@ var addCurrentCityWeatherData = function (data) {
 
   tempToFahrenheit();
   renderCurrentWeatherCityData();
+  generateBackgroundImage(weather_condition);
 }
 
 var addFiveDayCityWeatherData = function (data) {
@@ -40,9 +42,8 @@ var addFiveDayCityWeatherData = function (data) {
   });
 
   convertToDayOfWeek(forecastDataArray);
-  groupDailyWeatherData(forecastDataArray);
+  compressWeeklyWeatherData(forecastDataArray);
 }
-
 
 var fetchDailyWeather = function (currentCity) {
   $.ajax({
@@ -53,7 +54,7 @@ var fetchDailyWeather = function (currentCity) {
       addCurrentCityWeatherData(data);
     },
     error: function (jqXHR, textStatus, errorThrown) {
-      alert(errorThrown);
+      alert(textStatus + ': City not found.');
     }
   })
 }
@@ -67,7 +68,7 @@ var fetchFiveDayForecast = function (currentCity) {
       addFiveDayCityWeatherData(data);
     },
     error: function (jqXHR, textStatus, errorThrown) {
-      alert(errorThrown);
+      console.log(errorThrown);
     }
   })
 }
@@ -89,8 +90,10 @@ var convertToDayOfWeek = function (forecastDataArray) {
   })
 }
 
-var groupDailyWeatherData = function (forecastDataArray) {
+var compressWeeklyWeatherData = function (forecastDataArray) {
   var weeklyData = _.values(_.groupBy(forecastDataArray, 'date'));
+
+  fiveDayCityWeatherData = [];
 
   weeklyData.forEach(day => {
     var weekday = day[0].date;
@@ -120,9 +123,16 @@ var groupDailyWeatherData = function (forecastDataArray) {
       .entries()
       .maxBy(_.last));
 
-      fiveDayCityWeatherData.push({ day_of_the_week: weekday, temperature: temp, icon: mostCommonWeatherIcon, weather_conditions: mostCommonDailyCondition});
+    var weatherIconSrc = 'http://openweathermap.org/img/wn/' + mostCommonWeatherIcon +'@2x.png';
+
+      fiveDayCityWeatherData.push({ day_of_the_week: weekday, temperature: temp, icon: weatherIconSrc, weather_conditions: mostCommonDailyCondition});
   })
-  console.log(fiveDayCityWeatherData);
+
+  if (fiveDayCityWeatherData.length > 5) {
+    fiveDayCityWeatherData.pop();
+  };
+
+  renderWeekyWeatherData(fiveDayCityWeatherData);
 }
 
 var renderCurrentWeatherCityData = function () {
@@ -133,4 +143,27 @@ var renderCurrentWeatherCityData = function () {
   var newHTML = template(currentCityWeatherData[0]);
 
   $('.current-city-data').append(newHTML);
+}
+
+var renderWeekyWeatherData = function (fiveDayCityWeatherData) {
+  $('.weekly-weather').empty();
+
+  fiveDayCityWeatherData.forEach(day => {
+    var source = $('#five-day-forecast-template').html();
+    var template = Handlebars.compile(source);
+    var newHTML = template(day);
+  
+    $('.weekly-weather').append(newHTML);
+  })
+}
+
+//FIX THIS TOMORROW
+generateBackgroundImage = function (weather_condition) {
+  var weather_conditions = [{Thunderstorm: 'thunderstorm.jpg', Rain: 'rain.jpg', Drizzle: 'drizzle.jpg', Snow: 'snow.jpg', Mist: 'mist.jpg', Smoke: 'smoke.jpg', Haze: 'haze.jpg', Dust: 'dust.jpg', Fog: '', Sand: 'sand.jpg', Ash: 'ash.jpg', Squall: 'squall.jpg', Tornado: 'tornado.jpg', Clear: 'clear.jpg', Clouds: 'clouds.jpg'}];
+  
+  var weatherImage = weather_conditions[0][weather_condition];
+
+  if (weatherImage) {
+    $('.background').css('background', 'url(images/' + weatherImage + ') no-repeat center center fixed');
+  }
 }

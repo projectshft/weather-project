@@ -1,9 +1,25 @@
 body {
   margin: 0;
+  padding-bottom: 300px;
+}
+
+.background {
+  background: url("images/start.jpg") no-repeat center center fixed;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  z-index: -1;
+  opacity: 0.5;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  top: 0;
 }
 
 .page-header {
   margin-bottom: 75px;
+  margin-top: 75px;
 }
 
 .form-group {
@@ -30,9 +46,11 @@ body {
   width: 100px;
 }
 
-.weekly-weather .col {
+.city-weekly-data {
   border: 1px solid black;
   text-align: center;
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
 
 .weekly-weather {
