@@ -157,9 +157,8 @@ var renderWeekyWeatherData = function (fiveDayCityWeatherData) {
   })
 }
 
-//FIX THIS TOMORROW
 generateBackgroundImage = function (weather_condition) {
-  var weather_conditions = [{Thunderstorm: 'thunderstorm.jpg', Rain: 'rain.jpg', Drizzle: 'drizzle.jpg', Snow: 'snow.jpg', Mist: 'mist.jpg', Smoke: 'smoke.jpg', Haze: 'haze.jpg', Dust: 'dust.jpg', Fog: '', Sand: 'sand.jpg', Ash: 'ash.jpg', Squall: 'squall.jpg', Tornado: 'tornado.jpg', Clear: 'clear.jpg', Clouds: 'clouds.jpg'}];
+  var weather_conditions = [{Thunderstorm: 'thunderstorm.jpg', Rain: 'rain.jpg', Drizzle: 'drizzle.jpg', Snow: 'snow.jpg', Mist: 'mist.jpg', Smoke: 'smoke.jpg', Haze: 'haze.jpg', Dust: 'dust.jpg', Fog: 'fog.jpg', Sand: 'sand.jpg', Ash: 'ash.jpg', Squall: 'squall.jpg', Tornado: 'tornado.jpg', Clear: 'clear.jpg', Clouds: 'clouds.jpg'}];
   
   var weatherImage = weather_conditions[0][weather_condition];
 
