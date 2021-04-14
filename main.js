@@ -12,6 +12,12 @@ $('.search').on('click', function() {
   fetchFiveDayForecast($currentCity);
 });
 
+$("#search-query").keypress(function(event) {
+  if (event.keyCode === 13) {
+      $('.search').click();
+  }
+});
+
 var addCurrentCityWeatherData = function (data) {
   var currentWeatherImageCode = data.weather[0].icon;
   var imageSrc = 'http://openweathermap.org/img/wn/' + currentWeatherImageCode +'@2x.png';
