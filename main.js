@@ -4,9 +4,11 @@ $(document).ready(function() {
   var fiveDayCityWeatherData = [];
 
   $('.search').on('click', function() {
+    $('.processing').css('display', 'block');
     var $currentCity = $('#search-query').val();
     
     currentCityWeatherData = [];
+    fiveDayCityWeatherData = [];
 
     $('#search-query').val('');
     $('.set-default').css('display', 'block');
@@ -16,8 +18,11 @@ $(document).ready(function() {
   });
 
   $('.find-me').on('click', function() {
-    currentCityWeatherData = [];
+    $('.processing').css('display', 'block');
 
+    currentCityWeatherData = [];
+    fiveDayCityWeatherData = [];
+    
     $('.set-default').css('display', 'block');
 
     if(navigator.geolocation) {
@@ -33,7 +38,7 @@ $(document).ready(function() {
     }
   });
 
-  $("#search-query").keypress(function(event) {
+  $('#search-query').keypress(function(event) {
     if (event.keyCode === 13) {
         $('.search').click();
     }
@@ -50,7 +55,11 @@ $(document).ready(function() {
       $('#search-query').val(defaultCity); 
       $('.search').click();
     }
- }
+  }
+
+  $(document).ajaxComplete(function () {
+    $('.processing').css('display', 'none');
+  });
 
   var addCurrentCityWeatherData = function (data) {
     var currentWeatherImageCode = data.weather[0].icon;
