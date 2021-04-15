@@ -47,6 +47,7 @@ $(document).ready(function() {
   $('.set-default').on('click', function () {
       var defaultCity = currentCityWeatherData[0].city;
       localStorage.setItem('cityName', defaultCity);
+      alert(defaultCity + ' is now your default city.');
   }); 
 
   window.onload = function() {
@@ -54,6 +55,7 @@ $(document).ready(function() {
     if (defaultCity !== null) {
       $('#search-query').val(defaultCity); 
       $('.search').click();
+      $('.set-default').css('display', 'none');
     }
   }
 
