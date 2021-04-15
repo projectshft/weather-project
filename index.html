@@ -36,9 +36,41 @@
               </button>
             </div>
           </form>
+          <div id="current-weather-conditions" class="row">
+            <div class="col-md-6">
+              <p id="current-temp" class="text-center current">66&#176;</p>
+              <p id="current-city" class="text-center current">Durham</p>
+              <p id="current-condition" class="text-center current">Clouds</p>
+            </div>
+            <div id="current-weather-icon" class="col-md-6">
+              <p class="text-center">
+                <img
+                  src="http://openweathermap.org/img/wn/10d@2x.png"
+                  alt="weather"
+                />
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
+
+    <script id="current-weather-template" type="text/x-handlebars">
+      <div class="col-md-6">
+        <p id="current-temp" class="text-center current">{{current-temp}}&#176;</p>
+        <p id="current-city" class="text-center current">{{current-city}}</p>
+        <p id="current-condition" class="text-center current">{{current-condition}}</p>
+      </div>
+      <div id="current-weather-icon" class="col-md-6">
+        <p class="text-center">
+          <img
+            src="{{img-url}}"
+            alt="weather icon"
+          />
+        </p>
+      </div>
+    </script>
+
     <script
       src="https://code.jquery.com/jquery-3.6.0.js"
       integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="

@@ -1,4 +1,28 @@
 header {
   text-align: center;
   margin-bottom: 50px;
+  margin-top: 50px;
+}
+
+form {
+  margin-bottom: 50px;
+}
+
+.current {
+  margin: 0;
+}
+
+#current-temp,
+#current-city {
+  font-size: 35px;
+  font-weight: 500;
+}
+
+#current-condition {
+  font-size: 25px;
+  font-weight: 500;
+}
+
+#current-weather-icon img {
+  width: 75%;
 }
