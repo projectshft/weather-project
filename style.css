@@ -30,6 +30,11 @@ body {
   margin-right: 10px;
 }
 
+.set-default {
+  margin-top: 5px;
+  display: none;
+}
+
 .current-weather {
   padding-top: 75px;
 }
