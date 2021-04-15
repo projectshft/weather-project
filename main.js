@@ -15,6 +15,24 @@ $(document).ready(function() {
     fetchFiveDayForecast($currentCity);
   });
 
+  $('.find-me').on('click', function() {
+    currentCityWeatherData = [];
+
+    $('.set-default').css('display', 'block');
+
+    if(navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+          var latitude = position.coords.latitude;
+          var longitude = position.coords.longitude;
+
+          fetchByLocation(latitude, longitude);
+          fetchFiveDayForecastByLocation(latitude, longitude);
+        });
+    } else {
+        alert("Sorry, your location was not found.");
+    }
+  });
+
   $("#search-query").keypress(function(event) {
     if (event.keyCode === 13) {
         $('.search').click();
@@ -87,6 +105,20 @@ $(document).ready(function() {
     })
   }
 
+  var fetchByLocation = function (latitude, longitude) {
+    $.ajax({
+      method: 'GET',
+      url: 'https://api.openweathermap.org/data/2.5/weather?lat=' + latitude + '&lon=' + longitude + '&appid=345e1c9864ad7ebda8d87ea4d60c53f1',
+      dataType: 'json',
+      success: function (data) {
+        addCurrentCityWeatherData(data);
+      },
+      error: function (jqXHR, textStatus, errorThrown) {
+        alert(textStatus + ': City not found.');
+      }
+    })
+  }
+
   var fetchFiveDayForecast = function (currentCity) {
     $.ajax({
       method: 'GET',
@@ -100,6 +132,21 @@ $(document).ready(function() {
       }
     })
   }
+
+  var fetchFiveDayForecastByLocation = function (latitude, longitude) {
+    $.ajax({
+      method: 'GET',
+      url: 'https://api.openweathermap.org/data/2.5/forecast?lat=' + latitude + '&lon=' + longitude + '&appid=345e1c9864ad7ebda8d87ea4d60c53f1',
+      dataType: 'json',
+      success: function (data) {
+        addFiveDayCityWeatherData(data);
+      },
+      error: function (jqXHR, textStatus, errorThrown) {
+        console.log(errorThrown);
+      }
+    })
+  }
+  
 
   var tempToFahrenheit = function () {
     

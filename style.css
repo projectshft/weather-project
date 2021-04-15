@@ -24,10 +24,19 @@ body {
 
 .form-group {
   display: flex;
+  height: 40px;
 }
 
 .form-control {
   margin-right: 10px;
+}
+
+.search {
+  margin-right: 9px;
+}
+
+.find-me {
+  width: 120px;
 }
 
 .set-default {
