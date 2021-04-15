@@ -31,44 +31,98 @@
                   placeholder="Enter City Name Here"
                 />
               </div>
-              <button type="button" class="btn btn-primary col-md-2">
+              <button
+                id="search"
+                type="button"
+                class="btn btn-primary col-md-2"
+              >
                 Search
               </button>
             </div>
           </form>
           <div id="current-weather-conditions" class="row">
-            <div class="col-md-6">
-              <p id="current-temp" class="text-center current">66&#176;</p>
-              <p id="current-city" class="text-center current">Durham</p>
-              <p id="current-condition" class="text-center current">Clouds</p>
-            </div>
-            <div id="current-weather-icon" class="col-md-6">
-              <p class="text-center">
-                <img
-                  src="http://openweathermap.org/img/wn/10d@2x.png"
-                  alt="weather"
-                />
-              </p>
-            </div>
           </div>
         </div>
       </div>
+      <div class="row forecast-row">
     </div>
 
     <script id="current-weather-template" type="text/x-handlebars">
       <div class="col-md-6">
-        <p id="current-temp" class="text-center current">{{current-temp}}&#176;</p>
-        <p id="current-city" class="text-center current">{{current-city}}</p>
-        <p id="current-condition" class="text-center current">{{current-condition}}</p>
+        <p id="current-temp" class="text-center current">{{currentTemp}}&#176;</p>
+        <p id="current-city" class="text-center current">{{currentCity}}</p>
+        <p id="current-condition" class="text-center current">{{currentCondition}}</p>
       </div>
       <div id="current-weather-icon" class="col-md-6">
         <p class="text-center">
           <img
-            src="{{img-url}}"
+            src="http://openweathermap.org/img/wn/{{currentIcon}}@2x.png"
             alt="weather icon"
           />
         </p>
       </div>
+    </script>
+
+    <script id="forecast-template" type="text/x-handlebars">
+      <div id="day-1" class="col-md-2 offset-md-1 forecast">
+          <p class="text-center forecast-condition">{{day1Condition}}</p>
+          <p class="text-center forecast-temp">{{day1Temp}}&#176;</p>
+          <p class="text-center forecast-icon">
+            <img
+              src="{{day1Icon}}"
+              alt="weather"
+            />
+          </p>
+          <p class="text-center forecast-day">{{day1}}</p>
+        </div>
+
+        <div id="day-2" class="col-md-2 forecast">
+          <p class="text-center forecast-condition">{{day2Condition}}</p>
+          <p class="text-center forecast-temp">{{day2Temp}}&#176;</p>
+          <p class="text-center forecast-icon">
+            <img
+              src="{{day2Icon}}"
+              alt="weather"
+            />
+          </p>
+          <p class="text-center forecast-day">{{day2}}</p>
+        </div>
+
+        <div id="day-3" class="col-md-2 forecast">
+          <p class="text-center forecast-condition">{{day3Condition}}</p>
+          <p class="text-center forecast-temp">{{day3Temp}}&#176;</p>
+          <p class="text-center forecast-icon">
+            <img
+              src="{{day3Icon}}"
+              alt="weather"
+            />
+          </p>
+          <p class="text-center forecast-day">{{day3}}</p>
+        </div>
+
+        <div id="day-4" class="col-md-2 forecast">
+          <p class="text-center forecast-condition">{{day4Condition}}</p>
+          <p class="text-center forecast-temp">{{day4Temp}}&#176;</p>
+          <p class="text-center forecast-icon">
+            <img
+              src="{{day4Icon}}"
+              alt="weather"
+            />
+          </p>
+          <p class="text-center forecast-day">{{day4}}</p>
+        </div>
+
+        <div id="day-5" class="col-md-2 forecast">
+          <p class="text-center forecast-condition">{{day5Condition}}</p>
+          <p class="text-center forecast-temp">{{day5Temp}}&#176;</p>
+          <p class="text-center forecast-icon">
+            <img
+              src="{{day5Icon}}"
+              alt="weather"
+            />
+          </p>
+          <p class="text-center forecast-day">{{day5}}</p>
+        </div>
     </script>
 
     <script
