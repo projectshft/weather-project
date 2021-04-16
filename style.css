@@ -11,3 +11,8 @@
 .weather-form {
   margin-left: 20px;
 }
+
+.current-weather {
+  margin-top: 50px;
+  padding-left: 80px;
+}
