@@ -1,0 +1,13 @@
+.page-header {
+  text-align: center;
+  margin-top: 30px;
+}
+
+#search-query {
+  width: 80%;
+  margin-right: 15px;
+}
+
+.weather-form {
+  margin-left: 20px;
+}
