@@ -14,9 +14,22 @@
 
 .current-weather {
   margin-top: 50px;
-  padding-left: 60px;
+  padding-left: 70px;
 }
 
 .daily-weather {
+  text-align: center;
+}
+
+.forcast-weather {
+  border: black;
+  border-width: 1px;
+  border-style: solid;
+  padding-top: 10px;
+  padding-right: 50px;
+  padding-left: 50px;
+}
+
+.forcast-weather div {
   text-align: center;
 }

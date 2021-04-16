@@ -17,7 +17,7 @@
     <title>Weather Project</title>
   </head>
   <body>
-    <div class="container-fluid">
+    <div class="container">
       <div class="row">
         <div class="col-md-6 offset-md-3">
           <div class="page-header">
@@ -37,16 +37,27 @@
           </form>
 
           <div class="current-weather row"></div>
-          <div class="forcast"></div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-7 offset-md-3">
+          <div class="forcast row"></div>
         </div>
       </div>
     </div>
 
     <script id="current-weather-template" type="text/x-handlebars-template">
       <div class="col-md-6 daily-weather">
-        <h3>{{temp}}F</h3>
-        <div>{{city}}</div>
-        <div>{{weatherCondition}}</div>
+        <h3>
+          {{temp}}F
+        </h3>
+        <div>
+          {{city}}
+        </div>
+        <div>
+          {{weatherCondition}}
+        </div>
       </div>
     </script>
 
@@ -56,6 +67,18 @@
     >
       <div class="col-md-6 daily-icon">
         <img src="{{currentWeatherIcon}}" alt="" />
+      </div>
+    </script>
+
+    <script id="weather-forcast" type="text/x-handlebars-template">
+      <div class="col-md-3 forcast-weather">
+        <div>
+          {{forcastWeatherCondition}}
+        </div>
+        <div>
+          {{forcastTemp}}F
+        </div>
+        <img src="{{forcastWeatherIcon}}" alt="" />
       </div>
     </script>
 
