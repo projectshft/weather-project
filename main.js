@@ -149,7 +149,6 @@ $(document).ready(function() {
       dataType: 'json',
       success: function (data) {
         addFiveDayCityWeatherData(data);
-        console.log(data)
       },
       error: function (jqXHR, textStatus, errorThrown) {
         console.log(errorThrown);
