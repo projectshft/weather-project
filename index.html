@@ -44,19 +44,16 @@
 
     <script id="current-weather-template" type="text/x-handlebars-template">
       <div class="col-md-6 daily-weather">
-        <h3>
-          {{temp}}
-        </h3>
-        <div>
-          {{city}}
-        </div>
-        <div>
-          {{weatherCondition}}
-        </div>
+        <h3>{{temp}}F</h3>
+        <div>{{city}}</div>
+        <div>{{weatherCondition}}</div>
       </div>
     </script>
 
-    <script id="current-weather-icon-template" type="text/x-handlebars-template">
+    <script
+      id="current-weather-icon-template"
+      type="text/x-handlebars-template"
+    >
       <div class="col-md-6 daily-icon">
         <img src="{{currentWeatherIcon}}" alt="" />
       </div>

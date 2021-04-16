@@ -11,16 +11,48 @@
 //addCurrentWeather fxn to loop and render
 //find weather icons
 
-var currentWeather = [
-  {
-    temp: 66,
-    city: 'Durham',
-    weatherCondition: 'Cloudy',
-    currentWeatherIcon: 'http://openweathermap.org/img/wn/10d@2x.png'
-  }
-];
+var apiKey = '76e35e9aadf52246c6368e03bedbcecb'; 
 
-//var currentWeatherIcon; 
+var currentWeather = [];
+
+$('.search').on('click', function () {
+  var searchCity = $('#search-query').val(); //figure out how to do NC insead of full name 
+  $('#search-query').val('');
+  //console.log(searchCity)
+  fetch(searchCity);  
+});
+
+addCurrentWeather = function (data) {
+  var currentCity = data; 
+  var currentTemp = currentCity.main.feels_like
+  var currentTempF = Math.floor((currentTemp - 273.15) * 9/5 + 32);
+
+  var currentCityWeather = {
+    temp: currentTempF,
+    city: currentCity.name,
+    weatherCondition: currentCity.weather[0].main,
+    currentWeatherIcon: "http://openweathermap.org/img/wn/" + currentCity.weather[0].icon + "@2x.png" 
+  }; 
+
+  currentWeather.push(currentCityWeather); 
+  
+  renderCurrentWeather();
+  renderCurrentWeatherIcon(); 
+};
+
+var fetch = function (query) {
+  $.ajax({
+    method: "GET",
+    url: "https://api.openweathermap.org/data/2.5/weather?q=" + query + "&appid=" + apiKey,
+    dataType: "json",
+    success: function(data) {
+     addCurrentWeather(data);
+    },
+    error: function(jqXHR, textStatus, errorThrown) {
+      console.log(textStatus);
+    }
+  });
+}; 
 
 var renderCurrentWeather = function () {
   $('.current-weather').empty();
@@ -34,7 +66,6 @@ var renderCurrentWeather = function () {
 }; 
 
 var renderCurrentWeatherIcon = function () {
-  //$('.current-weather').empty();
 
   for (let i = 0; i < currentWeather.length; i++) {
     var source = $('#current-weather-icon-template').html();
@@ -44,5 +75,5 @@ var renderCurrentWeatherIcon = function () {
   };
 }; 
 
-renderCurrentWeather();
-renderCurrentWeatherIcon(); 
+
+
