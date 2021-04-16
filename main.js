@@ -73,7 +73,6 @@ $(document).ready(function() {
     var mapSrc = 'https://www.google.com/maps/embed/v1/place?key=AIzaSyCDyFxxpN5RtNUPm8u2aCKZ8XMqc9mfxdE&q=' + city;
     $('#map').attr('src', mapSrc);
     $('.map').css('display', 'block');
-    
 
     currentCityWeatherData.push({
       temperature: data.main.temp,
@@ -94,7 +93,6 @@ $(document).ready(function() {
       var conditions = e.weather[0].main;
       var weatherIcon = e.weather[0].icon;
       var date = new Date(e.dt_txt);
-
       forecastDataArray.push({ temp: temp, conditions: conditions, weatherIcon: weatherIcon, date: date});
     });
 
@@ -151,6 +149,7 @@ $(document).ready(function() {
       dataType: 'json',
       success: function (data) {
         addFiveDayCityWeatherData(data);
+        console.log(data)
       },
       error: function (jqXHR, textStatus, errorThrown) {
         console.log(errorThrown);
@@ -158,9 +157,7 @@ $(document).ready(function() {
     })
   }
   
-
   var tempToFahrenheit = function () {
-    
     var tempKelvin = currentCityWeatherData[0].temperature;
     var tempFahrenheit = Math.floor(1.8 * (tempKelvin - 273) + 32);
 
@@ -169,7 +166,7 @@ $(document).ready(function() {
 
   var convertToDayOfWeek = function (forecastDataArray) {
     var daysOfTheWeek = [ { 0: 'Sunday', 1: 'Monday', 2: 'Tuesday', 3: 'Wednesday', 4: 'Thursday', 5: 'Friday', 6: 'Saturday' } ];
-    
+
     forecastDataArray.forEach(e => {
       var dayCode = e.date.getDay();
       return e.date = daysOfTheWeek[0][dayCode];
@@ -211,7 +208,7 @@ $(document).ready(function() {
 
       var weatherIconSrc = 'http://openweathermap.org/img/wn/' + mostCommonWeatherIcon +'@2x.png';
 
-        fiveDayCityWeatherData.push({ day_of_the_week: weekday, temperature: temp, icon: weatherIconSrc, weather_conditions: mostCommonDailyCondition});
+      fiveDayCityWeatherData.push({ day_of_the_week: weekday, temperature: temp, icon: weatherIconSrc, weather_conditions: mostCommonDailyCondition});
     })
 
     if (fiveDayCityWeatherData.length > 5) {
@@ -252,5 +249,4 @@ $(document).ready(function() {
       $('.background').css('background', 'url(images/' + weatherImage + ') no-repeat center center fixed');
     }
   }
-
 });

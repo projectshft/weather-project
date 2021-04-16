@@ -31,6 +31,10 @@ body {
   margin-right: 10px;
 }
 
+.btn {
+  font-size: calc(13px + 0.3vw);
+}
+
 .search {
   margin-right: 9px;
 }
@@ -52,6 +56,8 @@ body {
 
 .current-weather {
   padding-top: 75px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
 }
 
 .current-city-data {
