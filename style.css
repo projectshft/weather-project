@@ -32,7 +32,7 @@ body {
 }
 
 .btn {
-  font-size: calc(13px + 0.3vw);
+  font-size: calc(12px + 0.3vw);
 }
 
 .search {
@@ -92,4 +92,11 @@ body {
 
 .map iframe {
   width: 50%;
+}
+
+@media only screen and (max-width: 770px) {
+  .weekly-weather {
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+  }
 }
