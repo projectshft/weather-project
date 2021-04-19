@@ -1,24 +1,13 @@
-//story 1
-//A user should be able to enter a city into the url, click "Search" and get weather data on the city they entered.
-//A user should be able to see the current temperature (in imperial units).
-//A user should be able to see the current conditions (whether it's cloudy, raining, etc).
-//When a user does another search, their first search should be replaced.
-
-//script for handlebars
-//render fxn for current temp with handlebars template and append to .current-weather div
-//test with hardcoded array
-//fetch fxn using current weather api
-//addCurrentWeather fxn to loop and render
-//find weather icons
-
 var apiKey = '76e35e9aadf52246c6368e03bedbcecb'; 
 
 var currentWeather = [];
 
-$('.search').on('click', function () {
+$('.search').on('click', function () { 
+  reset(); 
+
   var searchCity = $('#search-query').val(); //figure out how to do NC insead of full name 
   $('#search-query').val('');
-  //console.log(searchCity)
+  
   fetch(searchCity);  
 });
 
@@ -37,7 +26,6 @@ addCurrentWeather = function (data) {
   currentWeather.push(currentCityWeather); 
   
   renderCurrentWeather();
-  //renderCurrentWeatherIcon(); 
 };
 
 var fetch = function (query) {
@@ -80,44 +68,31 @@ var renderCurrentWeather = function () {
     var currentWeatherIconHTML = iconTemplate(currentWeather[i]);
     $('.current-weather').append(currentWeatherIconHTML); 
   };
-  
 }; 
 
-/*
-var renderCurrentWeatherIcon = function () {
+var weatherForcasts = [];
 
-  for (let i = 0; i < currentWeather.length; i++) {
-    var source = $('#current-weather-icon-template').html();
-    var template = Handlebars.compile(source);
-    var currentWeatherIconHTML = template(currentWeather[i]);
-    $('.current-weather').append(currentWeatherIconHTML); 
-  };
-}; */
-
-//story 2
-//forcast data
-//A user should be able to do all he/she could do in the first part.
-//When a user searches, they should additionally see a 5-day forecast, and each of the five days should have an associated day of the week, weather condition and temperature.
-
-var weatherForcast;
-// complete 5 day data
+// complete 5 day data from api
 var forcastDailyWeatherCondition = [], day;
 var forcastDailyTemp = [], day;
 var forcastDailyWeatherIcon = [], day; 
+var forcastDailyDate = [], day; 
 
-//data split into 5 arrays
-var splitDailyTemps = [];
-var splitDailyWeatherConditions = []; 
-var splitDailyWeatherIcon = []; 
+ //data split into 5 arrays based on 3hr data (1 day = 8 items)
+ var splitDailyTemps = [];
+ var splitDailyWeatherConditions = []; 
+ var splitDailyWeatherIcon = []; 
+ var splitDailyDate = []; 
 
-//5 day summary 
-var summaryTemps = [];
-var summaryWeatherConditions = [];
-var summaryWeatherIcons = [];
+ //5 day summary (i.e summaryTemps[0] = 1 day's data)
+ var summaryTemps = [];
+ var summaryWeatherConditions = [];
+ var summaryWeatherIcons = [];
+ var summaryWeekDay = []; 
+ var weekDays;
 
-
-
-var addWeatherForcast = function(data) {
+var addWeatherForcast = function (data) {
+  
   var forcastData = data.list; 
  
   compileFetchData(forcastData); 
@@ -125,40 +100,47 @@ var addWeatherForcast = function(data) {
   tempAvg(splitDailyTemps);
   middleItem(splitDailyWeatherConditions, summaryWeatherConditions);
   middleItem(splitDailyWeatherIcon, summaryWeatherIcons); 
+  middleItem(splitDailyDate, summaryWeekDay);
+  makeDay(); 
 
   weatherForcast = [
     {
      forcastWeatherCondition: summaryWeatherConditions[0],
      forcastTemp: summaryTemps[0],
-     forcastWeatherIcon: "http://openweathermap.org/img/wn/" + summaryWeatherIcons[0] + "@2x.png" 
+     forcastWeatherIcon: "http://openweathermap.org/img/wn/" + summaryWeatherIcons[0] + "@2x.png",
+     forcastWeekDay: weekDays[0]
    },
     {
      forcastWeatherCondition: summaryWeatherConditions[1],
      forcastTemp: summaryTemps[1],
-     forcastWeatherIcon: "http://openweathermap.org/img/wn/" + summaryWeatherIcons[1] + "@2x.png" 
+     forcastWeatherIcon: "http://openweathermap.org/img/wn/" + summaryWeatherIcons[1] + "@2x.png",
+     forcastWeekDay: weekDays[1]
    },
     {
      forcastWeatherCondition: summaryWeatherConditions[1],
      forcastTemp: summaryTemps[2],
-     forcastWeatherIcon: "http://openweathermap.org/img/wn/" + summaryWeatherIcons[2] + "@2x.png" 
+     forcastWeatherIcon: "http://openweathermap.org/img/wn/" + summaryWeatherIcons[2] + "@2x.png",
+     forcastWeekDay: weekDays[2]
    },
    {
      forcastWeatherCondition: summaryWeatherConditions[3],
      forcastTemp: summaryTemps[3],
-     forcastWeatherIcon: "http://openweathermap.org/img/wn/" + summaryWeatherIcons[3] + "@2x.png" 
+     forcastWeatherIcon: "http://openweathermap.org/img/wn/" + summaryWeatherIcons[3] + "@2x.png",
+     forcastWeekDay: weekDays[3]
    },
    {
      forcastWeatherCondition: summaryWeatherConditions[4],
      forcastTemp: summaryTemps[4],
-     forcastWeatherIcon: "http://openweathermap.org/img/wn/" + summaryWeatherIcons[4] + "@2x.png" 
+     forcastWeatherIcon: "http://openweathermap.org/img/wn/" + summaryWeatherIcons[4] + "@2x.png",
+     forcastWeekDay: weekDays[4]
    },
   ];
 
-  renderForcastWeather(); 
+  weatherForcasts.push(weatherForcast);
+  renderForcastWeather();
 };
 
 var compileFetchData = function (array) {
-
   for (let i = 0; i < array.length; i++) {
     var dailyData = array[i]; 
     
@@ -170,8 +152,11 @@ var compileFetchData = function (array) {
 
     var dailyIcon = dailyData.weather[0].icon;
     forcastDailyWeatherIcon.push(dailyIcon);
+
+    var date = dailyData.dt_txt;
+    forcastDailyDate.push(date); 
   };
-}
+};
 
 var spiltForcastArrays = function () {
   while (forcastDailyTemp.length > 0) {
@@ -189,6 +174,10 @@ var spiltForcastArrays = function () {
     splitDailyWeatherIcon.push(day); 
   };
 
+  while (forcastDailyDate.length > 0) {
+    day = forcastDailyDate.splice(0, 8);
+    splitDailyDate.push(day); 
+  };
 };
 
 var tempAvg = function (array) {
@@ -200,7 +189,6 @@ var tempAvg = function (array) {
     avgTemp = Math.round(sum/8);  
     summaryTemps.push(avgTemp);
   };
-  
 }; 
 
 var middleItem = function (array1, array2) {
@@ -211,16 +199,40 @@ var middleItem = function (array1, array2) {
   };
 };
 
+var makeDay = function () {
+  var weekDay = summaryWeekDay.map(x => moment(x).format('dddd'))
+  weekDays = weekDay; 
+};
+
+var reset = function () {
+  currentWeather = [];
+  weatherForcasts = []; 
+
+  forcastDailyWeatherCondition = [], day;
+  forcastDailyTemp = [], day;
+  forcastDailyWeatherIcon = [], day; 
+  forcastDailyDate = [], day; 
+
+  splitDailyTemps = [];
+  splitDailyWeatherConditions = []; 
+  splitDailyWeatherIcon = []; 
+  splitDailyDate = []; 
+
+  summaryTemps = [];
+  aummaryWeatherConditions = [];
+  summaryWeatherIcons = [];
+  summaryWeekDay = []; 
+  weekDays;
+};
+
 var renderForcastWeather = function () {
   $('.forcast').empty(); 
   
-  for(let i = 0; i < weatherForcast.length; i++) {
-    var dayForcast = weatherForcast[i]; 
+  for(let i = 0; i < weatherForcasts[0].length; i++) {
+    var dayForcast = weatherForcasts[0][i]; 
     var source = $('#weather-forcast').html(); 
     var template = Handlebars.compile(source); 
     var forcastHTML = template(dayForcast); 
     $('.forcast').append(forcastHTML); 
   };
 };
-
-

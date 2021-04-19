@@ -28,6 +28,7 @@
   padding-top: 10px;
   padding-right: 50px;
   padding-left: 50px;
+  padding-bottom: 10px;
 }
 
 .forcast-weather div {
@@ -35,5 +36,5 @@
 }
 
 .forcast-weather img {
-  margin-left: 22px;
+  margin-left: 24px;
 }
