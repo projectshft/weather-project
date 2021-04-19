@@ -33,3 +33,7 @@
 .forcast-weather div {
   text-align: center;
 }
+
+.forcast-weather img {
+  margin-left: 22px;
+}

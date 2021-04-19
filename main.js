@@ -10,7 +10,7 @@
 //fetch fxn using current weather api
 //addCurrentWeather fxn to loop and render
 //find weather icons
-/*
+
 var apiKey = '76e35e9aadf52246c6368e03bedbcecb'; 
 
 var currentWeather = [];
@@ -52,6 +52,18 @@ var fetch = function (query) {
       console.log(textStatus);
     }
   });
+
+  $.ajax({
+    method: "GET",
+    url: "https://api.openweathermap.org/data/2.5/forecast?q=" + query + "&units=imperial" + "&appid=" + apiKey,
+    dataType: "json",
+    success: function(data) {
+     addWeatherForcast(data);
+    },
+    error: function(jqXHR, textStatus, errorThrown) {
+      console.log(textStatus);
+    }
+  });
 }; 
 
 var renderCurrentWeather = function () {
@@ -71,6 +83,7 @@ var renderCurrentWeather = function () {
   
 }; 
 
+/*
 var renderCurrentWeatherIcon = function () {
 
   for (let i = 0; i < currentWeather.length; i++) {
@@ -79,42 +92,124 @@ var renderCurrentWeatherIcon = function () {
     var currentWeatherIconHTML = template(currentWeather[i]);
     $('.current-weather').append(currentWeatherIconHTML); 
   };
-}; 
-*/
-
+}; */
 
 //story 2
 //forcast data
 //A user should be able to do all he/she could do in the first part.
 //When a user searches, they should additionally see a 5-day forecast, and each of the five days should have an associated day of the week, weather condition and temperature.
 
-var weatherForcast = [
-  {
-    forcastWeatherCondition: 'clouds',
-    forcastTemp: 66,
-    forcastWeatherIcon: "http://openweathermap.org/img/wn/10d@2x.png"
-  },
-  {
-    forcastWeatherCondition: 'clouds',
-    forcastTemp: 68,
-    forcastWeatherIcon: "http://openweathermap.org/img/wn/10d@2x.png"
-  },
-  {
-    forcastWeatherCondition: 'clouds',
-    forcastTemp: 70,
-    forcastWeatherIcon: "http://openweathermap.org/img/wn/10d@2x.png"
-  },
-  {
-    forcastWeatherCondition: 'clouds',
-    forcastTemp: 66,
-    forcastWeatherIcon: "http://openweathermap.org/img/wn/10d@2x.png"
-  }, 
-  {
-    forcastWeatherCondition: 'clouds',
-    forcastTemp: 66,
-    forcastWeatherIcon: "http://openweathermap.org/img/wn/10d@2x.png"
-  }
-];
+var weatherForcast;
+// complete 5 day data
+var forcastDailyWeatherCondition = [], day;
+var forcastDailyTemp = [], day;
+var forcastDailyWeatherIcon = [], day; 
+
+//data split into 5 arrays
+var splitDailyTemps = [];
+var splitDailyWeatherConditions = []; 
+var splitDailyWeatherIcon = []; 
+
+//5 day summary 
+var summaryTemps = [];
+var summaryWeatherConditions = [];
+var summaryWeatherIcons = [];
+
+
+
+var addWeatherForcast = function(data) {
+  var forcastData = data.list; 
+ 
+  compileFetchData(forcastData); 
+  spiltForcastArrays(); 
+  tempAvg(splitDailyTemps);
+  middleItem(splitDailyWeatherConditions, summaryWeatherConditions);
+  middleItem(splitDailyWeatherIcon, summaryWeatherIcons); 
+
+  weatherForcast = [
+    {
+     forcastWeatherCondition: summaryWeatherConditions[0],
+     forcastTemp: summaryTemps[0],
+     forcastWeatherIcon: "http://openweathermap.org/img/wn/" + summaryWeatherIcons[0] + "@2x.png" 
+   },
+    {
+     forcastWeatherCondition: summaryWeatherConditions[1],
+     forcastTemp: summaryTemps[1],
+     forcastWeatherIcon: "http://openweathermap.org/img/wn/" + summaryWeatherIcons[1] + "@2x.png" 
+   },
+    {
+     forcastWeatherCondition: summaryWeatherConditions[1],
+     forcastTemp: summaryTemps[2],
+     forcastWeatherIcon: "http://openweathermap.org/img/wn/" + summaryWeatherIcons[2] + "@2x.png" 
+   },
+   {
+     forcastWeatherCondition: summaryWeatherConditions[3],
+     forcastTemp: summaryTemps[3],
+     forcastWeatherIcon: "http://openweathermap.org/img/wn/" + summaryWeatherIcons[3] + "@2x.png" 
+   },
+   {
+     forcastWeatherCondition: summaryWeatherConditions[4],
+     forcastTemp: summaryTemps[4],
+     forcastWeatherIcon: "http://openweathermap.org/img/wn/" + summaryWeatherIcons[4] + "@2x.png" 
+   },
+  ];
+
+  renderForcastWeather(); 
+};
+
+var compileFetchData = function (array) {
+
+  for (let i = 0; i < array.length; i++) {
+    var dailyData = array[i]; 
+    
+    var dailyTemps = Math.round(dailyData.main.temp);
+    forcastDailyTemp.push(dailyTemps);
+
+    var dailyCondition = dailyData.weather[0].main; 
+    forcastDailyWeatherCondition.push(dailyCondition);
+
+    var dailyIcon = dailyData.weather[0].icon;
+    forcastDailyWeatherIcon.push(dailyIcon);
+  };
+}
+
+var spiltForcastArrays = function () {
+  while (forcastDailyTemp.length > 0) {
+    day = forcastDailyTemp.splice(0, 8); 
+    splitDailyTemps.push(day);  
+  };
+
+  while (forcastDailyWeatherCondition.length > 0) {
+    day = forcastDailyWeatherCondition.splice(0, 8); 
+    splitDailyWeatherConditions.push(day); 
+  };
+
+  while (forcastDailyWeatherIcon.length > 0) {
+    day = forcastDailyWeatherIcon.splice(0, 8); 
+    splitDailyWeatherIcon.push(day); 
+  };
+
+};
+
+var tempAvg = function (array) {
+  for (let i = 0; i < array.length; i++) { 
+    let sum = array[i].reduce(function (acc, currentValue) {
+      return acc + currentValue; 
+    }, 0);
+
+    avgTemp = Math.round(sum/8);  
+    summaryTemps.push(avgTemp);
+  };
+  
+}; 
+
+var middleItem = function (array1, array2) {
+  var weatherItem;
+  for (let i = 0; i < array1.length; i++) {
+   weatherItem = array1[i][3]; 
+   array2.push(weatherItem); 
+  };
+};
 
 var renderForcastWeather = function () {
   $('.forcast').empty(); 
@@ -128,5 +223,4 @@ var renderForcastWeather = function () {
   };
 };
 
-renderForcastWeather(); 
 
