@@ -44,7 +44,7 @@ var fetch = function (query) {
     url: "https://api.openweathermap.org/data/2.5/forecast?q=" + query + "&units=imperial" + "&appid=" + apiKey,
     dataType: "json",
     success: function(data) {
-     addWeatherForcast(data);
+     addWeatherForecast(data);
     },
     error: function(jqXHR, textStatus, errorThrown) {
       console.log(textStatus);
@@ -68,13 +68,13 @@ var renderCurrentWeather = function () {
   };
 }; 
 
-var weatherForcast = [{}, {}, {}, {}, {}]; 
+var weatherForecast = [{}, {}, {}, {}, {}]; 
 
 // complete 5 day data from api
-var forcastDailyWeatherCondition = [], day;
-var forcastDailyTemp = [], day;
-var forcastDailyWeatherIcon = [], day; 
-var forcastDailyDate = [], day; 
+var forecastDailyWeatherCondition = [], day;
+var forecastDailyTemp = [], day;
+var forecastDailyWeatherIcon = [], day; 
+var forecastDailyDate = [], day; 
 
 //5 day summary (i.e summaryTemps[0] = 1 day's data)
 var summaryTemps = [];
@@ -82,12 +82,11 @@ var summaryWeatherConditions = [];
 var summaryWeatherIcons = [];
 var summaryWeekDay = []; 
 
-var addWeatherForcast = function (data) {
-  var forcastData = data.list; 
-  compileFetchData(forcastData); 
+var addWeatherForecast = function (data) {
+  var forecastData = data.list; 
+  compileFetchData(forecastData); 
   manageWeatherData(); 
-  weatherForcasts.push(weatherForcast);
-  renderForcastWeather();
+  renderForecastWeather();
 };
 
 var compileFetchData = function (array) {
@@ -95,32 +94,32 @@ var compileFetchData = function (array) {
     var dailyData = array[i]; 
     
     var dailyTemps = Math.round(dailyData.main.temp || null);
-    forcastDailyTemp.push(dailyTemps);
+    forecastDailyTemp.push(dailyTemps);
 
     var dailyCondition = dailyData.weather[0].main || null; 
-    forcastDailyWeatherCondition.push(dailyCondition);
+    forecastDailyWeatherCondition.push(dailyCondition);
 
     var dailyIcon = dailyData.weather[0].icon || null;
-    forcastDailyWeatherIcon.push(dailyIcon);
+    forecastDailyWeatherIcon.push(dailyIcon);
 
     var date = dailyData.dt_txt || null;
-    forcastDailyDate.push(date); 
+    forecastDailyDate.push(date); 
   };
 };
 
 var manageWeatherData = function () {
 
-  formatWeatherData(forcastDailyWeatherCondition, summaryWeatherConditions, 'weatherCondition');
-  buidForcastArray(summaryWeatherConditions, weatherForcast, 'forcastWeatherCondition');
+  formatWeatherData(forecastDailyWeatherCondition, summaryWeatherConditions, 'weatherCondition');
+  buidForecastArray(summaryWeatherConditions, weatherForecast, 'forecastWeatherCondition');
 
-  formatWeatherData(forcastDailyTemp, summaryTemps, 'avgTemp');
-  buidForcastArray(summaryTemps, weatherForcast, 'forcastTemp');
+  formatWeatherData(forecastDailyTemp, summaryTemps, 'avgTemp');
+  buidForecastArray(summaryTemps, weatherForecast, 'forecastTemp');
 
-  formatWeatherData(forcastDailyWeatherIcon, summaryWeatherIcons, 'weatherIcon');
-  buidForcastArray(summaryWeatherIcons, weatherForcast, 'forcastWeatherIcon');
+  formatWeatherData(forecastDailyWeatherIcon, summaryWeatherIcons, 'weatherIcon');
+  buidForecastArray(summaryWeatherIcons, weatherForecast, 'forecastWeatherIcon');
 
-  formatWeatherData(forcastDailyDate, summaryWeekDay, 'weatherWeekDay');
-  buidForcastArray(summaryWeekDay, weatherForcast, 'forcastWeekDay');
+  formatWeatherData(forecastDailyDate, summaryWeekDay, 'weatherWeekDay');
+  buidForecastArray(summaryWeekDay, weatherForecast, 'forecastWeekDay');
 
 };
 //divides 5 day data and formats it into a summary array where each index = 1 day
@@ -151,10 +150,10 @@ var formatWeatherData = function (arr1, arr2, item) {
   };
 };
 //fills in objet key value pairs in weatherForcast array with the summary data
-var buidForcastArray = function (arr1, arr2, prop) {
+var e = function (arr1, arr2, prop) {
   for(let i = 0; i < arr1.length; i++) {
     for (let j = 0; j < arr2.length; j++) {
-      if (prop === 'forcastWeatherIcon') {
+      if (prop === 'forecastWeatherIcon') {
         arr2[j][prop] = "http://openweathermap.org/img/wn/" + arr1[j] + "@2x.png" 
       } else {
         arr2[j][prop] = arr1[j];
@@ -165,12 +164,12 @@ var buidForcastArray = function (arr1, arr2, prop) {
 
 var reset = function () {
   currentWeather = [];
-  weatherForcasts = []; 
+  weatherForecasts = []; 
 
-  forcastDailyWeatherCondition = [], day;
-  forcastDailyTemp = [], day;
-  forcastDailyWeatherIcon = [], day; 
-  forcastDailyDate = [], day; 
+  forecastDailyWeatherCondition = [], day;
+  forecastDailyTemp = [], day;
+  forecastDailyWeatherIcon = [], day; 
+  forecastDailyDate = [], day; 
 
   summaryTemps = [];
   aummaryWeatherConditions = [];
@@ -178,15 +177,15 @@ var reset = function () {
   summaryWeekDay = []; 
 };
 
-var renderForcastWeather = function () {
-  $('.forcast').empty(); 
+var renderForecastWeather = function () {
+  $('.forecast').empty(); 
   
-  for(let i = 0; i < weatherForcast.length; i++) {
-    var dayForcast = weatherForcast[i]; 
-    var source = $('#weather-forcast').html(); 
+  for(let i = 0; i < weatherForecast.length; i++) {
+    var dayForecast = weatherForecast[i]; 
+    var source = $('#weather-forecast').html(); 
     var template = Handlebars.compile(source); 
-    var forcastHTML = template(dayForcast); 
-    $('.forcast').append(forcastHTML); 
+    var forecastHTML = template(dayForecast); 
+    $('.forecast').append(forecastHTML); 
   };
 };
 
@@ -228,22 +227,22 @@ var makeDay = function () {
 
 var spiltAndFormatTemp = function () {
   manageWeatherItems(forcastDailyTemp, summaryTemps, 'avgTemp');
-  buidForcastArray(summaryTemps, weatherForcast, 'forcastTemp');
+  e(summaryTemps, weatherForcast, 'forcastTemp');
 }; 
 
 var splitAndFormatConditions = function () {
   manageWeatherItems(forcastDailyWeatherCondition, summaryWeatherConditions, 'weatherCondition');
-  buidForcastArray(summaryWeatherConditions, weatherForcast, 'forcastWeatherCondition');
+  e(summaryWeatherConditions, weatherForcast, 'forcastWeatherCondition');
 };
      
 var splitAndFormatIcons = function () {
   manageWeatherItems(forcastDailyWeatherIcon, summaryWeatherIcons, 'weatherIcon');
-  buidForcastArray(summaryWeatherIcons, weatherForcast, 'forcastWeatherIcon');
+  e(summaryWeatherIcons, weatherForcast, 'forcastWeatherIcon');
 };
 
 
 var splitAndFormatWeekDay = function () {
   manageWeatherItems(forcastDailyDate, summaryWeekDay, 'weatherWeekDay');
-  buidForcastArray(summaryWeekDay, weatherForcast, 'forcastWeekDay');
+  e(summaryWeekDay, weatherForcast, 'forcastWeekDay');
 };
 */
