@@ -24,10 +24,21 @@ body {
 
 .form-group {
   display: flex;
+  flex-flow: row;
   height: 40px;
 }
 
+.input {
+  width: 80vw;
+
+  margin-right: 10px;
+}
+
 .form-control {
+  margin-right: 40vw;
+}
+
+.padding {
   margin-right: 10px;
 }
 
@@ -40,7 +51,7 @@ body {
 }
 
 .find-me {
-  width: 120px;
+  min-width: 90px;
 }
 
 .processing {

@@ -1,5 +1,21 @@
-$(document).ready(function() {
+$(document).ready(async function() {
+  var options = {
+    url: "citylist.json",
+  
+    getValue: function(element) {
+      return element.name;
+    },
+  
+    list: {
+      match: {
+        enabled: true
+      }
+    }
+  };
+  
+  $("#search-query").easyAutocomplete(options);
 
+  var API_key = '345e1c9864ad7ebda8d87ea4d60c53f1';
   var currentCityWeatherData = [];
   var fiveDayCityWeatherData = [];
 
@@ -117,7 +133,7 @@ $(document).ready(function() {
   var fetchByLocation = function (latitude, longitude) {
     $.ajax({
       method: 'GET',
-      url: 'https://api.openweathermap.org/data/2.5/weather?lat=' + latitude + '&lon=' + longitude + '&appid=345e1c9864ad7ebda8d87ea4d60c53f1',
+      url: 'https://api.openweathermap.org/data/2.5/weather?lat=' + latitude + '&lon=' + longitude + '&appid=' + API_key,
       dataType: 'json',
       success: function (data) {
         addCurrentCityWeatherData(data);
@@ -131,7 +147,7 @@ $(document).ready(function() {
   var fetchFiveDayForecast = function (currentCity) {
     $.ajax({
       method: 'GET',
-      url: 'https://api.openweathermap.org/data/2.5/forecast?q=' + currentCity + '&appid=345e1c9864ad7ebda8d87ea4d60c53f1',
+      url: 'https://api.openweathermap.org/data/2.5/forecast?q=' + currentCity + '&appid=' + API_key,
       dataType: 'json',
       success: function (data) {
         addFiveDayCityWeatherData(data);
@@ -145,7 +161,7 @@ $(document).ready(function() {
   var fetchFiveDayForecastByLocation = function (latitude, longitude) {
     $.ajax({
       method: 'GET',
-      url: 'https://api.openweathermap.org/data/2.5/forecast?lat=' + latitude + '&lon=' + longitude + '&appid=345e1c9864ad7ebda8d87ea4d60c53f1',
+      url: 'https://api.openweathermap.org/data/2.5/forecast?lat=' + latitude + '&lon=' + longitude + '&appid=' + API_key,
       dataType: 'json',
       success: function (data) {
         addFiveDayCityWeatherData(data);
