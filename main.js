@@ -2,14 +2,103 @@ var apiKey = '76e35e9aadf52246c6368e03bedbcecb';
 
 var currentWeather = [];
 
+var states = [
+  ['Arizona', 'AZ'],
+  ['Alabama', 'AL'],
+  ['Alaska', 'AK'],
+  ['Arkansas', 'AR'],
+  ['California', 'CA'],
+  ['Colorado', 'CO'],
+  ['Connecticut', 'CT'],
+  ['Delaware', 'DE'],
+  ['Florida', 'FL'],
+  ['Georgia', 'GA'],
+  ['Hawaii', 'HI'],
+  ['Idaho', 'ID'],
+  ['Illinois', 'IL'],
+  ['Indiana', 'IN'],
+  ['Iowa', 'IA'],
+  ['Kansas', 'KS'],
+  ['Kentucky', 'KY'],
+  ['Louisiana', 'LA'],
+  ['Maine', 'ME'],
+  ['Maryland', 'MD'],
+  ['Massachusetts', 'MA'],
+  ['Michigan', 'MI'],
+  ['Minnesota', 'MN'],
+  ['Mississippi', 'MS'],
+  ['Missouri', 'MO'],
+  ['Montana', 'MT'],
+  ['Nebraska', 'NE'],
+  ['Nevada', 'NV'],
+  ['New Hampshire', 'NH'],
+  ['New Jersey', 'NJ'],
+  ['New Mexico', 'NM'],
+  ['New York', 'NY'],
+  ['North Carolina', 'NC'],
+  ['North Dakota', 'ND'],
+  ['Ohio', 'OH'],
+  ['Oklahoma', 'OK'],
+  ['Oregon', 'OR'],
+  ['Pennsylvania', 'PA'],
+  ['Rhode Island', 'RI'],
+  ['South Carolina', 'SC'],
+  ['South Dakota', 'SD'],
+  ['Tennessee', 'TN'],
+  ['Texas', 'TX'],
+  ['Utah', 'UT'],
+  ['Vermont', 'VT'],
+  ['Virginia', 'VA'],
+  ['Washington', 'WA'],
+  ['West Virginia', 'WV'],
+  ['Wisconsin', 'WI'],
+  ['Wyoming', 'WY'],
+];
+ 
+ var getStateFullName = function (abbr){
+    for(i = 0; i < states.length; i++){
+      if(states[i][1] == abbr){
+        return states[i][0];
+      };
+    };
+ };
+
 $('.search').on('click', function () { 
   reset(); 
-
-  var searchCity = $('#search-query').val(); //figure out how to do NC insead of full name 
+  var searchCity = $('#search-query').val(); 
+  var fullStateName = stateName(searchCity); 
+ 
   $('#search-query').val('');
-  
-  fetch(searchCity);  
+
+  fetch(fullStateName);  
 });
+
+
+var stateName = function (city) {
+  let str1;
+  let str2; 
+  var fullName; 
+
+  for (let i = 0; i < city.length; i++) {
+    if(city[i] === ',') {
+      str1 = city.slice(0, city.indexOf(',')); //city
+      str2 = city.slice(city.indexOf(',') + 1, city.length) //state
+    };
+  }; 
+  
+  if (str2.length === 3) {
+    city = city.split(" ").join(""); 
+    var abbr = city.slice(-2) 
+    var capitalAbbr = abbr.toUpperCase(); 
+    state = getStateFullName(capitalAbbr); 
+    fullName = str1 + ', ' + state; 
+    return fullName; 
+
+  } else {
+    fullName = city; 
+    return fullName
+  }; 
+};
 
 addCurrentWeather = function (data) {
   var currentCity = data; 
@@ -23,6 +112,7 @@ addCurrentWeather = function (data) {
   }; 
 
   currentWeather.push(currentCityWeather); 
+  //backgroundStyle(); 
   renderCurrentWeather();
 };
 
@@ -89,11 +179,23 @@ var addWeatherForecast = function (data) {
   renderForecastWeather();
 };
 
+var renderForecastWeather = function () {
+  $('.forecast').empty(); 
+  
+  for(let i = 0; i < weatherForecast.length; i++) {
+    var dayForecast = weatherForecast[i]; 
+    var source = $('#weather-forecast').html(); 
+    var template = Handlebars.compile(source); 
+    var forecastHTML = template(dayForecast); 
+    $('.forecast').append(forecastHTML); 
+  };
+};
+
 var compileFetchData = function (array) {
   for (let i = 0; i < array.length; i++) {
     var dailyData = array[i]; 
     
-    var dailyTemps = Math.round(dailyData.main.temp || null);
+    var dailyTemps = Math.round(dailyData.main.temp_max || null);
     forecastDailyTemp.push(dailyTemps);
 
     var dailyCondition = dailyData.weather[0].main || null; 
@@ -134,12 +236,7 @@ var formatWeatherData = function (arr1, arr2, item) {
   } else if (item === 'avgTemp') {
     while (arr1.length > 0) {
       day = arr1.splice(0, 8); 
-      
-      let sum = day.reduce(function (acc, currentValue) {
-        return acc + currentValue; 
-      }, 0);
-      //var item = Math.max(day); 
-      var item = Math.round(sum/8);  
+      var item = Math.max(...day); 
       arr2.push(item);
     }
   } else {
@@ -178,17 +275,17 @@ var reset = function () {
   summaryWeekDay = []; 
 };
 
-var renderForecastWeather = function () {
-  $('.forecast').empty(); 
-  
-  for(let i = 0; i < weatherForecast.length; i++) {
-    var dayForecast = weatherForecast[i]; 
-    var source = $('#weather-forecast').html(); 
-    var template = Handlebars.compile(source); 
-    var forecastHTML = template(dayForecast); 
-    $('.forecast').append(forecastHTML); 
-  };
-};
+//COLOR/STYLE CHANGE EXTENSION 
+/*
+var backgroundStyle = function () {
+  if(currentWeather[0].weatherCondition === 'Clouds') {
+    document.body.style.backgroundColor = 'gray'
+  } else if (currentWeather[0].weatherCondition === 'Rain'){
+    document.body.style.backgroundColor = 'light blue'
+  } else if (currentWeather[0].weatherCondition === )
+}; */
+
+
 
 
 
@@ -246,4 +343,9 @@ var splitAndFormatWeekDay = function () {
   manageWeatherItems(forcastDailyDate, summaryWeekDay, 'weatherWeekDay');
   e(summaryWeekDay, weatherForcast, 'forcastWeekDay');
 };
-*/
+
+ 
+      let sum = day.reduce(function (acc, currentValue) {
+        return acc + currentValue; 
+      }, 0);*/
+      //var item = Math.round(sum/8);*/

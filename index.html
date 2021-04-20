@@ -31,7 +31,7 @@
               type="text"
               class="form-control"
               id="search-query"
-              placeholder="Enter City Name"
+              placeholder="Enter City, State "
             />
             <button type="button" class="btn btn-primary search">Search</button>
           </form>
@@ -49,13 +49,22 @@
 
     <script id="current-weather-template" type="text/x-handlebars-template">
       <div class="col-md-6 daily-weather">
-        <h3>{{temp}}F</h3>
-        <div>{{city}} </div>
-        <div>{{weatherCondition}}</div>
+        <h3>
+          {{temp}}F
+        </h3>
+        <div>
+          {{city}}
+        </div>
+        <div>
+          {{weatherCondition}}
+        </div>
       </div>
     </script>
 
-    <script id="current-weather-icon-template" type="text/x-handlebars-template">
+    <script
+      id="current-weather-icon-template"
+      type="text/x-handlebars-template"
+    >
       <div class="col-md-6 daily-icon">
         <img src="{{currentWeatherIcon}}" alt="" />
       </div>
@@ -63,10 +72,16 @@
 
     <script id="weather-forecast" type="text/x-handlebars-template">
       <div class="col-xs-4 col-sm-2 forecast-weather">
-        <div>{{forecastWeatherCondition}}</div>
-        <div>{{forecastTemp}}F</div>
+        <div>
+          {{forecastWeatherCondition}}
+        </div>
+        <div>
+          {{forecastTemp}}F
+        </div>
         <img src="{{forecastWeatherIcon}}" alt="" />
-        <div>{{forecastWeekDay}} </div>
+        <div>
+          {{forecastWeekDay}}
+        </div>
       </div>
     </script>
 
