@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
+      integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Weather Project - Dan Piston</title>
+  </head>
+  <body>
+    <div class="container-fluid"></div>
+    <div class="page-header row justify-content-center">
+      <h1>Weather Project</h1>
+    </div>
+    <hr />
+
+    <!-- do the search here -->
+    <div class="container offset-md-3">
+      <div class="row align-items-end">
+        <div class="form-group col-6 col-md-6">
+          <input class="form-control city" type="text" placeholder="City" />
+        </div>
+        <div class="form-group col-6 col-md-2">
+          <button class="btn btn-primary search">Search</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- put the current weather here -->
+    <div class="container offset-md-3">
+      <div class="row">
+        <div class="current-weather col-md-6">
+          Current Weather placeholder text
+        </div>
+        <div class="current-weather-desc col-md-6"></div>
+      </div>
+    </div>
+
+    <!-- template for pictures CLASS AVATAR (no s) -->
+    <script id="current-weather-template" type="text/x-handlebars-template">
+      <div class="row"></div>
+      <div class="current-weather">
+        <div>
+          <h2>
+            {{current-temp}}
+          </h2>
+        </div>
+        <div>
+          <h3>
+            {{city}}
+          </h3>
+        </div>
+        >
+        <div>
+          <h4>
+            {{current-weather-desc}}
+          </h4>
+        </div>
+      </div>
+      <div class="current-weather-icon">
+        {{current-icon}}
+      </div>
+    </script>
+
+    <!-- load jquery, handlebars, and js -->
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
+    <script src="main.js" type="text/javascript"></script>
+  </body>
+</html>
