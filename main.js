@@ -134,10 +134,11 @@ var formatWeatherData = function (arr1, arr2, item) {
   } else if (item === 'avgTemp') {
     while (arr1.length > 0) {
       day = arr1.splice(0, 8); 
+      
       let sum = day.reduce(function (acc, currentValue) {
         return acc + currentValue; 
       }, 0);
-  
+      //var item = Math.max(day); 
       var item = Math.round(sum/8);  
       arr2.push(item);
     }
@@ -150,7 +151,7 @@ var formatWeatherData = function (arr1, arr2, item) {
   };
 };
 //fills in objet key value pairs in weatherForcast array with the summary data
-var e = function (arr1, arr2, prop) {
+var buidForecastArray = function (arr1, arr2, prop) {
   for(let i = 0; i < arr1.length; i++) {
     for (let j = 0; j < arr2.length; j++) {
       if (prop === 'forecastWeatherIcon') {
