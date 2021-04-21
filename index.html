@@ -25,7 +25,12 @@
     <div class="container offset-md-3">
       <div class="row align-items-end">
         <div class="form-group col-6 col-md-6">
-          <input class="form-control city" type="text" placeholder="City" />
+          <input
+            id="search-query"
+            class="form-control city"
+            type="text"
+            placeholder="City"
+          />
         </div>
         <div class="form-group col-6 col-md-2">
           <button class="btn btn-primary search">Search</button>
@@ -36,36 +41,28 @@
     <!-- put the current weather here -->
     <div class="container offset-md-3">
       <div class="row">
-        <div class="current-weather col-md-6">
-          Current Weather placeholder text
-        </div>
+        <div class="current-weather col-md-6"></div>
         <div class="current-weather-desc col-md-6"></div>
       </div>
     </div>
 
     <!-- template for pictures CLASS AVATAR (no s) -->
     <script id="current-weather-template" type="text/x-handlebars-template">
-      <div class="row"></div>
-      <div class="current-weather">
-        <div>
-          <h2>
+      <div class="row">
+        <div class="current-weather">
+          <h2 class="text-center">
             {{current-temp}}
           </h2>
-        </div>
-        <div>
-          <h3>
+          <h3 class="text-center">
             {{city}}
           </h3>
-        </div>
-        >
-        <div>
-          <h4>
+          <h4 class="text-center">
             {{current-weather-desc}}
           </h4>
         </div>
-      </div>
-      <div class="current-weather-icon">
-        {{current-icon}}
+        <div class="current-weather-icon">
+          {{current-icon}}
+        </div>
       </div>
     </script>
 
