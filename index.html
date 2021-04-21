@@ -41,12 +41,12 @@
     <!-- put the current weather here -->
     <div class="container offset-md-3">
       <div class="row">
-        <div class="current-weather col-md-6"></div>
-        <div class="current-weather-desc col-md-6"></div>
+        <div class="current-weather"></div>
+        <div class="current-weather-desc"></div>
       </div>
     </div>
 
-    <!-- template for pictures CLASS AVATAR (no s) -->
+    <!-- template for current weather -->
     <script id="current-weather-template" type="text/x-handlebars-template">
       <div class="row">
         <div class="current-weather">
@@ -60,8 +60,9 @@
             {{current-weather-desc}}
           </h4>
         </div>
+        <!-- may need to set a new column -->
         <div class="current-weather-icon">
-          {{current-icon}}
+          <img src="{{current-icon}}" alt="Weather icon failed to load" />
         </div>
       </div>
     </script>
