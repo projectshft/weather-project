@@ -1,9 +1,11 @@
-$(document).ready(async function() {
+$(document).ready(function() {
   
+  // Set global variables
   var API_key = '345e1c9864ad7ebda8d87ea4d60c53f1';
   var currentCityWeatherData = [];
   var fiveDayCityWeatherData = [];
 
+  // Autopopulates cities as user types in input
   var autopopulateCityData = {
     url: "citylist.json",
   
@@ -20,6 +22,7 @@ $(document).ready(async function() {
   
   $("#search-query").easyAutocomplete(autopopulateCityData);
 
+  // Obtains user input to pass to fetch functions and resets values
   $('.search').on('click', function() {
     $('.processing').css('display', 'block');
     var $currentCity = $('#search-query').val();
@@ -34,6 +37,7 @@ $(document).ready(async function() {
     fetchFiveDayForecast($currentCity);
   });
 
+  // Uses geolocation to populate weather data
   $('.find-me').on('click', function() {
     $('.processing').css('display', 'block');
 
@@ -55,18 +59,21 @@ $(document).ready(async function() {
     }
   });
 
+  // Generates weather data when 'Enter' is pressed
   $('#search-query').keypress(function(event) {
     if (event.keyCode === 13) {
         $('.search').click();
     }
   });
 
+  // Sets default city to load when user returns to page
   $('.set-default').on('click', function () {
       var defaultCity = currentCityWeatherData[0].city;
       localStorage.setItem('cityName', defaultCity);
       alert(defaultCity + ' is now your default city.');
   }); 
 
+  // Loads default city data
   window.onload = function() {
     var defaultCity = localStorage.getItem('cityName');
     if (defaultCity !== null) {
@@ -76,10 +83,12 @@ $(document).ready(async function() {
     }
   }
 
+  // Removes 'processing' alert once it completes
   $(document).ajaxComplete(function () {
     $('.processing').css('display', 'none');
   });
 
+  // Gets current weather data
   var addCurrentCityWeatherData = function (data) {
     var currentWeatherImageCode = data.weather[0].icon;
     var imageSrc = 'http://openweathermap.org/img/wn/' + currentWeatherImageCode +'@2x.png';
@@ -102,6 +111,7 @@ $(document).ready(async function() {
     generateBackgroundImage(weather_condition);
   }
 
+  // Adds five day weather data to array
   var addFiveDayCityWeatherData = function (data) {
     var forecastData = data.list;
     var forecastDataArray = [];
@@ -172,7 +182,8 @@ $(document).ready(async function() {
       }
     })
   }
-  
+
+  // Converts temperature to Fahrenheit
   var tempToFahrenheit = function () {
     var tempKelvin = currentCityWeatherData[0].temperature;
     var tempFahrenheit = Math.floor(1.8 * (tempKelvin - 273) + 32);
@@ -180,6 +191,7 @@ $(document).ready(async function() {
     currentCityWeatherData[0].temperature = tempFahrenheit.toString() + '°';
   }
 
+  // converts date data to day of the week
   var convertToDayOfWeek = function (forecastDataArray) {
     var daysOfTheWeek = [ { 0: 'Sunday', 1: 'Monday', 2: 'Tuesday', 3: 'Wednesday', 4: 'Thursday', 5: 'Friday', 6: 'Saturday' } ];
 
@@ -190,16 +202,18 @@ $(document).ready(async function() {
   }
 
   var compressWeeklyWeatherData = function (forecastDataArray) {
+    // groups data by day of the week
     var weeklyData = _.values(_.groupBy(forecastDataArray, 'date'));
 
     fiveDayCityWeatherData = [];
-
+    
     weeklyData.forEach(day => {
       var weekday = day[0].date;
       var highestTemp = 0;
       var dailyConditions = [];
       var dailyIcons = [];
 
+      // Populates the hottest temp of the day
       for (let i = 0; i < day.length; i++) {
         if (day[i].temp > highestTemp) {
           highestTemp = day[i].temp;
@@ -209,24 +223,27 @@ $(document).ready(async function() {
       dailyIcons.push(day[i].weatherIcon);
       }
 
+      // Converts temperature to Fahrenheit
       var temp = Math.floor(1.8 * (highestTemp - 273) + 32);
       temp = temp.toString() + '°';
 
-      var mostCommonDailyCondition = _.head(_(dailyConditions)
+      // Find the most common daily condition and weather icon for the day
+      var mostCommonDailyCondition = _(dailyConditions)
         .countBy()
         .entries()
-        .maxBy());
+        .maxBy()[0];
 
-      var mostCommonWeatherIcon = _.head(_(dailyIcons)
+      var mostCommonWeatherIcon = _(dailyIcons)
         .countBy()
         .entries()
-        .maxBy());
+        .maxBy()[0];
 
       var weatherIconSrc = 'http://openweathermap.org/img/wn/' + mostCommonWeatherIcon +'@2x.png';
 
       fiveDayCityWeatherData.push({ day_of_the_week: weekday, temperature: temp, icon: weatherIconSrc, weather_conditions: mostCommonDailyCondition});
     })
 
+    // keeps only five days worth of weather
     if (fiveDayCityWeatherData.length > 5) {
       fiveDayCityWeatherData.pop();
     };
@@ -256,6 +273,7 @@ $(document).ready(async function() {
     })
   }
 
+  // generates new background based on current weather conditions
   generateBackgroundImage = function (weather_condition) {
     var weather_conditions = [{Thunderstorm: 'thunderstorm.jpg', Rain: 'rain.jpg', Drizzle: 'drizzle.jpg', Snow: 'snow.jpg', Mist: 'mist.jpg', Smoke: 'smoke.jpg', Haze: 'haze.jpg', Dust: 'dust.jpg', Fog: 'fog.jpg', Sand: 'sand.jpg', Ash: 'ash.jpg', Squall: 'squall.jpg', Tornado: 'tornado.jpg', Clear: 'clear.jpg', Clouds: 'clouds.jpg'}];
     
