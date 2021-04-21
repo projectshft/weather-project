@@ -1,5 +1,10 @@
 $(document).ready(async function() {
-  var options = {
+  
+  var API_key = '345e1c9864ad7ebda8d87ea4d60c53f1';
+  var currentCityWeatherData = [];
+  var fiveDayCityWeatherData = [];
+
+  var autopopulateCityData = {
     url: "citylist.json",
   
     getValue: function(element) {
@@ -13,11 +18,7 @@ $(document).ready(async function() {
     }
   };
   
-  $("#search-query").easyAutocomplete(options);
-
-  var API_key = '345e1c9864ad7ebda8d87ea4d60c53f1';
-  var currentCityWeatherData = [];
-  var fiveDayCityWeatherData = [];
+  $("#search-query").easyAutocomplete(autopopulateCityData);
 
   $('.search').on('click', function() {
     $('.processing').css('display', 'block');
@@ -109,7 +110,7 @@ $(document).ready(async function() {
       var conditions = e.weather[0].main;
       var weatherIcon = e.weather[0].icon;
       var date = new Date(e.dt_txt);
-      forecastDataArray.push({ temp: temp, conditions: conditions, weatherIcon: weatherIcon, date: date});
+      forecastDataArray.push({ temp, conditions, weatherIcon, date })
     });
 
     convertToDayOfWeek(forecastDataArray);
@@ -214,12 +215,12 @@ $(document).ready(async function() {
       var mostCommonDailyCondition = _.head(_(dailyConditions)
         .countBy()
         .entries()
-        .maxBy(_.last));
+        .maxBy());
 
       var mostCommonWeatherIcon = _.head(_(dailyIcons)
         .countBy()
         .entries()
-        .maxBy(_.last));
+        .maxBy());
 
       var weatherIconSrc = 'http://openweathermap.org/img/wn/' + mostCommonWeatherIcon +'@2x.png';
 
