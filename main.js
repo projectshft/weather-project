@@ -54,14 +54,6 @@ var states = [
   ['Wisconsin', 'WI'],
   ['Wyoming', 'WY'],
 ];
- 
- var getStateFullName = function (abbr){
-    for(i = 0; i < states.length; i++){
-      if(states[i][1] == abbr){
-        return states[i][0];
-      };
-    };
- };
 
 $('.search').on('click', function () { 
   reset(); 
@@ -72,33 +64,6 @@ $('.search').on('click', function () {
 
   fetch(fullStateName);  
 });
-
-
-var stateName = function (city) {
-  let str1;
-  let str2; 
-  var fullName; 
-
-  for (let i = 0; i < city.length; i++) {
-    if(city[i] === ',') {
-      str1 = city.slice(0, city.indexOf(',')); //city
-      str2 = city.slice(city.indexOf(',') + 1, city.length) //state
-    };
-  }; 
-  
-  if (str2.length === 3) {
-    city = city.split(" ").join(""); 
-    var abbr = city.slice(-2) 
-    var capitalAbbr = abbr.toUpperCase(); 
-    state = getStateFullName(capitalAbbr); 
-    fullName = str1 + ', ' + state; 
-    return fullName; 
-
-  } else {
-    fullName = city; 
-    return fullName
-  }; 
-};
 
 addCurrentWeather = function (data) {
   var currentCity = data; 
@@ -112,7 +77,6 @@ addCurrentWeather = function (data) {
   }; 
 
   currentWeather.push(currentCityWeather); 
-  //backgroundStyle(); 
   renderCurrentWeather();
 };
 
@@ -142,6 +106,52 @@ var fetch = function (query) {
   });
 }; 
 
+var backgroundStyle = function () {
+  var urlString = 'url("' + currentWeather[0].currentWeatherIcon + '")'; 
+  $('.background-image').css('background-image', urlString);  
+}; 
+/*
+//geolocation???
+$('.current-location').on('click', function () {
+  if('geolocation' in navigator) {
+    navigator.geolocation.getCurrentPosition((position) => {
+      doSomething(position.coords.latitude, position.coords.longitude);
+    });
+  } else {
+    console.log('geolocation not available')
+  } 
+}); */
+ 
+var getStateFullName = function (abbr){
+  for(i = 0; i < states.length; i++){
+    if(states[i][1] == abbr){
+      return states[i][0];
+    };
+  };
+};
+
+var stateName = function (city) {
+  let str1;
+  let str2; 
+  var fullName; 
+
+  str1 = city.slice(0, city.indexOf(',')); //city
+  str2 = city.slice(city.indexOf(',') + 1, city.length) //state
+  
+  if (str2.length === 3) {
+    city = city.split(" ").join(""); 
+    var abbr = city.slice(-2) 
+    var capitalAbbr = abbr.toUpperCase(); 
+    state = getStateFullName(capitalAbbr); 
+    fullName = str1 + ', ' + state; 
+    return fullName; 
+
+  } else {
+    fullName = city; 
+    return fullName
+  }; 
+};
+
 var renderCurrentWeather = function () {
   $('.current-weather').empty();
 
@@ -156,23 +166,52 @@ var renderCurrentWeather = function () {
     var currentWeatherIconHTML = iconTemplate(currentWeather[i]);
     $('.current-weather').append(currentWeatherIconHTML); 
   };
+   backgroundStyle(); 
 }; 
 
-var weatherForecast = [{}, {}, {}, {}, {}]; 
+var weatherForecast = []; 
 
 // complete 5 day data from api
-var forecastDailyWeatherCondition = [], day;
-var forecastDailyTemp = [], day;
-var forecastDailyWeatherIcon = [], day; 
-var forecastDailyDate = [], day; 
+var forecastDailyData = {
+  weatherCondition: [],
+  weatherTemp: [], 
+  weatherIcon: [], 
+  weatherWeekDay: [],
+  //splits and compresses data 
+  formatWeatherData (prop, arr2) {
+    if (prop === 'weatherWeekDay') {
+      while (this[prop].length > 0) {
+        this[prop] = this[prop], day; 
+        var day = this[prop].splice(0, 8);
+        var weekDay = moment(day[3]).format('dddd')
+        arr2.push(weekDay); 
+      }
+    } else if (prop === 'weatherTemp') {
+      while (this[prop].length > 0) {
+        this[prop]= this[prop], day; 
+        var day = this[prop].splice(0, 8); 
+        arr2.push(Math.max(...day));
+      }
+    } else {
+      while (this[prop].length > 0) {
+        this[prop] = this[prop], day; 
+        var day = this[prop].splice(0, 8); 
+        arr2.push(day[3]); 
+      };
+    };
+  }
+};
 
-//5 day summary (i.e summaryTemps[0] = 1 day's data)
-var summaryTemps = [];
-var summaryWeatherConditions = [];
-var summaryWeatherIcons = [];
-var summaryWeekDay = []; 
+//5 day summary (i.e summaryTemps[prop] = 1 day's data)
+var summaryWeatherData = {
+  forecastWeatherCondition: [],
+  forecastTemp: [], 
+  forecastWeatherIcon: [], 
+  forecastWeekDay: [],
+};
 
 var addWeatherForecast = function (data) {
+  weatherForecast.push({}, {}, {}, {}, {});
   var forecastData = data.list; 
   compileFetchData(forecastData); 
   manageWeatherData(); 
@@ -196,65 +235,44 @@ var compileFetchData = function (array) {
     var dailyData = array[i]; 
     
     var dailyTemps = Math.round(dailyData.main.temp_max || null);
-    forecastDailyTemp.push(dailyTemps);
+    //forecastDailyTemp.push(dailyTemps);
+    forecastDailyData.weatherTemp.push(dailyTemps)
 
     var dailyCondition = dailyData.weather[0].main || null; 
-    forecastDailyWeatherCondition.push(dailyCondition);
+    //forecastDailyWeatherCondition.push(dailyCondition);
+    forecastDailyData.weatherCondition.push(dailyCondition);
 
     var dailyIcon = dailyData.weather[0].icon || null;
-    forecastDailyWeatherIcon.push(dailyIcon);
+    //forecastDailyWeatherIcon.push(dailyIcon);
+    forecastDailyData.weatherIcon.push(dailyIcon)
 
     var date = dailyData.dt_txt || null;
-    forecastDailyDate.push(date); 
+    //forecastDailyDate.push(date); 
+    forecastDailyData.weatherWeekDay.push(date);
   };
 };
 
 var manageWeatherData = function () {
-
-  formatWeatherData(forecastDailyWeatherCondition, summaryWeatherConditions, 'weatherCondition');
-  buidForecastArray(summaryWeatherConditions, weatherForecast, 'forecastWeatherCondition');
-
-  formatWeatherData(forecastDailyTemp, summaryTemps, 'avgTemp');
-  buidForecastArray(summaryTemps, weatherForecast, 'forecastTemp');
-
-  formatWeatherData(forecastDailyWeatherIcon, summaryWeatherIcons, 'weatherIcon');
-  buidForecastArray(summaryWeatherIcons, weatherForecast, 'forecastWeatherIcon');
-
-  formatWeatherData(forecastDailyDate, summaryWeekDay, 'weatherWeekDay');
-  buidForecastArray(summaryWeekDay, weatherForecast, 'forecastWeekDay');
-
+  forecastDailyData.formatWeatherData('weatherCondition', summaryWeatherData['forecastWeatherCondition']);
+  buildWeatherForecastObjs();
+  forecastDailyData.formatWeatherData('weatherTemp', summaryWeatherData['forecastTemp']);
+  buildWeatherForecastObjs();
+  forecastDailyData.formatWeatherData('weatherIcon', summaryWeatherData['forecastWeatherIcon']);
+  buildWeatherForecastObjs();
+  forecastDailyData.formatWeatherData('weatherWeekDay', summaryWeatherData['forecastWeekDay']);
+  buildWeatherForecastObjs();
 };
-//divides 5 day data and formats it into a summary array where each index = 1 day
-var formatWeatherData = function (arr1, arr2, item) {
-  if (item === 'weatherWeekDay') {
-    while (arr1.length > 0) {
-      day = arr1.splice(0, 8);
-      var item = day[3]; 
-      var weekDay = moment(item).format('dddd')
-      arr2.push(weekDay); 
-    }
-  } else if (item === 'avgTemp') {
-    while (arr1.length > 0) {
-      day = arr1.splice(0, 8); 
-      var item = Math.max(...day); 
-      arr2.push(item);
-    }
-  } else {
-    while (arr1.length > 0) {
-      day = arr1.splice(0, 8); 
-      var item = day[3]; 
-      arr2.push(item); 
-    };
-  };
-};
+
 //fills in objet key value pairs in weatherForcast array with the summary data
-var buidForecastArray = function (arr1, arr2, prop) {
-  for(let i = 0; i < arr1.length; i++) {
-    for (let j = 0; j < arr2.length; j++) {
-      if (prop === 'forecastWeatherIcon') {
-        arr2[j][prop] = "http://openweathermap.org/img/wn/" + arr1[j] + "@2x.png" 
-      } else {
-        arr2[j][prop] = arr1[j];
+var buildWeatherForecastObjs = function () {
+  for (prop in summaryWeatherData) {
+    for (let i = 0; i < summaryWeatherData[prop].length; i++) {
+      for (let j = 0; j < weatherForecast.length; j++) {
+        if (prop === 'forecastWeatherIcon') {
+          weatherForecast[j][prop] =  "http://openweathermap.org/img/wn/" + summaryWeatherData[prop][j] + "@2x.png" 
+        } else {
+          weatherForecast[j][prop] = summaryWeatherData[prop][j];
+        };
       };
     };
   };
@@ -262,29 +280,18 @@ var buidForecastArray = function (arr1, arr2, prop) {
 
 var reset = function () {
   currentWeather = [];
-  weatherForecasts = []; 
+  weatherForecast = []; 
 
-  forecastDailyWeatherCondition = [], day;
-  forecastDailyTemp = [], day;
-  forecastDailyWeatherIcon = [], day; 
-  forecastDailyDate = [], day; 
+  forecastDailyData.weatherCondition = [];
+  forecastDailyData.weatherTemp = []; 
+  forecastDailyData.weatherIcon = [];
+  forecastDailyData.weatherWeekDay = [];
 
-  summaryTemps = [];
-  aummaryWeatherConditions = [];
-  summaryWeatherIcons = [];
-  summaryWeekDay = []; 
+  summaryWeatherData.forecastWeatherCondition = [];
+  summaryWeatherData.forecastTemp = [];
+  summaryWeatherData.forecastWeatherIcon = [];
+  summaryWeatherData.forecastWeekDay = [];
 };
-
-//COLOR/STYLE CHANGE EXTENSION 
-/*
-var backgroundStyle = function () {
-  if(currentWeather[0].weatherCondition === 'Clouds') {
-    document.body.style.backgroundColor = 'gray'
-  } else if (currentWeather[0].weatherCondition === 'Rain'){
-    document.body.style.backgroundColor = 'light blue'
-  } else if (currentWeather[0].weatherCondition === )
-}; */
-
 
 
 
@@ -349,3 +356,49 @@ var splitAndFormatWeekDay = function () {
         return acc + currentValue; 
       }, 0);*/
       //var item = Math.round(sum/8);*/
+  /*
+  for (let i = 0; i < city.length; i++) {
+    if(city[i] === ',') {
+      str1 = city.slice(0, city.indexOf(',')); //city
+      str2 = city.slice(city.indexOf(',') + 1, city.length) //state
+    };
+  }; */
+
+    /*
+  //formatWeatherData(forecastDailyData.weatherCondition, summaryWeatherConditions, 'weatherCondition');
+  //buidForecastArray(summaryWeatherConditions, weatherForecast, 'forecastWeatherCondition');
+
+  //formatWeatherData(forecastDailyTemp, summaryTemps, 'avgTemp');
+  //buidForecastArray(summaryTemps, weatherForecast, 'forecastTemp');
+
+  //formatWeatherData(forecastDailyWeatherIcon, summaryWeatherIcons, 'weatherIcon');
+  //buidForecastArray(summaryWeatherIcons, weatherForecast, 'forecastWeatherIcon');
+
+  //formatWeatherData(forecastDailyDate, summaryWeekDay, 'weatherWeekDay');
+  //buidForecastArray(summaryWeekDay, weatherForecast, 'forecastWeekDay');
+  
+  var buidForecastArray = function (arr1, arr2, prop) {
+  for(let i = 0; i < arr1.length; i++) {
+    for (let j = 0; j < arr2.length; j++) {
+      if (prop === 'forecastWeatherIcon') {
+        arr2[j][prop] = "http://openweathermap.org/img/wn/" + arr1[j] + "@2x.png" 
+      } else {
+        arr2[j][prop] = arr1[j];
+      };
+    };
+  };
+};
+
+
+var summaryTemps = [];
+var summaryWeatherConditions = [];
+var summaryWeatherIcons = [];
+var summaryWeekDay = []; 
+
+
+
+var forecastDailyWeatherCondition = [], day;
+var forecastDailyTemp = [], day;
+var forecastDailyWeatherIcon = [], day; 
+var forecastDailyDate = [], day; 
+*/

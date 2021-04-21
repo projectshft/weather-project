@@ -1,11 +1,24 @@
 .page-header {
   text-align: center;
-  margin-top: 30px;
+  margin-top: 10px;
+  margin-right: 40px;
+}
+
+.background-image {
+  margin: 0;
+}
+
+.background-image h1 {
+  visibility: hidden;
 }
 
 #search-query {
   width: 80%;
   margin-right: 15px;
+}
+
+.current-location {
+  margin-top: 20px;
 }
 
 .weather-form {
