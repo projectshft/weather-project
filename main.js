@@ -1,7 +1,20 @@
 const currentWeatherData = {};
-const forecastData = {};
+let forecastData = [];
 const daysOfTheWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 const apiKey = `c1300dccedd35aac7b51e962f9c75288`;
+let defaultCity = localStorage.getItem('defaultCity');
+
+const loadPage = function () {
+  if (defaultCity) {
+    fetchCurrent(defaultCity);
+    fetchForecast(defaultCity);
+  }
+};
+
+$('#current-weather-conditions').on('click', '#default-city', function() {
+  localStorage.setItem('defaultCity', currentWeatherData.currentCity);
+  $('#default-city').css('display', 'none');
+})
 
 $('#search').on('click', function() {
   const city = $('#city-name').val();
@@ -46,8 +59,8 @@ const fetchForecast = (cityName) => {
     method: "GET",
     dataType: "JSON",
     url: `https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&units=imperial&appid=${apiKey}`,
-    success: function(data) {
-      addToForecastData(data);
+    success: function(forecastResponse) {
+      addToForecastData(forecastResponse);
     },
     error: function(jqXhr, textStatus, errorMessage) {
       console.log(textStatus);
@@ -64,31 +77,22 @@ const addToCurrentWeatherData = data => {
   render();
 };
 
-const addToForecastData = data => {
-  forecastData.day1Temp = Math.round(data.list[7].main.temp); 
-  forecastData.day1Condition = data.list[7].weather[0].main;
-  forecastData.day1Icon = data.list[7].weather[0].icon;
-  forecastData.day1name = daysOfTheWeek[new Date(data.list[7].dt*1000).getDay()];
+const addToForecastData = forecastResponse => {
+    forecastData = [7, 15, 23, 31, 39].map(time => {
+    const temp = Math.round(forecastResponse.list[time].main.temp);
+    const condition = forecastResponse.list[time].weather[0].main;
+    const icon = forecastResponse.list[time].weather[0].icon;
+    const dayName = daysOfTheWeek[new Date(forecastResponse.list[time].dt*1000).getDay()];
 
-  forecastData.day2Temp = Math.round(data.list[15].main.temp);
-  forecastData.day2Condition = data.list[15].weather[0].main;
-  forecastData.day2Icon = data.list[15].weather[0].icon;
-  forecastData.day2name = daysOfTheWeek[new Date(data.list[15].dt*1000).getDay()];
+    const forecastForDay = {
+      temp,
+      condition,
+      icon,
+      dayName
+    }
 
-  forecastData.day3Temp = Math.round(data.list[23].main.temp);
-  forecastData.day3Condition = data.list[23].weather[0].main;
-  forecastData.day3Icon = data.list[23].weather[0].icon;
-  forecastData.day3name = daysOfTheWeek[new Date(data.list[23].dt*1000).getDay()];
-
-  forecastData.day4Temp = Math.round(data.list[31].main.temp);
-  forecastData.day4Condition = data.list[31].weather[0].main;
-  forecastData.day4Icon = data.list[31].weather[0].icon;
-  forecastData.day4name = daysOfTheWeek[new Date(data.list[31].dt*1000).getDay()];
-  
-  forecastData.day5Temp = Math.round(data.list[39].main.temp);
-  forecastData.day5Condition = data.list[39].weather[0].main;
-  forecastData.day5Icon = data.list[39].weather[0].icon;
-  forecastData.day5name = daysOfTheWeek[new Date(data.list[39].dt*1000).getDay()];
+    return forecastForDay;
+  })
 
   render();
 };
@@ -99,7 +103,15 @@ const render = () => {
   
   const newCurrentHTML = Handlebars.compile($('#current-weather-template').html())(currentWeatherData);
   $('#current-weather-conditions').append(newCurrentHTML);
-  
-  const newForecastHTML = Handlebars.compile($('#forecast-template').html())(forecastData);
-  $('#forecast-row').append(newForecastHTML);
+
+  forecastData.forEach(day => {
+    const newForecastHTML = Handlebars.compile($('#forecast-template').html())(day);
+    $('#forecast-row').append(newForecastHTML);
+  })
+
+  if (currentWeatherData.currentCity === defaultCity) {
+    $('#default-city').css('display', 'none');
+  }
 };
+
+loadPage();

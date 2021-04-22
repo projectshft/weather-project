@@ -39,3 +39,11 @@ form {
   margin: 0;
   font-weight: 500;
 }
+
+.btn-block {
+  margin-bottom: 25px;
+}
+
+#default-city {
+  display: block;
+}

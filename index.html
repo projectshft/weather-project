@@ -44,10 +44,13 @@
           </div>
         </div>
       </div>
-      <div class="row forecast-row">
+      <div id="forecast-row" class="row offset-2">
     </div>
 
     <script id="current-weather-template" type="text/x-handlebars">
+      <div class="col-md-4 offset-md-4">
+        <button type="button" id="default-city" class="btn btn-primary btn-sm btn-block">Set As Default City</button>
+      </div>
       <div class="col-md-6">
         <p id="current-temp" class="text-center current">{{currentTemp}}&#176;</p>
         <p id="current-city" class="text-center current">{{currentCity}}</p>
@@ -56,73 +59,26 @@
       <div id="current-weather-icon" class="col-md-6">
         <p class="text-center">
           <img
-            src="http://openweathermap.org/img/wn/{{currentIcon}}@2x.png"
-            alt="weather icon"
+          src="http://openweathermap.org/img/wn/{{currentIcon}}@2x.png"
+          alt="weather icon"
           />
         </p>
       </div>
+      
     </script>
 
     <script id="forecast-template" type="text/x-handlebars">
-      <div id="day-1" class="col-md-2 offset-md-1 forecast">
-          <p class="text-center forecast-condition">{{day1Condition}}</p>
-          <p class="text-center forecast-temp">{{day1Temp}}&#176;</p>
-          <p class="text-center forecast-icon">
-            <img
-              src="{{day1Icon}}"
-              alt="weather"
-            />
-          </p>
-          <p class="text-center forecast-day">{{day1}}</p>
-        </div>
-
-        <div id="day-2" class="col-md-2 forecast">
-          <p class="text-center forecast-condition">{{day2Condition}}</p>
-          <p class="text-center forecast-temp">{{day2Temp}}&#176;</p>
-          <p class="text-center forecast-icon">
-            <img
-              src="{{day2Icon}}"
-              alt="weather"
-            />
-          </p>
-          <p class="text-center forecast-day">{{day2}}</p>
-        </div>
-
-        <div id="day-3" class="col-md-2 forecast">
-          <p class="text-center forecast-condition">{{day3Condition}}</p>
-          <p class="text-center forecast-temp">{{day3Temp}}&#176;</p>
-          <p class="text-center forecast-icon">
-            <img
-              src="{{day3Icon}}"
-              alt="weather"
-            />
-          </p>
-          <p class="text-center forecast-day">{{day3}}</p>
-        </div>
-
-        <div id="day-4" class="col-md-2 forecast">
-          <p class="text-center forecast-condition">{{day4Condition}}</p>
-          <p class="text-center forecast-temp">{{day4Temp}}&#176;</p>
-          <p class="text-center forecast-icon">
-            <img
-              src="{{day4Icon}}"
-              alt="weather"
-            />
-          </p>
-          <p class="text-center forecast-day">{{day4}}</p>
-        </div>
-
-        <div id="day-5" class="col-md-2 forecast">
-          <p class="text-center forecast-condition">{{day5Condition}}</p>
-          <p class="text-center forecast-temp">{{day5Temp}}&#176;</p>
-          <p class="text-center forecast-icon">
-            <img
-              src="{{day5Icon}}"
-              alt="weather"
-            />
-          </p>
-          <p class="text-center forecast-day">{{day5}}</p>
-        </div>
+      <div class="col-md-2 forecast">
+        <p class="text-center forecast-condition">{{condition}}</p>
+        <p class="text-center forecast-temp">{{temp}}&#176;</p>
+        <p class="text-center forecast-icon">
+          <img
+            src="http://openweathermap.org/img/wn/{{icon}}@2x.png"
+            alt="weather"
+          />
+        </p>
+        <p class="text-center forecast-day">{{dayName}}</p>
+      </div>
     </script>
 
     <script
