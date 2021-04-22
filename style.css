@@ -46,4 +46,13 @@ form {
 
 #default-city {
   display: block;
+  margin: 0;
+}
+
+#current-location {
+  margin-bottom: 50px;
+}
+
+#current-condition {
+  margin-bottom: 25px;
 }

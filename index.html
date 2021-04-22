@@ -21,6 +21,9 @@
             <h1>Weather Project</h1>
             <hr />
           </header>
+          <div class="col-md-12 text-center">
+            <button id="current-location" type="button" class="btn btn-info">Get Forecast for Current Location</button>
+          </div>
           <form>
             <div class="form-row">
               <div class="col-md-10">
@@ -49,11 +52,11 @@
 
     <script id="current-weather-template" type="text/x-handlebars">
       <div class="col-md-4 offset-md-4">
-        <button type="button" id="default-city" class="btn btn-primary btn-sm btn-block">Set As Default City</button>
       </div>
       <div class="col-md-6">
         <p id="current-temp" class="text-center current">{{currentTemp}}&#176;</p>
         <p id="current-city" class="text-center current">{{currentCity}}</p>
+        <button type="button" id="default-city" class="btn btn-primary btn-sm btn-block">Set As Default City</button>
         <p id="current-condition" class="text-center current">{{currentCondition}}</p>
       </div>
       <div id="current-weather-icon" class="col-md-6">

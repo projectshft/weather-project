@@ -6,11 +6,13 @@ let defaultCity = localStorage.getItem('defaultCity');
 let currentCityName = '';
 
 //Get Current position's latitude and longitude
-navigator.geolocation.getCurrentPosition((position) => {
+$('#current-location').on('click', function() {
+  navigator.geolocation.getCurrentPosition((position) => {
   const longitute = position.coords.longitude;
   const latitude = position.coords.latitude;
   
   fetchCurrentCityName(longitute, latitude);
+  });
 });
 
 //Use latitude and longitude to get the current location's city name
@@ -21,6 +23,8 @@ const fetchCurrentCityName = (longitude, latitude) => {
     url: `http://api.openweathermap.org/geo/1.0/reverse?lat=${latitude}&lon=${longitude}&appid=${apiKey}`,
     success: function(data) {
       currentCityName = data[0].name;
+      fetchCurrent(currentCityName);
+      fetchForecast(currentCityName);
     },
     error: function(jqXhr, textStatus, errorMessage) {
       console.log(textStatus);
@@ -37,6 +41,7 @@ const loadPage = function () {
 
 $('#current-weather-conditions').on('click', '#default-city', function() {
   localStorage.setItem('defaultCity', currentWeatherData.currentCity);
+  defaultCity = localStorage.getItem('defaultCity');
   $('#default-city').css('display', 'none');
 })
 
