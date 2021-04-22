@@ -3,6 +3,30 @@ let forecastData = [];
 const daysOfTheWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 const apiKey = `c1300dccedd35aac7b51e962f9c75288`;
 let defaultCity = localStorage.getItem('defaultCity');
+let currentCityName = '';
+
+//Get Current position's latitude and longitude
+navigator.geolocation.getCurrentPosition((position) => {
+  const longitute = position.coords.longitude;
+  const latitude = position.coords.latitude;
+  
+  fetchCurrentCityName(longitute, latitude);
+});
+
+//Use latitude and longitude to get the current location's city name
+const fetchCurrentCityName = (longitude, latitude) => {
+  $.ajax({
+    method: "GET",
+    dataType: "JSON",
+    url: `http://api.openweathermap.org/geo/1.0/reverse?lat=${latitude}&lon=${longitude}&appid=${apiKey}`,
+    success: function(data) {
+      currentCityName = data[0].name;
+    },
+    error: function(jqXhr, textStatus, errorMessage) {
+      console.log(textStatus);
+    }
+  });
+};
 
 const loadPage = function () {
   if (defaultCity) {
