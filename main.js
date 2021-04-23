@@ -67,7 +67,8 @@ var renderCurrentWeather = function () {
 // how to break out separate functions?
 var formatForecastWeather = function (forecastData) {
 
-  filteredData = []; 
+  filteredData = [];
+  forecastWeather = []; 
 
   for (i = 0; i < forecastData.list.length; i++) {
     var forecastDataDates = forecastData.list[i].dt_txt;
@@ -75,8 +76,6 @@ var formatForecastWeather = function (forecastData) {
       filteredData.push(forecastData.list[i]);
     }
   };
-  
-  console.log(filteredData[0])
 
   for (j=0; j<filteredData.length; j++) {
     var dayInfo = {
@@ -88,7 +87,6 @@ var formatForecastWeather = function (forecastData) {
     forecastWeather.push(dayInfo);
   };
   
-  console.log(forecastWeather);
   renderForecastWeather();
 };
 
