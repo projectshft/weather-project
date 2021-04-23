@@ -186,11 +186,11 @@ var fetchForecast = function (query) {
     }
   });
 };
-
+//separates raw data into 5 days data into weatherForecastObj
 var compileFetchData = function (array) {
   for (let i = 0; i < array.length; i ++) {
     var dailyData = array[i]; 
-    
+
     if (i < 8) {
       weatherForecastObj.day1.push(dailyData);
     } else if (i > 7 && i < 16) {
@@ -204,23 +204,31 @@ var compileFetchData = function (array) {
     };
   }; 
 };
-
+//selects target data points and pushes data obj into weatherForecast array
 var buildWeatherForecastObjs = function (array) {
+  var temp = [];
+  var condition = [];
+  var icon = [];
+  var weekDays = [];
+
   for (let i = 0; i < array.length; i++) {
-    var maxTemp = Math.max(Math.round(array[i].main.temp_max || null));
-    var weatherCondition = array[i].weather[0].main || null; 
-    var weatherIcon = array[i].weather[0].icon || null;
-    var weekDay = moment(array[i].dt_txt).format('dddd') || null;
+    array[i]['dt_txt'] = moment(array[i]['dt_txt']).format('dddd'); 
+    temp.push(Math.round(array[i].main.temp_max || null));
+    condition.push(array[i].weather[0].main || null);
+    icon.push(array[i].weather[0].icon || null);
+    weekDays.push(array[i].dt_txt || null);
   };
   
   weatherForecast.push({
-    forecastWeatherCondition: weatherCondition,
-    forecastTemp: maxTemp,
-    forecastWeatherIcon: "http://openweathermap.org/img/wn/" + weatherIcon + "@2x.png" ,
-    forecastWeekDay: weekDay
+    forecastWeatherCondition: condition[3],
+    forecastTemp: Math.max(...temp),
+    forecastWeatherIcon: "http://openweathermap.org/img/wn/" + icon[3] + "@2x.png" ,
+    forecastWeekDay: weekDays[3]
   })
-};
 
+
+};
+//loops through 5 day data adds objs of target data to weatherForecast array via bulidWeatherForecastObjs
 var fillWeatherForecast = function () {
   for (prop in weatherForecastObj) {
     var day = weatherForecastObj[prop]; 

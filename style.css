@@ -1,11 +1,11 @@
 .page-header h1 {
   text-align: center;
-  margin-top: 40px;
-  margin-right: 60px;
+  margin-top: 5%;
+  margin-right: 10%;
 }
 
 .background-image {
-  margin-right: 75px;
+  margin-right: 10%;
   padding-top: 0;
   background-image: url("http://openweathermap.org/img/wn/02d@2x.png");
 }
@@ -16,7 +16,7 @@
 
 #search-query {
   width: 80%;
-  margin-right: 15px;
+  margin-right: 2%;
 }
 
 .current-location {
@@ -24,28 +24,28 @@
 }
 
 .current-weather {
-  margin-top: 50px;
-  padding-left: 70px;
+  margin-top: 10%;
+  padding-left: 14%;
 }
 
 .daily-weather {
   text-align: center;
+  padding-left: 0px;
 }
 
 .forecast {
-  margin-top: 20px;
-  padding-right: 90px;
+  margin-top: 2%;
+  padding-right: 10%;
 }
 
 .forecast-weather {
   border: black;
   border-width: 1px;
   border-style: solid;
-  padding-top: 10px;
-  padding-right: 50px;
-  padding-left: 50px;
-  padding-bottom: 10px;
-  background-color: white;
+  padding-top: 1%;
+  padding-right: 15%;
+  padding-left: 15%;
+  padding-bottom: 1%;
 }
 
 .forecast-weather div {
@@ -53,5 +53,5 @@
 }
 
 .forecast-weather img {
-  margin-left: 30px;
+  padding-left: 15%;
 }
