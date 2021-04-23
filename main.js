@@ -1,38 +1,6 @@
 currentWeather = [];
 forecastWeather=[];
 
-var renderWeather = function () {
-  $('.currentWeather').empty();
-
-  for (var i = 0; i < currentWeather.length; i++) {
-    const weather = currentWeather[i];
-
-    // create HTML and append to .currentWeather
-    var source = $('#current-weather-template').html();
-    var template = Handlebars.compile(source);
-    var newHTML = template(weather);
-
-    $('.currentWeather').append(newHTML);
-  }
-};
-
-renderWeather();
-
-var renderForecast = function () {
-  $('.forecastWeather').empty();
-
-  for (var i = 0; i < forecastWeather.length; i++) {
-    // create HTML and append to .currentWeather
-    var source = $('#forecast-template').html();
-    var template = Handlebars.compile(source);
-    var newHTML = template(forecastWeather[i]);
-
-    $('.forecast').append(newHTML);
-  }
-};
-
-renderForecast();
-
 //Upon clicking the search button, the data for current weather and forecast are called
 $('.search').on('click', function () {
   var search = $('#search-query').val();
@@ -73,9 +41,8 @@ var fetchForecast = function (query) {
 
 //Extracts specific information from the API and pushes it to the currentWeather array
 var addCurrentWeather = function (data) {
-    //push individual weather objects to the currentWeather array
     currentWeather.push({
-      degrees: data.main.temp + '°',
+      degrees: Math.round(data.main.temp) + '°',
       city: data.name,
       weatherType: data.weather[0].description,
       iconURL: 'https://openweathermap.org/img/wn/' + data.weather[0].icon + '@2x.png'
@@ -85,15 +52,51 @@ var addCurrentWeather = function (data) {
   currentWeather = [];
 };
 
+//Extracts specific information from the API and pushes it to the forecastWeather array
 var addForecast = function (data) {
-    //push individual forecast objects to forecastWeather array
-    forecastWeather.push({
-      day: 'day',
-      weatherType: data.list[0].weather[0].description,
-      degrees: data.list[0].main.temp + '°',
-      iconURL: 'https://openweathermap.org/img/wn/' + data.list[0].weather[0].icon + '@2x.png'
-    });
+    for(i=0; i < data.list.length; i++) {
+      forecastWeather.push({
+        day: moment(data.list[i].dt_txt).format('dddd'),
+        weatherType: data.list[i].weather[0].description,
+        degrees: Math.round(data.list[i].main.temp) + '°',
+        iconURL: 'https://openweathermap.org/img/wn/' + data.list[i].weather[0].icon + '@2x.png'
+      });
+    };
+  
 
   renderForecast();
+  forecastWeather = [];
 };
 
+var renderWeather = function () {
+  $('.currentWeather').empty();
+
+  for (var i = 0; i < currentWeather.length; i++) {
+    const weather = currentWeather[i];
+
+    // create HTML and append to .currentWeather
+    var source = $('#current-weather-template').html();
+    var template = Handlebars.compile(source);
+    var newHTML = template(weather);
+
+    $('.currentWeather').append(newHTML);
+  }
+};
+
+renderWeather();
+
+var renderForecast = function () {
+  $('.forecast').empty();
+
+  for (var i = 0; i < forecastWeather.length; i++) {
+    const weatherForecast = forecastWeather[i];
+    // create HTML and append to .currentWeather
+    var source = $('#forecast-template').html();
+    var template = Handlebars.compile(source);
+    var newHTML = template(weatherForecast);
+
+    $('.forecast').append(newHTML);
+  }
+};
+
+renderForecast();

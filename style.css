@@ -17,12 +17,13 @@
   display: inline;
 }
 
-.forecast {
-  border: 1px gray;
-  padding: 5px;
-  margin-bottom: 15px;
+.forecast-day img {
+  width: 50%;
 }
 
-.forecast img {
-  width: 50%;
+.forecast-day {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border: 1px solid darkgray;
+  padding: 10px;
 }
