@@ -1,7 +1,6 @@
 const currentWeatherData = {};
 let forecastData = [];
 const daysOfTheWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-const apiKey = `c1300dccedd35aac7b51e962f9c75288`;
 let defaultCity = localStorage.getItem('defaultCity');
 let currentCityName = '';
 
@@ -20,7 +19,7 @@ const fetchCurrentCityName = (longitude, latitude) => {
   $.ajax({
     method: "GET",
     dataType: "JSON",
-    url: `http://api.openweathermap.org/geo/1.0/reverse?lat=${latitude}&lon=${longitude}&appid=${apiKey}`,
+    url: `http://api.openweathermap.org/geo/1.0/reverse?lat=${latitude}&lon=${longitude}&appid=${config.apiKey}`,
     success: function(data) {
       currentCityName = data[0].name;
       fetchCurrent(currentCityName);
@@ -73,7 +72,7 @@ const fetchCurrent = (cityName) => {
   $.ajax({
     method: "GET",
     dataType: "JSON",
-    url: `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&units=imperial&appid=${apiKey}`,
+    url: `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&units=imperial&appid=${config.apiKey}`,
     success: function(data) {
       addToCurrentWeatherData(data);
     },
@@ -87,7 +86,7 @@ const fetchForecast = (cityName) => {
   $.ajax({
     method: "GET",
     dataType: "JSON",
-    url: `https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&units=imperial&appid=${apiKey}`,
+    url: `https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&units=imperial&appid=${config.apiKey}`,
     success: function(forecastResponse) {
       addToForecastData(forecastResponse);
     },
