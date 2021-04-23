@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>What's The Weather</title>
+  </head>
+  <body>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-6 offset-md-3">
+          <div class="page-header">
+          <h1>What's the weather?</h1>
+          <hr/>
+          </div>
+
+          <form class="search-form">
+          <h6>Enter a city below to see the current weather and five day forecast</h6>
+
+          <div class="form-inline">
+            <input type="text" id="search-query" class="form-control" placeholder="Enter city">
+            </input>
+          
+
+          <button type="button" class="btn btn-primary search">Search</button>
+          </form>
+
+        </div>
+        
+          <hr/>
+
+          <div class="currentWeather row">
+          </div>
+
+          <div class="forecast row">
+          </div>
+
+      </div>
+    </div> 
+
+  <script id="current-weather-template" type="text/x-handlebars-template">
+    <div class="current col-md-6">
+      <h4>{{ degrees }}</h4>
+      <div><strong>{{ city }}</strong></div>
+      <div>{{ weatherType }}</div>
+      <img src="{{iconURL}}" alt="">
+      <span><hr></span>
+    </div>
+  </script>
+
+  <script id="forecast-template" type="text/x-handlebars-template">
+    <div class="col-md-6">
+      <div class="forecast">
+        <h3>{{ day}} </h3>
+        <div>{{ weatherType }}</div>
+        <h4>{{ degrees }}</h4>
+      <img src="{{iconURL}}" alt="">
+    </div>
+    </div>
+  </script>
+
+  <script
+  src="https://code.jquery.com/jquery-3.6.0.js"
+  integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+  crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
+    <script src="main.js"></script>
+  </body>
+</html>

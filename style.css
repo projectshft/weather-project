@@ -1,0 +1,28 @@
+.page-header {
+  margin-top: 40px;
+}
+
+.search-form {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.form-control {
+  width: 600px;
+  margin-right: 10px;
+}
+
+.current img {
+  width: 50%;
+  display: inline;
+}
+
+.forecast {
+  border: 1px gray;
+  padding: 5px;
+  margin-bottom: 15px;
+}
+
+.forecast img {
+  width: 50%;
+}
