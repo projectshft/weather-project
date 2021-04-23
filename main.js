@@ -82,7 +82,7 @@ var formatForecastWeather = function (forecastData) {
       conditions: filteredData[j].weather[0].main,
       temp: Math.round(filteredData[j].main.temp) + '\u00B0',
       icon: 'http://openweathermap.org/img/wn/' + filteredData[j].weather[0].icon + '.png',
-      day: filteredData[j].dt_txt
+      day: moment(filteredData[j].dt_txt).format("dddd")
     }
     forecastWeather.push(dayInfo);
   };
