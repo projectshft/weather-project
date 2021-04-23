@@ -101,6 +101,7 @@ const addToCurrentWeatherData = data => {
   currentWeatherData.currentTemp = Math.round(data.main.temp) || null;
   currentWeatherData.currentCondition = data.weather[0].main || null;
   currentWeatherData.currentIcon = data.weather[0].icon || null;
+  currentWeatherData.key = config.mapsApiKey;
 
   render();
 };

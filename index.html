@@ -14,13 +14,13 @@
     <title>Weather Project</title>
   </head>
   <body>
+    <header>
+      <h1>Weather Project</h1>
+      <hr />
+    </header>
     <div class="container">
       <div class="row">
-        <div class="col-md-6 offset-3">
-          <header>
-            <h1>Weather Project</h1>
-            <hr />
-          </header>
+        <div class="col-md-6 offset-md-3">
           <div class="col-md-12 text-center">
             <button id="current-location" type="button" class="btn btn-info">Get Forecast for Current Location</button>
           </div>
@@ -43,30 +43,40 @@
               </button>
             </div>
           </form>
-          <div id="current-weather-conditions" class="row">
-          </div>
         </div>
       </div>
+
+      <div id="current-weather-conditions" class="row offset-2"></div>
+
       <div id="forecast-row" class="row offset-2">
+
     </div>
 
     <script id="current-weather-template" type="text/x-handlebars">
-      <div class="col-md-4 offset-md-4">
+      <div class="col-md-6 map">
+        <iframe
+          width="350px"
+          height="300px"
+          style="border:0"
+          loading="lazy"
+          allowfullscreen
+          src="https://www.google.com/maps/embed/v1/place?key={{key}}&q={{currentCity}}&zoom=13">
+        </iframe>
       </div>
-      <div class="col-md-6">
+
+      <div class="col-md-4">
         <p id="current-temp" class="text-center current">{{currentTemp}}&#176;</p>
         <p id="current-city" class="text-center current">{{currentCity}}</p>
-        <button type="button" id="default-city" class="btn btn-primary btn-sm btn-block">Set As Default City</button>
-        <p id="current-condition" class="text-center current">{{currentCondition}}</p>
-      </div>
-      <div id="current-weather-icon" class="col-md-6">
-        <p class="text-center">
+        <button type="button" id="default-city" class="btn btn-primary btn-sm">Set As Default City</button>
+        <p id="current-condition" class="text-center current">{{currentCondition}}</p>        
+        <p id="current-weather-icon" class="text-center">
           <img
           src="http://openweathermap.org/img/wn/{{currentIcon}}@2x.png"
           alt="weather icon"
           />
         </p>
       </div>
+
       
     </script>
 

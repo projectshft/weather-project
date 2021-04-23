@@ -1,6 +1,6 @@
 header {
   text-align: center;
-  margin-bottom: 50px;
+  margin-bottom: 25px;
   margin-top: 50px;
 }
 
@@ -21,10 +21,11 @@ form {
 #current-condition {
   font-size: 25px;
   font-weight: 500;
+  margin-bottom: 0;
 }
 
 #current-weather-icon img {
-  width: 75%;
+  width: 50%;
 }
 
 .forecast {
@@ -47,13 +48,14 @@ form {
 
 #default-city {
   display: block;
-  margin: 0;
+  margin: auto;
 }
 
 #current-location {
-  margin-bottom: 50px;
+  margin-bottom: 25px;
 }
 
-#current-condition {
+.map {
+  width: 100%;
   margin-bottom: 25px;
 }
