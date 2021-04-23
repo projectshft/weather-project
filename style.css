@@ -8,6 +8,10 @@ form {
   margin-bottom: 50px;
 }
 
+.forecast-boxes {
+  margin: 10px;
+}
+
 .forecast-day {
   margin-top: 50px;
   margin-bottom: 50px;
