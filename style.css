@@ -7,3 +7,14 @@
 form {
   margin-bottom: 50px;
 }
+
+.forecast-day {
+  margin-top: 50px;
+  margin-bottom: 50px;
+  border: 1px solid black;
+  padding: 10px;
+}
+
+.temp {
+  font-size: 24px;
+}

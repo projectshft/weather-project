@@ -36,7 +36,7 @@
           <div class="current-weather row">
           </div>
 
-          <div class="forecast row">
+          <div class="forecast-boxes row">
           </div>
 
       </div>
@@ -46,11 +46,20 @@
   <script id="current-weather-template" type="text/x-handlebars-template">
     <div class="col text-center">
       <h2>{{ temp }}</h2>
-      <h3>{{ name }}</h3>
-      <h4>{{ main }}</h4>
+      <h3>{{ city }}</h3>
+      <h4>{{ conditions }}</h4>
     </div>
     <div class="col text-center">
       <img src="{{ icon }}"/>
+    </div>
+  </script>
+
+  <script id="forecast-weather-template" type="text/x-handlebars-template">
+    <div class="col text-center forecast-day">
+      <p>{{ conditions }}</p>
+      <p class="temp">{{ temp }}</p>
+      <p><img src="{{ icon }}"/></p>
+      <p>{{ day }}</p>
     </div>
   </script>
   

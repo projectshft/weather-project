@@ -1,13 +1,16 @@
 var currentWeather = {};
+var forecastWeather = [];
+var filteredData = [];
 
 
 //on click, generates search query and invokes fetch function (API call)
 $('.search').on('click', function () {
-  var weatherSearch = $('#search-query').val();
+  var citySearch = $('#search-query').val();
 
-  fetch(weatherSearch);
+  fetch(citySearch);
 });
 
+//connects to the API to get the data and on success invokes function which formats the data to be pushed into the object/array
 var fetch = function (query) {
   var apiKey = "3ba2ed09725ebf9563a4db3c40b2c22f"
 
@@ -22,15 +25,27 @@ var fetch = function (query) {
       console.log(textStatus);
     }
   });
+
+  $.ajax({
+    method: "GET",
+    url: "https://api.openweathermap.org/data/2.5/forecast?q=" + query + "&units=imperial&appid=" + apiKey,
+    dataType: "json",
+    success: function(forecastData) {
+      formatForecastWeather(forecastData);
+    },
+    error: function(jqXHR, textStatus, errorThrown) {
+      console.log(textStatus);
+    }
+  });
 };
 
-// function that formats API search results & pushes them into the currentWeather object
+// formats API search results & pushes them into the currentWeather object
 
 var formatCurrentWeather = function (data) {
   currentWeather = {
     temp: Math.round(data.main.temp) + '\u00B0',
-    name: data.name,
-    main: data.weather[0].main,
+    city: data.name,
+    conditions: data.weather[0].main,
     icon: 'http://openweathermap.org/img/wn/' + data.weather[0].icon + '@2x.png'
   }
 
@@ -48,4 +63,47 @@ var renderCurrentWeather = function () {
   $('.current-weather').append(newHTML);
 };
 
-renderCurrentWeather();
+// Filters API search results, formats them & pushes them into the forecastWeather array
+// how to break out separate functions?
+var formatForecastWeather = function (forecastData) {
+
+  filteredData = []; 
+
+  for (i = 0; i < forecastData.list.length; i++) {
+    var forecastDataDates = forecastData.list[i].dt_txt;
+    if (forecastDataDates.includes('12:00:00')) {
+      filteredData.push(forecastData.list[i]);
+    }
+  };
+  
+  console.log(filteredData[0])
+
+  for (j=0; j<filteredData.length; j++) {
+    var dayInfo = {
+      conditions: filteredData[j].weather[0].main,
+      temp: Math.round(filteredData[j].main.temp) + '\u00B0',
+      icon: 'http://openweathermap.org/img/wn/' + filteredData[j].weather[0].icon + '.png',
+      day: filteredData[j].dt_txt
+    }
+    forecastWeather.push(dayInfo);
+  };
+  
+  console.log(forecastWeather);
+  renderForecastWeather();
+};
+
+
+
+//renders what's in the forecastWeather array
+var renderForecastWeather = function () {
+  $('.forecast-boxes').empty();
+
+  for (i = 0; i < forecastWeather.length; i++) {
+
+    var source = $('#forecast-weather-template').html();
+    var template = Handlebars.compile(source);
+    var newHTML = template(forecastWeather[i]);
+    
+    $('.forecast-boxes').append(newHTML);
+  }
+};
