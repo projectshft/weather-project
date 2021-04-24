@@ -57,7 +57,7 @@ var addForecast = function (data) {
   var weatherByDate = groupForecast(data.list);
   console.log(weatherByDate);
 
-  findAvgTemp(weatherByDate);
+  var avgTemp = findAvgTemp(weatherByDate);
 
     for(i=0; i < data.list.length; i++) {
       forecastWeather.push({
@@ -67,7 +67,6 @@ var addForecast = function (data) {
         iconURL: 'https://openweathermap.org/img/wn/' + data.list[i].weather[0].icon + '@2x.png'
       });
     };
-  
 
   renderForecast();
   forecastWeather = [];
@@ -123,6 +122,10 @@ var findAvgTemp = function (weatherByDate) {
     for(let i = 0; i < day.length; i++) {
       temps.push(day[i].main.temp);
     };
-    console.log(temps);
+    const sum = temps.reduce((accumulator,currentValue) => {
+      return accumulator + currentValue;
+    });
+    var avg = Math.round(sum/temps.length);
+    return avg
   };
 };
