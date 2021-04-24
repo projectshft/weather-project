@@ -1,65 +1,60 @@
 var apiKey = '76e35e9aadf52246c6368e03bedbcecb'; 
 var currentWeather = [];
 var weatherForecast = []; 
-var weatherForecastObj = {
-  day1: [],
-  day2: [],
-  day3: [],  
-  day4: [], 
-  day5: []
+var dailyData; 
+var today;
+var states = {
+  AZ: 'Arizona',
+  AL: 'Alabama',
+  AK: 'Alaska',
+  AR: 'Arkansas', 
+  CA: 'California',
+  CO: 'Colorado',
+  CT: 'Connecticut', 
+  DE: 'Delaware',
+  FL: 'Florida',
+  GA: 'Georgia',
+  HI: 'Hawaii',
+  ID: 'Idaho', 
+  IL: 'Illinois',
+  IN: 'Indiana',
+  IA: 'Iowa', 
+  KS: 'Kansas',
+  KY: 'Kentucky',
+  LA: 'Louisiana',
+  ME: 'Maine',
+  MD: 'Maryland',
+  MA: 'Massachusetts', 
+  MI: 'Michigan',
+  MN: 'Minnesota',
+  MS: 'Mississippi',
+  MO: 'Missouri',
+  MT: 'Montana',
+  NE: 'Nebraska',
+  NV: 'Nevada',
+  NH: 'New Hampshire', 
+  NJ: 'New Jersey', 
+  NM: 'New Mexico',
+  NY: 'New York', 
+  NC: 'North Carolina',
+  ND: 'North Dakota',
+  OH: 'Ohio',
+  OK: 'Oklahoma',
+  OR: 'Oregon',
+  PA: 'Pennsylvania', 
+  RI: 'Rhode Island', 
+  SC: 'South Carolina',
+  SD: 'South Dakota', 
+  TN: 'Tennessee',
+  TX: 'Texas',
+  UT: 'Utah', 
+  VT: 'Vermont',
+  VA: 'Virginia',
+  WA: 'Washington',
+  WV: 'West Virginia',
+  WI: 'Wisconsin',
+  WY: 'Wyoming'
 };
-var states = [
-  ['Arizona', 'AZ'],
-  ['Alabama', 'AL'],
-  ['Alaska', 'AK'],
-  ['Arkansas', 'AR'],
-  ['California', 'CA'],
-  ['Colorado', 'CO'],
-  ['Connecticut', 'CT'],
-  ['Delaware', 'DE'],
-  ['Florida', 'FL'],
-  ['Georgia', 'GA'],
-  ['Hawaii', 'HI'],
-  ['Idaho', 'ID'],
-  ['Illinois', 'IL'],
-  ['Indiana', 'IN'],
-  ['Iowa', 'IA'],
-  ['Kansas', 'KS'],
-  ['Kentucky', 'KY'],
-  ['Louisiana', 'LA'],
-  ['Maine', 'ME'],
-  ['Maryland', 'MD'],
-  ['Massachusetts', 'MA'],
-  ['Michigan', 'MI'],
-  ['Minnesota', 'MN'],
-  ['Mississippi', 'MS'],
-  ['Missouri', 'MO'],
-  ['Montana', 'MT'],
-  ['Nebraska', 'NE'],
-  ['Nevada', 'NV'],
-  ['New Hampshire', 'NH'],
-  ['New Jersey', 'NJ'],
-  ['New Mexico', 'NM'],
-  ['New York', 'NY'],
-  ['North Carolina', 'NC'],
-  ['North Dakota', 'ND'],
-  ['Ohio', 'OH'],
-  ['Oklahoma', 'OK'],
-  ['Oregon', 'OR'],
-  ['Pennsylvania', 'PA'],
-  ['Rhode Island', 'RI'],
-  ['South Carolina', 'SC'],
-  ['South Dakota', 'SD'],
-  ['Tennessee', 'TN'],
-  ['Texas', 'TX'],
-  ['Utah', 'UT'],
-  ['Vermont', 'VT'],
-  ['Virginia', 'VA'],
-  ['Washington', 'WA'],
-  ['West Virginia', 'WV'],
-  ['Wisconsin', 'WI'],
-  ['Wyoming', 'WY'],
-];
 
 $('.search').on('click', function () { 
   reset(); 
@@ -100,32 +95,12 @@ var fetch = function (query) {
     }
   });
 }; 
-
-var backgroundStyle = function () {
+//changes weather icons line to current weather icon
+var changeStyle = function () {
   var urlString = 'url("' + currentWeather[0].currentWeatherIcon + '")'; 
   $('.background-image').css('background-image', urlString);  
 }; 
-
-/*
-//geolocation???
-$('.current-location').on('click', function () {
-  if('geolocation' in navigator) {
-    navigator.geolocation.getCurrentPosition((position) => {
-      doSomething(position.coords.latitude, position.coords.longitude);
-    });
-  } else {
-    console.log('geolocation not available')
-  } 
-}); */
- 
-var getStateFullName = function (abbr){
-  for(i = 0; i < states.length; i++){
-    if(states[i][1] == abbr){
-      return states[i][0];
-    };
-  };
-};
-
+//allows for use of US state abbreviations in city search
 var stateName = function (city) {
   let str1;
   let str2; 
@@ -138,7 +113,7 @@ var stateName = function (city) {
     city = city.split(" ").join(""); 
     var abbr = city.slice(-2) 
     var capitalAbbr = abbr.toUpperCase(); 
-    state = getStateFullName(capitalAbbr); 
+    state = states[capitalAbbr]; 
     fullName = str1 + ', ' + state; 
     return fullName; 
 
@@ -147,7 +122,6 @@ var stateName = function (city) {
     return fullName
   }; 
 };
-
 
 var renderCurrentWeather = function () {
   $('.current-weather').empty();
@@ -163,12 +137,12 @@ var renderCurrentWeather = function () {
     var currentWeatherIconHTML = iconTemplate(currentWeather[i]);
     $('.current-weather').append(currentWeatherIconHTML); 
   };
-   backgroundStyle(); 
+   changeStyle(); 
 }; 
 
 var addWeatherForecast = function (data) {
   var forecastData = data.list; 
-  compileFetchData(forecastData);
+  dailyData = compileFetchData(forecastData, 'dt_txt');
   fillWeatherForecast();
   renderForecastWeather();
 };
@@ -186,53 +160,60 @@ var fetchForecast = function (query) {
     }
   });
 };
-//separates raw data into 5 days data into weatherForecastObj
-var compileFetchData = function (array) {
-  for (let i = 0; i < array.length; i ++) {
-    var dailyData = array[i]; 
-
-    if (i < 8) {
-      weatherForecastObj.day1.push(dailyData);
-    } else if (i > 7 && i < 16) {
-      weatherForecastObj.day2.push(dailyData);
-    } else if (i > 15 && i < 24) {
-      weatherForecastObj.day3.push(dailyData)
-    } else if (i > 23 && i < 32) {
-      weatherForecastObj.day4.push(dailyData);
-    } else if (i > 31) {
-      weatherForecastObj.day5.push(dailyData);
+//makes an object with data organized by date. 
+var compileFetchData = function (objectArray, property) {
+  return objectArray.reduce(function (acc, objs) {
+    let key = objs[property].slice(0, 10)
+    if(!acc[key]) {
+      acc[key] = []
     };
-  }; 
+    acc[key].push(objs)
+    return acc;
+  }, {});
 };
+
 //selects target data points and pushes data obj into weatherForecast array
 var buildWeatherForecastObjs = function (array) {
   var temp = [];
   var condition = [];
   var icon = [];
-  var weekDays = [];
+  var weekDays;
 
   for (let i = 0; i < array.length; i++) {
-    array[i]['dt_txt'] = moment(array[i]['dt_txt']).format('dddd'); 
-    temp.push(Math.round(array[i].main.temp_max || null));
+    array[i]['dt_txt'] = moment(array[i]['dt_txt']).format('dddd'); //weekday
+
+    temp.push(Math.round(array[i].main.temp|| null));
     condition.push(array[i].weather[0].main || null);
     icon.push(array[i].weather[0].icon || null);
-    weekDays.push(array[i].dt_txt || null);
+    weekDays = array[i].dt_txt || null;
   };
   
   weatherForecast.push({
     forecastWeatherCondition: condition[3],
     forecastTemp: Math.max(...temp),
     forecastWeatherIcon: "http://openweathermap.org/img/wn/" + icon[3] + "@2x.png" ,
-    forecastWeekDay: weekDays[3]
+    forecastWeekDay: weekDays
   })
-
-
 };
-//loops through 5 day data adds objs of target data to weatherForecast array via bulidWeatherForecastObjs
+
+var getToday = function () {
+  today = new Date();
+  var dd = String(today.getDate()).padStart(2, '0');
+  var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0
+  var yyyy = today.getFullYear();
+  today = yyyy + '-' + mm + '-' + dd;
+  return today; 
+};
+
+//loops through dailyData and adds objs of target data to weatherForecast array via bulidWeatherForecastObjs
+//excludes current day's data
 var fillWeatherForecast = function () {
-  for (prop in weatherForecastObj) {
-    var day = weatherForecastObj[prop]; 
-    buildWeatherForecastObjs(day);
+  getToday();
+  for (prop in dailyData) {
+    if(prop != today) {
+      var day = dailyData[prop]; 
+      buildWeatherForecastObjs(day);
+    };
   };
 };
 
@@ -251,11 +232,4 @@ var renderForecastWeather = function () {
 var reset = function () {
   currentWeather = [];
   weatherForecast = []; 
-  weatherForecastObj = {
-    day1: [],
-    day2: [],
-    day3: [],  
-    day4: [], 
-    day5: []
-  };
 };
