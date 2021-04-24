@@ -62,7 +62,7 @@ var addCurrentWeather = function (weatherDay) {
   });
 };
 
-var addFiveDayWeather = function ( weatherFiveDay) {
+var addFiveDayWeather = function (weatherFiveDay) {
   let tempSum = 0;
   let dataPerDay = weatherFiveDay.list.length / 5;
   let fiveDayDescs = [];
@@ -70,7 +70,7 @@ var addFiveDayWeather = function ( weatherFiveDay) {
   let fiveDayIcons = [];
   let fiveDayDays = [];
 
-  for (let i=0; i<weatherFiveDay.list.length; i++) {
+  for (let i = 0; i < weatherFiveDay.list.length; i++) {
     var temp = weatherFiveDay.list[i].main.temp;
     tempSum += temp;
     var icon = weatherFiveDay.list[i].weather[0].icon;
@@ -87,17 +87,19 @@ var addFiveDayWeather = function ( weatherFiveDay) {
     }
   }
 
-  for (let j=0; j<5; j++) {
-    result = {
+  resultArr = [];
+  for (let j = 0; j < 5; j++) {
+    tempResult = {
       "five-day-desc": fiveDayDescs[j],
       "five-day-temp": fiveDayTemps[j],
       "five-day-icon": fiveDayIcons[j],
       "five-day-weather-day": fiveDayDays[j],
     };
-
-    renderFiveDayWeather(result); // prints out 31???
+    resultArr.push(tempResult);  
   }
-};
+
+  renderFiveDayWeather(resultArr);  
+};;
 
 var renderCurrentWeather = (function (x) {
   $(".current-weather").empty();
@@ -111,7 +113,11 @@ var renderCurrentWeather = (function (x) {
 var renderFiveDayWeather = (function (x) {
   var source = $("#five-day-weather-template").html();
   var template = Handlebars.compile(source);
-  var newHTML = template(x);
-  console.log(newHTML);
-  $(".five-day-weather").append(newHTML);
+
+  // only need these two lines in the loop, the rest cause the nested issue, 
+  // make bigger object and loop it here?
+  x.forEach(element => {
+    var newHTML = template(element);
+    $(".five-day-weather").append(newHTML);
+  });
 });
