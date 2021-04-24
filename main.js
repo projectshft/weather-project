@@ -44,7 +44,7 @@ var addCurrentWeather = function (data) {
     currentWeather.push({
       degrees: Math.round(data.main.temp) + '°',
       city: data.name,
-      weatherType: data.weather[0].description,
+      weatherType: data.weather[0].main,
       iconURL: 'https://openweathermap.org/img/wn/' + data.weather[0].icon + '@2x.png'
     });
 
@@ -57,7 +57,7 @@ var addForecast = function (data) {
     for(i=0; i < data.list.length; i++) {
       forecastWeather.push({
         day: moment(data.list[i].dt_txt).format('dddd'),
-        weatherType: data.list[i].weather[0].description,
+        weatherType: data.list[i].weather[0].main,
         degrees: Math.round(data.list[i].main.temp) + '°',
         iconURL: 'https://openweathermap.org/img/wn/' + data.list[i].weather[0].icon + '@2x.png'
       });
