@@ -57,7 +57,11 @@ var addForecast = function (data) {
   var weatherByDate = groupForecast(data.list);
   console.log(weatherByDate);
 
-  var avgTemp = findAvgTemp(weatherByDate);
+  var avgTemps = findAvgTemp(weatherByDate);
+  console.log(avgTemps);
+
+  var forecastDays = findForecastDays(weatherByDate);
+  console.log(forecastDays);
 
     for(i=0; i < data.list.length; i++) {
       forecastWeather.push({
@@ -116,6 +120,7 @@ var groupForecast = function (array) {
 
 //Function to find the daily average temperature using the output from the groupForecast function.
 var findAvgTemp = function (weatherByDate) {
+  var averages = [];
   for (prop in weatherByDate) {
     var day = weatherByDate[prop];
     var temps = [];
@@ -126,6 +131,34 @@ var findAvgTemp = function (weatherByDate) {
       return accumulator + currentValue;
     });
     var avg = Math.round(sum/temps.length);
-    return avg
+    averages.push(avg);
   };
+  return averages;
+};
+
+//function that returns an array of days to use in five day forecast
+var findForecastDays = function (weatherByDate) {
+  getTodaysDate();
+  forecastDays = [];
+  for (let i = 0; i < Object.keys(weatherByDate).length; i++) {
+    forecastDays.push(moment(Object.keys(weatherByDate)[i]).format('dddd'));
+  };
+  return forecastDays;
+};
+
+//Function to get today's date
+var getTodaysDate = function () {
+  var today = new Date();
+  var dd = String(today.getDate()).padStart(2, '0');
+  var mm = String(today.getMonth() + 1).padStart(2, '0');
+  var yyyy = today.getFullYear();
+  today = mm + '/' + dd + '/' + yyyy;
+  return today;
+};
+
+//Function to build object with each day's condition, average temperature, and condition
+var makeDailyForecast = function (days) {
+  for(let i = 0; i < days.length; i++) {
+
+  }
 };
