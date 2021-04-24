@@ -54,6 +54,11 @@ var addCurrentWeather = function (data) {
 
 //Extracts specific information from the API and pushes it to the forecastWeather array
 var addForecast = function (data) {
+  var weatherByDate = groupForecast(data.list);
+  console.log(weatherByDate);
+
+  findAvgTemp(weatherByDate);
+
     for(i=0; i < data.list.length; i++) {
       forecastWeather.push({
         day: moment(data.list[i].dt_txt).format('dddd'),
@@ -83,7 +88,6 @@ var renderWeather = function () {
   }
 };
 
-renderWeather();
 
 var renderForecast = function () {
   $('.forecast').empty();
@@ -99,4 +103,26 @@ var renderForecast = function () {
   }
 };
 
-renderForecast();
+//Function that groups the weather object from the API into objects by day
+var groupForecast = function (array) {
+  return array.reduce(function (acc, obj) {
+    let key = obj['dt_txt'].substring(0,10);
+    if (!acc[key]) {
+      acc[key] = []
+    };
+    acc[key].push(obj)
+    return acc
+  }, {})
+};
+
+//Function to find the daily average temperature using the output from the groupForecast function.
+var findAvgTemp = function (weatherByDate) {
+  for (prop in weatherByDate) {
+    var day = weatherByDate[prop];
+    var temps = [];
+    for(let i = 0; i < day.length; i++) {
+      temps.push(day[i].main.temp);
+    };
+    console.log(temps);
+  };
+};
