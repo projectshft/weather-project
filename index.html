@@ -23,7 +23,7 @@
           </div>
 
           <form class="search-form">
-          <h6>Enter a city below to see the current weather and five day forecast</h6>
+          <h5>Enter a city below to see the current weather and five day forecast</h5>
 
           <div class="form-inline">
             <input type="text" id="search-query" class="form-control" placeholder="Enter city">
@@ -46,12 +46,14 @@
     </div> 
 
   <script id="current-weather-template" type="text/x-handlebars-template">
-    <div class="current col-md-8">
+    <div class="current col-md-10">
       <div><h3><strong>The current weather in {{ city }} is:</strong></h3></div>
-      <h3>{{ degrees }}</h3>      
+      <center><h3>{{ degrees }}</h3>      
       <div><h3>{{ weatherType }}</h3></div>
       <img src="{{iconURL}}" alt="">
+    </center>
     </div>
+    <h3><strong>The five (5) day forecast is: </strong></h3>
   </script>
 
   <script id="forecast-template" type="text/x-handlebars-template">
