@@ -1,7 +1,6 @@
 var currentWeather = {};
 var forecastWeather = [];
-var filteredData = [];
-
+var filteredForecast = [];
 
 //on click, generates search query and invokes fetch function (API call)
 $('.search').on('click', function () {
@@ -10,7 +9,7 @@ $('.search').on('click', function () {
   fetchForecast(citySearch);
 });
 
-//connects to the API to get the data and on success invokes function which formats the data to be pushed into the object/array
+//connects to the API to get the data and on success invokes format function
 var fetchCurrent = function (query) {
   var apiKey = "3ba2ed09725ebf9563a4db3c40b2c22f"
 
@@ -44,7 +43,6 @@ var fetchForecast = function (query) {
 };
 
 // formats API search results & pushes them into the currentWeather object
-
 var formatCurrentWeather = function (data) {
   currentWeather = {
     temp: Math.round(data.main.temp) + '\u00B0',
@@ -67,34 +65,31 @@ var renderCurrentWeather = function () {
   $('.current-weather').append(newHTML);
 };
 
-// Filters API search results, formats them & pushes them into the forecastWeather array
+// Filters API search results, formats & pushes them into the forecastWeather array
 var formatForecastWeather = function (forecastData) {
 
   // clear each array when the function is called
-  filteredData = []; 
+  filteredForecast = []; 
   forecastWeather = []; 
 
-  for (i = 0; i < forecastData.list.length; i++) {
-    var forecastDataDates = forecastData.list[i].dt_txt;
-    if (forecastDataDates.includes('12:00:00')) {
-      filteredData.push(forecastData.list[i]);
-    }
-  };
+  filteredForecast = forecastData.list.filter(function (dataPoint) {
+    if (dataPoint.dt_txt.includes('12:00:00')) {
+      return true
+    };
+  });
 
-  for (j=0; j<filteredData.length; j++) {
+  for (i=0; i<filteredForecast.length; i++) {
     var dayInfo = {
-      conditions: filteredData[j].weather[0].main,
-      temp: Math.round(filteredData[j].main.temp) + '\u00B0',
-      icon: 'http://openweathermap.org/img/wn/' + filteredData[j].weather[0].icon + '.png',
-      day: moment(filteredData[j].dt_txt).format("dddd")
+      conditions: filteredForecast[i].weather[0].main,
+      temp: Math.round(filteredForecast[i].main.temp) + '\u00B0',
+      icon: 'http://openweathermap.org/img/wn/' + filteredForecast[i].weather[0].icon + '.png',
+      day: moment(filteredForecast[i].dt_txt).format("dddd")
     }
     forecastWeather.push(dayInfo);
   };
   
   renderForecastWeather();
 };
-
-
 
 //renders what's in the forecastWeather array
 var renderForecastWeather = function () {
