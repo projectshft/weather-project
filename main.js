@@ -6,12 +6,12 @@ var filteredData = [];
 //on click, generates search query and invokes fetch function (API call)
 $('.search').on('click', function () {
   var citySearch = $('#search-query').val();
-
-  fetch(citySearch);
+  fetchCurrent(citySearch);
+  fetchForecast(citySearch);
 });
 
 //connects to the API to get the data and on success invokes function which formats the data to be pushed into the object/array
-var fetch = function (query) {
+var fetchCurrent = function (query) {
   var apiKey = "3ba2ed09725ebf9563a4db3c40b2c22f"
 
   $.ajax({
@@ -25,6 +25,10 @@ var fetch = function (query) {
       console.log(textStatus);
     }
   });
+};
+
+var fetchForecast = function (query) {
+  var apiKey = "3ba2ed09725ebf9563a4db3c40b2c22f"
 
   $.ajax({
     method: "GET",
@@ -64,10 +68,10 @@ var renderCurrentWeather = function () {
 };
 
 // Filters API search results, formats them & pushes them into the forecastWeather array
-// how to break out separate functions?
 var formatForecastWeather = function (forecastData) {
 
-  filteredData = [];
+  // clear each array when the function is called
+  filteredData = []; 
   forecastWeather = []; 
 
   for (i = 0; i < forecastData.list.length; i++) {
