@@ -1,8 +1,9 @@
 currentWeather = [];
-forecastWeather=[];
+forecastWeather= [];
 
 //Upon clicking the search button, the data for current weather and forecast are called
 $('.search').on('click', function () {
+  resetAll();
   var search = $('#search-query').val();
 
   fetchCurrent(search);
@@ -54,24 +55,24 @@ var addCurrentWeather = function (data) {
 
 //Extracts specific information from the API and pushes it to the forecastWeather array
 var addForecast = function (data) {
+  //Restructures the data to be grouped by day
   var weatherByDate = groupForecast(data.list);
-  console.log(weatherByDate);
 
-  var avgTemps = findAvgTemp(weatherByDate);
-  console.log(avgTemps);
-
-  var forecastDays = findForecastDays(weatherByDate);
-  console.log(forecastDays);
-
-    for(i=0; i < data.list.length; i++) {
-      forecastWeather.push({
-        day: moment(data.list[i].dt_txt).format('dddd'),
-        weatherType: data.list[i].weather[0].main,
-        degrees: Math.round(data.list[i].main.temp) + '°',
-        iconURL: 'https://openweathermap.org/img/wn/' + data.list[i].weather[0].icon + '@2x.png'
-      });
-    };
-
+//Calls each of the four functions to create arrays for forecast data
+ var avgTemps = findAvgTemp(weatherByDate);
+ var forecastDays = findForecastDays(weatherByDate);
+ var conditions = getConditions(weatherByDate);
+ var iconIds = getIconIds(weatherByDate);
+ 
+ for(i=0; i < Object.keys(weatherByDate).length - 1; i++) {
+   forecastWeather.push({
+     day: forecastDays[i],
+     weatherType: conditions[i],
+     degrees: avgTemps[i] + '°',
+     iconURL: 'https://openweathermap.org/img/wn/' + iconIds[i] + '@2x.png'
+    });
+  };
+  
   renderForecast();
   forecastWeather = [];
 };
@@ -90,7 +91,6 @@ var renderWeather = function () {
     $('.currentWeather').append(newHTML);
   }
 };
-
 
 var renderForecast = function () {
   $('.forecast').empty();
@@ -116,6 +116,16 @@ var groupForecast = function (array) {
     acc[key].push(obj)
     return acc
   }, {})
+};
+
+//Function to get today's date
+var getTodaysDate = function () {
+  var today = new Date();
+  var dd = String(today.getDate()).padStart(2, '0');
+  var mm = String(today.getMonth() + 1).padStart(2, '0');
+  var yyyy = today.getFullYear();
+  today = mm + '/' + dd + '/' + yyyy;
+  return today;
 };
 
 //Function to find the daily average temperature using the output from the groupForecast function.
@@ -146,19 +156,31 @@ var findForecastDays = function (weatherByDate) {
   return forecastDays;
 };
 
-//Function to get today's date
-var getTodaysDate = function () {
-  var today = new Date();
-  var dd = String(today.getDate()).padStart(2, '0');
-  var mm = String(today.getMonth() + 1).padStart(2, '0');
-  var yyyy = today.getFullYear();
-  today = mm + '/' + dd + '/' + yyyy;
-  return today;
+//Function to make an array of conditions for five day forecast
+var getConditions = function (weatherByDate) {
+  var conditions = [];
+  for(i=0; i < Object.keys(weatherByDate).length -1; i++) {
+    var condition = weatherByDate[Object.keys(weatherByDate)[i]][4].weather[0].main;
+    conditions.push(condition);
+};
+return conditions
 };
 
-//Function to build object with each day's condition, average temperature, and condition
-var makeDailyForecast = function (days) {
-  for(let i = 0; i < days.length; i++) {
+//Function to make an array of icon ids for five day forecast
+var getIconIds = function (weatherByDate) {
+  var iconIds = [];
+  for(i=0; i < Object.keys(weatherByDate).length -1; i++) {
+    var iconId = weatherByDate[Object.keys(weatherByDate)[i]][4].weather[0].icon;
+    iconIds.push(iconId);
+};
+return iconIds
+};
 
-  }
+var resetAll = function () {
+  currentWeather = [];
+  forecastWeather= [];
+  avgTemps = [];
+  forecastDays = [];
+  conditions = [];
+  iconIds = [];
 };
