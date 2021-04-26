@@ -1,0 +1,28 @@
+.page-header {
+  margin-top: 40px;
+}
+
+.search-form {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.form-control {
+  width: 600px;
+  margin-right: 10px;
+}
+
+.current img {
+  width: 30%;
+}
+
+.forecast-day img {
+  width: 50%;
+}
+
+.forecast-day {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border: 1px solid darkgray;
+  padding: 10px;
+}
