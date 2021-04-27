@@ -1,0 +1,57 @@
+.page-header h1 {
+  text-align: center;
+  margin-top: 5%;
+  margin-right: 10%;
+}
+
+.background-image {
+  margin-right: 10%;
+  padding-top: 0;
+  background-image: url("http://openweathermap.org/img/wn/02d@2x.png");
+}
+
+.background-image h1 {
+  visibility: hidden;
+}
+
+#search-query {
+  width: 80%;
+  margin-right: 2%;
+}
+
+.current-location {
+  margin-top: 20px;
+}
+
+.current-weather {
+  margin-top: 10%;
+  padding-left: 14%;
+}
+
+.daily-weather {
+  text-align: center;
+  padding-left: 0px;
+}
+
+.forecast {
+  margin-top: 2%;
+  padding-right: 8%;
+}
+
+.forecast-weather {
+  border: black;
+  border-width: 1px;
+  border-style: solid;
+  padding-top: 1%;
+  padding-right: 15%;
+  padding-left: 15%;
+  padding-bottom: 1%;
+}
+
+.forecast-weather div {
+  text-align: center;
+}
+
+.forecast-weather img {
+  padding-left: 15%;
+}

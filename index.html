@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
+      integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ"
+      crossorigin="anonymous"
+    />
+    <title>Weather Project</title>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-6 offset-md-3">
+          <div class="page-header">
+            <h1>Weather Project</h1>
+          </div>
+
+          <div class="background-image">
+            <h1>space</h1>
+            <h1>space</h1>
+          </div>
+
+          <form class="form-inline weather-form" action="">
+            <label class="sr-only" for="search">City</label>
+            <input
+              type="text"
+              class="form-control"
+              id="search-query"
+              placeholder="Enter city, state "
+            />
+            <button type="button" class="btn btn-primary search">Search</button>
+          </form>
+
+          <div class="current-weather row"></div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-10 offset-md-2">
+          <div class="forecast row"></div>
+        </div>
+      </div>
+    </div>
+
+    <script id="current-weather-template" type="text/x-handlebars-template">
+      <div class="col-md-5 daily-weather">
+        <h3>
+          {{temp}}F
+        </h3>
+        <div>
+          {{city}}
+        </div>
+        <div>
+          {{weatherCondition}}
+        </div>
+      </div>
+    </script>
+
+    <script
+      id="current-weather-icon-template"
+      type="text/x-handlebars-template"
+    >
+      <div class="col-md-6 daily-icon">
+        <img src="{{currentWeatherIcon}}" alt="" />
+      </div>
+    </script>
+
+    <script id="weather-forecast" type="text/x-handlebars-template">
+      <div class="col-xs-4 col-sm-2 forecast-weather">
+        <div>
+          {{forecastWeatherCondition}}
+        </div>
+        <div>
+          {{forecastTemp}}F
+        </div>
+        <img src="{{forecastWeatherIcon}}" alt="" />
+        <div>
+          {{forecastWeekDay}}
+        </div>
+      </div>
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
+    <script src=" https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="main.js" type="text/javascript"></script>
+  </body>
+</html>
