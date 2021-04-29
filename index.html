@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weather Project</title>
+</head>
+<body>
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-6 offset-md-3">
+        <div class="page-header">
+        <h1>Weather Project</h1>
+        <hr/>
+        </div>
+
+                
+        <form class="search-form">
+          <div class="row">
+            <div class="col-md-10">
+        
+              <div class="form-group">
+                <input type="text" id="search-query" class="form-control">
+                </input>
+              </div>
+            </div>
+
+            <div class="col-md-2">
+                <button type="button" class="btn btn-primary search">Search</button>
+            </div>
+          </div>
+        </form>
+         
+      
+        
+        <div class="weather row">
+        </div>
+        <div class="forecast row">
+        </div>
+    </div>
+    </div>
+  </div>
+  
+  <script id="weather-template" type="text/x-handlebars-template">
+    <div class='container'>
+      <div class='row'>
+        <div class='col-md-6'>
+          <div class='weather'>
+            <h2>{{city}}</h2>
+            <h2>{{temp}}</h2>
+            <h3>{{condition}}</h3>
+          </div>
+        </div>
+          <img src='http://openweathermap.org/img/wn/{{icon}}@2x.png'>
+      </div>
+    </div>
+  </script>
+ 
+
+  <script id="forecast-template" type="text/x-handlebars-template">
+    
+    <div class='forecast'>
+      <div class='container'>
+          <div class='row'>
+            
+              <div class='column-20'>
+                <h6>{{condition}}</h6>
+                <h5>{{temp}}</h5>
+                <img src='http://openweathermap.org/img/wn/{{icon}}@2x.png'>
+                <h5>{{date}}</h5>
+              </div>
+              <div class='column-20'>          
+                <h6>{{condition1}}</h6>
+                <h5>{{temp1}}</h5>
+                <img src='http://openweathermap.org/img/wn/{{icon1}}@2x.png'>
+              </div>
+              <div class='column-20'>
+                <h6>{{condition2}}</h6>
+                <h5>{{temp2}}</h5>
+                <img src='http://openweathermap.org/img/wn/{{icon2}}@2x.png'>
+              </div>
+              <div class='column-20'>
+                <h6>{{condition3}}</h6>
+                <h5>{{temp3}}</h5>
+                <img src='http://openweathermap.org/img/wn/{{icon3}}@2x.png'>
+              </div>
+              <div class='column-20'>
+                <h6>{{condition4}}</h6>
+                <h5>{{temp4}}</h5>
+                <img src='http://openweathermap.org/img/wn/{{icon4}}@2x.png'>
+              </div>
+              
+          </div>
+      </div>
+    </div>
+   
+  </script>
+
+  
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
+  <script src='main.js'></script>
+</body>
+</html>
