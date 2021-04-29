@@ -16,3 +16,17 @@ h1 {
 .page-header {
   margin: 0 0 70px 0;
 }
+
+.column-20 {
+  width: 20%;
+  border: 1px solid black;
+  text-align: center;
+  padding-top: 15px;
+}
+
+.forecast {
+  width: 100%;
+}
+.weather img {
+  width: 15%;
+}
