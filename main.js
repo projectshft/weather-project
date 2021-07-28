@@ -20,7 +20,7 @@ var fetchToday = function (city) {
 }
 var addTodaysWeather = function (data) {
   var todaysWeather = {
-    temp: data.main.temp,
+    temp: Math.round(data.main.temp),
     city: data.name,
     sky: data.weather[0].main,
     imgURL: data.weather[0].icon
@@ -51,15 +51,16 @@ var fetchWeek = function (city) {
 }
 
 var addWeeksWeather = function (data) {
+  $('.five-day').empty();
   var buildWeek = [];
-  for (let i = 7; i < data.list.length; i += 7) {
+  for (let i = 7; i < data.list.length; i += 8) {
     var wD = data.list[i];
 
     var dayData = {
       sky1: wD.weather[0].main,
-      temp1: wD.main.temp,
+      temp1: Math.round(wD.main.temp),
       imgURL1: wD.weather[0].icon,
-      day: wD.dt_txt, 
+      day1: dayjs(wD.dt_txt).format('dddd'), 
     }
     buildWeek.push(dayData);
   };
@@ -71,4 +72,3 @@ var addWeeksWeather = function (data) {
     $('.five-day').append(newHTML);  
   }
 };
-  
