@@ -1,5 +1,3 @@
-// weather api https://api.openweathermap.org/data/2.5/forecast?q={city name}&appid=1abc293a9c4ae9b968f6cc6d2a9785c9
-// today weather api https://api.openweathermap.org/data/2.5/weather?q={city name}&appid=1abc293a9c4ae9b968f6cc6d2a9785c9
 $('.search').on('click', function () {
   var city = $('#city-search').val();
   $('#city-search').val('');
@@ -53,6 +51,24 @@ var fetchWeek = function (city) {
 }
 
 var addWeeksWeather = function (data) {
-  console.log(data);
+  var buildWeek = [];
+  for (let i = 7; i < data.list.length; i += 7) {
+    var wD = data.list[i];
+
+    var dayData = {
+      sky1: wD.weather[0].main,
+      temp1: wD.main.temp,
+      imgURL1: wD.weather[0].icon,
+      day: wD.dt_txt, 
+    }
+    buildWeek.push(dayData);
+  };
+
+  for (let j = 0; j < buildWeek.length; j++) {
+    var template = $('#week-template').html();
+    var compiled = Handlebars.compile(template);
+    var newHTML = compiled(buildWeek[j]);
+    $('.five-day').append(newHTML);  
+  }
+};
   
-}
