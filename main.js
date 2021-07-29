@@ -1,3 +1,6 @@
+require('dotenv').config();
+var apiKey = process.env.API_KEY; 
+
 $('.search').on('click', function () {
   var city = $('#city-search').val();
   $('#city-search').val('');
@@ -8,7 +11,7 @@ $('.search').on('click', function () {
 var fetchToday = function (city) {
   $.ajax({
     method: "GET",
-    url: "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial&appid=1abc293a9c4ae9b968f6cc6d2a9785c9",
+    url: "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial&appid=" + apiKey,
     dataType: "json",
     success: function(data) {
       addTodaysWeather(data);
@@ -39,7 +42,7 @@ var addTodaysWeather = function (data) {
 var fetchWeek = function (city) {
   $.ajax({
     method: "GET",
-    url: "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&units=imperial&appid=1abc293a9c4ae9b968f6cc6d2a9785c9",
+    url: "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&units=imperial&appid=" + apiKey,
     dataType: "json",
     success: function(data) {
       addWeeksWeather(data);
