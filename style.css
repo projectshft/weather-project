@@ -2,6 +2,14 @@
   margin: 20px 0px 50px;
 }
 
+.set-default {
+  margin: 20px;
+}
+
+.hide {
+  display: none;
+}
+
 img {
   width: 100%;
 }

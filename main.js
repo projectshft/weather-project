@@ -1,17 +1,28 @@
-require('dotenv').config();
-var apiKey = process.env.API_KEY; 
+// require('dotenv').config();
+// var apiKey = process.env.API_KEY; 
+var apiKey = '1abc293a9c4ae9b968f6cc6d2a9785c9';
+var city = {
+  name: '',
+  lat: 0,
+  long: 0,
+};
+
+var findWeather = function () { 
+  city.name = $('#city-search').val();
+  $('#city-search').val('');
+  fetchToday(city.name);
+  fetchWeek(city.name);
+  $('.default').removeClass('hide');
+}
 
 $('.search').on('click', function () {
-  var city = $('#city-search').val();
-  $('#city-search').val('');
-  fetchToday(city);
-  fetchWeek(city);
-})
+  findWeather();
+});
 
-var fetchToday = function (city) {
+var fetchToday = function () {
   $.ajax({
     method: "GET",
-    url: "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial&appid=" + apiKey,
+    url: "https://api.openweathermap.org/data/2.5/weather?q=" + city.name + "&units=imperial&appid=" + apiKey,
     dataType: "json",
     success: function(data) {
       addTodaysWeather(data);
@@ -22,6 +33,8 @@ var fetchToday = function (city) {
   })
 }
 var addTodaysWeather = function (data) {
+  city.lat = data.coord.lat;
+  city.long = data.coord.lon;
   var todaysWeather = {
     temp: Math.round(data.main.temp),
     city: data.name,
@@ -39,10 +52,10 @@ var addTodaysWeather = function (data) {
   renderWeather();
 }
 
-var fetchWeek = function (city) {
+var fetchWeek = function () {
   $.ajax({
     method: "GET",
-    url: "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&units=imperial&appid=" + apiKey,
+    url: "https://api.openweathermap.org/data/2.5/forecast?q=" + city.name + "&units=imperial&appid=" + apiKey,
     dataType: "json",
     success: function(data) {
       addWeeksWeather(data);
@@ -74,4 +87,64 @@ var addWeeksWeather = function (data) {
     var newHTML = compiled(buildWeek[j]);
     $('.five-day').append(newHTML);  
   }
+};
+
+
+$('.default').on('click', function () {
+  if (localStorage !== "undefined") {
+    localStorage.city = city.name;
+  } else {
+    console.log('Sorry! No Web Storage support');
+  };
+})
+
+if (localStorage.city !== "undefined") {
+  $('#city-search').val(localStorage.city);
+  findWeather();
+};
+
+$('.geoLocate').on('click',function () {
+  if(!navigator.geolocation) {
+    console.log('Geolocation is not supported by your browser');
+  } else {
+    var success = function (position) {
+      city.lat  = position.coords.latitude;
+      city.long = position.coords.longitude;
+      fetchLocate(city.lat , city.long);
+      fetchLocateWeek(city.lat, city.long);
+    }
+    var error = function () {
+      console.log('No location')
+    }
+    navigator.geolocation.getCurrentPosition(success, error);
+  }
+})
+
+var fetchLocate = function (lat, long) {
+  $.ajax({
+    method: "GET",
+    url: "https://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + long + "&units=imperial&appid=" + apiKey,
+    dataType: "json",
+    success: function(data) {
+      addTodaysWeather(data);
+      city.name = data.name;
+    },
+    error: function(jqXHR, textStatus, errorThrown) {
+      console.log(textStatus);
+    }
+  })
+};
+
+var fetchLocateWeek = function (lat, long) {
+  $.ajax({
+    method: "GET",
+    url: "https://api.openweathermap.org/data/2.5/forecast?lat=" + lat + "&lon=" + long + "&units=imperial&appid=" + apiKey,
+    dataType: "json",
+    success: function(data) {
+      addWeeksWeather(data);
+    },
+    error: function(jqXHR, textStatus, errorThrown) {
+      console.log(textStatus);
+    }
+  })
 };
