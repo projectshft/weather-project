@@ -1,6 +1,3 @@
-// require('dotenv').config();
-// var apiKey = process.env.API_KEY; 
-var apiKey = '1abc293a9c4ae9b968f6cc6d2a9785c9';
 var city = {
   name: '',
   lat: 0,
@@ -22,7 +19,7 @@ $('.search').on('click', function () {
 var fetchToday = function () {
   $.ajax({
     method: "GET",
-    url: "https://api.openweathermap.org/data/2.5/weather?q=" + city.name + "&units=imperial&appid=" + apiKey,
+    url: "https://api.openweathermap.org/data/2.5/weather?q=" + city.name + "&units=imperial&appid=" + config.apiKey,
     dataType: "json",
     success: function(data) {
       addTodaysWeather(data);
@@ -55,7 +52,7 @@ var addTodaysWeather = function (data) {
 var fetchWeek = function () {
   $.ajax({
     method: "GET",
-    url: "https://api.openweathermap.org/data/2.5/forecast?q=" + city.name + "&units=imperial&appid=" + apiKey,
+    url: "https://api.openweathermap.org/data/2.5/forecast?q=" + city.name + "&units=imperial&appid=" + config.apiKey,
     dataType: "json",
     success: function(data) {
       addWeeksWeather(data);
@@ -123,7 +120,7 @@ $('.geoLocate').on('click',function () {
 var fetchLocate = function (lat, long) {
   $.ajax({
     method: "GET",
-    url: "https://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + long + "&units=imperial&appid=" + apiKey,
+    url: "https://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + long + "&units=imperial&appid=" + config.apiKey,
     dataType: "json",
     success: function(data) {
       addTodaysWeather(data);
@@ -138,7 +135,7 @@ var fetchLocate = function (lat, long) {
 var fetchLocateWeek = function (lat, long) {
   $.ajax({
     method: "GET",
-    url: "https://api.openweathermap.org/data/2.5/forecast?lat=" + lat + "&lon=" + long + "&units=imperial&appid=" + apiKey,
+    url: "https://api.openweathermap.org/data/2.5/forecast?lat=" + lat + "&lon=" + long + "&units=imperial&appid=" + config.apiKey,
     dataType: "json",
     success: function(data) {
       addWeeksWeather(data);

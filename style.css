@@ -1,3 +1,18 @@
+body {
+  background-color: lightslategray;
+}
+
+div {
+  font-family: "Montserrat", sans-serif;
+}
+
+button {
+  font-family: "Montserrat", sans-serif;
+}
+.page-header {
+  font-family: "Audiowide", cursive;
+}
+
 .today {
   margin: 20px 0px 50px;
 }
@@ -16,5 +31,6 @@ img {
 
 .week-day {
   text-align: center;
+  font-weight: bold;
   border: 1px solid black;
 }
