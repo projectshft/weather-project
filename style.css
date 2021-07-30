@@ -1,0 +1,19 @@
+.search-weather {
+  color: white;
+}
+
+.search-weather:hover {
+  cursor: pointer;
+}
+
+.forecast-day {
+  padding: 22px;
+}
+
+.curr_weath_overview {
+  padding: 22px;
+}
+
+.curr_weath_icon {
+  padding: 22px;
+}
