@@ -20,7 +20,7 @@
           <hr/>
         </div>
 
-        <form class="search-form">
+        <form class="search-form" onsubmit="event.preventDefault();">
           <h3>Enter city:</h3>
 
           <div class="form-group">
@@ -29,22 +29,34 @@
           </div>
 
           <button type="button" class="btn btn-primary search">Search</button>
-          </form>
+        </form>
 
-          <div class="forecast row">
-
-          </div>
+        <div class="forecasts row">
+          
+        </div>
       </div>
     </div>
 
-    <script id="forecast-template" type="text/x-handlebars-template">
-      <div class="current-forecast col-md-6">
+    <script id="current-forecast-template" type="text/x-handlebars-template">
+      <div class="row">
+        <div class="current-forecast col-md-6">
+          <h4>{{ temperature }}<span>&#176;</span></h4>
+          <h4>{{ cityName }}</h4>
+          <h5>{{ weather }}</h5>      
+        </div>
+        <div class="col-md-6">
+          <img src="{{iconURL}}">
+        </div>
+        <hr>
+      </div>   
+    </script>
+
+    <script id="daily-forecast-template" type="text/x-handlebars-template">
+      <div class="daily-forecast col-md-2">
+        <h5>{{ weather }}</h5>
         <h4>{{ temperature }}<span>&#176;</span></h4>
-        <h4>{{ cityName }}</h4>
-        <h5>{{ weather }}</h5>      
-      </div>
-      <div class="col-md-6">
         <img src="{{iconURL}}">
+        <h5>{{ day }}</h5>
       </div>
     </script>
 
@@ -53,6 +65,7 @@
       integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
       crossorigin="anonymous"
     ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.js"
       integrity="sha512-c7SfJeKRl8g7wgL+zMGX78faYVGp+NZVQ587mRLrqeLySX/qHCQOKw/iZ5Pp64DaPjvedixWC/Fe73upnhBaRA=="
