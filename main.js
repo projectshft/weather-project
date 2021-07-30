@@ -1,7 +1,6 @@
 var APIkey = "948ee37ea38c7bc204af5017eb8a2c87";
 
 function getCurrentWeather(cityName){
-    
     $.ajax({
         method: "GET",
         url: `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${APIkey}`,
@@ -17,7 +16,6 @@ function getCurrentWeather(cityName){
 }
 
 function get5DayForecast(cityName){
-
     $.ajax({
         method: "GET",
         url: `https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&appid=${APIkey}`,
@@ -35,12 +33,6 @@ function get5DayForecast(cityName){
 
 
 }
-
-//curr
-//https://api.openweathermap.org/data/2.5/weather?q=Austin&appid=948ee37ea38c7bc204af5017eb8a2c87
-
-//forec
-//https://api.openweathermap.org/data/2.5/forecast?q=Austin&appid=948ee37ea38c7bc204af5017eb8a2c87
 
 function renderCurrentWeather(wData){
     // Handlebar stuff
@@ -128,11 +120,4 @@ $('.search-weather').click(function(){
     var city = $('.city-name').val();
     getCurrentWeather(city);
     get5DayForecast(city);
-
-    // renderTodaysWeather();
-    // render5DayForcast();
 });
-
-// todays-weather
-
-// five-day-forcast
