@@ -13,6 +13,41 @@
     <title>Weather App</title>
   </head>
   <body>
+    <div class="row">
+      <div class="col-md-6 offset-md-3">
+        <div class="header">
+          <h1><strong>Weather Project</strong></h1>
+          <hr/>
+        </div>
+
+        <form class="search-form">
+          <h3>Enter city:</h3>
+
+          <div class="form-group">
+            <input type="text" id="search-query" class="form-control">
+            </input>
+          </div>
+
+          <button type="button" class="btn btn-primary search">Search</button>
+          </form>
+        
+          <hr/>
+
+          <div class="forecast">
+
+          </div>
+      </div>
+    </div>
+
+    <script id="current-forecast-template" type="text/x-handlebars-template">
+      <div class="current-forecast col-md-6">
+        <h4>{{ temperature }}</h4>
+        <h4>{{ cityName }}</h4>
+        <h5>{{ weather }}</h5>
+        <img src="{{iconURL}}">
+      </div>
+    </script>
+
     <script
       src="https://code.jquery.com/jquery-3.6.0.min.js"
       integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
