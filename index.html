@@ -30,20 +30,20 @@
 
           <button type="button" class="btn btn-primary search">Search</button>
           </form>
-        
-          <hr/>
 
-          <div class="forecast">
+          <div class="forecast row">
 
           </div>
       </div>
     </div>
 
-    <script id="current-forecast-template" type="text/x-handlebars-template">
+    <script id="forecast-template" type="text/x-handlebars-template">
       <div class="current-forecast col-md-6">
-        <h4>{{ temperature }}</h4>
+        <h4>{{ temperature }}<span>&#176;</span></h4>
         <h4>{{ cityName }}</h4>
-        <h5>{{ weather }}</h5>
+        <h5>{{ weather }}</h5>      
+      </div>
+      <div class="col-md-6">
         <img src="{{iconURL}}">
       </div>
     </script>
