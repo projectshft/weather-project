@@ -1,3 +1,11 @@
+var cityWeather = [];
+
+var pushCityWeather = function (data) {
+  var weatherInput = data.weather;
+
+  cityWeather.push(weatherInput);
+};
+
 var fetch = function (query) {
   $.ajax({
     method: "GET",
@@ -12,18 +20,17 @@ var fetch = function (query) {
   });
 };
 
+var renderBooks = function () {
+  $('.temperature').empty();
 
-// var renderBooks = function () {
-//   $('.books').empty();
-
-//   for (var i = 0; i < books.length; i++) {
-//     var source = $('#book-template').html();
-//     var template = Handlebars.compile(source);
-//     var newHTML = template(books[i]);
-//     $('.books').append(newHTML);
-//   };
+  var source = $('#temp-script').html();
+  var template = Handlebars.compile(source);
+  var newHTML = template(cityWeather);
+  $('.books').append(newHTML);
+};
 
 $('.button').click(function() {
   var input = $('.input-box').val(); 
   fetch(input);
+  console.log(cityWeather);
 });
