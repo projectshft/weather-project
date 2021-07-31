@@ -20,7 +20,7 @@ var pushCityWeather = function (data) {
   };
 
   var icon = `${data.weather[0].icon}`
-  var iconDisplay =  "<img src='http://openweathermap.org/img/wn/" + icon + "@2x.png'>"
+  var iconDisplay =  "<img src='http://openweathermap.org/img/wn/" + icon + "@4x.png'>"
 
   cityWeather.push(template);
 
