@@ -4,7 +4,7 @@ var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'S
 $('.search').on('click', function () {
   var city = $('#search-query').val();
 
-  fetch(city);
+  fetch('https://api.openweathermap.org/data/2.5/forecast?q=' + city + '&appid=5eb364706ec575886656a6840c287954');
 })
 
 $('.set-default').on('click', function () {
@@ -13,6 +13,21 @@ $('.set-default').on('click', function () {
     alert('Default city set!');
   }
 })
+
+$('.get-local-weather').on('click', function (){
+  navigator.geolocation.getCurrentPosition(onSuccess, onError);
+})
+
+var onSuccess = function (position) {
+  var latitude = position.coords.latitude;
+  var longitude = position.coords.longitude;
+
+  fetch('https://api.openweathermap.org/data/2.5/forecast?lat=' + latitude +'&lon=' + longitude + '&appid=5eb364706ec575886656a6840c287954');
+}
+
+var onError = function () {
+  alert('Unable to find location');
+}
 
 var getAverageTemp = function (arr) {
   var avg = arr.reduce(function(sum, curr) {
@@ -64,10 +79,10 @@ var addForecast = function (data) {
   renderForecasts();
 }
 
-var fetch = function (city) {
+var fetch = function (url) {
   $.ajax({
     method: 'GET',
-    url: 'https://api.openweathermap.org/data/2.5/forecast?q=' + city + '&appid=5eb364706ec575886656a6840c287954',
+    url: url,
     dataType: 'json',
     success: function (data) {
       addForecast(data);
@@ -98,6 +113,12 @@ var renderForecasts = function () {
 
     $('.forecasts').append(newHTML);
   }
+
+  var mapSource = $('#location-map-template').html();
+  var mapTemplate = Handlebars.compile(mapSource);
+  var mapHTML = mapTemplate(renderArray[0]);
+
+  $('.forecasts').append(mapHTML);
 }
 
 renderForecasts();

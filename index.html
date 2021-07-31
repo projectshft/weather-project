@@ -30,14 +30,21 @@
 
           <button type="button" class="btn btn-primary search">Search</button>
           <button type="button" class="btn btn-primary set-default">Set Default</button>        
+          <button type="button" class="btn btn-primary get-local-weather">Your Forecast</button>
           
         </form>
 
         <div class="forecasts row">
           
         </div>
+
+        <div class="map">
+
+        </div>
       </div>
     </div>
+
+    
 
     <script id="current-forecast-template" type="text/x-handlebars-template">
       <div class="row">
@@ -60,6 +67,15 @@
         <img src="{{iconURL}}">
         <h5>{{ day }}</h5>
       </div>
+    </script>
+
+    <script id="location-map-template" type="text/x-handlebars-template">
+      <iframe
+        loading="lazy"
+        allowfullscreen
+        src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDdeWs0zgAsEoYfxAzXb9fQNrNaxhG-Ze0
+          &q={{cityName}}">
+      </iframe>
     </script>
 
     <script
