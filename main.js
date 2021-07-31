@@ -102,23 +102,25 @@ var renderForecasts = function () {
   else
     var renderArray = JSON.parse(window.localStorage.getItem('default')); 
 
-  for (var i = 0; i < renderArray.length; i++) {
-    if (i === 0)
-      var source = $('#current-forecast-template').html();
-    else
-      var source = $('#daily-forecast-template').html();
-    
-    var template = Handlebars.compile(source);
-    var newHTML = template(renderArray[i]);
-
-    $('.forecasts').append(newHTML);
+  if (renderArray != null) {
+    for (var i = 0; i < renderArray.length; i++) {
+      if (i === 0)
+        var source = $('#current-forecast-template').html();
+      else
+        var source = $('#daily-forecast-template').html();
+      
+      var template = Handlebars.compile(source);
+      var newHTML = template(renderArray[i]);
+  
+      $('.forecasts').append(newHTML);
+    }
+  
+    var mapSource = $('#location-map-template').html();
+    var mapTemplate = Handlebars.compile(mapSource);
+    var mapHTML = mapTemplate(renderArray[0]);
+  
+    $('.forecasts').append(mapHTML);
   }
-
-  var mapSource = $('#location-map-template').html();
-  var mapTemplate = Handlebars.compile(mapSource);
-  var mapHTML = mapTemplate(renderArray[0]);
-
-  $('.forecasts').append(mapHTML);
 }
 
 renderForecasts();
