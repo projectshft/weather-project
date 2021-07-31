@@ -1,9 +1,23 @@
 var cityWeather = [];
 
-var pushCityWeather = function (data) {
-  var weatherInput = data.weather;
+var renderWeather = function () {
+  $('.temperature').empty();
 
-  cityWeather.push(weatherInput);
+  var source = $('#temp-script').html();
+  var template = Handlebars.compile(source);
+  var newHTML = template(cityWeather);
+  $('.temperature').append(newHTML);
+};
+
+var pushCityWeather = function (data) {
+
+  var template = {
+    temp: `${data.main.temp}`
+  }
+
+  cityWeather.push(template);
+
+  renderWeather();
 };
 
 var fetch = function (query) {
@@ -12,7 +26,7 @@ var fetch = function (query) {
     url:'http://api.openweathermap.org/data/2.5/weather?units=imperial&q=' + query + '&appid=9b71dd7687d5daeb5225c83041aa3ed4',
     dataType: "json",
     success: function (data) {
-      console.log(data);
+      pushCityWeather(data);
     },
     error: function (jqXHR, textStatus, errorThrown) {
       console.log(textStatus);
@@ -20,14 +34,6 @@ var fetch = function (query) {
   });
 };
 
-var renderBooks = function () {
-  $('.temperature').empty();
-
-  var source = $('#temp-script').html();
-  var template = Handlebars.compile(source);
-  var newHTML = template(cityWeather);
-  $('.books').append(newHTML);
-};
 
 $('.button').click(function() {
   var input = $('.input-box').val(); 
