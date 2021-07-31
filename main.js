@@ -1,12 +1,16 @@
 var cityWeather = [];
+var cityWeatherIcon = [];
 
 var renderWeather = function () {
   $('.temperature').empty();
+  $('.pic').empty();
 
   var source = $('#temp-script').html();
   var template = Handlebars.compile(source);
   var newHTML = template(cityWeather[0]);
   $('.temperature').append(newHTML);
+  
+  $('.pic').append(cityWeatherIcon);
 };
 
 var pushCityWeather = function (data) {
@@ -23,9 +27,9 @@ var pushCityWeather = function (data) {
   var iconDisplay =  "<img src='http://openweathermap.org/img/wn/" + icon + "@4x.png'>"
 
   cityWeather.push(template);
+  cityWeatherIcon.push(iconDisplay);
 
   renderWeather();
-  console.log(iconDisplay);
 };
 
 var fetch = function (query) {
