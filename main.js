@@ -1,3 +1,4 @@
 $('.button').click(function () {
-  console.log('run dis function');
+  var input = $('.input-box').val(); 
+  console.log(input);
 });
