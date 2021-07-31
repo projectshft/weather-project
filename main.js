@@ -5,7 +5,7 @@ var renderWeather = function () {
 
   var source = $('#temp-script').html();
   var template = Handlebars.compile(source);
-  var newHTML = template(cityWeather);
+  var newHTML = template(cityWeather[0]);
   $('.temperature').append(newHTML);
 };
 
