@@ -19,7 +19,6 @@
         <div class="col-md-6 offset-md-3">
           <h1 class="header">Weather Project</h1>
           <hr />
-
           <form>
             <div class="form-row">
               <div class="col-10">
@@ -34,21 +33,19 @@
               </div>
             </div>
           </form>
-
-          <div class="row current-render"></div>
-
-          <div class="row five-day-render"></div>
         </div>
       </div>
+      <div class="row justify-content-center current-render"></div>
+      <div class="row justify-content-center five-day-render"></div>
     </div>
 
     <script id="current-template" type="text/x-handlebars-template">
-      <div class="col-6" id="current-data">
+      <div class="col-2" id="current-data">
         <h2>{{temp}}</h2>
         <h3>{{city}}</h3>
         <h5>{{descrip}}</h5>
       </div>
-      <div class="col-6" id="current-icon">
+      <div class="col-2" id="current-icon">
         <img src="{{iconUrl}}" alt="" />
       </div>
     </script>
