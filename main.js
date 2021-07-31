@@ -17,11 +17,15 @@ var pushCityWeather = function (data) {
     temp: `${data.main.temp}`,
     city: `${input}`,
     description: `${data.weather[0].description}`
-  }
+  };
+
+  var icon = `${data.weather[0].icon}`
+  var iconDisplay =  "<img src='http://openweathermap.org/img/wn/" + icon + "@2x.png'>"
 
   cityWeather.push(template);
 
   renderWeather();
+  console.log(iconDisplay);
 };
 
 var fetch = function (query) {
