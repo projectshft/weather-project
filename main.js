@@ -32,17 +32,17 @@ var addCurrentWeatherData = function(data) {
   var city = data.name;
   var temp = Math.round(data.main.temp);
   var descrip = data.weather[0].main;
-  var iconURL = `http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
+  var iconUrl = `http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
   
   var pushObj = {
     temp: temp || null,
     city: city || null,
     descrip: descrip || null,
-    iconURL: iconURL || null
+    iconUrl: iconUrl || null
   };
 
   currentWeatherData.push(pushObj);
-  console.log(currentWeatherData); ////////
+  // console.log(currentWeatherData); ////////
 };
 
 var addFiveDayForecastData = function(data) {
@@ -73,45 +73,60 @@ var addFiveDayForecastData = function(data) {
   };
 
   var obj1 = {
-    descrip: data.list[4].weather[0].main,
-    temp: Math.round(sumTemp1 / 8),
-    iconURL: `http://openweathermap.org/img/wn/${data.list[4].weather[0].icon}@2x.png`,
-    dayOfWeek: moment().add(1,'days').format('dddd')
+    descrip: data.list[4].weather[0].main || null,
+    temp: Math.round(sumTemp1 / 8) || null,
+    iconUrl: `http://openweathermap.org/img/wn/${data.list[4].weather[0].icon}@2x.png` || null,
+    dayOfWeek: moment().add(1,'days').format('dddd') || null
   };
   var obj2 = {
-    descrip: data.list[12].weather[0].main,
-    temp: Math.round(sumTemp2 / 8),
-    iconURL: `http://openweathermap.org/img/wn/${data.list[12].weather[0].icon}@2x.png`,
-    dayOfWeek: moment().add(2,'days').format('dddd')
+    descrip: data.list[12].weather[0].main || null,
+    temp: Math.round(sumTemp2 / 8) || null,
+    iconUrl: `http://openweathermap.org/img/wn/${data.list[12].weather[0].icon}@2x.png` || null,
+    dayOfWeek: moment().add(2,'days').format('dddd') || null
   };
   var obj3 = {
-    descrip: data.list[20].weather[0].main,
-    temp: Math.round(sumTemp3 / 8),
-    iconURL: `http://openweathermap.org/img/wn/${data.list[20].weather[0].icon}@2x.png`,
-    dayOfWeek: moment().add(3,'days').format('dddd')
+    descrip: data.list[20].weather[0].main || null,
+    temp: Math.round(sumTemp3 / 8) || null,
+    iconUrl: `http://openweathermap.org/img/wn/${data.list[20].weather[0].icon}@2x.png` || null,
+    dayOfWeek: moment().add(3,'days').format('dddd') || null
   };
   var obj4 = {
-    descrip: data.list[28].weather[0].main,
-    temp: Math.round(sumTemp4 / 8),
-    iconURL: `http://openweathermap.org/img/wn/${data.list[28].weather[0].icon}@2x.png`,
-    dayOfWeek: moment().add(4,'days').format('dddd')
+    descrip: data.list[28].weather[0].main || null,
+    temp: Math.round(sumTemp4 / 8) || null,
+    iconUrl: `http://openweathermap.org/img/wn/${data.list[28].weather[0].icon}@2x.png` || null,
+    dayOfWeek: moment().add(4,'days').format('dddd') || null
   };
   var obj5 = {
-    descrip: data.list[36].weather[0].main,
-    temp: Math.round(sumTemp5 / 8),
-    iconURL: `http://openweathermap.org/img/wn/${data.list[36].weather[0].icon}@2x.png`,
-    dayOfWeek: moment().add(5,'days').format('dddd')
+    descrip: data.list[36].weather[0].main || null,
+    temp: Math.round(sumTemp5 / 8) || null,
+    iconUrl: `http://openweathermap.org/img/wn/${data.list[36].weather[0].icon}@2x.png` || null,
+    dayOfWeek: moment().add(5,'days').format('dddd') || null
   };
 
-  fiveDayForecastData.push(obj1);
-  fiveDayForecastData.push(obj2);
-  fiveDayForecastData.push(obj3);
-  fiveDayForecastData.push(obj4);
-  fiveDayForecastData.push(obj5);
+  fiveDayForecastData.push(obj1, obj2, obj3, obj4, obj5);
 
-  console.log(fiveDayForecastData);/////////
+  // console.log(fiveDayForecastData);/////////
+  renderWeatherData();
 
 };
+
+var renderWeatherData = function() {
+  $('.current-render').empty();
+  $('.five-day-render').empty();
+
+  var source = $('#current-template').html();
+  var template = Handlebars.compile(source);
+  var newHTML = template(currentWeatherData[0]);
+  $('.current-render').append(newHTML);
+  
+  for (let i = 0; i < fiveDayForecastData.length; i++) {
+    var source5 = $('#five-day-template').html();
+    var template5 = Handlebars.compile(source5);
+    var newHTML5 = template5(fiveDayForecastData[i]);
+    $('.five-day-render').append(newHTML5);
+  }
+
+}
 
 $('button').on('click', function() { 
   var cityInput = $('input').val();

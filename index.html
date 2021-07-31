@@ -35,15 +35,32 @@
             </div>
           </form>
 
-          <div class="row current">
-            <div class="col-6" id="current-data"></div>
-            <div class="col-6" id="current-icon"></div>
-          </div>
+          <div class="row current-render"></div>
 
-          <div class="row five-day"></div>
+          <div class="row five-day-render"></div>
         </div>
       </div>
     </div>
+
+    <script id="current-template" type="text/x-handlebars-template">
+      <div class="col-6" id="current-data">
+        <h2>{{temp}}</h2>
+        <h3>{{city}}</h3>
+        <h5>{{descrip}}</h5>
+      </div>
+      <div class="col-6" id="current-icon">
+        <img src="{{iconUrl}}" alt="" />
+      </div>
+    </script>
+
+    <script id="five-day-template" type="text/x-handlebars-template">
+      <div class="col">
+        <h5>{{descrip}}</h5>
+        <h4>{{temp}}</h4>
+        <img src="{{iconUrl}}" alt="" />
+        <h5>{{dayOfWeek}}</h5>
+      </div>
+    </script>
 
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
