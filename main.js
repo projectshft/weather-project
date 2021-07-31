@@ -7,6 +7,13 @@ $('.search').on('click', function () {
   fetch(city);
 })
 
+$('.set-default').on('click', function () {
+  if (forecasts.length != 0) {
+    window.localStorage.setItem('default', JSON.stringify(forecasts));
+    alert('Default city set!');
+  }
+})
+
 var getAverageTemp = function (arr) {
   var avg = arr.reduce(function(sum, curr) {
     return sum += curr.main.temp;
@@ -28,12 +35,14 @@ var addForecast = function (data) {
   forecasts = [];
   
   for (var i = 0; i < data.list.length; i += 8) {
+    var currentItem = data.list[i];
+
     var forecast = {
       cityName: data.city.name,
       temperature: null,
-      weather: data.list[i].weather[0].main,
-      day: getDay(data.list[i].dt + data.city.timezone),
-      iconURL: 'http://openweathermap.org/img/wn/' + data.list[i].weather[0].icon + '@2x.png'
+      weather: currentItem.weather[0].main,
+      day: getDay(currentItem.dt + data.city.timezone),
+      iconURL: 'http://openweathermap.org/img/wn/' + currentItem.weather[0].icon + '@2x.png'
     }
 
     var dailyForecast = {};
@@ -49,12 +58,10 @@ var addForecast = function (data) {
     else
       dailyForecast.temperature = kelvinToImperial(getAverageTemp(data.list.slice(i, i + 8)));
     
-
     forecasts.push(dailyForecast);
   }    
 
   renderForecasts();
-   
 }
 
 var fetch = function (city) {
@@ -75,14 +82,19 @@ var fetch = function (city) {
 var renderForecasts = function () {
   $('.forecasts').empty();
 
-  for (var i = 0; i < forecasts.length; i++) {
+  if (forecasts.length != 0)
+    var renderArray = forecasts;
+  else
+    var renderArray = JSON.parse(window.localStorage.getItem('default')); 
+
+  for (var i = 0; i < renderArray.length; i++) {
     if (i === 0)
       var source = $('#current-forecast-template').html();
     else
       var source = $('#daily-forecast-template').html();
     
     var template = Handlebars.compile(source);
-    var newHTML = template(forecasts[i]);
+    var newHTML = template(renderArray[i]);
 
     $('.forecasts').append(newHTML);
   }
