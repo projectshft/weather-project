@@ -10,9 +10,13 @@ var renderWeather = function () {
 };
 
 var pushCityWeather = function (data) {
-
+  
+  var input = $('.input-box').val(); 
+  
   var template = {
-    temp: `${data.main.temp}`
+    temp: `${data.main.temp}`,
+    city: `${input}`,
+    description: `${data.weather[0].description}`
   }
 
   cityWeather.push(template);
