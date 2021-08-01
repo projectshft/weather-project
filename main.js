@@ -1,11 +1,17 @@
 var days = [];
+var defaultCity;
 
 $('.search').on('click', function() {
   $('.todays-weather').html("");
   var search = $('#search-query').val();// how to handle city,state? .replace(/, /g, ",");//remove spaces so API recognizes query
   fetchToday(search);
   fetchForecast(search);
+  $('.default-city').show();
 });
+
+$('.default-city').on('click', function() {
+
+})
 
 var fetchToday = function(query) {
   var key = '4c414375755226104f1bfab42745ecab';
@@ -91,3 +97,9 @@ for (let i = 0; i < days.length; i++) {
   $('.forecast').append(day)
 }  
 };
+
+
+
+setDefault = function () {
+
+}

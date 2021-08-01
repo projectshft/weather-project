@@ -1,12 +1,10 @@
 <!DOCTYPE html>
   <html lang="en">
   <head>
-    <!-- Required meta tags -->
     <link rel="stylesheet" href="style.css">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <!-- Bootstrap CSS -->
+   
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
   </head>
   <body>   
@@ -20,43 +18,25 @@
           <h1>Weather Project</h1>
           <hr/>
           </div>
-
-         
-
-                
-          <div class="form-group">
-            <input type="text" id="search-query" class="form-control">
-            </input>
-              <div class="input-group-btn">
+          <div class="form-inline">
+            <input type="text" id="search-query" class="form-control w-75">
+            </input>              
               <button type="button" class="btn btn-primary search">
-                <span class="button_text">Search</span></button>
-    
-                
-              <button class="btn btn-primary" id="spin" type="button" disabled>
-                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                <span class="sr-only">Loading...</span>
-                  Loading...
-              </button>
-          </div>
-          </div>
-          
+                <span class="button_text">Search</span></button>  
+          </div>        
           
          <hr/>
       </div>
       </div>
-      <div class="todays-weather container">
-        
-
+    </div>
+      <div class="todays-weather container">       
       </div>
       <div class="forecast row no-gutters text-center">
-
       </div>
-    </div> 
+    
     <script id="today-template" type="text/x-handlebars-template">
-
-      <div class="row">
-        <div class="col-md text-right">
-          
+      <div class="row">        
+        <div class="col-md text-right">          
           <h3>{{temp}}</h3>          
           <h3>{{city}}</h3>          
           <h3>{{condition}}</h3>
@@ -64,11 +44,9 @@
          <div class="col-md text-left">
            <img src="{{img}}" alt="{{condition}}">
          </div>      
-
       </div>
       <hr>
-     
-      
+
     </script>
 
     <script id="forecast-template" type="text/x-handlebars-template">
