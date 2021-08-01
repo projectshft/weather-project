@@ -48,7 +48,10 @@ var fetch = function (query) {
 
 
 $('.button').click(function() {
+  cityWeather = [];
+  cityWeatherIcon = [];
+  
   var input = $('.input-box').val(); 
+  
   fetch(input);
-  console.log(cityWeather);
 });
