@@ -6,3 +6,19 @@ div.row2 div.col {
   width: 20%;
   border: solid black thin;
 }
+
+div #col1 {
+  border-right: none;
+}
+
+div #col2 {
+  border-right: none;
+}
+
+div #col3 {
+  border-right: none;
+}
+
+div #col4 {
+  border-right: none;
+}
