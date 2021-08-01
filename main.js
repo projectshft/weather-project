@@ -47,12 +47,15 @@ var pushCityWeather = function (data) {
 var pushCityForcast = function (data) {
   var input = $('.input-box').val(); 
   var icon = `${data.list[9].weather[0].icon}`
+  var date = `${data.list[9].dt}`
+  var day = moment(date).format('dddd'); 
   
   var template = {
     description: `${data.list[9].weather[0].description}`,
     temp: `${data.list[9].main.temp}`,
     city: `${input}`,
-    img: 'http://openweathermap.org/img/wn/' + icon + '@4x.png'
+    img: 'http://openweathermap.org/img/wn/' + icon + '@4x.png',
+    day: `${day}`
   };
 
   cityForcast.push(template);
@@ -97,4 +100,5 @@ $('.button').click(function() {
   var input = $('.input-box').val(); 
   
   fetch(input);
+  console.log(moment.format("dddd"));
 });
