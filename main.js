@@ -20,7 +20,7 @@ var renderForcast = function () {
 
   var source = $('#forecast-template').html();
   var template = Handlebars.compile(source);
-  var newHTML = template(cityForcast);
+  var newHTML = template(cityForcast[0]);
   $('#col1').append(newHTML);
 
   console.log(cityForcast);
