@@ -31,7 +31,7 @@
       </div>
       <div class="container">
         <div class="row">
-          <div class="col"></div>
+          <div id="col1" class="col"></div>
           <div class="col"></div>
           <div class="col"></div>
           <div class="col"></div>
@@ -43,6 +43,14 @@
           <h1>{{temp}} &#8457</h1>
           <h2>{{city}}</h2>
           <h3>{{description}}</h3>
+        </div>
+      </script>
+      <script id="forecast-template" type="text/x-handlebars-template">
+        <div class="forecast-text">
+          <h3>{{description}}</h3>
+          <h1>{{temp}} &#8457</h1>
+          <img src="{{img}}" />
+          <h2>{{city}}</h2>
         </div>
       </script>
     </main>
