@@ -2,6 +2,10 @@
   display: flex;
 }
 
+.row1 {
+  display: inline-flex;
+}
+
 div.row2 div.col {
   width: 20%;
   border: solid black thin;
@@ -14,7 +18,7 @@ div #col4 {
   border-right: none;
 }
 
-.input-box,
-button {
-  display: inline-flex;
+input {
+  width: 300px;
+  height: 34px;
 }
