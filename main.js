@@ -132,7 +132,6 @@ var pushCityForcast2 = function (data) {
 
   renderForcast2();
 
-  console.log(template);
 
 };
 
