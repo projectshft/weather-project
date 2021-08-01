@@ -3,6 +3,8 @@ var cityWeatherIcon = [];
 
 var cityForcast = [];
 
+var m = moment();
+
 var renderWeather = function () {
   $('.temperature').empty();
   $('.pic').empty();
@@ -48,21 +50,22 @@ var pushCityForcast = function (data) {
   var input = $('.input-box').val(); 
   var icon = `${data.list[9].weather[0].icon}`
   var date = `${data.list[9].dt}`
-  var day = moment(date).format('dddd'); 
+  var day = m.set("day", 1);
+  var dayFormatted = day.format("dddd");
+  
   
   var template = {
     description: `${data.list[9].weather[0].description}`,
     temp: `${data.list[9].main.temp}`,
     city: `${input}`,
     img: 'http://openweathermap.org/img/wn/' + icon + '@4x.png',
-    day: `${day}`
+    day: `${dayFormatted}`
   };
 
   cityForcast.push(template);
 
   renderForcast();
 
-  console.log(data.list[9].dt);
 };
 
 var fetch = function (query) {
@@ -100,5 +103,4 @@ $('.button').click(function() {
   var input = $('.input-box').val(); 
   
   fetch(input);
-  console.log(moment.format("dddd"));
 });
