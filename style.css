@@ -1,3 +1,7 @@
 .row2 {
   display: flex;
 }
+
+div.row2 div.col {
+  width: 20%;
+}
