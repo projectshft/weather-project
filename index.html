@@ -19,20 +19,18 @@
         <div class="col-md-6 offset-md-3">
           <h1 class="header">Weather Project</h1>
           <hr />
-          <form>
-            <div class="form-row">
-              <div class="col-10">
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="Enter City Name Here"
-                />
-              </div>
-              <div class="col">
-                <button type="button" class="btn btn-primary">Search</button>
-              </div>
+          <div class="form-row">
+            <div class="col-10">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Enter City Name Here"
+              />
             </div>
-          </form>
+            <div class="col">
+              <button type="button" class="btn btn-primary">Search</button>
+            </div>
+          </div>
         </div>
       </div>
       <div class="row justify-content-center current-render"></div>
@@ -53,7 +51,7 @@
     <script id="five-day-template" type="text/x-handlebars-template">
       <div class="col">
         <h5>{{descrip}}</h5>
-        <h4>{{temp}}</h4>
+        <h4>{{avgTemp}}</h4>
         <img src="{{iconUrl}}" alt="" />
         <h5>{{dayOfWeek}}</h5>
       </div>

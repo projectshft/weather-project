@@ -11,6 +11,7 @@ var fetchWeatherData = function(city) {
     },
     error: function(jqXHR, textStatus, errorThrown) {
       console.log(textStatus);
+      alert(errorThrown);
     }
   });
   $.ajax({
@@ -72,35 +73,35 @@ var addFiveDayForecastData = function(data) {
 
   var obj1 = {
     descrip: data.list[7].weather[0].main || null,
-    temp: Math.round(sumTemp1 / 8) + "\u00B0" || null,
+    avgTemp: Math.round(sumTemp1 / 8) + "\u00B0" || null,
     iconUrl: `http://openweathermap.org/img/wn/${data.list[7].weather[0].icon}@2x.png` || null,
     dayOfWeek: moment().add(1,'days').format('dddd') || null
   };
   var obj2 = {
     descrip: data.list[15].weather[0].main || null,
-    temp: Math.round(sumTemp2 / 8) + "\u00B0" || null,
+    avgTemp: Math.round(sumTemp2 / 8) + "\u00B0" || null,
     iconUrl: `http://openweathermap.org/img/wn/${data.list[15].weather[0].icon}@2x.png` || null,
     dayOfWeek: moment().add(2,'days').format('dddd') || null
   };
   var obj3 = {
     descrip: data.list[23].weather[0].main || null,
-    temp: Math.round(sumTemp3 / 8) + "\u00B0" || null,
+    avgTemp: Math.round(sumTemp3 / 8) + "\u00B0" || null,
     iconUrl: `http://openweathermap.org/img/wn/${data.list[23].weather[0].icon}@2x.png` || null,
     dayOfWeek: moment().add(3,'days').format('dddd') || null
   };
   var obj4 = {
     descrip: data.list[31].weather[0].main || null,
-    temp: Math.round(sumTemp4 / 8) + "\u00B0" || null,
+    avgTemp: Math.round(sumTemp4 / 8) + "\u00B0" || null,
     iconUrl: `http://openweathermap.org/img/wn/${data.list[31].weather[0].icon}@2x.png` || null,
     dayOfWeek: moment().add(4,'days').format('dddd') || null
   };
   var obj5 = {
     descrip: data.list[39].weather[0].main || null,
-    temp: Math.round(sumTemp5 / 8) + "\u00B0" || null,
+    avgTemp: Math.round(sumTemp5 / 8) + "\u00B0" || null,
     iconUrl: `http://openweathermap.org/img/wn/${data.list[39].weather[0].icon}@2x.png` || null,
     dayOfWeek: moment().add(5,'days').format('dddd') || null
   };
-  
+
   fiveDayForecastData.push(obj1, obj2, obj3, obj4, obj5);
 
   renderWeatherData();
@@ -120,13 +121,29 @@ var renderWeatherData = function() {
     var template5 = Handlebars.compile(source5);
     var newHTML5 = template5(fiveDayForecastData[i]);
     $('.five-day-render').append(newHTML5);
+  };
+};
+
+$('button').on('click', function() {  
+  var cityInput = $('input').val();
+
+  if (cityInput == "") {
+    return alert("Please enter a city name.");
   }
 
-}
-
-$('button').on('click', function() { 
-  var cityInput = $('input').val();
   $('input').val('');
-
   fetchWeatherData(cityInput);
+});
+
+$('input').on('keypress', function(e) {
+  if (e.keyCode == 13) {
+    var cityInput = $('input').val();
+    
+    if (cityInput == "") {
+      return alert("Please enter a city name.");
+    }
+    
+    $('input').val('');
+    fetchWeatherData(cityInput);
+  }
 });
