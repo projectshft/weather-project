@@ -22,8 +22,6 @@ var renderForcast = function () {
   var template = Handlebars.compile(source);
   var newHTML = template(cityForcast[0]);
   $('#col1').append(newHTML);
-
-  console.log(cityForcast);
   
 };
 
@@ -60,6 +58,8 @@ var pushCityForcast = function (data) {
   cityForcast.push(template);
 
   renderForcast();
+
+  console.log(data.list[9].dt);
 };
 
 var fetch = function (query) {
