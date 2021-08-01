@@ -1,0 +1,24 @@
+.row2 {
+  display: flex;
+}
+
+.row1 {
+  display: inline-flex;
+}
+
+div.row2 div.col {
+  width: 20%;
+  border: solid black thin;
+}
+
+div #col1,
+div #col2,
+div #col3,
+div #col4 {
+  border-right: none;
+}
+
+input {
+  width: 300px;
+  height: 34px;
+}

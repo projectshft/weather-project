@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+      integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <title>Weather Project</title>
+  </head>
+  <body>
+    <main>
+      <div class="container">
+        <div class="row1">
+          <div class="col">
+            <input type="text" class="input-box" />
+          </div>
+          <div class="col">
+            <button class="button btn btn-primary">Submit</button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="temperature"></div>
+          </div>
+          <div class="col">
+            <div class="pic"></div>
+          </div>
+        </div>
+      </div>
+      <div class="container">
+        <div class="row2">
+          <div id="col1" class="col"></div>
+          <div id="col2" class="col"></div>
+          <div id="col3" class="col"></div>
+          <div id="col4" class="col"></div>
+          <div id="col5" class="col"></div>
+        </div>
+      </div>
+      <script id="temp-script" type="text/x-handlebars-template">
+        <div class="temp-text col-md-6">
+          <h1>{{temp}} &#8457</h1>
+          <h2>{{city}}</h2>
+          <h3>{{description}}</h3>
+        </div>
+      </script>
+      <script id="forecast-template" type="text/x-handlebars-template">
+        <div class="forecast-text col-sm-2">
+          <h3>{{description}}</h3>
+          <h3>{{temp}} &#8457</h3>
+          <img src="{{img}}" />
+          <h3>{{day}}</h3>
+        </div>
+      </script>
+    </main>
+    <section>
+      <script src="lib/moment/moment.min.js"></script>
+      <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
+      <script
+        src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"
+      ></script>
+      <script src="main.js"></script>
+    </section>
+  </body>
+</html>
