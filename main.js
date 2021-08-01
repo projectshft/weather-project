@@ -29,8 +29,7 @@ var fetchForecast = function(query) {
     method: "GET",
     url: "https://api.openweathermap.org/data/2.5/forecast?q=" + query + "&appid=" + key + "&units=imperial",
     dataType: "json",
-    success: function(data){  
-      console.log(data);
+    success: function(data){       
       buildForecasts(data);
     },
     error: function(JqXHR, textStatus, errorThrown) {
@@ -55,48 +54,40 @@ var todaysWeather = function(data) {
   $(".todays-weather").append(newReport);
 }
 
-
+ 
 var buildForecasts = function(data) {  
-  var today = moment();
-
+  days = [];
   var temps = [];//collect daily temps to avg for forecast
  
   for (var i=0; i<data.list.length - 1; i++) {   //length is length -1 to avoid next day error 
     var iterateDay = moment.unix(data.list[i].dt);    
     var nextDay = moment.unix(data.list[i + 1].dt);//doesnt work b/c of last iteration
-    
-
-    if (today.isSame(iterateDay, 'date')) {
-      continue;      
-    };
-    //check to see if this time and the next time are the same day, then add to array or start new day's tally
-    if (iterateDay.isSame(nextDay, 'date')){
-      
+       
+    if (iterateDay.isSame(nextDay, 'date')){      
       temps.push(data.list[i].main.temp);
     } else {
       var avg = temps.reduce((total, temp) => total + temp) / temps.length;
-      console.log(parseInt(avg));
-      days.push({"date": iterateDay, "temp": parseInt(avg)});
+      days.push({
+        "date": moment.unix(data.list[i].dt).format('dddd'), 
+        "temp": parseInt(avg) + "°F", 
+        "condition": data.list[i].weather[0].main, 
+        "img": "http://openweathermap.org/img/w/" + data.list[i].weather[0].icon + ".png"
+      });
       temps = [];
     };
-  };  
-  console.log(days);
-  // renderForecasts();
+  };    
+ renderForecasts();
 }
 
 
 
-//renderForecasts function  
-//   var icon = data.weather[0].icon
-//   var html = {
-    
-//     //temp: parseInt(data.main.temp) + "°F",
-//     //condition: data.weather[0].main,
-//     //img: "http://openweathermap.org/img/w/" + icon + ".png"
-//   };
-//   var source = $('#forecast-template').html();
-//   var template = Handlebars.compile(source);
-//   var day = template(html);
-
-//   $('.forecast').append(day)
-// }
+renderForecasts = function () {
+$('.forecast').empty();
+for (let i = 0; i < days.length; i++) {
+  var element = days[i];
+  var source = $('#forecast-template').html();
+  var template = Handlebars.compile(source);
+  var day = template(element);
+  $('.forecast').append(day)
+}  
+};

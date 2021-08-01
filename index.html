@@ -48,6 +48,9 @@
         
 
       </div>
+      <div class="forecast row no-gutters text-center">
+
+      </div>
     </div> 
     <script id="today-template" type="text/x-handlebars-template">
 
@@ -58,7 +61,7 @@
           <h3>{{city}}</h3>          
           <h3>{{condition}}</h3>
          </div>
-         <div class="col-md text-center">
+         <div class="col-md text-left">
            <img src="{{img}}" alt="{{condition}}">
          </div>      
 
@@ -68,14 +71,13 @@
       
     </script>
 
-    <!-- does template need to include variables for all 5 days? -->
     <script id="forecast-template" type="text/x-handlebars-template">
-      <div class="col-md-4">
+      <div class="col-sm">
         <div class="day">
-          <h3>{{condition}}</h3>
-          <h3>{{temp}}</h3>          
+          <h5>{{condition}}</h5>
+          <h5>Average: {{temp}}</h5>          
           <img src="{{img}}">
-          <h3>{{day}}</h3>
+          <h5>{{date}}</h5>
         </div>
       </div>
     </script>
