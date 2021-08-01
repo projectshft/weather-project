@@ -102,7 +102,7 @@ var pushCityForcast1 = function (data) {
     description: `${data.list[9].weather[0].description}`,
     temp: `${data.list[9].main.temp}`,
     city: `${input}`,
-    img: 'http://openweathermap.org/img/wn/' + icon + '@4x.png',
+    img: 'http://openweathermap.org/img/wn/' + icon + '@2x.png',
     day: `${dayFormatted}`
   };
 
@@ -124,7 +124,7 @@ var pushCityForcast2 = function (data) {
     description: `${data.list[19].weather[0].description}`,
     temp: `${data.list[19].main.temp}`,
     city: `${input}`,
-    img: 'http://openweathermap.org/img/wn/' + icon + '@4x.png',
+    img: 'http://openweathermap.org/img/wn/' + icon + '@2x.png',
     day: `${dayFormatted}`
   };
 
@@ -147,7 +147,7 @@ var pushCityForcast3 = function (data) {
     description: `${data.list[29].weather[0].description}`,
     temp: `${data.list[29].main.temp}`,
     city: `${input}`,
-    img: 'http://openweathermap.org/img/wn/' + icon + '@4x.png',
+    img: 'http://openweathermap.org/img/wn/' + icon + '@2x.png',
     day: `${dayFormatted}`
   };
 
@@ -169,7 +169,7 @@ var pushCityForcast4 = function (data) {
     description: `${data.list[39].weather[0].description}`,
     temp: `${data.list[39].main.temp}`,
     city: `${input}`,
-    img: 'http://openweathermap.org/img/wn/' + icon + '@4x.png',
+    img: 'http://openweathermap.org/img/wn/' + icon + '@2x.png',
     day: `${dayFormatted}`
   };
 
@@ -191,7 +191,7 @@ var pushCityForcast5 = function (data) {
     description: `${data.list[39].weather[0].description}`,
     temp: `${data.list[39].main.temp}`,
     city: `${input}`,
-    img: 'http://openweathermap.org/img/wn/' + icon + '@4x.png',
+    img: 'http://openweathermap.org/img/wn/' + icon + '@2x.png',
     day: `${dayFormatted}`
   };
 
