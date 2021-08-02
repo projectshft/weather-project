@@ -41,8 +41,10 @@
     <script id="weather-template" type="text/x-handlebars-template">
       <div class='col-md-4'>
         <div class='cityWeather'>
-          <h3>{{city}}</h3>
-          <img src="{{weather_icon}}">
+          <h5>{{ temp }}</h5>
+          <h5>{{ city }}</h5>
+          <h5>{{ conditions }}</h5>
+          <img src="{{weatherIconURL}}">
         </div>
       </div>
     </script>
