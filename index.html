@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <meta charset="utf-8" />
+
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Weather Project</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+  <body>
+    
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-6 offset-md-3">
+          <div class="page-header">
+          <h1>Weather Project</h1>
+          <hr/>
+          </div>
+
+          <form class="search-form">
+          <h3>Search for a City's Weather</h3>
+
+          <div class="form-group">
+            <input type="text" id="search-query" class="form-control" placeholder="Enter City">
+            </input>
+          </div>
+
+          <button type="button" class="btn btn-primary search">Search</button>
+          </form>
+        
+          <hr/>
+
+          <div class="city row">
+          </div>
+
+          <div class="five row">
+          </div>
+      </div>
+      </div>
+    </div> 
+
+      <script id="weather-template" type="text/x-handlebars-template">
+        <div class='col-md-4 weather'>
+          <div class="cityData">
+            <h3>City: {{city}}</h3>
+            <h3>Temperature: {{temperature}}</h3>
+            <h4>Weather: {{weather}}</h4>
+          </div>
+        </div>
+        <div class='col-md-4 weather'>
+          <div class="weather-icon">
+            <img src="{{iconUrl}}" alt="">
+          </div>
+        </div>
+      </script>
+
+      <script id="fiveday-template" type="text/x-handlebars-template">
+      <div class="col">
+        <h4>Weather: {{weather}}</h4>
+        <h3>Temperature: {{temperature}}</h3>
+        <img src="{{iconUrl}}" alt="">
+        <h4>{{dayOfWeek}}</h4>
+      </div>
+      </script>
+
+      <div class="pushData"></div>
+
+
+
+    <script
+      src="https://code.jquery.com/jquery-3.6.0.min.js"
+      integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
+    <script src="main.js" async defer></script>
+  </body>
+</html>
