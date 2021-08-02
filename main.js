@@ -29,7 +29,7 @@ var fetchWeatherData = function(city) {
 
 var addCurrentWeatherData = function(data) {
   currentWeatherData  = [];
-console.log(data);
+  
   var city = data.name;
   var temp = Math.round(data.main.temp) + "\u00B0";
   var descrip = data.weather[0].main;
@@ -52,7 +52,7 @@ var addFiveDayForecastData = function(data) {
   var sumTemp3 = 0;
   var sumTemp4 = 0;
   var sumTemp5 = 0;
-  console.log(data);
+
   for (var i = 0; i < data.list.length; i++) {
     if (i < 8) {
       sumTemp1 += data.list[i].main.temp; 
