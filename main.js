@@ -45,10 +45,10 @@ var addFiveDay = function (data) {
       weather: dayData.weather[0].main,
       temperature: Math.round(dayData.main.temp),
       iconUrl: `http://openweathermap.org/img/wn/${dayData.weather[0].icon}@2x.png`,
+      //  need to find javascript function to convert to day of the week!
       dayOfWeek: (new Date(dayData.dt)).getDay()
   })
   }
-  
       console.log(fiveDay);
       renderFiveDay(fiveDay);
 } 
@@ -71,8 +71,16 @@ var renderCity = function (cities) {
 
 //  Need to complete this in the same format as renderCity
 var renderFiveDay = function (fiveDay) {
-$('.five').append(newHTML); 
-}
+  $('.five').empty();
+
+  for (let i = 0; i < fiveDay.length; i++) {
+    const city = fiveDay[i];
+    var source = $('#fiveday-template').html();
+    var template = Handlebars.compile(source);
+    var newHTML = template(city);
+    $('.five').append(newHTML);     
+  }
+};
 
 // var fetch = function (city) {
 //   $.ajax({
