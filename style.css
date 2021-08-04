@@ -1,0 +1,40 @@
+.page-header {
+  margin-top: 40px;
+  text-align: center;
+}
+
+.form-inline {
+  width: 1000px;
+}
+.search-form {
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+
+.search {
+  margin: 5px;
+}
+.btn {
+  position: relative;
+}
+
+#spin {
+  display: none;
+}
+
+img {
+  width: 25%;
+  height: auto;
+}
+
+.info {
+  display: inline-block;
+}
+
+.day {
+  border: 1px solid black;
+}
+
+.default-city {
+  display: none;
+}
