@@ -35,7 +35,8 @@ var fetchForecast = function(query) {
     method: "GET",
     url: "https://api.openweathermap.org/data/2.5/forecast?q=" + query + "&appid=" + key + "&units=imperial",
     dataType: "json",
-    success: function(data){       
+    success: function(data){  
+      console.log(data);     
       buildForecasts(data);
     },
     error: function(JqXHR, textStatus, errorThrown) {
@@ -65,17 +66,18 @@ var buildForecasts = function(data) {
   days = [];
   var temps = [];//collect daily temps to avg for forecast
  
-  for (var i=0; i<data.list.length - 1; i++) {   //length is length -1 to avoid next day error 
+  for (var i=0; i<data.list.length - 1; i++) {   //length is length -1 to avoid next day error on final iteration (goes 1 beyond i)
+    
     var iterateDay = moment.unix(data.list[i].dt);    
-    var nextDay = moment.unix(data.list[i + 1].dt);//doesnt work b/c of last iteration
-       
+    var nextDay = moment.unix(data.list[i + 1].dt);
+   
     if (iterateDay.isSame(nextDay, 'date')){      
       temps.push(data.list[i].main.temp);
     } else {
-      var avg = temps.reduce((total, temp) => total + temp) / temps.length;
+      var avg = temps.reduce((total, temp) => total + temp, 0) / temps.length;      
       days.push({
         "date": moment.unix(data.list[i].dt).format('dddd'), 
-        "temp": parseInt(avg) + "°F", 
+        "temp": parseInt(avg) + "°F", //avg doesn't work at night for current day
         "condition": data.list[i].weather[0].main, 
         "img": "http://openweathermap.org/img/w/" + data.list[i].weather[0].icon + ".png"
       });
