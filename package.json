@@ -17,5 +17,7 @@
     "url": "https://github.com/BSPryor/weather-project/issues"
   },
   "homepage": "https://github.com/BSPryor/weather-project#readme",
-  "dependencies": {}
+  "dependencies": {
+    "dotenv": "^10.0.0"
+  }
 }
