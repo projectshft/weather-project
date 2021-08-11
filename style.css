@@ -1,0 +1,48 @@
+.page-header {
+  margin-top: 1em;
+}
+
+.form-row {
+  align-items: center !important;
+}
+
+.search-form {
+  width: 100%;
+  margin: auto;
+}
+
+input {
+  height: 60px !important;
+  border-radius: 4rem !important;
+  width: 100% !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  margin: auto;
+}
+
+.input-section {
+  margin-left: 2em !important;
+}
+
+.icon {
+  width: 25%;
+}
+
+.current-forecast {
+  margin-top: 1em;
+}
+
+.five-days {
+  border-style: solid;
+  text-align: center;
+  padding: 1em;
+  margin: 1em;
+  
+}
+
+.five-day-forecast {
+  text-align: center;
+  margin: auto;
+  justify-content: center;
+
+}
