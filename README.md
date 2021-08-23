@@ -1,3 +1,5 @@
+Do not forget to add your own api key in a config.js file. See config.js_sample for more info.
+
 ## Weather Project
 
 This project has been created by a student at Parsity, an online software engineering course. The work in this repository is wholly of the student based on a sample starter project that can be accessed by looking at the repository that this project forks.
