@@ -15,11 +15,13 @@
     <div class="row">
       <div class="col-lg-8 offset-lg-2">
         <div class="page-header">
-          <h1>Weather App</h1>
+          <h1 class="title">WEATHER APP</h1>
           <hr/>
         </div>
         
         <div class="todays-weather row">   
+        </div>
+        <div class="forecast row">   
         </div>
         
         <form class="search-form">
@@ -40,16 +42,33 @@
   </div>
 
   <script id="todays-weather-template" type="text/x-handlebars-template">
-    <div class="today col-sm-6 offset-sm-3">
-      <div class="row">
+    <div class=" col-sm-6 offset-sm-3">
+      <h2>Current Weather</h2>
+      <div class="today row">
         <div class="temp col">
-            <div><h1><strong>{{ temp }}</strong> °F</h1></div>
+            <div><h1 id="temp-num"><strong>{{ temp }}</strong>° F</h1></div>
             <div><h3>{{ name }}</h3></div>
         </div>
         <div class="today-icon col">
           <img src= {{iconURL}}>
           <div><h6>{{ description }}</h6></div>
         </div>
+      </div>
+    </div>
+  </script>
+
+  <script id="forecast-template" type="text/x-handlebars-template">
+    <div class="col-sm-12">
+      <h2>5-Day Forecast</h2>
+      <div class="forecast row">
+        {{#each forecasts}}
+        <div class="col each-forecast">
+          <div><h6>{{ description }}</h6></div>
+          <div><h6>{{ temp }}</h6></div>
+          <img src= {{iconURL}}>
+          <div><h6>{{ dayOfWeek }}</h6></div>
+        </div>
+        {{/each}}
       </div>
     </div>
   </script>

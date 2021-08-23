@@ -1,14 +1,22 @@
-.container {
-  margin-top: 20px;
+.page-header {
+  background-color: #0275d8;
 }
 
-h1 {
+.title {
   text-align: center;
+  color: white;
+  padding-top: 20px;
+}
+
+h2 {
+  text-align: center;
+  color: #0275d8;
+  margin-bottom: 15px;
 }
 
 h3 {
-  margin-top:25px;
-  text-align: center;
+  margin-top: 15px;
+  text-align: right;
 }
 
 h6 {
@@ -19,19 +27,36 @@ img {
   display: block;
   margin-left: auto;
   margin-right: auto;
-
+  width: 60%;
 }
 
 .today {
   border: solid 1px #292b2c;
-  /* background-color: #f8f8f7; */
+  background-color: #0274d805;
   border-radius: 5px;
-  margin
+  padding: 5px;
 }
 
 .temp {
-  padding:20px;
+  padding: 15px;
 }
 .search-form {
   margin-top: 30px;
+}
+
+#temp-num {
+  font-size: 50px;
+  text-align: right;
+}
+
+.each-forecast {
+  border: solid 0.5px #292b2c;
+  background-color: #0274d805;
+  border-radius: 5px;
+  padding: 15px;
+  margin: 5px;
+}
+
+.todays-weather {
+  margin-bottom: 20px;
 }
