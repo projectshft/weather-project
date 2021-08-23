@@ -1,7 +1,37 @@
-.container-fluid {
+.container {
   margin-top: 20px;
 }
 
 h1 {
   text-align: center;
+}
+
+h3 {
+  margin-top:25px;
+  text-align: center;
+}
+
+h6 {
+  text-align: center;
+}
+
+img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+
+}
+
+.today {
+  border: solid 1px #292b2c;
+  /* background-color: #f8f8f7; */
+  border-radius: 5px;
+  margin
+}
+
+.temp {
+  padding:20px;
+}
+.search-form {
+  margin-top: 30px;
 }
