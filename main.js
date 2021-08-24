@@ -66,9 +66,9 @@ var fetchFiveDay = function (cityName) {
 var addWeeklyWeather = function (data) {
     for (var i = 0; i < 5; i++) {
         weeklyWeather.push({
-            weeklyDescription: data.list[i].weather.description,
+            weeklyDescription: data.list[i].weather[0].description,
             weeklyTemp: data.list[i].main.temp,
-            weeklyIcon: "http://openweathermap.org/img/wn/" + data.list[i].weather.icon + "@2x.png",
+            weeklyIcon: "http://openweathermap.org/img/wn/" + data.list[i].weather[0].icon + "@2x.png",
             dayOfWeek: data.list[i].dt       
         });
     }
