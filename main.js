@@ -52,7 +52,7 @@ var displayTodaysWeather = function () {
 var fetchFiveDay = function (cityName) {
     $.ajax({
         method: 'GET',
-        url: 'https://api.openweathermap.org/data/2.5/forecast/daily?q=' + cityName + '&cnt=5&appid=af4517becabe6b999a8031c609577a9a',
+        url: 'https://api.openweathermap.org/data/2.5/forecast?q=' + cityName + '&units=imperial&appid=af4517becabe6b999a8031c609577a9a',
         dataType: 'json',
         success: function (data) {
             addWeeklyWeather(data);
@@ -64,27 +64,30 @@ var fetchFiveDay = function (cityName) {
 };
 
 var addWeeklyWeather = function (data) {
-    weeklyWeather.push({
-        weeklyTemp: data.list.temp.day,
-        dayOfWeek: data.list.dt,
-        weeklyDescription: data.list.id,
-        weeklyIcon: "http://openweathermap.org/img/wn/" + data.list.weather.icon + "@2x.png"
-    });
+    for (var i = 0; i < 5; i++) {
+        weeklyWeather.push({
+            weeklyDescription: data.list[i].weather.description,
+            weeklyTemp: data.list[i].main.temp,
+            weeklyIcon: "http://openweathermap.org/img/wn/" + data.list[i].weather.icon + "@2x.png",
+            dayOfWeek: data.list[i].dt       
+        });
+    }
+    
     console.log(weeklyWeather);
     displayWeeklyWeather();
 }
 
 
 var displayWeeklyWeather = function () {
-    $('#weekly row').empty();
+    $('#weekly-row').empty();
 
-    for (var i = 1; i < weather.length; i++) {
-        var weekly = weather[i];
+    for (var i = 0; i < weeklyWeather.length; i++) {
+        var weekly = weeklyWeather[i];
         var sourceWeekly = $('#weekly-template').html();
         var weeklyTemplate = Handlebars.compile(sourceWeekly);
         var newHTML2 = weeklyTemplate(weekly);
 
-        $('#weekly row').append(newHTML2);
+        $('#weekly-row').append(newHTML2);
     }  
 
     weeklyWeather = [];
