@@ -22,3 +22,7 @@ p {
     display: block;
     max-width: 100%;
 }
+
+.form-control {
+    width: 50%;
+}
