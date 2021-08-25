@@ -1,11 +1,24 @@
-h3 {
+p {
+    font-weight: bold;
     font-size: 5;
-    width: 50%;
-    
-    
+    width: 50%;    
 }
 
-.col-6 col-sm-4 {
-    padding-right: 50px;
+#weekly-row {
+    max-width: 100%;
+    font-weight:bold;
+    font-size: 15px;
+    
+
 }
 
+#weekly-forecast {
+    outline-color: black;
+    outline-width: 1px;
+    outline-style: solid;
+}
+
+.weeklyimg {
+    display: block;
+    max-width: 100%;
+}

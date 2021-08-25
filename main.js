@@ -69,7 +69,7 @@ var addWeeklyWeather = function (data) {
             weeklyDescription: data.list[i].weather[0].description,
             weeklyTemp: data.list[i].main.temp,
             weeklyIcon: "http://openweathermap.org/img/wn/" + data.list[i].weather[0].icon + "@2x.png",
-            dayOfWeek: data.list[i].dt       
+            dayOfWeek: timeConverter(data.list[i * 8].dt)       
         });
     }
     
@@ -92,5 +92,13 @@ var displayWeeklyWeather = function () {
 
     weeklyWeather = [];
 
+}
+
+var timeConverter = function (timestamp) {
+    var milliseconds = timestamp * 1000;  //convert unix timestamp to milliseconds
+    var date = new Date(milliseconds);  //create date object with milliseconds value
+    
+    var dayValue = date.toLocaleString("en-US", {weekday: "long"})  //pulls day value from date object
+    return dayValue;
 }
 

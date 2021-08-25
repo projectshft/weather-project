@@ -44,22 +44,18 @@
     </div>    
     <script id="today-template" type="text/x-handlebars-template">
         <div class="row">
-        <div class="col-6 col-sm-4" id="todays-forecast">            
-            <h3>{{temp}}°</h3>  
-            <h3>{{name}}</h3> 
-            <h3>{{description}}</h3>    
+        <div class="col-md-6" id="todays-forecast">            
+            <p>{{temp}}°<br>{{name}}<br>{{description}}</p>              
         </div>
-        <div class="col-6 col-sm-4" id="todays-img">
+        <div class="col-md-6" id="todays-img">
                 <img src= {{icon}}>
         </div>        
         </div>
     </script> 
     <script id="weekly-template" type="text/x-handlebars-template">
-        <div class="col" id="weekly forecast">
-            <h3>{{weeklyDescription}}</h3> 
-            <h3>{{weeklyTemp}}°</h3>    
-            <img src= {{weeklyIcon}}>
-            <h3>{{dayOfWeek}}</h3>                         
+        <div class="col-md-2 col-md-offset-1" id="weekly-forecast">
+            {{weeklyDescription}}<br>{{weeklyTemp}}°<br><img class="weeklyimg" src= {{weeklyIcon}}><br>
+            {{dayOfWeek}}                       
         </div>         
     </script> 
 
