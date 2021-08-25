@@ -1,0 +1,28 @@
+p {
+    font-weight: bold;
+    font-size: 5;
+    width: 50%;    
+}
+
+#weekly-row {
+    max-width: 100%;
+    font-weight:bold;
+    font-size: 15px;
+    
+
+}
+
+#weekly-forecast {
+    outline-color: black;
+    outline-width: 1px;
+    outline-style: solid;
+}
+
+.weeklyimg {
+    display: block;
+    max-width: 100%;
+}
+
+.form-control {
+    width: 50%;
+}
