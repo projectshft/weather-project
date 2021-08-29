@@ -16,14 +16,14 @@
   <body>
     <div class="container-fluid">
       <div class="row">
-        <div class="col-md-6 offset-md-3">
+        <div class="col-md-4 offset-md-4">
           <div class="page-header">
             <h1 class="text-center">Weather Project</h1>
             <hr/>
           </div>
           
           <div class="input-group">
-            <input type="text" id="search-query" class="form-control" placeholder="Enter City Name Here">
+            <input type="text" id="search-query" class="form-control" autofocus="autofocus" placeholder="Enter City Name Here">
             </input>
             <button type="button" class="btn btn-primary search">Search</button>
           </div>
@@ -32,18 +32,35 @@
     </div> 
 
     <div class="container-fluid">
-      <div class="current-weather text-center col-md-6 offset-md-3 row"></div>
+      <div class="current-weather text-center col-md-4 offset-md-4 row"></div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="forecast text-center row"></div>
     </div>
 
     <script id="current-weather-template" type="text/x-handlebars-template">
-      <div class="current-weather-info col-md-6">
+      <div class="w-50">
         <h2><strong>{{temperature}}&#176;</strong></h2>
-        <h2><strong>{{city}}</strong></h2>
-        <h3><strong>{{description}}</strong></h3>
+        <h3><strong>{{city}}</strong></h3>
+        <h4>{{description}}</h4>
       </div>
-      <div class="current-weather-image col-md-6">
+      <div class="w-50">
         <img src="{{descriptionImageUrl}}" alt="">
       </div>
+    </script>
+
+    <script id="forecast-template" type="text/x-handlebars-template">
+      <div class="row col-md-10 offset-md-1">
+      {{#each forecastDays}}
+      <div class="forecast-info w-20">
+        <h4>{{description}}</h4>
+        <h3>{{temperature}}&#176;</h3>
+        <img src="{{descriptionImageUrl}}" alt="">
+        <h4>{{day}}</h4>
+      </div>
+      {{/each}}
+    </div>
     </script>
 
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>

@@ -1,4 +1,14 @@
 .input-group {
   padding-top: 20px;
-  padding-bottom: 20px;
+}
+
+.current-weather {
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+.forecast-info {
+  width: 20%;
+  border: 1px solid black;
+  padding: 20px;
 }
