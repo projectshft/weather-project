@@ -33,18 +33,33 @@
         
           <hr/>
 
-          <div class="weather row">
+          <div class="current-weather row">
+          </div>
+          <br>
+          <div class="forecast row">
           </div>
       </div>
       </div>
     </div>
-    <script id="weather-template" type="text/x-handlebars-template">
+    <script id="current-weather-template" type="text/x-handlebars-template">
       <div class='col-md-4'>
-        <div class='cityWeather'>
-          <h5>{{ temp }}</h5>
-          <h5>{{ city }}</h5>
-          <h5>{{ conditions }}</h5>
-          <img src="{{weatherIconURL}}">
+        <div class='city-weather'>
+          <h4>{{ temp }}</h4>
+          <h4>{{ city }}</h4>
+          <h6>{{ conditions }}</h6>
+            <div class="col-md-2 offset-md-3">
+              <img src="http://openweathermap.org/img/wn/{{weatherIcon}}@2x.png" alt="">
+            </div>
+       </div>
+      </div>
+    </script>
+    <script id="forecast-template" type="text/x-handlebars-template">
+      <div class='col-md-4'>
+        <div class='forecast-weather'>
+          <h6>{{ conditions }}</h6>
+          <h6>{{ temp }}</h6>
+          <img src="http://openweathermap.org/img/wn/{{weatherIcon}}@2x.png" alt="">
+          <h6>{{ day }}</h6>
         </div>
       </div>
     </script>
