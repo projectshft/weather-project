@@ -61,25 +61,28 @@ var renderForecast = function (data) {
   $('.forecast-weather').empty();
 
   var forecastWeek = [];
-  for (let i=7; i < data.list.length; i += 8)
+  
+  for (var i = 7; i < data.list.length; i += 8)
     var day = data.list[i];
 
-  var weatherForecast = {
-    conditions: day.weather.main,
-    temp: Math.round(day.main.temp),    
-    weatherIcon: day.weather[0].icon,
-    day: day.dt_txt
+    var weatherForecast = {
+      conditions: day.weather.main,
+      temp: Math.round(day.main.temp),    
+      weatherIcon: day.weather[0].icon,
+      day: day.dt_txt
+    }
 
+    forecastWeek.push(weatherForecast);
   }
 
-  forecastWeek.push(weatherForecast);
-}
-    
+  for (var j = 0; j < forecastWeek.length; j++) {
     var source = $('#forecast-template').html();
     var template = Handlebars.compile(source);
     var newHTML = template(forecastWeek[j]);
 
-    $('.forecast-weather').append(newHTML);
+    $('.forecast-weather').append(newHTML)
+  }
+}
 
   
     
