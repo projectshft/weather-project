@@ -1,3 +1,6 @@
+body {
+  background-color: blanchedalmond;
+}
 h1 {
   text-align: center;
   padding: 10px;
@@ -17,9 +20,15 @@ button {
   float: right;
 }
 
-.weather {
-  text-align: center;
+.weather-results {
+  text-align: right;
   margin: auto;
-  width: 65%;
+  width: 40%;
   padding: 10px;
+}
+
+.weather-results img {
+  float: right;
+  height: auto;
+  width: 50%;
 }

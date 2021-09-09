@@ -27,7 +27,7 @@
     </div>
     <div class="row">
       <div class="col-md-6 offset-md-3">
-        <div class="weather">
+        <div class="weather-results">
         </div>
       </div>
     </div>
@@ -35,10 +35,13 @@
   
   <script id="weather-template" type="text/x-handlebars-template">
     <div class='weather'>
+      <img src={{image}}>
       <h2>{{temp}}&deg;F</h2>
       <h2>{{city}}</h2>
       <h2>{{weather_desc}}</h2>
-      <img src={{image}}>
+      
+      
+      
     </div> 
   </script>
   

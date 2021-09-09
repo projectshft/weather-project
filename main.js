@@ -12,11 +12,12 @@ $('.search').on('click', function () {
 });
 
 var addWeather = function (data) {;
+   
   weatherData.push({
     temp: parseFloat((data.main.temp)*(9/5)-459.67).toFixed(0),
     city: data.name,
-    weather_desc: data.weather.id,
-    image: data.weather.icon
+    weather_desc: data.weather[0].description,
+    image: 'http://openweathermap.org/img/wn/' + data.weather[0].icon +'@2x.png'
   });
 
   renderWeather();
@@ -37,7 +38,7 @@ var fetch = function (city) {
 };
 
 var renderWeather = function () {
-  $('.weather').empty();
+  $('.weather-results').empty();
 
   for (let i = 0; i < weatherData.length; i++) {
     const weather = weatherData[i];
@@ -46,7 +47,7 @@ var renderWeather = function () {
     var template = Handlebars.compile(source);
     var newHTML = template(weather);
 
-    $('.weather').append(newHTML);
+    $('.weather-results').append(newHTML);
   }
 };
 
