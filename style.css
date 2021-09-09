@@ -1,0 +1,25 @@
+h1 {
+  text-align: center;
+  padding: 10px;
+}
+
+.form-group {
+  margin: auto;
+  width: 65%;
+}
+
+#search-query {
+  float: left;
+  width: 80%;
+}
+
+button {
+  float: right;
+}
+
+.weather {
+  text-align: center;
+  margin: auto;
+  width: 65%;
+  padding: 10px;
+}
