@@ -1,5 +1,5 @@
 body {
-  background-color: blanchedalmond;
+  background-color: white;
 }
 h1 {
   text-align: center;
@@ -21,14 +21,58 @@ button {
 }
 
 .weather-results {
-  text-align: right;
+  text-align: left;
   margin: auto;
-  width: 40%;
-  padding: 10px;
+  width: 100%;
+  padding: 60px;
+  max-width: 100%;
+  height: auto;
 }
 
 .weather-results img {
   float: right;
+  max-width: 100%;
   height: auto;
-  width: 50%;
+}
+
+.weather-results h2 {
+  text-align: left;
+}
+
+.weather {
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  height: auto;
+}
+
+.col-md-6 {
+  width: 100%;
+}
+
+.weather-forecast {
+  display: grid;
+  grid-template-rows: auto;
+  grid-template-columns: auto auto auto auto auto;
+  justify-items: center;
+  align-items: center;
+  width: 80%;
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.forecast {
+  text-align: center;
+  display: inline-block;
+  max-width: 100px;
+  vertical-align: top;
+  margin: 10px;
+}
+
+#forecastGrid {
+  width: 100%;
+  text-align: center;
+  border: 2px solid black;
+  border-width: 1px;
 }

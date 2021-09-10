@@ -31,6 +31,12 @@
         </div>
       </div>
     </div>
+    <div class="row" id='centerAlign'>
+      <div class="col-md-12">
+        <div class="weather-forecast">
+        </div>
+      </div>
+    </div>
   </div>
   
   <script id="weather-template" type="text/x-handlebars-template">
@@ -39,9 +45,15 @@
       <h2>{{temp}}&deg;F</h2>
       <h2>{{city}}</h2>
       <h2>{{weather_desc}}</h2>
-      
-      
-      
+    </div> 
+  </script>
+
+  <script id="forecast-template" type="text/x-handlebars-template">
+    <div class='col' id='forecastGrid'>
+      <h4>{{weather_desc}}</h4>
+      <h4>{{temp}}&deg;F</h4>
+      <img src={{image}}>
+      <h4>{{day}}</h4>
     </div> 
   </script>
   
