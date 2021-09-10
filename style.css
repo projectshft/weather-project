@@ -1,0 +1,78 @@
+body {
+  background-color: white;
+}
+h1 {
+  text-align: center;
+  padding: 10px;
+}
+
+.form-group {
+  margin: auto;
+  width: 65%;
+}
+
+#search-query {
+  float: left;
+  width: 80%;
+}
+
+button {
+  float: right;
+}
+
+.weather-results {
+  text-align: left;
+  margin: auto;
+  width: 100%;
+  padding: 60px;
+  max-width: 100%;
+  height: auto;
+}
+
+.weather-results img {
+  float: right;
+  max-width: 100%;
+  height: auto;
+}
+
+.weather-results h2 {
+  text-align: left;
+}
+
+.weather {
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  height: auto;
+}
+
+.col-md-6 {
+  width: 100%;
+}
+
+.weather-forecast {
+  display: grid;
+  grid-template-rows: auto;
+  grid-template-columns: auto auto auto auto auto;
+  justify-items: center;
+  align-items: center;
+  width: 80%;
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.forecast {
+  text-align: center;
+  display: inline-block;
+  max-width: 100px;
+  vertical-align: top;
+  margin: 10px;
+}
+
+#forecastGrid {
+  width: 100%;
+  text-align: center;
+  border: 2px solid black;
+  border-width: 1px;
+}
