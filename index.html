@@ -28,10 +28,13 @@
                 type="text"
                 placeholder="Enter City"
                 class="form-control"
+                id="weather-input"
               />
             </div>
             <div class="col-md-2">
-              <button type="button" class="btn btn-primary">Search</button>
+              <button type="button" class="btn btn-primary" id="search-weather">
+                Search
+              </button>
             </div>
           </form>
           <div class="weather-results"></div>
@@ -41,20 +44,21 @@
     <script id="weather-template" type="text/x-handlebars-template">
       <div class="row">
         <div class="col-md-6">
-          <h1>{{temp}}</h1>
+          <h2>{{temp}}°</h2>
           <h2>{{city}}</h2>
-          <h3>{{weather}}</h3>
+          <h4>{{weather}}</h4>
         </div>
         <div class="col-md-6">
           <img src={{icon}} />
         </div>
-      </div>;
+      </div>
     </script>
     <script
       src="https://code.jquery.com/jquery-3.6.0.min.js"
       integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
       crossorigin="anonymous"
     ></script>
+    <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
     <script src="main.js"></script>
   </body>
 </html>
