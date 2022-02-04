@@ -10,15 +10,53 @@
       integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
       crossorigin="anonymous"
     />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.12/css/weather-icons.min.css"
+      integrity="sha512-r/Gan7PMSRovDus++vDS2Ayutc/cSdl268u047n4z+k7GYuR7Hiw71FsT3QQxdKJBVHYttOJ6IGLnlM9IoMToQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
     <link href="style.css" rel="stylesheet" />
     <title>Document</title>
   </head>
-  <body></body>
+  <body>
+    <div class="container">
+      <div class="col-md-10 col-md-offset-1">
+        <div class="page-header text-center">
+          <h1>Weather Project</h1>
+        </div>
+        <div class="search-section">
+          <div class="form-group search-style">
+            <input
+              type="text"
+              class="form-control city-search"
+              placeholder="Search a City"
+            />
+            <button class="search-button btn btn-primary">Search</button>
+          </div>
+          <div class="current-weather-section"></div>
+        </div>
+      </div>
+    </div>
+  </body>
   <script
     src="https://code.jquery.com/jquery-3.6.0.js"
     integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
     crossorigin="anonymous"
   ></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.js"></script>
+  <script class="current-weather-template" type="text/x-handlebars-template">
+    <div>
+      <div class="current-weather-data">
+        <h3><strong>{{weather.temp}}</strong></h3>
+        <h2><strong>{{city}}</strong></h2>
+        <h4>{{weather.sky}}</h4>
+      </div>
+      <div class="current-weather-icon">
+        <i class="wi wi-{{weather.icon}}"></i>
+      </div>
+    </div>
+  </script>
   <script src="main.js"></script>
 </html>

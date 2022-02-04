@@ -1,7 +1,21 @@
-var testObj = fetch('http://api.openweathermap.org/geo/1.0/direct?q=Hanford&limit=1&appid=f7b75cc3d00a79fd79ccdda543f26f00');
+var currentWeatherData = {
+  city: "Durham",
+  country: "USA",
+  state: "NC",
+  weather: {
+    temp: "66" + String.fromCharCode(176),
+    sky: "Clouds",
+    icon: "day-cloudy-high"
+  }
+};
 
-console.log(testObj);
-console.log(testObj.then(function () {
-  console.log('Done!');
-}));
+var renderCurrentWeather = function () {
+  var $currentWeatherDiv = $('.current-weather-section');
+  $currentWeatherDiv.empty();
 
+  var newHTML = Handlebars.compile($('.current-weather-template').html())(currentWeatherData);
+
+  $currentWeatherDiv.append($.parseHTML(newHTML));
+};
+
+renderCurrentWeather();
