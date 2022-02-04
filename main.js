@@ -1,2 +1,3 @@
-const apiKey = 'd42fcd703f061a26191fb5165ab48e75';
+const { apiKey } = require('./config.json');
+
 const endPoint = 'http://api.openweathermap.org/';
