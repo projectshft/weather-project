@@ -1,0 +1,265 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  background-color: #f3f7f6;
+  height: 150vh;
+  font-family: "Montserrat", sans-serif;
+  color: #023047;
+}
+
+h1 {
+  font-size: 5rem;
+  margin-bottom: 4rem;
+  margin-left: -1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+h2 {
+  font-size: 4.7rem;
+}
+h3 {
+  font-size: 3rem;
+}
+
+p {
+  font-size: 1.6rem;
+  color: #f5fbff;
+}
+
+.main-heading {
+  margin-top: 7rem;
+  text-align: center;
+  position: relative;
+}
+
+hr {
+  margin: 0rem auto;
+  padding: 0;
+  width: 60%;
+}
+
+.search-form {
+  margin: 5rem auto 2rem;
+  width: 50%;
+}
+
+.form-control {
+  font-size: 1.4rem;
+}
+
+.btn {
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: bold;
+  background-color: #219ebc;
+  border: none;
+  outline: none;
+}
+
+.btn:hover,
+.btn:active {
+  background-color: #056b85;
+  outline: #056b85;
+}
+
+#find-me {
+  background-color: #fb8500;
+  outline: #fb8500;
+}
+
+#find-me:hover,
+#find-me:active {
+  background-color: #cc6f05;
+}
+#status,
+#find-result {
+  font-size: 1.6rem;
+  color: #222525;
+}
+
+::placeholder {
+  font-style: inherit;
+  font-size: 1.4rem;
+  letter-spacing: 0.4px;
+}
+
+.save-position {
+  display: none;
+  margin: 0 auto;
+  margin-bottom: 4rem;
+}
+
+.weather-display {
+  width: 80%;
+  margin: 0 auto;
+  margin-bottom: 4rem;
+  border-radius: 10px;
+  background-color: #f8f8f8;
+  box-shadow: 0 0 10px rgba(5, 107, 133, 0.2);
+}
+
+.current-weather-info {
+  margin-right: 10%;
+}
+
+.p-2 {
+  width: 200px;
+  height: 200px;
+  text-align: center;
+}
+
+.icon-div {
+  border-radius: 50%;
+}
+
+.main-icon {
+  width: 220px;
+  margin-top: -2rem;
+  align-self: flex-start;
+  justify-self: flex-start;
+  filter: saturate(200%) brightness(105%);
+}
+
+.secondary-icon {
+  width: 100px;
+}
+
+.col-sm {
+  border: 1px solid rgb(233, 233, 233);
+  border-radius: 10px;
+  padding: 15px;
+  margin: 10px;
+  box-shadow: 0 0 5px rgba(251, 133, 0, 0.4);
+  transition: all 0.4s;
+}
+
+.col-sm:hover {
+  transform: scale(1.1);
+}
+
+.five-day-description {
+  font-style: italic;
+  color: #fcfdfd;
+  text-align: center;
+  font-size: 1.4rem;
+}
+
+.five-day-degree {
+  padding-bottom: 10px;
+  font-size: 2rem;
+  font-weight: 600;
+  font-size: 3rem;
+}
+
+.five-day-day {
+  padding-top: 20px;
+  justify-self: flex-end;
+  font-weight: 600;
+  font-size: 2rem;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.five-day-date {
+  padding-top: 20px;
+  justify-self: flex-end;
+  font-weight: 400;
+  font-size: 1.8rem;
+  letter-spacing: 0.5px;
+}
+
+.map-divider {
+  margin: 8rem auto;
+  display: none;
+}
+.map-container {
+  width: 1000px;
+  height: 1000px;
+  background-color: black;
+  color: white;
+  z-index: 1000;
+}
+
+#map {
+  margin: 2rem auto;
+  width: 100%;
+  height: 500px;
+  filter: saturate(80%) hue-rotate(320deg);
+  display: none;
+  z-index: -100;
+}
+
+.sunny-style {
+  background: #ff4b1f;
+  background: -webkit-linear-gradient(#fc9d7a, #ff4b1f);
+  background: linear-gradient(#fc9d7a, #ff4b1f);
+}
+
+.cloudy-style {
+  background: #56e7b9;
+  background: -webkit-linear-gradient(#56e7b9, #185a9d);
+  background: linear-gradient(#56e7b9, #185a9d);
+}
+
+.stormy-style {
+  background: #5d7eeb;
+  background: -webkit-linear-gradient(#db90dd, #5d7eeb);
+  background: linear-gradient(#db90dd, #5d7eeb);
+}
+
+.snowy-style {
+  background: #ee9ca7;
+  background: -webkit-linear-gradient(to bottom, #f7ccd0, #ee9ca7);
+  background: linear-gradient(to bottom, #f7ccd0, #ee9ca7);
+}
+.foggy-style {
+  background: #403a3e;
+  background: -webkit-linear-gradient(to right, #403a3e, #be5869);
+  background: linear-gradient(to right, #403a3e, #be5869);
+}
+
+@media (max-width: 1000px) {
+  .search-form {
+    width: 55%;
+  }
+}
+
+@media (max-width: 800px) {
+  h1 {
+    font-size: 4rem;
+  }
+
+  h2 {
+    font-size: 3rem;
+  }
+
+  hr {
+    width: 80%;
+  }
+
+  .p-2 {
+    width: 150px;
+    height: 150px;
+  }
+
+  .search-form {
+    width: 60%;
+  }
+}
+
+@media (max-width: 600px) {
+  .search-form {
+    width: 70%;
+  }
+}
