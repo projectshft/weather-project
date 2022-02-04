@@ -9,7 +9,7 @@ html {
 }
 
 body {
-  background-color: #f3f7f6;
+  background-color: #fcf9f5;
   height: 150vh;
   font-family: "Montserrat", sans-serif;
   color: #023047;
@@ -34,6 +34,10 @@ h3 {
 p {
   font-size: 1.6rem;
   color: #f5fbff;
+}
+
+.navbar {
+  background-color: #fb8500;
 }
 
 .main-heading {
@@ -195,9 +199,7 @@ hr {
   margin: 2rem auto;
   width: 100%;
   height: 500px;
-  filter: saturate(80%) hue-rotate(320deg);
   display: none;
-  z-index: -100;
 }
 
 .sunny-style {

@@ -16,6 +16,8 @@ $(".search").on("click", () => {
   $("#status").text("");
   $("#map-link").text("");
   $("#city-input").val("");
+  $(".map-divider").css("display", "block");
+  $(".save-position").css("display", "block");
   fetch(city);
   fetchFiveDay(city);
 });
@@ -72,17 +74,32 @@ var renderWeather = function () {
   }
 
   initMap(latitude, longitude);
-  $(".map-divider").css("display", "block");
-  $(".save-position").css("display", "block");
   iconSwap();
 };
 
+let marker;
 function initMap(latitude = 0, longitude = 0) {
   var map;
   map = new google.maps.Map(document.getElementById("map"), {
     center: { lat: latitude, lng: longitude },
     zoom: 8,
   });
+
+  marker = new google.maps.Marker({
+    map,
+    draggable: true,
+    animation: google.maps.Animation.DROP,
+    position: { lat: latitude, lng: longitude },
+  });
+  marker.addListener("click", toggleBounce);
+}
+
+function toggleBounce() {
+  if (marker.getAnimation() !== null) {
+    marker.setAnimation(null);
+  } else {
+    marker.setAnimation(google.maps.Animation.BOUNCE);
+  }
 }
 
 ////////////////////////////////////////////////////////////////////
@@ -177,7 +194,7 @@ var addForecast = function (data) {
     if (dayArray[i][4]) {
       condition = dayArray[i][4].description;
     } else {
-      condition = dayArray[i][1].description;
+      condition = dayArray[i][0].description;
     }
 
     for (let j = 0; j < dayArray[i].length; j++) {
@@ -271,7 +288,7 @@ var fetchCity = function (lat, lon) {
   });
 };
 
-//Saving a default position
+//Saving a default position and having it pop up on load for the user
 $(".btn.save-position").on("click", function () {
   localStorage.setItem("city", city);
   $(".btn.save-position").css("display", "none");
@@ -279,12 +296,11 @@ $(".btn.save-position").on("click", function () {
 
 window.onload = function () {
   var storedCity = localStorage.getItem("city", city);
-
   if (storedCity) {
     fetch(storedCity);
     fetchFiveDay(storedCity);
+    $(".map-divider").css("display", "block");
   }
-  $(".btn.save-position").css("display", "none");
 };
 
 ///Personalizing background of 5-day cards based on condition and adding new icons
