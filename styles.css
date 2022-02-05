@@ -205,6 +205,7 @@ hr {
 footer {
   margin-top: 6rem;
   background-color: #fb8500;
+  display: none;
 }
 
 footer p {

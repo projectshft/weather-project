@@ -230,6 +230,7 @@ var renderForecast = function () {
   }
 
   tailorFiveDay();
+  $("footer").css("display", "block");
 };
 
 ////////////////////////////////////////////////////////////
