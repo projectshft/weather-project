@@ -1,10 +1,5 @@
 var weather = [
-  {
-    temp: 38,
-    city: 'Austin',
-    condition: 'overcast',
-    icon: '01d'
-  }
+  {}
 ];
 
 var renderWeather = function() {
@@ -44,72 +39,61 @@ var fetch = function(search) {
 
 var weatherInfo = function(data) {
   weather = [];
-
-  for(i = 0; i < data.length; i++) {
-    var info1 = data[i];
-    //temp
-    var kelvin = (info1.main.temp || null);
-    var F = toF(kelvin);
-    //condition
-    var cond = (data.weather.id || null);
-    cond.toString();
-    var C = toC(cond);
-    var info2 = {
-      temp: F,
-      city: info1.name || null,
-      condition: C,
-      icon: info1.weather.icon || null
-    }
-    weather.push(info2);
+  //temp
+  var kelvin = (data.main.temp || null);
+  console.log(kelvin)
+  var F = toF(kelvin);
+  console.log(F);
+  //condition
+  var cond = (data.weather[0].id || null);
+  console.log(cond);
+  var C = toC(cond);
+  console.log(C);
+  var info2 = {
+    temp: F,
+    city: data.name || null,
+    condition: C,
+    icon: data.weather[0].icon || null
   }
+  weather.push(info2);
   renderWeather();
 };
 
+//kelvin to F
 var toF = function(kelvin) {
   var F = Math.round((kelvin * 1.8) - 459.67);
   return F; 
 };
 
+//numbers to matching condition
 var toC = function(cond) {
-  console.log(cond);
-  console.log(cond[0]);
-  var result; 
-  if(cond[0] === 2) {
+  var substitue = cond.toString();
+  if(substitue[0] == 2) {
     alert('working');
-    return result = 'Thunderstorms';
+    return 'Thunderstorms';
   } 
-  if(cond[0] === 3) {
-    return result = 'Drizzle';
+  if(substitue[0] == 3) {
+    return 'Drizzle';
   }
-  if(cond[0] === 5) {
-    return result = 'Rain';
+  if(substitue[0] == 5) {
+    return 'Rain';
   }
-  if(cond[0] === 6) {
-    return result = 'Snow';
+  if(substitue[0] == 6) {
+    return 'Snow';
   }
-  if(cond[0] === 7) {
-    return result = 'Atmosphere';
+  if(substitue[0] == 7) {
+    return 'Atmosphere';
   }
-  if(cond[0] === 8 && cond[2] === 0) {
-    return result = 'Clear'
+  if(substitue[0] == 8 && substitue[2] == 0) {
+    return 'Clear'
   }
-  if(cond[0] === 8 && cond[2] !== 0) {
-    return result = 'Cloudy'
+  if(substitue[0] == 8 && substitue[2] !== 0) {
+    return 'Cloudy'
+  } else {
+    alert('Weather condition not read.')
   }
-  // } else {
-  //   alert('Weather condition not read.')
-  // }
 };
-var idk = 200;
-var idkk = '200';
 
-
-var idk = function(e) {
-  var yo = e
-  console.log(yo)
-  var yoo = e[0];
-  console.log(yoo)
-}
 
 
 //(K − 273.15) × 9/5 + 32.
