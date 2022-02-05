@@ -12,6 +12,15 @@ var currentWeatherData = {
 
 var apiKey = 'f7b75cc3d00a79fd79ccdda543f26f00';
 
+var renderCurrentWeather = function () {
+  var $currentWeatherDiv = $('.current-weather-section');
+  $currentWeatherDiv.empty();
+
+  var newHTML = Handlebars.compile($('.current-weather-template').html())(currentWeatherData);
+
+  $currentWeatherDiv.append($.parseHTML(newHTML));
+};
+
 var updateCurrentWeatherModel = function (cityName) { 
   
   currentWeatherData = {
@@ -23,16 +32,8 @@ var updateCurrentWeatherModel = function (cityName) {
       iconURL: 'http://openweathermap.org/img/wn/' + rawData.weather[0].icon + '@2x.png'
     }
   }
-  
-};
 
-var renderCurrentWeather = function () {
-  var $currentWeatherDiv = $('.current-weather-section');
-  $currentWeatherDiv.empty();
-
-  var newHTML = Handlebars.compile($('.current-weather-template').html())(currentWeatherData);
-
-  $currentWeatherDiv.append($.parseHTML(newHTML));
+  renderCurrentWeather();
 };
 
 var getWeatherData = function (geoLocation) {
@@ -43,7 +44,6 @@ var getWeatherData = function (geoLocation) {
     success: function (data) {
       rawData = data;
       updateCurrentWeatherModel(geoLocation.city);
-      renderCurrentWeather();
     },
     error: function () {
       console.log('Error');
