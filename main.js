@@ -27,7 +27,7 @@ $(".search").on("click", () => {
 var fetch = function (city) {
   $.ajax({
     method: "GET",
-    url: `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=imperial&appid=${api}`,
+    url: `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=imperial&appid=5de1b63f3ad7c2600e3f33f10036d1ec`,
     dataType: "json",
     success: function (data) {
       addWeather(data);
@@ -110,7 +110,7 @@ function toggleBounce() {
 var fetchFiveDay = function (city) {
   $.ajax({
     method: "GET",
-    url: `https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=imperial&appid=${api}`,
+    url: `https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=imperial&appid=5de1b63f3ad7c2600e3f33f10036d1ec`,
     dataType: "json",
     success: function (data) {
       addForecast(data);
@@ -278,7 +278,7 @@ function geoFindMe() {
 var fetchCity = function (lat, lon) {
   $.ajax({
     method: "GET",
-    url: `http://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&limit=2&appid=${api}`,
+    url: `http://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&limit=2&appid=5de1b63f3ad7c2600e3f33f10036d1ec`,
     dataType: "json",
     success: function (data) {
       fetch(data[0].name);
