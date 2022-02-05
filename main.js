@@ -74,6 +74,7 @@ var renderWeather = function () {
   }
 
   initMap(latitude, longitude);
+  $("#map").css("box-shadow", "0 0 5px rgba(0, 0, 0, 0.2)");
   iconSwap();
 };
 
