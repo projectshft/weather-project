@@ -1,3 +1,7 @@
+* {
+  padding: 0px;
+}
+
 .page-header {
   justify-content: center;
 }
@@ -7,4 +11,18 @@
 
 .plzWork {
   padding: 15px 0px;
+}
+
+.border {
+  border: solid 1px black;
+  /* height: 100px;
+  width: 100px; */
+}
+
+.margin {
+  margin: 5px 0px;
+  text-align: center;
+}
+.special {
+  margin-left: 41px;
 }
