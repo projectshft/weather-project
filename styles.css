@@ -89,6 +89,7 @@ hr {
 #find-result {
   font-size: 1.6rem;
   color: #222525;
+  text-align: center;
 }
 
 ::placeholder {

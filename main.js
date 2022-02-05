@@ -263,7 +263,9 @@ function geoFindMe() {
   }
 
   function error() {
-    $(status).text("Unable to retrieve your location");
+    $(status).text(
+      "Unable to retrieve your location. If you are using Safari, this is likely tied to security features. Try this feature in Chrome or Firefox"
+    );
   }
 
   if (!navigator.geolocation) {
