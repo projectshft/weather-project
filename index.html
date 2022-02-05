@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link href="style.css" rel="stylesheet" />
+    <!-- Required meta tags -->
+    <link rel="stylesheet" href="style.css" />
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
+      integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-5 offset-md-3">
+          <!--d-flex justify-content-center-->
+          <div class="page-header">
+            <h1 class="plzWork"><b>Weather Project</b></h1>
+            <hr />
+          </div>
+        </div>
+        <div class="col-md-4 offset-md-3">
+          <div class="input">
+            <input type="text" class="form-control value" />
+          </div>
+        </div>
+          <div class="button">
+            <button type="button" class="btn btn-primary">Submit</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="weather row offset-md-3">
+      </div>
+    </div>
+
+    <script id="weather-template" type="text/x-handlebars-template">
+      <div class="weather col-md-3 ">
+        <h3>{{temp}}&#176</h3>
+        <h5><strong>{{city}}</strong></h5>
+        <h6>{{condition}}</h6>
+        <!-- <img src="{{imageURL}}" alt="" /> -->
+      </div>
+      <div class="weather col-md-3">
+        <img src="http://openweathermap.org/img/wn/{{icon}}@2x.png" alt="" />
+      </div>
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
+    <script src="main.js"></script>
+  </body>
+</html>
