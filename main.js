@@ -330,7 +330,11 @@ var tailorFiveDay = function () {
       $(iconDiv).attr("src", "./icon_images/rain.png");
     }
 
-    if (text.includes("fog") || text.includes("mist")) {
+    if (
+      text.includes("fog") ||
+      text.includes("mist") ||
+      text.includes("haze")
+    ) {
       $(conditions[i]).closest(".col-sm").addClass("foggy-style");
       $(iconDiv).attr("src", "./icon_images/overcast.png");
     }
@@ -366,7 +370,11 @@ var iconSwap = function () {
     $(".main-icon").attr("src", "./icon_images/rain_thunder.png");
   }
 
-  if (description.includes("fog") || description.includes("mist")) {
+  if (
+    description.includes("fog") ||
+    description.includes("mist") ||
+    description.includes("haze")
+  ) {
     $(".main-icon").attr("src", "./icon_images/foggy.png");
   }
 };

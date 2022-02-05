@@ -202,6 +202,17 @@ hr {
   display: none;
 }
 
+footer {
+  margin-top: 6rem;
+  background-color: #fb8500;
+}
+
+footer p {
+  font-size: 1.2rem;
+  color: white;
+  text-align: center;
+}
+
 .sunny-style {
   background: #ff4b1f;
   background: -webkit-linear-gradient(#fc9d7a, #ff4b1f);
