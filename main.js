@@ -18,6 +18,7 @@ $(".search").on("click", () => {
   $("#city-input").val("");
   $(".map-divider").css("display", "block");
   $(".save-position").css("display", "block");
+  $("#find-result").css("display", "none");
   fetch(city);
   fetchFiveDay(city);
 });
@@ -26,7 +27,7 @@ $(".search").on("click", () => {
 var fetch = function (city) {
   $.ajax({
     method: "GET",
-    url: `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=imperial&appid=5de1b63f3ad7c2600e3f33f10036d1ec`,
+    url: `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=imperial&appid=${api}`,
     dataType: "json",
     success: function (data) {
       addWeather(data);
@@ -157,7 +158,7 @@ var addForecast = function (data) {
   var dayFiveData = [];
 
   for (let i = 0; i < days.length; i++) {
-    //Pulling out the object values so I can use array methods
+    //Identifying the data to pull into the day-specific arrays
     var daysArray = Object.values(days[i]);
     var dayData = {
       temp: daysArray[1],
@@ -351,7 +352,11 @@ var tailorFiveDay = function () {
 
 var iconSwap = function () {
   let description = $(".weather-description").text();
-  if (description.includes("rain") || description.includes("drizzle")) {
+  if (
+    description.includes("rain") ||
+    description.includes("drizzle") ||
+    description.includes("mist")
+  ) {
     $(".main-icon").attr("src", "./icon_images/rain.png");
   }
   if (description.includes("snow")) {
