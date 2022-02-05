@@ -19,27 +19,33 @@
       integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/weather-icons.css" />
 
     <title>Weather App</title>
   </head>
   <body>
     <div class="container">
-      <div class="row">
-        <div class="col-6 offset-3">
+      <div class="row header">
+        <div class="offset-3 col-6">
           <h1 class="display-3 text-center m-4">Weather App</h1>
           <hr />
 
-          <div class="input-group mb-3">
+          <div class="input-group pt-2 mb-3">
             <input
+              id="city-input"
               type="text"
               class="form-control"
-              placeholder="Enter City Name"
+              placeholder="Enter City Name or Zip Code"
               aria-label="City Search"
               aria-describedby="location-search"
             />
             <div class="input-group-append">
-              <button class="btn btn-outline-secondary" type="button">
+              <button
+                id="search-btn"
+                class="btn btn-outline-secondary"
+                type="button"
+              >
                 Search
               </button>
             </div>
@@ -47,8 +53,27 @@
         </div>
       </div>
 
-      <div class="row"></div>
+      <div class="row current-weather"></div>
+
+      <div class="row 5-day-forecast">
+        <div class="offset-2 col-10"></div>
+      </div>
     </div>
+
+    <script id="current-weather-template" type="text/x-handlebars-template">
+      <div
+        class="offset-3 col-3 d-flex justify-content-center align-items-center"
+      >
+        <div class="text-center mt-2">
+          <h2>{{temp}}&deg;</h2>
+          <h2>{{city}}</h2>
+          <h2>{{status}}</h2>
+        </div>
+      </div>
+      <div class="col-3 d-flex justify-content-center align-items-center">
+        <i class="wi {{icon}}" style="font-size: 100px"></i>
+      </div>
+    </script>
 
     <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -57,7 +82,7 @@
       integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
       crossorigin="anonymous"
     ></script>
-    <script src="path/to/dayjs/dayjs.min.js"></script>
+    <!-- <script src="path/to/dayjs/dayjs.min.js"></script> -->
     <script src="main.js"></script>
   </body>
 </html>
