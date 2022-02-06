@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Weather Project</title>
+    
+    <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@600&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
+      integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ"
+      crossorigin="anonymous"
+    />
+    <!--overwrite default bg style applied by Bootstrap -->
+    <style type="text/css">
+      body {
+        background: #2d2c2f !important;
+      }
+    </style>
+
+    <!-- Font Awesome CSS -->
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+  </head>
+
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-6 offset-md-3">
+          <div class="page-header">
+            <h1>
+              PROJECT WTHR <i class="fa fa-bolt fa-xs" aria-hidden="true"></i>
+            </h1>
+
+            <h5>Weather...whether you like it or not.</h5>
+          </div>
+        </div>
+      </div>
+    
+      <div class="bar row">
+        <div class="col-md-6 offset-md-3 p-2">
+          <form class="form-group">
+            <div class="input-group">
+              <input
+                type="text"
+                id="search-query"
+                placeholder="Enter City Name Here"
+                class="form-control"
+              />
+              <span class="input-group-btn">
+                <input
+                  type="button"
+                  value="Search"
+                  class="btn btn-outline-secondary search"
+                />
+              </span>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+      <div class="row">
+        <div class="col inner">
+          <input
+            type="button"
+            value="Set As Default Location"
+            class="btn btn-outline-secondary btn-sm user-default"
+          />
+          <div class="row">
+            <div class="forecast-bg inner col-md-6 offset-md-3">
+              <div class="d-flex justify-content-center">
+                  <div class="current row"></div>
+                </div>
+                <hr />
+                <div class="five-day row"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    <div class="map row">
+      <div id ="location" class="inner col">
+        <!--<iframe width="600" height="333"
+        frameborder="0" style="border:0"
+        src="https://www.google.com/maps/embed/v1/search?key=AIzaSyDMetKjiEuFYEvoGkPyFEjYfo-4_EdwMnM&q=Austin">
+        </iframe>-->
+      </div>
+    </div>
+  
+
+    <script id="currentWeather-template" type="text/x-handlebars-template">
+      <div class="h-75 book col">
+        <h5>{{condition}}</h5>
+        <!-- weather condition -->
+        <div><strong>{{temp}}°</strong></div>
+        <!-- temperature -->
+        <img src="http://openweathermap.org/img/wn/{{icon}}@2x.png" />
+        <!-- weather icon -->
+        <!-- city name -->
+        <div class="day"><strong>{{day}}</strong></div>
+      </div>
+    </script>
+
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.js"
+      integrity="sha384-fJU6sGmyn07b+uD1nMk7/iSb4yvaowcueiQhfVgQuD98rfva8mcr1eSvjchfpMrH"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
+    <script src="https://unpkg.com/dayjs@1.8.21/dayjs.min.js"></script>
+    <script src="https://unpkg.com/dayjs@1.8.21/plugin/utc.js"></script>
+    <script src="data2.js" type="text/javascript"></script>
+  </body>
+</html>
