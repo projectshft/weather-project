@@ -4,17 +4,17 @@ var fiveDayForecast = [[],[],[],[],[]];
 $('.search').on('click', function () {
   var search = $('#search-query').val();
 
-  fetch(search);
+  fetchWeather(search);
 });
 
 var showWeather = function(data) { 
-  var impTemp = Math.round((data.main.temp - 273.15) * 9/5 + 32);
-
+  var temp = Math.round(data.main.temp)
+  
   weather = {
     icon: "https://openweathermap.org/img/wn/" + data.weather[0].icon + "@2x.png",
     main: data.weather[0].main,
     name: data.name,
-    temp: impTemp + "°"
+    temp: temp + "°"
   };
 
   renderWeather();
@@ -25,13 +25,13 @@ var showForecast = function(data) {
   
   for (let i = 0; i < data.list.length; i++) {
     var forecastData = data.list[i];
-    var impTemp = Math.round((forecastData.main.temp - 273.15) * 9/5 + 32);
     var timestamp = forecastData.dt;
+    var temp = Math.round(forecastData.main.temp)
     var date = new Date(timestamp * 1000);
     var day = date.toLocaleString("en-US", {weekday: "long"})
 
     var forecast = {
-      temp: impTemp + "°",
+      temp: temp + "°",
       main: forecastData.weather[0].main,
       icon: "https://openweathermap.org/img/wn/" + forecastData.weather[0].icon + "@2x.png",
       day: day
@@ -52,10 +52,10 @@ var showForecast = function(data) {
   renderForecast();
 }
 
-var fetch = function(query) {
+var fetchWeather = function(query) {
   $.ajax({
     method: "GET",
-    url: "https://api.openweathermap.org/data/2.5/weather?q=" + query + "&appid=6783e8fc2f1c1f45b18e23afa6f08304",
+    url: "https://api.openweathermap.org/data/2.5/weather?q=" + query + "&units=imperial&appid=6783e8fc2f1c1f45b18e23afa6f08304",
     dataType: "json",
     success: function(data) {
       showWeather(data);
@@ -66,7 +66,7 @@ var fetch = function(query) {
   });
   $.ajax({
     method: "GET",
-    url: "https://api.openweathermap.org/data/2.5/forecast?q=" + query + "&appid=6783e8fc2f1c1f45b18e23afa6f08304",
+    url: "https://api.openweathermap.org/data/2.5/forecast?q=" + query + "&units=imperial&appid=6783e8fc2f1c1f45b18e23afa6f08304",
     dataType: "json",
     success: function(data) {
       showForecast(data);
