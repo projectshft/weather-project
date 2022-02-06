@@ -1,15 +1,20 @@
 const apiKey = 'd42fcd703f061a26191fb5165ab48e75';
 const endPoint = 'http://api.openweathermap.org/';
 
-const source = $('#current-weather-template').html();
+const sourceCurrentWeather = $('#current-weather-template').html();
+const sourceForecast = $('#forecast-template').html();
 // eslint-disable-next-line no-undef
-const template = Handlebars.compile(source);
+const templateCurrentWeather = Handlebars.compile(sourceCurrentWeather);
+// eslint-disable-next-line no-undef
+const templateForecast = Handlebars.compile(sourceForecast);
 
 // jQuery grabbers
 const $city = $('#city-input');
 const $searchBtn = $('#search-btn');
 const $currentWeatherDiv = $('.current-weather');
+const $forecastDiv = $('.forecast');
 
+// mappings for custom icon package
 const iconMap = {
   '01d': 'wi-day-sunny',
   '02d': 'wi-day-cloudy',
@@ -31,11 +36,32 @@ const iconMap = {
   '50n': 'wi-dust',
 };
 
+// day of week helper function
+const dayGetter = (dayObj) => {
+  const dayMap = {
+    Mon: 'Monday',
+    Tue: 'Tuesday',
+    Wed: 'Wednesday',
+    Thu: 'Thursday',
+    Fri: 'Friday',
+    Sat: 'Saturday',
+    Sun: 'Sunday',
+  };
+
+  const dayArr = String(dayObj).split(', ');
+  return dayMap[dayArr[0]];
+};
+
+// initialize current weather obj
 let currentWeather;
+const forecastArr = [];
 
 const render = () => {
   $currentWeatherDiv.empty();
-  $currentWeatherDiv.append(template(currentWeather));
+  $forecastDiv.empty();
+
+  $currentWeatherDiv.append(templateCurrentWeather(currentWeather));
+  $forecastDiv.append(templateForecast(forecastArr));
 };
 
 const addCurrentWeather = (data) => {
@@ -45,18 +71,31 @@ const addCurrentWeather = (data) => {
     status: data.weather[0].main,
     icon: iconMap[data.weather[0].icon],
   };
+};
+
+const addForecast = (data) => {
+  for (let i = -1; i < 4; i += 1) {
+    const forecast = data.list[i + 8];
+    forecastArr.push({
+      // eslint-disable-next-line no-undef
+      day: dayGetter(dayjs.unix(forecast.dt)),
+      temp: forecast.main.temp,
+      status: forecast.weather[0].main,
+      icon: iconMap[forecast.weather[0].icon],
+    });
+  }
   render();
 };
 
-const fetchWeather = (url) => {
-  // fetch current weather
-  $.ajax(url, {
+const fetchWeather = (currentWeatherUrl, forecastUrl) => {
+  // fetch current weather, then forecast
+  $.ajax(currentWeatherUrl, {
     success: (data) => addCurrentWeather(data),
     error: (textStatus) => {
       alert('Not a valid input. Use city name or zip code only.');
       console.log(textStatus);
     },
-  });
+  }).then($.ajax(forecastUrl, { success: (data) => addForecast(data) }));
 };
 
 $searchBtn.on('click', () => {
@@ -66,6 +105,7 @@ $searchBtn.on('click', () => {
   }
 
   const currentWeatherUrl = `${endPoint}data/2.5/weather?q=${$city.val()}&units=imperial&appid=${apiKey}`;
+  const forecastUrl = `${endPoint}data/2.5/forecast?q=${$city.val()}&units=imperial&appid=${apiKey}`;
 
-  fetchWeather(currentWeatherUrl);
+  fetchWeather(currentWeatherUrl, forecastUrl);
 });

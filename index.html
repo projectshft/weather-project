@@ -55,9 +55,7 @@
 
       <div class="row current-weather"></div>
 
-      <div class="row 5-day-forecast">
-        <div class="offset-2 col-10"></div>
-      </div>
+      <div class="row forecast"></div>
     </div>
 
     <script id="current-weather-template" type="text/x-handlebars-template">
@@ -75,6 +73,19 @@
       </div>
     </script>
 
+    <script id="forecast-template" type="text/x-handlebars-template">
+      <div class="offset-2 col-10">
+        {{#each day}}
+          <div class="col-2 border">
+            <h4>{{day}}</h4>
+            <i class="wi {{icon}}"></i>
+            <h4>{{temp}}</h4>
+            <h4>{{status}}</h4>
+          </div>
+        {{/each}}
+      </div>
+    </script>
+
     <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script
@@ -82,7 +93,7 @@
       integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
       crossorigin="anonymous"
     ></script>
-    <!-- <script src="path/to/dayjs/dayjs.min.js"></script> -->
+    <script src="https://unpkg.com/dayjs@1.8.21/dayjs.min.js"></script>
     <script src="main.js"></script>
   </body>
 </html>
