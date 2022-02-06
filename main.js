@@ -1,3 +1,6 @@
+var currDefaultCity = localStorage.getItem("defaultCity");
+var currCity;
+
 var daysMap = {
   0 : "Sunday",
   1 : "Monday",
@@ -13,13 +16,17 @@ $('#search-weather').on('click', function() {
   $('.weather-results').empty();
   $('.forecast-results').empty();
   
-  var city = $('#weather-input').val();
+  //var city = $('#weather-input').val();
+  currCity = $('#weather-input').val();
   $('#weather-input').val('');
 
-  fetchCurrentWeather(city);
-  fetchForecast(city);
+  fetchCurrentWeather(currCity);
+  fetchForecast(currCity);
 });
 
+$('#set-default').on('click', function() {
+  localStorage.setItem("defaultCity", currCity); 
+});
 
 var fetchCurrentWeather = function(city) {
   var api_token = 'd8962aecd5213db8fadda59d04d64a81';
@@ -64,7 +71,6 @@ var createWeatherObj = function(weatherData) {
 
 var createForecast = function(forecastData) {
   
-  TODO: //fix day mapping 
   var date = new Date();
   var todaysDay = date.getDay();
   var forecast = [];
@@ -97,7 +103,6 @@ var createForecast = function(forecastData) {
     var maxFreqWeather = getMaxProp(weatherFreqMap);
 
     forecast.push({
-      // TODO: // fix day
       day : daysMap[currDayNum],
       avgTemp : avgTemp,
       iconURL : "http://openweathermap.org/img/wn/" + maxFreqIcon + "@2x.png",
@@ -110,7 +115,6 @@ var createForecast = function(forecastData) {
 
 var renderCurrentWeather = function(weatherObj) {
   
-
   var source = $('#weather-template').html();
   var template = Handlebars.compile(source);
   var newHTML = template(weatherObj);
@@ -142,5 +146,7 @@ var getMaxProp = function(obj) {
   return prop;
 };
 
-
-//  https://api.openweathermap.org/data/2.5/forecast?q=austin&units=imperial&appid=d8962aecd5213db8fadda59d04d64a81
+if (currDefaultCity) {
+  fetchCurrentWeather(currDefaultCity);
+  fetchForecast(currDefaultCity);
+};
