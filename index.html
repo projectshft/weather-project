@@ -53,9 +53,13 @@
         </div>
       </div>
 
-      <div class="row current-weather"></div>
+      <div class="current-weather row py-1"></div>
 
-      <div class="row forecast"></div>
+      <div class="forecast row offset-1 col-10 row-cols-5 mt-4"></div>
+
+      <footer class="offset-1 col-10 fixed-bottom py-3 my-4 border-top">
+        <p class="mb-0 text-muted text-center">Made by Nathan Drake</p>
+      </footer>
     </div>
 
     <script id="current-weather-template" type="text/x-handlebars-template">
@@ -74,15 +78,11 @@
     </script>
 
     <script id="forecast-template" type="text/x-handlebars-template">
-      <div class="offset-2 col-10">
-        {{#each day}}
-          <div class="col-2 border">
-            <h4>{{day}}</h4>
-            <i class="wi {{icon}}"></i>
-            <h4>{{temp}}</h4>
-            <h4>{{status}}</h4>
-          </div>
-        {{/each}}
+      <div class="col text-center border border-2 border-end-0">
+        <h4 class="mt-2">{{day}}</h4>
+        <i class="wi {{icon}} mb-3 mt-1" style="font-size: 60px;"></i>
+        <h4>{{temp}}&deg;</h4>
+        <h4 class="mb-2">{{status}}</h4>
       </div>
     </script>
 

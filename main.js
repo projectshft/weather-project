@@ -54,14 +54,19 @@ const dayGetter = (dayObj) => {
 
 // initialize current weather obj
 let currentWeather;
-const forecastArr = [];
+let forecastArr = [];
 
 const render = () => {
   $currentWeatherDiv.empty();
   $forecastDiv.empty();
 
   $currentWeatherDiv.append(templateCurrentWeather(currentWeather));
-  $forecastDiv.append(templateForecast(forecastArr));
+  forecastArr.forEach((forecastObj) =>
+    $forecastDiv.append(templateForecast(forecastObj))
+  );
+
+  // i used bootstrap to remove all right borders so they don't stack, this adds the border to the last box
+  $($forecastDiv.children()[4]).removeClass('border-end-0');
 };
 
 const addCurrentWeather = (data) => {
@@ -74,12 +79,13 @@ const addCurrentWeather = (data) => {
 };
 
 const addForecast = (data) => {
-  for (let i = -1; i < 4; i += 1) {
-    const forecast = data.list[i + 8];
+  forecastArr = [];
+  for (let i = 7; i < 40; i += 8) {
+    const forecast = data.list[i];
     forecastArr.push({
       // eslint-disable-next-line no-undef
       day: dayGetter(dayjs.unix(forecast.dt)),
-      temp: forecast.main.temp,
+      temp: Math.round(forecast.main.temp),
       status: forecast.weather[0].main,
       icon: iconMap[forecast.weather[0].icon],
     });
@@ -98,7 +104,7 @@ const fetchWeather = (currentWeatherUrl, forecastUrl) => {
   }).then($.ajax(forecastUrl, { success: (data) => addForecast(data) }));
 };
 
-$searchBtn.on('click', () => {
+const submitSearch = () => {
   if (!$city.val()) {
     alert('Search field cannot be blank.');
     return;
@@ -108,4 +114,17 @@ $searchBtn.on('click', () => {
   const forecastUrl = `${endPoint}data/2.5/forecast?q=${$city.val()}&units=imperial&appid=${apiKey}`;
 
   fetchWeather(currentWeatherUrl, forecastUrl);
+};
+
+$searchBtn.on('click', () => submitSearch());
+$city.on('keypress', (e) => {
+  if (e.keyCode === 13) {
+    submitSearch();
+  }
 });
+
+// pulls austin as default city on page load
+fetchWeather(
+  `${endPoint}data/2.5/weather?q=austin&units=imperial&appid=${apiKey}`,
+  `${endPoint}data/2.5/forecast?q=austin&units=imperial&appid=${apiKey}`
+);
