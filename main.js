@@ -1,16 +1,16 @@
-var rawData = {};
+var geoLocation = {};
 
-var currentWeatherData = {
-  city: "Durham",
-  country: "USA", 
-  weather: {
-    temp: "66" + String.fromCharCode(176),
-    sky: "Clouds",
-    iconURL: 'http://openweathermap.org/img/wn/10d@2x.png'
-  }
-};
+var rawWeather = {};
+
+var rawForecasts = {};
+
+var currentWeatherData = {};
+
+var forecastData
 
 var apiKey = 'f7b75cc3d00a79fd79ccdda543f26f00';
+
+
 
 var renderCurrentWeather = function () {
   var $currentWeatherDiv = $('.current-weather-section');
@@ -19,17 +19,20 @@ var renderCurrentWeather = function () {
   var newHTML = Handlebars.compile($('.current-weather-template').html())(currentWeatherData);
 
   $currentWeatherDiv.append($.parseHTML(newHTML));
+
+
+  var $forecastDiv = $('');
 };
 
 var updateCurrentWeatherModel = function (cityName) { 
   
   currentWeatherData = {
     city: cityName,
-    country: rawData.sys.country,
+    country: rawWeather.sys.country,
     weather: {
-      temp: new String(Math.floor(rawData.main.temp)) + String.fromCharCode(176),
-      sky: rawData.weather[0].main,
-      iconURL: 'http://openweathermap.org/img/wn/' + rawData.weather[0].icon + '@2x.png'
+      temp: new String(Math.floor(rawWeather.main.temp)) + String.fromCharCode(176),
+      sky: rawWeather.weather[0].main,
+      iconURL: 'http://openweathermap.org/img/wn/' + rawWeather.weather[0].icon + '@2x.png'
     }
   }
 
@@ -51,10 +54,9 @@ var getWeatherData = function (geoLocation) {
   })
 };
 
+
 $('.search-button').on('click', function (event) {
   var city = $('.city-search').val();
-
-  var geoLocation;
 
   $.ajax({
     method: "GET",
@@ -68,6 +70,7 @@ $('.search-button').on('click', function (event) {
         city: data[0].local_names.en
       }
 
+      
       getWeatherData(geoLocation);
     },
     error: function () {
