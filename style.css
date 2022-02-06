@@ -1,0 +1,24 @@
+#search-query {
+  width: 75%;
+}
+
+.forecast {
+  border: 1px solid black;
+  padding: 10px;
+  text-align: center;
+}
+
+.forecast-page {
+  text-align: center;
+}
+
+.weather {
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.forecast-page .col-md-2 {
+  display: inline-block;
+  vertical-align: middle;
+  float: none;
+}
