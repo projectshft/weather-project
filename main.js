@@ -16,12 +16,20 @@ var renderCurrentWeather = function () {
   var $currentWeatherDiv = $('.current-weather-section');
   $currentWeatherDiv.empty();
 
-  var newHTML = Handlebars.compile($('.current-weather-template').html())(currentWeatherData);
+  var newWeatherHTML = Handlebars.compile($('.current-weather-template').html())(currentWeatherData);
 
-  $currentWeatherDiv.append($.parseHTML(newHTML));
+  $currentWeatherDiv.append($.parseHTML(newWeatherHTML));
 
 
-  var $forecastDiv = $('');
+  var $forecastDiv = $('.5-day-forecast');
+  $forecastDiv.empty();
+
+  forecastData.forEach(function (forecast) {
+    var newForecastHTML = Handlebars.compile($('.5-day-forecast-template').html())(forecast);
+
+    $forecastDiv.append($.parseHTML(newForecastHTML));
+  });
+  
 };
 
 var updateWeatherModel = function (cityName) { 
@@ -39,10 +47,14 @@ var updateWeatherModel = function (cityName) {
   // forecastData needs to end up as an array of objects, each of which has temp, sky, iconURL, and day properties.
   forecastData = rawForecasts.list.reduce(function (acc, forecastObj, index, array) {
     var hour = parseInt(forecastObj.dt_txt.slice(11, 13));
+    var dayNumber = 0;
 
     // every day starts at 6 am
     if (hour === 6) {
-      var formattedForecast = {};
+      dayNumber += 1;
+      var formattedForecast = {
+        dayNumber: dayNumber
+      };
       // gets the forecasts at 6 am, 9 am, 12 pm, and 3pm and averages the temp
       var tempAverage = forecastObj.main.temp + 
       array[index + 1].main.temp +

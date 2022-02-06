@@ -53,32 +53,11 @@
     </div>
   </script>
   <script class="5-day-forecast-template" type="text/x-handlebars-template">
-    <div>
-      <div class="tomorrow">
-        <h5>{{weather.sky}}</h5>
-        <h4><strong>{{weather.temp}}</strong></h4>
-        <img src="{{weather.iconURL}}" />
-        <h5>{{weather.day}}</h5>
-      </div>
-      <div class="2-days-out">
-        <h5>{{weather.sky}}</h5>
-        <h4><strong>{{weather.temp}}</strong></h4>
-        <img src="{{weather.iconURL}}" />
-        <h5>{{weather.day}}</h5>
-      </div>
-      <div class="3-days-out">
-        <h5>{{weather.sky}}</h5>
-        <h4><strong>{{weather.temp}}</strong></h4>
-        <img src="{{weather.iconURL}}" />
-        <h5>{{weather.day}}</h5>
-      </div>
-      <div class="4-days-out">
-        <h5>{{weather.sky}}</h5>
-        <h4><strong>{{weather.temp}}</strong></h4>
-        <img src="{{weather.iconURL}}" />
-        <h5>{{weather.day}}</h5>
-      </div>
-      <div class="5-days-out"></div>
+    <div class="forecasts day-{{dayNumber}}">
+      <h5>{{sky}}</h5>
+      <h4><strong>{{temp}}</strong></h4>
+      <img src="{{iconURL}}" />
+      <h5>{{day}}</h5>
     </div>
   </script>
   <script src="main.js"></script>

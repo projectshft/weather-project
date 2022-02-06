@@ -13,6 +13,10 @@
   right: 40px;
 }
 
+.current-weather-section {
+  clear: both;
+}
+
 .current-weather-data,
 .current-weather-icon {
   width: 50%;
@@ -23,4 +27,11 @@
 
 .current-weather-icon img {
   margin-top: 20px;
+}
+
+.forecasts {
+  width: 20%;
+  float: left;
+  text-align: center;
+  border: 1px solid black;
 }
