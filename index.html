@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link href="style.css" rel="stylesheet" />
+    <!-- Required meta tags -->
+    <link rel="stylesheet" href="style.css" />
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
+      integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row justify-content-md-center">
+        <div class="col col-md-5 d-flex justify-content-center">
+          <div class="page-header">
+            <h1 class="padding"><b>Weather Project</b></h1>
+            <hr />
+          </div>
+        </div>
+      </div>
+      <div class="row justify-content-md-center padding">
+        <div class="col-md-4">
+          <div class="input">
+            <input type="text" class="form-control value" />
+          </div>
+        </div>
+        <div class="button">
+          <button type="button" class="btn btn-primary">Submit</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="weather row justify-content-md-center padding"></div>
+    <div class="weather2 row offset-md-2 padding"></div>
+
+    <!-- first box -->
+    <script id="first-weather-template" type="text/x-handlebars-template">
+      <div class="col-md-2">
+        <h3>{{temp}}&#176</h3>
+        <h5><strong>{{city}}</strong></h5>
+        <h6>{{condition}}</h6>
+      </div>
+      <div class="weather col-md-2">
+        <img src="http://openweathermap.org/img/wn/{{icon}}@2x.png" alt="" />
+      </div>
+    </script>
+
+    <!-- second boxes -->
+    <script id="second-weather-template" type="text/x-handlebars-template">
+      <div class="col-2 border">
+        <h6 class="margin">{{condition}}</h6>
+        <h5 class="margin">{{temp}}&#176</h5>
+        <img
+          class="special"
+          src="http://openweathermap.org/img/wn/{{icon}}@2x.png"
+          alt=""
+        />
+        <h6 class="margin">{{day}}</h6>
+      </div>
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
+    <script src="main.js"></script>
+  </body>
+</html>

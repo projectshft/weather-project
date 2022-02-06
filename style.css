@@ -1,0 +1,31 @@
+* {
+  padding: 0px;
+}
+
+.page-header {
+  justify-content: center;
+}
+.input-width {
+  width: 478px;
+}
+
+.padding {
+  padding: 25px 0px;
+}
+
+.border {
+  border: solid 1px black;
+  padding: 25px 0px;
+}
+
+.margin {
+  margin: 5px 0px;
+  text-align: center;
+}
+.special {
+  margin-left: 41px;
+}
+
+.hidden {
+  display: none;
+}
