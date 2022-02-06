@@ -30,7 +30,6 @@ renderWeather();
 
 $('button').on('click', function() {
   var search = $('.value').val();
-  // console.log(search);
   fetch(search);
 });
 
@@ -42,7 +41,6 @@ var fetch = function(search) {
     dataType: "json",
     success: function(data) {
       weatherInfo(data);
-      // console.log(data);
     },
     error: function(jqXHR, textStatus, errorThrown) {
       console.log(textStatus);
@@ -56,11 +54,9 @@ var fetch = function(search) {
     dataType: "json",
     success: function(data) {
       weather2Info(data);
-      // console.log(data);
     },
     error: function(jqXHR, textStatus, errorThrown) {
       console.log(textStatus);
-      // alert(search + " is not a valid city name.")
     }
   })
 };
@@ -84,7 +80,7 @@ var weather2Info = function(data) {
     weather2.push(info2);
   }
   renderWeather();
-}
+};
 
 var weatherInfo = function(data) {
   weather = [];
@@ -112,5 +108,5 @@ var getDay = function(e) {
   e = new Date(e);
   var date = e.getDay();
   return weekday[date];
-}
+};
 
