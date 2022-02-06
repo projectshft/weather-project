@@ -12,28 +12,26 @@
       <div class="row">
         <div class="col-md-6 offset-md-3">
           <div class="page-header">
-          <h1>Weather Project</h1>
-          <hr/>
+            <h1>Weather Project</h1>
+            <hr/>
           </div>
 
           <form class="search-form">
-          <div class="form-inline">
-            <input type="text" id="search-query" class="form-control mr-2" placeholder="Enter City Name Here">
-            </input>
-            <button type="button" class="btn btn-primary search">Search</button>
-          </div>
+            <div class="form-inline">
+              <input type="text" id="search-query" class="form-control mr-2" placeholder="Enter City Name Here">
+              </input>
+              <button type="button" class="btn btn-primary search">Search</button>
+            </div>
           </form>
           <hr/>
 
           <div class="weather row">
           </div>
-
-          <div class="forecast-page row">
-          </div>
-      </div>
+        </div>
       </div>
     </div> 
-    
+    <div class="forecast-page row1">
+    </div>
     <script id="weather-template" type="text/x-handlebars-template">
       <div class="weather col-md-6">
         <h3>{{temp}}</h3>
@@ -46,11 +44,11 @@
     </script>
 
     <script id="forecast-template" type="text/x-handlebars-template">
-      <div class="forecast">
-        <h4>{{main}}</h4>
-        <div><strong>{{temp}}</strong></div>
+      <div class="forecast col-md-2">
+        <div><p>{{main}}</p></div>
+        <div>{{temp}}</div>
         <img src="{{icon}}" alt="" />
-        <div><strong>{{day}}</strong></div>
+        <div>{{day}}</div>
       </div>
     </script>
 

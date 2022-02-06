@@ -22,6 +22,7 @@ var showWeather = function(data) {
 
 var showForecast = function(data) {
   fiveDayForecast = [[],[],[],[],[]];
+  
   for (let i = 0; i < data.list.length; i++) {
     var forecastData = data.list[i];
     var impTemp = Math.round((forecastData.main.temp - 273.15) * 9/5 + 32);
