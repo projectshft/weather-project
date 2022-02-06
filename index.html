@@ -40,16 +40,34 @@
           <div class="weather-results"></div>
         </div>
       </div>
+      <div class="row forecast-section">
+        <div class="col-md-10 offset-md-2">
+          <div class="row forecast-results"></div>
+        </div>
+      </div>
     </div>
     <script id="weather-template" type="text/x-handlebars-template">
       <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-5">
           <h2>{{temp}}°</h2>
           <h2>{{city}}</h2>
           <h4>{{weather}}</h4>
         </div>
-        <div class="col-md-6">
-          <img src={{icon}} />
+        <div class="col-md-5">
+          <div class="weather-img">
+            <img src={{icon}} />
+          </div>
+        </div>
+      </div>
+    </script>
+    <script id="forecast-template" type="text/x-handlebars-template">
+      <!-- <div class="col-md-2 offset-md-1 text-center">FIRST BOX</div> -->
+      <div class="col-md-2 text-center">
+        <div class="day">
+          <h6>{{weather}}</h6>
+          <h5>{{avgTemp}}°</h5>
+          <img src={{iconURL}} alt="" />
+          <h6>{{day}}</h6>
         </div>
       </div>
     </script>
