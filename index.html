@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+      integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+      crossorigin="anonymous"
+    />
+    <link href="style.css" rel="stylesheet" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="col-md-10 col-md-offset-1">
+        <div class="page-header text-center">
+          <h1>Weather Project</h1>
+        </div>
+        <div class="search-section">
+          <div class="form-group search-style">
+            <input
+              type="text"
+              class="form-control city-search"
+              placeholder="Search a City"
+            />
+            <button class="search-button btn btn-primary">Search</button>
+          </div>
+          <div class="current-weather-section"></div>
+          <div class="5-day-forecast"></div>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script
+    src="https://code.jquery.com/jquery-3.6.0.js"
+    integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+    crossorigin="anonymous"
+  ></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.js"></script>
+  <script class="current-weather-template" type="text/x-handlebars-template">
+    <div>
+      <div class="current-weather-data">
+        <h3><strong>{{weather.temp}}</strong></h3>
+        <h2><strong>{{city}}</strong></h2>
+        <h4>{{weather.sky}}</h4>
+      </div>
+      <div class="current-weather-icon">
+        <img src="{{weather.iconURL}}" />
+      </div>
+    </div>
+  </script>
+  <script class="5-day-forecast-template" type="text/x-handlebars-template">
+    <div class="forecasts day-{{dayNumber}}">
+      <h5>{{sky}}</h5>
+      <h4><strong>{{temp}}</strong></h4>
+      <img src="{{iconURL}}" />
+      <h5>{{day}}</h5>
+    </div>
+  </script>
+  <script src="main.js"></script>
+</html>
