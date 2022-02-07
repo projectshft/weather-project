@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Weather App</title>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
+      integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-8 offset-md-2">
+          <div class="page-header">
+            <h1 class="title">Find Local Weather</h1>
+            <hr />
+          </div>
+
+          <form class="search-form">
+            <h3 id="search-title">Search for City</h3>
+            <div class="form-group">
+              <input type="text" id="search-query" class="form-control" />
+            </div>
+
+            <button type="button" class="btn btn-primary search">Search</button>
+          </form>
+          <hr />
+
+          <div class="current row">
+          </div>
+
+          <div class="week row">
+          </div>
+      </div>
+    </div>
+
+    <script id="current-weather-template" type="text/x-handlebars-template">
+      <div class="weather col-md-2 offset-md-5 text-center">
+        <h3>{{ temperature }}</h3>
+        <h3>{{ location }}</h3>
+        <h5>{{ weather }}</h5>
+      </div>
+    </script>
+
+    <script id="week-weather-template" type="text/x-handlebars-template">
+      <div class="col-md-2 offset-md-1 weather">
+        <h4 class>{{ day }}</h4>
+        <p>{{ temperature }}</p>
+      </div>
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
+    <script src="main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,8 @@
+.weather-title {
+  display: inline-block;
+}
+
+.weather {
+  border-color: black;
+  border-style: solid;
+}
