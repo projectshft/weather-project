@@ -1,22 +1,24 @@
 var weatherDays = [
 ];
 
-//helper function to convert Kelvin to Fahrenheit
+var apiID = '';
+
+//Helper function to convert Kelvin to Fahrenheit
 var kelvinToF = function (kelvinTemp) {
   var fTemp = Math.round((kelvinTemp - 273.15) * 9/5 + 32);
   return fTemp;
 };
 
-//helper function to convert unix timestamp to day
+//Helper function to convert unix timestamp to day
 var unixToDay = function (unix) {
   var milliseconds = unix * 1000;
   var dateObject = new Date(milliseconds);
   return dateObject.toLocaleString('en-US', {weekday: 'long'})
 };
 
-//helper function to find where days start and end in 5 day forecast
+//Helper function to find where days start and end in 5 day forecast
 var findDayEnd = function (data) {
-
+  
   for (let i = 1; i < data.list.length; i++) {
     var timeFrame = data.list[i];
     var compareFrame = data.list[i - 1]
@@ -30,13 +32,13 @@ var findDayEnd = function (data) {
   }
 }
 
-//function to render changes in the weatherDays model in the "view"
+//Function to render changes in the weatherDays model in the "view"
 var renderWeather = function () {
   $('.current').empty();
   
   var sourceCurrent = $('#current-weather-template').html();
   var templateCurrent = Handlebars.compile(sourceCurrent);
-  var newHTMLCurrent = templateCurrent({temperature: weatherDays[0].temp, day: weatherDays[0].day, location: weatherDays[0].location, weather: weatherDays[0].weather});
+  var newHTMLCurrent = templateCurrent({temperature: weatherDays[0].temp, day: weatherDays[0].day, location: weatherDays[0].location, weather: weatherDays[0].weather, imageCode: weatherDays[0].imageCode});
 
   $('.current').append(newHTMLCurrent);
 
@@ -46,45 +48,29 @@ var renderWeather = function () {
   for (let i = 1; i < weatherDays.length; i++) {
     var sourceWeek = $('#week-weather-template').html();
     var templateWeek = Handlebars.compile(sourceWeek);
-    var newHTMLWeek = templateWeek({temperature: weatherDays[i].temp, day: weatherDays[i].day, location: weatherDays[i].location, weather: weatherDays[i].weather});
+    var newHTMLWeek = templateWeek({temperature: weatherDays[i].temp, day: weatherDays[i].day, location: weatherDays[i].location, weather: weatherDays[i].weather, imageCode: weatherDays[i].imageCode});
 
     $('.week').append(newHTMLWeek);
   }
-  
-
 }
 
-//calls "fetch()" when the search button is clicked
+
+//Calling "fetch()" when the search button is clicked
 $('.search').on('click', function () {
   weatherDays = [];
 
-  var search = $('.search-query').val();
+  var search = $('#search-query').val();
 
   fetch(search);
 })
 
 
-var cityToLatLong = function (query) {
-  $.ajax({
-    method: "GET",
-    url: "http://api.openweathermap.org/geo/1.0/direct?q=" + query + "&limit=5&appid=",
-    dataType: "json",
-    success: function (data) {
-      return [datak]
-      addWeather(data, true);
-    },
-    error: function (jqXHR, textStatus, errorThrown) {
-      console.log(textStatus);
-    }
-  });
-}
-
-//uses ajax to get data from the OpenWeather API
+//Using ajax request to get data from the OpenWeather API
 var fetch = function (query) {
 
   $.ajax({
     method: "GET",
-    url: "https://api.openweathermap.org/data/2.5/weather?lat=35&lon=139&appid=",
+    url: "https://api.openweathermap.org/data/2.5/weather?q=" + query + "&appid=" + apiID,
     dataType: "json",
     success: function (data) {
       console.log('current');
@@ -98,7 +84,7 @@ var fetch = function (query) {
 
   $.ajax({
     method: "GET",
-    url: "https://api.openweathermap.org/data/2.5/forecast?lat=35&lon=139&appid=",
+    url: "https://api.openweathermap.org/data/2.5/forecast?q=" + query + "&appid=" + apiID,
     dataType: "json",
     success: function (data) {
       console.log('week');
@@ -111,7 +97,8 @@ var fetch = function (query) {
   });
 }
 
-//adds new "weather objects" to the weatherDays array, each weather object represents a day's forcast
+
+//Adding new "weather objects" to the weatherDays array, each weather object represents a day's forcast
 var addWeather = function (data, isCurrent) {
   
   if (isCurrent) {
@@ -120,6 +107,7 @@ var addWeather = function (data, isCurrent) {
       temp: kelvinToF(data.main.temp) + '\u00B0',
       location: data.name,
       weather: data.weather[0].main,
+      imageCode: data.weather[0].icon,
     }
 
     weatherDays.push(weather);
@@ -127,14 +115,13 @@ var addWeather = function (data, isCurrent) {
   } else {
     var startPoint = findDayEnd(data);
 
-
     for (i = startPoint; i < data.list.length; i += 8) {
       var weather = {
         day: unixToDay(data.list[i].dt),
-        firstDayEnd: findDayEnd(data),
         temp: kelvinToF(data.list[i].main.temp) + '\u00B0',
         location: data.city.name,
         weather: data.list[i].weather[0].main,
+        imageCode: data.list[i].weather[0].icon,
       };
 
       weatherDays.push(weather);
