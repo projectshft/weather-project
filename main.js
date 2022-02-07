@@ -1,3 +1,4 @@
+var api_token = 'd8962aecd5213db8fadda59d04d64a81';
 var currDefaultCity = localStorage.getItem("defaultCity");
 var currCity;
 
@@ -11,25 +12,26 @@ var daysMap = {
   6 : "Saturday"
 };
 
-$('#search-weather').on('click', function() {
-  
-  $('.weather-results').empty();
-  $('.forecast-results').empty();
-  
-  //var city = $('#weather-input').val();
-  currCity = $('#weather-input').val();
-  $('#weather-input').val('');
+var newWeatherSearch = function() {
 
-  fetchCurrentWeather(currCity);
-  fetchForecast(currCity);
-});
-
-$('#set-default').on('click', function() {
-  localStorage.setItem("defaultCity", currCity); 
-});
+  if ($('#weather-input').val()) {
+    $('.weather-results').empty();
+    $('.forecast-results').empty();
+  
+    currCity = $('#weather-input').val();
+    $('#weather-input').val('');
+  
+    fetchCurrentWeather(currCity);
+    fetchForecast(currCity);
+  } else {
+    $('.weather-results').empty();
+    $('.forecast-results').empty();
+    currCity = undefined;
+  }
+};
 
 var fetchCurrentWeather = function(city) {
-  var api_token = 'd8962aecd5213db8fadda59d04d64a81';
+
   $.ajax({
     method: "GET",
     url: "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial" + "&appid=" + api_token,
@@ -44,7 +46,6 @@ var fetchCurrentWeather = function(city) {
 };
 
 var fetchForecast = function(city) {
-  var api_token = 'd8962aecd5213db8fadda59d04d64a81';
   $.ajax({
     method: "GET",
     url: " https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&units=imperial" + "&appid=" + api_token,
@@ -146,7 +147,54 @@ var getMaxProp = function(obj) {
   return prop;
 };
 
+var fetchWithCords = function(latitude, longitude) {
+  $.ajax({
+    method: "GET",
+    url: "https://api.openweathermap.org/geo/1.0/reverse?lat=" + latitude + "&lon=" + longitude + "&appid=" + api_token,
+    dataType: "json",
+    success: function(data) {
+      
+      var city = data[0].name;
+      $('#weather-input').val(city);
+    },
+    error: function(jqXHR, textStatus, errorThrown) {
+      console.log(textStatus);
+    }
+  });
+};
+
+var geoSuccess = function(position) {
+  var latitude  = position.coords.latitude;
+  var longitude = position.coords.longitude;
+  fetchWithCords(latitude, longitude);
+};
+
+var geoError = function(postition) {
+  console.log("geo error");
+}
+
+$('#search-weather').on('click', newWeatherSearch);
+
+$('#set-default').on('click', function() {
+  if (currCity) {
+    localStorage.setItem("defaultCity", currCity);
+  } else {
+    localStorage.removeItem("defaultCity");
+  }
+});
+
+$('#current-location').on('click', function() {
+  $('#weather-input').val("Loading...");
+
+  if(!navigator.geolocation) {
+    alert('Geolocation is not supported by your browser');
+  } else {
+    navigator.geolocation.getCurrentPosition(geoSuccess, geoError);
+  }
+});
+
 if (currDefaultCity) {
   fetchCurrentWeather(currDefaultCity);
   fetchForecast(currDefaultCity);
 };
+

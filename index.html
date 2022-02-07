@@ -23,7 +23,7 @@
             <hr />
           </div>
           <form class="search-bar row">
-            <div class="form-group col-md-8">
+            <div class="form-group col-md-10">
               <input
                 type="text"
                 placeholder="Enter City"
@@ -31,12 +31,24 @@
                 id="weather-input"
               />
             </div>
-            <div class="col-md-4">
+            <div class="col-md-2">
               <button type="button" class="btn btn-primary" id="search-weather">
                 Search
               </button>
+            </div>
+
+            <div class="col-md-4 offset-md-1">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                id="current-location"
+              >
+                Use Current Location
+              </button>
+            </div>
+            <div class="col-md-4">
               <button type="button" class="btn btn-secondary" id="set-default">
-                Default
+                Set City As Default
               </button>
             </div>
           </form>
