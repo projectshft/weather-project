@@ -39,17 +39,16 @@ const iconMap = {
 // day of week helper function
 const dayGetter = (dayObj) => {
   const dayMap = {
-    Mon: 'Monday',
-    Tue: 'Tuesday',
-    Wed: 'Wednesday',
-    Thu: 'Thursday',
-    Fri: 'Friday',
-    Sat: 'Saturday',
-    Sun: 'Sunday',
+    0: 'Sunday',
+    1: 'Monday',
+    2: 'Tuesday',
+    3: 'Wednesday',
+    4: 'Thursday',
+    5: 'Friday',
+    6: 'Saturday',
   };
 
-  const dayArr = String(dayObj).split(', ');
-  return dayMap[dayArr[0]];
+  return dayMap[dayObj.$d.getDay()];
 };
 
 // initialize current weather obj
@@ -65,8 +64,8 @@ const render = () => {
     $forecastDiv.append(templateForecast(forecastObj))
   );
 
-  // i used bootstrap to remove all right borders so they don't stack, this adds the border to the last box
-  $($forecastDiv.children()[4]).removeClass('border-end-0');
+  // i used bootstrap to remove all right side borders so they don't stack, this adds the border back to the last box
+  $($forecastDiv.children().last()).removeClass('border-end-0');
 };
 
 const addCurrentWeather = (data) => {
@@ -96,12 +95,17 @@ const addForecast = (data) => {
 const fetchWeather = (currentWeatherUrl, forecastUrl) => {
   // fetch current weather, then forecast
   $.ajax(currentWeatherUrl, {
-    success: (data) => addCurrentWeather(data),
+    success: (data) => {
+      addCurrentWeather(data);
+      $.ajax(forecastUrl, {
+        success: (forecastData) => addForecast(forecastData),
+      });
+    },
     error: (textStatus) => {
       alert('Not a valid input. Use city name or zip code only.');
       console.log(textStatus);
     },
-  }).then($.ajax(forecastUrl, { success: (data) => addForecast(data) }));
+  });
 };
 
 const submitSearch = () => {
