@@ -14,32 +14,53 @@
     <title>Weather App</title>
   </head>
   <body>
-    <div class="container">
-      <h1>Weather Project</h1>
-      <hr />
-      <input
-        type="text"
-        placeholder="Enter City Name Here"
-        class="form-control"
-      />
-      <button type="button" class="btn btn-sm btn-primary">Search</button>
+      <div class="row">
+        <div class="col-sm-6  col-md-offset-3">
+          <h1>Weather Project</h1>
+          <hr />
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-5 col-sm-offset-3">
+          <input
+            type="text"
+            placeholder="Enter City Name Here"
+            class="form-control"
+          />
+        </div>
+        <div class="col-sm-1">
+            <button type="button" class="btn btn-sm btn-primary">Search</button>
+        </div>
+      </div>
     </div>
-
-    <script
-      id="weather-today-template"
-      type="text/x-handlebars-template"
-    ></script>
-    <script
-      id="weather-five-day-template"
-      type="text/x-handlebars-template"
-    ></script>
+    <script id="weather-today-template" type="text/x-handlebars-template">
+      <div class="row">
+        <div class="col-sm-3 col-sm-offset-3">
+          <p>{{temperature}}&#176</p>
+          <p>{{city}}</p>
+          <p>{{weather}}</p>
+        </div>
+        <div class="col-sm-3">
+          <img src="{{iconURL}}" alt="" />
+        </div>
+    </script>
+    <script id="weather-five-day-template" type="text/x-handlebars-template">
+      <div class="row">
+        <div class="col-sm-3">
+          <p>{{weather}}</p>
+          <p>{{temperature}}&#176</p>
+          <img src="{{iconURL}}" alt="" />
+          <p>{{day}}</p>
+        </div>
+      </div>
+    </script>
     <script
       src="https://code.jquery.com/jquery-3.6.0.min.js"
       integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
       crossorigin="anonymous"
     ></script>
     <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/usm/popper.min.js"
       integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
       crossorigin="anonymous"
     ></script>
