@@ -1,6 +1,12 @@
 const API_KEY = "eef46e88eea99fdfcbf3e442af90b863";
 var $searchButton = $('#search-button');
 
+var weatherTodaySource = $("#weather-today-template").html();
+var weatherTodayTemplate = Handlebars.compile(weatherTodaySource);
+
+var weatherFiveDaySource = $("#weather-five-day-template").html();
+var weatherFiveDayTemplate = Handlebars.compile(weatherFiveDaySource);
+
 $searchButton.on('click', function() {
     searchVal = $('#search-val').val();
     fetchWeather(searchVal);
@@ -13,8 +19,8 @@ var fetchCurrent = function(lat, lon) {
         method: "GET",
         url: `http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}`,
         dataType: "json",
-        success: function(moreData) {
-            console.dir(moreData);
+        success: function(currData) {
+            console.dir(currData);
         },
         failure: function(jqHXR, textStatus, errorThrown) {
             console.log(textStatus);
