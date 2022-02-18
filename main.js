@@ -1,19 +1,20 @@
 const API_KEY = "eef46e88eea99fdfcbf3e442af90b863";
 var $searchButton = $('#search-button');
 
-var weatherTodaySource = $("#weather-today-template").html();
-var weatherTodayTemplate = Handlebars.compile(weatherTodaySource);
-
-var weatherFiveDaySource = $("#weather-five-day-template").html();
-var weatherFiveDayTemplate = Handlebars.compile(weatherFiveDaySource);
-
 $searchButton.on('click', function() {
     searchVal = $('#search-val').val();
     fetchWeather(searchVal);
     $('#searchVal').val(() => '');
 });
 
-var fetchCurrent = function(lat, lon) {
+var weatherTodaySource = $("#weather-today-template").html();
+var weatherTodayTemplate = Handlebars.compile(weatherTodaySource);
+
+var weatherFiveDaySource = $("#weather-five-day-template").html();
+var weatherFiveDayTemplate = Handlebars.compile(weatherFiveDaySource);
+
+
+var fetchCurrent = function(lat, lon, city) {
     console.log('fetching current');
     $.ajax({
         method: "GET",
@@ -21,6 +22,14 @@ var fetchCurrent = function(lat, lon) {
         dataType: "json",
         success: function(currData) {
             console.dir(currData);
+            var fahr = (currData.main.temp - 273.15) * 1.8 + 32;
+            var weatherToday = weatherTodayTemplate({
+                temperature: Math.round(fahr),
+                city: city,
+                weather: currData.weather[0].main,
+                iconURL: `http://openweathermap.org/img/wn/${currData.weather[0].icon}@2x.png`
+            });
+            $('.current-weather-container').append(weatherToday);
         },
         failure: function(jqHXR, textStatus, errorThrown) {
             console.log(textStatus);
@@ -50,7 +59,7 @@ var fetchWeather = function(city) {
         url: `http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=5&appid=${API_KEY}`,
         dataType: "json",
         success: function(data) {
-            fetchCurrent(data[0].lat, data[0].lon);
+            fetchCurrent(data[0].lat, data[0].lon, city);
             fetchFiveDay(data[0].lat, data[0].lon);
             console.log(data);
             console.dir(data);
