@@ -33,17 +33,21 @@
             <button id="search-button" type="button" class="btn btn-sm btn-primary">Search</button>
         </div>
       </div>
+      <div class="row current-weather-container">
+      </div>
+      <div class="row five-day-container"></div>
     </div>
     <script id="weather-today-template" type="text/x-handlebars-template">
       <div class="row">
         <div class="col-sm-3 col-sm-offset-3">
-          <p>{{temperature}}&#176</p>
-          <p>{{city}}</p>
-          <p>{{weather}}</p>
+          <p class="1">{{temperature}}&#176</p>
+          <p class="2">{{city}}</p>
+          <p class="3">{{weather}}</p>
         </div>
         <div class="col-sm-3">
           <img src="{{iconURL}}" alt="" />
         </div>
+      </div>
     </script>
     <script id="weather-five-day-template" type="text/x-handlebars-template">
       <div class="row">
