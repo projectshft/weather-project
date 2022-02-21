@@ -54,26 +54,40 @@ var detailsCurrent = function () {
 };
 
 var displayFiveDays = function (dataFiveDays) {
-  weatherFiveDay = [];
-  var fiveDays = [];
-  var forecast = [];
-
+  weatherFiveDays = [];
+  var arrayFiveDays = [];
+  
   for (let j = 7; j < dataFiveDays.list.length; j+= 8) {
-    fiveDays.push(dataFiveDays.list[j]);
+    arrayFiveDays.push(dataFiveDays.list[j]);
     }    
-  for (let k = 0; k < fiveDays.length; k++) {
-    forecast.push({
-      timestamp: fiveDays[k]['dt_txt'],
-      tempCurrent: Math.round(fiveDays[k].main.temp),
-      conditionsCurrent: fiveDays[k].weather[0].main,
-      iconCurrent: fiveDays[k].weather[0].icon
+  for (let k = 0; k < arrayFiveDays.length; k++) {
+    weatherFiveDays.push({
+      day: moment(arrayFiveDays[k]['dt_txt']).format('dddd'),
+      tempForecast: Math.round(arrayFiveDays[k].main.temp),
+      conditionsForecast: arrayFiveDays[k].weather[0].main,
+      iconForecast: arrayFiveDays[k].weather[0].icon
     });  
   }
+  
+  console.log(weatherFiveDays);
+  
+  detailsFiveDays();
+};
 
+var detailsFiveDays = function () {
+  $('.weather-forecast').empty();
 
-  console.log(forecast);
-  //weatherFiveDay.push()
-
+  for (let m = 0; m < weatherFiveDays.length; m++) {
+    var forecast = weatherFiveDays[m];
+    console.log(forecast);
+    
+    
+    var source = $('#template-forecast').html();
+    var template = Handlebars.compile(source);
+    var newHTML = template(forecast);
+    
+    $('.weather-forecast').append(newHTML);
+  }
 };
 
 
