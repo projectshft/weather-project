@@ -40,6 +40,19 @@
       </div>
       </div>
     </div> 
+
+    <script id="template-current" type="text/x-handlebars-template">
+      <div class="weather-current col-md-6">
+        <table><td class="details-current">
+        <h4>{{ cityCurrent }}</h4>
+        <p><h3>{{ tempCurrent }}&#176;</h3></p>
+        <p><h5>{{ conditionsCurrent }}</h5></p></td>
+        <td class="icon-current">
+        <div><img src="http://openweathermap.org/img/wn/{{ iconCurrent }}@2x.png" alt=""></div></td>
+      </table>
+      </div>
+    </script>
+
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
     <script src="main.js" type="text/javascript"></script>

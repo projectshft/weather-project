@@ -12,13 +12,16 @@ $('.search').on('click', function () {
 
 var displayCurrent = function (dataCurrent) {
   weatherCurrent = [];
+  var tempCurrentRounded = Math.round(dataCurrent.main.temp);
+
   weatherCurrent.push({
     cityCurrent: dataCurrent.name,
-    tempCurrent: dataCurrent.main.temp,
+    tempCurrent: tempCurrentRounded,
     conditionsCurrent: dataCurrent.weather[0].main,
+    iconCurrent: dataCurrent.weather[0].icon
   });
 
-  console.log(weatherCurrent);
+  detailsCurrent();
 };
 
 
@@ -28,7 +31,6 @@ var fetchCurrent = function (city) {
     url: "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=6dfa5fa1e6c3d2353bb1a165e2634ef1&units=imperial",
     dataType: "json",
     success: function (dataCurrent) {
-      console.log(dataCurrent);
       displayCurrent(dataCurrent);
     },
     error: function (jqXHR, textStatus, errorThrown) {
@@ -36,6 +38,21 @@ var fetchCurrent = function (city) {
     },
   });
 };
+
+var detailsCurrent = function () {
+  $('.weather-current').empty();
+
+  for (let i = 0; i < weatherCurrent.length; i++) {
+    var current = weatherCurrent[i];
+    
+    var source = $('#template-current').html();
+    var template = Handlebars.compile(source);
+    var newHTML = template(current);
+
+    $('.weather-current').append(newHTML);
+  }
+};
+
 
 
 var fetchFiveDay = function (city) {
