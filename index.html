@@ -35,7 +35,7 @@
       </div>
       <div class="row current-weather-container">
       </div>
-      <div class="row five-day-container"></div>
+      <div class="row five-day-weather-container"></div>
     </div>
     <script id="weather-today-template" type="text/x-handlebars-template">
       <div class="row">
@@ -51,12 +51,15 @@
     </script>
     <script id="weather-five-day-template" type="text/x-handlebars-template">
       <div class="row">
-        <div class="col-sm-3">
+        <div class="col-sm-1"></div>
+        {{#each fiveDayArr}}
+        <div class="col-sm-2 one-of-five">
           <p>{{weather}}</p>
           <p>{{temperature}}&#176</p>
           <img src="{{iconURL}}" alt="" />
           <p>{{day}}</p>
         </div>
+        {{/each}}
       </div>
     </script>
     <script
