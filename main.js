@@ -1,5 +1,5 @@
 var weatherCurrent = [];
-var weatherFiveDay = [];
+var weatherFiveDays = [];
 
 $('.search').on('click', function () {
   var city = $('#search-query').val();
@@ -7,7 +7,7 @@ $('.search').on('click', function () {
   $('#search-query').val('');
 
   fetchCurrent(city);
-  fetchFiveDay(city);
+  fetchFiveDays(city);
 });
 
 var displayCurrent = function (dataCurrent) {
@@ -53,15 +53,38 @@ var detailsCurrent = function () {
   }
 };
 
+var displayFiveDays = function (dataFiveDays) {
+  weatherFiveDay = [];
+  var fiveDays = [];
+  var forecast = [];
+
+  for (let j = 7; j < dataFiveDays.list.length; j+= 8) {
+    fiveDays.push(dataFiveDays.list[j]);
+    }    
+  for (let k = 0; k < fiveDays.length; k++) {
+    forecast.push({
+      timestamp: fiveDays[k]['dt_txt'],
+      tempCurrent: Math.round(fiveDays[k].main.temp),
+      conditionsCurrent: fiveDays[k].weather[0].main,
+      iconCurrent: fiveDays[k].weather[0].icon
+    });  
+  }
 
 
-var fetchFiveDay = function (city) {
+  console.log(forecast);
+  //weatherFiveDay.push()
+
+};
+
+
+var fetchFiveDays = function (city) {
   $.ajax({
     method: "GET",
     url: "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&appid=6dfa5fa1e6c3d2353bb1a165e2634ef1&units=imperial",
     dataType: "json",
-    success: function (dataFiveDay) {
-      console.log(dataFiveDay);
+    success: function (dataFiveDays) {
+      console.log(dataFiveDays);
+      displayFiveDays(dataFiveDays);
     },
     error: function (jqXHR, textStatus, errorThrown) {
       console.log(textStatus);
