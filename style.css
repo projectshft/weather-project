@@ -1,3 +1,12 @@
 table {
   width: 100%;
 }
+
+button:hover {
+  background: tomato;
+  z-index: -1;
+}
+
+.set-default {
+  z-index: -1;
+}

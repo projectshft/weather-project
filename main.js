@@ -1,5 +1,9 @@
 var weatherCurrent = [];
 var weatherFiveDays = [];
+var defaultCurrent = [];
+var defaultFiveDays = [];
+var searchedCity = null;
+var defaultCity = localStorage.getItem('city');
 
 $('.search').on('click', function () {
   var city = $('#search-query').val();
@@ -8,7 +12,10 @@ $('.search').on('click', function () {
 
   fetchCurrent(city);
   fetchFiveDays(city);
+  searchedCity = city;
 });
+
+
 
 var displayCurrent = function (dataCurrent) {
   weatherCurrent = [];
@@ -21,7 +28,7 @@ var displayCurrent = function (dataCurrent) {
     iconCurrent: dataCurrent.weather[0].icon
   });
 
-  detailsCurrent();
+  detailsCurrent(weatherCurrent);
 };
 
 
@@ -39,11 +46,25 @@ var fetchCurrent = function (city) {
   });
 };
 
-var detailsCurrent = function () {
+// var detailsCurrent = function () {
+//   $('.weather-current').empty();
+
+//   for (let i = 0; i < weatherCurrent.length; i++) {
+//     var current = weatherCurrent[i];
+    
+//     var source = $('#template-current').html();
+//     var template = Handlebars.compile(source);
+//     var newHTML = template(current);
+
+//     $('.weather-current').append(newHTML);
+//   }
+// };
+
+var detailsCurrent = function (arrayCurrent) {
   $('.weather-current').empty();
 
-  for (let i = 0; i < weatherCurrent.length; i++) {
-    var current = weatherCurrent[i];
+  for (let i = 0; i < arrayCurrent.length; i++) {
+    var current = arrayCurrent[i];
     
     var source = $('#template-current').html();
     var template = Handlebars.compile(source);
@@ -69,8 +90,6 @@ var displayFiveDays = function (dataFiveDays) {
     });  
   }
   
-  console.log(weatherFiveDays);
-  
   detailsFiveDays();
 };
 
@@ -79,9 +98,7 @@ var detailsFiveDays = function () {
 
   for (let m = 0; m < weatherFiveDays.length; m++) {
     var forecast = weatherFiveDays[m];
-    console.log(forecast);
-    
-    
+       
     var source = $('#template-forecast').html();
     var template = Handlebars.compile(source);
     var newHTML = template(forecast);
@@ -97,7 +114,6 @@ var fetchFiveDays = function (city) {
     url: "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&appid=6dfa5fa1e6c3d2353bb1a165e2634ef1&units=imperial",
     dataType: "json",
     success: function (dataFiveDays) {
-      console.log(dataFiveDays);
       displayFiveDays(dataFiveDays);
     },
     error: function (jqXHR, textStatus, errorThrown) {
@@ -106,5 +122,17 @@ var fetchFiveDays = function (city) {
   });
 };
 
-// fetchCurent("Denver");
-// fetchFiveDay("Denver");
+$('.set-default').on('click', function() {
+  localStorage.setItem('city', searchedCity);
+});
+
+var loadDefaultCity = function (defaultCity) {
+  if (defaultCity !== null) {
+    fetchCurrent(defaultCity);
+    fetchFiveDays(defaultCity);
+  } else {
+    localStorage.clear();
+  }
+}
+
+loadDefaultCity(defaultCity);
