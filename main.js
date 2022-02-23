@@ -1,13 +1,56 @@
 var currentWeather = [];
-var currentWeatherIcon = [];
 var currentForecast = [];
+
+var defaultWeather = [];
+var defaultForecast = [];
+
+$('.forecast-body').hide();
+$('.head').hide();
+$('.set-default').hide();
+$('.clear-default').hide();
 
 $('.search').on('click', function () {
   var search = $('#search-query').val();
 
   fetchLatandLong(search);
+
+  $('.forecast-body').show();
+  $('.head').show();
+  $('.set-default').show();
+  $('#search-query').val('');
 });
 
+$('.set-default').on('click', function () {
+  $('.clear-default').show();
+  alert('You have set ' + currentWeather[0].city + ' as your default city.');
+
+  defaultWeather.push(currentWeather);
+  defaultForecast.push(currentForecast);
+
+  var toString = JSON.stringify(defaultWeather);
+  localStorage.setItem("defaultW", toString);
+
+  var toStringForecast = JSON.stringify(defaultForecast);
+  localStorage.setItem("defaultF", toStringForecast);
+  });
+
+  window.addEventListener('load', function () {
+    var defaultW = JSON.parse(localStorage.getItem("defaultW"));
+    var defaultF = JSON.parse(localStorage.getItem("defaultF"));
+    var renderThisOne = defaultF[0];
+    renderCurrentWeather(defaultW[0]);
+    renderForecast(renderThisOne);
+
+    $('.forecast-body').show();
+    $('.head').show();
+  })
+
+  $('.clear-default').on('click', function () {
+    localStorage.clear();
+    alert('Your default city has been cleared');
+  })
+
+ 
 var fetchLatandLong = function (query) {
   $.ajax({
     method: "GET",
@@ -40,8 +83,9 @@ var getCurrentWeather = function (data) {
 };
 
 var createCurrentWeather = function (data) {
+  
   currentWeather = [];
-  currentWeatherIcon = [];
+  
   var iconPic = data.weather[0].icon;
   var weatherObject = {
     temp: Math.floor((1.8 * (data.main.temp - 273) + 32)),
@@ -52,17 +96,18 @@ var createCurrentWeather = function (data) {
 
   currentWeather.push(weatherObject);
 
-  renderCurrentWeather();
+  renderCurrentWeather(currentWeather);
 };
 
 
-var renderCurrentWeather = function () {
+var renderCurrentWeather = function (arr) {
+  
   $(".current-weather").empty();
 
-  for (let i = 0; i < currentWeather.length; i++) {
+  for (let i = 0; i < arr.length; i++) {
     var source = $("#today-template").html();
     var template = Handlebars.compile(source);
-    var newHTML = template(currentWeather[i]);
+    var newHTML = template(arr[i]);
     $(".current-weather").append(newHTML);
   }
 };
@@ -86,9 +131,8 @@ var getForecast = function (data) {
 var createForecast = function (data) {
   currentForecast = [];
   
+  
   for (let i = 7; i < data.list.length; i += 8) {
-    console.log(data.list[i]);
-
     var forecastObject = {
       weather: data.list[i].weather[0].main,
       temp: Math.floor((1.8 * (data.list[i].main.temp - 273) + 32)),
@@ -120,16 +164,18 @@ var createForecast = function (data) {
     currentForecast.push(forecastObject)
   }
 
-  renderForecast();
+  renderForecast(currentForecast);
 }
 
-var renderForecast = function () {
+var renderForecast = function (arr) {
   $('.forecast').empty();
 
-  for (let i = 0; i < currentForecast.length; i++) {
+  for (let i = 0; i < arr.length; i++) {
     var source = $("#forecast-template").html();
     var template = Handlebars.compile(source);
-    var newHTML = template(currentForecast[i]);
+    var newHTML = template(arr[i]);
     $(".forecast").append(newHTML);
   }
-}
+};
+
+
