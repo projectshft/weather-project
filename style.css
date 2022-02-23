@@ -1,0 +1,21 @@
+html {
+  min-width: 385px;
+}
+
+body {
+  text-align: center;
+}
+
+input,
+button {
+  display: inline-block;
+}
+
+.one-of-five {
+  display: inline-block;
+  border: 1px solid black;
+}
+
+.row {
+  margin-bottom: 20px;
+}
