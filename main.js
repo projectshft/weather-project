@@ -1,8 +1,7 @@
 var currentWeather = [];
 var currentForecast = [];
-
-var defaultWeather = [];
-var defaultForecast = [];
+var city = '';
+var defaultClicked = false;
 
 $('.forecast-body').hide();
 $('.head').hide();
@@ -20,37 +19,31 @@ $('.search').on('click', function () {
   $('#search-query').val('');
 });
 
+$('.current-location').on('click', function () {
+  console.log('hey');
+})
+
 $('.set-default').on('click', function () {
+  defaultClicked = true;
   $('.clear-default').show();
-  alert('You have set ' + currentWeather[0].city + ' as your default city.');
+  city = currentWeather[0].city;
+  localStorage.setItem("defaultCity", city);
+  localStorage.setItem("defaultClickedKey", defaultClicked);
+})
 
-  defaultWeather.push(currentWeather);
-  defaultForecast.push(currentForecast);
+$('.clear-default').on('click', function () {
+  localStorage.clear();
+  alert('Your default city has been cleared');
+})
 
-  var toString = JSON.stringify(defaultWeather);
-  localStorage.setItem("defaultW", toString);
+window.addEventListener('load', function () {
+  var defaultCity = localStorage.getItem("defaultCity");
+  var defaultHasBeenClicked = localStorage.getItem("defaultClickedKey");
+  if (defaultHasBeenClicked) {
+    fetchLatandLong(defaultCity);
+  }
+})
 
-  var toStringForecast = JSON.stringify(defaultForecast);
-  localStorage.setItem("defaultF", toStringForecast);
-  });
-
-  window.addEventListener('load', function () {
-    var defaultW = JSON.parse(localStorage.getItem("defaultW"));
-    var defaultF = JSON.parse(localStorage.getItem("defaultF"));
-    var renderThisOne = defaultF[0];
-    renderCurrentWeather(defaultW[0]);
-    renderForecast(renderThisOne);
-
-    $('.forecast-body').show();
-    $('.head').show();
-  })
-
-  $('.clear-default').on('click', function () {
-    localStorage.clear();
-    alert('Your default city has been cleared');
-  })
-
- 
 var fetchLatandLong = function (query) {
   $.ajax({
     method: "GET",
@@ -83,7 +76,6 @@ var getCurrentWeather = function (data) {
 };
 
 var createCurrentWeather = function (data) {
-  
   currentWeather = [];
   
   var iconPic = data.weather[0].icon;
@@ -99,9 +91,7 @@ var createCurrentWeather = function (data) {
   renderCurrentWeather(currentWeather);
 };
 
-
 var renderCurrentWeather = function (arr) {
-  
   $(".current-weather").empty();
 
   for (let i = 0; i < arr.length; i++) {
@@ -131,7 +121,6 @@ var getForecast = function (data) {
 var createForecast = function (data) {
   currentForecast = [];
   
-  
   for (let i = 7; i < data.list.length; i += 8) {
     var forecastObject = {
       weather: data.list[i].weather[0].main,
@@ -160,10 +149,8 @@ var createForecast = function (data) {
         }
       }
     }
-
     currentForecast.push(forecastObject)
   }
-
   renderForecast(currentForecast);
 }
 
