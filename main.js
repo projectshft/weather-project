@@ -1,29 +1,20 @@
 const API_KEY = "eef46e88eea99fdfcbf3e442af90b863";
-var $searchButton = $('#search-button');
-var weatherTodaySource = $("#weather-today-template").html();
-var weatherTodayTemplate = Handlebars.compile(weatherTodaySource);
+let $searchButton = $('#search-button');
+let $currentLocationButton =  $("#current-location-button");
 
-var weatherFiveDaySource = $("#weather-five-day-template").html();
-var weatherFiveDayTemplate = Handlebars.compile(weatherFiveDaySource);
-
-//used to get day of week from UTC date in 5-day fetch
-var daysOfWeek = {
-    0: 'Sunday',
-    1: 'Monday',
-    2: 'Tuesday',
-    3: 'Wednesday',
-    4: 'Thursday',
-    5: 'Friday',
-    6: 'Saturday'
-}
+//build templates
+let weatherTodaySource = $("#weather-today-template").html();
+let weatherTodayTemplate = Handlebars.compile(weatherTodaySource);
+let weatherFiveDaySource = $("#weather-five-day-template").html();
+let weatherFiveDayTemplate = Handlebars.compile(weatherFiveDaySource);
 
 //function that clears weather containers so new data can fill empty containers
-var clearWeatherContainers = function() {
+let clearWeatherContainers = function() {
     $('.current-weather-container').empty()
     $('.five-day-weather-container').empty();
 }
 
- $("#current-location-button").on('click', function() {
+$currentLocationButton.on('click', function() {
     clearWeatherContainers();
     let geo = navigator.geolocation;
     //function that will run when the getCurrentPosition method successfully returns a user's current location
@@ -62,30 +53,30 @@ $searchButton.on('click', function() {
 });
 
 //gets coordinates from city then fetches current and five day weather info upon coordinate-request success
-    var fetchCoordinates = function(city) {
-        $.ajax({
-            method: "GET",
-            url: `http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=5&appid=${API_KEY}`,
-            dataType: "json",
-            success: function(data) {
-                fetchCurrent(data[0].lat, data[0].lon, city);
-                fetchFiveDay(data[0].lat, data[0].lon);
-            },
-            failure: function(jqXHR, textStatus, errorThrown) {
-                console.log(textStatus);
-            }
-        });
-    }
+let fetchCoordinates = function(city) {
+    $.ajax({
+        method: "GET",
+        url: `http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=5&appid=${API_KEY}`,
+        dataType: "json",
+        success: function(data) {
+            fetchCurrent(data[0].lat, data[0].lon, city);
+            fetchFiveDay(data[0].lat, data[0].lon);
+        },
+        failure: function(jqXHR, textStatus, errorThrown) {
+            console.log(textStatus);
+        }
+    });
+}
 
 //fetch weather information for current day using latitude and longitude provided by successful fetchCoordinates request
-var fetchCurrent = function(lat, lon, city) {
+let fetchCurrent = function(lat, lon, city) {
     $.ajax({
         method: "GET",
         url: `http://api.openweathermap.org/data/2.5/weather?units=imperial&lat=${lat}&lon=${lon}&appid=${API_KEY}`,
         dataType: "json",
         success: function(currData) {
             //fill out and append current weather template to current weather display container
-            var weatherToday = weatherTodayTemplate({
+            let weatherToday = weatherTodayTemplate({
                 temperature: Math.round(currData.main.temp),
                 city: city,
                 weather: currData.weather[0].main,
@@ -95,12 +86,24 @@ var fetchCurrent = function(lat, lon, city) {
         },
         failure: function(jqHXR, textStatus, errorThrown) {
             console.log(textStatus);
+            alert('Unable to find current weather info for that location');
         }
     });
 }
 
+//used to get day of week from UTC date in 5-day fetch
+let daysOfWeek = {
+    0: 'Sunday',
+    1: 'Monday',
+    2: 'Tuesday',
+    3: 'Wednesday',
+    4: 'Thursday',
+    5: 'Friday',
+    6: 'Saturday'
+}
+
 //fetch five-day weather information using latitude and longitude provided by successful fetchCoordinates request
-var fetchFiveDay = function(lat, lon) {
+let fetchFiveDay = function(lat, lon) {
     $.ajax({
         method: "GET",
         url: `http://api.openweathermap.org/data/2.5/forecast?units=imperial&lat=${lat}&lon=${lon}&appid=${API_KEY}`,
