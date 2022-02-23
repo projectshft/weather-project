@@ -17,10 +17,43 @@ var daysOfWeek = {
     6: 'Saturday'
 }
 
-$searchButton.on('click', function() {
-    //clear weather display containters
+//function that clears weather containers so new data can fill empty containers
+var clearWeatherContainers = function() {
     $('.current-weather-container').empty()
     $('.five-day-weather-container').empty();
+}
+
+ $("#current-location-button").on('click', function() {
+    clearWeatherContainers();
+    let geo = navigator.geolocation;
+    //function that will run when the getCurrentPosition method successfully returns a user's current location
+    function success(position) {
+        //get location name from coordinates of current position
+        $.ajax({
+            method: "GET",
+            url: `http://api.openweathermap.org/geo/1.0/reverse?lat=${position.coords.latitude}&lon=${position.coords.longitude}&appid=${API_KEY}`,
+            dataType: "json",
+            success: function(data) {
+                fetchCurrent(position.coords.latitude, position.coords.longitude, data[0].name);
+                fetchFiveDay(position.coords.latitude, position.coords.longitude);
+            },
+            failure: function(jqXHR, textStatus, errorThrown) {
+                console.log(textStatus);
+            }
+        });
+    }
+    function error(err) {
+        console.warn(`ERROR(${err.code}): ${err.message}`);
+    }
+    let options = {
+        enableHighAccuracy: true,
+        timeout: 10000
+    }
+    geo.getCurrentPosition(success, error, options);
+});
+
+$searchButton.on('click', function() {
+    clearWeatherContainers();
     //get value from searchbar and call function that will send requests to current & 5-day weather APIs after getting coordinates from city name
     searchVal = $('#search-val').val();
     fetchCoordinates(searchVal);
@@ -30,7 +63,6 @@ $searchButton.on('click', function() {
 
 //gets coordinates from city then fetches current and five day weather info upon coordinate-request success
     var fetchCoordinates = function(city) {
-        // console.log('fetching coordinates')
         $.ajax({
             method: "GET",
             url: `http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=5&appid=${API_KEY}`,
@@ -38,8 +70,6 @@ $searchButton.on('click', function() {
             success: function(data) {
                 fetchCurrent(data[0].lat, data[0].lon, city);
                 fetchFiveDay(data[0].lat, data[0].lon);
-                // console.log(data);
-                // console.dir(data);
             },
             failure: function(jqXHR, textStatus, errorThrown) {
                 console.log(textStatus);
@@ -54,7 +84,6 @@ var fetchCurrent = function(lat, lon, city) {
         url: `http://api.openweathermap.org/data/2.5/weather?units=imperial&lat=${lat}&lon=${lon}&appid=${API_KEY}`,
         dataType: "json",
         success: function(currData) {
-            // console.dir(currData);
             //fill out and append current weather template to current weather display container
             var weatherToday = weatherTodayTemplate({
                 temperature: Math.round(currData.main.temp),
@@ -122,7 +151,6 @@ var fetchFiveDay = function(lat, lon) {
                     temperature: Math.round(dateHash[d].temps.reduce((prev, curr) => prev + curr) / dateHash[d].temps.length)
                 });
             }
-            console.dir(fiveDayArr);
             //fill out and append five-day weather template to five-day-weather display container
             let fiveDayResults = weatherFiveDayTemplate({'fiveDayArr': fiveDayArr});
             $('.five-day-weather-container').append(fiveDayResults);
