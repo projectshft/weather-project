@@ -34,27 +34,29 @@
         </div>
       </div>
       <div class="row">
-          <div class="col-md-3 offset-3 current-weather">column 1</div>
-          <div class="col-md-3 current-weather-icon">column 2</div>
+          <div class="col-md-3 offset-3 current-weather"></div>
         </div>
       
       <div class="row">
-        <div class="col poop">Col 1</div>
-        <div class="col">Col 2</div>
-        <div class="col">Col 3</div>
-        <div class="col">Col 4</div>
-        <div class="col">Col 5</div>
-        <div class="col">Col 6</div>
+        <div class="col forecast"></div>
     </div>
 
     </div>
     <script id="today-template" type="text/x-handlebars-template">
-      <h2>{{temp}}</h2>
+      <div class="info">
+      <h2>{{temp}} &#8457;</h2>
       <h3>{{city}}</h3>
       <h4>{{weather}}</h4>
+    </div>
+      <img class="icon" src="{{icon}}" alt="">
     </script>
-    <script id="today-icon-template" type="text/x-handlebars-template">
+    <script id="forecast-template" type="text/x-handlebars-template">
+      <div class="day">
+      <h4>{{weather}}</h4>
+      <h4>{{temp}} &#8457;</h4>
       <img src="{{icon}}" alt="">
+      <h5>{{date}}</h5>
+    </div>
     </script>
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>

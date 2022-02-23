@@ -1,7 +1,30 @@
-.col {
+.day {
   border: solid 1px black;
+  padding: 50px;
+  text-align: center;
 }
 
 .page-header {
   text-align: center;
+}
+
+.forecast {
+  display: flex;
+  justify-content: center;
+}
+
+.current-weather {
+  display: flex;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  padding-left: 50px;
+  align-items: center;
+}
+
+.icon {
+  align-self: center;
+  padding-left: 300px;
 }
