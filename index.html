@@ -52,10 +52,10 @@
 
     <script id="weather-template" type="text/x-handlebars-template">
       <div class="row weather-current justify-content-center">
-        <div class="col-md-3 weather-text">
-          <h3>{{city}}</h3>
-          <h2>{{tempCurrent}}°</h2>
-          <p class="weather-main">{{mainCurrent}}</p>
+        <div class="col-md-3 weather-text current">
+          <h2>{{city}}</h3>
+          <p><strong>{{tempCurrent}}</strong></p>
+          <p>{{mainCurrent}}</p>
         </div>
         <div class="col-md-3 weather-icon">
           <img
@@ -66,45 +66,45 @@
       </div>
 
       <div class="row weather-forecast justify-content-center">
-        <div class="col-md-2 inner weather-text forecast1">
+        <div class="col-md-2 weather-text">
           <p><strong>{{dayForecast1}}</strong></p>
-          <p>{{tempForecast1}}°</p>
+          <p><strong>{{tempForecast1}}</strong></p>
           <p>{{mainForecast1}}</p>
           <img
             src="http://openweathermap.org/img/wn/{{iconForecast1}}@2x.png"
             alt=""
           />
         </div>
-        <div class="col-md-2 inner weather-text forecast2">
+        <div class="col-md-2 weather-text">
           <p><strong>{{dayForecast2}}</strong></p>
-          <p>{{tempForecast2}}°</p>
+          <p><strong>{{tempForecast2}}</strong></p>
           <p>{{mainForecast2}}</p>
           <img
             src="http://openweathermap.org/img/wn/{{iconForecast2}}@2x.png"
             alt=""
           />
         </div>
-        <div class="col-md-2 inner weather-text forecast3">
+        <div class="col-md-2 weather-text">
           <p><strong>{{dayForecast3}}</strong></p>
-          <p>{{tempForecast3}}°</p>
+          <p><strong>{{tempForecast3}}</strong></p>
           <p>{{mainForecast3}}</p>
           <img
             src="http://openweathermap.org/img/wn/{{iconForecast3}}@2x.png"
             alt=""
           />
         </div>
-        <div class="col-md-2 inner weather-text forecast4">
+        <div class="col-md-2 weather-text">
           <p><strong>{{dayForecast4}}</strong></p>
-          <p>{{tempForecast4}}°</p>
+          <p><strong>{{tempForecast4}}</strong></p>
           <p>{{mainForecast4}}</p>
           <img
             src="http://openweathermap.org/img/wn/{{iconForecast4}}@2x.png"
             alt=""
           />
         </div>
-        <div class="col-md-2 inner weather-text forecast5">
+        <div class="col-md-2 weather-text">
           <p><strong>{{dayForecast5}}</strong></p>
-          <p>{{tempForecast5}}°</p>
+          <p><strong>{{tempForecast5}}</strong></p>
           <p>{{mainForecast5}}</p>
           <img
             src="http://openweathermap.org/img/wn/{{iconForecast5}}@2x.png"

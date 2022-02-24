@@ -16,10 +16,6 @@ hr {
   margin-bottom: 40px;
 }
 
-.form-group {
-  margin-bottom: 16px;
-}
-
 .btn:focus {
   outline: none;
   box-shadow: none;
@@ -27,21 +23,21 @@ hr {
 
 .weather-current {
   margin-top: 40px;
-  margin-bottom: 20px;
+  margin-bottom: 40px;
 }
 
 .weather-text {
   text-align: center;
 }
 
-.weather-main {
-  font-size: 20px;
+.weather-current .weather-text p {
+  font-size: 28px;
+  margin-bottom: 0;
 }
 
 .weather-forecast .weather-text {
   padding-top: 15px;
   margin: 0 5px;
-  border: 2px solid #000;
 }
 
 .weather-forecast .weather-text p {
