@@ -1,0 +1,49 @@
+body {
+  background-color: #dcdcdc;
+}
+
+.page-header {
+  margin: 40px 0;
+  text-align: center;
+}
+
+hr {
+  border-top: 1px solid #fff;
+}
+
+.search-form {
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+
+.form-group {
+  margin-bottom: 16px;
+}
+
+.btn:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.weather-current {
+  margin-top: 40px;
+  margin-bottom: 20px;
+}
+
+.weather-text {
+  text-align: center;
+}
+
+.weather-main {
+  font-size: 20px;
+}
+
+.weather-forecast .weather-text {
+  padding-top: 15px;
+  margin: 0 5px;
+  border: 2px solid #000;
+}
+
+.weather-forecast .weather-text p {
+  margin: 0;
+}
