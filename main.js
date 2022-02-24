@@ -30,7 +30,7 @@ var renderWeathers = function () {
     Handlebars.compile($('#weather-template').html())(weathers[0])
   );
 
-  $('#search-query').val('');
+  $('#search-query').val('').blur();
 };
 
 var addCurrent = function (data) {
