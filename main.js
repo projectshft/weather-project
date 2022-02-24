@@ -131,6 +131,8 @@ var renderCurrentWeather = function (arr) {
     var newHTML = template(arr[i]);
     $(".current-weather").append(newHTML);
   }
+
+  renderStyle();
 };
 
 var getForecast = function (data) {
@@ -197,3 +199,26 @@ var renderForecast = function (arr) {
 };
 
 
+var renderStyle = function () {
+  if (currentWeather[0].weather === 'Clear') {
+    $('body').css('background-image', "url('https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Clear_Sky.jpg/640px-Clear_Sky.jpg')");
+  }
+
+  if (currentWeather[0].weather === 'Clouds') {
+    $('body').css('background-image', "url('https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Germi_Cloudy_Sky.jpg/640px-Germi_Cloudy_Sky.jpg')");
+  }
+
+  if (currentWeather[0].weather === 'Mist' || currentWeather[0].weather === 'Fog') {
+    $('body').css('background-image', "url('https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Grass_Deodar_Monsoon_Mist_Manali_Sep20_R16_04026.jpg/640px-Grass_Deodar_Monsoon_Mist_Manali_Sep20_R16_04026.jpg')");
+  }
+
+  if (currentWeather[0].weather === 'Snow') {
+    $('body').css('background-image', "url('https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Snow_Scene_at_Shipka_Pass_1.JPG/640px-Snow_Scene_at_Shipka_Pass_1.JPG')");
+  }
+
+  if (currentWeather[0].weather ===  'Thunderstorm' || currentWeather[0].weather ===  'Rain') {
+    $('body').css('background-image', "url('https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Lightning_Pritzerbe_01_%28MK%29.jpg/640px-Lightning_Pritzerbe_01_%28MK%29.jpg')");
+    $('body').css('color', 'white');
+  }
+
+}

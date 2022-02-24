@@ -44,3 +44,8 @@
   text-align: center;
   font-size: 25px;
 }
+
+body {
+  background-size: cover;
+  background-repeat: no-repeat;
+}
