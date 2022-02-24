@@ -16,19 +16,50 @@ $('.search').on('click', function () {
   $('.forecast-body').show();
   $('.head').show();
   $('.set-default').show();
+  $('.clear-default').show();
   $('#search-query').val('');
 });
 
 $('.current-location').on('click', function () {
-  console.log('hey');
+  navigator.geolocation.getCurrentPosition(function (position) {
+    var latitude = position.coords.latitude;
+    var longitude = position.coords.longitude;
+    $.ajax({
+      method: "GET",
+      url: "http://api.openweathermap.org/data/2.5/weather?lat=" + latitude + "&lon=" + longitude + "&appid=" + "e4f6ea6ff60bd89789f84c07b1f17a89",
+      dataType: "json",
+      success: function (data) {
+        createCurrentWeather(data);
+
+      },
+      error: function(jqXHR, textStatus, errorThrown) {
+        console.log(textStatus);
+      }
+    });
+    $.ajax({
+      method: "GET",
+      url: "http://api.openweathermap.org/data/2.5/forecast?lat=" + latitude + "&lon=" + longitude + "&appid=" + "e4f6ea6ff60bd89789f84c07b1f17a89",
+      dataType: "json",
+      success: function (data) {
+        createForecast(data);
+      },
+      error: function(jqXHR, textStatus, errorThrown) {
+        console.log(textStatus);
+      }
+    });
+  }, function () {
+    alert('No location available');
+  });
+  $('.set-default').show();
+  $('.clear-default').show();
 })
 
 $('.set-default').on('click', function () {
   defaultClicked = true;
-  $('.clear-default').show();
   city = currentWeather[0].city;
   localStorage.setItem("defaultCity", city);
   localStorage.setItem("defaultClickedKey", defaultClicked);
+  alert(city + ' has been set to your default city');
 })
 
 $('.clear-default').on('click', function () {
