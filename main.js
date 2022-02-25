@@ -123,10 +123,12 @@ var fetch = function (query) {
     url: `https://api.openweathermap.org/data/2.5/weather?q=${query},&units=imperial&appid=${apiKey}`,
     dataType: 'json',
     success: function (data) {
+      $('.loading-img').css('display', 'none');
       addCurrent(data);
     },
     error: function (jqXHR, textStatus, errorThrown) {
       alert('Please enter a valid or different city.');
+      $('.loading-img').css('display', 'none');
       $('#search-query').val('');
       console.log(textStatus);
     },
@@ -147,12 +149,14 @@ var fetch = function (query) {
 };
 
 $('.search').on('click', function () {
+  $('.loading-img').css('display', 'block');
   var searchValue = $('#search-query').val();
   fetch(searchValue);
 });
 
 $('#search-query').on('keypress', function (event) {
   if (event.keyCode === 13) {
+    $('.loading-img').css('display', 'block');
     var searchValue = $('#search-query').val();
     fetch(searchValue);
     return false;

@@ -3,12 +3,14 @@ body {
 }
 
 .page-header {
-  margin: 40px 0;
+  border: 0;
+  margin-top: 40px;
+  margin-bottom: 20px;
   text-align: center;
 }
 
-hr {
-  border-top: 1px solid #fff;
+.page-header h1 {
+  font-weight: bold;
 }
 
 .search-form {
@@ -16,23 +18,48 @@ hr {
   margin-bottom: 40px;
 }
 
+button {
+  cursor: pointer;
+}
+
 .btn:focus {
   outline: none;
   box-shadow: none;
+  background-color: #337ab7;
+  border-color: #337ab7;
+}
+
+.btn-default:focus {
+  background-color: #fff;
+  border-color: #ccc;
+}
+
+.loading-img {
+  width: 10%;
+  margin: auto;
+  display: none;
 }
 
 .weather-current {
   margin-top: 40px;
-  margin-bottom: 40px;
+  margin-bottom: 30px;
 }
 
 .weather-text {
   text-align: center;
 }
 
+.weather-current .weather-text h2 {
+  margin: 0;
+}
+
 .weather-current .weather-text p {
   font-size: 28px;
   margin-bottom: 0;
+}
+
+.weather-current .weather-icon {
+  margin-top: 10px;
 }
 
 .weather-forecast .weather-text {
@@ -42,4 +69,9 @@ hr {
 
 .weather-forecast .weather-text p {
   margin: 0;
+  font-size: 15px;
+}
+
+.weather-forecast .weather-icon {
+  width: 75%;
 }
