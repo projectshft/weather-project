@@ -3,11 +3,6 @@ var currentForecast = [];
 var city = '';
 var defaultClicked = false;
 
-$('.forecast-body').hide();
-$('.head').hide();
-$('.set-default').hide();
-$('.clear-default').hide();
-
 $('.search').on('click', function () {
   var search = $('#search-query').val();
 
@@ -24,35 +19,15 @@ $('.current-location').on('click', function () {
   navigator.geolocation.getCurrentPosition(function (position) {
     var latitude = position.coords.latitude;
     var longitude = position.coords.longitude;
-    $.ajax({
-      method: "GET",
-      url: "http://api.openweathermap.org/data/2.5/weather?lat=" + latitude + "&lon=" + longitude + "&appid=" + "e4f6ea6ff60bd89789f84c07b1f17a89",
-      dataType: "json",
-      success: function (data) {
-        createCurrentWeather(data);
-
-      },
-      error: function(jqXHR, textStatus, errorThrown) {
-        console.log(textStatus);
-      }
-    });
-    $.ajax({
-      method: "GET",
-      url: "http://api.openweathermap.org/data/2.5/forecast?lat=" + latitude + "&lon=" + longitude + "&appid=" + "e4f6ea6ff60bd89789f84c07b1f17a89",
-      dataType: "json",
-      success: function (data) {
-        createForecast(data);
-      },
-      error: function(jqXHR, textStatus, errorThrown) {
-        console.log(textStatus);
-      }
-    });
+    getCurrentWeather(latitude, longitude);
+    getForecast(latitude, longitude);
   }, function () {
     alert('No location available');
   });
+
   $('.set-default').show();
   $('.clear-default').show();
-})
+});
 
 $('.set-default').on('click', function () {
   defaultClicked = true;
@@ -60,12 +35,12 @@ $('.set-default').on('click', function () {
   localStorage.setItem("defaultCity", city);
   localStorage.setItem("defaultClickedKey", defaultClicked);
   alert(city + ' has been set to your default city');
-})
+});
 
 $('.clear-default').on('click', function () {
   localStorage.clear();
   alert('Your default city has been cleared');
-})
+});
 
 window.addEventListener('load', function () {
   var defaultCity = localStorage.getItem("defaultCity");
@@ -73,7 +48,7 @@ window.addEventListener('load', function () {
   if (defaultHasBeenClicked) {
     fetchLatandLong(defaultCity);
   }
-})
+});
 
 var fetchLatandLong = function (query) {
   $.ajax({
@@ -81,8 +56,8 @@ var fetchLatandLong = function (query) {
     url: "http://api.openweathermap.org/geo/1.0/direct?q=" + query + "&limit=" + 1 + "&appid=" + "e4f6ea6ff60bd89789f84c07b1f17a89",
     dataType: "json",
     success: function(data) {
-      getCurrentWeather(data);
-      getForecast(data);
+      getCurrentWeather(data[0].lat, data[0].lon);
+      getForecast(data[0].lat, data[0].lon);
     },
     error: function(jqXHR, textStatus, errorThrown) {
       console.log(textStatus);
@@ -90,9 +65,7 @@ var fetchLatandLong = function (query) {
   });
 };
 
-var getCurrentWeather = function (data) {
-  var latitude = data[0].lat;
-  var longitude = data[0].lon;
+var getCurrentWeather = function (latitude, longitude) {
   $.ajax({
     method: "GET",
     url: "http://api.openweathermap.org/data/2.5/weather?lat=" + latitude + "&lon=" + longitude + "&appid=" + "e4f6ea6ff60bd89789f84c07b1f17a89",
@@ -108,7 +81,6 @@ var getCurrentWeather = function (data) {
 
 var createCurrentWeather = function (data) {
   currentWeather = [];
-  
   var iconPic = data.weather[0].icon;
   var weatherObject = {
     temp: Math.floor((1.8 * (data.main.temp - 273) + 32)),
@@ -118,7 +90,6 @@ var createCurrentWeather = function (data) {
   };
 
   currentWeather.push(weatherObject);
-
   renderCurrentWeather(currentWeather);
 };
 
@@ -131,13 +102,10 @@ var renderCurrentWeather = function (arr) {
     var newHTML = template(arr[i]);
     $(".current-weather").append(newHTML);
   }
-
   renderStyle();
 };
 
-var getForecast = function (data) {
-  var latitude = data[0].lat;
-  var longitude = data[0].lon;
+var getForecast = function (latitude, longitude) {
   $.ajax({
     method: "GET",
     url: "http://api.openweathermap.org/data/2.5/forecast?lat=" + latitude + "&lon=" + longitude + "&appid=" + "e4f6ea6ff60bd89789f84c07b1f17a89",
@@ -185,7 +153,7 @@ var createForecast = function (data) {
     currentForecast.push(forecastObject)
   }
   renderForecast(currentForecast);
-}
+};
 
 var renderForecast = function (arr) {
   $('.forecast').empty();
@@ -220,5 +188,4 @@ var renderStyle = function () {
     $('body').css('background-image', "url('https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Lightning_Pritzerbe_01_%28MK%29.jpg/640px-Lightning_Pritzerbe_01_%28MK%29.jpg')");
     $('body').css('color', 'white');
   }
-
-}
+};

@@ -33,6 +33,7 @@
 .head {
   text-align: center;
   font-size: 25px;
+  display: none;
 }
 
 .button {
@@ -43,9 +44,15 @@
 .forecast-body {
   text-align: center;
   font-size: 25px;
+  display: none;
 }
 
 body {
   background-size: cover;
   background-repeat: no-repeat;
+}
+
+.set-default,
+.clear-default {
+  display: none;
 }
