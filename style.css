@@ -1,0 +1,58 @@
+.day {
+  border: solid 1px black;
+  padding: 50px;
+  text-align: center;
+  width: 100%;
+}
+
+.page-header {
+  text-align: center;
+}
+
+.forecast {
+  display: flex;
+  justify-content: center;
+}
+
+.current-weather {
+  display: flex;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  padding-left: 50px;
+  align-items: center;
+}
+
+.icon {
+  align-self: center;
+  padding-left: 300px;
+}
+
+.head {
+  text-align: center;
+  font-size: 25px;
+  display: none;
+}
+
+.button {
+  text-align: center;
+  padding-top: 10px;
+}
+
+.forecast-body {
+  text-align: center;
+  font-size: 25px;
+  display: none;
+}
+
+body {
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.set-default,
+.clear-default {
+  display: none;
+}
