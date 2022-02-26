@@ -62,21 +62,21 @@ var addForecast = function (data) {
     dailyTemps.push(allTemps.splice(0, 8));
   }
 
-  for (var k = 0; k < data.list.length; k += 8) {
-    midMains.push(data.list[k].weather[0].main);
-  }
-
-  for (var l = 0; l < data.list.length; l += 8) {
-    midIcons.push(data.list[l].weather[0].icon);
-  }
-
-  for (var m = 0; m < dailyTemps.length; m++) {
-    var avgTemp = dailyTemps[m].reduce(function (prev, curr) {
+  for (var k = 0; k < dailyTemps.length; k++) {
+    var avgTemp = dailyTemps[k].reduce(function (prev, curr) {
       return prev + curr;
     }, 0);
 
     var dailyAvgTemp = Math.floor(avgTemp / 5);
     avgTemps.push(dailyAvgTemp);
+  }
+
+  for (var l = 0; l < data.list.length; l += 8) {
+    midMains.push(data.list[l].weather[0].main);
+  }
+
+  for (var m = 0; m < data.list.length; m += 8) {
+    midIcons.push(data.list[m].weather[0].icon);
   }
 
   var weather = {
