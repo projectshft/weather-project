@@ -1,0 +1,20 @@
+body {
+  text-align: center;
+}
+table {
+  width: 100%;
+}
+
+button:hover {
+  background: tomato;
+  z-index: -1;
+}
+
+.set-default {
+  z-index: -1;
+  text-align: right;
+}
+
+.weather-current {
+  width: 100%;
+}
