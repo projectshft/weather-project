@@ -1,0 +1,58 @@
+h1 {
+  color: rgb(17, 17, 17);
+  text-align: center;
+  font-family: Dejavu Sans, Arial, Verdana, sans-serif;
+}
+
+h3 {
+  color: rgb(17, 17, 17);
+  text-align: center;
+  font-family: Dejavu Sans, Arial, Verdana, sans-serif;
+}
+
+body {
+  background-color: rgb(139, 140, 141);
+}
+
+button {
+  background-color: black;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  display: inline-block;
+  margin: 0 auto;
+  width: 200px;
+}
+
+.container-fluid {
+  height: 250px;
+  position: relative;
+  border: 3px solid;
+  margin-top: 5px;
+  padding: 5px;
+  text-align: center;
+}
+
+.city-row {
+  display: none;
+  font-family: Dejavu Sans, Arial, Verdana, sans-serif;
+  border: 5px solid black;
+  padding: 10px;
+  background-image: linear-gradient(
+    to bottom right,
+    rgba(255, 0, 0, 0),
+    rgb(0, 119, 255)
+  );
+}
+.five-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  display: none;
+  padding: 10px;
+  border: 5px solid black;
+  font-family: Dejavu Sans, Arial, Verdana, sans-serif;
+  background-image: linear-gradient(
+    to top left,
+    rgba(255, 0, 0, 0),
+    rgb(0, 119, 255)
+  );
+}
