@@ -1,0 +1,50 @@
+.search-form {
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+
+.search {
+  margin-left: 15px;
+}
+
+#search-query {
+  margin-left: 13px;
+}
+
+.current {
+  text-align: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+
+.current-img {
+  text-align: center;
+  margin-top: 30px;
+  margin-bottom: 40px;
+}
+
+.current-img img {
+  width: 50%;
+}
+
+.page-header {
+  text-align: center;
+  margin-top: 50px;
+  margin-bottom: 20px;
+}
+
+.five .each {
+  height: 250px;
+  padding: 20px 30px 20px;
+  margin-top: 40px;
+  margin-bottom: 40px;
+  text-align: center;
+  border: 1px solid gray;
+  background-color: lightgray;
+}
+
+.five-day-forecast {
+  margin: 0 auto;
+}
