@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css"
+      integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="style.css" />
+
+    <title>Weather Project</title>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+          <div class="page-header">
+            <h1>Weather Project</h1>
+          </div>
+
+          <hr />
+
+          <form class="search-form form-inline col-md-offset-3">
+            <div class="form-group">
+              <input
+                type="text"
+                class="form-control"
+                id="search-query"
+                placeholder="Enter City Name"
+              />
+            </div>
+
+            <button type="button" class="btn btn-primary search">Search</button>
+            <button type="button" class="btn btn-default clear">Clear</button>
+          </form>
+
+          <hr />
+
+          <div class="results">
+            <img
+              src="loading-spinner.png"
+              class="loading-img"
+              alt="loading spinner"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script id="weather-template" type="text/x-handlebars-template">
+      <div class="row weather-current col-md-offset-3">
+        <div class="col-md-5 weather-text current">
+          <h2><strong>{{city}}</strong></h3>
+          <p><strong>{{tempCurrent}}</strong></p>
+          <p>{{mainCurrent}}</p>
+        </div>
+        <div class="col-md-3 weather-icon">
+          <img
+            src="http://openweathermap.org/img/wn/{{iconCurrent}}@2x.png"
+            alt=""
+          />
+        </div>
+      </div>
+
+      <div class="row weather-forecast col-md-offset-1">
+        <div class="col-md-2 weather-text">
+          <p><strong>{{dayForecast1}}</strong></p>
+          <p><strong>{{tempForecast1}}</strong></p>
+          <p>{{mainForecast1}}</p>
+          <img
+            src="http://openweathermap.org/img/wn/{{iconForecast1}}@2x.png"
+            class="weather-icon"
+            alt=""
+          />
+        </div>
+        <div class="col-md-2 weather-text">
+          <p><strong>{{dayForecast2}}</strong></p>
+          <p><strong>{{tempForecast2}}</strong></p>
+          <p>{{mainForecast2}}</p>
+          <img
+            src="http://openweathermap.org/img/wn/{{iconForecast2}}@2x.png"
+            class="weather-icon"
+            alt=""
+          />
+        </div>
+        <div class="col-md-2 weather-text">
+          <p><strong>{{dayForecast3}}</strong></p>
+          <p><strong>{{tempForecast3}}</strong></p>
+          <p>{{mainForecast3}}</p>
+          <img
+            src="http://openweathermap.org/img/wn/{{iconForecast3}}@2x.png"
+            class="weather-icon"
+            alt=""
+          />
+        </div>
+        <div class="col-md-2 weather-text">
+          <p><strong>{{dayForecast4}}</strong></p>
+          <p><strong>{{tempForecast4}}</strong></p>
+          <p>{{mainForecast4}}</p>
+          <img
+            src="http://openweathermap.org/img/wn/{{iconForecast4}}@2x.png"
+            class="weather-icon"
+            alt=""
+          />
+        </div>
+        <div class="col-md-2 weather-text">
+          <p><strong>{{dayForecast5}}</strong></p>
+          <p><strong>{{tempForecast5}}</strong></p>
+          <p>{{mainForecast5}}</p>
+          <img
+            src="http://openweathermap.org/img/wn/{{iconForecast5}}@2x.png"
+            class="weather-icon"
+            alt=""
+          />
+        </div>
+      </div>
+    </script>
+
+    <!-- jQuery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!-- Handlebars -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
+    <script src="main.js" type="text/javascript"></script>
+  </body>
+</html>
