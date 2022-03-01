@@ -1,0 +1,18 @@
+body {
+  text-align: center;
+}
+.container {
+  margin-top: 7%;
+}
+h2 {
+  font-size: 4em;
+}
+.input-group {
+  margin-top: 5%;
+  margin-bottom: 5%;
+  width: 70%;
+}
+.btn,
+.five-day-weather {
+  margin-left: 5%;
+}
