@@ -10,6 +10,43 @@
 </head>
 <body>
 
+    <header>
+        <div class="container">
+            <div class="row">
+                <div class="col"></div>
+                <div class="col-10">
+                    <h1 class="d-flex justify-content-center">Weather Project</h1>
+                    <hr>
+                </div>
+                <div class="col"></div>
+            </div>
+        </div>
+    </header>
+
+    <section class="search">
+        <div class="container">
+            <div class="row">
+                <div class="col"></div>
+                <div class="col-10 input-group">
+                    <input type="text" name="search-bar" id="search-bar" class="form-control" placeholder="Enter City Name Here">
+                    <div class="input-group-append">
+                        <button type="button" class="btn btn-primary">Search</button>
+                    </div>
+                </div>
+                <div class="col"></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="weather">
+        <div id="current-weather" class=""></div>
+        <div id="forecast" class=""></div>
+    </section>
+
+    <!-- Handlebars Templates -->
+
+
+    <!-- Libraries -->
     <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
     <script src="main.js"></script>
