@@ -50,17 +50,24 @@
       </div>
     </section>
 
-    <section class="weather">
-      <p>Hello</p>
-    </section>
+    <section class="current-weather"></section>
+
+    <section class="forecast"></section>
 
     <!-- Handlebars Templates -->
     <script id="current-weather-template" type="text/x-handlebars-template">
-      <div class="col-md-4">
-        <div>
-          <h3>{{degrees}}&deg;</h3>
-          <h3>{{name}}</h3>
-          <h4>{{weather}}</h4>
+      <div class="container">
+        <div class="row">
+          <div class="col"></div>
+          <div class="col-4">
+            <h3>{{degrees}}&deg;</h3>
+            <h3>{{name}}</h3>
+            <h4>{{weather}}</h4>
+          </div>
+          <div class="col-4">
+            <img src="" />
+          </div>
+          <div class="col"></div>
         </div>
       </div>
     </script>

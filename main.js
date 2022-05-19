@@ -1,8 +1,6 @@
 
 var openWeatherAPIKey = '6a65180b6deaa01fa71842b569804727';
 
-var weather = [];
-
 $('.search').on('click', function () {
     var locationData = $('#search-query').val();
 
@@ -19,7 +17,7 @@ var fetch = function (query) {
         success: function(data) {
             var lat = data[0].lat;
             var lon = data[0].lon;
-            grabLocation(lat, lon);
+            currentWeather(lat, lon);
         },
         error: function (jqXHR, textStatus, errorThrown) {
             console.log(textStatus);
@@ -27,9 +25,9 @@ var fetch = function (query) {
     });
 };
 
-// Next, use lat and lon to make weather API call
+// Next, use lat and lon to make current-weather API call
 
-var grabLocation = (lat, lon) => {
+var currentWeather = (lat, lon) => {
     $.ajax({
         method: "GET",
         url: "https://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lon + "&appid=" + openWeatherAPIKey + "&units=imperial",
@@ -58,11 +56,11 @@ var addWeather = function (data) {
 };
 
 var renderWeather = function (weatherData) {
-    $('.weather').empty();
+    $('.current-weather').empty();
 
     var source = $('#current-weather-template').html();
     var template = Handlebars.compile(source);
     var newHTML = template(weatherData);
     
-    $('.weather').append(newHTML);
+    $('.current-weather').append(newHTML);
 };
