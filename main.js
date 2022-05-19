@@ -46,23 +46,23 @@ var grabLocation = (lat, lon) => {
 // Next, parse and add weather data to an empty array
 
 var addWeather = function (data) {
-
-    var weatherData = [{
+    var weatherData = {
         name: data.name || null,
         degrees: data.main["temp"] || null,
         weather: data.weather[0]["main"] || null,
         icon: data.weather[0]["icon"] || null
-    }];
+    };
 
-    console.log(weatherData);
+
+    renderWeather(weatherData);
 };
 
-// var renderWeather = function () {
-//     $('.weather').empty();
+var renderWeather = function (weatherData) {
+    $('.weather').empty();
 
-//     var source = $('#current-weather-template').html();
-//     var template = Handlebars.compile(source);
-//     var newHTML = template();
-
-//     console.log(newHTML);
-// };
+    var source = $('#current-weather-template').html();
+    var template = Handlebars.compile(source);
+    var newHTML = template(weatherData);
+    
+    $('.weather').append(newHTML);
+};
