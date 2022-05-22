@@ -100,7 +100,7 @@ var addForecast = function (data) {
 };
 
 var renderForecast = function (forecast5Day) {
-    $(".weather").empty();
+    $(".forecast").empty();
 
     for (let i = 0; i < forecast5Day.length; i++) {
         var source = $("#forecast-template").html();
