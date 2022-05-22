@@ -86,11 +86,15 @@ var addForecast = function (data) {
         extractedData.push(data.list[targetIndex].weather[0]["icon"]);
         extractedData.push(data.list[targetIndex]["dt_txt"]);
 
+        var dateToDay = new Date(extractedData[3]);
+        var options = { weekday: 'long'};
+        var convertedDay = new Intl.DateTimeFormat('en-US', options).format(dateToDay);
+
         var day = {
             weather: extractedData[0],
             degrees: extractedData[1],
             icon: extractedData[2],
-            date: extractedData[3]
+            date: convertedDay
         };
 
         forecast5Day.push(day);
