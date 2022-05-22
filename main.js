@@ -7,8 +7,6 @@ $('.search').on('click', function () {
     fetch(locationData);
 });
 
-// First, grab lat and lon data from API call
-
 var fetch = function (query) {
     $.ajax({
         method: "GET",
@@ -18,6 +16,7 @@ var fetch = function (query) {
             var lat = data[0].lat;
             var lon = data[0].lon;
             currentWeather(lat, lon);
+            forecast(lat, lon);
         },
         error: function (jqXHR, textStatus, errorThrown) {
             console.log(textStatus);
@@ -25,14 +24,12 @@ var fetch = function (query) {
     });
 };
 
-// Next, use lat and lon to make current-weather API call
-
 var currentWeather = (lat, lon) => {
     $.ajax({
         method: "GET",
         url: "https://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lon + "&appid=" + openWeatherAPIKey + "&units=imperial",
         dataType: "json",
-        success: function(data) {
+        success: function (data) {
             addWeather(data);
         },
         error: function (jqXHR, textStatus, errorThrown) {
@@ -41,12 +38,24 @@ var currentWeather = (lat, lon) => {
     });
 }
 
-// Next, parse and add weather data to an empty array
+var forecast = (lat, lon) => {
+    $.ajax({
+        method: "GET",
+        url: "https://api.openweathermap.org/data/2.5/forecast?lat=" + lat + "&lon=" + lon + "&appid=" + openWeatherAPIKey + "&units=imperial",
+        dataType: "json",
+        success: function (data) {
+            addForecast(data);
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            console.log(textStatus);
+        }
+    });
+};
 
 var addWeather = function (data) {
     var weatherData = {
         name: data.name || null,
-        degrees: data.main["temp"] || null,
+        degrees: Math.round(data.main["temp"]) || null,
         weather: data.weather[0]["main"] || null,
         icon: data.weather[0]["icon"] || null
     };
@@ -61,6 +70,43 @@ var renderWeather = function (weatherData) {
     var source = $('#current-weather-template').html();
     var template = Handlebars.compile(source);
     var newHTML = template(weatherData);
-    
+
     $('.current-weather').append(newHTML);
+};
+
+var addForecast = function (data) {
+    var targets = [5, 13, 21, 29, 37];
+    var forecast5Day = [];
+
+    targets.forEach(targetIndex => {
+        var extractedData = [];
+
+        extractedData.push(data.list[targetIndex].weather[0]["main"]);
+        extractedData.push(Math.round(data.list[targetIndex].main["feels_like"]));
+        extractedData.push(data.list[targetIndex].weather[0]["icon"]);
+        extractedData.push(data.list[targetIndex]["dt_txt"]);
+
+        var day = {
+            weather: extractedData[0],
+            degrees: extractedData[1],
+            icon: extractedData[2],
+            date: extractedData[3]
+        };
+
+        forecast5Day.push(day);
+    });
+
+    renderForecast(forecast5Day);
+};
+
+var renderForecast = function (forecast5Day) {
+    $(".weather").empty();
+
+    for (let i = 0; i < forecast5Day.length; i++) {
+        var source = $("#forecast-template").html();
+        var template = Handlebars.compile(source);
+        var newHTML = template(forecast5Day[i]);
+
+        $(".forecast").append(newHTML);
+    }
 };

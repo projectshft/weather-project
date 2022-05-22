@@ -31,7 +31,7 @@
       <div class="container">
         <div class="row">
           <div class="col"></div>
-          <div class="col-10 input-group">
+          <div class="col-4 input-group">
             <input
               type="text"
               name="search-query"
@@ -39,7 +39,7 @@
               class="form-control"
               placeholder="Enter City Name Here"
             />
-            <div class="input-group-append">
+            <div class="col-2">
               <button type="button" class="btn btn-primary search">
                 Search
               </button>
@@ -52,7 +52,13 @@
 
     <section class="current-weather"></section>
 
-    <section class="forecast"></section>
+    <section>
+      <div class="container">
+        <div class="forecast row">
+
+        </div>
+      </div>
+    </section>
 
     <!-- Handlebars Templates -->
     <script id="current-weather-template" type="text/x-handlebars-template">
@@ -65,10 +71,19 @@
             <h4>{{weather}}</h4>
           </div>
           <div class="col-4">
-            <img src="" />
+            <img src="http://openweathermap.org/img/wn/{{ icon }}@2x.png">
           </div>
           <div class="col"></div>
         </div>
+      </div>
+    </script>
+
+    <script id="forecast-template" type="text/x-handlebars-template">
+      <div class="forecast-day col">
+        <h3>{{ weather }}</h3>
+        <h3>{{ degrees }}&deg;</h3>
+        <img src="http://openweathermap.org/img/wn/{{ icon }}@2x.png">
+        <h3>{{ date }}</h3>
       </div>
     </script>
 
