@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Weather Project</title>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="row">
+          <div class="col"></div>
+          <div class="col-10">
+            <h1 class="d-flex justify-content-center">Weather Project</h1>
+            <hr>
+          </div>
+          <div class="col"></div>
+        </div>
+      </div>
+    </header>
+
+    <section class="location-weather-search">
+      <div class="container">
+        <div class="row">
+          <div class="col"></div>
+          <div class="col-4 input-group">
+            <input
+              type="text"
+              name="search-query"
+              id="search-query"
+              class="form-control search"
+              placeholder="Enter City Name Here"
+            />
+            <div class="col-2">
+              <button type="button" id="search-button" class="btn btn-primary search">
+                Search
+              </button>
+            </div>
+          </div>
+          <div class="col"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="current-weather"></section>
+
+    <section>
+      <div class="container">
+        <div class="forecast row">
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Handlebars Templates -->
+    <script id="current-weather-template" type="text/x-handlebars-template">
+      <div class="container">
+        <div class="row">
+          <div class="col"></div>
+          <div class="col-4 text-center">
+            <h3>{{degrees}}&deg;</h3>
+            <h3>{{name}}</h3>
+            <h4>{{weather}}</h4>
+          </div>
+          <div class="col-4 text-center">
+            <img src="http://openweathermap.org/img/wn/{{ icon }}@2x.png">
+          </div>
+          <div class="col"></div>
+        </div>
+      </div>
+    </script>
+
+    <script id="forecast-template" type="text/x-handlebars-template">
+      <div class="forecast-day col text-center">
+        <h3>{{ weather }}</h3>
+        <h3>{{ degrees }}&deg;</h3>
+        <img src="http://openweathermap.org/img/wn/{{ icon }}@2x.png">
+        <h3>{{ date }}</h3>
+      </div>
+    </script>
+
+    <!-- Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
+    <script
+      src="https://code.jquery.com/jquery-3.6.0.js"
+      integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+      crossorigin="anonymous"
+    ></script>
+    <script src="main.js"></script>
+  </body>
+</html>
