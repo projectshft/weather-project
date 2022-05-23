@@ -20,7 +20,7 @@
           <div class="col"></div>
           <div class="col-10">
             <h1 class="d-flex justify-content-center">Weather Project</h1>
-            <hr />
+            <hr>
           </div>
           <div class="col"></div>
         </div>
@@ -36,11 +36,11 @@
               type="text"
               name="search-query"
               id="search-query"
-              class="form-control"
+              class="form-control search"
               placeholder="Enter City Name Here"
             />
             <div class="col-2">
-              <button type="button" class="btn btn-primary search">
+              <button type="button" id="search-button" class="btn btn-primary search">
                 Search
               </button>
             </div>
@@ -65,12 +65,12 @@
       <div class="container">
         <div class="row">
           <div class="col"></div>
-          <div class="col-4">
+          <div class="col-4 text-center">
             <h3>{{degrees}}&deg;</h3>
             <h3>{{name}}</h3>
             <h4>{{weather}}</h4>
           </div>
-          <div class="col-4">
+          <div class="col-4 text-center">
             <img src="http://openweathermap.org/img/wn/{{ icon }}@2x.png">
           </div>
           <div class="col"></div>
@@ -79,7 +79,7 @@
     </script>
 
     <script id="forecast-template" type="text/x-handlebars-template">
-      <div class="forecast-day col">
+      <div class="forecast-day col text-center">
         <h3>{{ weather }}</h3>
         <h3>{{ degrees }}&deg;</h3>
         <img src="http://openweathermap.org/img/wn/{{ icon }}@2x.png">
