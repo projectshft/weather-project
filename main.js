@@ -1,29 +1,28 @@
 let weather = {};
 
+const getSearchQuery = () => $('#search-query').val();
+
 // Search button handler
 $('#search-btn').click(() => {
-  submitWeatherRequest();
+  submitWeatherRequest(getSearchQuery());
 });
 
 // Search input key handler for 'enter/return' 
 $('#search-query').keydown((e) => {  
   if(e.keyCode === 13) {
     e.preventDefault();
-    submitWeatherRequest();
+    submitWeatherRequest(getSearchQuery());
   }
 });
 
-const submitWeatherRequest = () => {
+const submitWeatherRequest = query => {
   weather = {};
-  if ([...$('#search-query').val()].every(c => c === ' ') 
-      || $('#search-query').val().length === 0) {
+  if ([...query].every(c => c === ' ') 
+      || query.length === 0) {
     alert('Please enter city')
   } else {
-    fetchCoords($('#search-query').val());
-    $('#search-query').val('');
-    $('#current-weather-container').empty();
-    $('#forecast-container').empty();
-    $('.section-header').removeClass('d-none');
+    fetchCoords(query);
+    renderReset();
   }
 }
  
@@ -77,6 +76,7 @@ const addWeather = (data) => {
   
   renderCurrentWeather(weather);
   renderForecast(weather);
+  $('.section-header').removeClass('d-none');
 }
 
 const getCurrent = data => {
@@ -111,6 +111,8 @@ const renderCurrentWeather = obj => {
   var newHTML = template(obj);
 
   $('#current-weather-container').append(newHTML);
+  renderDefaultBtn();
+  renderResetBtn();
 };
 
 const renderForecast = data => {
@@ -125,6 +127,13 @@ const renderForecastItem = obj => {
   $('#forecast-container').append(newHTML);
 };
 
+const renderReset = () => {
+  $('#search-query').val('');
+  $('#current-weather-container').empty();
+  $('#forecast-container').empty();
+  $('.section-header').addClass('d-none');
+}
+
 const getDate = x => {
   const date = new Date(x * 1000);
 
@@ -137,4 +146,56 @@ const getDate = x => {
   const day = date.toLocaleDateString(undefined, options[1]);
 
   return { weekday, day }
+}
+
+// Default Location Functions
+
+const getDefaultLocation = () => localStorage.getItem('defaultLocation');
+
+const setDefaultLocation = () => {
+  if (weather.city) {
+    localStorage.setItem('defaultLocation', weather.city);
+  }
+}
+
+const renderDefaultLocation = () => {
+  if (getDefaultLocation()) {
+    submitWeatherRequest(getDefaultLocation());
+  }
+}
+
+renderDefaultLocation()
+
+// Default button handlers
+
+$('#set-default-btn').click(() => {
+  setDefaultLocation();
+  renderDefaultBtn();
+  renderResetBtn();
+});
+
+$('#reset-default-btn').click(() => {
+  localStorage.clear();
+  renderDefaultBtn();
+  renderResetBtn();
+});
+
+const renderDefaultBtn = () => {
+  if (weather.city === getDefaultLocation()) {
+    $('#set-default-btn').html('Current Default Location');
+    $('#set-default-btn').removeClass('btn-outline-primary')
+    $('#set-default-btn').addClass('btn-primary')
+  } else {
+    $('#set-default-btn').html('Set as Default');
+    $('#set-default-btn').removeClass('btn-primary')
+    $('#set-default-btn').addClass('btn-outline-primary')
+  }
+}
+
+const renderResetBtn = () => {
+  if (getDefaultLocation()) {
+    $('#reset-default-btn').removeClass('d-none')
+  } else {
+    $('#reset-default-btn').addClass('d-none')
+  }
 }
