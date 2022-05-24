@@ -15,11 +15,16 @@ $('#search-query').keydown((e) => {
 
 const submitWeatherRequest = () => {
   weather = {};
-  fetchCoords($('#search-query').val());
-  $('#search-query').val('');
-  $('#current-weather-container').empty();
-  $('#forecast-container').empty();
-  $('.section-header').removeClass('d-none');
+  if ([...$('#search-query').val()].every(c => c === ' ') 
+      || $('#search-query').val().length === 0) {
+    alert('Please enter city')
+  } else {
+    fetchCoords($('#search-query').val());
+    $('#search-query').val('');
+    $('#current-weather-container').empty();
+    $('#forecast-container').empty();
+    $('.section-header').removeClass('d-none');
+  }
 }
  
 const fetchCoords = query => {
@@ -32,7 +37,7 @@ const fetchCoords = query => {
     )
     .then(response => response.json())
     .then(data => addCoords(...data))
-    .catch(error => console.log(error));
+    .catch(error => alert('City not found'));
 }
 
 const addCoords = data => {
@@ -85,7 +90,7 @@ const getCurrent = data => {
 const getDaily = data => {
   return data.daily.reduce((start, item, index) => {
     return (
-      index >= 1 && index <=5 ?
+      index >= 1 && index <= 5 ?
       [
         ...start,
         {
