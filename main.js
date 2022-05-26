@@ -2,8 +2,27 @@ let weather = {};
 
 const getSearchQuery = () => $('#search-query').val();
 
+const loader = {
+  load: () => {
+    $('#get-location-btn')
+      .html(`<img src="assets/three-dots.svg" class="text-primary px-3" style="height: 10px"/>`);
+  },
+  reset: () => {
+    $('#get-location-btn')
+      .html('or Get Current Location');
+  }
+};
+
+// Search button handler
+$('#get-location-btn').click(() => {
+  getCurrentPos();
+  renderReset();
+  loader.load();
+});
+
 // Search button handler
 $('#search-btn').click(() => {
+  loader.load();
   submitWeatherRequest(getSearchQuery());
 });
 
@@ -11,6 +30,7 @@ $('#search-btn').click(() => {
 $('#search-query').keydown((e) => {  
   if(e.keyCode === 13) {
     e.preventDefault();
+    loader.load();
     submitWeatherRequest(getSearchQuery());
   }
 });
@@ -19,14 +39,15 @@ const submitWeatherRequest = query => {
   weather = {};
   if ([...query].every(c => c === ' ') 
       || query.length === 0) {
-    alert('Please enter city')
+    alert('Please enter city');
+    loader.reset();
   } else {
-    fetchCoords(query);
+    fetchLocationViaCity(query);
     renderReset();
   }
 }
  
-const fetchCoords = query => {
+const fetchLocationViaCity = query => {
   return fetch(
       "http://"
       + "api.openweathermap.org/geo/1.0/direct?q="
@@ -35,12 +56,27 @@ const fetchCoords = query => {
       + "&appid=4230d88dcd920385ffe81333658fae0f"
     )
     .then(response => response.json())
-    .then(data => addCoords(...data))
+    .then(data => addLocationGetWeather(...data))
     .catch(error => alert('City not found'));
 }
 
-const addCoords = data => {
+const fetchLocationViaCoords = (lat, lon) => {
+  return fetch(
+      "http://"
+      + "api.openweathermap.org/geo/1.0/reverse?"
+      + "lat=" + lat
+      + "&lon=" + lon
+      + "&limit=1"
+      + "&appid=4230d88dcd920385ffe81333658fae0f"
+    )
+    .then(response => response.json())
+    .then(data => addLocationGetWeather(...data))
+    .catch(error => alert('Coordinates not found'));
+}
+
+const addLocationGetWeather = data => {
   weather = {
+    ...weather,
     city: data.name,
     state: data.state,
     country: data.country,
@@ -111,6 +147,7 @@ const renderCurrentWeather = obj => {
   var newHTML = template(obj);
 
   $('#current-weather-container').append(newHTML);
+  loader.reset();
   renderDefaultBtn();
   renderResetBtn();
 };
@@ -198,4 +235,22 @@ const renderResetBtn = () => {
   } else {
     $('#reset-default-btn').addClass('d-none')
   }
+}
+
+// Geolocation API
+
+const getCurrentPos = () => {
+  const currentPos = () => navigator.geolocation.getCurrentPosition(onSuccess, onError);
+  
+  const onSuccess = position => {
+    const {latitude, longitude} = position.coords;
+    fetchLocationViaCoords(latitude, longitude);
+  };
+  
+  const onError = () => {
+    loader.reset();
+    console.log(`Failed to get your location!`);
+  }
+
+  currentPos()
 }
