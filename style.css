@@ -1,0 +1,31 @@
+.nav-title {
+  font-size: 40px;
+  font-weight: bold;
+}
+
+.weather-img {
+  height: 350px;
+  width: auto;
+  margin-bottom: 10px;
+}
+.card:hover {
+  animation: bounce 0.5s linear;
+}
+.card {
+  border-radius: 10px;
+}
+@keyframes bounce {
+  20% {
+    transform: translateY(-6px);
+  }
+  40% {
+    transform: translateY(0px);
+  }
+
+  80% {
+    transform: translateY(-2px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
