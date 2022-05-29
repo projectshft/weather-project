@@ -55,7 +55,7 @@ const fiveDayForecast = (data) => {
     const currentDay = dayOfTheWeekNumber.toLocaleString('default', {
       weekday: 'long',
     });
-
+    // five day weather object //
     const forecastObject = {
       conditions: data.list[i].weather[0].main,
       temp: forecastTemp,
@@ -68,7 +68,6 @@ const fiveDayForecast = (data) => {
 };
 // Handlebars Template for currentWeather //
 const renderCurrentWeather = (value) => {
-  // $('.current-weather').empty();
   const source = $('#current-weather-template').html();
   const template = Handlebars.compile(source);
 
@@ -97,7 +96,9 @@ const renderFiveDayForecast = (value) => {
 $('.btn').click(() => {
   $('.five-day-weather').empty();
   $('.current-weather').empty();
+
   weatherArray = [];
+
   const search = $('.search-bar').val();
   fetchCurrentWeather(search);
   $('.search-bar').val('');

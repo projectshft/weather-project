@@ -3,11 +3,6 @@
   font-weight: bold;
 }
 
-.weather-img {
-  height: 250px;
-  width: auto;
-  margin-bottom: 10px;
-}
 .card:hover {
   animation: bounce 0.5s linear;
   background-color: cornsilk;
