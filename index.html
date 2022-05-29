@@ -55,8 +55,8 @@
       </div>
     </section>
     <!-- Search Bar -->
-    <div class="container mt-5">
-      <div class="input-group input-group-md justify-content-center">
+    <div class="container mt-3">
+      <div class="input-group input-group-lg justify-content-center">
         <input
           type="text"
           class="search-bar form-control-lg mr-3"
@@ -70,14 +70,13 @@
     <div
       class="d-flex flex-wrap justify-content-around align-content-around current-weather"
     ></div>
-    <hr />
+    <!-- Where the five day weather will live -->
     <div
-      class="d-flex flex-wrap justify-content-center align-content-around five-day-weather"
+      class="card-group d-flex flex-wrap justify-content-center align-content-around five-day-weather"
     ></div>
-
     <!-- Handlebars Template Current Weather-->
     <script id="current-weather-template" type="text/x-handlebars-template">
-      <div class="card m-3 bg-light border-primary" style="width: 15rem">
+      <div class="card m-3 border-primary card-click-one" style="width: 14rem">
         <div class="card-body">
           <h4 class="card-title text-primary"><strong>{{name}}</strong></h4>
           <img src="{{icon}}" class="card-img-top" alt="..." />
@@ -92,15 +91,16 @@
     </script>
     <!-- Handlebars Template 5 day forecast -->
     <script id="five-day-weather-template" type="text/x-handlebars-template">
-      <div class="card m-3 bg-light border-primary" style="width: 15rem">
+      <div class="card mb-3 border-primary card-click-two" style="width: 10rem">
         <div class="card-body">
-          <h4 class="card-title text-primary"><strong>{{name}}</strong></h4>
+          <h4 class="card-title text-primary"><strong
+            >{{conditions}}</strong></h4>
           <img src="{{icon}}" class="card-img-top" alt="..." />
           <p class="card-text text-primary">
             <strong class="text-warning">Tempeature:</strong>
             {{temp}}°
-            <strong class="text-warning">Conditions:</strong>
-            {{conditions}}
+            <strong class="text-warning">Weekday:</strong>
+            {{day}}
           </p>
         </div>
       </div>
