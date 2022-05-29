@@ -92,13 +92,13 @@ const renderFiveDayForecast = (value) => {
     alert('Maybe one day I will do something...');
   });
 };
-// On click with the value of search //
+
 $('.btn').click(() => {
+  // empty weather //
   $('.five-day-weather').empty();
   $('.current-weather').empty();
-
   weatherArray = [];
-
+  // On click with the value of search //
   const search = $('.search-bar').val();
   fetchCurrentWeather(search);
   $('.search-bar').val('');
