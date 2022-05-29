@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Bootstrap v5 -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+      crossorigin="anonymous"
+    />
+    <!-- CSS Stylesheet-->
+    <link rel="stylesheet" href="style.css" />
+    <title>Project</title>
+  </head>
+  <!-- Body -->
+  <body class="bg-info">
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand bg-primary">
+      <div class="container justify-content-start align-items-center">
+        <span class="name nav-title navbar-brand text-light"
+          >The <span class="text-warning">Weather</span> Project</span
+        >
+      </div>
+    </nav>
+    <!-- Hero Section -->
+    <section class="bg-primary text-light text-center">
+      <div class="container">
+        <div class="d-flex align-items-center justify-content-between">
+          <div>
+            <h1 class="h1-style">
+              Search for <span class="text-warning">your Local Weather</span>
+            </h1>
+      </div>
+    </section>
+    <!-- Search Bar -->
+    <div class="container mt-3">
+      <div class="input-group input-group-lg justify-content-center">
+        <input
+          type="text"
+          class="search-bar form-control-lg mr-3"
+          placeholder="Enter Your Location"
+        />
+       <button class="btn btn-primary" type="button">Search</button>
+      </div>
+    </div>
+    <!-- Where the current weather will live -->
+    <div
+      class="d-flex flex-wrap justify-content-around align-content-around current-weather"
+    ></div>
+    <!-- Where the five day weather will live -->
+    <div
+      class="card-group d-flex flex-wrap justify-content-center align-content-around five-day-weather"
+    ></div>
+    <!-- Handlebars Template Current Weather-->
+    <script id="current-weather-template" type="text/x-handlebars-template">
+      <div class="card m-3 border-primary card-click-one" style="width: 14rem">
+        <div class="card-body">
+          <h4 class="card-title text-primary"><strong>{{name}}</strong></h4>
+          <img src="{{icon}}" class="card-img-top" alt="..." />
+          <p class="card-text text-primary">
+            <strong class="text-warning">Temperature:</strong>
+            {{temp}}°
+            <strong class="text-warning">Conditions:</strong>
+            {{conditions}}
+          </p>
+        </div>
+      </div>
+    </script>
+    <!-- Handlebars Template 5 day forecast -->
+    <script id="five-day-weather-template" type="text/x-handlebars-template">
+      <div class="card mb-3 border-primary card-click-two" style="width: 10rem">
+        <div class="card-body">
+          <h4 class="card-title text-primary"><strong
+            >{{conditions}}</strong></h4>
+          <img src="{{icon}}" class="card-img-top" alt="..." />
+          <p class="card-text text-primary">
+            <strong class="text-warning">Temperature:</strong>
+            {{temp}}°
+            <strong class="text-warning">Weekday:</strong>
+            {{day}}
+          </p>
+        </div>
+      </div>
+    </script>
+    <!-- jQ -->
+    <script
+      src="https://code.jquery.com/jquery-3.6.0.min.js"
+      integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+      crossorigin="anonymous"
+    ></script>
+    <!-- Handlebars -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"
+      integrity="sha512-RNLkV3d+aLtfcpEyFG8jRbnWHxUqVZozacROI4J2F1sTaDqo1dPQYs01OMi1t1w9Y2FdbSCDSQ2ZVdAC8bzgAg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <!-- JS -->
+    <script src="main.js"></script>
+  </body>
+</html>
