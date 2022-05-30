@@ -9,3 +9,7 @@ h1 {
 .search-form {
   margin-top: 40px;
 }
+
+label {
+  font-size: 0.8rem;
+}
