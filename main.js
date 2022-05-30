@@ -1,5 +1,15 @@
 const cityData = {};
 
+const renderCityData = function () {
+  $('.city-current').empty();
+
+  const source = $('#city-template').html();
+  const template = Handlebars.compile(source);
+  const newHTML = template(cityData);
+
+  $('.city-current').append(newHTML);
+};
+
 const fetch = function (query) {
   $.ajax({
     method: 'GET',
@@ -26,10 +36,14 @@ const fetch = function (query) {
       url: `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=4da99895dae25ae39743d1996fb14942&units=imperial`,
       dataType: 'json',
       success(fullData) {
-        console.log(fullData);
+        cityData.current = Math.round(fullData.main.temp);
+        cityData.description = fullData.weather[0].main;
+        cityData.icon = fullData.weather[0].icon;
+
+        renderCityData();
       },
-      error(jqXHR, textStatus, errorThrown) {
-        console.log(textStatus);
+      error(jqXHRa, aTextStatus, anErrorThrown) {
+        console.log(aTextStatus);
       },
     });
   });
