@@ -13,3 +13,17 @@ h1 {
 label {
   font-size: 0.8rem;
 }
+
+.city {
+  text-align: center;
+}
+
+.instructions {
+  padding-right: 0;
+  font-size: small;
+  margin-bottom: 0.8rem;
+}
+
+.city-current {
+  margin-top: 30px;
+}

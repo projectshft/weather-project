@@ -10,6 +10,18 @@ const renderCityData = function () {
   $('.city-current').append(newHTML);
 };
 
+const gatherCityData = function (fullData) {
+  const descriptionArr = fullData.weather[0].description.split(' ');
+  const description = descriptionArr
+    .map((word) => word[0].toUpperCase() + word.substring(1))
+    .join(' ');
+  cityData.current = Math.round(fullData.main.temp);
+  cityData.description = description;
+  cityData.icon = fullData.weather[0].icon;
+
+  renderCityData();
+};
+
 const fetch = function (query) {
   $.ajax({
     method: 'GET',
@@ -36,11 +48,8 @@ const fetch = function (query) {
       url: `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=4da99895dae25ae39743d1996fb14942&units=imperial`,
       dataType: 'json',
       success(fullData) {
-        cityData.current = Math.round(fullData.main.temp);
-        cityData.description = fullData.weather[0].main;
-        cityData.icon = fullData.weather[0].icon;
-
-        renderCityData();
+        console.log(fullData);
+        gatherCityData(fullData);
       },
       error(jqXHRa, aTextStatus, anErrorThrown) {
         console.log(aTextStatus);
@@ -59,7 +68,7 @@ const searchValueTrimmer = (query) => {
 $('.search').on('click', () => {
   const search = $('#search-query').val();
   const searchTrimmed = searchValueTrimmer(search);
-  console.log(searchTrimmed);
+
   fetch(searchTrimmed);
 
   $('#search-query').val('');
