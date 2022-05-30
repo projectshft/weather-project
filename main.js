@@ -3,14 +3,35 @@ const cityData = {};
 const fetch = function (query) {
   $.ajax({
     method: 'GET',
-    url: `http://api.openweathermap.org/geo/1.0/direct?q=${query}&limit=1&appid=4da99895dae25ae39743d1996fb14942&units=imperial`,
+    url: `http://api.openweathermap.org/geo/1.0/direct?q=${query}&limit=1&appid=4da99895dae25ae39743d1996fb14942`,
     dataType: 'json',
-    success(data) {
-      console.log(data);
-    },
     error(jqXHR, textStatus, errorThrown) {
       console.log(textStatus);
     },
+  }).done((data) => {
+    if (data[0].country === 'US') {
+      cityData.country = data[0].state;
+    } else {
+      const regionNames = new Intl.DisplayNames(['en'], { type: 'region' });
+      cityData.country = regionNames.of(data[0].country);
+    }
+
+    cityData.name = data[0].name;
+
+    const { lat } = data[0];
+    const { lon } = data[0];
+
+    return $.ajax({
+      method: 'GET',
+      url: `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=4da99895dae25ae39743d1996fb14942&units=imperial`,
+      dataType: 'json',
+      success(fullData) {
+        console.log(fullData);
+      },
+      error(jqXHR, textStatus, errorThrown) {
+        console.log(textStatus);
+      },
+    });
   });
 };
 
