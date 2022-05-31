@@ -65,21 +65,33 @@
           </form>
         </div>
       </div>
-      <div class="row city-current"></div>
+      <div class="row city-current d-flex justify-content-center"></div>
       <div class="row city-forecast"></div>
     </div>
     <script id="city-template" type="text/x-handlebars-template">
-      <div class="city col-md-3 offset-md-3 col-6 offset-1">
-        <h4>{{current}}<span>&#8457;</span></h4>
-        <h5>{{name}}</h5>
+      <div class="city col-auto">
+        <h1>{{current}}<span>&#8457;</span></h1>
+        <h3>{{name}}</h3>
         <h6>{{country}}</h6>
         <p>{{description}}</p>
       </div>
-      <div class="icon col-md-2 col-4">
+      <div class="icon col-auto">
         <img
-          src="http://openweathermap.org/img/wn/{{icon}}@2x.png"
+          class="h-100"
+          src="https://openweathermap.org/img/wn/{{icon}}@2x.png"
           alt="{{description}}"
         />
+      </div>
+    </script>
+    <script id="forecast-template" type="text/x-handlebars-template">
+      <div class="col-md forecast">
+        <h6>{{description}}</h6>
+        <h6>{{high}}<span>&#8457;</span></h6>
+        <img
+          src="https://openweathermap.org/img/wn/{{icon}}@2x.png"
+          alt="{{description}}"
+        />
+        <h6>{{date}}</h6>
       </div>
     </script>
   </body>

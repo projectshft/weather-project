@@ -10,16 +10,65 @@ const renderCityData = function () {
   $('.city-current').append(newHTML);
 };
 
-const gatherCityData = function (fullData) {
-  const descriptionArr = fullData.weather[0].description.split(' ');
+const renderForecastData = function () {
+  $('.city-forecast').empty();
+
+  const source = $('#forecast-template').html();
+  const template = Handlebars.compile(source);
+
+  for (let i = 0; i < cityData.forecast.length; i += 1) {
+    const newHTML = template(cityData.forecast[i]);
+    $('.city-forecast').append(newHTML);
+  }
+};
+
+const gatherLocationData = function (data) {
+  if (data[0].country === 'US') {
+    cityData.country = data[0].state;
+  } else {
+    const regionNames = new Intl.DisplayNames(['en'], { type: 'region' });
+    cityData.country = regionNames.of(data[0].country);
+  }
+
+  cityData.name = data[0].name;
+  cityData.lat = data[0].lat;
+  cityData.lon = data[0].lon;
+};
+
+const gatherWeatherData = function (currentWeatherData) {
+  cityData.current = Math.round(currentWeatherData.main.temp);
+  cityData.icon = currentWeatherData.weather[0].icon;
+
+  const descriptionArr = currentWeatherData.weather[0].description.split(' ');
   const description = descriptionArr
     .map((word) => word[0].toUpperCase() + word.substring(1))
     .join(' ');
-  cityData.current = Math.round(fullData.main.temp);
   cityData.description = description;
-  cityData.icon = fullData.weather[0].icon;
+};
+
+const gatherForecastData = function (forecastData) {
+  cityData.forecast = [];
+  console.log(forecastData);
+  for (let i = 5; i < forecastData.list.length; i += 8) {
+    const eachForecast = {};
+
+    const date = new Date(forecastData.list[i].dt_txt).toLocaleDateString(
+      'en-US',
+      { weekday: 'long' }
+    );
+
+    eachForecast.date = date;
+    eachForecast.high = Math.round(forecastData.list[i].main.temp_max);
+    eachForecast.description = forecastData.list[i].weather[0].main;
+    eachForecast.icon = forecastData.list[i].weather[0].icon;
+
+    cityData.forecast.push(eachForecast);
+    console.log(`List #${i}, Date is ${forecastData.list[i].dt_txt}`);
+  }
 
   renderCityData();
+
+  renderForecastData();
 };
 
 const fetch = function (query) {
@@ -30,32 +79,34 @@ const fetch = function (query) {
     error(jqXHR, textStatus, errorThrown) {
       console.log(textStatus);
     },
-  }).done((data) => {
-    if (data[0].country === 'US') {
-      cityData.country = data[0].state;
-    } else {
-      const regionNames = new Intl.DisplayNames(['en'], { type: 'region' });
-      cityData.country = regionNames.of(data[0].country);
-    }
+  })
+    .then((data) => {
+      gatherLocationData(data);
 
-    cityData.name = data[0].name;
+      return $.ajax({
+        method: 'GET',
+        url: `https://api.openweathermap.org/data/2.5/weather?lat=${cityData.lat}&lon=${cityData.lon}&appid=4da99895dae25ae39743d1996fb14942&units=imperial`,
+        dataType: 'json',
+        error(jqXHR, textStatus, errorThrown) {
+          console.log(textStatus);
+        },
+      });
+    })
+    .done((currentWeatherData) => {
+      gatherWeatherData(currentWeatherData);
 
-    const { lat } = data[0];
-    const { lon } = data[0];
-
-    return $.ajax({
-      method: 'GET',
-      url: `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=4da99895dae25ae39743d1996fb14942&units=imperial`,
-      dataType: 'json',
-      success(fullData) {
-        console.log(fullData);
-        gatherCityData(fullData);
-      },
-      error(jqXHRa, aTextStatus, anErrorThrown) {
-        console.log(aTextStatus);
-      },
+      return $.ajax({
+        method: 'GET',
+        url: `https://api.openweathermap.org/data/2.5/forecast?lat=${cityData.lat}&lon=${cityData.lon}&appid=4da99895dae25ae39743d1996fb14942&units=imperial`,
+        dataType: 'json',
+        success(forecastData) {
+          gatherForecastData(forecastData);
+        },
+        error(jqXHR, textStatus, errorThrown) {
+          console.log(textStatus);
+        },
+      });
     });
-  });
 };
 
 const searchValueTrimmer = (query) => {
@@ -80,7 +131,7 @@ $('input').on('keypress', (e) => {
     e.preventDefault();
     const search = $('#search-query').val();
     const searchTrimmed = searchValueTrimmer(search);
-    console.log(searchTrimmed);
+
     fetch(searchTrimmed);
 
     $('#search-query').val('');
