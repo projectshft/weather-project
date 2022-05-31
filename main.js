@@ -48,7 +48,7 @@ const gatherWeatherData = function (currentWeatherData) {
 
 const gatherForecastData = function (forecastData) {
   cityData.forecast = [];
-  console.log(forecastData);
+
   for (let i = 5; i < forecastData.list.length; i += 8) {
     const eachForecast = {};
 
@@ -63,7 +63,6 @@ const gatherForecastData = function (forecastData) {
     eachForecast.icon = forecastData.list[i].weather[0].icon;
 
     cityData.forecast.push(eachForecast);
-    console.log(`List #${i}, Date is ${forecastData.list[i].dt_txt}`);
   }
 
   renderCityData();
