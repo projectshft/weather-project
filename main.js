@@ -1,6 +1,6 @@
 const cityData = {};
 
-const renderCityData = function () {
+const renderCurrentWeatherData = function () {
   $('.city-current').empty();
 
   const source = $('#city-template').html();
@@ -64,10 +64,6 @@ const gatherForecastData = function (forecastData) {
 
     cityData.forecast.push(eachForecast);
   }
-
-  renderCityData();
-
-  renderForecastData();
 };
 
 const fetch = function (query) {
@@ -80,6 +76,9 @@ const fetch = function (query) {
     },
   })
     .then((data) => {
+      if (data.length === 0) {
+        return alert('Invalid location. Please try again.');
+      }
       gatherLocationData(data);
 
       return $.ajax({
@@ -100,6 +99,10 @@ const fetch = function (query) {
         dataType: 'json',
         success(forecastData) {
           gatherForecastData(forecastData);
+
+          renderCurrentWeatherData();
+
+          renderForecastData();
         },
         error(jqXHR, textStatus, errorThrown) {
           console.log(textStatus);
@@ -108,31 +111,24 @@ const fetch = function (query) {
     });
 };
 
-const searchValueTrimmer = (query) => {
-  const queryArr = query.split(',');
+const searchValueTrimmer = () => {
+  const search = $('#search-query').val();
+  const queryArr = search.split(',');
   const queryTrimmedArr = queryArr.map((index) => index.trim());
   const finalQuery = queryTrimmedArr.join(',');
+  $('#search-query').val('');
   return finalQuery;
 };
 
 $('.search').on('click', () => {
-  const search = $('#search-query').val();
-  const searchTrimmed = searchValueTrimmer(search);
-
-  fetch(searchTrimmed);
-
-  $('#search-query').val('');
+  fetch(searchValueTrimmer());
 });
 
 $('input').on('keypress', (e) => {
   const keycode = e.keyCode ? e.keyCode : e.which;
   if (keycode === 13) {
     e.preventDefault();
-    const search = $('#search-query').val();
-    const searchTrimmed = searchValueTrimmer(search);
 
-    fetch(searchTrimmed);
-
-    $('#search-query').val('');
+    fetch(searchValueTrimmer());
   }
 });
