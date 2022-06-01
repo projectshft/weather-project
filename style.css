@@ -1,0 +1,61 @@
+.page-header {
+  text-align: center;
+}
+
+.page-header:after {
+  content: "";
+  display: block;
+  height: 50px;
+}
+
+.button {
+  display: inline-block;
+}
+
+.weather-row:after {
+  content: "";
+  display: block;
+  height: 20px;
+}
+
+.selector-for-some-widget {
+  box-sizing: content-box;
+}
+
+.weatherResult img {
+  width: 100%;
+}
+
+
+.row {
+  margin: 0 -5px;
+}
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.weatherIcon {
+  position: absolute;
+  top: 70%;
+  left: 30%;
+  width: 150px;
+  height: 150px;
+  margin-top: -75px; 
+  margin-left: -75px; 
+
+.search-form {
+  width: 75%;
+}
+
+.btn {
+  position: margin-left;
+}
+
+.forecastResult {
+  border: 1px solid black;
+  padding: 15px;
+  margin-bottom: 15px;
+}
