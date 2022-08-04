@@ -71,3 +71,7 @@ button {
   font-size: 12px;
   margin-bottom: 10%;
 }
+
+.btn-outline-info {
+  font-size: 11px;
+}
