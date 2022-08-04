@@ -3,10 +3,10 @@ const renderWeather = function () {
 
   for (let i = 0; i < weather.length; i++) {
     const ele = weather[i];
-    const source = $("#weather-template").html();
-    const template = Handlebars.compile(source);
-    const newHTML = template(ele);
-    $(".weathers").append(newHTML);
+
+    $(".weathers").append(
+      Handlebars.compile($("#weather-template").html())(ele)
+    );
   }
 };
 

@@ -2,10 +2,14 @@ const renderForecast = function () {
   $(".forecasts").empty();
   for (let i = 0; i < forecast.length; i++) {
     const ele = forecast[i];
-    const source = $("#forecast-template").html();
-    const template = Handlebars.compile(source);
-    const newHTML = template(ele);
-    $(".forecasts").append(newHTML);
+    // const source = $("#forecast-template").html();
+    // const template = Handlebars.compile(source);
+    // const newHTML = template(ele);
+    // $(".forecasts").append(newHTML);
+
+    $(".forecasts").append(
+      Handlebars.compile($("#forecast-template").html())(ele)
+    );
   }
 };
 
