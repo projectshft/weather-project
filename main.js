@@ -57,7 +57,7 @@ var addCurrentWeather = function(data) {
     weatherArr = [];
     
     var currentObj = {
-        temperature: data.main.temp,
+        temperature: Math.round(data.main.temp),
         city: data.name,
         conditions: data.weather[0].main,
         iconURL: `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`

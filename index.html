@@ -39,17 +39,27 @@
     </div> 
 
     <script id="current-template" type="text/x-handlebars-template">
-        <div class="current col-md-6">
-          <h4>{{ temperature }}</h4>
+        <div class="current col-md-2 offset-md-4">
+          <h4>{{ temperature }}&deg</h4>
           <h3>{{city}}</h3>
-          <h5>Conditions</h5>
+          <h5>{{conditions}}</h5>
         </div>
-        <div class="current col-md-6">
+        <div class="current col-md-2">
           <img src="{{iconURL}}" alt="">
         </div>
     </script>
 
-    
+    <script id="forecast-template" type="text/x-handlebars-template">
+        <div class="current col-md-2">
+            <h5>{{conditions}}</h5>
+            <h4>{{ temperature }}</h4>
+            <img src="{{iconURL}}" alt="">
+            <h5>{{ dayOfWeek }}</h5>
+        </div>
+        <div class="current col-md-6">
+          
+        </div>
+    </script> 
 
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
