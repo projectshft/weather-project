@@ -24,7 +24,7 @@ var fetchGeocode = function(query) {
         url: `http://api.openweathermap.org/geo/1.0/direct?q=${query}&limit=5&appid=${APIKey}`,
         dataType: "json",
         success: function (data) {
-            console.log(data[0]);
+            //console.log(data[0]);
             fetchData(data);
         },
         error: function (jqXHR, textStatus, errorThrown) {
@@ -43,8 +43,20 @@ var fetchData = function(geocode) {
         url: `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${APIKey}&units=imperial`,
         dataType: "json",
         success: function (data) {
-            console.log(data);
             addCurrentWeather(data);
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+          console.log(textStatus);
+        },
+    });
+
+    //forecast API
+    $.ajax({
+        method: "GET",
+        url: `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${APIKey}&units=imperial`,
+        dataType: "json",
+        success: function (data) {
+            addForecast(data);
         },
         error: function (jqXHR, textStatus, errorThrown) {
           console.log(textStatus);
@@ -53,7 +65,6 @@ var fetchData = function(geocode) {
 };
 
 var addCurrentWeather = function(data) {
-    //need to add code here
     weatherArr = [];
     
     var currentObj = {
@@ -65,21 +76,61 @@ var addCurrentWeather = function(data) {
 
     weatherArr.push(currentObj);
 
-    console.log(weatherArr);
+    //console.log(weatherArr);
+
+    //renderWeather();
+};
+
+var addForecast = function(data) {
+    //don't need to clear weatherArr because it's already been cleared by addCurrentWeather
+    //console.log(data.list);
+    //build 5 arrays from the 40 3-hour forecasts in data.list
+    for (i=0; i<5; i++) {
+        var arr = [];
+        for (j=i*8; j<i*8+8; j++) {
+            //create object for each 3-hour forecast
+            var obj = {
+                max: data.list[j].main.temp_max,
+                conditions: data.list[j].weather[0].main,
+                iconURL: `https://openweathermap.org/img/wn/${data.list[j].weather[0].icon}@2x.png` 
+            };
+            arr.push(obj);
+        }
+
+        //find the max temp in this 24-hour window
+        var forecastMax = arr.reduce((max,forecast) => (max > forecast.max) ? max : forecast.max);
+        //find the object of the 3hour forecast containing this max
+        var forecastObj = arr.find((element) => element.max === forecastMax);
+
+        //find date of the last 3-hour forecast in this 24hour window
+        forecastObj.dayOfWeek = findDay(data.list[i*8].dt_txt);
+        console.log(forecastObj);
+        
+        //push onto main weather array
+        weatherArr.push(forecastObj);
+    }
+
 
     renderWeather();
+};
+
+var findDay = function(dateText) {
+    var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    var date = new Date(dateText);
+    return days[date.getDay()]
 };
 
 var renderWeather = function() {
     $current.empty();
     $forecast.empty();
 
+    console.log(weatherArr);
+
     //rendering current weather
     var sourceCurrent = $("#current-template").html();
     var templateCurrent = Handlebars.compile(sourceCurrent);
 
     var newHTML = templateCurrent({
-        //need to fill these in
         temperature: weatherArr[0].temperature,
         city: weatherArr[0].city,
         conditions: weatherArr[0].conditions,
@@ -87,5 +138,22 @@ var renderWeather = function() {
     });
 
     $current.append(newHTML);
+
+    //rendering forecast
+    var sourceForecast = $("#forecast-template").html();
+    var templateForecast = Handlebars.compile(sourceForecast);
+
+    //start at index 1 and iterate through weatherArr
+    for (i=1; i<6; i++) {
+        var newHTML = templateForecast({
+            conditions: weatherArr[i].conditions,
+            temperature: Math.round(weatherArr[i].max),
+            iconURL: weatherArr[i].iconURL,
+            dayOfWeek: weatherArr[i].dayOfWeek
+        });
+
+        $forecast.append(newHTML);
+    }
+
 
 };

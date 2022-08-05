@@ -1,0 +1,17 @@
+.current.row {
+  border: 1px solid #ccc;
+  border-radius: 16px;
+  margin-bottom: 24px;
+  padding: 12px;
+}
+
+.forecast.col-sm-2 {
+  border: 1px solid #ccc;
+  border-radius: 16px;
+  padding: 12px;
+}
+
+.forecast.row {
+  display: flex;
+  justify-content: space-evenly;
+}
