@@ -8,6 +8,11 @@ var $forecast = $(".forecast");
 //API key
 const APIKey = "c44eb17ad7f8bb0d37f00beae955a5fb";
 
+//check if there is a default city
+window.onload = function() {
+    checkDefault();
+};
+
 $(".search").click(function() {
     var search= $("#search-query").val();
 
@@ -83,7 +88,6 @@ var addCurrentWeather = function(data) {
 
 var addForecast = function(data) {
     //don't need to clear weatherArr because it's already been cleared by addCurrentWeather
-    //console.log(data.list);
     //build 5 arrays from the 40 3-hour forecasts in data.list
     for (i=0; i<5; i++) {
         var arr = [];
@@ -104,7 +108,7 @@ var addForecast = function(data) {
 
         //find date of the last 3-hour forecast in this 24hour window
         forecastObj.dayOfWeek = findDay(data.list[i*8].dt_txt);
-        console.log(forecastObj);
+        //console.log(forecastObj);
         
         //push onto main weather array
         weatherArr.push(forecastObj);
@@ -124,7 +128,7 @@ var renderWeather = function() {
     $current.empty();
     $forecast.empty();
 
-    console.log(weatherArr);
+    //console.log(weatherArr);
 
     //rendering current weather
     var sourceCurrent = $("#current-template").html();
@@ -138,6 +142,9 @@ var renderWeather = function() {
     });
 
     $current.append(newHTML);
+
+    //add default button
+    renderDefaultButtons(weatherArr[0].city);
 
     //rendering forecast
     var sourceForecast = $("#forecast-template").html();
@@ -155,5 +162,43 @@ var renderWeather = function() {
         $forecast.append(newHTML);
     }
 
-
 };
+
+var renderDefaultButtons = function(renderedCity) {
+    //clear divs
+    $("#default-btn-div").empty(); 
+
+    //create buttons
+    $("<button id='set-default-btn'>Set as Default</button>")
+        .addClass("btn")
+        .addClass("btn-outline-info")
+        .click(function() {
+            localStorage.setItem("default", renderedCity);
+            renderDefaultButtons(weatherArr[0].city);
+        })
+        .appendTo($("#default-btn-div"));
+
+    $("<button id='clear-default-button'>Clear Default</button>")
+        .addClass("btn")
+        .addClass("btn-outline-secondary")
+        .click(function() {
+            localStorage.clear();
+            renderDefaultButtons(weatherArr[0].city);
+        })
+        .appendTo($("#default-btn-div"));
+
+    //disable buttons if n/a
+    if (localStorage.getItem("default") === renderedCity) {
+        $("#set-default-btn").addClass("disabled");
+        $("#set-default-btn").text("is Default");
+    }
+
+    if (!(localStorage.getItem("default"))) {
+        $("#clear-default-btn").hide();
+    }
+};
+
+var checkDefault = function() {
+    var defaultCity = localStorage.getItem("default");
+    (defaultCity) ? fetchGeocode(defaultCity) : false;
+}
