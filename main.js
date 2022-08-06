@@ -23,6 +23,14 @@ $(".search").click(function() {
     $("#search-query").val("");
 });
 
+//enable event listener for form submitting too
+$(".search-form").submit(() => {
+    $(".search").click();
+
+    //return false to prevent page reload
+    return false;
+});
+
 var fetchGeocode = function(query) {
     $.ajax({
         method: "GET",
@@ -30,7 +38,9 @@ var fetchGeocode = function(query) {
         dataType: "json",
         success: function (data) {
             //console.log(data[0]);
-            fetchData(data);
+            var lat = data[0].lat;
+            var lon = data[0].lon;
+            fetchData(lat, lon);
         },
         error: function (jqXHR, textStatus, errorThrown) {
           console.log(textStatus);
@@ -38,9 +48,7 @@ var fetchGeocode = function(query) {
     });
 };
 
-var fetchData = function(geocode) {
-    var lat = geocode[0].lat;
-    var lon = geocode[0].lon;
+var fetchData = function(lat, lon) {
     
     //current weather API
     $.ajax({
@@ -202,3 +210,14 @@ var checkDefault = function() {
     var defaultCity = localStorage.getItem("default");
     (defaultCity) ? fetchGeocode(defaultCity) : false;
 }
+
+$("#geolocator").click(function() {
+    navigator.geolocation.getCurrentPosition((location) => useCurrentLocation(location));
+});
+
+var useCurrentLocation = function(location) {
+    var lat = location.coords.latitude;
+    var lon = location.coords.longitude;
+
+    fetchData(lat, lon);
+};
