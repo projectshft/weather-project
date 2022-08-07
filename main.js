@@ -1,18 +1,9 @@
-const renderWeather = function () {
-  $(".weathers").empty();
-
-  for (let i = 0; i < weather.length; i++) {
-    const ele = weather[i];
-
-    $(".weathers").append(
-      Handlebars.compile($("#weather-template").html())(ele)
-    );
-  }
-};
-
 $(".search").click(function () {
-  let city = $("#search-query").val();
-  fetch1(city);
+  let $city = $("#search-query").val();
+  $("#search-query").val("");
+
+  fetch1($city);
+  fetch2($city);
 });
 
 $(".btn-outline-info").click(function () {
@@ -22,6 +13,7 @@ $(".btn-outline-info").click(function () {
       const long = position.coords.longitude;
 
       fetch_lat_long(lat, long);
+      fetch_lat_long_forecast(lat, long);
     },
     function () {
       alert("Can't not locate your position");
@@ -32,7 +24,7 @@ $(".btn-outline-info").click(function () {
 const addWeather = function (data) {
   weather = [];
 
-  const w = {
+  let w = {
     temp1: Math.round(data.main.temp),
     name1: data.name,
     main1: data.weather[0].main,
@@ -70,3 +62,17 @@ const fetch_lat_long = function (latitude, longitude) {
     },
   });
 };
+
+const renderWeather = function () {
+  $(".weathers").empty();
+
+  for (let i = 0; i < weather.length; i++) {
+    const ele = weather[i];
+
+    $(".weathers").append(
+      Handlebars.compile($("#weather-template").html())(ele)
+    );
+  }
+};
+
+renderWeather();

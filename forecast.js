@@ -1,37 +1,3 @@
-const renderForecast = function () {
-  $(".forecasts").empty();
-  for (let i = 0; i < forecast.length; i++) {
-    const ele = forecast[i];
-    // const source = $("#forecast-template").html();
-    // const template = Handlebars.compile(source);
-    // const newHTML = template(ele);
-    // $(".forecasts").append(newHTML);
-
-    $(".forecasts").append(
-      Handlebars.compile($("#forecast-template").html())(ele)
-    );
-  }
-};
-
-$(".search").click(function () {
-  let city = $("#search-query").val();
-  fetch2(city);
-});
-
-$(".btn-outline-info").click(function () {
-  navigator.geolocation.getCurrentPosition(
-    function (position) {
-      const lat = position.coords.latitude;
-      const long = position.coords.longitude;
-
-      fetch_lat_long_forecast(lat, long);
-    },
-    function () {
-      alert("Can't not locate your position");
-    }
-  );
-});
-
 const addForecast = function (data) {
   forecast = [];
   const dataFiltered = data.list.filter(function (value, index, arr) {
@@ -107,3 +73,16 @@ const fetch_lat_long_forecast = function (latitude, longitude) {
     },
   });
 };
+
+const renderForecast = function () {
+  $(".forecasts").empty();
+  for (let i = 0; i < forecast.length; i++) {
+    const ele = forecast[i];
+
+    $(".forecasts").append(
+      Handlebars.compile($("#forecast-template").html())(ele)
+    );
+  }
+};
+
+renderForecast();
