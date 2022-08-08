@@ -115,7 +115,7 @@ var addForecast = function(data) {
         var forecastObj = arr.find((element) => element.max === forecastMax);
 
         //find date of the last 3-hour forecast in this 24hour window
-        forecastObj.dayOfWeek = findDay(data.list[i*8].dt_txt);
+        forecastObj.dayOfWeek = findDay(data.list[i*8+7].dt_txt);
         //console.log(forecastObj);
         
         //push onto main weather array
