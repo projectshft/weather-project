@@ -9,10 +9,7 @@ const days = {
   5: 'Friday',
   6: 'Saturday',
 };
-// require
-// console.log(moment().format());
-const day = moment.unix(1660068000);
-console.log(days[day.day()]);
+// const day = moment.unix();
 
 function renderCurrentWeather(weatherData) {
   $('.current-weather').empty();
@@ -27,7 +24,24 @@ function renderCurrentWeather(weatherData) {
   });
   $('.current-weather').append(newHTML);
 }
-
+function renderForecast(forecastData) {
+  $('.forecast').empty();
+  forecastData.forEach((elem) => {
+    const { temp, unixDateTime, condition, icon } = elem;
+    const dateObj = moment.unix(unixDateTime);
+    const day = days[dateObj.day()];
+    console.log(dateObj.day());
+    const source = $('#forecast-template').html();
+    const template = Handlebars.compile(source);
+    const newHTML = template({
+      temp,
+      day,
+      condition,
+      icon,
+    });
+    $('.forecast').append(newHTML);
+  });
+}
 const fetch = function (query) {
   return $.ajax({
     method: 'GET',
@@ -41,6 +55,23 @@ const fetch = function (query) {
     },
   });
 };
+
+async function getFiveDayForecase({ lat, lon }) {
+  const url = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${key}&units=imperial`;
+  const result = await fetch(url);
+  const increments = result.list || null;
+  const temps = [];
+  for (let i = 7; i < result.list.length; i += 8) {
+    temps.push({
+      temp: result.list[i].main.temp,
+      condition: result.list[i].weather[0].description,
+      unixDateTime: result.list[i].dt || null,
+      icon: result.list[i].weather[0].icon,
+    });
+  }
+
+  renderForecast(temps);
+}
 
 async function getCurrentWeatherData({ lat, lon }) {
   const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${key}&units=imperial`;
@@ -71,6 +102,7 @@ async function getCoordinates() {
   };
   // console.table(coords);
   getCurrentWeatherData(coords);
+  getFiveDayForecase(coords);
 }
 
 //

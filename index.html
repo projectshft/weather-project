@@ -39,7 +39,7 @@
         </form>
       </div>
     </section>
-    <section class="row">
+    <section class="row forecast">
       <section class="col-md-2 offset-md-1">
         <h2>Monday</h2>
         <img src="http://placekitten.com/100/100" alt="" />
@@ -82,6 +82,14 @@
       </section>
     </script>
 
+    <script id="forecast-template" type="text/x-handlebars-template">
+      <section class="col-md-2 offset-md-1">
+        <h2>{{day}}</h2>
+        <img src="http://openweathermap.org/img/wn/{{icon}}@2x.png" alt="" />
+        <h2>{{temp}}</h2>
+        <span class="align-middle">{{condition}}</span>
+      </section>
+    </script>
     <script
       src="https://code.jquery.com/jquery-3.6.0.min.js"
       integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
