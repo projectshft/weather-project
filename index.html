@@ -17,18 +17,25 @@
   <body>
     <section class="row">
       <div class="col-md-6 offset-md-3 text-center">
-        <h1>CITY NAME</h1>
-        <section class="row">
-          <h2 class="col-md-6">TEMP</h2>
-          <img
-            class="col-md-6"
-            src="http://placekitten.com/100/100"
-            alt="conditons pic"
-          />
+        <section class="current-weather container">
+          <h1>CITY NAME</h1>
+          <section class="row">
+            <section class="col-md-6">
+              <h2>TEMP</h2>
+              <span>{{conditon}}</span>
+            </section>
+
+            <img
+              class="col-md-6"
+              src="http://openweathermap.org/img/wn/10d.png "
+              alt="conditons pic"
+            />
+          </section>
         </section>
-        <form class="row" action="#">
-          <input type="text" name="city" />
-          <button>Icon</button>
+
+        <form class="row" action="#" onsubmit="event.preventDefault();">
+          <input type="text" id="city" name="city" />
+          <button id="search">Icon</button>
         </form>
       </div>
     </section>
@@ -59,5 +66,34 @@
         <h2>22°F</h2>
       </section>
     </section>
+
+    <script id="current-weather-template" type="text/x-handlebars-template">
+      <h1>{{city}}</h1>
+      <section class="row">
+        <section class="col-md-6 align-items-center justify-content-center">
+          <h2 class="align-middle c-temp">{{temp}}°F</h2>
+          <span class="align-middle">{{condition}}</span>
+        </section>
+        <img
+          class="col-md-6"
+          src="http://openweathermap.org/img/wn/{{icon}}@4x.png"
+          alt="weather conditons icon"
+        />
+      </section>
+    </script>
+
+    <script
+      src="https://code.jquery.com/jquery-3.6.0.min.js"
+      integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"
+      integrity="sha512-RNLkV3d+aLtfcpEyFG8jRbnWHxUqVZozacROI4J2F1sTaDqo1dPQYs01OMi1t1w9Y2FdbSCDSQ2ZVdAC8bzgAg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script src="env.js"></script>
+    <script src="main.js"></script>
   </body>
 </html>
