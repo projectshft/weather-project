@@ -1,10 +1,35 @@
-section {
-  border: 2px black solid;
-}
 img {
-  max-width: 100%;
+  width: 100%;
 }
 
 .c-temp {
-  font-size: 10rem;
+  font-size: 5rem;
+  padding-top: 20%;
+}
+
+.head {
+  font-size: 5rem;
+  padding-top: 2vh;
+  padding-bottom: 2vh;
+}
+
+.city {
+  padding-top: 2vh;
+}
+
+.forecast-section {
+  padding-top: 15px;
+}
+
+.column-inner {
+  padding: 10px;
+  border: 1px solid black;
+}
+
+.condition-current {
+  font-size: 2rem;
+}
+
+.day {
+  font-size: 25px;
 }

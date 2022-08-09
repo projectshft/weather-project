@@ -15,32 +15,29 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <section class="row">
-      <div class="col-md-6 offset-md-3 text-center">
-        <section class="current-weather container">
-          <h1>CITY NAME</h1>
-          <section class="row">
-            <section class="col-md-6">
-              <h2>TEMP</h2>
-              <span>{{conditon}}</span>
-            </section>
+    <div class="container">
+      <section class="row">
+        <div class="col-md-6 offset-md-3 text-center">
+          <h1 class="head">Better Weather</h1>
 
-            <img
-              class="col-md-6"
-              src="http://openweathermap.org/img/wn/10d.png "
-              alt="conditons pic"
-            />
-          </section>
-        </section>
+          <form
+            class="row text-center"
+            action="#"
+            onsubmit="event.preventDefault();"
+          >
+            <input class="col-md-8" type="text" id="city" name="city" />
+            <button class="col-md-3 offset-md-1" id="search">
+              City Search
+            </button>
+          </form>
+          <section class="current-weather container"></section>
+        </div>
+      </section>
+      <section class="row forecast">
+        <div class="col-md-12"></div>
+        <section class="row"></section>
 
-        <form class="row" action="#" onsubmit="event.preventDefault();">
-          <input type="text" id="city" name="city" />
-          <button id="search">Icon</button>
-        </form>
-      </div>
-    </section>
-    <section class="row forecast">
-      <section class="col-md-2 offset-md-1">
+        <!-- <section class="col-md-2 offset-md-1">
         <h2>Monday</h2>
         <img src="http://placekitten.com/100/100" alt="" />
         <h2>22°F</h2>
@@ -64,18 +61,18 @@
         <h2>friday</h2>
         <img src="http://placekitten.com/100/100" alt="" />
         <h2>22°F</h2>
+      </section> -->
       </section>
-    </section>
-
+    </div>
     <script id="current-weather-template" type="text/x-handlebars-template">
-      <h1>{{city}}</h1>
+      <h2 class="city">{{city}}</h2>
       <section class="row">
-        <section class="col-md-6 align-items-center justify-content-center">
-          <h2 class="align-middle c-temp">{{temp}}°F</h2>
-          <span class="align-middle">{{condition}}</span>
+        <section class="col-md-4 offset-md-2">
+          <h2 class=".align-baseline c-temp">{{temp}}°F</h2>
+          <span class="align-middle condition-current">{{condition}}</span>
         </section>
         <img
-          class="col-md-6"
+          class="col-md-4"
           src="http://openweathermap.org/img/wn/{{icon}}@4x.png"
           alt="weather conditons icon"
         />
@@ -83,11 +80,13 @@
     </script>
 
     <script id="forecast-template" type="text/x-handlebars-template">
-      <section class="col-md-2 offset-md-1">
-        <h2>{{day}}</h2>
-        <img src="http://openweathermap.org/img/wn/{{icon}}@2x.png" alt="" />
-        <h2>{{temp}}</h2>
-        <span class="align-middle">{{condition}}</span>
+      <section class="col-md-2 text-center forecast-section">
+        <div class="column-inner">
+          <h2 class="day">{{day}}</h2>
+          <img src="http://openweathermap.org/img/wn/{{icon}}@4x.png" alt="" />
+          <h2>{{temp}}</h2>
+          <span class="align-middle">{{condition}}</span>
+        </div>
       </section>
     </script>
     <script
