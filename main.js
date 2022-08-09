@@ -59,27 +59,28 @@ const fetch = function (query) {
     },
   });
 };
-
+function compileForecastData(data) {
+  const filteredData = [];
+  for (let i = 7; i < data.list.length; i += 8) {
+    filteredData.push({
+      temp: data.list[i].main.temp ? Math.round(data.list[i].main.temp) : null,
+      condition: data.list[i].weather
+        ? data.list[i].weather[0].description
+        : null,
+      unixDateTime: data.list[i].dt || null,
+      icon: data.list[i].weather ? data.list[i].weather[0].icon : null,
+    });
+  }
+  return filteredData;
+}
 async function getFiveDayForecase({ lat, lon }) {
   const url = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${key}&units=imperial`;
   const result = await fetch(url);
   const hasListProperty = Object.prototype.hasOwnProperty.call(result, 'list');
 
   if (hasListProperty) {
-    const temps = [];
-    for (let i = 7; i < result.list.length; i += 8) {
-      temps.push({
-        temp: result.list[i].main.temp
-          ? Math.round(result.list[i].main.temp)
-          : null,
-        condition: result.list[i].weather
-          ? result.list[i].weather[0].description
-          : null,
-        unixDateTime: result.list[i].dt || null,
-        icon: result.list[i].weather ? result.list[i].weather[0].icon : null,
-      });
-    }
-    renderForecast(temps);
+    const compressedData = compileForecastData(result);
+    renderForecast(compressedData);
   }
 }
 
