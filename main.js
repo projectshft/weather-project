@@ -1,7 +1,5 @@
 const key = KEY;
 
-// const day = moment.unix();
-
 function renderCurrentWeather(weatherData) {
   // empty old weather data to overwrite it with new data
   $('.current-weather').empty();
@@ -71,7 +69,9 @@ async function getFiveDayForecase({ lat, lon }) {
     const temps = [];
     for (let i = 7; i < result.list.length; i += 8) {
       temps.push({
-        temp: result.list[i].main.temp || null,
+        temp: result.list[i].main.temp
+          ? Math.round(result.list[i].main.temp)
+          : null,
         condition: result.list[i].weather
           ? result.list[i].weather[0].description
           : null,
