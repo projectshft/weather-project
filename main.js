@@ -1,5 +1,19 @@
 const key = KEY;
 
+const days = {
+  0: 'Sunday',
+  1: 'Monday',
+  2: 'Tuesday',
+  3: 'Wednesday',
+  4: 'Thursday',
+  5: 'Friday',
+  6: 'Saturday',
+};
+// require
+// console.log(moment().format());
+const day = moment.unix(1660068000);
+console.log(days[day.day()]);
+
 function renderCurrentWeather(weatherData) {
   $('.current-weather').empty();
   const { temp, city, condition, icon } = weatherData;
