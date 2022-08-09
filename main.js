@@ -108,6 +108,7 @@ async function getCoordinates() {
   if (coords.lat && coords.lon) {
     getCurrentWeatherData(coords);
     getFiveDayForecase(coords);
+    $('#city').val('');
   }
 }
 
