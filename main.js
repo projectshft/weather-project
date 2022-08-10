@@ -23,7 +23,6 @@ $(".btn-outline-info").click(function () {
 
 const addWeather = function (data) {
   weather = [];
-
   let w = {
     temp1: Math.round(data.main.temp),
     name1: data.name,
@@ -74,5 +73,3 @@ const renderWeather = function () {
     );
   }
 };
-
-renderWeather();

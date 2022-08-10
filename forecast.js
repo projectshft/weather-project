@@ -1,5 +1,8 @@
+// let forecast = [];
+
 const addForecast = function (data) {
   forecast = [];
+
   const dataFiltered = data.list.filter(function (value, index, arr) {
     return index % 7 === 0;
   });
@@ -84,5 +87,3 @@ const renderForecast = function () {
     );
   }
 };
-
-renderForecast();
