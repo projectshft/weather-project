@@ -122,12 +122,6 @@ function chooseDefaultLocation() {
 
 $('.current-weather').on('click', '#set-default', chooseDefaultLocation);
 
-if (window.localStorage.length === 1) {
-  currentCoords = JSON.parse(window.localStorage.getItem('defaultLocation'));
-  getCurrentWeatherData(currentCoords);
-  getFiveDayForecast(currentCoords);
-}
-
 function geolocate() {
   const options = {
     enableHighAccuracy: true,
@@ -157,3 +151,9 @@ function geolocate() {
 }
 
 $('#geolocate').click(geolocate);
+
+if (window.localStorage.length === 1) {
+  currentCoords = JSON.parse(window.localStorage.getItem('defaultLocation'));
+  getCurrentWeatherData(currentCoords);
+  getFiveDayForecast(currentCoords);
+}
