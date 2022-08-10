@@ -1,5 +1,5 @@
 const key = KEY;
-
+let currentCoords = {};
 function renderCurrentWeather(weatherData) {
   // empty old weather data to overwrite it with new data
   $('.current-weather').empty();
@@ -73,7 +73,7 @@ function compileForecastData(data) {
   }
   return filteredData;
 }
-async function getFiveDayForecase({ lat, lon }) {
+async function getFiveDayForecast({ lat, lon }) {
   const url = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${key}&units=imperial`;
   const result = await fetch(url);
   const hasListProperty = Object.prototype.hasOwnProperty.call(result, 'list');
@@ -107,10 +107,23 @@ async function getCoordinates() {
     lon: result[0].lon || null,
   };
   if (coords.lat && coords.lon) {
+    currentCoords = coords;
     getCurrentWeatherData(coords);
-    getFiveDayForecase(coords);
+    getFiveDayForecast(coords);
     $('#city').val('');
   }
 }
 
 $('#search').click(getCoordinates);
+
+function chooseDefaultLocation() {
+  window.localStorage.setItem('defaultLocation', JSON.stringify(currentCoords));
+}
+
+$('.current-weather').on('click', chooseDefaultLocation);
+
+if (window.localStorage.length === 1) {
+  currentCoords = JSON.parse(window.localStorage.getItem('defaultLocation'));
+  getCurrentWeatherData(currentCoords);
+  getFiveDayForecast(currentCoords);
+}
