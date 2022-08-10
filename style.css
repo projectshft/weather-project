@@ -1,3 +1,8 @@
+body {
+  background-image: url("resources/25501.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+}
 .page-header {
   margin-top: 40px;
 }
@@ -9,4 +14,8 @@
 .card {
   margin: 10px;
   padding: 10px;
+}
+footer {
+  position: fixed;
+  bottom: 0;
 }

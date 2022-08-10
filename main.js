@@ -6,7 +6,7 @@ $('.search').on('click', function () {
   var search = $('#search-query').val();
 
   fetch(search);
-
+  $('.search').val('');
 });
 
 var fetch = function (query) {
@@ -41,10 +41,13 @@ var fetch = function (query) {
 var addWeather = function (data2) {
   var temp = parseInt(data2.main.temp);
   var weatherIcon = "http://openweathermap.org/img/wn/" + data2.weather[0].icon + "@2x.png"
-    weather.push({
+  var today = dayjs(data2.id).format('dddd');
+  weather.push({
+    today: today || null,
     temp: temp || null,
     name: data2.name || null,
     weather: data2.weather[0].main || null,
+    humidity: data2.main.humidity,
     icon: weatherIcon || null
     });
   
@@ -56,9 +59,10 @@ var addForecast = function (data) {
   for(var i = 0; i < data.list.length; i +=8){
     var temp = parseInt(data.list[i].main.temp);
     var weatherIcon = "http://openweathermap.org/img/wn/" + data.list[i].weather[0].icon + "@2x.png"
+    var date = dayjs(data.list[i].dt_txt ).format('dddd');
     forecast.push({
     temp1: temp || null,
-    date1: data.list[i].dt_txt || null,
+    date1: date || null,
     weather1: data.list[i].weather[0].main || null,
     icon1: weatherIcon  || null
     });
