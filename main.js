@@ -120,7 +120,7 @@ function chooseDefaultLocation() {
   window.localStorage.setItem('defaultLocation', JSON.stringify(currentCoords));
 }
 
-$('.current-weather').on('click', chooseDefaultLocation);
+$('.current-weather').on('click', '#set-default', chooseDefaultLocation);
 
 if (window.localStorage.length === 1) {
   currentCoords = JSON.parse(window.localStorage.getItem('defaultLocation'));
