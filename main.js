@@ -127,3 +127,33 @@ if (window.localStorage.length === 1) {
   getCurrentWeatherData(currentCoords);
   getFiveDayForecast(currentCoords);
 }
+
+function geolocate() {
+  const options = {
+    enableHighAccuracy: true,
+    timeout: 5000,
+    maximumAge: 0,
+  };
+
+  function geolocateSuccess(pos) {
+    const crd = pos.coords;
+    currentCoords = {
+      lat: crd.latitude,
+      lon: crd.longitude,
+    };
+    getCurrentWeatherData(currentCoords);
+    getFiveDayForecast(currentCoords);
+  }
+
+  function geolocateError(err) {
+    console.warn(`ERROR(${err.code}): ${err.message}`);
+  }
+
+  navigator.geolocation.getCurrentPosition(
+    geolocateSuccess,
+    geolocateError,
+    options
+  );
+}
+
+$('#geolocate').click(geolocate);
