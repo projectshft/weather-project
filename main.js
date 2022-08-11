@@ -1,6 +1,48 @@
-// let API_KEY = ''
+let API_KEY = 'ffcbd48c376466c1987f4185ae974876'
 // let ICON_URL = `http://openweathermap.org/img/wn/${weatherIconCode}@2x.png`
-let STATIC_WEATHER = {"coord":{"lon":-78.6382,"lat":35.7796},"weather":[{"id":802,"main":"Clouds","description":"scattered clouds","icon":"03d"}],"base":"stations","main":{"temp":93.72,"feels_like":104.94,"temp_min":90.95,"temp_max":96.6,"pressure":1019,"humidity":54},"visibility":10000,"wind":{"speed":8.05,"deg":240,"gust":25.32},"clouds":{"all":40},"dt":1660153543,"sys":{"type":2,"id":2042838,"country":"US","sunrise":1660127368,"sunset":1660176628},"timezone":-14400,"id":4487042,"name":"Raleigh","cod":200}
+let STATIC_WEATHER = {
+  "coord": {
+  "lon": -78.6382,
+  "lat": 35.7796
+  },
+  "weather": [
+  {
+  "id": 803,
+  "main": "Clouds",
+  "description": "broken clouds",
+  "icon": "04d"
+  }
+  ],
+  "base": "stations",
+  "main": {
+  "temp": 79.83,
+  "feels_like": 79.83,
+  "temp_min": 77,
+  "temp_max": 82.74,
+  "pressure": 1017,
+  "humidity": 80
+  },
+  "visibility": 10000,
+  "wind": {
+  "speed": 9.22,
+  "deg": 230
+  },
+  "clouds": {
+  "all": 75
+  },
+  "dt": 1660227133,
+  "sys": {
+  "type": 2,
+  "id": 2042838,
+  "country": "US",
+  "sunrise": 1660213816,
+  "sunset": 1660262963
+  },
+  "timezone": -14400,
+  "id": 4497286,
+  "name": "Wake",
+  "cod": 200
+  }
 
 let STATIC_FIVE_DAY_WEATHER = {
   "cod": "200",
@@ -1490,15 +1532,16 @@ let STATIC_FIVE_DAY_WEATHER = {
   "city": {}
   }
 
-// $('.search').on('click', function(){
-//   let search = $('#search-query').val()
-//   fetchLocation(search)
-//   $('#search-query').empty()
-// })
-
 $('.search').on('click', function(){
+  let searchBar = document.getElementById('search-query')
+  let search = $('#search-query').val()
+  // fetchLocation(search)
+  searchBar.value = ''
   renderCurrentForecast(STATIC_WEATHER)
+  // renderFiveDayForecast(STATIC_FIVE_DAY_WEATHER.list)
+  collateFiveDayData(STATIC_FIVE_DAY_WEATHER.list)
 })
+
 
 let fetchLocation = function(query){
   $.ajax({
@@ -1556,25 +1599,88 @@ let renderCurrentForecast = function(weatherData){
     currentForecastCondition: weatherData.weather[0].description,
     currentForecastIcon: weatherData.weather[0].icon
   }
-  console.log(currentWeatherObj)
+
   let source = $('#current-forecast-template').html()
   let template = Handlebars.compile(source)
   let newHTML = template(currentWeatherObj)
   $('.currentWeather').append(newHTML)
 }
 
-let renderFiveDayForecast = function(fiveDayData){
+let renderFiveDayForecast = function(fiveDayArray){
   $('.fiveDayWeather').empty()
-  let fiveDayWeatherObj = {}
+  let week = []
+  
+  fiveDayArray.forEach(day => {
+    let highs = []
+    let lows = []
+    
+    for (let i = 0; i < day.length; i++) {
+      const element = day[i];
+      highs.push(element.fiveDayForecastHigh)
+      lows.push(element.fiveDayForecastLow)
+      var singleDayOfFiveForecast = {
+        fiveDayForecastCondition: element.fivedayForecastCondition,
+        fiveDayForecastIcon: element.fiveDayForecastIcon,
+        fiveDayForecastDay: element.fiveDayForecastDay,
+        fiveDayForecastHigh: element.fiveDayForecastHigh,
+        fiveDayForecastLow: element.fiveDayForecastLow
+      }
+      
+      let high = highs.sort().reverse()
+      let low = lows.sort()
+      singleDayOfFiveForecast.fiveDayForecastHigh = high[0]
+      singleDayOfFiveForecast.fiveDayForecastLow = low[0]
+    }
+
+    week.push(singleDayOfFiveForecast)
+  })
+  week.forEach(day=>{
+
+    
+    let source = $('#five-day-forecast-template').html()
+    let template = Handlebars.compile(source)
+    let newHTML = template(day)
+    $('.fiveDayWeather').append(newHTML)
+  })
+  
 
 }
 
 let convertTime = function(utc){
   miliUtc = utc*1000
-  let newDate = new Date(miliUtc)
-  console.log(newDate)
+  let dayNum = parseInt(new Date(miliUtc).toLocaleString("en-US", {day: "numeric"}))
+  let weekDay = new Date(miliUtc).toLocaleString("en-US", {weekday: "long"})
+  return([dayNum, weekDay])
+}
+
+let collateFiveDayData = function(fiveDayData){
+  let fiveDayWeatherObj = [[],[],[],[],[]]
+  let today = (new Date().toLocaleString('en-US', {day:"numeric"}))
+  let tomorrow = parseInt(today)
+  for (let i = 0; i < fiveDayData.length; i++) {
+    const element = fiveDayData[i];
+    let daysOut = convertTime(element.dt)[0] - tomorrow
+    if(daysOut >= 0){
+
+      fiveDayWeatherObj[daysOut].push({
+        fivedayForecastCondition: element.weather[0].description,
+        fiveDayForecastHigh: element.main.temp_max,
+        fiveDayForecastLow: element.main.temp_min,
+        fiveDayForecastIcon: element.weather[0].icon,
+        fiveDayForecastDay: convertTime(element.dt)[1]
+        
+      })
+      
+    }
+    
+  }
+  // console.log(fiveDayWeatherObj)
+  renderFiveDayForecast(fiveDayWeatherObj)
+  
 }
 
 
-renderCurrentForecast(STATIC_WEATHER)
-convertTime(1660165200)
+
+// collateFiveDayData(STATIC_FIVE_DAY_WEATHER.list)
+// renderCurrentForecast(STATIC_WEATHER)
+// convertTime(1660165200)

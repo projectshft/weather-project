@@ -15,60 +15,63 @@
   </head>
   <body>
     <div class="container-fluid">
-      <div class="row">
-        <div class="col-md-6 offset-md-3">
+      <div class="row ">
+        <div class="col-md-6 mx-auto">
           <div class="page-header">
           <h1>Let's get that weather for you!</h1>
           <hr/>
-          </div>
+          </div> <!-- .page-header -->
 
           <form class="search-form">
           <h3>Search for some weather</h3>
 
           <div class="form-group">
-            <input type="text" id="search-query" class="form-control">
+            <input type="text" id="search-query" class="form-control" placeholder="Type your city to find the weather!">
             </input>
-          </div>
+          </div><!-- .form-group -->
 
           <button type="button" class="btn btn-primary search">Find the weather!</button>
           </form>
         
           <hr/>
-        </div>
-      </div>
-      <div class="col col-med-6 offset-md-3" id="currentWeatherGoesHere">
+        </div><!-- .col-md-6-->
+      </div> <!-- .row -->
+      
+      <div class="col col-md-6 offset-md-3" id="currentWeatherGoesHere">
+        <div class="currentWeather row "></div><!-- .currentWeather-->
+      </div> <!-- #currentWeatherGoesHere -->
 
-        <div class="currentWeather row"></div>
-      </div>
-      <div class="col col-med-6 offset-md-3" id="fiveDayWeatherGoesHere">
-
-        <div class="fiveDayWeather row"></div>
-      </div>
-    </div> 
+      <!-- <div class="col col-sm-8 offset-sm-1 mx-auto" id="fiveDayWeatherGoesHere"> -->
+      <div class="d-flex justify-content-around" id="fiveDayWeatherGoesHere">
+        <div class="fiveDayWeather row"></div><!-- .fiveDayWeather-->
+      </div> <!-- #fiveDayWeatherGoesHere -->
+    
+    </div> <!-- .container-fluid -->
   <script id="current-forecast-template" type="text/x-handlebars-template">
 
-      <div class="current-weather-info col col-md-3">
+      <div class="current-weather-info col col-md-6">
         <h4 class="forecast degrees">{{currentForecastDegrees}}</h4>
         <h4 class="forecast city">{{currentForecastCity}}</h4>
         <h5 class="forecast condition">{{currentForecastCondition}}</h5>
-      </div>
-      <div class="top-weather-icon col col-md-6">
+      </div><!-- .current-weather-info -->
+      <div class="top-weather-icon col">
         <img src="http://openweathermap.org/img/wn/{{currentForecastIcon}}@2x.png" alt="{{currentForecastCondition}}"></img>
-    </div>
+    </div> <!-- .top-weather-icon -->
     </script>
 
     <script id="five-day-forecast-template" type="text/x-handlebars-template">
       <div class="row">
 
-        <div class="five-day-weather-container col col-md-10 offset-md-1">
-          <div class="five-day-panel">
-            <p>{{fiveDayForecastCondition}}</p>
-            <p>{{fiveDayForecastDegrees}}</p>
+        <div class="five-day-weather-container col">
+          <div class="five-day-panel ">
+            <p class="five-day-cond">{{fiveDayForecastCondition}}</p>
+            <p class="five-day-high"><em>High:</em> {{fiveDayForecastHigh}}</p>
+            <p class="five-day-low"><em>Low:</em> {{fiveDayForecastLow}}</p>
             <img src="http://openweathermap.org/img/wn/{{fiveDayForecastIcon}}@2x.png" alt="{{fiveDayForecastCondition}}"></img>
-            <p>{{fiveDayForecastDay}}</p>
-          </div>
-        </div>
-      </div>
+            <p class="five-day-day">{{fiveDayForecastDay}}</p>
+          </div><!-- .five-day-panel -->
+        </div><!-- .five-day-weather-container -->
+      </div><!-- .row -->
     </script>
     
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
