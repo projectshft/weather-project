@@ -32,11 +32,12 @@
 
           <button type="submit" class="btn btn-primary search">Find the weather!</button>
           </form>
-        
-          <hr/>
+          <h4>-or-</h4>
+          <button class="btn btn-info" id="geoButton">Let the weather find you!</button>
+          
         </div><!-- .col-md-6-->
       </div> <!-- .row -->
-      
+      <hr>
       <div class="col col-md-6 offset-md-3" id="currentWeatherGoesHere">
         <div class="currentWeather row "></div><!-- .currentWeather-->
       </div> <!-- #currentWeatherGoesHere -->
@@ -45,8 +46,9 @@
       <div class="d-flex justify-content-around" id="fiveDayWeatherGoesHere">
         <div class="fiveDayWeather row"></div><!-- .fiveDayWeather-->
       </div> <!-- #fiveDayWeatherGoesHere -->
-    
+ 
     </div> <!-- .container-fluid -->
+    
   <script id="current-forecast-template" type="text/x-handlebars-template">
 
       <div class="current-weather-info col col-md-6">
@@ -73,7 +75,7 @@
         </div><!-- .five-day-weather-container -->
       </div><!-- .row -->
     </script>
-    
+ 
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
     

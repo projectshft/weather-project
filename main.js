@@ -10,6 +10,24 @@ $('#search-form').submit(function (e){
 
 })
 
+let getLocation = function() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(showPosition);
+  } else {
+    alert("Geolocation is not supported by this browser.")
+  }
+}
+
+let showPosition = function(position) {
+
+  fetchCurrentForecast(position.coords.latitude, position.coords.longitude)
+  fetchFiveDayForecast(position.coords.latitude, position.coords.longitude)
+}
+$('#geoButton').on('click', function(){
+  getLocation()
+})
+
+
 let fetchLocation = function(query){
   $.ajax({
     method: "GET",
@@ -22,6 +40,7 @@ let fetchLocation = function(query){
       
       fetchFiveDayForecast(latitude, longitude)
       fetchCurrentForecast(latitude, longitude)
+      initMap(latitude, longitude, 5)
       
     },
     error: function(textStatus){
@@ -164,6 +183,5 @@ let setBgColor = function(weatherCode){
     $("body").css({"background-image": "linear-gradient(#131F29,#bbbbdd)"})
     $(".page-header").css({"color": "#DDD"})
   }
-
-
 }
+
