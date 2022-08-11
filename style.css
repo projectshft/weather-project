@@ -1,0 +1,28 @@
+body {
+  background-color: #bbd;
+}
+
+#currentWeatherGoesHere {
+  width: auto;
+}
+#fiveDayWeatherGoesHere {
+  width: auto;
+}
+.condition {
+  text-transform: capitalize;
+}
+
+.five-day-panel {
+  background-color: #bbd;
+  border-radius: 3px;
+  padding: 10px;
+  margin: 15px;
+}
+.five-day-cond {
+  text-transform: capitalize;
+  color: #229;
+  font-weight: bold;
+}
+.five-day-day {
+  font-weight: bold;
+}
