@@ -8,8 +8,12 @@ body {
 #fiveDayWeatherGoesHere {
   width: auto;
 }
+.condition {
+  text-transform: capitalize;
+}
+
 .five-day-panel {
-  border: 1px solid black;
+  background-color: #bbd;
   border-radius: 3px;
   padding: 10px;
   margin: 15px;
