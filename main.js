@@ -1,4 +1,4 @@
-const key = KEY;
+const key = '26b173b2d7973e107c9221fdda439df7';
 let currentCoords = {};
 function renderCurrentWeather(weatherData) {
   // empty old weather data to overwrite it with new data
@@ -14,7 +14,8 @@ function renderCurrentWeather(weatherData) {
   });
   $('.current-weather').append(newHTML);
 }
-function renderForecast(forecastData) {
+
+function getDayFromNumber(num) {
   const days = {
     0: 'Sunday',
     1: 'Monday',
@@ -24,13 +25,16 @@ function renderForecast(forecastData) {
     5: 'Friday',
     6: 'Saturday',
   };
+  return days[num];
+}
+function renderForecast(forecastData) {
   // empty old forecast data to overwrite it with new data
   $('.forecast').empty();
   forecastData.forEach((elem) => {
     const { temp, unixDateTime, condition, icon } = elem;
     // convert unix date/time code to day of the week string
     const dateObj = moment.unix(unixDateTime);
-    const day = days[dateObj.day()];
+    const day = getDayFromNumber[dateObj.day()];
     // append
     const source = $('#forecast-template').html();
     const template = Handlebars.compile(source);
@@ -61,7 +65,9 @@ const fetch = function (query) {
 };
 function compileForecastData(data) {
   const filteredData = [];
-  for (let i = 7; i < data.list.length; i += 8) {
+  const interval = 8;
+  const firstDataPoint = 7;
+  for (let i = firstDataPoint; i < data.list.length; i += interval) {
     filteredData.push({
       temp: data.list[i].main.temp ? Math.round(data.list[i].main.temp) : null,
       condition: data.list[i].weather
@@ -78,6 +84,7 @@ async function getFiveDayForecast({ lat, lon }) {
   const result = await fetch(url);
   const hasListProperty = Object.prototype.hasOwnProperty.call(result, 'list');
 
+  // don't rerender if there is no list property on the API data received
   if (hasListProperty) {
     const compressedData = compileForecastData(result);
     renderForecast(compressedData);
@@ -106,7 +113,7 @@ async function getCoordinates() {
     lat: result[0].lat || null,
     lon: result[0].lon || null,
   };
-  if (coords.lat && coords.lon) {
+  if (coords.lat !== null && coords.lon !== null) {
     currentCoords = coords;
     getCurrentWeatherData(coords);
     getFiveDayForecast(coords);
@@ -122,6 +129,7 @@ function chooseDefaultLocation() {
 
 $('.current-weather').on('click', '#set-default', chooseDefaultLocation);
 
+// use geolocation API to autoset the user's city
 function geolocate() {
   const options = {
     enableHighAccuracy: true,
@@ -152,6 +160,7 @@ function geolocate() {
 
 $('#geolocate').click(geolocate);
 
+// check if localStorage exists for this site. If it does, load user's default location
 if (window.localStorage.length === 1) {
   currentCoords = JSON.parse(window.localStorage.getItem('defaultLocation'));
   getCurrentWeatherData(currentCoords);
