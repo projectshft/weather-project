@@ -14,7 +14,6 @@ var getDay = function (data) {
     city: data.name,
     temperature: Math.round(data.main.temp),
     condition: data.weather[0].description,
-    // icon: data.weather[0].icon,
     icon: icon + data.weather[0].icon + '.png',
   });
 
@@ -56,3 +55,53 @@ renderDay();
 ////////////////////////////////////////////////////////////////////////////////////
 
 var forecasts = [];
+
+$('.search').on('click', function () {
+  var forecast = $('#search-query').val('');
+
+  fetchForecast(forecast);
+});
+
+var getForecast = function (data) {
+  var icon = 'http://openweathermap.org/img/wn/';
+  // var average =
+  forecasts.push({
+    nextTemp: Math.round(data.list.main.temp),
+    condition: data.weather[0].description,
+    icon: icon + data.weather[0].icon + '.png',
+  });
+
+  renderForecast();
+};
+
+var fetchForecast = function (forecast) {
+  var apiKey = '&appid=' + '9de0841aea702821eece6900aab8d8f1&units=imperial';
+  $.ajax({
+    method: 'GET',
+    url: 'https://api.openweathermap.org/data/2.5/forecast?q=' + day + apiKey,
+    dataType: 'json',
+    success: function (data) {
+      getForecast(data);
+    },
+
+    error: function (jqXHR, textStatus, errorThrown) {
+      console.log(textStatus);
+    },
+  });
+};
+
+var renderForecast = function () {
+  $('.forecasts').empty();
+
+  for (let i = 0; i < forecasts.length; i++) {
+    const forecast = forecasts[i];
+
+    var source = $('#forecast-template').html();
+    var template = Handlebars.compile(source);
+    var newHTML = template(forecast);
+
+    $('.forecasts').append(newHTML);
+  }
+};
+
+renderForecast();
