@@ -24,6 +24,16 @@
   border-radius: 50%;
 }
 
+#short {
+  margin-left: 25%;
+  margin-right: 25%;
+}
+
+#long {
+  margin-left: 15%;
+  margin-right: 15%;
+}
+
 #forecast {
   margin-left: 8.3333333333%;
   margin-right: 8.333333333%;
@@ -34,6 +44,18 @@
   margin-left: 35%;
 }
 
+body {
+  font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
 h1 {
   margin: 3%;
+}
+
+.days {
+  font-family: 'Script MT Bold';
+  font-size: 20px;
+}
+
+#dayIcon {
 }

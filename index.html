@@ -24,27 +24,14 @@
         <!-- <div class="col-md-6 offset-md-3"> -->
           <div class="page-header">
           <h1>Weather Project</h1>
-          <hr/>
           </div>
   
           <div class="input-group">
             <input type="text" id="search-query" class="form-control rounded" placeholder="Enter city name here" aria-label="Search" aria-describedby="search-addon" />
             <button type="button" class="btn btn-outline-primary search">Search</button>
           </div>
-          </form>
-        
-          <hr/>
-          
-        <!-- <form class="search-form">
-            <div class="form-group">
-              <input type="text" id="search-query" class="form-control rounded" placeholder="Enter city name here">
-              </input>
-            
-    
-            <button type="button" class="btn btn-primary search">Search</button>
-          </form>
-          
-          <hr/> -->
+          </form>    
+          <br>      
 
     <div class="days row">
     </div>
@@ -55,20 +42,20 @@
     <script id="day-template" type="text/x-handlebars-template">
       <div class="col-md-6">
         <div class="city current">
-          <div>{{city}}</div>
-          <div>{{temperature}}</div>
-          <div>{{condition}}</div>
+          <div><strong>{{city}}</strong></div>
+          <div>{{temperature}}&degF</div>
+          <div><small>{{condition}}</small></div>
+          <img id="dayIcon" src="{{icon}}"> 
         </div>
       </div>
     </script> 
-
-    
+   
    <script id="forecast-template" type="text/x-handlebars-template">
       <div class="row row-cols-1 row-cols-md-5 g-0">
       <div class="col">
         <div class="card h-70">
           <img
-            src="use icon from api right here"
+            src="{{}}"
             class="card-img-top"
             alt="weather conditions"
           />
