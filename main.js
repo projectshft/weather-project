@@ -2,10 +2,11 @@ var days = [];
 
 $('.search').on('click', function () {
   var day = $('#search-query').val();
-
-  $('#search-query').val('');
+  var forecast = $('#search-query').val();
+  // $('#search-query').val('');
 
   fetchDay(day);
+  fetchForecast(day);
 });
 
 var getDay = function (data) {
@@ -56,32 +57,27 @@ renderDay();
 
 var forecasts = [];
 
-$('.search').on('click', function () {
-  var forecast = $('#search-query').val('');
-
-  fetchForecast(forecast);
-});
-
-var getForecast = function (data) {
+var getForecast = function (fiveData) {
   var icon = 'http://openweathermap.org/img/wn/';
   // var average =
   forecasts.push({
-    nextTemp: Math.round(data.list.main.temp),
-    condition: data.weather[0].description,
-    icon: icon + data.weather[0].icon + '.png',
+    nextTemp: fiveData.list[0].main.temp,
+    nextCondition: fiveData.list[0].weather[0].description,
+    icon: icon + fiveData.list[0].weather[0].icon + '.png',
+    dayOfWeek: fiveData.list[0].dt_txt,
   });
 
   renderForecast();
 };
 
-var fetchForecast = function (forecast) {
+var fetchForecast = function (day) {
   var apiKey = '&appid=' + '9de0841aea702821eece6900aab8d8f1&units=imperial';
   $.ajax({
     method: 'GET',
     url: 'https://api.openweathermap.org/data/2.5/forecast?q=' + day + apiKey,
     dataType: 'json',
-    success: function (data) {
-      getForecast(data);
+    success: function (fiveData) {
+      getForecast(fiveData);
     },
 
     error: function (jqXHR, textStatus, errorThrown) {
@@ -91,16 +87,16 @@ var fetchForecast = function (forecast) {
 };
 
 var renderForecast = function () {
-  $('.forecasts').empty();
+  // $('.forecasts').empty();
 
   for (let i = 0; i < forecasts.length; i++) {
     const forecast = forecasts[i];
 
-    var source = $('#forecast-template').html();
-    var template = Handlebars.compile(source);
-    var newHTML = template(forecast);
+    var source1 = $('#forecast-template').html();
+    var template1 = Handlebars.compile(source1);
+    var newHTML1 = template1(forecast);
 
-    $('.forecasts').append(newHTML);
+    $('.forecasts').append(newHTML1);
   }
 };
 
