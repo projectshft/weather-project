@@ -59,10 +59,14 @@ var forecasts = [];
 var getForecast = function (fiveData) {
   var icon = 'http://openweathermap.org/img/wn/';
   forecasts.push({
-    nextTemp: fiveData.list[0].main.temp,
-    nextCondition: fiveData.list[39].weather[0].description,
-    icon: icon + fiveData.list[0].weather[0].icon + '.png',
-    dayOfWeek: fiveData.list[4].dt_txt,
+    day1Temp: fiveData.list[0 + 1].main.temp,
+    day1Condition: fiveData.list[0 + 8 + 1].weather[0].description,
+    day1icon: icon + fiveData.list[0].weather[0].icon + '.png',
+    dayOfWeek1: fiveData.list[0 + 8].dt_txt,
+    day2Temp: fiveData.list[1 + 8].main.temp,
+    day2Condition: fiveData.list[9 + 8].weather[0].description,
+    day2icon: icon + fiveData.list[1].weather[0].icon + '.png',
+    dayOfWeek2: fiveData.list[8 + 8].dt_txt,
   });
 
   renderForecast();
