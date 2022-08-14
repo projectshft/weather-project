@@ -67,6 +67,18 @@ var getForecast = function (fiveData) {
     day2Condition: fiveData.list[9 + 8].weather[0].description,
     day2icon: icon + fiveData.list[1].weather[0].icon + '.png',
     dayOfWeek2: fiveData.list[8 + 8].dt_txt,
+    day3Temp: fiveData.list[9 + 8].main.temp,
+    day3Condition: fiveData.list[17 + 8].weather[0].description,
+    day3icon: icon + fiveData.list[2].weather[0].icon + '.png',
+    dayOfWeek3: fiveData.list[16 + 8].dt_txt,
+    day4Temp: fiveData.list[17 + 8].main.temp,
+    day4Condition: fiveData.list[25 + 8].weather[0].description,
+    day4icon: icon + fiveData.list[3].weather[0].icon + '.png',
+    dayOfWeek4: fiveData.list[24 + 8].dt_txt,
+    day5Temp: fiveData.list[25 + 8].main.temp,
+    day5Condition: fiveData.list[33 + 5].weather[0].description,
+    day5icon: icon + fiveData.list[4].weather[0].icon + '.png',
+    dayOfWeek5: fiveData.list[32 + 5].dt_txt,
   });
 
   renderForecast();
