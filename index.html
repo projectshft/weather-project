@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
+      integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ"
+      crossorigin="anonymous"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>weatherapp</title>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-6 offset-md-3">
+          <div class="page-header">
+            <h1>Weather Project</h1>
+            <hr />
+          </div>
+
+          <form class="search-form">
+            <div class="input-group">
+              <input
+                type="text"
+                class="form-control"
+                id="search-query"
+                placeholder="Enter City Name Here"
+              />
+              <button type="button" class="btn btn-primary search">
+                search
+              </button>
+              <button type="button" class="btn btn-outline-info">
+                <strong>Local</strong><br /><strong>Weather</strong>
+              </button>
+            </div>
+          </form>
+          <div class="weathers"></div>
+        </div>
+
+        <div class="col-md-10 offset-md-2">
+          <div class="forecasts row"></div>
+        </div>
+      </div>
+    </div>
+
+    <script id="weather-template" type="text/x-handlebars-template">
+      <div class="weather col-md-6">
+        <div class="inline-block">
+          <div class="tempreture"><strong>{{temp1}}°</strong></div>
+          <div class="city-name">{{name1}}</div>
+          <div class="weather-description"><strong>{{main1}}</strong></div>
+        </div>
+        <div class="inline-block">
+          <img src={{icon_url1}} alt="" />
+        </div>
+      </div>
+    </script>
+
+    <script id="forecast-template" type="text/x-handlebars-template">
+      <div class="forecast col-sm-2">
+        <div class="weather-description-forecast">{{main2}}</div>
+        <div class="tempreture-forecast">{{temp2}}°</div>
+        <img src={{icon_url2}} alt="" />
+        <div class="forecast-day">{{day2}}</div>
+      </div>
+    </script>
+
+    <script id="googlemap-template" type="text/x-handlebars-template"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
+    <script src="main.js" type="text/javascript"></script>
+    <script src="forecast.js" type="text/javascript"></script>
+  </body>
+</html>
