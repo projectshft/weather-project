@@ -27,6 +27,7 @@ function getDayFromNumber(num) {
   };
   return days[num];
 }
+
 function renderForecast(forecastData) {
   // empty old forecast data to overwrite it with new data
   $('.forecast').empty();
@@ -34,7 +35,7 @@ function renderForecast(forecastData) {
     const { temp, unixDateTime, condition, icon } = elem;
     // convert unix date/time code to day of the week string
     const dateObj = moment.unix(unixDateTime);
-    const day = getDayFromNumber[dateObj.day()];
+    const day = getDayFromNumber(dateObj.day());
     // append
     const source = $('#forecast-template').html();
     const template = Handlebars.compile(source);
@@ -50,6 +51,7 @@ function renderForecast(forecastData) {
     $('.forecast :first-child').addClass('offset-md-1');
   });
 }
+
 const fetch = function (query) {
   return $.ajax({
     method: 'GET',
@@ -63,6 +65,7 @@ const fetch = function (query) {
     },
   });
 };
+
 function compileForecastData(data) {
   const filteredData = [];
   const interval = 8;
@@ -79,6 +82,7 @@ function compileForecastData(data) {
   }
   return filteredData;
 }
+
 async function getFiveDayForecast({ lat, lon }) {
   const url = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${key}&units=imperial`;
   const result = await fetch(url);
