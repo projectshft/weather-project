@@ -1,0 +1,56 @@
+PART 1: Upon user entry of a city name, render the current weather for that city. 
+        Current weather will include: city name, temperature (in imperial units),
+        conditions, and weather icon.
+
+-var 'days' is an array that hold the data that will be rendered to the page.
+            This variable name will need to be renamed for better readability
+
+-the specific data needed for 'days' array is selected and added by the 'getDay' function. 
+
+-the source of the data that gets added by 'getDay' is the api (for current weather).
+ The variable 'fetchDay' achieves/accesses this. 
+
+-in order for the data from 'days' to render on the page, it must be injected into the html. 
+ The function 'renderDay' achieves this.
+
+mentor suggestion: when I am working on any given section of my code, don't be overly
+                   anticipatory of issues cropping up in other parts of the code. Just 
+                   make each section work, and only afterwards will I tie the sections
+                   together. 
+
+                   regarding my for-loop that iterates over only one item...although it
+                   is not necessary, keep it in my code since it works. No need to over-
+                   complicate things by trying to perfect them at first, because that is    
+                   where I tend to break other areas of my code and get lost and overwhelmed.
+
+* areas from part 1 that still need attention: 
+        -current weather icon needs to be offset to the right
+        -current weather icon needs to be larger
+        -fix how I empty the html div, because right now if a second city is entered in the
+         search bar, it renders both cities. It needs to only render one.
+
+PART 2: Upon user entry of a city name, render the 5-day forecast for that city with 
+        5 containers/divs/cards, displayed in one row that is located below the current weather. 
+        Each day should display the following data: 
+            -temperature
+            -conditions
+            -icon (small)
+            -day of the week
+
+-format is similar to part 1, although a different api is used for the 5-day forecast. Also, the
+ number of items I am pushing to my 'forecasts' array is multipied by 5.
+
+*areas from part 2 that still need attention:
+      -determine what needs to be included in my handlebar template in html for my '.forecast'
+       Find out if it best to have one template for all 5 days/cards, or five templates for each day.
+      -decide on what is to be included in my getForecast function. Options that come to mind:
+            -map and filter the 40 items and retrieve 5 items (with each item including the 
+             4 pieces of data mentioned above)
+            -push the 4 pieces of data for each day of the week. Disadvantage is that it would 
+             require 20 lines of code for this, which is in danger of being verbose
+      -use moment.js -> days.js to convert timestamp to a weekday
+      -if time permits, style the page background and add color to the relevant divs      
+
+
+
+

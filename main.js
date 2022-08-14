@@ -1,4 +1,3 @@
-//PART 1: render the current weather for any city in the world. Render city name, temperature (imperial units), conditions, and icon
 var days = [];
 
 $('.search').on('click', function () {
@@ -54,74 +53,64 @@ var renderDay = function () {
 
 renderDay();
 
-////////////////////////////////////////////////////////////////////////////////////
 //the code below works for a single card (day) of the 5-day forecast
-// var forecasts = [];
+var forecasts = [];
 
-//     nextTemp: fiveData.list[0].main.temp,
-//     nextCondition: fiveData.list[0].weather[0].contains('15:00:00').description,
-//     icon: icon + fiveData.list[0].weather[0].icon + '.png',
-//     dayOfWeek: fiveData.list[0].dt_txt,
-//   });
+var getForecast = function (fiveData) {
+  var icon = 'http://openweathermap.org/img/wn/';
+  forecasts.push({
+    nextTemp: fiveData.list[0].main.temp,
+    nextCondition: fiveData.list[39].weather[0].description,
+    icon: icon + fiveData.list[0].weather[0].icon + '.png',
+    dayOfWeek: fiveData.list[4].dt_txt,
+  });
 
-//   renderForecast();
-// };
+  renderForecast();
+};
 
-// var fetchForecast = function (day) {
-//   var apiKey = '&appid=' + '9de0841aea702821eece6900aab8d8f1&units=imperial';
-//   $.ajax({
-//     method: 'GET',
-//     url: 'https://api.openweathermap.org/data/2.5/forecast?q=' + day + apiKey,
-//     dataType: 'json',
-//     success: function (fiveData) {
-//       getForecast(fiveData);
-//     },
+var fetchForecast = function (day) {
+  var apiKey = '&appid=' + '9de0841aea702821eece6900aab8d8f1&units=imperial';
+  $.ajax({
+    method: 'GET',
+    url: 'https://api.openweathermap.org/data/2.5/forecast?q=' + day + apiKey,
+    dataType: 'json',
+    success: function (fiveData) {
+      getForecast(fiveData);
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+      console.log(textStatus);
+    },
+  });
+};
 
-//     error: function (jqXHR, textStatus, errorThrown) {
-//       console.log(textStatus);
-//     },
-//   });
-// };
+var renderForecast = function () {
+  $('.forecasts').empty();
 
-// var renderForecast = function () {
-//   $('.forecasts').empty();
+  for (let i = 0; i < forecasts.length; i++) {
+    const forecast = forecasts[i];
 
-//   for (let i = 0; i < forecasts.length; i++) {
-//     const forecast = forecasts[i];
+    var source1 = $('#forecast-template').html();
+    var template1 = Handlebars.compile(source1);
+    var newHTML1 = template1(forecast);
 
-//     var source1 = $('#forecast-template').html();
-//     var template1 = Handlebars.compile(source1);
-//     var newHTML1 = template1(forecast);
+    $('.forecasts').append(newHTML1);
+  }
+};
 
-//     $('.forecasts').append(newHTML1);
-//   }
-// };
+renderForecast();
 
-// renderForecast();
+var fetchForecast = function (day) {
+  var apiKey = '&appid=' + '9de0841aea702821eece6900aab8d8f1&units=imperial';
+  $.ajax({
+    method: 'GET',
+    url: 'https://api.openweathermap.org/data/2.5/forecast?q=' + day + apiKey,
+    dataType: 'json',
+    success: function (fiveData) {
+      getForecast(fiveData);
+    },
 
-// var fetchForecast = function (day) {
-//   var apiKey = '&appid=' + '9de0841aea702821eece6900aab8d8f1&units=imperial';
-//   $.ajax({
-//     method: 'GET',
-//     url: 'https://api.openweathermap.org/data/2.5/forecast?q=' + day + apiKey,
-//     dataType: 'json',
-//     success: function (fiveData) {
-//       getForecast(fiveData);
-//     },
-
-//     error: function (jqXHR, textStatus, errorThrown) {
-//       console.log(textStatus);
-//     },
-//   });
-// };
-//////////////////////////////////////////////////////////////////////////////////
-
-// variable that will (eventually) store only the data for the five timestamps
-var subData = [];
-
-// variable that stores all 40 timestamps. It will require a function to fetch this data (ajax that includes api for 5-day)
-var allData = [];
-
-//function that will map allData, which will result in allData being converted into an array.
-//We do this because an array will allow us to select particular indices/indexes, which we can't do with objects?
-var mapData = allData.map(function (allData) {});
+    error: function (jqXHR, textStatus, errorThrown) {
+      console.log(textStatus);
+    },
+  });
+};
