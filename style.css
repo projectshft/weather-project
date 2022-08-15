@@ -1,0 +1,9 @@
+.form-group {
+  width: 90%;
+}
+
+.cast {
+  border: 1px solid black;
+  padding: 15px;
+  margin-bottom: 15px;
+}
