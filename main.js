@@ -108,5 +108,3 @@ var renderForecast = function () {
     $('.forecast').append(newHTML);
   }
 };
-
-console.log(moment());
