@@ -50,3 +50,19 @@ hr {
 .card-img-top {
   height: fit-content;
 }
+
+#dayCon {
+  width: 300px;
+  height: auto;
+}
+
+.row {
+  font-size: 25px;
+}
+.red {
+  color: red;
+}
+
+.card {
+  border-color: green;
+}

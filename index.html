@@ -44,7 +44,7 @@
 			<div><strong>{{city}}</strong></div>
 			<div>{{temperature}}&degF</div>
 			<div><small>{{condition}}</small></div>
-			<div><img src="{{icon}}"></div>
+			<div><img id="dayCon" src="{{icon}}"></div>
 		</div>
 	</script>
 	<br>
@@ -54,7 +54,7 @@
 			{{#each forecast}}
 			<div class="col card text-center">
 				<div>{{condition}}</div>
-				<div>{{temperature}}&degF</div>
+				<div class="red">{{temperature}}&degF</div>
 				<div><img src="{{icon}}"></div>
 				<div>{{day}}</div>
 				</div>
