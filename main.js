@@ -41,9 +41,11 @@ var fetchAndRenderForecast = function (city) {
     dataType: 'json',
     success: function (data) {
       items = [];
+
+      //this for-loop will iterate over the 40 items and return 5 (1 item for each day of 5-day forecast)
       for (let i = 7; i <= 40; i += 8) {
         items.push({
-          day: data.list[i].dt_txt,
+          day: data.list[i].dt,
           temperature: Math.round(data.list[i].main.temp),
           condition: data.list[i].weather[0].description,
           icon: `http://openweathermap.org/img/wn/${data.list[i].weather[0].icon}.png`,
@@ -61,3 +63,9 @@ var fetchAndRenderForecast = function (city) {
     },
   });
 };
+
+// var unixTimestamp = 1660532400;
+// var milliseconds = unixTimestamp * 1000;
+// var dateObject = new Date(milliseconds);
+// var humanDateFormat = dateObject.toLocaleString();
+// dateObject.toLocaleString('en-US', { weekday: 'long' });
