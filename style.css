@@ -1,0 +1,68 @@
+.gradient-custom {
+  /* fallback for old browsers */
+  background: #ffffff;
+
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: -webkit-linear-gradient(
+    to right,
+    rgba(255, 255, 255, 1),
+    rgba(255, 236, 210, 1)
+  );
+
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 1),
+    rgba(255, 236, 210, 1)
+  );
+}
+
+.carousel-indicators li {
+  background-color: #282828;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+}
+
+.input-group {
+  width: 30%;
+  margin-left: 35%;
+}
+
+body {
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  background-image: url('background.png');
+}
+
+h1 {
+  margin-top: 3%;
+}
+
+hr {
+  margin-left: 20%;
+  margin-right: 20%;
+}
+
+.city-current {
+  font-size: 30px;
+}
+
+.card-img-top {
+  height: fit-content;
+}
+
+#dayCon {
+  width: 300px;
+  height: auto;
+}
+
+.row {
+  font-size: 25px;
+}
+.red {
+  color: red;
+}
+
+.card {
+  border-color: green;
+}
