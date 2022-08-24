@@ -1,0 +1,85 @@
+.page-header {
+  margin-top: 40px;
+  text-align-last: center;
+}
+
+.form-group {
+  display: flex;
+}
+
+.search-form {
+  margin-top: 40px;
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.city-temp-descr {
+  text-align-last: center;
+}
+
+.col-md-2 {
+  border: thin solid black;
+  width: 50px;
+  text-align: center;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  align-content: flex-start;
+  margin-top: 20px;
+}
+
+div.img {
+  width: 100%;
+  align-items: center;
+}
+
+div.five-days.row {
+  justify-content: center;
+  margin-top: 10px;
+  margin-left: 12%;
+  margin-right: 12%;
+}
+
+div.col-md-6 {
+  text-align: center;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  align-content: flex-start;
+}
+
+.weather {
+  /* margin: -30px; */
+  justify-content: center;
+}
+
+div.row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+  align-content: stretch;
+  margin-top: 20px;
+}
+.descr {
+  padding-top: 5px;
+}
+div.flex-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+  align-content: stretch;
+  margin-right: 5%;
+}
+.form-control {
+  margin: 1%;
+}
+.btn {
+  margin: 1%;
+}
+div.flex-container img {
+  width: 180px;
+}
