@@ -1,0 +1,46 @@
+.page-header {
+  margin-top: 40px;
+  text-align-last: center;
+}
+
+.form-group {
+  display: flex;
+}
+
+.search-form {
+  margin-top: 40px;
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.city-temp-descr {
+  text-align-last: center;
+}
+
+.col-md-2 {
+  border: thin solid black;
+  width: 50px;
+  text-align: center;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  align-content: flex-start;
+  margin-top: 7%;
+}
+
+div.img {
+  width: 100%;
+  align-items: center;
+}
+
+div.five-days.row {
+  justify-content: center;
+}
+
+div.col-md-6 {
+  text-align: center;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  align-content: flex-start;
+}
