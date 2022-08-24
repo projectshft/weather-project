@@ -25,7 +25,7 @@
   justify-content: space-around;
   align-items: center;
   align-content: flex-start;
-  margin-top: 7%;
+  margin-top: 20px;
 }
 
 div.img {
@@ -35,6 +35,9 @@ div.img {
 
 div.five-days.row {
   justify-content: center;
+  margin-top: 10px;
+  margin-left: 12%;
+  margin-right: 12%;
 }
 
 div.col-md-6 {
@@ -43,4 +46,40 @@ div.col-md-6 {
   justify-content: space-around;
   align-items: center;
   align-content: flex-start;
+}
+
+.weather {
+  /* margin: -30px; */
+  justify-content: center;
+}
+
+div.row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+  align-content: stretch;
+  margin-top: 20px;
+}
+.descr {
+  padding-top: 5px;
+}
+div.flex-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+  align-content: stretch;
+  margin-right: 5%;
+}
+.form-control {
+  margin: 1%;
+}
+.btn {
+  margin: 1%;
+}
+div.flex-container img {
+  width: 180px;
 }

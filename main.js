@@ -1,6 +1,5 @@
-
-var weather={}
-var fiveDays=[]
+let weather={}
+let fiveDays=[]
 
 //Helping functions 
 const upperFirstLetter=(str)=>{
@@ -11,11 +10,11 @@ const tempConvToCelsius=(t)=>{return Math.round(t-273.15)}
 
 
 $('.search').on('click', function () {
-  var search = $('#search-query').val();
+  const search = $('#search-query').val();
   geoCoding(search)
 });
 
-var geoCoding = function (query) {
+const geoCoding = function (query) {
   $.ajax({
     method: "GET",
     url: "http://api.openweathermap.org/geo/1.0/direct?q="+query+"&limit=1&appid=88f3a5b06c7349e901851ad64cc7758c",
@@ -29,7 +28,7 @@ var geoCoding = function (query) {
   });
 };
 
-var getLatLon = function(data){
+const getLatLon = function(data){
   const latLon={
     lat:data[0].lat,
     lon:data[0].lon
@@ -38,7 +37,7 @@ var getLatLon = function(data){
   getFiveDays(latLon)
 }
 
-var getWeather =function (obj){
+const getWeather =function (obj){
   const lat= obj.lat
   const lon= obj.lon
   $.ajax({
@@ -54,12 +53,12 @@ var getWeather =function (obj){
   });
 }
 
-var addWeather=function(data){
-  var temp = tempConvToCelsius(data.main.temp)
-  var search = upperFirstLetter($('#search-query').val());
-  var description=upperFirstLetter(data.weather[0].main)
-  var icon=data.weather[0].icon
-  var iconImageURL="https://openweathermap.org/img/wn/"+icon+"@2x.png"
+const addWeather=function(data){
+  const temp = tempConvToCelsius(data.main.temp)
+  const search = upperFirstLetter($('#search-query').val());
+  const description=upperFirstLetter(data.weather[0].main)
+  const icon=data.weather[0].icon
+  const iconImageURL="https://openweathermap.org/img/wn/"+icon+"@2x.png"
   
   weather={}
   weather={
@@ -71,12 +70,12 @@ var addWeather=function(data){
   renderWeather()
 }
 
-var renderWeather = function(){
+const renderWeather = function(){
   $(".weather").empty()
-  var source=$("#weather-template").html()
+  const source=$("#weather-template").html()
   console.log(source)
-  var template=Handlebars.compile(source)
-  var newHTML=template(weather)
+  const template=Handlebars.compile(source)
+  const newHTML=template(weather)
   console.log(newHTML)
   $(".weather").append(newHTML)
 }
@@ -99,12 +98,11 @@ const getFiveDays=function(obj){
 
 const addFiveDays=function(data){
   fiveDays=[]
-  var dayOne=data.list[6]
-  var dayTwo=data.list[14]
-  var dayThree=data.list[22]
-  var dayFour=data.list[30]
-  var dayFive=data.list[38]
-
+  const dayOne=data.list[6]
+  const dayTwo=data.list[14]
+  const dayThree=data.list[22]
+  const dayFour=data.list[30]
+  const dayFive=data.list[38]
 
   fiveDays=[
     {
@@ -141,12 +139,12 @@ const addFiveDays=function(data){
  renderFiveDays()
 }
 
-var renderFiveDays = function(){
+const renderFiveDays = function(){
   $(".five-days").empty()
   for (let i = 0; i < fiveDays.length; i++){
-    var source=$("#fivedays-template").html()
-    var template=Handlebars.compile(source)
-    var newHTML=template(fiveDays[i])
+    const source=$("#fivedays-template").html()
+    const template=Handlebars.compile(source)
+    const newHTML=template(fiveDays[i])
     $(".five-days").append(newHTML)
   }
 }
