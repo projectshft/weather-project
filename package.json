@@ -1,0 +1,23 @@
+{
+  "name": "weather-project",
+  "version": "1.0.0",
+  "description": "This project has been created by a student at Parsity, an online software engineering course. The work in this repository is wholly of the student based on a sample starter project that can be accessed by looking at the repository that this project forks.",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ryanrobertson27/weather-project.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ryanrobertson27/weather-project/issues"
+  },
+  "homepage": "https://github.com/ryanrobertson27/weather-project#readme",
+  "devDependencies": {
+    "eslint": "^8.23.0"
+  }
+}
