@@ -4,6 +4,8 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Bootstrap 5.2-->
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.0/css/bootstrap.min.css"
@@ -11,21 +13,168 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
-    <title>Weather Project</title>
-  </head>
-  <body>
+
+    <!-- Bootstrap Icons-->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css"
+    />
+
+    <!-- Custom CSS-->
+    <link rel="stylesheet" href="style.css" />
+
+    <!-- jQuery -->
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"
       integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA=="
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     ></script>
+
+    <!-- Handlebars -->
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"
       integrity="sha512-RNLkV3d+aLtfcpEyFG8jRbnWHxUqVZozacROI4J2F1sTaDqo1dPQYs01OMi1t1w9Y2FdbSCDSQ2ZVdAC8bzgAg=="
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     ></script>
-    <script src="main.js"></script>
+
+    <script src="main.js" defer></script>
+    <title>Weather Project</title>
+  </head>
+  <body class="bg-light">
+    <header class="container-fluid bg-primary text-light py-3">
+      <h1 class="text-center display-1">myWeather</h1>
+    </header>
+    <div class="container-md mt-1">
+      <!-- ANCHOR Search section -->
+      <section class="row justify-content-center m-4">
+        <form id="search-location-form" class="col-sm-4" action="#">
+          <div class="input-group m-1">
+            <input
+              type="text"
+              class="form-control"
+              name="location"
+              id="user-location"
+              placeholder="City.."
+            />
+            <!-- TODO finish add states-->
+            <select name="state" class="form-select" id="user-state">
+              <option selected value="choose">State...</option>
+              <option value="01">AL</option>
+              <option value="02">AK</option>
+              <option value="04">AZ</option>
+              <option value="05">AR</option>
+              <option value="06">CA</option>
+              <option value="08">CO</option>
+              <option value="09">CT</option>
+              <option value="10">DE</option>
+              <option value="11">DC</option>
+              <option value="12">FL</option>
+              <option value="13">GA</option>
+              <option value="15">HI</option>
+              <option value="15">ID</option>
+              <option value="17">IL</option>
+              <option value="18">IN</option>
+              <option value="19">IA</option>
+              <option value="20">KS</option>
+              <option value="21">KY</option>
+              <option value="22">LA</option>
+              <option value="23">ME</option>
+              <option value="24">MD</option>
+              <option value="25">MA</option>
+              <option value="26">MI</option>
+              <option value="27">MN</option>
+              <option value="28">MS</option>
+              <option value="29">MO</option>
+              <option value="30">MT</option>
+              <option value="31">NE</option>
+              <option value="32">NV</option>
+              <option value="33">NH</option>
+              <option value="43">NJ</option>
+              <option value="35">NM</option>
+              <option value="36">NY</option>
+              <option value="37">NC</option>
+              <option value="38">ND</option>
+              <option value="39">OH</option>
+              <option value="40">OK</option>
+              <option value="41">OR</option>
+              <option value="42">PA</option>
+              <option value="72">PR</option>
+              <option value="44">RI</option>
+              <option value="45">SC</option>
+              <option value="46">SD</option>
+              <option value="47">TN</option>
+              <option value="48">TX</option>
+              <option value="49">UT</option>
+              <option value="50">VT</option>
+              <option value="51">VA</option>
+              <option value="78">VI</option>
+              <option value="53">WA</option>
+              <option value="54">WV</option>
+              <option value="55">WI</option>
+              <option value="56">WY</option>
+            </select>
+            <button
+              class="btn btn-secondary"
+              type="submit"
+              id="user-location-button"
+            >
+              Search
+            </button>
+          </div>
+        </form>
+      </section>
+
+      <!-- ANCHOR Current Weather Container-->
+      <section
+        id="current-weather-container"
+        class="row text-light justify-content-center text-center m-4"
+      ></section>
+
+      <!-- ANCHOR Five Day Weather Container-->
+      <section id="five-day-weather-container" class="row bg-dark rounded">
+        <div class="row"></div>
+      </section>
+
+      <!-- ANCHOR Weather Map Container-->
+      <section id="weather-map-container" class="row bg-dark rounded"></section>
+    </div>
+
+    <!-- ANCHOR Current Weather Handlebars Template-->
+    <script id="current-weather-template" type="text/x-handlebars-template">
+      <div class="text-secondary">
+        <h3>Current Weather</h3>
+      </div>
+      <div class="col-sm-3 bg-dark rounded p-3 shadow">
+        <div class="row">
+          <div id="city" class="col">
+            <h2>{{city}}</h2>
+          </div>
+        </div>
+        <hr class="border" />
+        <div class="row align-items-center justify-content-center">
+          <div id="weather-icon" class="col-4 text-center">
+            <div class="row">
+              <div class="col">
+                <img src="{{conditionURL}}" alt="weather-condition" />
+              </div>
+            </div>
+          </div>
+          <div id="temp-condition" class="col-4 text-center">
+            <div class="row justify-content-start align-items-center">
+              <div id="temp" class="col">
+                <h1>{{temperature}}</h1>
+              </div>
+            </div>
+            <div class="row">
+              <div id="condition" class="col">
+                <p class="p-0 m-0">{{condition}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </script>
   </body>
 </html>
