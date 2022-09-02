@@ -23,6 +23,8 @@
     <!-- Custom CSS-->
     <link rel="stylesheet" href="style.css" />
 
+    <script src="config.js"></script>
+
     <!-- jQuery -->
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"
@@ -46,11 +48,28 @@
     <header class="container-fluid bg-dark text-light py-3">
       <h1 class="text-center display-1">myWeather</h1>
     </header>
-    <div class="container-md mt-1">
+    <div class="container my-5">
       <!-- ANCHOR Search section -->
       <section class="row justify-content-center m-4">
-        <form id="search-location-form" class="col-sm-4" action="#">
+        <form
+          id="search-location-form"
+          class=""
+          style="width: 30rem !important"
+          action="#"
+        >
           <div class="input-group m-1">
+            <button id="use-current-location-btn" class="btn btn-dark">
+              <div>
+                <div
+                  id="location-spinner"
+                  class="spinner-border spinner-border-sm text-light d-none"
+                  role="status"
+                >
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+                <i id="location-icon" class="bi bi-geo-alt"></i>
+              </div>
+            </button>
             <input
               type="text"
               class="form-control"
@@ -58,67 +77,68 @@
               id="user-location"
               placeholder="City.."
             />
-            <!-- TODO finish add states-->
             <select name="state" class="form-select" id="user-state">
               <option selected value="choose">State...</option>
-              <option value="01">AL</option>
-              <option value="02">AK</option>
-              <option value="04">AZ</option>
-              <option value="05">AR</option>
-              <option value="06">CA</option>
-              <option value="08">CO</option>
-              <option value="09">CT</option>
-              <option value="10">DE</option>
-              <option value="11">DC</option>
-              <option value="12">FL</option>
-              <option value="13">GA</option>
-              <option value="15">HI</option>
-              <option value="15">ID</option>
-              <option value="17">IL</option>
-              <option value="18">IN</option>
-              <option value="19">IA</option>
-              <option value="20">KS</option>
-              <option value="21">KY</option>
-              <option value="22">LA</option>
-              <option value="23">ME</option>
-              <option value="24">MD</option>
-              <option value="25">MA</option>
-              <option value="26">MI</option>
-              <option value="27">MN</option>
-              <option value="28">MS</option>
-              <option value="29">MO</option>
-              <option value="30">MT</option>
-              <option value="31">NE</option>
-              <option value="32">NV</option>
-              <option value="33">NH</option>
-              <option value="43">NJ</option>
-              <option value="35">NM</option>
-              <option value="36">NY</option>
-              <option value="37">NC</option>
-              <option value="38">ND</option>
-              <option value="39">OH</option>
-              <option value="40">OK</option>
-              <option value="41">OR</option>
-              <option value="42">PA</option>
-              <option value="72">PR</option>
-              <option value="44">RI</option>
-              <option value="45">SC</option>
-              <option value="46">SD</option>
-              <option value="47">TN</option>
-              <option value="48">TX</option>
-              <option value="49">UT</option>
-              <option value="50">VT</option>
-              <option value="51">VA</option>
-              <option value="78">VI</option>
-              <option value="53">WA</option>
-              <option value="54">WV</option>
-              <option value="55">WI</option>
-              <option value="56">WY</option>
+              <option id="Alabama" value="01">Alabama</option>
+              <option id="Alaska" value="02">Alaska</option>
+              <option id="Arizona" value="04">Arizona</option>
+              <option id="Arkansas" value="05">Arkansas</option>
+              <option id="California" value="06">California</option>
+              <option id="Colorado" value="08">Colorado</option>
+              <option id="Connecticut" value="09">Connecticut</option>
+              <option id="Delaware" value="10">Delaware</option>
+              <option id="District of Columbia" value="11">
+                District of Columbia
+              </option>
+              <option id="Florida" value="12">Florida</option>
+              <option id="Georgia" value="13">Georgia</option>
+              <option id="Hawaii" value="15">Hawaii</option>
+              <option id="Idaho" value="15">Idaho</option>
+              <option id="Illinois" value="17">Illinois</option>
+              <option id="Indiana" value="18">Indiana</option>
+              <option id="Iowa" value="19">Iowa</option>
+              <option id="Kansas" value="20">Kansas</option>
+              <option id="Kentucky" value="21">Kentucky</option>
+              <option id="Louisiana" value="22">Louisiana</option>
+              <option id="Maine" value="23">Maine</option>
+              <option id="Maryland" value="24">Maryland</option>
+              <option id="Massachusetts" value="25">Massachusetts</option>
+              <option id="Michigan" value="26">Michigan</option>
+              <option id="Minnesota" value="27">Minnesota</option>
+              <option id="Mississippi" value="28">Mississippi</option>
+              <option id="Missouri" value="29">Missouri</option>
+              <option id="Montana" value="30">Montana</option>
+              <option id="Nebraska" value="31">Nebraska</option>
+              <option id="Nevada" value="32">Nevada</option>
+              <option id="New Hampshire" value="33">New Hampshire</option>
+              <option id="New Jersey" value="43">New Jersey</option>
+              <option id="New Mexico" value="35">New Mexico</option>
+              <option id="New York" value="36">New York</option>
+              <option id="North Carolina" value="37">North Carolina</option>
+              <option id="North Dakota" value="38">North Dakota</option>
+              <option id="Ohio" value="39">Ohio</option>
+              <option id="Oklahoma" value="40">Oklahoma</option>
+              <option id="Oregon" value="41">Oregon</option>
+              <option id="Pennsylvania" value="42">Pennsylvania</option>
+              <option id="Puerto Rico" value="72">Puerto Rico</option>
+              <option id="Rhode Island" value="44">Rhode Island</option>
+              <option id="South Carolina" value="45">South Carolina</option>
+              <option id="South Dakota" value="46">South Dakota</option>
+              <option id="Tennessee" value="47">Tennessee</option>
+              <option id="Texas" value="48">Texas</option>
+              <option id="Utah" value="49">Utah</option>
+              <option id="Vermont" value="50">Vermont</option>
+              <option id="Virginia" value="51">Virginia</option>
+              <option id="Virgin Island" value="78">Virgin Islands</option>
+              <option id="Washington" value="53">Washington</option>
+              <option id="West Virginia" value="54">West Virginia</option>
+              <option id="Wisconsin" value="55">Wisconsin</option>
+              <option id="Wyoming" value="56">Wyoming</option>
             </select>
             <button
-              class="btn btn-secondary"
+              class="btn btn-primary"
               type="submit"
-              id="user-location-button"
+              id="user-location-btn"
             >
               Search
             </button>
@@ -146,7 +166,7 @@
       <div class="text-secondary">
         <h3>Current Weather</h3>
       </div>
-      <div class="col-sm-3 bg-dark rounded p-3 shadow-sm my-2">
+      <div class="bg-dark rounded p-3 shadow-sm my-2" style="width: 20rem">
         <div class="row">
           <div id="city" class="col">
             <h2>{{city}}</h2>
