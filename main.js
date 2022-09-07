@@ -1,34 +1,39 @@
 $('document').ready(function() {
 
-
+  //ANCHOR Get current weather on form submit
   $('#user-location-btn').on('click', function(e) {
     e.preventDefault();
     $('#current-weather-container').empty()
 
     const cityValue = $('#user-location').val();
     const stateValue = $('#user-state').val()
-    console.log(cityValue,stateValue)
 
+    //API call to get the Lat and Lon of searched city/state
     async function getLocationWeather() {
-      const response1 = await fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${cityValue},${stateValue}&limit=${1}&appid=371e007761abd9ab85f149c680e677ac`)
-      const latLonData = await response1.json();
-      const lat = latLonData[0].lat;
-      const lon = latLonData[0].lon;
+      try {
+        const latLonResponse = await fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${cityValue},${stateValue}&limit=${1}&appid=${keys.weatherKey}`)
+        const latLonData = await latLonResponse.json();
 
-      console.log(lat, lon)
+        const lat = latLonData[0].lat;
+        const lon = latLonData[0].lon;
+  
+        //API call to get weather data based on Lat and Lon
+        // const weatherResponse = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${keys.weatherKey}&units=imperial`)
+        const weatherResponse = await fetch(`https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&appid=${keys.oneCall}&units=imperial`)
+        const locationWeatherData = await weatherResponse.json();
 
-      const response2 = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${keys.weatherKey}&units=imperial`)
-      const locationWeatherData = await response2.json();
-      console.log(locationWeatherData)
-      return locationWeatherData;
+        showCurrentWeather(locationWeatherData)
+      } catch (error) {
+        console.log(error)
+      }
     }
 
-    function showCurrentWeather() {
-      getLocationWeather().then(data => {
-        console.log(data)
+    //Populate page with current weather HTML
+    function showCurrentWeather(data) {
+      console.log(data)
         const currentWeatherHTML = $('#current-weather-template').html();
-        const currentWeatherFunc = Handlebars.compile(currentWeatherHTML)
-        const currentWeatherTemplate = currentWeatherFunc(
+        const currentWeatherFunction = Handlebars.compile(currentWeatherHTML)
+        const currentWeatherTemplate = currentWeatherFunction(
           {
             city: data.name || null,
             conditionURL: `http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png` || null,
@@ -36,20 +41,20 @@ $('document').ready(function() {
             condition: data.weather[0].main
           }
         )
-        console.log(currentWeatherTemplate)
         $(currentWeatherTemplate).appendTo('#current-weather-container')
-      })
-    }
-    showCurrentWeather();
 
+        }
+
+    getLocationWeather();
+    $('#search-location-form').trigger('reset');
   })
 
+  //ANCHOR button to find users current location
   $('#use-current-location-btn').on('click', function(e) {
     e.preventDefault();
 
-    $('#location-spinner').removeClass('d-none')
-    $('#location-icon').addClass('d-none disabled')
-
+    //show spinner, hide icon, disable button
+    toggleLocationSpinner(true)
 
     navigator.geolocation.getCurrentPosition((position) => {
       const lat = position.coords.latitude;
@@ -60,20 +65,24 @@ $('document').ready(function() {
         .then(data => {
           console.log(data[0].name, data[0].state)
           $('#user-location').val(data[0].name)
-          // $('#user-state').val(data[0].state)
           const selectValue = $(`#${data[0].state}`).val()
           $('#user-state').val(selectValue)
 
-          $('#location-spinner').addClass('d-none')
-          $('#location-icon').removeClass('d-none disabled')
+          //hide spinner, show icon, enable button
+          toggleLocationSpinner(false);
         })
       
     })
   })
 
-  const toggleGetLocationSpinner = function() {
-    
+  const toggleLocationSpinner = function(status) {
+    if(status) {
+      $('#location-spinner').removeClass('d-none')
+      $('#location-icon').addClass('d-none disabled')
+    } else {
+      $('#location-spinner').addClass('d-none')
+      $('#location-icon').removeClass('d-none disabled')
+    }
   }
-
 })
 
