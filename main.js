@@ -17,12 +17,18 @@ $('document').ready(function() {
         const lat = latLonData[0].lat;
         const lon = latLonData[0].lon;
   
-        //API call to get weather data based on Lat and Lon
-        // const weatherResponse = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${keys.weatherKey}&units=imperial`)
-        const weatherResponse = await fetch(`https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&appid=${keys.oneCall}&units=imperial`)
-        const locationWeatherData = await weatherResponse.json();
+        //API call to get weather data for current and five day based on Lat and Lon
+        const weatherResponse = await Promise.all([
+          fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${keys.weatherKey}&units=imperial`),
+          fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${keys.weatherKey}&units=imperial`)
+        ])
 
-        showCurrentWeather(locationWeatherData)
+        const weatherData = await Promise.all(weatherResponse.map(weather => weather.json()))
+
+        //function call to display weather on page
+        showCurrentWeather(weatherData)
+
+        showFiveDayWeather(weatherData)
       } catch (error) {
         console.log(error)
       }
@@ -30,20 +36,30 @@ $('document').ready(function() {
 
     //Populate page with current weather HTML
     function showCurrentWeather(data) {
-      console.log(data)
-        const currentWeatherHTML = $('#current-weather-template').html();
-        const currentWeatherFunction = Handlebars.compile(currentWeatherHTML)
-        const currentWeatherTemplate = currentWeatherFunction(
-          {
-            city: data.name || null,
-            conditionURL: `http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png` || null,
-            temperature: Math.round(data.main.temp) || null,
-            condition: data.weather[0].main
-          }
-        )
-        $(currentWeatherTemplate).appendTo('#current-weather-container')
 
+      const current = data[0];
+
+      const currentWeatherHTML = $('#current-weather-template').html();
+      const currentWeatherFunction = Handlebars.compile(currentWeatherHTML)
+      const currentWeatherTemplate = currentWeatherFunction(
+        {
+          city: current.name || null,
+          conditionURL: `http://openweathermap.org/img/wn/${current.weather[0].icon}@2x.png` || null,
+          temperature: Math.round(current.main.temp) || null,
+          condition: current.weather[0].main
         }
+      )
+      $(currentWeatherTemplate).appendTo('#current-weather-container')
+
+    }
+
+    function showFiveDayWeather(data) {
+      const fiveDay = data[1]
+      console.log(fiveDay)
+      console.log(convertUTX(fiveDay.list[0].dt))
+      console.log(convertUTX(fiveDay.list[1].dt))
+    }
+      
 
     getLocationWeather();
     $('#search-location-form').trigger('reset');
@@ -74,6 +90,14 @@ $('document').ready(function() {
       
     })
   })
+
+  const convertUTX = function(time) {
+    const date = new Date(time * 1000);
+    const day = date.getDay();
+    const hour = date.getHours();
+    return `${day} + ${hour}`;
+
+  }
 
   const toggleLocationSpinner = function(status) {
     if(status) {
