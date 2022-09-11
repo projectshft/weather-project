@@ -1,9 +1,51 @@
+
+let day = [
+    {
+      day: 'Monday',
+      high: 90,
+      low: 75,
+      icon: 'images/sun.png',
+      condition: 'sunny'
+    },
+    {
+      day: 'Tuesday',
+      high: 100,
+      low: 85,
+      icon: 'images/sun.png',
+      condition: 'sunny'
+    },
+    {
+      day: 'Wednesday',
+      high: 89,
+      low: 73,
+      icon: 'images/sun.png',
+      condition: 'rain'
+    },
+    {
+      day: 'Thursday',
+      high: 98,
+      low: 76,
+      icon: 'images/sun.png',
+      condition: 'sunny'
+    },
+    {
+      day: 'Friday',
+      high: 92,
+      low: 67,
+      icon: 'images/sun.png',
+      condition: 'cloudy'
+    }
+  ]
+
+let fiveDayArray = []
+
+
 $('document').ready(function() {
 
   //ANCHOR Get current weather on form submit
   $('#user-location-btn').on('click', function(e) {
     e.preventDefault();
-    $('#current-weather-container').empty()
+ 
 
     const cityValue = $('#user-location').val();
     const stateValue = $('#user-state').val()
@@ -11,7 +53,7 @@ $('document').ready(function() {
     //API call to get the Lat and Lon of searched city/state
     async function getLocationWeather() {
       try {
-        const latLonResponse = await fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${cityValue},${stateValue}&limit=${1}&appid=${keys.weatherKey}`)
+        const latLonResponse = await fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${cityValue},${stateValue}&limit=1&appid=${keys.weatherKey}`)
         const latLonData = await latLonResponse.json();
 
         const lat = latLonData[0].lat;
@@ -27,16 +69,15 @@ $('document').ready(function() {
 
         //function call to display weather on page
         showCurrentWeather(weatherData)
-
         showFiveDayWeather(weatherData)
       } catch (error) {
         console.log(error)
       }
     }
 
-    //Populate page with current weather HTML
+    //ANCHOR Populate page with current weather HTML
     function showCurrentWeather(data) {
-
+      $('#current-weather-container').empty()
       const current = data[0];
 
       const currentWeatherHTML = $('#current-weather-template').html();
@@ -53,11 +94,38 @@ $('document').ready(function() {
 
     }
 
+    //ANCHOR Show Five Day Weather function
     function showFiveDayWeather(data) {
-      const fiveDay = data[1]
-      console.log(fiveDay)
-      console.log(convertUTX(fiveDay.list[0].dt))
-      console.log(convertUTX(fiveDay.list[1].dt))
+      fiveDayArray.length = 0; //reset array each API call
+      $('#five-day-weather-container').empty()
+      const fiveDay = data[1].list
+
+      let filteredWeatherArr = fiveDay.filter((day, index) => {
+        if(index === 0 || index === 7 || index === 15 || index === 23 || index === 31) {
+          return day
+        }
+      })
+
+      let weatherArrData = filteredWeatherArr.map(day => {
+        return {
+          'day': convertUTX(day.dt),
+          'high': Math.round(day.main.temp),
+          'low':  Math.round(day.main.temp),
+          'iconURL': `http://openweathermap.org/img/wn/${day.weather[0].icon}@2x.png`,
+          'condition': day.weather[0].main
+        }
+      })
+
+      console.log(weatherArrData)
+
+
+      const fiveDayWeatherHTML = $('#five-day-weather-template').html();
+      const fiveDayWeatherFunction = Handlebars.compile(fiveDayWeatherHTML);
+      const fiveDayWeatherTemplate = fiveDayWeatherFunction({weatherArrData})
+
+      console.log(fiveDayWeatherTemplate)
+
+      $(fiveDayWeatherTemplate).appendTo('#five-day-weather-container')
     }
       
 
@@ -91,13 +159,7 @@ $('document').ready(function() {
     })
   })
 
-  const convertUTX = function(time) {
-    const date = new Date(time * 1000);
-    const day = date.getDay();
-    const hour = date.getHours();
-    return `${day} + ${hour}`;
-
-  }
+  
 
   const toggleLocationSpinner = function(status) {
     if(status) {
@@ -110,3 +172,26 @@ $('document').ready(function() {
   }
 })
 
+//function to convert UTX to day of week
+const convertUTX = function(time) {
+  const date = new Date(time * 1000);
+  const day = date.getDay();
+
+  switch(day) {
+    case 0:
+      return 'Sunday'
+    case 1:
+      return "Monday"
+    case 2:
+      return "Tuesday"
+    case 3:
+      return "Wednesday"
+    case 4:
+      return "Thursday"
+    case 5:
+      return "Friday"
+    case 6: 
+      return "Saturday"
+  }
+
+}
