@@ -1,4 +1,15 @@
+
+
+
 $('document').ready(function() {
+
+  //Populate page with user set default location if set
+  if(localStorage.getItem('isDefault')) {
+    let weatherData = JSON.parse(localStorage.getItem('data'))
+    showCurrentWeather(weatherData);
+    showFiveDayWeather(weatherData);
+  }
+  
 
   //ANCHOR Function to call Weather API to get Current and Five Day weather
   const getWeatherData = function(){
@@ -23,9 +34,13 @@ $('document').ready(function() {
         //convert the responses to JSON
         const weatherData = await Promise.all(weatherResponse.map(weather => weather.json()))
 
+        localStorage.setItem('data', JSON.stringify(weatherData))
+
         //function call to display weather on page
         showCurrentWeather(weatherData)
         showFiveDayWeather(weatherData)
+        
+        $('#set-location-container').removeClass('d-none');
       } catch (error) {
         console.log(error)
       }
@@ -47,7 +62,7 @@ $('document').ready(function() {
     const current = data[0];
 
     const currentWeatherHTML = $('#current-weather-template').html();
-    const currentWeatherFunction = Handlebars.compile(currentWeatherHTML)
+    const currentWeatherFunction = Handlebars.compile(currentWeatherHTML);
     const currentWeatherTemplate = currentWeatherFunction(
       {
         city: current.name || null,
@@ -56,7 +71,8 @@ $('document').ready(function() {
         condition: current.weather[0].main
       }
     )
-    $(currentWeatherTemplate).appendTo('#current-weather-container')
+    $(currentWeatherTemplate).hide().appendTo('#current-weather-container').fadeIn('slow');
+    // $('#current-weather-container').append(currentWeatherTemplate).fadeIn('slow')
   }
 
 
@@ -86,7 +102,7 @@ $('document').ready(function() {
     const fiveDayWeatherFunction = Handlebars.compile(fiveDayWeatherHTML);
     const fiveDayWeatherTemplate = fiveDayWeatherFunction({weatherArrData})
 
-    $(fiveDayWeatherTemplate).appendTo('#five-day-weather-container')
+    $(fiveDayWeatherTemplate).hide().appendTo('#five-day-weather-container').fadeIn('slow')
   }
 
 
@@ -112,11 +128,15 @@ $('document').ready(function() {
           //hide spinner, show icon, enable button
           toggleLocationSpinner(false);
         })
-      
     })
   })
 
-  
+  $('#set-default-location').on('click', function() {
+    if(localStorage.getItem('data')) {
+      localStorage.setItem('isDefault', true)
+      console.log(localStorage)
+    }
+  })
 
   const toggleLocationSpinner = function(status) {
     if(status) {
