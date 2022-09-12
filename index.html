@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="shortcut icon" type="image/x-icon" href="images/cloudy.png" />
+
+    <!-- Bootstrap 5.2-->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.0/css/bootstrap.min.css"
+      integrity="sha512-XWTTruHZEYJsxV3W/lSXG1n3Q39YIWOstqvmFsdNEEQfHoZ6vm6E9GK2OrF6DSJSpIbRbi+Nn0WDPID9O7xB2Q=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
+    <!-- Bootstrap Icons-->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css"
+    />
+
+    <!-- Custom CSS-->
+    <link rel="stylesheet" href="style.css" />
+
+    <script src="config.js"></script>
+
+    <!-- jQuery -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"
+      integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+
+    <!-- Handlebars -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"
+      integrity="sha512-RNLkV3d+aLtfcpEyFG8jRbnWHxUqVZozacROI4J2F1sTaDqo1dPQYs01OMi1t1w9Y2FdbSCDSQ2ZVdAC8bzgAg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+
+    <script src="main.js" defer></script>
+    <title>Weather Project</title>
+  </head>
+  <body class="bg-white">
+    <header class="container-fluid bg-dark text-light py-3">
+      <h1 class="text-center display-1">myWeather</h1>
+    </header>
+    <div class="container my-5">
+      <!-- ANCHOR Search section -->
+      <section class="row justify-content-center m-2">
+        <form
+          id="search-location-form"
+          class="col"
+          style="width: 30rem !important"
+          action="#"
+        >
+          <div class="input-group m-1">
+            <button id="use-current-location-btn" class="btn btn-dark">
+              <div>
+                <div
+                  id="location-spinner"
+                  class="spinner-border spinner-border-sm text-light d-none"
+                  role="status"
+                >
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+                <i id="location-icon" class="bi bi-geo-alt"></i>
+              </div>
+            </button>
+            <input
+              type="text"
+              class="form-control"
+              name="location"
+              id="user-location"
+              placeholder="City.."
+              required
+            />
+            <select name="state" class="form-select" id="user-state" required>
+              <option selected disabled value="choose">State...</option>
+              <option id="Alabama" value="01">Alabama</option>
+              <option id="Alaska" value="02">Alaska</option>
+              <option id="Arizona" value="04">Arizona</option>
+              <option id="Arkansas" value="05">Arkansas</option>
+              <option id="California" value="06">California</option>
+              <option id="Colorado" value="08">Colorado</option>
+              <option id="Connecticut" value="09">Connecticut</option>
+              <option id="Delaware" value="10">Delaware</option>
+              <option id="District of Columbia" value="11">
+                District of Columbia
+              </option>
+              <option id="Florida" value="12">Florida</option>
+              <option id="Georgia" value="13">Georgia</option>
+              <option id="Hawaii" value="15">Hawaii</option>
+              <option id="Idaho" value="15">Idaho</option>
+              <option id="Illinois" value="17">Illinois</option>
+              <option id="Indiana" value="18">Indiana</option>
+              <option id="Iowa" value="19">Iowa</option>
+              <option id="Kansas" value="20">Kansas</option>
+              <option id="Kentucky" value="21">Kentucky</option>
+              <option id="Louisiana" value="22">Louisiana</option>
+              <option id="Maine" value="23">Maine</option>
+              <option id="Maryland" value="24">Maryland</option>
+              <option id="Massachusetts" value="25">Massachusetts</option>
+              <option id="Michigan" value="26">Michigan</option>
+              <option id="Minnesota" value="27">Minnesota</option>
+              <option id="Mississippi" value="28">Mississippi</option>
+              <option id="Missouri" value="29">Missouri</option>
+              <option id="Montana" value="30">Montana</option>
+              <option id="Nebraska" value="31">Nebraska</option>
+              <option id="Nevada" value="32">Nevada</option>
+              <option id="New Hampshire" value="33">New Hampshire</option>
+              <option id="New Jersey" value="43">New Jersey</option>
+              <option id="New Mexico" value="35">New Mexico</option>
+              <option id="New York" value="36">New York</option>
+              <option id="North Carolina" value="37">North Carolina</option>
+              <option id="North Dakota" value="38">North Dakota</option>
+              <option id="Ohio" value="39">Ohio</option>
+              <option id="Oklahoma" value="40">Oklahoma</option>
+              <option id="Oregon" value="41">Oregon</option>
+              <option id="Pennsylvania" value="42">Pennsylvania</option>
+              <option id="Puerto Rico" value="72">Puerto Rico</option>
+              <option id="Rhode Island" value="44">Rhode Island</option>
+              <option id="South Carolina" value="45">South Carolina</option>
+              <option id="South Dakota" value="46">South Dakota</option>
+              <option id="Tennessee" value="47">Tennessee</option>
+              <option id="Texas" value="48">Texas</option>
+              <option id="Utah" value="49">Utah</option>
+              <option id="Vermont" value="50">Vermont</option>
+              <option id="Virginia" value="51">Virginia</option>
+              <option id="Virgin Island" value="78">Virgin Islands</option>
+              <option id="Washington" value="53">Washington</option>
+              <option id="West Virginia" value="54">West Virginia</option>
+              <option id="Wisconsin" value="55">Wisconsin</option>
+              <option id="Wyoming" value="56">Wyoming</option>
+            </select>
+            <button
+              class="btn btn-primary"
+              type="submit"
+              id="user-location-btn"
+            >
+              Search
+            </button>
+          </div>
+        </form>
+      </section>
+
+      <!-- ANCHOR Set Default Location Container-->
+      <section
+        id="set-location-container"
+        class="row justify-content-center rounded my-1"
+        style="display: none"
+      >
+        <button
+          id="set-default-location"
+          type="button"
+          class="btn btn-success m-2 p-0"
+          style="width: 10rem"
+        >
+          Set As Default City
+        </button>
+        <button
+          id="clear-default-location"
+          type="button"
+          class="btn btn-warning m-2 p-0"
+          style="width: 10rem"
+        >
+          Clear Default City
+        </button>
+      </section>
+
+      <!-- ANCHOR Current Weather Container-->
+      <section
+        id="current-weather-container"
+        class="row text-light justify-content-center text-center my-5"
+      ></section>
+
+      <!-- ANCHOR Five Day Weather Container-->
+      <section
+        id="five-day-weather-container"
+        class="row text-light justify-content-center text-center my-5"
+      ></section>
+    </div>
+
+    <!-- ANCHOR Current Weather Handlebars Template-->
+    <script id="current-weather-template" type="text/x-handlebars-template">
+      <div class="text-secondary">
+        <h3>Current Weather</h3>
+      </div>
+      <div class="bg-dark rounded p-3 shadow-sm my-2" style="width: 15rem">
+        <div class="row">
+          <div id="city" class="col">
+            <h2>{{city}}</h2>
+          </div>
+        </div>
+        <hr class="border" />
+        <div class="row align-items-center justify-content-center">
+          <div id="weather-icon" class="col-4 text-center">
+            <div class="row justify-content-center">
+              <div class="col">
+                <img
+                  class="img-fluid"
+                  src="{{conditionURL}}"
+                  alt="weather-condition"
+                />
+              </div>
+            </div>
+          </div>
+          <div id="temp-condition" class="col-4 text-center">
+            <div class="row justify-content-start align-items-center">
+              <div id="temp" class="col">
+                <h1>{{temperature}}</h1>
+              </div>
+            </div>
+            <div class="row">
+              <div id="condition" class="col">
+                <p class="p-0 m-0">{{condition}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </script>
+
+    <!-- ANCHOR Current Weather Handlebars Template-->
+    <script id="five-day-weather-template" type="text/x-handlebars-template">
+      <div class="text-secondary text-center">
+        <h3>Five Day Weather</h3>
+      </div>
+      {{#each weatherArrData}}
+        <div class="bg-dark rounded p-3 shadow-sm m-1" style="width: 15rem">
+          <div class="row">
+            <div id="city" class="col text-center">
+              <h2>{{day}}</h2>
+            </div>
+          </div>
+          <hr class="border" />
+          <div class="row align-items-center justify-content-center">
+            <div id="weather-icon" class="col-4 text-center">
+              <div class="row justify-content-center">
+                <div class="col">
+                  <img
+                    class="img-fluid"
+                    src="{{iconURL}}"
+                    alt="weather-condition"
+                  />
+                </div>
+              </div>
+            </div>
+            <div id="temp-condition" class="col-4 text-center">
+              <div class="row justify-content-start align-items-center">
+                <div id="temp" class="col">
+                  <h1>{{temp}}</h1>
+                </div>
+              </div>
+              <div class="row">
+                <div id="condition" class="col">
+                  <p class="p-0 m-0">{{condition}}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      {{/each}}
+    </script>
+
+    <!-- ANCHOR Handlebar template for clear/set default location-->
+    <script id="set-clear-message-banner" type="text/x-handlebars-template">
+      <small><p
+          class="text-{{text-color}}
+            text-uppercase text-center fixed-top bg-{{bg-color}}"
+        >{{message}}</p></small>
+    </script>
+  </body>
+</html>

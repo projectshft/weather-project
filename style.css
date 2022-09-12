@@ -1,0 +1,24 @@
+/* make header stretch entire page */
+header {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+/* remove outline on btn click*/
+.btn:focus,
+.btn:active {
+  outline: none !important;
+  box-shadow: none;
+}
+
+input:focus,
+input:active {
+  outline: none !important;
+  box-shadow: none;
+}
+
+select:focus,
+select:active {
+  outline: none !important;
+  box-shadow: none;
+}
