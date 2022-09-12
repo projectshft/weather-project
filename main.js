@@ -6,6 +6,7 @@ $('document').ready(function() {
   //Populate page with user set default location if set
   if(localStorage.getItem('isDefault')) {
     let weatherData = JSON.parse(localStorage.getItem('data'))
+    $('#set-location-container').fadeIn('slow')
     showCurrentWeather(weatherData);
     showFiveDayWeather(weatherData);
   }
@@ -39,8 +40,8 @@ $('document').ready(function() {
         //function call to display weather on page
         showCurrentWeather(weatherData)
         showFiveDayWeather(weatherData)
-        
-        $('#set-location-container').removeClass('d-none');
+        $('#set-location-container').fadeIn('slow')
+
       } catch (error) {
         console.log(error)
       }
@@ -49,12 +50,14 @@ $('document').ready(function() {
   }
 
   //ANCHOR Get current weather on form submit
-  $('#user-location-btn').on('click', function(e) {
+  $('#search-location-form').submit(function(e) {
     e.preventDefault();
+    $('#set-location-container').hide();
     $('#current-weather-container').empty()
     $('#five-day-weather-container').empty()
+    
     getWeatherData(e)
-    // $('#search-location-form').trigger('reset');
+
   })
 
   //ANCHOR Handlebars to display current weather on page
@@ -72,7 +75,6 @@ $('document').ready(function() {
       }
     )
     $(currentWeatherTemplate).hide().appendTo('#current-weather-container').fadeIn('slow');
-    // $('#current-weather-container').append(currentWeatherTemplate).fadeIn('slow')
   }
 
 
@@ -105,6 +107,18 @@ $('document').ready(function() {
     $(fiveDayWeatherTemplate).hide().appendTo('#five-day-weather-container').fadeIn('slow')
   }
 
+  //ANCHOR Handlebars to display banner for set/clear location
+  function showBanner(textColor, bgColor, message) {
+    const bannerHTML = $('#set-clear-message-banner').html();
+    const bannerFunction = Handlebars.compile(bannerHTML);
+    const bannerTemplate = bannerFunction({
+      'text-color': textColor,
+      'bg-color': bgColor,
+      'message': message
+    })
+    $(bannerTemplate).hide().appendTo('body').fadeIn('slow').delay('3000').fadeOut('slow')
+  }
+
 
   //ANCHOR button to find users current location
   $('#use-current-location-btn').on('click', function(e) {
@@ -131,11 +145,24 @@ $('document').ready(function() {
     })
   })
 
+  //ANCHOR buttons for set and clear default location
+
+
+  //ANCHOR button to set current location as default in localStorage
   $('#set-default-location').on('click', function() {
     if(localStorage.getItem('data')) {
       localStorage.setItem('isDefault', true)
+      showBanner('white', 'success', 'Default Location Stored')
       console.log(localStorage)
+    } else {
+      showBanner('white', 'danger', 'You Must Search For A City First')
     }
+  })
+
+  //ANCHOR button to set current location as default in localStorage
+  $('#clear-default-location').on('click', function() {
+    localStorage.clear();
+    showBanner('dark', 'warning', 'Default Location Cleared')
   })
 
   const toggleLocationSpinner = function(status) {
@@ -171,4 +198,4 @@ const convertUTX = function(time) {
       return "Saturday"
   }
 
-}
+};
