@@ -25,54 +25,53 @@
       </div>
       </form>
   </div>
+       
+<div class="todaysWeather row todaysWeather-template">
+</div>
     
-    
-  <div class="todaysWeather row todaysWeather-template">
+<script id="todaysWeather-template" type="text/x-handlebars-template">
+  <h4>{{temp}}°<br>
+    {{city}}<br>
+    {{conditions}}
+    <img src="{{weather_icon}}"></h4>
+</script>
+
+<div class="futureWeather row futureWeather-template">
+</div>
+
+<script id="futureWeather-template" type="text/x-handlebars-template">
+  <div class="border">
+    <p>{{day1}}<br>
+      {{temp1}}<br>
+      {{conditions1}}<br>
+    <img src="{{weather_icon1}}"></p>
   </div>
-    
-  <script id="todaysWeather-template" type="text/x-handlebars-template">
-    <h4>{{temp}}°<br>
-      {{city}}<br>
-      {{conditions}}
-      <img src="{{weather_icon}}"></h4>
+  <div class="border">
+    <p>{{day2}}<br>
+      {{temp2}}<br>
+      {{conditions2}}<br>
+    <img src="{{weather_icon2}}"></p>
+  </div>
+  <div class="border">
+    <p>{{day3}}<br>
+      {{temp3}}<br>
+      {{conditions3}}<br>
+    <img src="{{weather_icon3}}"></p>
+  </div>
+  <div class="border">
+    <p>{{day4}}<br>
+      {{temp4}}<br>
+      {{conditions4}}<br>
+    <img src="{{weather_icon4}}"></p>
+  </div>
+  <div class="border">
+    <p>{{day5}}<br>
+      {{temp5}}<br>
+      {{conditions5}}<br>
+    <img src="{{weather_icon5}}"></p>
+  </div>
   </script>
-
-  <div class="futureWeather row futureWeather-template">
-  </div>
-
-  <script id="futureWeather-template" type="text/x-handlebars-template">
-    <div class="border">
-      <p>{{day1}}<br>
-        {{temp1}}<br>
-        {{conditions1}}<br>
-      <img src="{{weather_icon1}}"></p>
-    </div>
-    <div class="border">
-      <p>{{day2}}<br>
-        {{temp2}}<br>
-        {{conditions2}}<br>
-      <img src="{{weather_icon2}}"></p>
-    </div>
-    <div class="border">
-      <p>{{day3}}<br>
-        {{temp3}}<br>
-        {{conditions3}}<br>
-      <img src="{{weather_icon3}}"></p>
-    </div>
-    <div class="border">
-      <p>{{day4}}<br>
-        {{temp4}}<br>
-        {{conditions4}}<br>
-      <img src="{{weather_icon4}}"></p>
-    </div>
-    <div class="border">
-      <p>{{day5}}<br>
-        {{temp5}}<br>
-        {{conditions5}}<br>
-      <img src="{{weather_icon5}}"></p>
-    </div>
-    </script>
-  </div>
+</div>
     
     
       

@@ -64,15 +64,6 @@ var renderTodaysWeather = function () {
 
 renderTodaysWeather();
 
-
-
-
-
-
-
-
-
-
 var futureWeather = [];
 
 var addFutureWeather = function (data2) {
