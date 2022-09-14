@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weather Project</title>
+</head>
+<body>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-6 offset-md-3">
+      <div class="page-header">
+      <h1>Weather Project</h1>
+      <hr/>
+      </div>
+
+      <form class="search-form">
+      <div class="form-group">
+        <input type="text" id="search-query" class="form-control" placeholder="Enter a city"></input>
+        <button type="button" class="btn btn-primary search">Search</button>
+      </div>
+      </div>
+      </form>
+  </div>
+       
+<div class="todaysWeather row todaysWeather-template">
+</div>
+    
+<script id="todaysWeather-template" type="text/x-handlebars-template">
+  <h4>{{temp}}°<br>
+    {{city}}<br>
+    {{conditions}}
+    <img src="{{weather_icon}}"></h4>
+</script>
+
+<div class="futureWeather row futureWeather-template">
+</div>
+
+<script id="futureWeather-template" type="text/x-handlebars-template">
+  <div class="border">
+    <p>{{day1}}<br>
+      {{temp1}}<br>
+      {{conditions1}}<br>
+    <img src="{{weather_icon1}}"></p>
+  </div>
+  <div class="border">
+    <p>{{day2}}<br>
+      {{temp2}}<br>
+      {{conditions2}}<br>
+    <img src="{{weather_icon2}}"></p>
+  </div>
+  <div class="border">
+    <p>{{day3}}<br>
+      {{temp3}}<br>
+      {{conditions3}}<br>
+    <img src="{{weather_icon3}}"></p>
+  </div>
+  <div class="border">
+    <p>{{day4}}<br>
+      {{temp4}}<br>
+      {{conditions4}}<br>
+    <img src="{{weather_icon4}}"></p>
+  </div>
+  <div class="border">
+    <p>{{day5}}<br>
+      {{temp5}}<br>
+      {{conditions5}}<br>
+    <img src="{{weather_icon5}}"></p>
+  </div>
+  </script>
+</div>
+    
+    
+      
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
+  <script src='main.js'></script>
+</body>
+</html>

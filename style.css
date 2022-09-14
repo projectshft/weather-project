@@ -1,0 +1,43 @@
+button {
+  float: right;
+}
+
+.form-group {
+  display: inline-flex;
+  width: 100%;
+}
+
+.page-header {
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+.todaysWeather-template {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding-top: 50px;
+}
+
+.futureWeather-template {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 50px;
+  width: 100%;
+}
+
+.border {
+  border: solid 10px black;
+  display: inline-flex;
+  align-items: center;
+  background-color: whitesmoke;
+  border-radius: 5px;
+}
+
+body {
+  background-image: url(http://www.nasa.gov/sites/default/files/thumbnails/image/smap-weather.jpg);
+  background-size: cover;
+  position: relative;
+}
