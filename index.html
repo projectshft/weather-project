@@ -37,11 +37,14 @@
     </div>
 
       <script id="weather-template" type="text/x-handlebars-template">
-        <div class='col-md-4'>
-          <h3>{{currentTemp}}&#8457;</h3>
-          <h3>{{city}}</h3>
-          <h5>{{currentConditions}}</h5>
-          <!-- <h3>{{currentIcon}}</h3> -->
+        <div class="row">
+          <div class='col-md-4'>
+            <h3>{{currentTemp}}&#8457;</h3>
+            <h3>{{city}}</h3>
+            <h5>{{currentConditions}}</h5>
+            <!-- NOTE: Icon still needs to be moved to the right of the above info -->
+            <img src={{currentIcon}}>
+          </div>
         </div>
       </script> 
 
