@@ -8,7 +8,7 @@ const kelvinToF = (num) => {
   return fahrenheit;
 };
 
-
+// Later, I'll make "enter" work as well
 $('.search').on('click', function () {
   let query = $('#search-bar').val();
 
@@ -19,31 +19,31 @@ $('.search').on('click', function () {
 });
 
 // Adds today's weather to the currentWeather array
-// Is working, with the exception of the Icon
 const addWeather = (data) => {
   currentWeather.push({
     currentTemp: kelvinToF(data.main.temp),
     city: data.name,
     currentConditions: data.weather[0].main,
-    currentIcon: data.weather[0].icon // Currently not pulling the icon in. Not sure if I need to save each locally, or how to link to them?
+    currentIcon: 'http://openweathermap.org/img/wn/' + data.weather[0].icon + '@2x.png'
   });
   
   renderWeather();
 };
 
-// Is NOT working yet per the requirements in the prompt, but it does add 1 set of data to the weather Forecast array
-// I need to figure out how to pull only 1 set of data per day for 5 days (Moment.js and/or getDate() + 1?)
+// Is NOT working yet
+// Should add the 5-day forecast to the weatherForecast array
 const addForecast = (data) => {
   weatherForecast.push({
     temperature: kelvinToF(data.list[0].main.temp),
     conditions: data.list[0].weather[0].main,
-    icon: data.list[0].weather[0].icon,
-    day: 'Tuesday',
+    icon: 'http://openweathermap.org/img/wn/' + data.list[0].weather[0].icon + '@2x.png',
+    day: 'Monday'
   });
     
   renderForecast();    
 };
-    
+
+// renders today's weather
 const renderWeather = () => {
   $('.weather').empty();
     
@@ -58,6 +58,7 @@ const renderWeather = () => {
   }
 };
 
+// renders the 5-day forecast
 const renderForecast = () => {
   for (let i = 0; i < weatherForecast.length; i++) {
     const forecast = weatherForecast[i];
@@ -75,8 +76,6 @@ var fetchWeather = (query) => {
   $.ajax({
     method: 'GET',
     url: 'http://api.openweathermap.org/data/2.5/weather?q=' + query + '&appid=c60d7d92799f3cf527b48cf6335c9cc5',
-    // test url:
-    // url: 'https://api.openweathermap.org/data/2.5/weather?q=nashville&appid=c60d7d92799f3cf527b48cf6335c9cc5',
     dataType: 'json',
     success: (data) => {
       console.log(data);
@@ -88,17 +87,16 @@ var fetchWeather = (query) => {
   })
 };
 
-// gets the 5-day forecast 
+// gets the 5-day forecast (WORK IN PROGRESS)
 var fetchForecast = (query) => {
   $.ajax({
     method: 'GET',
     url: 'http://api.openweathermap.org/data/2.5/forecast?q=' + query + '&appid=c60d7d92799f3cf527b48cf6335c9cc5',
-    // test url:
-    // url: 'https://api.openweathermap.org/data/2.5/forecast?q=Nashville&appid=c60d7d92799f3cf527b48cf6335c9cc5',
     dataType: 'json',
     success: (data) => {
       console.log(data);
       addForecast(data);
+      
     },
     error: function (jqXHR, textStatus, errorThrown) {
       console.log(textStatus);
@@ -108,4 +106,5 @@ var fetchForecast = (query) => {
 
 renderWeather();
 renderForecast();
+
 
