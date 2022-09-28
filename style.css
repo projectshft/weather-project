@@ -1,0 +1,38 @@
+#search-query {
+  width: 550px;
+  margin: 40px;
+}
+
+h1 {
+  text-align: center;
+  font-weight: strong;
+}
+
+.image {
+  width: 200px;
+  height: auto;
+}
+
+h3 {
+  text-align: center;
+}
+
+.image2 {
+  width: 100px;
+  height: auto;
+}
+
+.five {
+  display: flex;
+  border: 1px solid black;
+  padding: 10px;
+  margin: 0px;
+  align-items: center;
+  justify-content: center;
+  height: 250px;
+  width: 250px;
+}
+
+.weather-five {
+  text-align: center;
+}
