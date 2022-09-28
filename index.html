@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
+      integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ"
+      crossorigin="anonymous"
+    />
+
+    <link rel="stylesheet" href="style.css" />
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-6 offset-md-3">
+          <div class="page-header">
+            <h1>Weather Project</h1>
+            <hr />
+          </div>
+          <form class="form-inline">
+            <div class="form-group">
+              <input
+                type="text"
+                id="search-query"
+                class="form-control"
+                placeholder="Enter City Name Here"
+              />
+              <span class="input-group btn">
+                <button type="button" class="btn btn-primary search">
+                  Search
+                </button>
+              </span>
+            </div>
+          </form>
+          <div class="current-weather row"></div>
+        </div>
+      </div>
+    </div>
+
+    <script id="current-weather-template" type="text/x-handlebars-template">
+      <div class="current-weather col-md-6">
+        <h1>{{temp}}°</h1>
+        <h1>{{city}}</h1>
+        <h3>{{effects}}</h3>
+      </div>
+      <div class="current-img col-md-6">
+        <img class="image" src="{{icon}}" />
+      </div>
+    </script>
+
+    <div id="weathers" class="row justify-content-center"></div>
+    <script id="weather-five-template" type="text/x-handlebars-template">
+      {{#each .}}
+      <div class="five row">
+        <div class="weather-five col-md-6">
+          <h4>{{effect}}</h4>
+          <h4>{{temps}}°</h4>
+          <img class="image2" src="{{icon}}"/>
+          <h4>{{days}}</h4>
+        </div>
+      </div>
+      {{/each}}
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
+    <script src="main.js" type="text/javascript"></script>
+  </body>
+</html>
