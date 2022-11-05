@@ -26,8 +26,8 @@ function render5DayWeather (data) {
 
 
 function fetchCurrent (query) {
-  $.get("https://api.openweathermap.org/data/2.5/weather?q=" + 
-        query + 
+  $.get("https://api.openweathermap.org/data/2.5/weather?lat=" + lat + 
+        "&lon=" + lon + 
         "&APPID=" + 
         apiKey + 
         "&units=imperial", 
@@ -38,9 +38,9 @@ function fetchCurrent (query) {
         })
 }
 
-function fetch5Day (query) {
-  $.get("https://api.openweathermap.org/data/2.5/forecast?q=" + 
-        query + 
+function fetch5Day (lat, lon) {
+  $.get("https://api.openweathermap.org/data/2.5/forecast?lat=" + lat + 
+        "&lon=" + lon + 
         "&APPID=" + 
         apiKey + 
         "&units=imperial", 
@@ -59,18 +59,32 @@ function fetch5Day (query) {
             {condition: day5.weather[0].main, temp: day5.main.temp, iconUrl: 'http://openweathermap.org/img/wn/' + day5.weather[0].icon + '@2x.png', day: "Today"}
           ]
 
-          console.log(compressedData);
-
           render5DayWeather(compressedData)
         });
+}
+
+
+function fetchCoordinates(query) {
+  $.get("https://api.openweathermap.org/geo/1.0/direct?q=" + 
+  query + 
+  "&APPID=" + 
+  apiKey,
+  function(data) {
+    let lat = data[0].lat;
+    let lon = data[0].lon;
+
+    fetchCurrent(lat, lon);
+    fetch5Day(lat, lon)
+  })
 }
 
 
 $('#search-button').click(function() {
   let query = $('#search-query').val();
 
-  fetchCurrent(query);
-  fetch5Day(query);
+  // fetchCurrent(query);
+  // fetch5Day(query);
+  fetchCoordinates(query);
 })
 
 
@@ -88,5 +102,5 @@ $('#search-button').click(function() {
 
 
 
-// renderCurrentWeather({condition: 'clouds', temp: '58', iconUrl: 'http://openweathermap.org/img/wn/01d@2x.png', day: "Today"})
-// render5DayWeather([{condition: 'clouds', temp: '58', iconUrl: 'http://openweathermap.org/img/wn/01d@2x.png', day: "Today"},{condition: 'clouds', temp: '58', iconUrl: 'http://openweathermap.org/img/wn/01d@2x.png', day: "Today"},{condition: 'clouds', temp: '58', iconUrl: 'http://openweathermap.org/img/wn/01d@2x.png', day: "Today"},{condition: 'clouds', temp: '58', iconUrl: 'http://openweathermap.org/img/wn/01d@2x.png', day: "Today"},{condition: 'clouds', temp: '58', iconUrl: 'http://openweathermap.org/img/wn/01d@2x.png', day: "Today"}])
+renderCurrentWeather({condition: 'clouds', temp: '58', iconUrl: 'http://openweathermap.org/img/wn/01d@2x.png', day: "Today"})
+render5DayWeather([{condition: 'clouds', temp: '58', iconUrl: 'http://openweathermap.org/img/wn/01d@2x.png', day: "Today"},{condition: 'clouds', temp: '58', iconUrl: 'http://openweathermap.org/img/wn/01d@2x.png', day: "Today"},{condition: 'clouds', temp: '58', iconUrl: 'http://openweathermap.org/img/wn/01d@2x.png', day: "Today"},{condition: 'clouds', temp: '58', iconUrl: 'http://openweathermap.org/img/wn/01d@2x.png', day: "Today"},{condition: 'clouds', temp: '58', iconUrl: 'http://openweathermap.org/img/wn/01d@2x.png', day: "Today"}])
