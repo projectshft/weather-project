@@ -25,7 +25,7 @@ function render5DayWeather (data) {
 }
 
 
-function fetchCurrent (query) {
+function fetchCurrent (lat, lon) {
   $.get("https://api.openweathermap.org/data/2.5/weather?lat=" + lat + 
         "&lon=" + lon + 
         "&APPID=" + 
@@ -88,7 +88,21 @@ $('#search-button').click(function() {
 })
 
 
+$('button.current-location').click(function () {
+  let lon = null;
+  let lat = null;
 
+  navigator.geolocation.getCurrentPosition(function(pos) {
+    let crds = pos.coords;
+    lat = crds.latitude;
+    lon = crds.longitude;
+    
+    fetchCurrent(lat, lon);
+    fetch5Day(lat, lon);
+  })
+  
+  
+})
 
 
 
