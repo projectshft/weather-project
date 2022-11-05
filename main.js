@@ -25,6 +25,22 @@ function render5DayWeather (data) {
 }
 
 
+function changeIcon(weatherData) {//the '03d' and '03n' icons are blank white
+  if(weatherData.list) {
+    weatherData.list.forEach((data) => {
+      if(data.weather[0].icon.includes('03')){
+        data.weather[0].icon = '04d'
+      }
+    })
+  } else {
+    if(weatherData.weather[0].icon.includes('03')){
+      data.weather[0].icon = '04d'
+    }
+  }
+  return weatherData;
+}
+
+
 function fetchCurrent (lat, lon) {
   $.get("https://api.openweathermap.org/data/2.5/weather?lat=" + lat + 
         "&lon=" + lon + 
@@ -32,6 +48,7 @@ function fetchCurrent (lat, lon) {
         apiKey + 
         "&units=imperial", 
         function(data) {
+          data = changeIcon(data);
           let compressedData = {condition: data.weather[0].main, temp: data.main.temp, iconUrl: 'http://openweathermap.org/img/wn/' + data.weather[0].icon + '@2x.png', day: "Today"}
 
           renderCurrentWeather(compressedData);
@@ -43,8 +60,10 @@ function fetch5Day (lat, lon) {
         "&lon=" + lon + 
         "&APPID=" + 
         apiKey + 
-        "&units=imperial", 
+        "&units=imperial",
+
         function(data) {
+          data = changeIcon(data);
           let day1 = data.list[0]
           let day2 = data.list[8];
           let day3 = data.list[16];
@@ -58,6 +77,7 @@ function fetch5Day (lat, lon) {
             {condition: day4.weather[0].main, temp: day4.main.temp, iconUrl: 'http://openweathermap.org/img/wn/' + day4.weather[0].icon + '@2x.png', day: "Today"},
             {condition: day5.weather[0].main, temp: day5.main.temp, iconUrl: 'http://openweathermap.org/img/wn/' + day5.weather[0].icon + '@2x.png', day: "Today"}
           ]
+          console.log(compressedData)
 
           render5DayWeather(compressedData)
         });
