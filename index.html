@@ -64,7 +64,25 @@
             </form>
           </div>
         </div>
+        <div class="row current"></div>
+        <div class="row 5-day"></div>
       </div>
     </main>
+    <script id="current-template" type="text/x-handlebars-template">
+      <div class="col single-day-forecast">
+        <div class="condition">{{condition}}</div>
+        <div class="temp">{{temp}}</div>
+        <div class="condition-icon"><img src="{{iconUrl}}" /></div>
+        <div class="day">{{day}}</div>
+      </div>
+    </script>
+    <script id="5-day-template" type="text/x-handlebars-template">
+      <div class="col 5-day-forecast">
+        <div class="condition">{{condition}}</div>
+        <div class="temp">{{temp}}</div>
+        <div class="condition-icon"><img src="{{iconUrl}}" /></div>
+        <div class="day">{{day}}</div>
+      </div>
+    </script>
   </body>
 </html>
