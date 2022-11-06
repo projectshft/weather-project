@@ -60,7 +60,7 @@ function fetchCurrent (lat, lon) {
         "&units=imperial", 
         function(data) {
           data = changeIcon(data);
-          let compressedData = {condition: data.weather[0].main, temp: data.main.temp, iconUrl: 'http://openweathermap.org/img/wn/' + data.weather[0].icon + '@2x.png', day: getDay(data.dt)}
+          let compressedData = {condition: data.weather[0].main, temp: Math.round(data.main.temp), iconUrl: 'http://openweathermap.org/img/wn/' + data.weather[0].icon + '@2x.png', day: getDay(data.dt)}
 
           renderCurrentWeather(compressedData);
         })
@@ -82,11 +82,11 @@ function fetch5Day (lat, lon) {
           let day5 = data.list[32];
 
           let compressedData = [
-            {condition: day1.weather[0].main, temp: day1.main.temp, iconUrl: 'http://openweathermap.org/img/wn/' + day1.weather[0].icon + '@2x.png', day: "Today"},
-            {condition: day2.weather[0].main, temp: day2.main.temp, iconUrl: 'http://openweathermap.org/img/wn/' + day2.weather[0].icon + '@2x.png', day: getDay(day2.dt)},
-            {condition: day3.weather[0].main, temp: day3.main.temp, iconUrl: 'http://openweathermap.org/img/wn/' + day3.weather[0].icon + '@2x.png', day: getDay(day3.dt)},
-            {condition: day4.weather[0].main, temp: day4.main.temp, iconUrl: 'http://openweathermap.org/img/wn/' + day4.weather[0].icon + '@2x.png', day: getDay(day4.dt)},
-            {condition: day5.weather[0].main, temp: day5.main.temp, iconUrl: 'http://openweathermap.org/img/wn/' + day5.weather[0].icon + '@2x.png', day: getDay(day5.dt)}
+            {condition: day1.weather[0].main, temp: Math.round(day1.main.temp), iconUrl: 'http://openweathermap.org/img/wn/' + day1.weather[0].icon + '@2x.png', day: "Today"},
+            {condition: day2.weather[0].main, temp: Math.round(day2.main.temp), iconUrl: 'http://openweathermap.org/img/wn/' + day2.weather[0].icon + '@2x.png', day: getDay(day2.dt)},
+            {condition: day3.weather[0].main, temp: Math.round(day3.main.temp), iconUrl: 'http://openweathermap.org/img/wn/' + day3.weather[0].icon + '@2x.png', day: getDay(day3.dt)},
+            {condition: day4.weather[0].main, temp: Math.round(day4.main.temp), iconUrl: 'http://openweathermap.org/img/wn/' + day4.weather[0].icon + '@2x.png', day: getDay(day4.dt)},
+            {condition: day5.weather[0].main, temp: Math.round(day5.main.temp), iconUrl: 'http://openweathermap.org/img/wn/' + day5.weather[0].icon + '@2x.png', day: getDay(day5.dt)}
           ]
           console.log(compressedData)
 
