@@ -34,7 +34,7 @@ function changeIcon(weatherData) {//the '03d' and '03n' icons are blank white
     })
   } else {
     if(weatherData.weather[0].icon.includes('03')){
-      data.weather[0].icon = '04d'
+      weatherData.weather[0].icon = '04d'
     }
   }
   return weatherData;
