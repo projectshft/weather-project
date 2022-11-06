@@ -82,11 +82,11 @@ function fetch5Day (lat, lon) {
           let day5 = data.list[32];
 
           let compressedData = [
-            {condition: day1.weather[0].main, temp: Math.round(day1.main.temp), iconUrl: 'http://openweathermap.org/img/wn/' + day1.weather[0].icon + '@2x.png', day: "Today"},
-            {condition: day2.weather[0].main, temp: Math.round(day2.main.temp), iconUrl: 'http://openweathermap.org/img/wn/' + day2.weather[0].icon + '@2x.png', day: getDay(day2.dt)},
-            {condition: day3.weather[0].main, temp: Math.round(day3.main.temp), iconUrl: 'http://openweathermap.org/img/wn/' + day3.weather[0].icon + '@2x.png', day: getDay(day3.dt)},
-            {condition: day4.weather[0].main, temp: Math.round(day4.main.temp), iconUrl: 'http://openweathermap.org/img/wn/' + day4.weather[0].icon + '@2x.png', day: getDay(day4.dt)},
-            {condition: day5.weather[0].main, temp: Math.round(day5.main.temp), iconUrl: 'http://openweathermap.org/img/wn/' + day5.weather[0].icon + '@2x.png', day: getDay(day5.dt)}
+            {condition: day1.weather[0].main, tempMin: Math.round(day1.main.temp_min), tempMax: Math.round(day1.main.temp_max), iconUrl: 'http://openweathermap.org/img/wn/' + day1.weather[0].icon + '@2x.png', day: "Today"},
+            {condition: day2.weather[0].main, tempMin: Math.round(day2.main.temp_min), tempMax: Math.round(day2.main.temp_max), iconUrl: 'http://openweathermap.org/img/wn/' + day2.weather[0].icon + '@2x.png', day: getDay(day2.dt)},
+            {condition: day3.weather[0].main, tempMin: Math.round(day3.main.temp_min), tempMax: Math.round(day3.main.temp_max), iconUrl: 'http://openweathermap.org/img/wn/' + day3.weather[0].icon + '@2x.png', day: getDay(day3.dt)},
+            {condition: day4.weather[0].main, tempMin: Math.round(day4.main.temp_min), tempMax: Math.round(day4.main.temp_max), iconUrl: 'http://openweathermap.org/img/wn/' + day4.weather[0].icon + '@2x.png', day: getDay(day4.dt)},
+            {condition: day5.weather[0].main, tempMin: Math.round(day5.main.temp_min), tempMax: Math.round(day5.main.temp_max), iconUrl: 'http://openweathermap.org/img/wn/' + day5.weather[0].icon + '@2x.png', day: getDay(day5.dt)}
           ]
           console.log(compressedData)
 
