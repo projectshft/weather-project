@@ -111,15 +111,21 @@ function fetchCoordinates(query) {
 
 
 $('#search-button').click(function() {
+  
   let query = $('#search-query').val();
-
-  // fetchCurrent(query);
-  // fetch5Day(query);
-  fetchCoordinates(query);
+  
+  if(query) {
+    $('.five-day').removeClass('visually-hidden');
+    
+    fetchCoordinates(query);
+  }
+  
 })
 
 
 $('button.current-location').click(function () {
+  $('.five-day').removeClass('visually-hidden')
+
   let lon = null;
   let lat = null;
 
@@ -131,6 +137,4 @@ $('button.current-location').click(function () {
     fetchCurrent(lat, lon);
     fetch5Day(lat, lon);
   })
-  
-  
 })
