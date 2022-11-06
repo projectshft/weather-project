@@ -12,15 +12,15 @@ function renderCurrentWeather(data) {
 
 
 function render5DayWeather (data) {
-  $('.5-day').empty();
+  $('.five-day').empty();
 
-  let source = $('#5-day-template').html();
+  let source = $('#five-day-template').html();
   let template = Handlebars.compile(source);
 
   data.forEach(day => {
     let html = template (day);
 
-    $('.5-day').append(html);
+    $('.five-day').append(html);
   });
 }
 

@@ -1,0 +1,21 @@
+body {
+  background-color: cornsilk;
+  height: 90vh;
+}
+
+.main-container {
+  height: 95vh;
+}
+
+.current {
+  height: 33%;
+}
+
+.five-day {
+  border: 1px solid black;
+  height: 33%;
+}
+
+.five-day-forecast {
+  padding: 10px;
+}

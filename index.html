@@ -42,7 +42,7 @@
       </div>
     </nav>
     <main>
-      <div class="container text-center">
+      <div class="container main-container text-center">
         <div class="row search align-content-start">
           <div class="col">
             <div class="intro-info">
@@ -68,7 +68,9 @@
           </div>
         </div>
         <div class="row current align-content-center"></div>
-        <div class="row 5-day align-content-end"></div>
+        <div
+          class="row five-day align-content-center justify-content-md-center align-content-end"
+        ></div>
       </div>
     </main>
     <script id="current-template" type="text/x-handlebars-template">
@@ -79,8 +81,8 @@
         <div class="day">{{day}}</div>
       </div>
     </script>
-    <script id="5-day-template" type="text/x-handlebars-template">
-      <div class="col 5-day-forecast">
+    <script id="five-day-template" type="text/x-handlebars-template">
+      <div class="col-lg col-sm-12 five-day-forecast">
         <div class="condition">{{condition}}</div>
         <div class="temp">{{temp}}</div>
         <div class="condition-icon"><img src="{{iconUrl}}" /></div>
