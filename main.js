@@ -103,11 +103,13 @@ function fetchCoordinates(query) {
   "&APPID=" + 
   apiKey,
   function(data) {
+    console.log(data);
     let lat = data[0].lat;
     let lon = data[0].lon;
 
     fetchCurrent(lat, lon);
     fetch5Day(lat, lon)
+    getImageData(0, lat, lon, 30);
   })
 }
 
@@ -138,5 +140,8 @@ $('button.current-location').click(function () {
     
     fetchCurrent(lat, lon);
     fetch5Day(lat, lon);
+    getImageData(0, lat, lon, 30);
   })
 })
+
+
