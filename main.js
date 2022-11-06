@@ -24,6 +24,13 @@ function render5DayWeather (data) {
   });
 }
 
+function renderError() {
+  $('.current').empty();
+  $('.five-day').empty();
+
+  $('.current').append('<p class="error">There was an error, please try another search query</p>')
+}
+
 
 function changeIcon(weatherData) {//the '03d' and '03n' icons are blank white
   if(weatherData.list) {
@@ -58,7 +65,7 @@ function fetchCurrent (lat, lon) {
         "&APPID=" + 
         apiKey + 
         "&units=imperial", 
-        function(data) {
+        function(data) { // render error if data empty/false
           data = changeIcon(data);
           let compressedData = {condition: data.weather[0].main, temp: Math.round(data.main.temp), iconUrl: 'http://openweathermap.org/img/wn/' + data.weather[0].icon + '@2x.png', location: data.name}
 
@@ -75,7 +82,7 @@ function fetch5Day (lat, lon) {
 
         function(data) {
           data = changeIcon(data);
-
+          // render error if data list empty
           let days = [];
           for(let i = 0; i < data.list.length; i += 8){//should be 5 days as long as 40 items are returned
             days.push(data.list[i])
@@ -103,7 +110,9 @@ function fetchCoordinates(query) {
   "&APPID=" + 
   apiKey,
   function(data) {
-    console.log(data);
+    if(data.length === 0) {
+      renderError()
+    }
     let lat = data[0].lat;
     let lon = data[0].lon;
 
