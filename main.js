@@ -41,6 +41,17 @@ function changeIcon(weatherData) {//the '03d' and '03n' icons are blank white
 }
 
 
+function getDay (unixTime) {
+  let days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+
+  let weekDayNum = new Date(unixTime * 1000).getDay();
+
+  let day = days[weekDayNum];
+
+  return day;
+}
+
+
 function fetchCurrent (lat, lon) {
   $.get("https://api.openweathermap.org/data/2.5/weather?lat=" + lat + 
         "&lon=" + lon + 
@@ -49,7 +60,7 @@ function fetchCurrent (lat, lon) {
         "&units=imperial", 
         function(data) {
           data = changeIcon(data);
-          let compressedData = {condition: data.weather[0].main, temp: data.main.temp, iconUrl: 'http://openweathermap.org/img/wn/' + data.weather[0].icon + '@2x.png', day: "Today"}
+          let compressedData = {condition: data.weather[0].main, temp: data.main.temp, iconUrl: 'http://openweathermap.org/img/wn/' + data.weather[0].icon + '@2x.png', day: getDay(data.dt)}
 
           renderCurrentWeather(compressedData);
         })
@@ -72,10 +83,10 @@ function fetch5Day (lat, lon) {
 
           let compressedData = [
             {condition: day1.weather[0].main, temp: day1.main.temp, iconUrl: 'http://openweathermap.org/img/wn/' + day1.weather[0].icon + '@2x.png', day: "Today"},
-            {condition: day2.weather[0].main, temp: day2.main.temp, iconUrl: 'http://openweathermap.org/img/wn/' + day2.weather[0].icon + '@2x.png', day: "Today"},
-            {condition: day3.weather[0].main, temp: day3.main.temp, iconUrl: 'http://openweathermap.org/img/wn/' + day3.weather[0].icon + '@2x.png', day: "Today"},
-            {condition: day4.weather[0].main, temp: day4.main.temp, iconUrl: 'http://openweathermap.org/img/wn/' + day4.weather[0].icon + '@2x.png', day: "Today"},
-            {condition: day5.weather[0].main, temp: day5.main.temp, iconUrl: 'http://openweathermap.org/img/wn/' + day5.weather[0].icon + '@2x.png', day: "Today"}
+            {condition: day2.weather[0].main, temp: day2.main.temp, iconUrl: 'http://openweathermap.org/img/wn/' + day2.weather[0].icon + '@2x.png', day: getDay(day2.dt)},
+            {condition: day3.weather[0].main, temp: day3.main.temp, iconUrl: 'http://openweathermap.org/img/wn/' + day3.weather[0].icon + '@2x.png', day: getDay(day3.dt)},
+            {condition: day4.weather[0].main, temp: day4.main.temp, iconUrl: 'http://openweathermap.org/img/wn/' + day4.weather[0].icon + '@2x.png', day: getDay(day4.dt)},
+            {condition: day5.weather[0].main, temp: day5.main.temp, iconUrl: 'http://openweathermap.org/img/wn/' + day5.weather[0].icon + '@2x.png', day: getDay(day5.dt)}
           ]
           console.log(compressedData)
 
@@ -123,18 +134,3 @@ $('button.current-location').click(function () {
   
   
 })
-
-
-
-
-
-
-
-
-
-
-
-
-
-renderCurrentWeather({condition: 'clouds', temp: '58', iconUrl: 'http://openweathermap.org/img/wn/01d@2x.png', day: "Today"})
-render5DayWeather([{condition: 'clouds', temp: '58', iconUrl: 'http://openweathermap.org/img/wn/01d@2x.png', day: "Today"},{condition: 'clouds', temp: '58', iconUrl: 'http://openweathermap.org/img/wn/01d@2x.png', day: "Today"},{condition: 'clouds', temp: '58', iconUrl: 'http://openweathermap.org/img/wn/01d@2x.png', day: "Today"},{condition: 'clouds', temp: '58', iconUrl: 'http://openweathermap.org/img/wn/01d@2x.png', day: "Today"},{condition: 'clouds', temp: '58', iconUrl: 'http://openweathermap.org/img/wn/01d@2x.png', day: "Today"}])
