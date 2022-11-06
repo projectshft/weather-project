@@ -78,11 +78,13 @@
       </div>
     </main>
     <script id="current-template" type="text/x-handlebars-template">
-      <div class="col single-day-forecast">
-        <div class="condition">{{condition}}</div>
+      <div class="col-lg-2 offset-lg-4 justify- single-day-forecast">
         <div class="temp">{{temp}}°</div>
+        <div class="location">{{location}}</div>
+        <div class="condition">{{condition}}</div>
+      </div>
+      <div class="col-lg-2">
         <div class="condition-icon"><img src="{{iconUrl}}" /></div>
-        <div class="day">{{day}}</div>
       </div>
     </script>
     <script id="five-day-template" type="text/x-handlebars-template">

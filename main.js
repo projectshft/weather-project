@@ -60,7 +60,7 @@ function fetchCurrent (lat, lon) {
         "&units=imperial", 
         function(data) {
           data = changeIcon(data);
-          let compressedData = {condition: data.weather[0].main, temp: Math.round(data.main.temp), iconUrl: 'http://openweathermap.org/img/wn/' + data.weather[0].icon + '@2x.png', day: getDay(data.dt)}
+          let compressedData = {condition: data.weather[0].main, temp: Math.round(data.main.temp), iconUrl: 'http://openweathermap.org/img/wn/' + data.weather[0].icon + '@2x.png', location: data.name}
 
           renderCurrentWeather(compressedData);
         })
