@@ -75,20 +75,22 @@ function fetch5Day (lat, lon) {
 
         function(data) {
           data = changeIcon(data);
-          let day1 = data.list[0]
-          let day2 = data.list[8];
-          let day3 = data.list[16];
-          let day4 = data.list[24];
-          let day5 = data.list[32];
 
-          let compressedData = [
-            {condition: day1.weather[0].main, tempMin: Math.round(day1.main.temp_min), tempMax: Math.round(day1.main.temp_max), iconUrl: 'http://openweathermap.org/img/wn/' + day1.weather[0].icon + '@2x.png', day: "Today"},
-            {condition: day2.weather[0].main, tempMin: Math.round(day2.main.temp_min), tempMax: Math.round(day2.main.temp_max), iconUrl: 'http://openweathermap.org/img/wn/' + day2.weather[0].icon + '@2x.png', day: getDay(day2.dt)},
-            {condition: day3.weather[0].main, tempMin: Math.round(day3.main.temp_min), tempMax: Math.round(day3.main.temp_max), iconUrl: 'http://openweathermap.org/img/wn/' + day3.weather[0].icon + '@2x.png', day: getDay(day3.dt)},
-            {condition: day4.weather[0].main, tempMin: Math.round(day4.main.temp_min), tempMax: Math.round(day4.main.temp_max), iconUrl: 'http://openweathermap.org/img/wn/' + day4.weather[0].icon + '@2x.png', day: getDay(day4.dt)},
-            {condition: day5.weather[0].main, tempMin: Math.round(day5.main.temp_min), tempMax: Math.round(day5.main.temp_max), iconUrl: 'http://openweathermap.org/img/wn/' + day5.weather[0].icon + '@2x.png', day: getDay(day5.dt)}
-          ]
-          console.log(compressedData)
+          let days = [];
+          for(let i = 0; i < data.list.length; i += 8){//should be 5 days as long as 40 items are returned
+            days.push(data.list[i])
+          }
+         
+          let compressedData = []
+          days.forEach((day) => {
+            let dayObj = {condition: day.weather[0].main, 
+                          tempMin: Math.round(day.main.temp_min), 
+                          tempMax: Math.round(day.main.temp_max), 
+                          iconUrl: 'http://openweathermap.org/img/wn/' + day.weather[0].icon + '@2x.png', 
+                          day: getDay(day.dt)
+                        }
+            compressedData.push(dayObj);
+          })
 
           render5DayWeather(compressedData)
         });
