@@ -24,6 +24,7 @@ function render5DayWeather(data) {
 function renderError() {
   $(".current").empty();
   $(".five-day").empty();
+  $(".five-day").addClass('visually-hidden')
 
   $(".current").append(
     '<p class="error">There was an error, please try another search query.</p>'
