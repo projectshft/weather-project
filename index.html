@@ -84,7 +84,9 @@
             </form>
           </div>
         </div>
-        <div class="row current align-content-center"></div>
+        <div
+          class="row current d-flex align-items-center align-content-center"
+        ></div>
         <div
           class="row five-day align-content-center justify-content-md-center align-content-end visually-hidden"
         ></div>
@@ -94,10 +96,10 @@
       <div class="col-lg-2 offset-lg-4 justify- single-day-forecast">
         <div class="temp">{{temp}}°</div>
         <div class="location">{{location}}</div>
-        <div class="condition">{{condition}}</div>
       </div>
       <div class="col-lg-2">
         <div class="condition-icon"><img src="{{iconUrl}}" /></div>
+        <div class="condition">{{condition}}</div>
       </div>
     </script>
     <script id="five-day-template" type="text/x-handlebars-template">
