@@ -1,10 +1,14 @@
 body {
-  background-color: cornsilk;
+  background-color: hsl(214deg 41% 85%);
   height: 90vh;
 }
 
 .main-container {
   height: 95vh;
+}
+
+.search-form {
+  width: 100%;
 }
 
 .current {
@@ -14,6 +18,7 @@ body {
 .five-day {
   border: 1px solid black;
   height: 33%;
+  background-color: hsl(214deg 41% 75%);
 }
 
 .five-day-forecast {
