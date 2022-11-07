@@ -70,7 +70,7 @@ function fetchCurrent(lat, lon) {
   if(!lat || !lon) {
     renderError();
   }
-  
+
   $.get(
     "https://api.openweathermap.org/data/2.5/weather?lat=" +
       lat +
@@ -176,7 +176,7 @@ $("#search-button").click(function () {
   }
 });
 
-$("button.current-location").click(function () {
+$(".current-location").click(function () {
   $(".five-day").removeClass("visually-hidden");
 
   let lon = null;
