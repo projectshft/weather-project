@@ -19,6 +19,7 @@ function getImageData(lat, lon, radius) {
 
   $.get(searchParams, function (data) {
     let photos = data.photos.photo;
+    
     let serverId = photos[0].server;
     let serverId2 = photos[1].server;
 
@@ -40,18 +41,3 @@ function getImageUrl(serverId, photoId, secret, size = "") {
   renderImage(url);
 }
 
-function renderImageLeft(serverId, photoId, secret, size = "") {
-  let imageOrigin = "https://live.staticflickr.com/";
-  let url =
-    imageOrigin + serverId + "/" + photoId + "_" + secret + size + ".jpg";
-  $(".left-of-search").empty();
-  $(".left-of-search").append('<img src="' + url + '"/>');
-}
-
-function renderImageRight(serverId, photoId, secret, size = "") {
-  let imageOrigin = "https://live.staticflickr.com/";
-  let url =
-    imageOrigin + serverId + "/" + photoId + "_" + secret + size + ".jpg";
-  $(".right-of-search").empty();
-  $(".right-of-search").append('<img src="' + url + '"/>');
-}
