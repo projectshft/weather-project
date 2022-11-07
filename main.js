@@ -67,6 +67,10 @@ function getDay(unixTime) {
 }
 
 function fetchCurrent(lat, lon) {
+  if(!lat || !lon) {
+    renderError();
+  }
+  
   $.get(
     "https://api.openweathermap.org/data/2.5/weather?lat=" +
       lat +
@@ -98,6 +102,10 @@ function fetchCurrent(lat, lon) {
 }
 
 function fetch5Day(lat, lon) {
+  if(!lat || !lon) {
+    renderError();
+  }
+
   $.get(
     "https://api.openweathermap.org/data/2.5/forecast?lat=" +
       lat +
