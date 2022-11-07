@@ -2,6 +2,16 @@
   font-family: "Raleway", sans-serif;
 }
 
+.btn {
+  background-color: hsl(214deg 41% 75%);
+}
+
+.btn:hover {
+  background-color: hsl(214deg 41% 75%);
+  font-weight: 700;
+  box-shadow: 2px 2px 4px;
+}
+
 body {
   background-color: hsl(214deg 41% 85%);
   height: 90vh;

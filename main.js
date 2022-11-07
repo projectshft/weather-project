@@ -166,9 +166,12 @@ function fetchCoordinates(query) {
   );
 }
 
-$("#search-button").click(function () {
+$("#search-button").click(function (e) {
   let query = $("#search-query").val();
 
+  e.preventDefault();
+  $("#search-query").val('');
+  
   if (query) {
     $(".five-day").removeClass("visually-hidden");
 
