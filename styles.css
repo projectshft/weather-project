@@ -2,6 +2,10 @@
   font-family: "Raleway", sans-serif;
 }
 
+.logo-image {
+  max-height: 100px;
+}
+
 .btn {
   background-color: hsl(214deg 41% 75%);
 }

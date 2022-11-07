@@ -32,21 +32,6 @@ function renderError() {
   );
 }
 
-function changeIcon(weatherData) {
-  //the '03d' and '03n' icons are blank white
-  if (weatherData.list) {
-    weatherData.list.forEach((data) => {
-      if (data.weather[0].icon.includes("03")) {
-        data.weather[0].icon = "04d";
-      }
-    });
-  } else {
-    if (weatherData.weather[0].icon.includes("03")) {
-      weatherData.weather[0].icon = "04d";
-    }
-  }
-  return weatherData;
-}
 
 function getDay(unixTime) {
   let days = [
@@ -161,7 +146,7 @@ function fetchCoordinates(query) {
 
       fetchCurrent(lat, lon);
       fetch5Day(lat, lon);
-      getImageData(0, lat, lon, 30);
+      getImageData(lat, lon, 32);
     }
   );
 }
@@ -192,6 +177,6 @@ $(".current-location").click(function () {
 
     fetchCurrent(lat, lon);
     fetch5Day(lat, lon);
-    getImageData(0, lat, lon, 30);
+    getImageData(lat, lon, 30);
   });
 });
