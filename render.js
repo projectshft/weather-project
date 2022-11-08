@@ -1,4 +1,4 @@
-function renderCurrentWeather(data) {
+function renderCurrentWeather(data) {//takes and object that represents 1 day of weather
   $(".current").empty();
 
   let source = $("#current-template").html();
@@ -8,7 +8,7 @@ function renderCurrentWeather(data) {
   $(".current").append(html);
 }
 
-function render5DayWeather(data) {
+function render5DayWeather(data) {//takes an array with 5 objects each containing a day of weather
   $(".five-day").empty();
 
   let source = $("#five-day-template").html();
