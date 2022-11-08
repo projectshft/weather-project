@@ -5,7 +5,7 @@ var lat;
 var currentWeather;
 var forecasts = [];
 
-const week = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+const week = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 
 function renderWeather(){
         var source = $('#weather-template').html()
@@ -39,15 +39,15 @@ function showWeather(data){
 
 function showFiveDayForecast(data){
     forecasts.splice(0,forecasts.length)
-    console.log(data)
     for (let i = 7; i < 41; i += 8) {
         var currentDay = data.list[i] || {};
-        dayNumber = new Date(currentDay.dt * 1000).getDay()-1
+        dayNumber = new Date(currentDay.dt * 1000).getDay()
+        console.log(dayNumber)
         var forecast = {
             forecastedTemperature: Math.floor(currentDay.main.temp)+'°' || null,
             main : currentDay.weather[0].main || null,
             forecastedIcon : currentDay.weather[0].icon || null,
-            day: week[dayNumber] || null
+            day: week[dayNumber]
                 }
                 forecasts.push(forecast)
 
