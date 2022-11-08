@@ -21,6 +21,6 @@ $(".current-location").click(function () {
 
     fetchCurrent(lat, lon);
     fetch5Day(lat, lon);
-    getImageData(lat, lon, 30);
+    getImageData(lat, lon, 32);
   });
 });
