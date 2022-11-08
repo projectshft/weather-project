@@ -1,0 +1,10 @@
+.box {
+  border: 1px solid black;
+  text-align: center;
+  padding-top: 10px;
+}
+
+.results {
+  text-align: center;
+  align-items: center;
+}
