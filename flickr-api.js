@@ -33,11 +33,3 @@ function getImageData(lat, lon, radius) {
     renderImageRight(serverId2, photoId2, secret2, "_q");
   });
 }
-
-function getImageUrl(serverId, photoId, secret, size = "") {
-  let imageOrigin = "https://live.staticflickr.com/";
-  let url =
-    imageOrigin + serverId + "/" + photoId + "_" + secret + size + ".jpg";
-  renderImage(url);
-}
-
