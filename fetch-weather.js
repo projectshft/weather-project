@@ -21,6 +21,7 @@ function fetchCoordinates(query) {
   );
 }
 
+
 function fetchCurrent(lat, lon) {
   if (-90 <= lat && lat <= 90 && -180 <= lon && lon <= 180) {
     renderError();
@@ -53,6 +54,7 @@ function fetchCurrent(lat, lon) {
     }
   );
 }
+
 
 function fetch5Day(lat, lon) {
   if (-90 <= lat && lat <= 90 && -180 <= lon && lon <= 180) {
@@ -97,6 +99,7 @@ function fetch5Day(lat, lon) {
     }
   );
 }
+
 
 function getDayName(unixTime) {
   let days = [

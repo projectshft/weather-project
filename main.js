@@ -11,6 +11,7 @@ $("#search-button").click(function (e) {
   }
 });
 
+
 $(".current-location").click(function () {
   $(".five-day").removeClass("visually-hidden");
  

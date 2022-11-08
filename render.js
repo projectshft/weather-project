@@ -8,6 +8,7 @@ function renderCurrentWeather(data) {//takes and object that represents 1 day of
   $(".current").append(html);
 }
 
+
 function render5DayWeather(data) {//takes an array with 5 objects each containing a day of weather
   $(".five-day").empty();
 
@@ -21,6 +22,7 @@ function render5DayWeather(data) {//takes an array with 5 objects each containin
   });
 }
 
+
 function renderError() {
   $(".current").empty();
   $(".five-day").empty();
@@ -31,6 +33,7 @@ function renderError() {
   );
 }
 
+
 function renderImageLeft(serverId, photoId, secret, size = "") {
   let imageOrigin = "https://live.staticflickr.com/";
   let url =
@@ -38,6 +41,7 @@ function renderImageLeft(serverId, photoId, secret, size = "") {
   $(".left-of-search").empty();
   $(".left-of-search").append('<img src="' + url + '"/>');
 }
+
 
 function renderImageRight(serverId, photoId, secret, size = "") {
   let imageOrigin = "https://live.staticflickr.com/";
