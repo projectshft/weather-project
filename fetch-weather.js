@@ -23,8 +23,10 @@ function fetchCoordinates(query) {
 
 
 function fetchCurrent(lat, lon) {
-  if (-90 <= lat && lat <= 90 && -180 <= lon && lon <= 180) {
+  if (!(-90 <= lat && lat <= 90 && -180 <= lon && lon <= 180)) {
+    
     renderError();
+    console.log(":(")
   }
 
   $.get(
@@ -57,7 +59,7 @@ function fetchCurrent(lat, lon) {
 
 
 function fetch5Day(lat, lon) {
-  if (-90 <= lat && lat <= 90 && -180 <= lon && lon <= 180) {
+  if (!(-90 <= lat && lat <= 90 && -180 <= lon && lon <= 180)) {
     renderError();
   }
 
