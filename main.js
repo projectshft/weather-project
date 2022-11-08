@@ -1,30 +1,27 @@
-
 var lon;
 var lat;
-
 var currentWeather;
 var forecasts = [];
 
-const week = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
-
 function renderWeather(){
         var source = $('#weather-template').html()
-        var template = Handlebars.compile(source)
-        var newHTML = template(currentWeather)
-        $('.results').html(newHTML)
+        $('.results').html('')
+        renderHandlebars(source, currentWeather, $('.results'))
 }
 
 function renderForecast(){
     $('.forecast').html('')
-    $('.forecast-header').html('')
-    $('.forecast-header').prepend('<h3>5 day forecast:</h3>')
+    $('.forecast-header').html('<h3>5 day forecast:</h3>')
     for (let i = 0; i < forecasts.length; i++) {
     var source = $('#forecast-template').html()
-    var template = Handlebars.compile(source)
-    var newHTML = template(forecasts[i])
-    $('.forecast').append(newHTML)
+    renderHandlebars(source, forecasts[i], $('.forecast'))
         }
+}
 
+function renderHandlebars(source, data, destination){
+  var template = Handlebars.compile(source)
+  var newHTML = template(data)
+  destination.append(newHTML)
 }
 
 function showWeather(data){
@@ -39,24 +36,28 @@ function showWeather(data){
 
 function showFiveDayForecast(data){
     forecasts.splice(0,forecasts.length)
-    for (let i = 7; i < 41; i += 8) {
+    console.log(data)
+    var oneDay = 8;
+    var tomorrow = 7;
+    for (let i = tomorrow; i < data.list.length+1; i += oneDay) {
         var currentDay = data.list[i] || {};
-        dayNumber = new Date(currentDay.dt * 1000).getDay()
-        console.log(dayNumber)
         var forecast = {
             forecastedTemperature: Math.floor(currentDay.main.temp)+'°' || null,
             main : currentDay.weather[0].main || null,
             forecastedIcon : currentDay.weather[0].icon || null,
-            day: week[dayNumber]
+            day: unixToWeekday(currentDay.dt) || null
                 }
-                forecasts.push(forecast)
-
-            }
-            renderForecast()
-        }
+      forecasts.push(forecast)
+    }
+    renderForecast()
+  }
         
-
-
+function unixToWeekday(unix){
+  const week = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+  const weekday = week[new Date (unix * 1000).getDay()]
+  return weekday
+}
+        
 function getCoordinates(data){
     lat = data[0].lat
     lon = data[0].lon
@@ -64,9 +65,7 @@ function getCoordinates(data){
     fetchFiveDayForecast(lat, lon)
 }
 
-
 var fetchCoordinates = function (query) {
-    
     $.ajax({
       method: "GET",
       url: "http://api.openweathermap.org/geo/1.0/direct?q="+query+"&limit=5&appid=edab4a2d7f22f4130c4959004a7fb76c",
@@ -79,8 +78,6 @@ var fetchCoordinates = function (query) {
       }
     });
   };
-
-
 
 var fetchWeather = function (lat, lon) {
     
@@ -114,7 +111,5 @@ var fetchWeather = function (lat, lon) {
 
 
   $('.search').on('click', function () {
-    var city = $('#search-query').val();
-  
-    fetchCoordinates(city);
+    fetchCoordinates($('#search-query').val());
   });
