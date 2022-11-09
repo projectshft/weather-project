@@ -1,8 +1,3 @@
-// Start with the search query and sending the results to a fetch.
-// Find a way to convert city to geo cordinates for api search.
-// Once qpi query is fully functional, build handlebars template.
-// In .card-weather, we will attach .card-body with handlebars.
-
 var currentWeather = [];
 var weeklyWeather = [];
 var totals = [];
