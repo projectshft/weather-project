@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/3.6.95/css/materialdesignicons.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="style.css" />
+
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="page-header">
+      <h1>Weather Project</h1>
+      <hr />
+    </div>
+    <div class="search-area mx-auto">
+      <nav class="navbar navbar-light bg-light">
+        <form class="form-inline">
+          <input
+            class="form-control form-control-lg city-search"
+            type="search"
+            placeholder="Enter City Name Here"
+            aria-label="Search"
+          />
+          <button
+            class="btn btn-outline-success my-2 my-sm-0 search-btn"
+            type="button"
+          >
+            Search
+          </button>
+        </form>
+      </nav>
+    </div>
+    <div class="page-content page-container" id="page-content">
+      <div class="padding">
+        <div class="row container d-flex mx-auto justify-content-center">
+          <div class="col-lg-8 grid-margin stretch-card">
+            <!--weather card-->
+
+            <!-- dynamic content should be here -->
+
+            <!--weather card ends-->
+          </div>
+        </div>
+      </div>
+
+      <script id="weather-template" type="text/x-handlebars-template">
+        <div>
+          <div class="card card-weather">
+            <div class="card-body">
+              <div class="weather-date-location">
+                <!-- <h3>Friday</h3> -->
+                <p class="text-gray">
+                  <!-- <span class="weather-date">25 March, 2019</span> -->
+                  <span class="weather-location"> {{city}} </span>
+                </p>
+              </div>
+              <div class="weather-data d-flex">
+                <div class="mr-auto">
+                  <h4 class="display-3">
+                    {{temperature}}
+                    <span class="symbol">&deg;</span>F
+                  </h4>
+                  <img src={{icon_url}}></img>
+                </div>
+              </div>
+      </script>
+      <script id="other-template" type="text/x-handlebars-template">
+            <div class="card card-weather">
+            <div class="d-flex weakly-weather">
+              <div class="weakly-weather-item">
+                <p class="mb-0">{{day0}}</p>
+
+                <img src="{{forecast_url0}}">
+                <p class="mb-0">{{temp0}}&deg;</p>
+              </div>
+              <div class="weakly-weather-item">
+                <p class="mb-1">{{day1}}</p>
+
+                <img src="{{forecast_url1}}">
+                <p class="mb-0">{{temp1}}&deg;</p>
+              </div>
+              <div class="weakly-weather-item">
+                <p class="mb-1">{{day2}}</p>
+
+                <img src="{{forecast_url2}}">
+                <p class="mb-0">{{temp2}}&deg;</p>
+              </div>
+              <div class="weakly-weather-item">
+                <p class="mb-1">{{day3}}</p>
+                <img src="{{forecast_url3}}">
+                <p class="mb-0">{{temp3}}&deg;</p>
+              </div>
+              <div class="weakly-weather-item">
+                <p class="mb-1">{{day4}}</p>
+
+                <img src="{{forecast_url4}}">
+                <p class="mb-0">{{temp4}}&deg;</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </script>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
+    <script type="text/javascript" src="config.js"></script>
+    <script src="main.js"></script>
+  </body>
+</html>
