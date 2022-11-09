@@ -19,6 +19,15 @@ $(".search-btn").click(function () {
   $(".city-search").val("");
 });
 
+$(document).ready(function () {
+  $(".city-search").keydown(function (event) {
+    if (event.keyCode == 13) {
+      event.preventDefault();
+      return false;
+    }
+  });
+});
+
 function getDayName(dateStr, locale) {
   var date = new Date(dateStr);
   return date.toLocaleDateString(locale, { weekday: "long" });
