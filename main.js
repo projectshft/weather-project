@@ -1,6 +1,5 @@
 var currentWeather = [];
 var weeklyWeather = [];
-
 let firstday = "";
 let secondDay = "";
 let thirdDay = "";
@@ -12,6 +11,7 @@ let day2 = "";
 let day3 = "";
 let day4 = "";
 
+// User input will be sent to the API request functions for fetchCurrent weather and fetchWeekly weather.
 $(".search-btn").click(function () {
   var search = $(".city-search").val();
   fetchCurrent(search);
@@ -19,6 +19,7 @@ $(".search-btn").click(function () {
   $(".city-search").val("");
 });
 
+// Prevents refreshing of page when pressing enter.
 $(document).ready(function () {
   $(".city-search").keydown(function (event) {
     if (event.keyCode == 13) {
@@ -28,6 +29,7 @@ $(document).ready(function () {
   });
 });
 
+// Convert the timestamp of each entry into a weekday format.
 function getDayName(dateStr, locale) {
   var date = new Date(dateStr);
   return date.toLocaleDateString(locale, { weekday: "long" });
@@ -44,7 +46,7 @@ const forecastBuilder = function (weeklyWeatherData) {
   day3 = getDayName(weeklyWeatherData.list[24].dt_txt);
   day4 = getDayName(weeklyWeatherData.list[32].dt_txt);
 
-  // icon retriever.
+  // weather icon retriever
   let weather0 = weeklyWeatherData.list[0].weather[0].icon;
   firstday = `http://openweathermap.org/img/wn/${weather0}@2x.png`;
   let weather1 = weeklyWeatherData.list[8].weather[0].icon;
@@ -61,14 +63,13 @@ const forecastBuilder = function (weeklyWeatherData) {
     var weatherTemps = weeklyWeatherData.list[i].main.temp;
 
     totalTemps.push(weatherTemps);
-
-    // console.log(weatherTemps);
   }
-  // console.log(firstday);
-  // this function will take the totalTemps array from above and store them into 5 sets of 8 data entries in the dailyTemps array.
 
+  // This function will take the raw weather data in the totalTemps array and sort them into 5 day averages.
   sliceIntoChunks(totalTemps, 8);
 };
+
+// This is the function sorting the totalTemps array into 5 day averages.
 function sliceIntoChunks(arr, chunkSize) {
   // resets the weekly forecast from previous search.
   var dailyTemps = [];
@@ -78,8 +79,6 @@ function sliceIntoChunks(arr, chunkSize) {
     const chunk = arr.slice(i, i + chunkSize);
     dailyTemps.push(chunk);
   }
-
-  // console.log(dailyTemps);
 
   // a nested for loop will be utilized to iterate through the 8 entries and calculate the average. The results will be pushed into totals array hoisted at the start of the code.
   for (let j = 0; j < dailyTemps.length; j++) {
@@ -94,47 +93,56 @@ function sliceIntoChunks(arr, chunkSize) {
   }
   // The totals array will be sent as an argument for the weekBuilder function.
   weekBuilder(totals);
-
-  console.log(totals);
-  // renderWeeklyWeather(totals);
 }
+
 // weekBuilder will build the weekly weather.
 const weekBuilder = function (array) {
   weeklyWeather = [];
+
   weeklyWeather.push({
     temp0: array[0],
     temp1: array[1],
     temp2: array[2],
     temp3: array[3],
     temp4: array[4],
-    forecast_url0: firstday,
     day0: day0,
     day1: day1,
     day2: day2,
     day3: day3,
     day4: day4,
+    forecast_url0: firstday,
     forecast_url1: secondDay,
     forecast_url2: thirdDay,
     forecast_url3: fourthDay,
     forecast_url4: fifthDay,
-    // day0: getDayName(),
   });
-
   // We have now built an object inside the weeklyWeather array and will send it to the renderWeeklyWeather function.
   renderWeeklyWeather(weeklyWeather);
 };
 
-// Builds the current weather
+// this handlebars function will append the dynamic 5-day forecast HTML to the page.
+const renderWeeklyWeather = function (array) {
+  for (let i = 0; i < array.length; i++) {
+    const element = array[i];
+    var source = $("#other-template").html();
+    var otherTemplate = Handlebars.compile(source);
+    var forecast = otherTemplate(element);
+    $(".stretch-card").append(forecast);
+  }
+};
+
+// API query will send the data to this function that builds the currentWeather object.
 const weatherBuilder = function (currentWeatherData) {
   currentWeather = [];
   const currentTemp = Math.floor(currentWeatherData.main.temp);
-  // possible refactor here. currentTemp is not being used how it should to build the object.
-  currentWeather.push({
-    city: currentWeatherData.name,
-    temperature: currentTemp,
-    icon_url: `http://openweathermap.org/img/wn/${currentWeatherData.weather[0].icon}@2x.png`,
-  });
+  const currentCity = currentWeatherData.name;
+  const imageIcon = `http://openweathermap.org/img/wn/${currentWeatherData.weather[0].icon}@2x.png`;
 
+  currentWeather.push({
+    city: currentCity,
+    temperature: currentTemp,
+    icon_url: imageIcon,
+  });
   // We have now built an object inside the currentWeather array and will send it to the renderWeather function.
   renderWeather(currentWeather);
 };
@@ -144,7 +152,6 @@ const renderWeather = function (currentWeather) {
   $(".stretch-card").empty();
   for (let i = 0; i < currentWeather.length; i++) {
     const weather = currentWeather[i];
-    // #weather-template is the id of the handelbars script in the HTML.
     var source = $("#weather-template").html();
     var template = Handlebars.compile(source);
     var newWeather = template(weather);
@@ -152,18 +159,7 @@ const renderWeather = function (currentWeather) {
   }
 };
 
-// handlebars function for the weekly weather
-const renderWeeklyWeather = function (array) {
-  for (let i = 0; i < array.length; i++) {
-    const element = array[i];
-    // console.log(element);
-    // #other-template is the id of the second handlebars script in the HTML.
-    var source = $("#other-template").html();
-    var otherTemplate = Handlebars.compile(source);
-    var forecast = otherTemplate(element);
-    $(".stretch-card").append(forecast);
-  }
-};
+// <------  These are the API request functions for both the current weather and the weekly weather. ------>
 
 // Queries the current weather
 const myApiKey = config.MY_API_KEY;
@@ -181,7 +177,7 @@ var fetchCurrent = function (search) {
   });
 };
 
-// Queries the weekly forecast
+// Queries the weekly weather
 var fetchWeekly = function (search) {
   $.ajax({
     method: "GET",
