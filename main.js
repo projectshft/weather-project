@@ -1,20 +1,20 @@
 var currentWeather = [];
 var weeklyWeather = [];
-let firstday = "";
-let secondDay = "";
-let thirdDay = "";
-let fourthDay = "";
-let fifthDay = "";
-let day0 = "";
-let day1 = "";
-let day2 = "";
-let day3 = "";
-let day4 = "";
-let condition0 = "";
-let condition1 = "";
-let condition2 = "";
-let condition3 = "";
-let condition4 = "";
+var firstday = "";
+var secondDay = "";
+var thirdDay = "";
+var fourthDay = "";
+var fifthDay = "";
+var day0 = "";
+var day1 = "";
+var day2 = "";
+var day3 = "";
+var day4 = "";
+var condition0 = "";
+var condition1 = "";
+var condition2 = "";
+var condition3 = "";
+var condition4 = "";
 
 // User input will be sent to the API request functions for fetchCurrent weather and fetchWeekly weather.
 $(".search-btn").click(function () {
@@ -52,23 +52,23 @@ const forecastBuilder = function (weeklyWeatherData) {
   day4 = getDayName(weeklyWeatherData.list[32].dt_txt);
 
   // weather icon retriever
-  let weather0 = weeklyWeatherData.list[0].weather[0].icon;
+  var weather0 = weeklyWeatherData.list[0].weather[0].icon;
   firstday = `http://openweathermap.org/img/wn/${weather0}@2x.png`;
   condition0 = weeklyWeatherData.list[0].weather[0].description;
 
-  let weather1 = weeklyWeatherData.list[8].weather[0].icon;
+  var weather1 = weeklyWeatherData.list[8].weather[0].icon;
   secondDay = `http://openweathermap.org/img/wn/${weather1}@2x.png`;
   condition1 = weeklyWeatherData.list[8].weather[0].description;
 
-  let weather2 = weeklyWeatherData.list[16].weather[0].icon;
+  var weather2 = weeklyWeatherData.list[16].weather[0].icon;
   thirdDay = `http://openweathermap.org/img/wn/${weather2}@2x.png`;
   condition2 = weeklyWeatherData.list[16].weather[0].description;
 
-  let weather3 = weeklyWeatherData.list[24].weather[0].icon;
+  var weather3 = weeklyWeatherData.list[24].weather[0].icon;
   fourthDay = `http://openweathermap.org/img/wn/${weather3}@2x.png`;
   condition3 = weeklyWeatherData.list[24].weather[0].description;
 
-  let weather4 = weeklyWeatherData.list[32].weather[0].icon;
+  var weather4 = weeklyWeatherData.list[32].weather[0].icon;
   fifthDay = `http://openweathermap.org/img/wn/${weather4}@2x.png`;
   condition4 = weeklyWeatherData.list[32].weather[0].description;
 
@@ -87,7 +87,7 @@ const forecastBuilder = function (weeklyWeatherData) {
 function sliceIntoChunks(arr, chunkSize) {
   // resets the weekly forecast from previous search.
   var dailyTemps = [];
-  let totals = [];
+  var totals = [];
 
   for (let i = 0; i < arr.length; i += chunkSize) {
     const chunk = arr.slice(i, i + chunkSize);
@@ -96,11 +96,11 @@ function sliceIntoChunks(arr, chunkSize) {
 
   // a nested for loop will be utilized to iterate through the 8 entries and calculate the average. The results will be pushed into totals array hoisted at the start of the code.
   for (let j = 0; j < dailyTemps.length; j++) {
-    let total = 0;
-    let element = dailyTemps[j];
+    var total = 0;
+    var element = dailyTemps[j];
 
     for (let k = 0; k < element.length; k++) {
-      let otherElement = element[k];
+      var otherElement = element[k];
       total += otherElement;
     }
     totals.push(Math.floor(total / 8));
