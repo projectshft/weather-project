@@ -1,16 +1,16 @@
 var currentWeather = [];
 var weeklyWeather = [];
 var totals = [];
-let firstday = ``;
-let secondDay = ``;
-let thirdDay = ``;
-let fourthDay = ``;
-let fifthDay = ``;
-let day0 = ``;
-let day1 = ``;
-let day2 = ``;
-let day3 = ``;
-let day4 = ``;
+let firstday = "";
+let secondDay = "";
+let thirdDay = "";
+let fourthDay = "";
+let fifthDay = "";
+let day0 = "";
+let day1 = "";
+let day2 = "";
+let day3 = "";
+let day4 = "";
 
 $(".search-btn").click(function () {
   var search = $(".city-search").val();
