@@ -1,6 +1,6 @@
 var currentWeather = [];
 var weeklyWeather = [];
-var totals = [];
+
 let firstday = "";
 let secondDay = "";
 let thirdDay = "";
@@ -36,7 +36,6 @@ function getDayName(dateStr, locale) {
 // Crunches the api weather data of 40 entries into 5-day averages.
 const forecastBuilder = function (weeklyWeatherData) {
   var totalTemps = [];
-  var dailyTemps = [];
 
   // getDayName converter for the current day of the week.
   day0 = getDayName(weeklyWeatherData.list[0].dt_txt);
@@ -67,36 +66,38 @@ const forecastBuilder = function (weeklyWeatherData) {
   }
   // console.log(firstday);
   // this function will take the totalTemps array from above and store them into 5 sets of 8 data entries in the dailyTemps array.
-  function sliceIntoChunks(arr, chunkSize) {
-    // resets the weekly forecast from previous search.
-    totals = [];
-
-    for (let i = 0; i < arr.length; i += chunkSize) {
-      const chunk = arr.slice(i, i + chunkSize);
-      dailyTemps.push(chunk);
-    }
-    // console.log(dailyTemps);
-
-    // a nested for loop will be utilized to iterate through the 8 entries and calculate the average. The results will be pushed into totals array hoisted at the start of the code.
-    for (let j = 0; j < dailyTemps.length; j++) {
-      let total = 0;
-      let element = dailyTemps[j];
-
-      for (let k = 0; k < element.length; k++) {
-        let otherElement = element[k];
-        total += otherElement;
-      }
-      totals.push(Math.floor(total / 8));
-    }
-    // The totals array will be sent as an argument for the weekBuilder function.
-    weekBuilder(totals);
-    // console.log(totals);
-    // renderWeeklyWeather(totals);
-  }
 
   sliceIntoChunks(totalTemps, 8);
 };
+function sliceIntoChunks(arr, chunkSize) {
+  // resets the weekly forecast from previous search.
+  var dailyTemps = [];
+  let totals = [];
 
+  for (let i = 0; i < arr.length; i += chunkSize) {
+    const chunk = arr.slice(i, i + chunkSize);
+    dailyTemps.push(chunk);
+  }
+
+  // console.log(dailyTemps);
+
+  // a nested for loop will be utilized to iterate through the 8 entries and calculate the average. The results will be pushed into totals array hoisted at the start of the code.
+  for (let j = 0; j < dailyTemps.length; j++) {
+    let total = 0;
+    let element = dailyTemps[j];
+
+    for (let k = 0; k < element.length; k++) {
+      let otherElement = element[k];
+      total += otherElement;
+    }
+    totals.push(Math.floor(total / 8));
+  }
+  // The totals array will be sent as an argument for the weekBuilder function.
+  weekBuilder(totals);
+
+  console.log(totals);
+  // renderWeeklyWeather(totals);
+}
 // weekBuilder will build the weekly weather.
 const weekBuilder = function (array) {
   weeklyWeather = [];
