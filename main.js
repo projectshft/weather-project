@@ -10,6 +10,11 @@ let day1 = "";
 let day2 = "";
 let day3 = "";
 let day4 = "";
+let condition0 = "";
+let condition1 = "";
+let condition2 = "";
+let condition3 = "";
+let condition4 = "";
 
 // User input will be sent to the API request functions for fetchCurrent weather and fetchWeekly weather.
 $(".search-btn").click(function () {
@@ -49,14 +54,23 @@ const forecastBuilder = function (weeklyWeatherData) {
   // weather icon retriever
   let weather0 = weeklyWeatherData.list[0].weather[0].icon;
   firstday = `http://openweathermap.org/img/wn/${weather0}@2x.png`;
+  condition0 = weeklyWeatherData.list[0].weather[0].description;
+
   let weather1 = weeklyWeatherData.list[8].weather[0].icon;
   secondDay = `http://openweathermap.org/img/wn/${weather1}@2x.png`;
+  condition1 = weeklyWeatherData.list[8].weather[0].description;
+
   let weather2 = weeklyWeatherData.list[16].weather[0].icon;
   thirdDay = `http://openweathermap.org/img/wn/${weather2}@2x.png`;
+  condition2 = weeklyWeatherData.list[16].weather[0].description;
+
   let weather3 = weeklyWeatherData.list[24].weather[0].icon;
   fourthDay = `http://openweathermap.org/img/wn/${weather3}@2x.png`;
+  condition3 = weeklyWeatherData.list[24].weather[0].description;
+
   let weather4 = weeklyWeatherData.list[32].weather[0].icon;
   fifthDay = `http://openweathermap.org/img/wn/${weather4}@2x.png`;
+  condition4 = weeklyWeatherData.list[32].weather[0].description;
 
   // this for loop iterates through the 40 entries and stores them in the totalTemps array.
   for (let i = 0; i < weeklyWeatherData.list.length; i++) {
@@ -106,6 +120,11 @@ const weekBuilder = function (array) {
     temp3: array[3],
     temp4: array[4],
     day0: day0,
+    skies0: condition0,
+    skies1: condition1,
+    skies2: condition2,
+    skies3: condition3,
+    skies4: condition4,
     day1: day1,
     day2: day2,
     day3: day3,
@@ -137,11 +156,13 @@ const weatherBuilder = function (currentWeatherData) {
   const currentTemp = Math.floor(currentWeatherData.main.temp);
   const currentCity = currentWeatherData.name;
   const imageIcon = `http://openweathermap.org/img/wn/${currentWeatherData.weather[0].icon}@2x.png`;
+  const currentCondition = currentWeatherData.weather[0].description;
 
   currentWeather.push({
     city: currentCity,
     temperature: currentTemp,
     icon_url: imageIcon,
+    skies: currentCondition,
   });
   // We have now built an object inside the currentWeather array and will send it to the renderWeather function.
   renderWeather(currentWeather);
