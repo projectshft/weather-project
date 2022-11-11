@@ -1,0 +1,27 @@
+.page-header {
+  text-align: center;
+  margin-top: 40px;
+}
+
+.container {
+  margin-bottom: 70px;
+}
+
+.city {
+  margin-bottom: 30px;
+  justify-content: center;
+}
+
+.icon {
+  display: flex;
+  justify-content: center;
+}
+
+.forecast {
+  text-align: center;
+  margin-top: 60px;
+}
+
+.border {
+  border: rgba(0, 0, 0, 0.1) solid 1px;
+}
