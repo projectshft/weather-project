@@ -12,7 +12,8 @@
   justify-content: center;
 }
 
-.icon {
+.icon,
+.forecasts {
   display: flex;
   justify-content: center;
 }

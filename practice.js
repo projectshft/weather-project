@@ -124,66 +124,7 @@
 
 
 
-//   let datas = {
-//     "coord": {
-//     "lon": -97.7431,
-//     "lat": 30.2672
-//     },
-//     "weather": [
-//     {
-//     "id": 804,
-//     "main": "Clouds",
-//     "description": "overcast clouds",
-//     "icon": "04d"
-//     }
-//     ],
-//     "base": "stations",
-//     "main": {
-//     "temp": 80.01,
-//     "feels_like": 82.6,
-//     "temp_min": 77.49,
-//     "temp_max": 82.85,
-//     "pressure": 1011,
-//     "humidity": 67
-//     },
-//     "visibility": 10000,
-//     "wind": {
-//     "speed": 12.66,
-//     "deg": 190
-//     },
-//     "clouds": {
-//     "all": 100
-//     },
-//     "dt": 1668109650,
-//     "sys": {
-//     "type": 2,
-//     "id": 2003218,
-//     "country": "US",
-//     "sunrise": 1668084750,
-//     "sunset": 1668123445
-//     },
-//     "timezone": -21600,
-//     "id": 4671654,
-//     "name": "Austin",
-//     "cod": 200
-//     }
 
-   
-//     console.log(datas);
-//     console.log(datas.name);
-
-
-//     for (let i = 0; i < datas.weather.length; i++) {
-//       const element = datas.weather[i];
-//       console.log(element.main);
-//     }
-
-    // for (let i = 0; i < datas.weather.length; i++) {
-    //   const element = datas.weather[i];
-    //   console.log(element.main);
-    // }
-
-    // console.log(datas.main.temp);
 
 
 
@@ -243,6 +184,7 @@
     console.log('click');
   
     fetch(city);
+
     $('#search.query').empty();
   
   })
@@ -300,6 +242,131 @@
       var template = Handlebars.compile(source);
       var newHTML = template(location);
       $('.cities').append(newHTML);
+
+    }
+    clearSearch();
+  };
+  
+  renderCity();
+
+
+
+
+//-------------------------------------------------------------------------------------------------------------------------------------------------------//
+
+
+
+
+
+
+
+
+
+  $('.search').on('click', function(e) {
+    e.preventDefault();
+    let city = $('#search-query').val();
+    console.log('click');
+  
+    fetch(city);
+    fetchForecast(city);
+    $('#search.query').empty();
+  
+  })
+  
+  
+  var addCity = function (data) {
+    cities = [];
+  
+    let location = {
+      city: data.name,
+      temp: data.main.temp + ' °'
+    };
+  
+    for (let i = 0; i < data.weather.length; i++) {
+      const element = data.weather[i];
+      let icon = element.icon;
+      location.main = element.main;
+      location.icon = `https://openweathermap.org/img/wn/${icon}@2x.png`;
+    }
+  
+    cities.push(location);
+  
+    renderCity();
+  };
+
+
+  var addCityForecast = function (data) {
+    forecasts = [];
+  
+    let location = {};
+
+    
+
+  };
+
+
+
+  
+  var fetch = function (city) {
+    $.ajax({
+      method: 'GET',
+      url: `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=fd29eda782d2ed239fe8bc7bac217402&units=imperial`,
+      dataType: 'json',
+      success: function (data) {
+        addCity(data);
+  
+      },
+      error: function (jqXHR, textStatus, errorThrown) {
+        console.log(textStatus);
+      }
+    })
+  };
+
+
+
+  var fetchForecast = function (city) {
+    $.ajax({
+      method: 'GET',
+      url: `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=fd29eda782d2ed239fe8bc7bac217402&units=imperial`,
+      dataType: 'json',
+      success: function (data) {
+        addCityForecast(data);
+  
+      },
+      error: function (jqXHR, textStatus, errorThrown) {
+        console.log(textStatus);
+      }
+    })
+  };
+
+
+
+
+
+
+
+  
+  
+  var renderCity = function () {
+    $('.cities').empty();
+  
+    for (let i = 0; i < cities.length; i++) {
+      const location = cities[i];
+      
+      var source = $('#city-template').html();
+      var template = Handlebars.compile(source);
+      var newHTML = template(location);
+      $('.cities').append(newHTML);
+
+      var source = $('#weather-icon-template').html();
+      var template = Handlebars.compile(source);
+      var newHTML = template(location);
+      $('.cities').append(newHTML);
+
+      var source = $('#forecast-template').html();
+      var template = Handlebars.compile(source);
+      var newHTML = template(location);
+      $('.forecasts').append(newHTML);
 
     }
     clearSearch();
