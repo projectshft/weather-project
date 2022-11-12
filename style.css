@@ -12,17 +12,26 @@
   justify-content: center;
 }
 
-.icon,
-.forecasts {
+.icon {
   display: flex;
   justify-content: center;
-}
-
-.forecast {
   text-align: center;
-  margin-top: 60px;
 }
 
 .border {
   border: rgba(0, 0, 0, 0.1) solid 1px;
+}
+
+.forecasts {
+  text-align: center;
+  width: 80%;
+}
+
+.col {
+  border: rgba(0, 0, 0, 0.1) solid 1px;
+  padding: 20px;
+}
+
+.margin {
+  margin-bottom: 60px;
 }
