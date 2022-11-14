@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
+    integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <div class="col-md-6 offset-md-3">
+    <div class="page-header text-center mt-4">
+      <h1>Weather Project</h1>
+      <hr />
+    </div>
+
+    <form class="w-50 mx-auto">
+      <div class="w-100 ">
+        <input type="text" id="search-query" class="w-75" style="width: 250px">
+        <button type="button" class="btn btn-primary search-button" style="float: right">Search</button>
+      </div>
+    </form>
+
+    <div class="current-weather container text-center mb-5 mt-5 w-50">
+    </div>
+  </div>
+
+  <div>
+    <div class="row 5-day">
+
+    </div>
+  </div>
+
+
+  <script id="future-forecast-template" type="text/x-handlebars-template">
+    <div class="col text-center forecast-col">
+      <h5 class="condition">{{ condition }}</h5>
+      <h5 class="temp">{{ temperature }}°</h5>
+      <img class="icon" src="{{ iconURL }}" />
+      <h5 class="day">{{ weekday }}</h5>
+    </div>
+  </script>
+
+
+
+  <script id="weather-template" type="text/x-handlebars-template">
+    <div class="row">
+      <div class="col main-icon">
+        <h3 class="temperature">{{ temperature }}°F</h3>
+        <h2 class="city">{{ city }}</h2>
+        <h4 class="condition">{{ condition }}</h4>
+      </div>
+      <div class="col main-temp">
+        <img class="icon" src="{{ iconURL }}" />
+      </div>
+    </div>
+  </script>
+
+
+
+
+
+  <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
+  <script src="main.js" type="text/javascript"></script>
+
+</body>
+
+</html>
