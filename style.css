@@ -1,0 +1,31 @@
+.weather {
+  position: relative;
+}
+
+.weather img {
+  width: 150px;
+  height: 150px;
+  position: absolute;
+  bottom: -25px;
+  left: 375px;
+}
+
+/* .fiveDayWeather {
+  width: 150%;
+  margin: 50 auto;
+} */
+.fiveDayWeather {
+  width: 141px;
+  float: left;
+}
+.fiveDayWeather {
+  border: 1px solid black;
+  padding: 15px;
+}
+
+/* #img {
+  position: absolute;
+  right: 150px;
+  width: 200px;
+  height: 120px;
+} */
