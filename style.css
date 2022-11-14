@@ -1,0 +1,37 @@
+.page-header {
+  text-align: center;
+  margin-top: 40px;
+}
+
+.container {
+  margin-bottom: 70px;
+}
+
+.city {
+  margin-bottom: 30px;
+  justify-content: center;
+}
+
+.icon {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+
+.border {
+  border: rgba(0, 0, 0, 0.1) solid 1px;
+}
+
+.forecasts {
+  text-align: center;
+  width: 80%;
+}
+
+.col {
+  border: rgba(0, 0, 0, 0.1) solid 1px;
+  padding: 20px;
+}
+
+.margin {
+  margin-bottom: 60px;
+}
