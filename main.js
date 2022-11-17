@@ -1,8 +1,9 @@
+// set global arrays to be used
 var weather = [];
 var forecast = [];
 var myAPIkey = "f6ad0633a29e3143c16b9163ca5aa265";
 
-
+// on search click, get the location value and fetch the information from the API
 $('.search').click(function () {
   var location = $('#search-query').val();
 
@@ -10,6 +11,7 @@ $('.search').click(function () {
   fetchForecast(location)
 });
 
+// first fetch is for today's weather
 var fetchWeather = function (location) {
   $.ajax({
     method: "GET",
@@ -24,6 +26,7 @@ var fetchWeather = function (location) {
   });
 }
 
+// second fetch is for the five day forecast
 var fetchForecast = function (location) {
   $.ajax({
     method: "GET",
@@ -38,6 +41,7 @@ var fetchForecast = function (location) {
   });
 }
 
+// the addWeather function builds the weather array, which is the pushed and rendered in the renderWeather() function
 var addWeather = function (data) {
   weather = [];
   weather.push({
@@ -50,6 +54,7 @@ var addWeather = function (data) {
   renderWeather();
 };
 
+// the addForecast function does the same as addWeather but has more to consider like getting the average temperature, and the correct weekday
 var addForecast = function (days) {
   forecast = [];
   var day = [];
@@ -59,7 +64,7 @@ var addForecast = function (days) {
     day.push(
       days.list[i].main.temp,
     );
-
+    // build forecast array at each correct index using modulus
     if (i % 8 === 0){
       var currDate = new Date(days.list[i].dt_txt).toLocaleString('en-us', {weekday:'long'});
       console.log(i-4);
@@ -80,6 +85,7 @@ var addForecast = function (days) {
   renderWeather();
 };
 
+// handlebars and building template/html file
 var renderWeather = function () {
   $('.today-weather').empty();
   $('.fiveDay-weather').empty();
@@ -102,4 +108,3 @@ var renderWeather = function () {
 };
 
 renderWeather();
-
