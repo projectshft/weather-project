@@ -1,0 +1,32 @@
+html,
+body {
+  background-image: linear-gradient(
+    68.4deg,
+    rgba(248, 182, 204, 1) 0.5%,
+    rgba(192, 198, 230, 1) 49%,
+    rgba(225, 246, 240, 1) 99.8%
+  );
+}
+
+h1,
+h2 {
+  font-weight: 600;
+}
+h3 {
+  font-size: x-large;
+  font-weight: 600;
+}
+
+.search-group {
+  padding-top: 8%;
+  padding-bottom: 8%;
+}
+
+.weather-forecast {
+  margin-top: 80px;
+}
+
+.forecast-block {
+  border: 0.1rem outset rgb(82, 85, 88);
+  border-radius: 12px;
+}
