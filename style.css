@@ -12,3 +12,9 @@
   flex-basis: 15%;
   margin-left: 10px;
 }
+
+.current-weather {
+  text-align: center;
+  margin-top: 50px;
+  justify-content: center;
+}

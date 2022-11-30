@@ -21,17 +21,42 @@
             <h1>Weather Project</h1>
             <hr />
           </div>
-          <form class="search-form">
+          <form
+            id="weather-search"
+            style="margin-top: 30px"
+            onsubmit="event.preventDefault();"
+          >
             <div class="form-group my-flex">
               <div class="input-group">
-                <input type="text" class="form-control" placeholder="City" />
-                <button class="btn btn-primary" type="button">Search</button>
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Enter City Name Here"
+                />
+                <button type="submit" class="btn btn-primary">Search</button>
               </div>
             </div>
           </form>
+          <div class="current-weather"></div>
         </div>
       </div>
     </div>
+    <script id="current-weather-template" type="text/x-handlebars-template">
+      <div class="col-md-4">
+        <div class="city-weather">
+          <h2>{{temp}}&deg;</h2>
+          <h2>{{city}}</h2>
+          <h5>{{weatherMain}}</h5>
+        </div>
+      </div>
+      <div class="col-md-4">
+          <img
+            src="http://openweathermap.org/img/wn/{{weatherIcon}}@2x.png"
+            alt=""
+          />
+        </div>
+      </div>
+    </script>
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
     <script src="main.js" type="text/javascript"></script>
