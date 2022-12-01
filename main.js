@@ -2,12 +2,6 @@ var currentWeather = [];
 var fiveDayForecast = [];
 var apiKey = "2ccf36241265a5eac335e90c49b7ee49"
 
-
-$('#weather-search').on('submit', function() {
-  var city = $('.form-control').val();
-  fetchCurrentWeather(city);
-});
-
 var addCurrentWeather = function(data) {
   currentWeather = [];
 
@@ -29,12 +23,14 @@ var addFiveDayForecast = function(data) {
   fiveDayForecast = []
   var daysOfTheWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
+  // reduce the number of elements on data.list from 40 t0 5
   var fiveDayData = data.list.filter(function(value, index, Arr){
     return index % 8 == 0;
   })
 
   for (var i = 0; i < fiveDayData.length; i++) {
     var nextDay = fiveDayData[i];
+    // find the date using the dt data
     var d = new Date(nextDay.dt * 1000);
     var nextDayForecast = {
       temp: Math.round(nextDay.main.temp),
@@ -45,8 +41,7 @@ var addFiveDayForecast = function(data) {
     fiveDayForecast.push(nextDayForecast);
   }
   renderFiveDayForecast();
-  console.log(fiveDayForecast);
-};
+}
 
 var fetchCurrentWeather = function(query) {
   $.ajax({
@@ -59,7 +54,7 @@ var fetchCurrentWeather = function(query) {
       console.log(textStatus);
     }
   });
-};
+}
 
 var fetchFiveDayForecast = function(lon, lat) {
   $.ajax({
@@ -89,3 +84,25 @@ var renderFiveDayForecast = function() {
   var forecast = template(fiveDayForecast);
   $('.five-day').append(forecast);
 }
+
+var startSearch = function() {
+  $('#weather-search').on('submit', function() {
+    var city = $('.form-control').val();
+    fetchCurrentWeather(city);
+    // clear out input form
+    $('#weather-search').trigger('reset');
+  });
+}
+
+startSearch();
+
+// loads spinner from https://www.cssscript.com/svg-loading-spinner/
+$(document).on({
+  ajaxStart: function(){
+      Spinner();
+      Spinner.show();
+  },
+  ajaxStop: function(){ 
+      Spinner.hide();
+  }    
+});
