@@ -26,7 +26,7 @@
             style="margin-top: 30px"
             onsubmit="event.preventDefault();"
           >
-            <div class="form-group my-flex">
+            <div class="form-group">
               <div class="input-group">
                 <input
                   type="text"
@@ -37,8 +37,14 @@
               </div>
             </div>
           </form>
-          <div class="current-weather"></div>
+
+          <div class="current-weather d-flex justify-content-center"></div>
         </div>
+      </div>
+    </div>
+    <div class="container-fluid">
+      <div class="row justify-content-center">
+        <div class="five-day d-flex justify-content-center"></div>
       </div>
     </div>
     <script id="current-weather-template" type="text/x-handlebars-template">
@@ -55,6 +61,22 @@
             alt=""
           />
         </div>
+      </div>
+    </script>
+    <script id="five-day-template" type="text/x-handlebars-template">
+      {{#each .}}
+        <div class="day-boxes col-md-5">
+          <div class="five-day-forecast">
+            <h5>{{weatherMain}}</h5>
+            <h2>{{temp}}&deg;</h2>
+            <img
+            src="http://openweathermap.org/img/wn/{{weatherIcon}}@2x.png"
+            alt=""
+            />
+            <h5>{{dayName}}</h5>
+         </div>
+      </div>
+      {{/each}}
       </div>
     </script>
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>

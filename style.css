@@ -2,13 +2,7 @@
   text-align: center;
 }
 
-.my-flex {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-}
-
-.my-flex .input-group button {
+.form-group .input-group button {
   flex-basis: 15%;
   margin-left: 10px;
 }
@@ -17,4 +11,20 @@
   text-align: center;
   margin-top: 50px;
   justify-content: center;
+}
+
+.five-day {
+  margin-top: 50px;
+}
+
+.five-day-forecast {
+  text-align: center;
+  justify-content: center;
+  padding: 15px;
+}
+
+.day-boxes {
+  max-width: 100%;
+  border: 1px solid black;
+  padding: 0px;
 }
