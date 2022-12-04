@@ -47,6 +47,9 @@
       <div class="row justify-content-center">
         <div class="five-day d-flex justify-content-center"></div>
       </div>
+      <div class="container-fluid">
+        <div class="map map-responsive"></div>
+      </div>
     </div>
     <script id="current-weather-template" type="text/x-handlebars-template">
       <div class="col-md-4">
@@ -79,6 +82,18 @@
       </div>
       {{/each}}
       </div>
+    </script>
+    <script id="map-template" type="text/x-handlebars-template">
+      <iframe
+        width="600"
+        height="450"
+        style="border:0"
+        loading="lazy"
+        allowfullscreen
+        referrerpolicy="no-referrer-when-downgrade"
+        src="https://www.google.com/maps/embed/v1/place?key={{googleApiKey}}&q={{city}}"
+      >
+      </iframe>
     </script>
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
