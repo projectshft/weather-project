@@ -69,7 +69,8 @@ var fetchFiveDayForecast = function(lon, lat) {
       console.log(textStatus);
     }
   });
-}
+};
+
 
 var renderCurrentWeather = function() {
   $('.current-weather').empty();
@@ -77,7 +78,7 @@ var renderCurrentWeather = function() {
   var template = Handlebars.compile(source);
   var weather = template(currentWeather[0]);
   $('.current-weather').append(weather);
-}
+};
 
 var renderFiveDayForecast = function() {
   $('.five-day').empty();
@@ -85,7 +86,7 @@ var renderFiveDayForecast = function() {
   var template = Handlebars.compile(source);
   var forecast = template(fiveDayForecast);
   $('.five-day').append(forecast);
-}
+};
 
 var renderMap = function() {
   $('.map').empty();
@@ -95,6 +96,9 @@ var renderMap = function() {
   $('.map').append(map);
 }
 
+$('.btn-secondary').on('click', function() {
+  console.log('click');
+});
 
 $('#weather-search').on('submit', function() {
   var city = $('.form-control').val();
