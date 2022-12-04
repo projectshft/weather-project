@@ -5,8 +5,10 @@ var googleApiKey = "AIzaSyAh13W4nGXKsUNJpkdXonIuU1XPym0P7QU";
 
 var addCurrentWeather = function(data) {
   currentWeather = [];
+  console.log(data);
   var cityCurrentWeather = {
     city: data.name,
+    country: data.sys.country,
     temp: Math.round(data.main.temp),
     weatherMain: data.weather[0].main,
     weatherIcon: data.weather[0].icon,
@@ -28,7 +30,7 @@ var addFiveDayForecast = function(data) {
   // reduce the number of elements on data.list from 40 t0 5
   var fiveDayData = data.list.filter(function(value, index, Arr){
     return index % 8 == 0;
-  })
+  });
 
   for (var i = 0; i < fiveDayData.length; i++) {
     var nextDay = fiveDayData[i];
@@ -41,9 +43,9 @@ var addFiveDayForecast = function(data) {
       dayName: daysOfTheWeek[d.getDay()]
     }
     fiveDayForecast.push(nextDayForecast);
-  }
+  };
   renderFiveDayForecast();
-}
+};
 
 var fetchCurrentWeather = function(query) {
   $.ajax({
@@ -56,7 +58,20 @@ var fetchCurrentWeather = function(query) {
       console.log(textStatus);
     }
   });
-}
+};
+
+var fetchMyWeather = function(lon, lat) {
+  $.ajax({
+    method: "GET",
+    url: "https://api.openweathermap.org/data/2.5/weather?lat=" +lat + "&lon=" + lon + "&units=imperial&appid=" + weatherApiKey,
+    success: function(data) {
+      addCurrentWeather(data);
+    },
+    error: function(jqXHR, textStatus, errorThrown) {
+      console.log(textStatus);
+    }
+  })
+};
 
 var fetchFiveDayForecast = function(lon, lat) {
   $.ajax({
@@ -70,7 +85,6 @@ var fetchFiveDayForecast = function(lon, lat) {
     }
   });
 };
-
 
 var renderCurrentWeather = function() {
   $('.current-weather').empty();
@@ -94,10 +108,22 @@ var renderMap = function() {
   var template = Handlebars.compile(source);
   var map = template(currentWeather[0]);
   $('.map').append(map);
-}
+};
+
+var userLocation = function (position) {
+  var lon = position.coords.longitude;
+  var lat = position.coords.latitude;
+
+  fetchMyWeather(lon,lat);
+  fetchFiveDayForecast(lon,lat);
+};
 
 $('.btn-secondary').on('click', function() {
-  console.log('click');
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(userLocation);
+} else {
+    $("#locationData").html('Your browser does not support location data retrieval.');
+}
 });
 
 $('#weather-search').on('submit', function() {
