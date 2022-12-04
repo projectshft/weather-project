@@ -8,26 +8,27 @@ var convertKelvinToFahrenheit = function(kelvinValue) {
 var addWeather = function(data) {
   weather = [];
   weather.push({
-    temperature: Math.round(convertKelvinToFahrenheit(data.main.temp)) || null,
-    city: data.name || null,
-    currentConditions: data.weather ? data.weather[0].main :  null,
-    imageURL: data.weather ? data.weather[0].icon :  null
+    temperature: Math.round(convertKelvinToFahrenheit(data.list[0].main.temp)) || null,
+    city: data.city.name || null,
+    currentConditions: data.list[0].weather ? data.list[0].weather[0].main :  null,
+    imageURL: data.list[0].weather ? data.list[0].weather[0].icon :  null,
   });
   renderWeather();
-}
-;
+};
+
 // Click event listener for the search button
 $('.search').on('click', function() {
   var $input = $('#search-query').val();
-
-  fetch($input)
+  
+  fetch($input);
+  $('form')[0].reset();
 });
 
 // Function to fetch weather data from the OpenWeather API
 var fetch = function($input) {
   $.ajax({
     method: "Get",
-    url: "https://api.openweathermap.org/data/2.5/weather?q=" + $input + "&appid=4e2bf892b3ff4156e7b0ae2b1d68deb2",
+    url: "https://api.openweathermap.org/data/2.5/forecast?q=" + $input + "&appid=4e2bf892b3ff4156e7b0ae2b1d68deb2",
     dataType: "json",
     success: function(data) {
       addWeather(data);
