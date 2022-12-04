@@ -52,7 +52,7 @@
 
     <!-- Handlebars template -->
     <script id="weather-template" type="text/x-handlebars-template">
-      <div class="row mt-5">
+      <div class="row mt-5 text-center">
         <div class="col-6 my-auto">
           <h4>{{temperature}} &#176</h4>
           <h4>{{city}}</h4>
@@ -62,6 +62,39 @@
           <img src="http://openweathermap.org/img/wn/{{imageURL}}@2x.png" />
         </div>
       </div>
+      <div class="row justify-content-center mt-5">
+        <div class="five-day col-2">
+          <p>{{dayOneCurrentConditions}}</p>
+          <p>{{dayOneTemperature}}</p>
+          <img src="http://openweathermap.org/img/wn/{{dayOneImageURL}}@2x.png">
+          <p>{{dayOneDayOfWeek}}</p>
+        </div>
+        <div class="five-day col-2">
+          <p>{{dayTwoCurrentConditions}}</p>
+          <p>{{dayTwoTemperature}}</p>
+          <img src="http://openweathermap.org/img/wn/{{dayTwoImageURL}}@2x.png">
+          <p>{{dayTwoDayOfWeek}}</p>
+        </div>
+        <div class="five-day col-2">
+          <p>{{dayThreeCurrentConditions}}</p>
+          <p>{{dayThreeTemperature}}</p>
+          <img src="http://openweathermap.org/img/wn/{{dayThreeImageURL}}@2x.png">
+          <p>{{dayThreeDayOfWeek}}</p>
+        </div>
+        <div class="five-day col-2">
+          <p>{{dayFourCurrentConditions}}</p>
+          <p>{{dayFourTemperature}}</p>
+          <img src="http://openweathermap.org/img/wn/{{dayFourImageURL}}@2x.png">
+          <p>{{dayFourDayOfWeek}}</p>
+        </div>
+        <div class="five-day col-2">
+          <p>{{dayFiveCurrentConditions}}</p>
+          <p>{{dayFiveTemperature}}</p>
+          <img src="http://openweathermap.org/img/wn/{{dayFiveImageURL}}@2x.png">
+          <p>{{dayFiveDayOfWeek}}</p>
+        </div>
+      </div>
+       
     </script>
 
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
