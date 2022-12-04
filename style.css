@@ -1,0 +1,11 @@
+.wrapper {
+  min-width: 575px;
+}
+
+.page-header {
+  margin: 20px 0;
+}
+
+.five-day {
+  border: 1px solid black;
+}
