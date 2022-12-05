@@ -5,7 +5,6 @@ var googleApiKey = "AIzaSyAh13W4nGXKsUNJpkdXonIuU1XPym0P7QU";
 
 var addCurrentWeather = function(data) {
   currentWeather = [];
-  console.log(data);
   var cityCurrentWeather = {
     city: data.name,
     country: data.sys.country,

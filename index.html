@@ -10,7 +10,12 @@
       integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ"
       crossorigin="anonymous"
     />
+    <script
+      src="https://kit.fontawesome.com/006c2751a4.js"
+      crossorigin="anonymous"
+    ></script>
     <link rel="stylesheet" href="style.css" />
+
     <title>Weather Project</title>
   </head>
   <body>
@@ -34,10 +39,10 @@
                   placeholder="Enter City Name Here"
                   required
                 />
-
                 <button type="submit" class="btn btn-primary">Search</button>
                 <button type="button" class="btn btn-secondary">
-                  Use My Location
+                  <span><i class="fa-solid fa-location-arrow"></i></span>
+                </button>
                 </button>
               </div>
             </div>
@@ -47,9 +52,11 @@
         </div>
       </div>
     </div>
+
     <div class="container-fluid">
       <div class="five-day d-flex justify-content-center"></div>
     </div>
+
     <div class="container-fluid">
       <div class="map map-responsive"></div>
     </div>
@@ -69,6 +76,7 @@
         </div>
       </div>
     </script>
+
     <script id="five-day-template" type="text/x-handlebars-template">
       <div class="row">
         {{#each .}}
@@ -86,6 +94,7 @@
       {{/each}}
       </div>
     </script>
+
     <script id="map-template" type="text/x-handlebars-template">
       <iframe
         width="600"
@@ -98,6 +107,7 @@
       >
       </iframe>
     </script>
+    
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
     <script src="loading-spinner.js"></script>
