@@ -1,0 +1,47 @@
+.page-header {
+  margin-top: 25px;
+  text-align: center;
+}
+
+.input-group button {
+  flex-basis: 15%;
+  margin-left: 10px;
+}
+
+.current-weather {
+  text-align: center;
+  margin-top: 50px;
+  justify-content: center;
+}
+
+.five-day {
+  margin-top: 50px;
+}
+
+.five-day-forecast {
+  text-align: center;
+  justify-content: center;
+  padding: 15px;
+  position: static;
+}
+
+.day-boxes {
+  max-width: 100%;
+  border: 1px solid black;
+  padding: 0px;
+}
+
+.map-responsive {
+  overflow: hidden;
+  padding-bottom: 50%;
+  position: relative;
+  height: 0;
+  margin-top: 50px;
+}
+.map-responsive iframe {
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+}
