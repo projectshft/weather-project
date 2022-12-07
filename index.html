@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <link rel="stylesheet" href="style.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+  </head>
+  <body>   
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-6 offset-md-3">
+          <div class="page-header">
+          <h1>Weather APP</h1>
+          <hr/>
+          </div>
+
+          <form class="search-form">
+          <h3>Search City</h3>
+
+          <div class="form-group">
+            <input type="text" id="search-query" class="form-control">
+            </input>
+          </div>
+
+          <button type="button" class="btn btn-primary search">Search</button>
+          </form>
+        
+          <hr/>
+
+          <div class="weather-display"></div>
+          <div class="weather-display2"></div>
+      </div>
+      </div>
+    </div>
+    
+    <script id="weather-template" type="text/x-handlebars">
+      <div class="row">
+        <div class="col-md-6 card text-center">
+          <h6>{{temperature}}</h6>
+          <h5>{{cityName}}</h5>
+          <h6><small>{{clouds}}</small></h6>
+        </div>
+        <div class="col-md-6 card">
+          <img src="{{imageURL}}" alt="">
+        </div>
+      </div>
+    </script>
+
+    <script id="weather-template2" type="text/x-handlebars">
+      <div class="row">
+        <div class="custome-col">
+          <div>{{clouds}}</div>
+          <div>{{temperature}}</div>
+          <img src="{{imageURL}}" alt="">
+          <div>{{day}}</div>
+        </div>
+        <div class="custome-col"></div>
+        <div class="custome-col"></div>
+        <div class="custome-col"></div>
+        <div class="custome-col"></div>
+      </div>
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
+    <script src="main.js" type="text/javascript"></script>
+  </body>
+</html>
