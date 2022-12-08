@@ -15,54 +15,42 @@
 
 
 let cities = [];
-let fiveDay = [];
+let fiveDayArray = []; //how do we want to see the info pop up here? How do we want to use it?
 
 $(".search").click(function () {
   let userSearch = $("#search-query").val();
 
   fetch(userSearch);
+  fetchFiveDay(userSearch);
 });
 
 let fetch = function (query) {
-  $.ajax({
-  
-    // Our url to make request 
+  $.ajax({ 
     url: "https://api.openweathermap.org/data/2.5/weather?q=" + query + "&appid=651b4326c31add8e66f753623aae609d",
-
-    // Type of Request
     type: "GET",
-
-    // Function to call when
     success: function (data) {
         addCity(data);
-    },
-
-    // Error handling 
+    }, 
     error: function (error) {
         console.log(`Error ${error}`);
     }
   });
+};
 
-  $.ajax({
-  
-    // Our url to make request 
+let fetchFiveDay = function (query) {
+  $.ajax({ 
     url: "https://api.openweathermap.org/data/2.5/weather?q=" + query + "&appid=651b4326c31add8e66f753623aae609d",
-
-    // Type of Request
     type: "GET",
-
-    // Function to call when
     success: function (data2) {
         addCity(data2);
     },
-
-    // Error handling 
     error: function (error) {
         console.log(`Error ${error}`);
     }
   });
 
-};
+}
+
 
 
 let addCity = function (data, data2) {
@@ -73,15 +61,64 @@ let addCity = function (data, data2) {
     imageURL: "http://openweathermap.org/img/wn/" + data.weather[0].icon + "@2x.png"
   }
 
-  let fiveDay = {
-    temperature: data2.list
-
-  }
+  averageFiveDay(data2);
 
   cities.push(city);
 
   renderWeather();
 }
+
+let averageFiveDay = function (data2) {
+console.log(data2)
+  let one = 0;
+  let two = 0;
+  let three = 0;
+  let four = 0;
+  let five = 0;
+
+  for (let i = 0; i < data2.list.length; i++) {
+    const element = data2.list[i].main.temp;
+
+    if(i+1 <= 8){
+      one = one + element.temp
+    } else if(i+1 > 8 && i+1 <= 16){
+      two = two + element.temp
+    } else if(i+1 > 16 && i+1 <= 24){
+      three = three + element.temp
+    } else if(i+1 > 24 && i+1 <= 32){
+      four = four + element.temp
+    } else{
+      five = five + element.temp
+    }
+    
+  };
+  // averageArray.push((one/8));
+  // averageArray.push((two/8));
+  // averageArray.push((three/8));
+  // averageArray.push((four/8));
+  // averageArray.push((five/8));
+
+  let oneDay = {
+    clouds: data2.list[0].weather.main,
+    temperature: (((one/8)- 273.15) * (9/5) + 32),
+    imageURL: "http://openweathermap.org/img/wn/" + data2.weather[0].icon + "@2x.png",
+    day: findDay(data2)
+  }
+
+  fiveDayArray.push(oneDay);
+};
+
+let findDay = function (data2) {
+  let timeStamp = data2.list[0].dt;
+  let date = new Date(timeStamp);
+
+  let newDate = date.getDate()+ 
+  "/"+(date.getMonth()+1)+
+  "/"+date.getFullYear()
+
+  return getDay(newDate);
+}
+
 
 
 let renderWeather = function () {
@@ -98,8 +135,8 @@ let renderWeather = function () {
     $(".weather-display").append(newHTML);
   }
 
-  for (let j = 0; j < fiveDay.length; j++) {
-    const forecastElement = fiveDay[j];
+  for (let j = 0; j < fiveDayArray.length; j++) {
+    const forecastElement = fiveDayArray[j];
     
     let sourceTwo = $("#weather-template2").html();
     let templateTwo = Handlebars.compile(sourceTwo);
