@@ -49,11 +49,12 @@ let fetchFiveDay = function (query) {
     }
   });
 
-}
+};
 
 
 
 let addCity = function (data) {
+  cities = [];
   let city = { 
     temperature: `${Math.round(((data.main.temp - 273.15) * (9/5) + 32))}\u00B0 F` || null,
     cityName: data.name || null,
@@ -62,7 +63,7 @@ let addCity = function (data) {
   };
   cities.push(city);
   renderWeather();
-}
+};
 
 let averageFiveDay = function (data) {
   let one = 0;
@@ -89,9 +90,10 @@ let averageFiveDay = function (data) {
   };
 
   let arr = [one, two, three, four, five];
+  fiveDayArray = [];
   
   for (let j = 0; j < arr.length; j++) {
-    const averageTemp = Math.round((((arr[j]/8)- 273.15) * (9/5) + 32));
+    const averageTemp = `${Math.round((((arr[j]/8)- 273.15) * (9/5) + 32))}\u00B0`;
     let indexItem = 0;
 
     if(j+1 === 1){
