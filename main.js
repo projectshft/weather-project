@@ -39,10 +39,10 @@ let fetch = function (query) {
 
 let fetchFiveDay = function (query) {
   $.ajax({ 
-    url: "https://api.openweathermap.org/data/2.5/weather?q=" + query + "&appid=651b4326c31add8e66f753623aae609d",
+    url: "https://api.openweathermap.org/data/2.5/forecast?q=" + query + "&appid=651b4326c31add8e66f753623aae609d",
     type: "GET",
-    success: function (data2) {
-        addCity(data2);
+    success: function (data) {
+        averageFiveDay(data);
     },
     error: function (error) {
         console.log(`Error ${error}`);
@@ -53,78 +53,84 @@ let fetchFiveDay = function (query) {
 
 
 
-let addCity = function (data, data2) {
+let addCity = function (data) {
   let city = { 
     temperature: `${Math.round(((data.main.temp - 273.15) * (9/5) + 32))}\u00B0 F` || null,
     cityName: data.name || null,
     clouds: data.weather[0].main,
     imageURL: "http://openweathermap.org/img/wn/" + data.weather[0].icon + "@2x.png"
-  }
-
-  averageFiveDay(data2);
-
+  };
   cities.push(city);
-
   renderWeather();
 }
 
-let averageFiveDay = function (data2) {
-console.log(data2)
+let averageFiveDay = function (data) {
   let one = 0;
   let two = 0;
   let three = 0;
   let four = 0;
   let five = 0;
-
-  for (let i = 0; i < data2.list.length; i++) {
-    const element = data2.list[i].main.temp;
-
+  
+  for (let i = 0; i < data.list.length; i++) {
+    const element = data.list[i].main.temp;
+    
     if(i+1 <= 8){
-      one = one + element.temp
+      one = one + element
     } else if(i+1 > 8 && i+1 <= 16){
-      two = two + element.temp
+      two = two + element
     } else if(i+1 > 16 && i+1 <= 24){
-      three = three + element.temp
+      three = three + element
     } else if(i+1 > 24 && i+1 <= 32){
-      four = four + element.temp
+      four = four + element
     } else{
-      five = five + element.temp
+      five = five + element
     }
     
   };
-  // averageArray.push((one/8));
-  // averageArray.push((two/8));
-  // averageArray.push((three/8));
-  // averageArray.push((four/8));
-  // averageArray.push((five/8));
 
-  let oneDay = {
-    clouds: data2.list[0].weather.main,
-    temperature: (((one/8)- 273.15) * (9/5) + 32),
-    imageURL: "http://openweathermap.org/img/wn/" + data2.weather[0].icon + "@2x.png",
-    day: findDay(data2)
-  }
+  let arr = [one, two, three, four, five];
+  
+  for (let j = 0; j < arr.length; j++) {
+    const averageTemp = Math.round((((arr[j]/8)- 273.15) * (9/5) + 32));
+    let indexItem = 0;
 
-  fiveDayArray.push(oneDay);
+    if(j+1 === 1){
+      indexItem = 0;
+    } else if(j+1 === 2){
+      indexItem = 8
+    } else if(j+1 === 3){
+      indexItem = 16
+    } else if(j+1 === 4){
+      indexItem = 24
+    }else if(j+1 === 5){
+      indexItem = 32
+    }
+
+    let fiveDayObj = {
+      clouds: data.list[indexItem].weather[0].main || null,
+      temperature: averageTemp || null,
+      imageURL: "http://openweathermap.org/img/wn/" + data.list[indexItem].weather[0].icon + "@2x.png" || null,
+      day: findDay(data.list[indexItem].dt_txt) || null
+    };
+
+    fiveDayArray.push(fiveDayObj);
+
+  };
+  
+  renderFiveDay();
 };
 
-let findDay = function (data2) {
-  let timeStamp = data2.list[0].dt;
+let findDay = function (timeStamp) {
+  const weekday = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+
   let date = new Date(timeStamp);
-
-  let newDate = date.getDate()+ 
-  "/"+(date.getMonth()+1)+
-  "/"+date.getFullYear()
-
-  return getDay(newDate);
-}
-
-
+  
+  return weekday[date.getDay()];
+};
 
 let renderWeather = function () {
   $(".weather-display").empty();
-  $(".weather-display2").empty();
-
+  
   for (let i = 0; i < cities.length; i++) {
     const element = cities[i];
     
@@ -134,6 +140,10 @@ let renderWeather = function () {
 
     $(".weather-display").append(newHTML);
   }
+};
+
+let renderFiveDay = function () {
+  $(".weather-display2").empty();
 
   for (let j = 0; j < fiveDayArray.length; j++) {
     const forecastElement = fiveDayArray[j];
@@ -145,5 +155,3 @@ let renderWeather = function () {
     $(".weather-display2").append(newHTMLTwo);
   }
 }
-
-renderWeather()
