@@ -75,14 +75,28 @@ var renderCurrentWeather = function () {
   var newHTML = template(currentWeather);
 
   $('#display-now').html(newHTML);
-
+  
   render5Day();
-}
+  
+  // Save default location via local storage
+  $('#set-default').click(function() {
+    localStorage.setItem('default-location', $city)
+    this.remove()
+  });
 
+  // Remove "Save as Default Location"
+  if (localStorage.getItem('default-location')) {
+    $('#set-default').remove()
+  };
+};
 
-// Extension - when currentWeather is rendered invoke render5Day, may need to pass it currentWeather as an arg
+// Extension - when currentWeather is rendered invoke render5Day
+// may need to pass currentWeather as an arg...
 var render5Day = function (current) {
-  // append to #display-5-day
+  // -- Code here --
+  $('#display-5-day').html(
+    // -- Code here --
+  );
 };
 
 
@@ -124,7 +138,14 @@ var createClock = function () {
   }, 1000);
 };
 
-// For Fun - when currentWeather is rendered invoked create clock
 window.onload = (event) => {
+  // For Fun - when currentWeather is rendered invoked create clock
   createClock();
+  // If default location saved in local storage, load it and change display elements
+  if (localStorage.getItem('default-location')) {
+    $city = localStorage.getItem('default-location');
+    fetch($city);
+    $('#set-default').remove()
+    $('.page-header').append('<br><button id="remove-default" class="btn btn-secondary">Remove Default Location</button>')
+  }
 };
