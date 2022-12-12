@@ -81,7 +81,7 @@ var addForecast = function (data) {
     var forecast = {
       condition: forecastData.weather[0].main,
       temperature: forecastData.main.temp,
-      graphic: 'http://openweathermap.org/img/wn/' + forecastData.weather[0].icon + '.png',
+      graphic: 'http://openweathermap.org/img/wn/' + forecastData.weather[0].icon + '@2x.png',
       time: forecastData.dt_txt,
       date: null
     };
