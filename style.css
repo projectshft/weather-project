@@ -1,16 +1,43 @@
 .page-header {
-  margin-top: 41px;
-}
-
-.search-form {
-  margin-top: 40px;
-  margin-bottom: 40px;
+  margin-top: 10px;
 }
 
 .wait {
   cursor: wait;
 }
 
-.col {
-  border: 1px darkblue dashed;
+.col,
+.city-input,
+.forecast-5-box {
+  border: 2px rgba(6, 6, 24, 0.5) ridge;
+  background-color: rgba(224, 225, 236, 0.6);
+  background-blend-mode: screen;
+  border-radius: 9px;
+}
+
+#background-video {
+  width: 100vw;
+  height: 100vh;
+  opacity: 65%;
+  object-fit: cover;
+  position: fixed;
+  z-index: -1;
+}
+
+#local-clock {
+  font-size: x-large;
+  font-weight: 500;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+  background-color: rgba(224, 225, 236, 0.6);
+  margin-bottom: 20px;
+}
+
+#remove-default,
+#set-default {
+  margin-bottom: 10px;
+}
+
+#search-city {
+  margin-right: 20px;
 }

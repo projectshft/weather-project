@@ -15,13 +15,16 @@
     <title>Weather App</title>
   </head>
   <body>
-    <div class="container-fluid">
+    <!-- Background Video -->
+    <video autoplay muted loop id="background-video">
+    </video>
 
+    <div class="container-fluid">
       <!-- Header Section -->
       <section class="row">
         <div class="col col-md-8 offset-md-2">
           <div class="page-header text-center">
-            <h1>Weather App</h1>
+            <h1>  Weather App</h1>
             <hr />
             <div class="form-group city-input">
               <div class="input-group m-2">
@@ -38,70 +41,19 @@
             </div>
             <!-- Current Clock Area -->
             <div class="timer row justify-content-center">
-              <div class="col col-3">Your Local Time: </div>
-              <div id="local-clock" class="col col-3"></div>
+              <div id="local-clock" class="col col-10 mt-3">Your Local Time: </div>
             </div>
           </div>
+          <div class="remove-btn-area d-flex justify-content-center"></div>
         </div>
       </section>
 
       <!-- Current Weather Section -->
-      <section id="display-now" class="row text-center align-items-center mt-4">
+      <section id="display-now" class="row text-center align-items-center mt-3">
       </section>
 
       <!-- 5 Day Forecast Section -->
-      <section id="display-5-day" class="row d-flex justify-content-center text-center mt-4">
-        <h3>5-Day Forecast</h3>
-        <div class="col tomorrow-info col-2">
-          <p>Clouds</p>
-          <p>65F°</p>
-          <img
-            style="width: 25%"
-            src="https://cdn-icons-png.flaticon.com/512/5903/5903939.png"
-            alt="an icon displaying the current weather conditions"
-          />
-          <p class="mt-4">Saturday</p>
-        </div>
-        <div class="col 2-days-out-info col-2">
-          <p>Clouds</p>
-          <p>65F°</p>
-          <img
-            style="width: 25%"
-            src="https://cdn-icons-png.flaticon.com/512/5903/5903939.png"
-            alt="an icon displaying the current weather conditions"
-          />
-          <p class="mt-4">Saturday</p>
-        </div>
-        <div class="col 3-days-out-info col-2">
-          <p>Clouds</p>
-          <p>65F°</p>
-          <img
-            style="width: 25%"
-            src="https://cdn-icons-png.flaticon.com/512/5903/5903939.png"
-            alt="an icon displaying the current weather conditions"
-          />
-          <p class="mt-4">Saturday</p>
-        </div>
-        <div class="col 4-days-out-info col-2">
-          <p>Clouds</p>
-          <p>65F°</p>
-          <img
-            style="width: 25%"
-            src="https://cdn-icons-png.flaticon.com/512/5903/5903939.png"
-            alt="an icon displaying the current weather conditions"
-          />
-          <p class="mt-4">Saturday</p>
-        </div>
-        <div class="col 5-days-out-info col-2">
-          <p>Clouds</p>
-          <p>65F°</p>
-          <img
-            style="width: 25%"
-            src="https://cdn-icons-png.flaticon.com/512/5903/5903939.png"
-            alt="an icon displaying the current weather conditions"
-          />
-          <p class="mt-4">Saturday</p>
-        </div>
+      <section id="display-5-day" class="container">
       </section>
 
     <!-- Handlebars Current Weather Template -->
@@ -111,16 +63,25 @@
           src="{{iconURL}}"
           alt="an icon displaying the current weather conditions"
         />
-        <h1>{{ temp }} F°</h1>
+        <h1>{{ temp }} °F</h1>
         <h2>{{ cityName }}</h2>
-        <p>{{ description }}</p>
+        <p id="current-conditions">{{ description }}</p>
         <button id="set-default" class="btn btn-secondary">Save as Default Location</button>
       </div>
     </script>
 
     <!-- Handlebars 5-Day Weather Template -->
     <script id="weather-template-5-day" type="text/x-handlebars-template">
-      <!-- Code here -->
+      <div class="col tomorrow-info col-2">
+        <p>{{ description }}</p>
+        <p>{{ temp }} °F</p>
+        <img
+          style="width: 25%"
+          src="{{ icon }}"
+          alt="an icon displaying future weather conditions"
+        />
+        <p class="mt-3">{{ day }}</p>
+      </div>
     </script>
     
     <!-- Include Bootstrap script, Handlebars, jQuery & main.js -->
@@ -135,6 +96,7 @@
       integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
       crossorigin="anonymous"
     ></script>
+    <script type="text/javascript" src="config.js"></script>
     <script src="main.js"></script>
   </body>
 </html>
