@@ -1,17 +1,33 @@
 
-var weather = {};
+var weather = [];
+
+
 
 
 $(".search").on("click", function () {
   var city = $("#search-query").val();
-  $("#search-query").empty();
+  $('#search-query').val('');
 
   fetchWeather(city);
   fetchWeek(city);
 })
   
+var addWeather = function (data) {
+var weather = [];
+
+  weather.push({
+  
+  city: data.name,
+  temp: data.main.temp,
+  conditions: data.weather[0].main,
+  icon: data.weather[0].icon
+});
 
 
+renderWeather(weather);
+
+};
+ 
 
 
 var fetchWeather = function (city) {
@@ -20,7 +36,7 @@ var fetchWeather = function (city) {
     url: `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=47660a38fec862070e43a3f0dfaed41c`,
     dataType: 'json',
     success: function (data) {
-      console.log(data);
+     
       addWeather(data);
  
     },
@@ -46,24 +62,14 @@ var fetchWeek = function (city) {
        console.log(textStatus);
  
      },
-   })
+   });
  };
 
-var addWeather = function (data) {
- weather.push({
-  
-  city: data.name,
-  temp: data.main.temp,
-  conditions: data.weather[0].main,
-  icon: data.weather[0].icon
- });
- 
- renderWeather();
-};
+
 
 var addWeatherWeek = function(data) {
   var weatherWeek = [];
-
+  
   for (let i = 0; i < data.length; i++) {
       
     
@@ -73,30 +79,35 @@ var addWeatherWeek = function(data) {
         icon: data.weather[0].icon,
         days: new Date(data.dt)
        })
-  }
+  };
+
+
+renderWeatherWeek(weatherWeek);
 };
-renderWeatherWeek();
 
 
 
 
+var renderWeather = function (day) {
+     $(".current-weather").empty();
 
-
-
-var renderWeather = function () {
-    $(".current-weather").empty();
     var source = $("#current-weather-template").html();
     var template = Handlebars.compile(source);
-    var newHTML = template(weather);
+    var newHTML = template(day);
     $(".current-weather").append(newHTML);
 };
 
-var renderWeatherWeek = function () {
-   for (let i = 0; i < array.length; i++) {   
-      
+
+var renderWeatherWeek = function (week) {
+  
+   for (let i = 0; i < week.length; i++) {   
+      var weatherWeeks = week[i];
+
     var sources = $("#weather-week-template").html();
     var template = Handlebars.compile(sources);
-    var newHTML = template(weatherWeek);
+    var newHTML = template(weatherWeeks);
     $('.weather-week').append(newHTML);
    }
 };
+
+
