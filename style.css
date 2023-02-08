@@ -1,0 +1,9 @@
+.col {
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+.fa-regular {
+  color: rgb(39, 87, 70);
+  font-size: 50px;
+  border-bottom: 2px black;
+}
