@@ -9,3 +9,13 @@ button {
 form {
   margin-top: 50px;
 }
+
+.current {
+  margin-top: 50px;
+}
+
+img {
+  margin-left: 10%;
+  width: 150px;
+  height: 150px;
+}
