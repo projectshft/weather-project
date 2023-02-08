@@ -19,7 +19,7 @@ const renderCurrentWeather = () => {
   $('.current').empty();
 
   for (let i=0; i < current.length; i++) {
-    let source = $('#result-template').html();
+    let source = $('#current-template').html();
     console.log(source);
     let resultTemplate = Handlebars.compile(source);
 
