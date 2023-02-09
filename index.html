@@ -40,15 +40,21 @@
             <button type="button" class="btn btn-primary">Search</button>
             </div>
         </div>
+
+        <div class="display">
+          <div class="container text-center">
+            <div class="row"></div>
+          </div>
+        </div>
     
         <!-- current weather from API -->
     <!-- handlebars for AJAX -->
-    <script id="currentweather" type="text/x-handlebars-template">
+    <script id="currentweather-template" type="text/x-handlebars-template">
       <div class="container text-center">
         <div class="row align-items-start">
           <div class="col">
             <div>Temperature: <strong>{{ author }}</strong></div>
-            <div>CITY: <strong>{{ pageCount }}</strong></div>
+            <div>City: <strong>{{ pageCount }}</strong></div>
             <div>CONDITIONS: <strong>{{ isbn }}</strong></div>
           </div>
           <div class="col">
