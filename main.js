@@ -61,6 +61,7 @@ const currentWeather = (query) => {
     url: `https://api.openweathermap.org/data/2.5/forecast?q=${query}&appid=4df43207cfa7a1f67f6f7fbd99044f1c&units=imperial`,
     dataType: "json",
     success: function(data) {
+      // TODO: add "data" to addForecastWeather function
       console.log(data);
     },
     error: function(jqXHR, textStatus, errorThrown) {
@@ -72,7 +73,7 @@ const currentWeather = (query) => {
 const addCurrentWeather = (data) => {
 
   let currentWeather = {
-    temp: data.main.temp,
+    temp: Math.round(data.main.temp),
     name: data.name,
     main: data.weather[0].main,
     iconURL: `http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`
@@ -81,6 +82,9 @@ const addCurrentWeather = (data) => {
   current.push(currentWeather);
   renderCurrentWeather();
 }
+
+// TODO: create addForecastWeather function
+
 
 const renderCurrentWeather = () => {
   // empty current weather div
