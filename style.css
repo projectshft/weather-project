@@ -14,8 +14,29 @@ form {
   margin-top: 50px;
 }
 
-img {
+.current-img {
   margin-left: 10%;
   width: 150px;
   height: 150px;
+}
+
+.box {
+  border: solid 1px black;
+  width: 200px;
+  height: 210px;
+  font-weight: 500;
+}
+
+.main-forecast {
+  margin-top: 15px;
+  margin-bottom: 0px;
+}
+
+.temp-forecast {
+  margin-bottom: 0px;
+  font-size: 20px;
+}
+
+.forecast {
+  margin-top: 50px;
 }
