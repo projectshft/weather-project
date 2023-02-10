@@ -35,7 +35,6 @@
     <div class="container text-center">
     <div class="time row">
       <h1><span id="time"> </span></h1>
-<script src="index.js">   </script>
     </div>
   </div>
     <!-- searchbar -->
@@ -52,6 +51,8 @@
         </div>
 
         <div class="display row"></div>
+
+        <div class="forecastdisplay row"></div>
        
         <!-- current weather from API -->
     <!-- handlebars for AJAX -->
@@ -69,14 +70,20 @@
           <div class="col"> </div>
         </div>
       </div>
+    </script>
 
+      <script id="forecast-template" type="text/x-handlebars-template">
       <div class="container text-center">
         <div class="row align-items-start">
-          <div class="col">1</div>
-          <div class="col">2</div>
-          <div class="col">3</div>
-          <div class="col">4</div>
-          <div class="col">5</div>
+          <div class="col">
+            <div> {{ condition1 }} </div>
+            <div> {{ temp1 }} </div>
+            <!-- <img src="{{ image1 }}" alt=""> -->
+            </div>
+              <div class="col">2</div>
+               <div class="col">3</div>
+              <div class="col">4</div>
+             <div class="col">5</div>
         </div>
       </div>
     </script>
