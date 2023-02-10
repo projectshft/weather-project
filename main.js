@@ -1,36 +1,5 @@
 let current = [];
-let forecast = [
-  {
-    temp: 62,
-    day: 'Friday',
-    main: 'Clouds',
-    iconURL: `http://openweathermap.org/img/wn/01d@2x.png`
-  },
-  {
-    temp: 62,
-    day: 'Saturday',
-    main: 'Clouds',
-    iconURL: `http://openweathermap.org/img/wn/01d@2x.png`
-  },
-  {
-    temp: 62,
-    day: 'Sunday',
-    main: 'Clouds',
-    iconURL: `http://openweathermap.org/img/wn/01d@2x.png`
-  },
-  {
-    temp: 62,
-    day: 'Monday',
-    main: 'Clouds',
-    iconURL: `http://openweathermap.org/img/wn/01d@2x.png`
-  },
-  {
-    temp: 62,
-    day: 'Tuesday',
-    main: 'Clouds',
-    iconURL: `http://openweathermap.org/img/wn/01d@2x.png`
-  }
-];
+let forecast = [];
 
 $('.search').on('click', function () {
   let query = $('#search-query').val();
@@ -61,8 +30,7 @@ const currentWeather = (query) => {
     url: `https://api.openweathermap.org/data/2.5/forecast?q=${query}&appid=4df43207cfa7a1f67f6f7fbd99044f1c&units=imperial`,
     dataType: "json",
     success: function(data) {
-      // TODO: add "data" to addForecastWeather function
-      console.log(data);
+      addForecastWeather(data);
     },
     error: function(jqXHR, textStatus, errorThrown) {
       console.log(textStatus);
@@ -71,20 +39,32 @@ const currentWeather = (query) => {
 }
 
 const addCurrentWeather = (data) => {
-
   let currentWeather = {
     temp: Math.round(data.main.temp),
     name: data.name,
     main: data.weather[0].main,
     iconURL: `http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`
   }
-
   current.push(currentWeather);
   renderCurrentWeather();
 }
 
-// TODO: create addForecastWeather function
-
+const addForecastWeather = (data) => {
+  
+  let days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+  
+  // get every 8th data point
+  for (let i=0; i < data.list.length; i = i+8) {
+    let forecastDay = {
+      temp: Math.round(data.list[i].main.temp),
+      day: days[dayjs(data.list[i].dt_txt).day()],
+      main: data.list[i].weather[0].main,
+      iconURL: `http://openweathermap.org/img/wn/${data.list[i].weather[0].icon}@2x.png`
+    }
+    forecast.push(forecastDay);
+  }
+  renderForecastWeather();
+}
 
 const renderCurrentWeather = () => {
   // empty current weather div
@@ -117,5 +97,3 @@ const renderForecastWeather = () => {
   // empty current weather array
   forecast = [];
 };
-
-renderForecastWeather();
