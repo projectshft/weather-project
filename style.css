@@ -7,3 +7,12 @@
   font-size: 50px;
   border-bottom: 2px black;
 }
+
+.current-weather {
+  font-family: "Montserrat", sans-serif;
+  border: solid;
+}
+
+.time {
+  font-family: "Source Code Pro", monospace;
+}

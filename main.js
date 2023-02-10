@@ -1,5 +1,13 @@
-var cityWeather = [];
 
+function refreshTime() {
+  var timeDisplay = document.getElementById("time");
+  var dateString = new Date().toLocaleString();
+  var formattedString = dateString.replace(", ", " - ");
+  timeDisplay.textContent = formattedString;
+}
+  setInterval(refreshTime, 1000);
+  
+  var cityWeather = [];
 
 
 $('.btn').on('click', function () {
@@ -9,14 +17,20 @@ $('.btn').on('click', function () {
 
 var addWeather = function (data) {
   cityWeather = [];
+  var weatherIcon = data.weather[0].icon;
+
+  var forecast = {
+    
+  }
 
 
   var currentWeather = {
+    time: currentTime,
+    image: `http://openweathermap.org/img/wn/${weatherIcon}@2x.png`,
     city: data.name,
     temp: data.main.temp, 
     conditions: data.weather[0].description,
   }
-  console.log(currentWeather);
   cityWeather.push(currentWeather);
   render();
 
