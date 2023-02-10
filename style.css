@@ -40,3 +40,13 @@ form {
 .forecast {
   margin-top: 50px;
 }
+
+.current-location {
+  color: #0275d8 !important;
+  text-decoration: underline !important;
+}
+
+.current-location:hover {
+  color: black !important;
+  cursor: pointer !important;
+}
