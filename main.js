@@ -98,3 +98,40 @@ const renderForecastWeather = () => {
   // empty current weather array
   forecast = [];
 };
+
+// event listener for current location
+$('.current-location').on('click', function() {
+  navigator.geolocation.getCurrentPosition(success, error);
+})
+
+const success = (position) => {
+  // current-location current weather
+  $.ajax({
+    method: "GET",
+    url: `https://api.openweathermap.org/data/2.5/weather?lat=${position.coords.latitude}&lon=${position.coords.longitude}&appid=4df43207cfa7a1f67f6f7fbd99044f1c&units=imperial`,
+    dataType: "json",
+    success: function(data) {
+      addCurrentWeather(data);
+    },
+    error: function(jqXHR, textStatus, errorThrown) {
+      console.log(textStatus);
+    }
+  });
+
+  // current-location forecast
+  $.ajax({
+    method: "GET",
+    url: `https://api.openweathermap.org/data/2.5/forecast?lat=${position.coords.latitude}&lon=${position.coords.longitude}&appid=4df43207cfa7a1f67f6f7fbd99044f1c&units=imperial`,
+    dataType: "json",
+    success: function(data) {
+      addForecastWeather(data);
+    },
+    error: function(jqXHR, textStatus, errorThrown) {
+      console.log(textStatus);
+    }
+  });
+};
+
+const error = (error) => {
+  console.log(position);
+};
