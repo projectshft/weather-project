@@ -4,13 +4,13 @@ let forecast = [];
 $('.search').on('click', function () {
   let query = $('#search-query').val();
 
-  currentWeather(query);
+  getAPI(query);
 
   // clears input
   $('#search-query').val('');
 })
 
-const currentWeather = (query) => {
+const getAPI = (query) => {
   // current weather
   $.ajax({
     method: "GET",
@@ -52,7 +52,7 @@ const addCurrentWeather = (data) => {
 const addForecastWeather = (data) => {
   
   let days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-  
+
   // get every 8th data point
   for (let i=0; i < data.list.length; i = i+8) {
     let forecastDay = {
