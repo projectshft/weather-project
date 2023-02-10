@@ -34,6 +34,7 @@ const getAPI = (query) => {
     },
     error: function(jqXHR, textStatus, errorThrown) {
       console.log(textStatus);
+      alert('Invalid city name. Please try again.')
     }
   });
 }
