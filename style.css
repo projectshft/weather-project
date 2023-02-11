@@ -16,3 +16,63 @@
 .time {
   font-family: "Source Code Pro", monospace;
 }
+
+.fore {
+  border: solid;
+  padding: 10px 10px;
+}
+
+div.fore:nth-child(3) {
+  margin-left: 3px;
+  margin-right: 3px;
+}
+
+div.fore:nth-child(2) {
+  margin-left: 3px;
+}
+
+div.fore:nth-child(3) {
+  margin-left: 3px;
+  margin-right: 3px;
+}
+
+div.fore:nth-child(1) {
+  margin-right: 4px;
+}
+
+div.fore:nth-child(3) {
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+div.fore:nth-child(1) > div:nth-child(1) {
+  margin-right: 3px;
+}
+
+div.fore:nth-child(2) {
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+div.fore:nth-child(5) {
+  margin-left: 3px;
+  margin-left: 5px;
+}
+
+div.fore:nth-child(4) {
+  margin-right: 5px;
+  margin-left: 5px;
+}
+
+div.fore:nth-child(1) > div:nth-child(2) {
+  margin-right: 5px;
+  margin-left: 5px;
+}
+
+div.fore:nth-child(1) {
+  margin-right: 4px;
+}
+
+.current-weather {
+  margin-bottom: 50px;
+}

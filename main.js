@@ -15,6 +15,7 @@ function refreshTime() {
 //Search Bar Functionality
 $('.btn').on('click', function () {
   var citySearch = $('.form-control').val();
+  $('.form-control').val('')
   getCity(citySearch);
   getForecastAPI(citySearch);
 })
@@ -27,7 +28,7 @@ var addWeather = function (data) {
   var currentWeather = {
     image: `http://openweathermap.org/img/wn/${weatherIcon}@2x.png`,
     city: data.name,
-    temp: data.main.temp, 
+    temp: Math.round(data.main.temp) + "°F", 
     conditions: data.weather[0].description,
   }
   cityWeather.push(currentWeather);
@@ -36,16 +37,45 @@ var addWeather = function (data) {
 
 //forecast to Handlebars
 var addForecast = function (data) {
-  cityForecast = [];
 
-      var toRenderForecast =    {
-        condition1: data.list[35].weather[0].description,
-        temp1: data.list[35].main.temp
-        // image1: `http://openweathermap.org/img/wn/${forecastIcon}@2x.png`,
-        }
- cityForecast.push(toRenderForecast);
- renderForecast()
-}
+  Date.prototype.addDays = function(days) {
+    var date = new Date(this.valueOf());
+    date.setDate(date.getDate() + days);
+    return date;
+  }
+    var date = new Date();
+
+  cityForecast = [];
+  var icon1 = data.list[3].weather[0].icon;
+  var icon2 = data.list[11].weather[0].icon;
+  var icon3 = data.list[19].weather[0].icon;
+  var icon4 = data.list[27].weather[0].icon;
+  var icon5 = data.list[35].weather[0].icon;
+  var allForeCast = {
+    date1: date.addDays(1),
+    image1: `http://openweathermap.org/img/wn/${icon1}@2x.png`,
+    temp1: Math.round(data.list[3].main.temp) + '°F',
+    cond1: data.list[3].weather[0].description,
+    date2: date.addDays(2),
+    image2: `http://openweathermap.org/img/wn/${icon2}@2x.png`,
+    temp2: Math.round(data.list[11].main.temp) + '°F',
+    cond2: data.list[11].weather[0].description,
+    date3: date.addDays(3),
+    image3: `http://openweathermap.org/img/wn/${icon3}@2x.png`,
+    temp3: Math.round(data.list[19].main.temp) + '°F',
+    cond3: data.list[19].weather[0].description,
+    date4: date.addDays(4),
+    image4: `http://openweathermap.org/img/wn/${icon4}@2x.png`,
+    temp4: Math.round(data.list[27].main.temp) + '°F',
+    cond4: data.list[27].weather[0].description,
+    date5: date.addDays(5),
+    image5: `http://openweathermap.org/img/wn/${icon5}@2x.png`,
+    temp5: Math.round(data.list[35].main.temp) + '°F',
+    cond5: data.list[35].weather[0].description
+  }
+  cityForecast.push(allForeCast)
+  renderForecast();
+};
 
 //current Weather API Call
 var getCity = function (city) {
