@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>myWeatherApp</title>
+    <!-- bootstrap link -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat&family=Source+Code+Pro:wght@300&display=swap" rel="stylesheet">
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
+      crossorigin="anonymous"
+    />
+    <!-- fontawesome -->
+    <!-- <script src="https://kit.fontawesome.com/354e0559d9.js" crossorigin="anonymous"></script> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- myCSS -->
+    <link href="style.css" rel="stylesheet" />
+  </head>
+  <body>
+    <header class="head">
+      <div class="container">
+        <div class="container text-center">
+          <div class="row">
+            <div class="col">
+              <i class="fa-sharp fa-regular fa-font-case">WEATHER on-DEMAND</i>
+            </div>        
+      </div>
+    </header>
+
+    <div class="container text-center">
+    <div class="time row">
+      <h1><span id="time"> </span></h1>
+    </div>
+  </div>
+    <!-- searchbar -->
+    <div class="container text-center">
+      <div class="row">
+        <div class="col">
+          <div class="input-group mb-3">
+            <span class="input-group-text" id="inputGroup-sizing-default"><i class="fa-solid fa-wind"></i></span>
+            <input type="text" placeholder="City" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+          </div>
+          <div class="row">
+            <button type="button" class="btn btn-primary">Search</button>
+            </div>
+        </div>
+
+        <div class="display row"></div>
+
+        <div class="forecastdisplay row"></div>
+       
+        <!-- current weather from API -->
+    <!-- handlebars for AJAX -->
+    <script id="currentweather-template" type="text/x-handlebars-template">
+      <div class="container text-left">
+        <div class="row align-items-start">
+          <div class= "col">
+          </div>
+          <div class="current-weather col">
+            <img src="{{ image }}" alt="">
+            <div><strong>City:</strong>     {{ city }}</div>
+            <div><strong>Temperature:</strong>     {{ temp }} </div>
+            <div><strong>Conditions: </strong>     {{ conditions }}</div>
+          </div>
+          <div class="col"> </div>
+        </div>
+      </div>
+    </script>
+
+      <script id="forecast-template" type="text/x-handlebars-template">
+      <div class="container text-center">
+        <div class="row align-items-start">
+          <div class="fore col">
+            <div> {{date1}} </div>
+            <img src = "{{ image1 }}" alt="">
+            <div> {{ cond1 }} </div>
+            <div> {{ temp1 }} </div>
+            </div>
+              <div class="fore col">
+                <div> {{date2}} </div>
+                <img src = "{{ image2 }}" alt="">
+                <div> {{ cond2 }} </div>
+                <div> {{ temp2 }} </div>
+              </div>
+               <div class="fore col">
+                <div> {{date3}} </div>
+                <img src = "{{ image3 }}" alt="">
+                <div> {{ cond3 }} </div>
+                <div> {{ temp3 }} </div>
+               </div>
+              <div class="fore col">
+                <div> {{date4}} </div>
+                <img src = "{{ image4 }}" alt="">
+                <div> {{ cond4 }} </div>
+                <div> {{ temp4 }} </div>
+              </div>
+             <div class="fore col">
+              <div> {{date5}} </div>
+              <img src = "{{ image5 }}" alt="">
+              <div> {{ cond5 }} </div>
+              <div> {{ temp5 }} </div>
+             </div>
+        </div>
+      </div>
+    </script>
+
+
+    <!-- handlebars bootstrap jquery and my js -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"
+    integrity="sha512-RNLkV3d+aLtfcpEyFG8jRbnWHxUqVZozacROI4J2F1sTaDqo1dPQYs01OMi1t1w9Y2FdbSCDSQ2ZVdAC8bzgAg=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  ></script>
+    <script src="main.js"></script>
+  </body>
+</html>
