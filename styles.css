@@ -1,0 +1,11 @@
+body {
+  text-align: center;
+}
+
+#week-adjust {
+  border: 1px solid black;
+}
+
+.week {
+  margin: 100px;
+}
