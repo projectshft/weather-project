@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link
+    rel="stylesheet"
+    href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+    crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="styles.css"
+      http-equiv="X-UA-Compatible"
+      content="IE=edge"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Weather Report</title>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-6 offset-md-3">
+          <div class="page-header">
+            <h1>What is the weather?</h1>
+            <hr />
+          </div>
+        </div>
+      </div>
+      <form class="search-form">
+        <h3>Search your city</h3>
+
+        <div class="form-group">
+          <input type="text" id="search-query" class="form=control">
+          </input>
+        </div>
+
+        <button type="button" class="btn btn-primary search">Search</button>
+      </form>
+
+      <hr/>
+
+      <div class="weather row">
+
+      </div>
+    </div>
+    <div class="week row no-gutters justify-content-center">
+
+    </div>
+
+    <script id="weather-template" type="text/x-handlebars-template">
+      <div class="container-fluid">
+        <div class="row justify-content-center">
+          <div class="col-2">
+            <div class="city-weather">
+              <h2>{{temp}}<span>&#176;</span></h2>
+              <h2>{{name}}</h2>
+              <h3>{{wType}}</h3>
+            </div>
+          </div>
+          <div class="col-2">
+            <div id="icon"><img id="wicon" src="{{wIcon}}" alt="Weather icon"></div>
+          </div>
+        </div>
+      </div>
+    </script>
+
+    <script id="week-template" type="text/x-handlebars-template">
+      <div class="col">
+        <div class="week-weather" id="week-adjust">
+          <h3>{{wType}}</h3>
+          <h3>{{temp}}<span>&#176;</span></h3>
+          <div id="icon"><img id="wicon" src="{{wIcon}}" alt="Weather icon"></div>
+          <h3>{{date}}</h3>
+        </div>
+      </div>
+    </script>
+
+    <script src="https://kit.fontawesome.com/bf14934db7.js" crossorigin="anonymous"></script>
+    <script src="node_modules\moment\moment.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
+    <script src='main.js'></script>
+  </body>
+</html>
