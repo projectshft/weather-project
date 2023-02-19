@@ -3,18 +3,15 @@
   margin-top: 20px;
 }
 
-.current-weather-tile img {
-  width: 100%;
-}
-
-.current-weather-tile {
-  border: 1px solid black;
+.current-tile {
+  /* border: 1px solid black; */
   padding: 15px;
   margin-bottom: 15px;
+  text-align: center;
 }
 
-.current-weather-tile {
-  text-align: center;
+#weather-image img {
+  background-color: rgba(224, 224, 224, 0.1);
 }
 
 .form-group {

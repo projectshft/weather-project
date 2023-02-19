@@ -30,7 +30,7 @@
             </div>
           </form>
 
-          <div class="current-weather row">
+          <div class="current row">
           </div>
           <div class="five-day row">
           </div>
@@ -38,18 +38,24 @@
         </div>
       </div>
     </div>
-    <script id="weather-template" type="text/x-handlebars-template">
+    <script id="current-template" type="text/x-handlebars-template">
       <div class="col-md-4">
-        <div class="current-weather-tile">
-          <h1><strong>{{temperature}}</strong></h1>
-          <h2><strong>{{city}}</strong></h2>
-          <h4><strong>{{conditions}}</strong></h4>
-          <img id="weather-images" src="{{conditions_img}}" alt="">
+        <div class="current-tile">
+          <h1><strong>{{temp}}<span>&#176;</span></strong></h1>
+          <h2><strong>{{name}}</strong></h2>
+          <div id="conditions">
+            <h4>{{conditions}}</h4>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div id="weather-image" class="current-tile">
+          <img src="{{icon}}" alt="">
         </div>
       </div>
     </script>
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
     <script src="main.js" type="text/javascript"></script>
   </body>
 </html>
