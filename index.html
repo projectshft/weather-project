@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Weather Project</title>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
+      integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-6 offset-md-3">
+          <div class="page-header">
+            <h1>Weather Project</h1>
+            <hr/>
+          </div>
+
+          <form class="search-form">
+            <div class="form-group">
+              <input type="text" id="search-query" class="form-control" placeholder="Enter City Name Here">
+              </input>
+              <button type="button" class="btn btn-primary search">Search</button>
+            </div>
+          </form>
+
+          <div class="currents row">
+          </div>
+          
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-10 offset-md-2">
+          <div class="five-day row">
+          </div>
+        </div>
+      </div>
+    </div>
+    <script id="current-template" type="text/x-handlebars-template">
+      <div class="col-md-4">
+        <div class="current-tile">
+          <h1><strong>{{temp}}<span>&#176;</span></strong></h1>
+          <h2><strong>{{name}}</strong></h2>
+          <div id="conditions">
+            <h4>{{conditions}}</h4>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div id="weather-image" class="current-tile">
+          <img src="{{icon}}" alt="">
+        </div>
+      </div>
+    </script>
+
+    <script id="forecast-template" type="text/x-handlebars-template">
+      <div id="forecast-tile" class="col-md-2">
+        <div class="forecast-tile">
+          <div id="conditions">
+            <h4>{{forecast_conditions}}</h4>
+          </div>
+          <h1><strong>{{forecast_temp}}<span>&#176;</span></strong></h1>
+          <div id="weather-image">
+            <img src="{{forecast_icon}}" alt="">
+          </div>
+          <h2><strong>{{forecast_day}}</strong></h2>
+        </div>
+      </div>
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="main.js" type="text/javascript"></script>
+  </body>
+</html>
