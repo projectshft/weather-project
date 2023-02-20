@@ -1,6 +1,6 @@
 var currentWeather = [];
 
-// var forecast = [];
+// var fodrecast = [];
 
 // var forecastAPI = 'api.openweathermap.org/data/2.5/forecast?q={city name}&appid=ed82dafb0490d14952ef1d1117c72baf&units=imperial'
 
@@ -15,9 +15,10 @@ $('.search').on('click', function () {
 });
 
 var addCurrentWeather = function (data) {
+  currentWeather = [];
   currentWeather.push({
     name: data.name,
-    temp: data.main.temp,
+    temp: Math.round(data.main.temp),
     conditions: data.weather[0].main,
     icon : 'http://openweathermap.org/img/wn/' + data.weather[0].icon + '@2x.png',
   });
@@ -42,7 +43,7 @@ var fetchCurrent = function (cityName) {
 }
 
 var renderCurrent = function () {
-  $('.current').empty();
+  $('.currents').empty();
 
   for (let i = 0; i < currentWeather.length; i++) {
     const current = currentWeather[i];
@@ -50,7 +51,7 @@ var renderCurrent = function () {
     var template = Handlebars.compile(source);
     var newHTML = template(current);
 
-    $('.current').append(newHTML);
+    $('.currents').append(newHTML);
   }
 }
 
