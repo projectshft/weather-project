@@ -1,9 +1,5 @@
 var currentWeather = [];
-
 var forecast = [];
-
-var forecastAPI = 'api.openweathermap.org/data/2.5/forecast?q={city name}&appid=ed82dafb0490d14952ef1d1117c72baf&units=imperial';
-
 var apiKey = 'ed82dafb0490d14952ef1d1117c72baf';
 
 $('.search').on('click', function () {
@@ -13,7 +9,7 @@ $('.search').on('click', function () {
 
   fetchWeather(cityName);
 });
-
+// instead of using the object structure from the response, I pushed the needed properties into a simpler object structure, as I was having trouble accessing the objects in the api response weather array when doing the render function.
 var addCurrentWeather = function (data) {
   currentWeather = [];
   currentWeather.push({
@@ -25,7 +21,7 @@ var addCurrentWeather = function (data) {
 
   renderWeather();
 };
-
+// used moment js to convert list.dt unix timestamp values to day of week
 var addForecast = function (data) {
   forecast = [];
   for (let i = 0; i < data.list.length; i=i+8) {
@@ -39,7 +35,7 @@ var addForecast = function (data) {
   }
   renderWeather();
 };
-
+// used the openweather params to pull the imperial temperature instead of manually converting. Also did two separate ajax iterations for each api url.
 var fetchWeather = function (cityName) {
   $.ajax({
     method: 'GET',
@@ -68,7 +64,7 @@ var fetchWeather = function (cityName) {
     }
   });
 }
-
+// renderWeather renders for the current then for the forecast responses
 var renderWeather = function () {
   $('.currents').empty();
   $('.five-day').empty();
