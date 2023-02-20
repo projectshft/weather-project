@@ -1,8 +1,8 @@
 var currentWeather = [];
 
-// var fodrecast = [];
+var forecast = [];
 
-// var forecastAPI = 'api.openweathermap.org/data/2.5/forecast?q={city name}&appid=ed82dafb0490d14952ef1d1117c72baf&units=imperial'
+var forecastAPI = 'api.openweathermap.org/data/2.5/forecast?q={city name}&appid=ed82dafb0490d14952ef1d1117c72baf&units=imperial';
 
 var apiKey = 'ed82dafb0490d14952ef1d1117c72baf';
 
@@ -11,7 +11,7 @@ $('.search').on('click', function () {
 
   $('#search-query').val('');
 
-  fetchCurrent(cityName);
+  fetchWeather(cityName);
 });
 
 var addCurrentWeather = function (data) {
@@ -23,10 +23,24 @@ var addCurrentWeather = function (data) {
     icon : 'http://openweathermap.org/img/wn/' + data.weather[0].icon + '@2x.png',
   });
 
-  renderCurrent();
+  renderWeather();
 };
 
-var fetchCurrent = function (cityName) {
+var addForecast = function (data) {
+  forecast = [];
+  for (let i = 0; i < data.list.length; i=i+8) {
+    var forecastArray = data.list[i];
+    forecast.push({
+      forecast_conditions: forecastArray.weather[0].main,
+      forecast_temp: Math.round(forecastArray.main.temp),
+      forecast_icon: 'http://openweathermap.org/img/wn/' + forecastArray.weather[0].icon + '@2x.png',
+      forecast_day: forecastArray.dt
+    });
+  }
+  renderWeather();
+};
+
+var fetchWeather = function (cityName) {
   $.ajax({
     method: 'GET',
     url: 'https://api.openweathermap.org/data/2.5/weather?q='
@@ -39,11 +53,25 @@ var fetchCurrent = function (cityName) {
     error: function (jqXHR, textStatus, errorThrown) {
       console.log(textStatus);
     }
-  })
+  });
+  $.ajax({
+    method: 'GET',
+    url: 'https://api.openweathermap.org/data/2.5/forecast?q='
+     + cityName + '&appid=' 
+     + apiKey + '&units=imperial',
+    dataType: 'json',
+    success: function (data) {
+      addForecast(data);
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+      console.log(textStatus);
+    }
+  });
 }
 
-var renderCurrent = function () {
+var renderWeather = function () {
   $('.currents').empty();
+  $('.five-day').empty();
 
   for (let i = 0; i < currentWeather.length; i++) {
     const current = currentWeather[i];
@@ -53,20 +81,14 @@ var renderCurrent = function () {
 
     $('.currents').append(newHTML);
   }
+  for (let i = 0; i < forecast.length; i++) {
+    const fiveDay = forecast[i];
+    var source = $('#forecast-template').html();
+    var template = Handlebars.compile(source);
+    var newHTML = template(fiveDay);
+
+    $('.five-day').append(newHTML);
+  }
 }
 
-// var renderForecast = function () {
-//   $('.forecast').empty();
-
-//   for (let i = 0; i < forecast.length; i++) {
-//     const forecastHTML = forecast[i];
-//     var source = $('#forecast-template').html();
-//     var template = Handlebars.compile(source);
-//     var newHTML = template(forecastHTML);
-
-//     $('.forecast').append(newHTML);
-//   }
-// }
-
-renderCurrent();
-// renderForecast();
+renderWeather();
