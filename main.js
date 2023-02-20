@@ -34,7 +34,7 @@ var addForecast = function (data) {
       forecast_conditions: forecastArray.weather[0].main,
       forecast_temp: Math.round(forecastArray.main.temp),
       forecast_icon: 'http://openweathermap.org/img/wn/' + forecastArray.weather[0].icon + '@2x.png',
-      forecast_day: forecastArray.dt
+      forecast_day: moment.unix(forecastArray.dt).format("dddd")
     });
   }
   renderWeather();
