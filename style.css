@@ -1,0 +1,31 @@
+.container {
+  margin-top: 50px;
+}
+
+.form-group{
+  margin-top: 70px;
+}
+
+.search {
+  margin-left: 15px;
+}
+
+.weather-display {
+  margin-top: 50px;
+  text-align: center;
+}
+
+.five-day div{
+border: thin black solid;
+}
+
+.week-container {
+  text-align: center;
+  margin-top: 50px;
+  margin-bottom: 100px;
+  margin-left: 8.3%;
+}
+
+.col-sm-2 {
+  padding: 50px;
+}
