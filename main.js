@@ -2,7 +2,7 @@
 
 
  
-$('#submit').on('click', function(){
+$('#search').on('click', function(){
     let nameOfCity = $('#cityName').val();
     
     fetchGeo(nameOfCity); 
@@ -101,18 +101,19 @@ appendWeather(currentWeather, weatherDaily);
 }   
 
 let appendWeather = function(currentWeather, weatherDaily) { 
-    let source = $('#weather-table').html(); 
+    let source = $('#weather-template').html(); 
     let template = Handlebars.compile(source);
     let newHTML = template(currentWeather); 
 
-    console.log(newHTML); 
-    $('#weather-table').empty(); 
-    $('#weather-table').append(newHTML); 
+    //console.log(newHTML); 
+    $('.currentWeather').empty(); 
+    $('.fiveDayWeather').empty(); 
+    $('.currentWeather').append(newHTML); 
 
     for (let i = 0; i < weatherDaily.length; i++) {
-        let newHTML2 = template(weatherDaily[i]); 
-        console.log(newHTML2)
-        $('#weather-table').append(newHTML2); 
+        const newHTML2 = template(weatherDaily[i]); 
+        //console.log(newHTML2)
+        $('.fiveDayWeather').append(newHTML2); 
     }
 }; 
 

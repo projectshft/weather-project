@@ -1,3 +1,10 @@
 .header {
     margin-top: 40px;
 }
+
+.weather {
+    border : 1px solid black; 
+}
+.column-inner {
+    padding: 10px;
+}
