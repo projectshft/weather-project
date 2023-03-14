@@ -2,8 +2,13 @@
     margin-top: 40px;
 }
 
+.container-fluid {
+    padding: 2rem;
+}
+
 .weather {
-    border : 1px solid black; 
+    border : 2px solid black; 
+    margin: .25rem;
 }
 .column-inner {
     padding: 10px;

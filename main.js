@@ -1,15 +1,8 @@
-//change the for loop code, avoid the same code in weather daily
 
-
- 
 $('#search').on('click', function(){
-    let nameOfCity = $('#cityName').val();
+    var nameOfCity = $('#cityName').val();
     
     fetchGeo(nameOfCity); 
-    //this doesnt work.. i think it has something to do with the variable being protected by the function.
-    // its more readable this way than calling fetchWeather inside of fetchGeo?
-    //fetchWeather(newLat, newLon); 
-    //renderWeather(); 
 }); 
  
 //fetch the lat and lon of the city
@@ -22,7 +15,6 @@ let fetchGeo = function(cityName) {
         success: function(data) { 
             var newLat = data[0].lat; 
             var newLon = data[0].lon; 
-            //console.log(data);
             fetchWeather(newLat, newLon); 
             
         }, 
@@ -50,48 +42,42 @@ let fetchWeather = function(lat, lon){
     }); 
 }; 
 
-
-
 //take the fetched data and loop through the 40 temps
 let renderWeather = function(data) {  
-    //console.log(data); 
-
-    let weatherDaily = [ { dayOfTheWeek : [], temp : [], }, 
-        { dayOfTheWeek : [], temp : [], }, 
-        { dayOfTheWeek : [], temp : [], }, 
-        { dayOfTheWeek : [], temp : [], }, 
-        { dayOfTheWeek : [], temp : [], }, 
-        ]; 
-
-    let currentWeather = {temperture : data.current.temp};
-    console.log(currentWeather.temperture); 
-
+    let weatherDaily = []; 
+    let dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    let dayOfToday = (new Date(Date.now() + data.timezone_offset * 1000)).getUTCDay(); 
+    
     //new array for the 48 hourly temp 
     let hourly = data.hourly.map(x => x.temp); 
 
     let everyHour = []; 
 
-    //so j does not reset to 0 everytime the inner while loop is iterate
-    j = 0;
+    let currentWeather = {
+        temperture : Math.floor(data.current.temp) + "°", 
+        today: dayNames[dayOfToday], 
+        //city: nameOfCity,  
+        icon: "https://openweathermap.org/img/wn/" + data.hourly[0].weather[0].icon + "@2x.png", 
+    };
+
 
     //48 temps, every 8 is for one day 
     for (let i = 0; i < hourly.length; i++) {
         everyHour.push(hourly[i]); 
-        let reminderCheck = (i+1) % 8 ; 
+        let reminderCheck = (i+1) % 8 ;
 
         // if i+1 divided by 8, and the reminder is 0, get the average of the 8 temps
         if (reminderCheck === 0){
             let weatherOfTheDay = Math.round(everyHour.reduce((acc, curr) => acc + curr) / 8); 
             
-            //push weather of the day into the weatherdaily object
-            while (j < weatherDaily.length) {
-                //debugger; 
-                weatherDaily[j].temp.push(weatherOfTheDay);
-                console.log(weatherDaily[j].temp[0]);
-                j++; 
-                break; 
-            }
-        
+            let weatherCondition = {
+                condition: data.hourly[i].weather[0].main, 
+                temperture: weatherOfTheDay + "°", 
+                icon: "https://openweathermap.org/img/wn/" + data.hourly[i].weather[0].icon + "@2x.png", 
+                //futureDays: dayNames[dayOfToday++] 
+            }; 
+            weatherDaily.push(weatherCondition); 
+
             //empty the yesterdays hours
             everyHour = []; 
         }
