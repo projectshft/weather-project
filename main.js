@@ -23,10 +23,28 @@ var fetchData = function(city) {
 
 var addWeather = function(data) {
   weatherCurrent.push( {
-    Temp: data.main.temp,
-    City: data.name,
-    Conditions: data.weather[0].description
+    temp: Math.round(((data.main.temp - 273.15) * 1.8) + 32),
+    city: data.name,
+    conditions: data.weather[0].description
   })
 
-console.log(weatherCurrent);
+renderweatherCurrent();
+
+}
+var renderweatherCurrent = function() {
+  document.querySelector('.todays-weather').replaceChildren();
+  for (let i = 0; i < weatherCurrent.length; i++) {
+    var weatherNow = weatherCurrent[i];
+    var template = `
+    <div class="col-md-5 offset-md-3">
+     <div class='weatherNow'>
+       <h3>${weatherNow.temp}</h3>
+       <h3>${weatherNow.city}</h3>
+       <h6>${weatherNow.conditions}</h6>
+      </div>
+    </div>`;
+
+    document.querySelector('.todays-weather').insertAdjacentHTML('beforeend', template);
+    
+  }
 }
