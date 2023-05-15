@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
+      integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Weather</title>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <!-- Page Header -->
+      <div class="row">
+        <div class="col-md-6 offset-md-3">
+          <div class="page-header text-center">
+            <h1>Weather Project</h1>
+            <hr />
+          </div>
+          <!-- Form and Button -->
+          <form class="search-form row">
+            <div class="form-group col-md-6 offset-md-2">
+              <input
+                type="text"
+                id="search-query"
+                class="form-control"
+                placeholder="City"
+              />
+            </div>
+            <div class="col-md-auto">
+              <button type="button" class="btn btn-primary search">
+                Search
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Divs for current weather conditions -->
+        <!-- Current contents are just placeholders that will be replaced by the actual weather data after search -->
+        <div class="current row text-center col-md-8 offset-md-4">
+          <div class="col-md-3">
+            <div>
+              <h4>Temp</h4>
+              <h5>City</h5>
+              <p>Condition</p>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <img
+              src="https://static.vecteezy.com/system/resources/previews/001/500/512/original/cloudy-weather-icon-free-vector.jpg"
+              alt=""
+              class="img-fluid"
+            />
+          </div>
+        </div>
+
+        <!-- Divs for 5 Day Forecast -->
+        <!-- Current contents are just placeholders that will be replaced by the actual weather data after search -->
+        <div class="forecast row text-center col-md-10 offset-md-2">
+          <div class="day col-md-2">
+            <p>Condition</p>
+            <h5>Temp</h5>
+            <img
+              src="https://static.vecteezy.com/system/resources/previews/001/500/512/original/cloudy-weather-icon-free-vector.jpg"
+              alt=""
+              class="img-fluid"
+            />
+            <h5>Day of the Week</h5>
+          </div>
+          <div class="day col-md-2">
+            <p>Condition</p>
+            <h5>Temp</h5>
+            <img
+              src="https://static.vecteezy.com/system/resources/previews/001/500/512/original/cloudy-weather-icon-free-vector.jpg"
+              alt=""
+              class="img-fluid"
+            />
+            <h5>Day of the Week</h5>
+          </div>
+          <div class="day col-md-2">
+            <p>Condition</p>
+            <h5>Temp</h5>
+            <img
+              src="https://static.vecteezy.com/system/resources/previews/001/500/512/original/cloudy-weather-icon-free-vector.jpg"
+              alt=""
+              class="img-fluid"
+            />
+            <h5>Day of the Week</h5>
+          </div>
+          <div class="day col-md-2">
+            <p>Condition</p>
+            <h5>Temp</h5>
+            <img
+              src="https://static.vecteezy.com/system/resources/previews/001/500/512/original/cloudy-weather-icon-free-vector.jpg"
+              alt=""
+              class="img-fluid"
+            />
+            <h5>Day of the Week</h5>
+          </div>
+          <div class="day col-md-2">
+            <p>Condition</p>
+            <h5>Temp</h5>
+            <img
+              src="https://static.vecteezy.com/system/resources/previews/001/500/512/original/cloudy-weather-icon-free-vector.jpg"
+              alt=""
+              class="img-fluid"
+            />
+            <h5>Day of the Week</h5>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>
+    <script src="main.js" type="text/javascript"></script>
+  </body>
+</html>
