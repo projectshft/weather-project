@@ -1,0 +1,22 @@
+.page-header {
+  margin-top: 40px;
+}
+
+.search-form {
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+
+.current {
+  margin-bottom: 20px;
+}
+.current img {
+  max-height: 90px;
+}
+
+.day {
+  border: 1px solid black;
+  padding: 10px;
+  margin-left: 2px;
+  margin-bottom: 40px;
+}
