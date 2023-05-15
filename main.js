@@ -77,7 +77,6 @@ var addFiveDayForecast = function (dataFiveDay) {
     };
 
     fiveDayForecast.push(dayTemplate);
-    console.log(dayTemplate);
   };
 
   renderFiveDayForecast();
@@ -91,10 +90,10 @@ var renderFiveDayForecast = function () {
 
     const fiveDayForecastTemplate = `
     <div class="forecast col-md-2">
-    <h5> ${ oneDay.condition } </h5>
-    <h4> ${ oneDay.temp } </h4>
-    <img src='https://openweathermap.org/img/wn/${oneDay.icon}@2x.png' class='img-fluid' />
-    <h5> ${ oneDay.dayOfTheWeek } </h5>
+      <h5> ${ oneDay.condition } </h5>
+      <h4> ${ oneDay.temp } </h4>
+      <img src='https://openweathermap.org/img/wn/${oneDay.icon}@2x.png' class='img-fluid' />
+      <h5> ${ oneDay.dayOfTheWeek } </h5>
     </div>`
 
     document.querySelector('.five-day-forecast').insertAdjacentHTML('beforeend', fiveDayForecastTemplate);
