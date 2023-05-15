@@ -78,12 +78,12 @@ var renderWeeklyWeather = function() {
       everyEighthWeather.push(weeklyWeather[i]);
     var template = `
     <div class='weeklyWeather'>
-     <ul class="list-group list-group-horizontal-md">
-      <li class="list-group-item flex-fill">${everyEighthWeather[everyEighthWeather.length - 1].temp}° ${everyEighthWeather[everyEighthWeather.length - 1].conditions}</li>
-      <li class="list-group-item flex-fill">${everyEighthWeather[everyEighthWeather.length - 1].temp}° ${everyEighthWeather[everyEighthWeather.length - 1].conditions}</li>
-      <li class="list-group-item flex-fill">${everyEighthWeather[everyEighthWeather.length - 1].temp}° ${everyEighthWeather[everyEighthWeather.length - 1].conditions}</li>
-      <li class="list-group-item flex-fill">${everyEighthWeather[everyEighthWeather.length - 1].temp}° ${everyEighthWeather[everyEighthWeather.length - 1].conditions}</li>
-      <li class="list-group-item flex-fill">${everyEighthWeather[everyEighthWeather.length - 1].temp}° ${everyEighthWeather[everyEighthWeather.length - 1].conditions}</li>
+     <ul class="list-group list-group-horizontal-xl">
+      <li class="list-group-item flex-fill"><strong>${everyEighthWeather[everyEighthWeather.length - 1].temp}°</strong> <br> ${everyEighthWeather[everyEighthWeather.length - 1].conditions}</li>
+      <li class="list-group-item flex-fill"><strong>${everyEighthWeather[everyEighthWeather.length - 1].temp}°</strong> <br> ${everyEighthWeather[everyEighthWeather.length - 1].conditions}</li>
+      <li class="list-group-item flex-fill"><strong>${everyEighthWeather[everyEighthWeather.length - 1].temp}°</strong> <br> ${everyEighthWeather[everyEighthWeather.length - 1].conditions}</li>
+      <li class="list-group-item flex-fill"><strong>${everyEighthWeather[everyEighthWeather.length - 1].temp}°</strong> <br> ${everyEighthWeather[everyEighthWeather.length - 1].conditions}</li>
+      <li class="list-group-item flex-fill"><strong>${everyEighthWeather[everyEighthWeather.length - 1].temp}°</strong> <br> ${everyEighthWeather[everyEighthWeather.length - 1].conditions}</li>
      </ul>
     </div>`;
 
