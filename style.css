@@ -1,0 +1,25 @@
+.page-header {
+  text-align: center;
+  margin-top: 25px;
+}
+
+.form-group {
+  display: flex;
+  margin: 50px;
+}
+
+#search-query {
+  margin-right: 30px;
+}
+
+.current-weather-forecast,
+.five-day-forecast {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 70px;
+}
+
+.forecast {
+  border: 1px solid black;
+  padding: 20px 10px;
+}
