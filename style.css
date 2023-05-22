@@ -1,0 +1,8 @@
+.forecast-day {
+    border: 2px solid black;
+}
+  
+.inner-div {
+    border: 2px solid black;
+    cursor: pointer;
+}

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+    <link 
+        rel="stylesheet" 
+        href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" 
+        integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" 
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css" >
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <div class="page-header text-center">
+                    <h1>Weather Project</h1>
+                    <hr />
+                </div>
+                <form class="form-inline search-form">
+                    <input
+                        type="text"
+                        id="city"
+                        class="form-control mr-3"
+                        placeholder="Enter City Name Here"
+                    />
+                    <button type="button" class="btn btn-primary search-button">
+                        Search
+                    </button>
+                </form>
+                <div class="row mt-5 current-weather"></div>
+                <div class="row mt-5 forecast"></div>
+            </div>
+            
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>
