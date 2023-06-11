@@ -1,10 +1,12 @@
+// Empty arrays to store data we pull from the API
 let weather = [];
+let forecast = [];
 
+// Fetch the daily and weekly weather
 const fetchWeather = function(query) {
-  const url = 'https://api.openweathermap.org/data/2.5/weather?q=' + query + '&appid=0eb7282867c9f6a908734d94070fdac1&units=imperial';
-  // https://api.openweathermap.org/data/2.5/weather?q={city name}&appid={API key}
-  // API Key: 0eb7282867c9f6a908734d94070fdac1
-  fetch(url, {
+  const weatherURL = 'https://api.openweathermap.org/data/2.5/weather?q=' + query + '&appid=0eb7282867c9f6a908734d94070fdac1&units=imperial';
+
+  fetch(weatherURL, {
     method: 'GET',
     dataType: 'json'
   })
@@ -13,17 +15,17 @@ const fetchWeather = function(query) {
 }
 
 const fetchForecast = function(query) {
-  const url = 'https://api.openweathermap.org/data/2.5/weather?q=' + query + '&appid=0eb7282867c9f6a908734d94070fdac1&units=imperial';
-  // https://api.openweathermap.org/data/2.5/weather?q={city name}&appid={API key}
-  // API Key: 0eb7282867c9f6a908734d94070fdac1
-  fetch(url, {
+  const forecastURL = 'https://api.openweathermap.org/data/2.5/forecast?q=' + query + '&appid=0eb7282867c9f6a908734d94070fdac1&units=imperial';
+
+  fetch(forecastURL, {
     method: 'GET',
     dataType: 'json'
   })
     .then(data => data.json())
-    .then(data => addWeather(data));
+    .then(data => addForecast(data));
 }
 
+// Event listener to trigger the fetch calls
 document.querySelector('.search').addEventListener('click', function () {
 
   const search = document.querySelector('#search-query').value;
@@ -34,25 +36,44 @@ document.querySelector('.search').addEventListener('click', function () {
   document.querySelector('#search-query').value = '';
 });
 
+// Pull data from the current weather data
 const addWeather = function (data) {
-
-  console.log(data);
 
   weather = [];
 
-  const weatherdata = {
+  const weatherData = {
     currentTemp: data.main.temp,
     location: data.name,
     currentWeather: data.weather[0].main,
     currentIcon: data.weather[0].icon
-    // weather[0].icon
   };
 
-  weather.push(weatherdata);
+  weather.push(weatherData);
 
   renderWeather();
 };
 
+// Pull data from the weekly forecast data
+const addForecast = function (data) {
+
+  forecast = [];
+
+  for (var i = 7; i < data.list.length; i += 8) { // Start on the 8th item of the array (24 hours from current time) and then increment by 24 hours.
+
+    let forecastData = data.list[i];
+
+    forecastData = {
+      condition: forecastData.weather[0].main,
+      temp: forecastData.main.temp,
+      icon: forecastData.weather[0].icon,
+      timeStamp: forecastData.dt_txt
+    };
+    forecast.push(forecastData);
+  }
+  renderForecast();
+};
+
+// Format weather data and put it on the page
 var renderWeather = function () {
   document.querySelector('.weather').replaceChildren();
 
@@ -68,4 +89,30 @@ var renderWeather = function () {
   `;
 
   document.querySelector('.weather').innerHTML = template;
+};
+
+// Format 5 day forecast and put it on the page
+var renderForecast = function () {
+  document.querySelector('.forecast').replaceChildren();
+
+  for (var i = 0; i < forecast.length; i++) {
+
+    const day = forecast[i];
+
+    const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']; //Turn day of week number from getDay() method into a string
+    
+    let timeStampDate = new Date(day.timeStamp); // Turn timestamp from API into JS time stamp
+    let dayNum = timeStampDate.getDay(); // Get day of week number
+
+    const template = `
+    <div class="day col">
+      <h5 class="text-center">${ day.condition }</h5>
+      <h4 class="text-center">${ Math.round(day.temp) }&deg;</h4>
+      <div class="d-flex justify-content-center"><img src="https://openweathermap.org/img/wn/${ day.icon }@2x.png" alt=""></div>
+      <h5 class="text-center">${ daysOfWeek[dayNum] }</h5>
+    </div>`;
+
+    document.querySelector('.forecast').insertAdjacentHTML('beforeend', template);
+  }
+  
 };
