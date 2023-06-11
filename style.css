@@ -1,0 +1,19 @@
+.page-header {
+  text-align: center;
+  margin-top: 20px;
+}
+form {
+  justify-content: center;
+}
+
+.top-buffer {
+  margin-top: 60px;
+}
+
+.left-buffer {
+  margin-left: 15px;
+}
+
+.day {
+  border: solid black;
+}

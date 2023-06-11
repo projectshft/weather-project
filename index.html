@@ -18,14 +18,14 @@
   <body>
     <div class="container-fluid">
       <div class="row">
-        <div class="col-md-6 offset-md-3">
+        <div class="col-12">
           <div class="page-header">
             <h1>Weather Project</h1>
             <hr />
           </div>
 
-          <form class="form-inline">
-            <div class="form-group col-md-auto">
+          <form class="form-inline top-buffer">
+            <div class="form-group">
               <input
                 type="text"
                 id="search-query"
@@ -34,12 +34,19 @@
               />
             </div>
 
-            <button type="button" class="btn btn-primary search col-md-auto">
+            <button type="button" class="btn btn-primary search left-buffer">
               Search
             </button>
           </form>
 
-          <div class="weather row"></div>
+          <div class="weather row top-buffer"></div>
+          <div class="forecast row top-buffer">
+            <div class="col text-center day">Day 1</div>
+            <div class="col text-center day">Day 2</div>
+            <div class="col text-center day">Day 3</div>
+            <div class="col text-center day">Day 4</div>
+            <div class="col text-center day">Day 5</div>
+          </div>
         </div>
       </div>
     </div>
