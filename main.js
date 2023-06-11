@@ -2,6 +2,47 @@
 let weather = [];
 let forecast = [];
 
+// Geolocation
+function geoFind() {
+
+  function success(position) {
+    const latitude = position.coords.latitude;
+    const longitude = position.coords.longitude;
+    const geoWeatherURL = 'https://api.openweathermap.org/data/2.5/weather?lat=' + latitude + '&lon=' + longitude + '&appid=0eb7282867c9f6a908734d94070fdac1&units=imperial';
+
+    fetch(geoWeatherURL, {
+      method: 'GET',
+      dataType: 'json'
+    })
+      .then(weatherData => weatherData.json())
+      .then(weatherData => addWeather(weatherData));
+
+    
+
+    const geoForecastURL = 'https://api.openweathermap.org/data/2.5/forecast?lat=' + latitude + '&lon=' + longitude + '&appid=0eb7282867c9f6a908734d94070fdac1&units=imperial';
+
+    fetch(geoForecastURL, {
+      method: 'GET',
+      dataType: 'json'
+    })
+      .then(forecastData => forecastData.json())
+      .then(forecastData => addForecast(forecastData));
+
+  }
+  function error() {
+    alert("Unable to retrieve your location");
+  }
+
+  if (!navigator.geolocation) {
+    alert("Geolocation is not supported by your browser");
+  } else {
+    navigator.geolocation.getCurrentPosition(success, error);
+  }
+}
+
+document.querySelector(".find-me").addEventListener("click", geoFind);
+
+
 // Fetch the daily and weekly weather
 const fetchWeather = function(query) {
   const weatherURL = 'https://api.openweathermap.org/data/2.5/weather?q=' + query + '&appid=0eb7282867c9f6a908734d94070fdac1&units=imperial';
