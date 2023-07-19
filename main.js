@@ -112,6 +112,8 @@ searchForm.addEventListener("submit", function(e) {
 
   e.preventDefault();
   
-  var query = document.querySelector("#search-bar").value;
-  fetchCoords(query);
+  var query = document.querySelector("#search-bar");
+  fetchCoords(query.value);
+
+  query.value = ""
 })
