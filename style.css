@@ -1,0 +1,44 @@
+
+
+.title {
+  padding-top: 20px;
+  padding-bottom: 50px;
+}
+
+#search-form {
+  display: flex;
+  justify-content: center;
+}
+.container-1 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.weather-text {
+  font-family: "Verdana";
+  height: 150%;
+}
+
+.day-text-1, .day-text-2 {
+  font-family: "Verdana";
+}
+
+.row-2 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.day {
+  border: solid black 2px;
+}
+
+.day-img {
+  display: flex;
+  justify-content: center;
+}
+
+
+#main-weather {
+  width: 100%;
+}
