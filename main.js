@@ -22,7 +22,7 @@ var fetchData = function(data) {
       method: "GET",
       dataType: "json",
     })
-    .then(data => data.json());
+    .then(data => data.json())
     .then(data => addData(data));
 
   })
