@@ -20,13 +20,13 @@ var fetchData = function(data) {
   urls.forEach(function (url) {
     fetch(url, {
       method: "GET",
-      dataType: "json",
+      dataType: "json"
     })
     .then(data => data.json())
     .then(data => addData(data));
 
-  })
-}
+  });
+};
 
 
 var addData = function (data) {
@@ -37,7 +37,7 @@ var addData = function (data) {
 
     for (let i = 0; i < 5; i++) {
 
-      var iMult = i*8
+      var iMult = i * 8;
       var dayFinder = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
       var date = new Date(list[iMult].dt_txt);
 
@@ -47,11 +47,11 @@ var addData = function (data) {
         weatherIMG: list[iMult].weather[0].icon,
         day: dayFinder[date.getDay()]
 
-      }
-
-      template5DayArr.push(days)
       };
-      weather.push(template5DayArr)
+
+      template5DayArr.push(days);
+      };
+      weather.push(template5DayArr);
   } else if (data.main) {
     var templateObj = {
       temp: data.main.temp,
@@ -59,17 +59,17 @@ var addData = function (data) {
       weather: data.weather[0].main,
       weatherIMG: data.weather[0].icon
     }
-    weather.push(templateObj)
+    weather.push(templateObj);
 };
   if (weather.length === 2) {
-    renderData()
+    renderData();
   };
 }
 
 var renderData = function () {
   var findInfo = weather[0];
   var findDays = weather[1];
-  var mainWeather = document.querySelector("#main-weather")
+  var mainWeather = document.querySelector("#main-weather");
   mainWeather.replaceChildren();
   
   var template = `
@@ -115,5 +115,5 @@ searchForm.addEventListener("submit", function(e) {
   var query = document.querySelector("#search-bar");
   fetchCoords(query.value);
 
-  query.value = ""
-})
+  query.value = "";
+});
