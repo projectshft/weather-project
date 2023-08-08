@@ -1,0 +1,7 @@
+.weather {
+  padding-top: 48px;
+}
+
+.current-weather {
+  text-transform: capitalize;
+}

@@ -11,12 +11,16 @@ const Location = (name, lat, lon) => {
 
 const currentWeather = (data) => {
 
-  const currentTemp = data.main.temp;
-  const currentConditions = data.weather[0].description
+  const location = data.name;
+  const currentTemp = Math.round(data.main.temp);
+  const currentConditions = data.weather[0].description;
+  const icon = data.weather[0].icon;
 
   return {
+    location,
     currentTemp,
-    currentConditions
+    currentConditions,
+    icon
   }
 };
 
@@ -59,10 +63,13 @@ const renderCurrentWeather = function (weather) {
   weatherDiv.replaceChildren();
 
   const template = `
-  <div class="current-weather">
-    <h4>${ weather.currentTemp }</h4>
-    <h3>Durham</h3>
-    <h4>${ weather.currentConditions}</h4>
+  <div class="current-weather col-md-6">
+    <h1>${ weather.currentTemp }\xB0</h1>
+    <h2>${ weather.location }</h2>
+    <h3>${ weather.currentConditions }</h3>
+  </div>
+  <div class="current-weather-icon col-md-6">
+    <img src="https://openweathermap.org/img/wn/${ weather.icon }@2x.png">
   </div>`
   
   weatherDiv.innerHTML = template;    
@@ -70,5 +77,8 @@ const renderCurrentWeather = function (weather) {
 
 document.querySelector('.search').addEventListener('click', function () {
   const searchTerm = document.querySelector('#search-query').value;
+
   fetchCoordinates(searchTerm);
+
+  document.querySelector('#search-query').value = '';
 });
