@@ -21,5 +21,42 @@
       crossorigin="anonymous"
     ></script>
   </head>
-  <body></body>
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-4 offset-md-4 text-center">
+          <div class="page-header">
+          <h1>Weather Project</h1>
+          <hr/>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-4 offset-md-4">
+          <form class="search-form">
+            <div class="form-group">
+              <input type="text" id="search-query" class="form-control" placeholder="Enter city name here">
+              </input>
+            </div>
+
+            <button type="button" id="btnFetch" class="spinner-button btn btn-primary mb-2 search">Search</button>
+          </form>
+        </div>
+      </div>
+        
+      <div class="row">
+        <div class="weather col-md-6 offset-md-3">
+
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="forecast col-md">
+
+        </div>
+      </div>
+
+    </div> 
+  </body>
 </html>
