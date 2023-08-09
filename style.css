@@ -1,7 +1,13 @@
-.weather {
+.page-header,
+.weather,
+.forecast {
   padding-top: 48px;
 }
 
 .current-weather {
   text-transform: capitalize;
+}
+
+.forecast-day-inner {
+  padding: 24px;
 }

@@ -86,12 +86,15 @@ const fetchCoordinates = function (query) {
     dataType: 'json'
   })
     .then(data => data.json())
-    .then(data => setLocation(data))
-    .then(myLocation => fetchWeather(myLocation.lat, myLocation.lon))
+    .then(data => myLocation = setLocation(data))
+    .then(myLocation => {
+      fetchWeather(myLocation.lat, myLocation.lon);
+      fetchForecast(myLocation.lat, myLocation.lon);
+    })
 };
 
 const setLocation = function (data) {
-  return myLocation = Location(data[0].name, data[0].lat, data[0].lon);
+  return Location(data[0].name, data[0].lat, data[0].lon);
 };
 
 const fetchWeather = function (lat, lon) {
@@ -152,10 +155,12 @@ const renderForecast = function (forecast) {
   forecast.days.forEach((day) => {
     const template = `
     <div class="forecast-day col-md-2">
-      <h1>${ day.weather }\xB0</h1>
-      <h2>High: ${ day.tempHigh } Low: ${ day.tempLow }</h2>
-      <img src="https://openweathermap.org/img/wn/${ day.icon }@2x.png">
-      <h2>${ day.dayOfWeek }</h2>
+      <div class="forecast-day-inner col-md border rounded">
+        <h3>${ day.weather }</h3>
+        <h5>High: ${ day.tempHigh }\xB0    Low: ${ day.tempLow }\xB0</h5>
+        <img src="https://openweathermap.org/img/wn/${ day.icon }@2x.png">
+        <h4>${ day.dayOfWeek }</h4>
+      </div>
     </div>`
 
     forecastDiv.insertAdjacentHTML('beforeend', template);  
@@ -169,9 +174,3 @@ document.querySelector('.search').addEventListener('click', function () {
 
   document.querySelector('#search-query').value = '';
 });
-
-
-
-fetchCoordinates('Durham');
-
-fetchForecast(35.996653, -78.9018053);
