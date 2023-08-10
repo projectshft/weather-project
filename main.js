@@ -126,9 +126,16 @@ const renderCurrentWeather = (weather) => {
   </div>
   <div class="current-weather-icon col-md-6">
     <img src="https://openweathermap.org/img/wn/${ weather.icon }@2x.png">
+  </div>
+  <div class="set-as-default col-md-12 pt-2 text-center">
+    <button type="button" id="btnSetDefault" class="btn btn-primary">Set as Default</button>
   </div>`
   
-  weatherDiv.innerHTML = template;    
+  weatherDiv.innerHTML = template;
+  
+  document.querySelector('#btnSetDefault').addEventListener('click', () => {
+    localStorage.setItem('defaultLocation', JSON.stringify(myLocation));
+  })
 }
 
 const fetchForecast = (lat, lon) => {
@@ -174,3 +181,9 @@ document.querySelector('.search').addEventListener('click', () => {
 
   document.querySelector('#search-query').value = '';
 });
+
+if (localStorage.getItem('defaultLocation')) {
+  const myLocation = JSON.parse(localStorage.getItem('defaultLocation'));
+  fetchWeather(myLocation.lat, myLocation.lon);
+  fetchForecast(myLocation.lat, myLocation.lon);
+}
