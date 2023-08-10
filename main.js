@@ -119,7 +119,7 @@ const renderCurrentWeather = (weather) => {
   weatherDiv.replaceChildren();
 
   const template = `
-  <div class="current-weather col-md-6">
+  <div class="current-weather text-capitalize col-md-6">
     <span class="badge badge-light invisible">Default</span>
     <h1>${ weather.currentTemp }\xB0</h1>
     <h2>${ weather.location }</h2>
@@ -170,7 +170,7 @@ const renderForecast = (forecast) => {
   forecast.days.forEach((day) => {
     const template = `
     <div class="forecast-day col-md-2">
-      <div class="forecast-day-inner col-md border rounded">
+      <div class="forecast-day-inner col-md p-4 border rounded">
         <h3>${ day.weather }</h3>
         <h5>High: ${ day.tempHigh }\xB0    Low: ${ day.tempLow }\xB0</h5>
         <img src="https://openweathermap.org/img/wn/${ day.icon }@2x.png">
