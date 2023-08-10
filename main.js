@@ -120,6 +120,7 @@ const renderCurrentWeather = (weather) => {
 
   const template = `
   <div class="current-weather col-md-6">
+    <span class="badge badge-light invisible">Default</span>
     <h1>${ weather.currentTemp }\xB0</h1>
     <h2>${ weather.location }</h2>
     <h3>${ weather.currentConditions }</h3>
@@ -128,13 +129,20 @@ const renderCurrentWeather = (weather) => {
     <img src="https://openweathermap.org/img/wn/${ weather.icon }@2x.png">
   </div>
   <div class="set-as-default col-md-12 pt-2 text-center">
-    <button type="button" id="btnSetDefault" class="btn btn-primary">Set as Default</button>
+    <button type="button" id="btnSetDefault" class="btn btn-secondary">Set as Default Location</button>
   </div>`
   
   weatherDiv.innerHTML = template;
-  
+
+  if (localStorage.getItem('defaultLocation')) {
+    if (JSON.parse(localStorage.getItem('defaultLocation')).name === weather.location) {
+    document.querySelector('.badge').classList.remove('invisible');
+    }
+  }
+
   document.querySelector('#btnSetDefault').addEventListener('click', () => {
     localStorage.setItem('defaultLocation', JSON.stringify(myLocation));
+    document.querySelector('.badge').classList.remove('invisible');
   })
 }
 
