@@ -25,7 +25,7 @@ const CurrentWeather = (data) => {
 };
 
 const Forecast = (data) => {
-  const getDayOfWeek = function (dateString) {
+  const getDayOfWeek = (dateString) => {
     const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   
     const dayIndex = new Date(dateString).getDay();
@@ -33,11 +33,11 @@ const Forecast = (data) => {
     return dayNames[dayIndex];
   }
 
-  const getTimeOfDay = function (dateString) {
+  const getTimeOfDay = (dateString) => {
     return new Date(dateString).getHours();
   }
 
-  const getTempsByDay = function (data) {
+  const getTempsByDay = (data) => {
     const tempsByDay = {};
     data.list.forEach((threeHours) => {
       if (!Object.keys(tempsByDay).includes(getDayOfWeek(threeHours.dt_txt))) {
@@ -49,11 +49,11 @@ const Forecast = (data) => {
     return tempsByDay;
   }
 
-  const getHighTemp = function (temps) {
+  const getHighTemp = (temps) => {
     return Math.round(Math.max(...temps));
   }
 
-  const getLowTemp = function (temps) {
+  const getLowTemp = (temps) => {
     return Math.round(Math.min(...temps));
   }
 
@@ -78,7 +78,7 @@ const Forecast = (data) => {
   }
 }
 
-const fetchCoordinates = function (query) {
+const fetchCoordinates = (query) => {
   const url = `https://api.openweathermap.org/geo/1.0/direct?q=${query}&appid=${apiKey}`;
 
   fetch(url, {
@@ -93,11 +93,11 @@ const fetchCoordinates = function (query) {
     })
 };
 
-const setLocation = function (data) {
+const setLocation = (data) => {
   return Location(data[0].name, data[0].lat, data[0].lon);
 };
 
-const fetchWeather = function (lat, lon) {
+const fetchWeather = (lat, lon) => {
   const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=imperial&appid=${apiKey}`
 
   fetch(url, {
@@ -109,11 +109,11 @@ const fetchWeather = function (lat, lon) {
     .then(myCurrentWeather => renderCurrentWeather(myCurrentWeather));
 };
 
-const setCurrentWeather = function (data) {
+const setCurrentWeather = (data) => {
   return myCurrentWeather = CurrentWeather(data);
 }
 
-const renderCurrentWeather = function (weather) {
+const renderCurrentWeather = (weather) => {
   const weatherDiv = document.querySelector('.weather');
 
   weatherDiv.replaceChildren();
@@ -131,7 +131,7 @@ const renderCurrentWeather = function (weather) {
   weatherDiv.innerHTML = template;    
 }
 
-const fetchForecast = function (lat, lon) {
+const fetchForecast = (lat, lon) => {
   const url = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=imperial&appid=${apiKey}`;
 
   fetch(url, {
@@ -143,11 +143,11 @@ const fetchForecast = function (lat, lon) {
     .then(myForecast => renderForecast(myForecast));
 }
 
-const setForecast = function (data) {
+const setForecast = (data) => {
   return myForecast = Forecast(data);
 }
 
-const renderForecast = function (forecast) {
+const renderForecast = (forecast) => {
   const forecastDiv = document.querySelector('.forecast');
 
   forecastDiv.replaceChildren();
@@ -167,7 +167,7 @@ const renderForecast = function (forecast) {
   })
 }
 
-document.querySelector('.search').addEventListener('click', function () {
+document.querySelector('.search').addEventListener('click', () => {
   const searchTerm = document.querySelector('#search-query').value;
 
   fetchCoordinates(searchTerm);
