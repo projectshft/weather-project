@@ -208,7 +208,9 @@ const getDefaultLocation = () => {
 //
 
 // Add event listener to search button to get weather data for search term
-document.querySelector('.search').addEventListener('click', () => {
+document.querySelector('.search-form').addEventListener('submit', (event) => {
+  event.preventDefault();
+
   const searchTerm = document.querySelector('#search-query').value;
 
   fetchCoordinates(searchTerm);
