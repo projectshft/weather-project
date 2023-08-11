@@ -1,9 +1,50 @@
 //
-// Declare global variables and factory functions
+// Declare global variables
 //
 
 const apiKey = '94b98533e038ecd1e982b96426143136';
 let currentLocation = null;
+
+//
+// Helper functions
+//
+
+const getDayOfWeek = (dateString) => {
+  const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+  const dayIndex = new Date(dateString).getDay();
+
+  return dayNames[dayIndex];
+};
+
+const getTimeOfDay = (dateString) => new Date(dateString).getHours();
+
+const getTempsByDay = (tempData) => {
+  const tempsByDay = {};
+  tempData.list.forEach((threeHours) => {
+    if (!Object.keys(tempsByDay).includes(getDayOfWeek(threeHours.dt_txt))) {
+      tempsByDay[getDayOfWeek(threeHours.dt_txt)] = [threeHours.main.temp];
+    } else {
+      tempsByDay[getDayOfWeek(threeHours.dt_txt)].push(threeHours.main.temp);
+    }
+  });
+  return tempsByDay;
+};
+
+const getHighTemp = (temps) => Math.round(Math.max(...temps));
+
+const getLowTemp = (temps) => Math.round(Math.min(...temps));
+
+const showDefaultBadge = () => document.querySelector('.badge').classList.remove('invisible');
+
+const setDefaultLocation = () => {
+  localStorage.setItem('defaultLocation', JSON.stringify(currentLocation));
+  showDefaultBadge();
+};
+
+//
+// Factory functions for Location, CurrentWeather, and Forecast objects
+//
 
 const Location = (name, lat, lon) => ({
   name,
@@ -27,32 +68,6 @@ const CurrentWeather = (data) => {
 };
 
 const Forecast = (data) => {
-  const getDayOfWeek = (dateString) => {
-    const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-
-    const dayIndex = new Date(dateString).getDay();
-
-    return dayNames[dayIndex];
-  };
-
-  const getTimeOfDay = (dateString) => new Date(dateString).getHours();
-
-  const getTempsByDay = (tempData) => {
-    const tempsByDay = {};
-    tempData.list.forEach((threeHours) => {
-      if (!Object.keys(tempsByDay).includes(getDayOfWeek(threeHours.dt_txt))) {
-        tempsByDay[getDayOfWeek(threeHours.dt_txt)] = [threeHours.main.temp];
-      } else {
-        tempsByDay[getDayOfWeek(threeHours.dt_txt)].push(threeHours.main.temp);
-      }
-    });
-    return tempsByDay;
-  };
-
-  const getHighTemp = (temps) => Math.round(Math.max(...temps));
-
-  const getLowTemp = (temps) => Math.round(Math.min(...temps));
-
   const days = [];
 
   data.list.forEach((threeHours) => {
@@ -110,21 +125,12 @@ const renderCurrentWeather = (weather) => {
 
   weatherDiv.innerHTML = template;
 
-  // Show default badge
-  const showDefaultBadge = () => document.querySelector('.badge').classList.remove('invisible');
-
   // If showing weather of default location, show default badge
   if (localStorage.getItem('defaultLocation')) {
     if (JSON.parse(localStorage.getItem('defaultLocation')).name === weather.location) {
       showDefaultBadge();
     }
   }
-
-  // Save current location as default location in localStorage and show badge
-  const setDefaultLocation = () => {
-    localStorage.setItem('defaultLocation', JSON.stringify(currentLocation));
-    showDefaultBadge();
-  };
 
   // Add event listener to set default location button
   document.querySelector('#btnSetDefault').addEventListener('click', setDefaultLocation);
