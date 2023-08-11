@@ -122,7 +122,7 @@ const renderCurrentWeather = (weather) => {
     <h2>${weather.location}</h2>
     <h3>${weather.currentConditions}</h3>
   </div>
-  <div class="current-weather-icon col-md-6">
+  <div class="current-weather-icon col-md-6 my-auto">
     <img src="https://openweathermap.org/img/wn/${weather.icon}@2x.png">
   </div>
   <div class="set-as-default col-md-12 pt-2 text-center">
