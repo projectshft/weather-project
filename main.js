@@ -95,7 +95,13 @@ const Forecast = (data) => {
 //
 
 // Create location object with API response
-const setLocation = (data) => Location(data[0].name, data[0].lat, data[0].lon);
+const setLocation = (data) => {
+  if (data.length === 0) {
+    return null;
+  }
+
+  return Location(data[0].name, data[0].lat, data[0].lon);
+};
 
 // Create weather object with API response
 const setCurrentWeather = (data) => CurrentWeather(data);
@@ -157,6 +163,20 @@ const renderForecast = (forecast) => {
   });
 };
 
+// Render location not found
+const renderLocationNotFound = () => {
+  const weatherDiv = document.querySelector('.weather');
+  const forecastDiv = document.querySelector('.forecast');
+
+  weatherDiv.replaceChildren();
+  forecastDiv.replaceChildren();
+
+  const template = `
+    <h2>Sorry, we couldn't find that city! Please try again.</h2>`;
+
+  weatherDiv.innerHTML = template;
+};
+
 // Get current weather data from API
 const fetchWeather = (lat, lon) => {
   const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=imperial&appid=${apiKey}`;
@@ -194,13 +214,17 @@ const fetchCoordinates = (query) => {
     .then((data) => data.json())
     .then((data) => setLocation(data))
     .then((myLocation) => {
-      fetchWeather(myLocation.lat, myLocation.lon);
-      fetchForecast(myLocation.lat, myLocation.lon);
-      currentLocation = myLocation;
+      if (!myLocation) {
+        renderLocationNotFound();
+      } else {
+        fetchWeather(myLocation.lat, myLocation.lon);
+        fetchForecast(myLocation.lat, myLocation.lon);
+        currentLocation = myLocation;
+      }
     });
 };
 
-// Get default location if it exists and render
+// If there is a stored default location, get info and render
 const getDefaultLocation = () => {
   if (localStorage.getItem('defaultLocation')) {
     const myLocation = JSON.parse(localStorage.getItem('defaultLocation'));
