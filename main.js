@@ -1,117 +1,79 @@
 const apiKey = '94b98533e038ecd1e982b96426143136';
+let currentLocation = null;
 
-const Location = (name, lat, lon) => {
-
-  return {
-    name,
-    lat,
-    lon
-  }
-};
+const Location = (name, lat, lon) => ({
+  name,
+  lat,
+  lon,
+});
 
 const CurrentWeather = (data) => {
-
   const location = data.name;
   const currentTemp = Math.round(data.main.temp);
   const currentConditions = data.weather[0].description;
+  // eslint-disable-next-line prefer-destructuring
   const icon = data.weather[0].icon;
 
   return {
     location,
     currentTemp,
     currentConditions,
-    icon
-  }
+    icon,
+  };
 };
 
 const Forecast = (data) => {
   const getDayOfWeek = (dateString) => {
     const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-  
+
     const dayIndex = new Date(dateString).getDay();
-  
+
     return dayNames[dayIndex];
-  }
+  };
 
-  const getTimeOfDay = (dateString) => {
-    return new Date(dateString).getHours();
-  }
+  const getTimeOfDay = (dateString) => new Date(dateString).getHours();
 
-  const getTempsByDay = (data) => {
+  const getTempsByDay = (tempData) => {
     const tempsByDay = {};
-    data.list.forEach((threeHours) => {
+    tempData.list.forEach((threeHours) => {
       if (!Object.keys(tempsByDay).includes(getDayOfWeek(threeHours.dt_txt))) {
         tempsByDay[getDayOfWeek(threeHours.dt_txt)] = [threeHours.main.temp];
       } else {
-        tempsByDay[getDayOfWeek(threeHours.dt_txt)].push(threeHours.main.temp)
+        tempsByDay[getDayOfWeek(threeHours.dt_txt)].push(threeHours.main.temp);
       }
-    })
+    });
     return tempsByDay;
-  }
+  };
 
-  const getHighTemp = (temps) => {
-    return Math.round(Math.max(...temps));
-  }
+  const getHighTemp = (temps) => Math.round(Math.max(...temps));
 
-  const getLowTemp = (temps) => {
-    return Math.round(Math.min(...temps));
-  }
+  const getLowTemp = (temps) => Math.round(Math.min(...temps));
 
   const days = [];
 
   data.list.forEach((threeHours) => {
     if (getTimeOfDay(threeHours.dt_txt) === 12) {
-      day = {
+      const day = {
         dayOfWeek: getDayOfWeek(threeHours.dt_txt),
         timeOfDay: getTimeOfDay(threeHours.dt_txt),
         tempHigh: getHighTemp(getTempsByDay(data)[getDayOfWeek(threeHours.dt_txt)]),
         tempLow: getLowTemp(getTempsByDay(data)[getDayOfWeek(threeHours.dt_txt)]),
         weather: threeHours.weather[0].main,
-        icon: threeHours.weather[0].icon
-      }
-    days.push(day)
+        icon: threeHours.weather[0].icon,
+      };
+
+      days.push(day);
     }
   });
 
   return {
-    days
-  }
-}
-
-const fetchCoordinates = (query) => {
-  const url = `https://api.openweathermap.org/geo/1.0/direct?q=${query}&appid=${apiKey}`;
-
-  fetch(url, {
-    method: 'GET',
-    dataType: 'json'
-  })
-    .then(data => data.json())
-    .then(data => myLocation = setLocation(data))
-    .then(myLocation => {
-      fetchWeather(myLocation.lat, myLocation.lon);
-      fetchForecast(myLocation.lat, myLocation.lon);
-    })
+    days,
+  };
 };
 
-const setLocation = (data) => {
-  return Location(data[0].name, data[0].lat, data[0].lon);
-};
+const setLocation = (data) => Location(data[0].name, data[0].lat, data[0].lon);
 
-const fetchWeather = (lat, lon) => {
-  const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=imperial&appid=${apiKey}`
-
-  fetch(url, {
-    method: 'GET',
-    dataType: 'json'
-  })
-    .then(data => data.json())
-    .then(data => setCurrentWeather(data))
-    .then(myCurrentWeather => renderCurrentWeather(myCurrentWeather));
-};
-
-const setCurrentWeather = (data) => {
-  return myCurrentWeather = CurrentWeather(data);
-}
+const setCurrentWeather = (data) => CurrentWeather(data);
 
 const renderCurrentWeather = (weather) => {
   const weatherDiv = document.querySelector('.weather');
@@ -121,46 +83,37 @@ const renderCurrentWeather = (weather) => {
   const template = `
   <div class="current-weather text-capitalize col-md-6">
     <span class="badge badge-light invisible">Default</span>
-    <h1>${ weather.currentTemp }\xB0</h1>
-    <h2>${ weather.location }</h2>
-    <h3>${ weather.currentConditions }</h3>
+    <h1>${weather.currentTemp}\xB0</h1>
+    <h2>${weather.location}</h2>
+    <h3>${weather.currentConditions}</h3>
   </div>
   <div class="current-weather-icon col-md-6">
-    <img src="https://openweathermap.org/img/wn/${ weather.icon }@2x.png">
+    <img src="https://openweathermap.org/img/wn/${weather.icon}@2x.png">
   </div>
   <div class="set-as-default col-md-12 pt-2 text-center">
     <button type="button" id="btnSetDefault" class="btn btn-secondary">Set as Default Location</button>
-  </div>`
-  
+  </div>`;
+
   weatherDiv.innerHTML = template;
 
-  if (localStorage.getItem('defaultLocation')) {
-    if (JSON.parse(localStorage.getItem('defaultLocation')).name === weather.location) {
-    document.querySelector('.badge').classList.remove('invisible');
+  const showDefaultBadgeOnRender = () => {
+    if (localStorage.getItem('defaultLocation')) {
+      if (JSON.parse(localStorage.getItem('defaultLocation')).name === weather.location) {
+        document.querySelector('.badge').classList.remove('invisible');
+      }
     }
-  }
+  };
 
-  document.querySelector('#btnSetDefault').addEventListener('click', () => {
-    localStorage.setItem('defaultLocation', JSON.stringify(myLocation));
+  const setDefaultLocation = () => {
+    localStorage.setItem('defaultLocation', JSON.stringify(currentLocation));
     document.querySelector('.badge').classList.remove('invisible');
-  })
-}
+  };
 
-const fetchForecast = (lat, lon) => {
-  const url = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=imperial&appid=${apiKey}`;
+  showDefaultBadgeOnRender();
+  document.querySelector('#btnSetDefault').addEventListener('click', setDefaultLocation);
+};
 
-  fetch(url, {
-    method: 'GET',
-    dataType: 'json'
-  })
-    .then(data => data.json())
-    .then(data => setForecast(data))
-    .then(myForecast => renderForecast(myForecast));
-}
-
-const setForecast = (data) => {
-  return myForecast = Forecast(data);
-}
+const setForecast = (data) => Forecast(data);
 
 const renderForecast = (forecast) => {
   const forecastDiv = document.querySelector('.forecast');
@@ -171,16 +124,64 @@ const renderForecast = (forecast) => {
     const template = `
     <div class="forecast-day col-md-2">
       <div class="forecast-day-inner col-md p-4 border rounded">
-        <h3>${ day.weather }</h3>
-        <h5>High: ${ day.tempHigh }\xB0    Low: ${ day.tempLow }\xB0</h5>
-        <img src="https://openweathermap.org/img/wn/${ day.icon }@2x.png">
-        <h4>${ day.dayOfWeek }</h4>
+        <h3>${day.weather}</h3>
+        <h5>High: ${day.tempHigh}\xB0    Low: ${day.tempLow}\xB0</h5>
+        <img src="https://openweathermap.org/img/wn/${day.icon}@2x.png">
+        <h4>${day.dayOfWeek}</h4>
       </div>
-    </div>`
+    </div>`;
 
-    forecastDiv.insertAdjacentHTML('beforeend', template);  
+    forecastDiv.insertAdjacentHTML('beforeend', template);
+  });
+};
+
+const fetchWeather = (lat, lon) => {
+  const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=imperial&appid=${apiKey}`;
+
+  fetch(url, {
+    method: 'GET',
+    dataType: 'json',
   })
-}
+    .then((data) => data.json())
+    .then((data) => setCurrentWeather(data))
+    .then((myCurrentWeather) => renderCurrentWeather(myCurrentWeather));
+};
+
+const fetchForecast = (lat, lon) => {
+  const url = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=imperial&appid=${apiKey}`;
+
+  fetch(url, {
+    method: 'GET',
+    dataType: 'json',
+  })
+    .then((data) => data.json())
+    .then((data) => setForecast(data))
+    .then((myForecast) => renderForecast(myForecast));
+};
+
+const fetchCoordinates = (query) => {
+  const url = `https://api.openweathermap.org/geo/1.0/direct?q=${query}&appid=${apiKey}`;
+
+  fetch(url, {
+    method: 'GET',
+    dataType: 'json',
+  })
+    .then((data) => data.json())
+    .then((data) => setLocation(data))
+    .then((myLocation) => {
+      fetchWeather(myLocation.lat, myLocation.lon);
+      fetchForecast(myLocation.lat, myLocation.lon);
+      currentLocation = myLocation;
+    });
+};
+
+const getDefaultLocation = () => {
+  if (localStorage.getItem('defaultLocation')) {
+    const myLocation = JSON.parse(localStorage.getItem('defaultLocation'));
+    fetchWeather(myLocation.lat, myLocation.lon);
+    fetchForecast(myLocation.lat, myLocation.lon);
+  }
+};
 
 document.querySelector('.search').addEventListener('click', () => {
   const searchTerm = document.querySelector('#search-query').value;
@@ -190,8 +191,4 @@ document.querySelector('.search').addEventListener('click', () => {
   document.querySelector('#search-query').value = '';
 });
 
-if (localStorage.getItem('defaultLocation')) {
-  const myLocation = JSON.parse(localStorage.getItem('defaultLocation'));
-  fetchWeather(myLocation.lat, myLocation.lon);
-  fetchForecast(myLocation.lat, myLocation.lon);
-}
+getDefaultLocation();
