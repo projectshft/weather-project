@@ -1,3 +1,7 @@
+//
+// Declare global variables and factory functions
+//
+
 const apiKey = '94b98533e038ecd1e982b96426143136';
 let currentLocation = null;
 
@@ -71,10 +75,20 @@ const Forecast = (data) => {
   };
 };
 
+//
+// Functions
+//
+
+// Create location object with API response
 const setLocation = (data) => Location(data[0].name, data[0].lat, data[0].lon);
 
+// Create weather object with API response
 const setCurrentWeather = (data) => CurrentWeather(data);
 
+// Create forecast object with API response
+const setForecast = (data) => Forecast(data);
+
+// Render current weather
 const renderCurrentWeather = (weather) => {
   const weatherDiv = document.querySelector('.weather');
 
@@ -96,25 +110,27 @@ const renderCurrentWeather = (weather) => {
 
   weatherDiv.innerHTML = template;
 
-  const showDefaultBadgeOnRender = () => {
-    if (localStorage.getItem('defaultLocation')) {
-      if (JSON.parse(localStorage.getItem('defaultLocation')).name === weather.location) {
-        document.querySelector('.badge').classList.remove('invisible');
-      }
-    }
-  };
+  // Show default badge
+  const showDefaultBadge = () => document.querySelector('.badge').classList.remove('invisible');
 
+  // If showing weather of default location, show default badge
+  if (localStorage.getItem('defaultLocation')) {
+    if (JSON.parse(localStorage.getItem('defaultLocation')).name === weather.location) {
+      showDefaultBadge();
+    }
+  }
+
+  // Save current location as default location in localStorage and show badge
   const setDefaultLocation = () => {
     localStorage.setItem('defaultLocation', JSON.stringify(currentLocation));
-    document.querySelector('.badge').classList.remove('invisible');
+    showDefaultBadge();
   };
 
-  showDefaultBadgeOnRender();
+  // Add event listener to set default location button
   document.querySelector('#btnSetDefault').addEventListener('click', setDefaultLocation);
 };
 
-const setForecast = (data) => Forecast(data);
-
+// Render forecast
 const renderForecast = (forecast) => {
   const forecastDiv = document.querySelector('.forecast');
 
@@ -135,6 +151,7 @@ const renderForecast = (forecast) => {
   });
 };
 
+// Get current weather data from API
 const fetchWeather = (lat, lon) => {
   const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=imperial&appid=${apiKey}`;
 
@@ -147,6 +164,7 @@ const fetchWeather = (lat, lon) => {
     .then((myCurrentWeather) => renderCurrentWeather(myCurrentWeather));
 };
 
+// Get forecast data from API
 const fetchForecast = (lat, lon) => {
   const url = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=imperial&appid=${apiKey}`;
 
@@ -159,6 +177,7 @@ const fetchForecast = (lat, lon) => {
     .then((myForecast) => renderForecast(myForecast));
 };
 
+// Get coordinates for searched city name and use to get current weather and forecast
 const fetchCoordinates = (query) => {
   const url = `https://api.openweathermap.org/geo/1.0/direct?q=${query}&appid=${apiKey}`;
 
@@ -175,6 +194,7 @@ const fetchCoordinates = (query) => {
     });
 };
 
+// Get default location if it exists and render
 const getDefaultLocation = () => {
   if (localStorage.getItem('defaultLocation')) {
     const myLocation = JSON.parse(localStorage.getItem('defaultLocation'));
@@ -183,6 +203,11 @@ const getDefaultLocation = () => {
   }
 };
 
+//
+// Event listeners and initializations
+//
+
+// Add event listener to search button to get weather data for search term
 document.querySelector('.search').addEventListener('click', () => {
   const searchTerm = document.querySelector('#search-query').value;
 
