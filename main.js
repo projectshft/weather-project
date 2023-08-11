@@ -211,7 +211,12 @@ const fetchCoordinates = (query) => {
     method: 'GET',
     dataType: 'json',
   })
-    .then((data) => data.json())
+    .then((data) => {
+      if (data.ok) {
+        return data.json();
+      }
+      return Promise.reject(data);
+    })
     .then((data) => setLocation(data))
     .then((myLocation) => {
       if (!myLocation) {
@@ -221,7 +226,8 @@ const fetchCoordinates = (query) => {
         fetchForecast(myLocation.lat, myLocation.lon);
         currentLocation = myLocation;
       }
-    });
+    })
+    .catch(() => renderLocationNotFound());
 };
 
 // If there is a stored default location, get info and render
