@@ -115,7 +115,7 @@ const renderWeatherData = (weather) => {
 };
 
 const dayTheme = () => {
-  document.querySelector("body").classList.add("bg-day");
+  document.querySelector("body").classList.add("bg-day", "text-light");
 };
 
 const nightTheme = () => {
