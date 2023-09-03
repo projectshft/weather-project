@@ -1,3 +1,5 @@
+import { getLocalTime } from "./time.js";
+
 // Get longitude and latitude from city name
 const API_KEY = "078ae2ec7600b1d6a28bd166f6aad9e8";
 
@@ -89,7 +91,7 @@ const renderWeatherData = (weather) => {
         <br />
         Low Today: ${minTempF}
         <br />
-        Local Time: ${localTime};
+        Local Time: ${localTime}
         
       </p>
     </div>
@@ -99,12 +101,6 @@ const renderWeatherData = (weather) => {
   `;
 
   document.querySelector(".search-results").insertAdjacentHTML("beforeend", template);
-};
-
-const getLocalTime = (weather) => {
-  const localTime = dayjs.utc('2000-01-01T06:01:02Z').utcOffset(1, true).format();
-  
-  return localTime;
 };
 
 export default fetchCityData;
