@@ -42,7 +42,7 @@ const fetchCurrentWeather = async (cityData) => {
 };
 
 const addWeatherData = (weatherData, cityData) => {
-  const weather = { // get timezone to display time, and sunrise and sunset to determine whether to display night or day mode (dark vs. light)
+  const weather = { 
     description: weatherData.weather[0].main,
     dt: weatherData.dt,
     temp: weatherData.main.temp,
@@ -56,11 +56,7 @@ const addWeatherData = (weatherData, cityData) => {
     timezone: weatherData.timezone,
     icon: weatherData.weather[0].icon,
   };
-  // Testing
-  console.log(weatherData);
-  console.log(weather);
-  console.log(`https://openweathermap.org/img/wn/${weather.icon}@2x.png`);
-// end testing
+ 
   renderWeatherData(weather);
 };
 
@@ -72,7 +68,7 @@ const renderWeatherData = (weather) => {
   const tempF = Math.round((weather.temp - 273.15) * (9/5) + 32);
   const maxtTempF = Math.round((weather.highTemp - 273.15) * (9/5) + 32);
   const minTempF = Math.round((weather.lowTemp - 273.15) * (9/5) + 32);
-  const tempC = Math.round(weather.temp - 273.15); // Add toggle between F / C
+  const tempC = Math.round(weather.temp - 273.15); // TODO: Add toggle between F / C
 
   let state = weather.country;
   if (weather.state) {
