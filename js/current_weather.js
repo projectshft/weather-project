@@ -1,6 +1,3 @@
-// import dayjs from '../node_modules/dayjs';
-// dayjs().format()
-
 // Get longitude and latitude from city name
 const API_KEY = "078ae2ec7600b1d6a28bd166f6aad9e8";
 
@@ -105,8 +102,8 @@ const renderWeatherData = (weather) => {
 };
 
 const getLocalTime = (weather) => {
-  const localTime = 4;
-
+  const localTime = dayjs.utc('2000-01-01T06:01:02Z').utcOffset(1, true).format();
+  
   return localTime;
 };
 
