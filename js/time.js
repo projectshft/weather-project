@@ -1,7 +1,12 @@
-export const getLocalTime = (weather) => {
-  const currentUTCTime = new Date();
+export const getLocalTime = (weather, date) => {
+  let currentUTCTime = new Date();
+  
+  if (date) {
+    currentUTCTime = date;
+  } 
+
   const currentUTCHours = currentUTCTime.getUTCHours();
-  const currentUTCMinutes = currentUTCTime.getUTCMinutes();
+  let currentUTCMinutes = currentUTCTime.getUTCMinutes();
   let localTimeHours = (weather.timezone / 60 /60) + currentUTCHours;
 
   if (localTimeHours < 0) {
@@ -15,8 +20,41 @@ export const getLocalTime = (weather) => {
   if (localTimeHours >= 0 && localTimeHours < 10) {
     localTimeHours = 0 + "" + localTimeHours;
   }
+
+  if (currentUTCMinutes < 10) {
+    currentUTCMinutes = 0 + "" + currentUTCMinutes;
+  }
   
   const localTime = `${localTimeHours}:${currentUTCMinutes}`;
   
   return localTime;
 };
+
+export const getSunriseTime = (weather) => {
+  const sunriseTimeUTC = new Date(weather.sunrise * 1000);
+  const localSunriseTime = getLocalTime(weather, sunriseTimeUTC);
+  return localSunriseTime;
+};
+
+export const getSunsetTime = (weather) => {
+  const sunsetTimeUTC = new Date(weather.sunset * 1000);
+  const localSunsetTime = getLocalTime(weather, sunsetTimeUTC);
+  return localSunsetTime;
+};
+
+export const compareTime = (weather) => {
+  const utcTime = new Date();
+  const localTime = Date.parse(utcTime) + weather.timezone;
+  const sunriseTimeUTC = new Date(weather.sunrise * 1000);
+  const localSunrise = Date.parse(sunriseTimeUTC) + weather.timezone;
+  const sunsetTimeUTC = new Date(weather.sunset * 1000);
+  const localSunset = Date.parse(sunsetTimeUTC) + weather.timezone;
+  let day = false;
+
+  if (localTime >= localSunrise && localTime <= localSunset) {
+    day = true;
+    return day;
+  }
+
+  return day;
+};  

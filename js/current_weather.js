@@ -1,4 +1,4 @@
-import { getLocalTime } from "./time.js";
+import { getLocalTime, getSunriseTime, getSunsetTime, compareTime } from "./time.js";
 
 // Get longitude and latitude from city name
 const API_KEY = "078ae2ec7600b1d6a28bd166f6aad9e8";
@@ -80,6 +80,14 @@ const renderWeatherData = (weather) => {
   }
 
   const localTime = getLocalTime(weather);
+  const sunrise = getSunriseTime(weather);
+  const sunset = getSunsetTime(weather);
+
+  if (compareTime(weather)) {
+    dayTheme();
+  } else {
+    nightTheme();
+  }
 
   const template = `
     <div class="col text-center">
@@ -87,12 +95,15 @@ const renderWeatherData = (weather) => {
       <h2>${weather.city}, ${state}</h2>
       <h4>${weather.description}</h4>
       <p>
-        High Today: ${maxtTempF}
+        High Today: ${maxtTempF}&deg;F
         <br />
-        Low Today: ${minTempF}
+        Low Today: ${minTempF}&deg;F
         <br />
-        Local Time: ${localTime}
-        
+        Local Time: ${localTime} 
+        <br />
+        Sunrise: ${sunrise}
+        <br />
+        Sunset: ${sunset}
       </p>
     </div>
     <div class="col text-center">
@@ -101,6 +112,14 @@ const renderWeatherData = (weather) => {
   `;
 
   document.querySelector(".search-results").insertAdjacentHTML("beforeend", template);
+};
+
+const dayTheme = () => {
+  document.querySelector("body").classList.add("bg-day");
+};
+
+const nightTheme = () => {
+  document.querySelector("body").classList.add("bg-night", "text-light");
 };
 
 export default fetchCityData;
