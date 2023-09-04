@@ -1,3 +1,4 @@
+import fetchForecastData from "./forecast.js";
 import { getLocalTime, getSunriseTime, getSunsetTime, compareTime } from "./time.js";
 const API_KEY = "078ae2ec7600b1d6a28bd166f6aad9e8";
 
@@ -28,7 +29,8 @@ const addLatAndLon = (data) => {
     longitude: data[0].lon
   };
 
-  fetchCurrentWeather(cityData)
+  fetchCurrentWeather(cityData);
+  fetchForecastData(cityData);
 };
 
 // Retrieve current weather data from API
