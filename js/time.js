@@ -1,10 +1,9 @@
-/*
-* Returns local time in format hh:mm
-*
-* @param {object} weather Weather object which contains the timezone offset from UTC
-* @param {Date} date (optional) Date to set current UTC time to (used when setting sunrise and sunset times)
-* @return {string} localTime Local time in format hh:mm
-*/
+
+// Returns local time in format hh:mm
+// @param {object} weather Weather object which contains the timezone offset from UTC
+// @param {Date} date (optional) Date to set current UTC time to (used when setting sunrise and sunset times)
+// @return {string} localTime Local time in format hh:mm
+
 export const getLocalTime = (weather, date) => {
   let currentUTCTime = new Date();
   

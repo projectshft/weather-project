@@ -1,6 +1,9 @@
 import { getLocalTime, getSunriseTime, getSunsetTime, compareTime } from "./time.js";
 const API_KEY = "078ae2ec7600b1d6a28bd166f6aad9e8";
 
+// Collect city data from API
+// @param {string} input City name (and, optionally, state, country ISO code) received from user input on UI
+
 const fetchCityData = async (input) => {
   const url = `https://api.openweathermap.org/geo/1.0/direct?q=${input}&appid=${API_KEY}`;
 
@@ -12,6 +15,9 @@ const fetchCityData = async (input) => {
     console.log(error);
   }
 };
+
+// Add relevant data (city name, state if available, country, latitude, longitude) to cityData object
+// @param {json} data JSON received from fetch API in fetchCityData function is passed to addLatAndLon
 
 const addLatAndLon = (data) => {
   const cityData = {
@@ -25,7 +31,9 @@ const addLatAndLon = (data) => {
   fetchCurrentWeather(cityData)
 };
 
-// Fetch current weather data
+// Retrieve current weather data from API
+// @param {object} cityData Object passed from addLatAndLon is used to retrieve weather data from that latitude and longitude
+// data {json} is passed to addWeatherData, a function that creates a weather object and adds the data we want
 
 const fetchCurrentWeather = async (cityData) => {
   const url = `https://api.openweathermap.org/data/2.5/weather?lat=${cityData.latitude}&lon=${cityData.longitude}&appid=${API_KEY}`;
@@ -57,8 +65,6 @@ const addWeatherData = (weatherData, cityData) => {
  
   renderWeatherData(weather);
 };
-
-// Render data to UI
 
 const renderWeatherData = (weather) => {
   document.querySelector(".search-results").replaceChildren();
