@@ -1,4 +1,4 @@
-import { getLocalTime, getSunriseTime, getSunsetTime, compareTime, getLocalTimeTest } from "./time.js";
+import { getLocalTime, getSunriseTime, getSunsetTime, compareTime } from "./time.js";
 const API_KEY = "078ae2ec7600b1d6a28bd166f6aad9e8";
 
 // Get longitude and latitude from city name
@@ -78,8 +78,6 @@ const renderWeatherData = (weather) => {
   const localTime = getLocalTime(weather);
   const sunrise = getSunriseTime(weather);
   const sunset = getSunsetTime(weather);
-
-  console.log(getLocalTimeTest(weather)); //testing 
 
   if (compareTime(weather)) {
     dayTheme();

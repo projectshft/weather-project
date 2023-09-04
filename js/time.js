@@ -7,7 +7,21 @@ export const getLocalTime = (weather, date) => {
 
   const currentUTCHours = currentUTCTime.getUTCHours();
   let currentUTCMinutes = currentUTCTime.getUTCMinutes();
-  let localTimeHours = (weather.timezone / 60 /60) + currentUTCHours;
+  let localTimeMinutes = (weather.timezone / 60) + currentUTCMinutes;
+  let localTimeHours = currentUTCHours;
+
+  if (localTimeMinutes < 0) {
+    localTimeMinutes += 1440;
+  }
+
+  if (localTimeMinutes >= 1440) {
+    localTimeMinutes -= 1440;
+  }
+
+  while (localTimeMinutes >= 60) {
+    localTimeMinutes -= 60;
+    localTimeHours++;
+  }
 
   if (localTimeHours < 0) {
     localTimeHours += 24;
@@ -21,11 +35,11 @@ export const getLocalTime = (weather, date) => {
     localTimeHours = 0 + "" + localTimeHours;
   }
 
-  if (currentUTCMinutes < 10) {
-    currentUTCMinutes = 0 + "" + currentUTCMinutes;
+  if (localTimeMinutes < 10) {
+    localTimeMinutes = 0 + "" + localTimeMinutes;
   }
   
-  const localTime = `${localTimeHours}:${currentUTCMinutes}`;
+  const localTime = `${localTimeHours}:${localTimeMinutes}`;
   
   return localTime;
 };
@@ -59,42 +73,3 @@ export const compareTime = (weather) => {
   return day;
 };  
 
-export const getLocalTimeTest = (weather, date) => {
-  let currentUTCTime = new Date();
-  
-  if (date) {
-    currentUTCTime = date;
-  } 
-
-  const currentUTCHours = currentUTCTime.getUTCHours();
-  let currentUTCMinutes = currentUTCTime.getUTCMinutes();
-  let localTimeMinutes = (weather.timezone / 60) + currentUTCMinutes;
-  let localTimeHours = currentUTCHours;
-
-  if (localTimeMinutes < 0) {
-    localTimeMinutes += 1440;
-  }
-
-  if (localTimeMinutes >= 1440) {
-    localTimeMinutes -= 1440;
-  }
-
-  while (localTimeMinutes >= 60) {
-    localTimeMinutes -= 60;
-    localTimeHours++;
-  }
-
-  console.log(localTimeHours + " " + localTimeMinutes);
-
-  if (localTimeHours >= 0 && localTimeHours < 10) {
-    localTimeHours = 0 + "" + localTimeHours;
-  }
-
-  if (localTimeMinutes < 10) {
-    localTimeMinutes = 0 + "" + localTimeMinutes;
-  }
-  
-  const localTime = `${localTimeHours}:${localTimeMinutes}`;
-  
-  return localTime;
-};
