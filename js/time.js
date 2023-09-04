@@ -70,12 +70,13 @@ export const getLocalTimeTest = (weather, date) => {
   let currentUTCMinutes = currentUTCTime.getUTCMinutes();
   let localTimeMinutes = (weather.timezone / 60) + currentUTCMinutes;
   let localTimeHours = currentUTCHours;
-  
+
   if (localTimeMinutes < 0) {
-    while (localTimeMinutes < 0) {
-      localTimeMinutes += 60;
-      localTimeHours++;
-    }
+    localTimeMinutes += 1440;
+  }
+
+  if (localTimeMinutes >= 1440) {
+    localTimeMinutes -= 1440;
   }
 
   while (localTimeMinutes >= 60) {
@@ -84,14 +85,6 @@ export const getLocalTimeTest = (weather, date) => {
   }
 
   console.log(localTimeHours + " " + localTimeMinutes);
-
-  if (localTimeHours < 0) {
-    localTimeHours += 24;
-  }
-
-  if (localTimeHours >= 24) {
-    localTimeHours -= 24;
-  }
 
   if (localTimeHours >= 0 && localTimeHours < 10) {
     localTimeHours = 0 + "" + localTimeHours;
