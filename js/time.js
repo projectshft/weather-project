@@ -58,3 +58,50 @@ export const compareTime = (weather) => {
 
   return day;
 };  
+
+export const getLocalTimeTest = (weather, date) => {
+  let currentUTCTime = new Date();
+  
+  if (date) {
+    currentUTCTime = date;
+  } 
+
+  const currentUTCHours = currentUTCTime.getUTCHours();
+  let currentUTCMinutes = currentUTCTime.getUTCMinutes();
+  let localTimeMinutes = (weather.timezone / 60) + currentUTCMinutes;
+  let localTimeHours = currentUTCHours;
+  
+  if (localTimeMinutes < 0) {
+    while (localTimeMinutes < 0) {
+      localTimeMinutes += 60;
+      localTimeHours++;
+    }
+  }
+
+  while (localTimeMinutes >= 60) {
+    localTimeMinutes -= 60;
+    localTimeHours++;
+  }
+
+  console.log(localTimeHours + " " + localTimeMinutes);
+
+  if (localTimeHours < 0) {
+    localTimeHours += 24;
+  }
+
+  if (localTimeHours >= 24) {
+    localTimeHours -= 24;
+  }
+
+  if (localTimeHours >= 0 && localTimeHours < 10) {
+    localTimeHours = 0 + "" + localTimeHours;
+  }
+
+  if (localTimeMinutes < 10) {
+    localTimeMinutes = 0 + "" + localTimeMinutes;
+  }
+  
+  const localTime = `${localTimeHours}:${localTimeMinutes}`;
+  
+  return localTime;
+};
