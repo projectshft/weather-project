@@ -83,3 +83,11 @@ export const compareTime = (weather) => {
   return day;
 };  
 
+export const getDayName = (day) => {
+  const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+
+  const dayNum = new Date(day.data[4].dt_txt).getDay();
+
+  return dayNames[dayNum];
+};
+

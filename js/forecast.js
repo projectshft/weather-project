@@ -1,3 +1,5 @@
+import { getDayName } from "./time.js";
+
 const API_KEY = "078ae2ec7600b1d6a28bd166f6aad9e8";
 
 const fetchForecastData = async (cityData) => {
@@ -33,6 +35,7 @@ const addForecastData = (forecastData) => {
 
 const reduceForecastData = (days) => {
   days.forEach((day) => {
+    day.dayOfWeek = getDayName(day); 
     day.avgTemp = averageTemp(day);
     day.description = mostFrequentDescription(day);
   });
