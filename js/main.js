@@ -1,5 +1,10 @@
 // Module imports
 import fetchCityData from "./current_weather.js";
+import getGeolocationWeather from "./geolocation.js";
+
+if (!localStorage.getItem("defaultStart")) {
+  getGeolocationWeather();
+}
 
 // Get user input
 const searchBtn = document.querySelector("#submit");
@@ -30,6 +35,7 @@ toggleBtn.addEventListener('click', () => {
   } else {
     document.querySelector("#toggle-temp").textContent = "Fahrenheit";
   }
+
   const input = localStorage.getItem("input");
   fetchCityData(input);
 });

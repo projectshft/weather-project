@@ -36,8 +36,9 @@ const addLatAndLon = (data) => {
 // Retrieve current weather data from API
 // @param {object} cityData Object passed from addLatAndLon is used to retrieve weather data from that latitude and longitude
 // data {json} is passed to addWeatherData, a function that creates a weather object and adds the data we want
+// Export for use by geolocation.js
 
-const fetchCurrentWeather = async (cityData) => {
+export const fetchCurrentWeather = async (cityData) => {
   const url = `https://api.openweathermap.org/data/2.5/weather?lat=${cityData.latitude}&lon=${cityData.longitude}&appid=${API_KEY}`;
 
   try {
@@ -54,9 +55,9 @@ const addWeatherData = (weatherData, cityData) => {
     description: weatherData.weather[0].main,
     dt: weatherData.dt,
     temp: weatherData.main.temp,
-    city: cityData.city,
-    state: cityData.state,
-    country: cityData.country,
+    city: cityData.city || weatherData.name,
+    state: cityData.state || null,
+    country: cityData.country || weatherData.sys.country,
     highTemp: weatherData.main.temp_max,
     lowTemp: weatherData.main.temp_min,
     sunrise: weatherData.sys.sunrise,
