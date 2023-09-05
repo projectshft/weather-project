@@ -58,12 +58,13 @@ const mostFrequentDescription = (day) => {
     }
   });
 
-  let count = 0;
-  let mostFrequent = null;
+  let highest = 0;
+  let mostFrequent = {};
   for (let key in descriptionObj) {
-    if (descriptionObj[key].freq > count) {
-      mostFrequent = key;
-      count = descriptionObj[key].freq;
+    if (descriptionObj[key].freq > highest) {
+      mostFrequent.main = key;
+      mostFrequent.icon = descriptionObj[key].icon;
+      highest = descriptionObj[key].freq;
     }
   }
 
