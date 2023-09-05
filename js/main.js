@@ -2,12 +2,6 @@
 import fetchCityData from "./current_weather.js";
 import getGeolocationWeather from "./geolocation.js";
 
-if (localStorage.getItem("defaultStart") === null || localStorage.getItem("defaultStart") === "null") {
-  getGeolocationWeather();
-} else {
-  fetchCityData(localStorage.getItem("defaultStart"));
-}
-
 // Get user input
 const searchBtn = document.querySelector("#submit");
 const input = document.querySelector("#search-query");
@@ -51,10 +45,7 @@ setDefault.addEventListener("click", () => {
 
   updateOptionsDropdown();
 
-  const rmBtn = document.querySelector("#rm-default");
-
-  rmBtn.removeEventListener("click", removeDefault);
-  rmBtn.addEventListener("click", removeDefault);
+  addRmDefaultEventListener();
 });
 
 const removeDefault = () => {
@@ -70,3 +61,18 @@ const updateOptionsDropdown = () => {
 
   document.querySelector(".dropdown-menu").insertAdjacentHTML("beforeend", template);
 };
+
+const addRmDefaultEventListener = () => {
+  const rmBtn = document.querySelector("#rm-default");
+
+  rmBtn.removeEventListener("click", removeDefault);
+  rmBtn.addEventListener("click", removeDefault);
+};
+
+if (localStorage.getItem("defaultStart") === null || localStorage.getItem("defaultStart") === "null") {
+  getGeolocationWeather();
+} else {
+  updateOptionsDropdown();
+  addRmDefaultEventListener();
+  fetchCityData(localStorage.getItem("defaultStart"));
+}
