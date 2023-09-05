@@ -22,31 +22,78 @@
       <br />
     </header>
 
-    <nav class="navbar sticky-top bg-body-tertiary margin-top mb-5">
+    <nav
+      class="navbar sticky-top navbar-expand-lg bg-body-tertiary margin-top mb-5 py-3"
+    >
       <div class="container">
-        <a class="navbar-brand" href="#">Sticky top</a>
+        <a class="navbar-brand" href="#">Navbar</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Link</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                Dropdown
+              </a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">Action</a></li>
+                <li><a class="dropdown-item" href="#">Another action</a></li>
+                <li><hr class="dropdown-divider" /></li>
+                <li>
+                  <a class="dropdown-item" href="#">Something else here</a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+            </li>
+          </ul>
+          <div class="d-flex input-group">
+            <input
+              type="search"
+              class="form-control"
+              placeholder="City"
+              id="search-query"
+              required
+            />
+            <button
+              type="submit"
+              class="btn btn-secondary"
+              id="submit"
+              onclick="event.preventDefault()"
+            >
+              Search
+            </button>
+          </div>
+        </div>
       </div>
     </nav>
-    <section class="container">
-      <div class="input-group mb-5">
-        <input
-          type="search"
-          class="form-control"
-          placeholder="City"
-          id="search-query"
-          required
-        />
-        <button
-          type="submit"
-          class="btn btn-secondary"
-          id="submit"
-          onclick="event.preventDefault()"
-        >
-          Search
-        </button>
-      </div>
 
-      <div class="row search-results flex-column-reverse flex-md-row mb-5"></div>
+    <section class="container">
+      <div
+        class="row search-results flex-column-reverse flex-md-row mb-5"
+      ></div>
 
       <div class="row forecast text-dark mb-5">
         <div class="col-md day" id="day0">
