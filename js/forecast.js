@@ -80,14 +80,20 @@ const renderForecast = (days) => {
   days.forEach((day) => {
     document.querySelector(`#day${day.order}`).replaceChildren();
 
-    const tempF = Math.round((day.avgTemp - 273.15) * (9/5) + 32);
-    const tempC = Math.round(day.avgTemp - 273.15); // TODO: Add toggle between F / C -- also had f and c to each object (including in current_weather)
+    day.tempF = Math.round((day.avgTemp - 273.15) * (9/5) + 32);
+    day.tempC = Math.round(day.avgTemp - 273.15); // TODO: Add toggle between F / C -- also had f and c to each object (including in current_weather)
+
+    let displayTemp = day.tempF + "&deg;F";
+  
+    if (document.querySelector("#toggle-temp").textContent === "Fahrenheit") {
+      displayTemp = day.tempC + "&deg;C";
+    }
 
     const template = `
     <div class="border border-dark text-center">
       <img src="https://openweathermap.org/img/wn/${day.description.icon}@2x.png" alt="weather conditions icon" />
       <h4>${day.description.main}</h4>
-      <h2 class="text-primary">${tempF}&deg;F</h2>
+      <h2 class="text-primary">${displayTemp}</h2>
       <h5 class="text-muted">${day.dayOfWeek}</h5>
     </div>
     `;

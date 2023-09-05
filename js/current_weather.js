@@ -71,10 +71,22 @@ const addWeatherData = (weatherData, cityData) => {
 const renderWeatherData = (weather) => {
   document.querySelector(".search-results").replaceChildren();
 
-  const tempF = Math.round((weather.temp - 273.15) * (9/5) + 32);
-  const maxtTempF = Math.round((weather.highTemp - 273.15) * (9/5) + 32);
-  const minTempF = Math.round((weather.lowTemp - 273.15) * (9/5) + 32);
-  const tempC = Math.round(weather.temp - 273.15); // TODO: Add toggle between F / C
+  weather.tempF = Math.round((weather.temp - 273.15) * (9/5) + 32);
+  weather.maxTempF = Math.round((weather.highTemp - 273.15) * (9/5) + 32);
+  weather.minTempF = Math.round((weather.lowTemp - 273.15) * (9/5) + 32);
+  weather.tempC = Math.round(weather.temp - 273.15); // TODO: Add toggle between F / C
+  weather.maxTempC = Math.round(weather.highTemp - 273.15);
+  weather.minTempC = Math.round(weather.lowTemp - 273.15);
+
+  let displayTemp = weather.tempF + "&deg;F";
+  let displayMax = weather.maxTempF + "&deg;F";
+  let displayMin = weather.minTempF + "&deg;F";
+
+  if (document.querySelector("#toggle-temp").textContent === "Fahrenheit") {
+    displayTemp = weather.tempC + "&deg;C";
+    displayMax = weather.maxTempC + "&deg;C";
+    displayMin = weather.minTempC + "&deg;C";
+  }
 
   let state = weather.country;
   if (weather.state) {
@@ -93,13 +105,13 @@ const renderWeatherData = (weather) => {
 
   const template = `
     <div class="col text-center">
-      <h1>${tempF}&deg;F</h1>
+      <h1>${displayTemp}</h1>
       <h2>${weather.city}, ${state}</h2>
       <h4>${weather.description}</h4>
       <p>
-        High Today: ${maxtTempF}&deg;F
+        High Today: ${displayMax}
         <br />
-        Low Today: ${minTempF}&deg;F
+        Low Today: ${displayMin}
         <br />
         Local Time: ${localTime} 
         <br />
