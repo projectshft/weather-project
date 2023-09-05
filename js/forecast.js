@@ -58,7 +58,16 @@ const mostFrequentDescription = (day) => {
     }
   });
 
-  return descriptionObj;
+  let count = 0;
+  let mostFrequent = null;
+  for (let key in descriptionObj) {
+    if (descriptionObj[key].freq > count) {
+      mostFrequent = key;
+      count = descriptionObj[key].freq;
+    }
+  }
+
+  return mostFrequent;
 };
 
 export default fetchForecastData;
