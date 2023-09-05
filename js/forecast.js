@@ -77,8 +77,27 @@ const mostFrequentDescription = (day) => {
 };
 
 const renderForecast = (days) => {
+  days.forEach((day) => {
+    document.querySelector(`#day${day.order}`).replaceChildren();
 
-}
+    const tempF = Math.round((day.avgTemp - 273.15) * (9/5) + 32);
+    const tempC = Math.round(day.avgTemp - 273.15); // TODO: Add toggle between F / C -- also had f and c to each object (including in current_weather)
+
+    const template = `
+    <div class="border border-dark text-center">
+      <img src="https://openweathermap.org/img/wn/${day.description.icon}@2x.png" alt="weather conditions icon" />
+      <h4>${day.description.main}</h4>
+      <h2 class="text-primary">${tempF}&deg;F</h2>
+      <h5 class="text-secondary">${day.dayOfWeek}</h5>
+    </div>
+    `;
+
+    document.querySelector(`#day${day.order}`).classList.add("mt-3", "mb-3");
+
+    document.querySelector(`#day${day.order}`).insertAdjacentHTML("beforeend", template);
+  });
+  
+};
 
 export default fetchForecastData;
 
