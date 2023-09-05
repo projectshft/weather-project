@@ -27,7 +27,25 @@ const addForecastData = (forecastData) => {
     num++;
   };
 
-  console.log(days);
+  reduceForecastData(days);
+  console.log(days); // testing
+};
+
+const reduceForecastData = (days) => {
+  days.forEach((day) => {
+    day.avgTemp = day.data.reduce((tempSum, currentDataObj) => {
+      tempSum += currentDataObj.main.temp;
+      return tempSum;
+    }, 0) / 8;
+  });
+};
+
+const averageTemp = () => {
+
+};
+
+const mostFrequentDescription = () => {
+
 };
 
 export default fetchForecastData;
