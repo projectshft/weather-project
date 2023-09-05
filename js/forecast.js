@@ -88,7 +88,7 @@ const renderForecast = (days) => {
       <img src="https://openweathermap.org/img/wn/${day.description.icon}@2x.png" alt="weather conditions icon" />
       <h4>${day.description.main}</h4>
       <h2 class="text-primary">${tempF}&deg;F</h2>
-      <h5 class="text-secondary">${day.dayOfWeek}</h5>
+      <h5 class="text-muted">${day.dayOfWeek}</h5>
     </div>
     `;
 

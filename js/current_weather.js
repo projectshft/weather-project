@@ -119,11 +119,17 @@ const renderWeatherData = (weather) => {
 const dayTheme = () => {
   document.querySelector("body").classList.remove("bg-day", "bg-night");
   document.querySelector("body").classList.add("bg-day");
+
+  document.querySelector(".forecast").classList.remove("bg-light-blue", "bg-gray");
+  document.querySelector(".forecast").classList.add("bg-light-blue");
 };
 
 const nightTheme = () => {
   document.querySelector("body").classList.remove("bg-day", "bg-night");
   document.querySelector("body").classList.add("bg-night");
+
+  document.querySelector(".forecast").classList.remove("bg-light-blue", "bg-gray");
+  document.querySelector(".forecast").classList.add("bg-gray");
 };
 
 export default fetchCityData;
