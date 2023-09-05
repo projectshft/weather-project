@@ -68,7 +68,7 @@ const mostFrequentDescription = (day) => {
   for (let key in descriptionObj) {
     if (descriptionObj[key].freq > highest) {
       mostFrequent.main = key;
-      mostFrequent.icon = descriptionObj[key].icon;
+      mostFrequent.icon = descriptionObj[key].icon.replace("n", "d"); // Shows only daytime icons
       highest = descriptionObj[key].freq;
     }
   }
