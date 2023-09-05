@@ -33,19 +33,32 @@ const addForecastData = (forecastData) => {
 
 const reduceForecastData = (days) => {
   days.forEach((day) => {
-    day.avgTemp = day.data.reduce((tempSum, currentDataObj) => {
-      tempSum += currentDataObj.main.temp;
-      return tempSum;
-    }, 0) / 8;
+    day.avgTemp = averageTemp(day);
+    day.description = mostFrequentDescription(day);
   });
 };
 
-const averageTemp = () => {
+const averageTemp = (day) => {
+  const avgTemp = day.data.reduce((tempSum, currentDataObj) => {
+    tempSum += currentDataObj.main.temp;
+    return tempSum;
+  }, 0) / 8;
 
+  return avgTemp;
 };
 
-const mostFrequentDescription = () => {
+const mostFrequentDescription = (day) => {
+  const descriptionObj = {};
 
+  day.data.forEach((dataPoint) => {
+    if (descriptionObj.hasOwnProperty(dataPoint.weather[0].main)) {
+      descriptionObj[dataPoint.weather[0].main].freq += 1;
+    } else {
+      descriptionObj[dataPoint.weather[0].main] = { freq: 1, icon: dataPoint.weather[0].icon };
+    }
+  });
+
+  return descriptionObj;
 };
 
 export default fetchForecastData;
