@@ -36,6 +36,8 @@ const reduceForecastData = (days) => {
     day.avgTemp = averageTemp(day);
     day.description = mostFrequentDescription(day);
   });
+
+  renderForecast(days);
 };
 
 const averageTemp = (day) => {
@@ -70,6 +72,10 @@ const mostFrequentDescription = (day) => {
 
   return mostFrequent;
 };
+
+const renderForecast = (days) => {
+
+}
 
 export default fetchForecastData;
 
