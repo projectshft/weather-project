@@ -65,7 +65,9 @@ const addWeatherData = (weatherData, cityData) => {
     timezone: weatherData.timezone,
     icon: weatherData.weather[0].icon,
   };
- 
+  
+  localStorage.setItem("currentCity", weather.city);
+  localStorage.setItem("currentCountry", weather.country);
   renderWeatherData(weather);
 };
 
@@ -149,6 +151,13 @@ const nightTheme = () => {
     day.classList.remove("bg-light-blue", "bg-gray");
     day.classList.add("bg-gray");
   });
+};
+
+export const getCurrentWeatherObj = () => {
+  const weatherObj = {};
+  weatherObj.city = localStorage.getItem("currentCity");
+  weatherObj.country = localStorage.getItem("currentCountry");
+  return weatherObj;
 };
 
 

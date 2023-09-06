@@ -1,6 +1,7 @@
 // Module imports
 import fetchCityData from "./current_weather.js";
 import getGeolocationWeather from "./geolocation.js";
+import { getCurrentWeatherObj } from "./current_weather.js";
 
 // Store current page
 // window.addEventListener("click", () => {
@@ -40,9 +41,10 @@ toggleBtn.addEventListener('click', () => {
     document.querySelector("#toggle-temp").textContent = "Fahrenheit";
   }
   
-  // const input = localStorage.getItem("currentLocation");
-  const input = localStorage.getItem("input");
-  fetchCityData(input);
+  const input = getCurrentWeatherObj();
+  const inputString = `${input.city}, ${input.country}`;
+  console.log(inputString);
+  fetchCityData(inputString);
 });
 
 // Set default landing page
