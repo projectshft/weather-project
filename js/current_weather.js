@@ -1,5 +1,6 @@
 import fetchForecastData from "./forecast.js";
 import { getLocalTime, getSunriseTime, getSunsetTime, compareTime } from "./time.js";
+import renderMap from "./google_maps.js";
 const API_KEY = "078ae2ec7600b1d6a28bd166f6aad9e8";
 
 // Collect city data from API
@@ -69,6 +70,7 @@ const addWeatherData = (weatherData, cityData) => {
   localStorage.setItem("currentCity", weather.city);
   localStorage.setItem("currentCountry", weather.country);
   renderWeatherData(weather);
+  renderMap(`${weather.city}, ${weather.country}`);
 };
 
 const renderWeatherData = (weather) => {
