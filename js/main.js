@@ -2,6 +2,14 @@
 import fetchCityData from "./current_weather.js";
 import getGeolocationWeather from "./geolocation.js";
 
+// Store current page
+// window.addEventListener("click", () => {
+//   const currentLocation = document.querySelector("#location-name").innerHTML;
+
+//   localStorage.setItem("currentLocation", currentLocation);
+// });
+
+
 // Get user input
 const searchBtn = document.querySelector("#submit");
 const input = document.querySelector("#search-query");
@@ -31,7 +39,8 @@ toggleBtn.addEventListener('click', () => {
   } else {
     document.querySelector("#toggle-temp").textContent = "Fahrenheit";
   }
-
+  
+  // const input = localStorage.getItem("currentLocation");
   const input = localStorage.getItem("input");
   fetchCityData(input);
 });
@@ -68,6 +77,8 @@ const addRmDefaultEventListener = () => {
   rmBtn.removeEventListener("click", removeDefault);
   rmBtn.addEventListener("click", removeDefault);
 };
+
+// Local storage
 
 if (localStorage.getItem("defaultStart") === null || localStorage.getItem("defaultStart") === "null") {
   getGeolocationWeather();

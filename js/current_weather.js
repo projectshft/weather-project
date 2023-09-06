@@ -107,7 +107,7 @@ const renderWeatherData = (weather) => {
   const template = `
     <div class="col text-center">
       <h1>${displayTemp}</h1>
-      <h2>${weather.city}, ${state}</h2>
+      <h2 id="location-name">${weather.city}, ${state}</h2>
       <h4>${weather.description}</h4>
       <p>
         High Today: ${displayMax}
@@ -150,5 +150,7 @@ const nightTheme = () => {
     day.classList.add("bg-gray");
   });
 };
+
+
 
 export default fetchCityData;
