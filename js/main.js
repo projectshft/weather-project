@@ -49,17 +49,13 @@ const addSetDefaultEventListener = () => {
 };
 
 setDefault.addEventListener("click", () => {
-  // const input = localStorage.getItem("input");
-
   addSetDefaultEventListener();
 
   updateOptionsDropdown();
-  //addRmDefaultEventListener();
 });
 
 const removeDefault = () => {
   localStorage.removeItem("defaultStart");
-  console.log(getCurrentWeatherObj()); //testing
 };
 
 const updateOptionsDropdown = () => {
@@ -85,12 +81,15 @@ const addRmDefaultEventListener = () => {
   rmBtn.addEventListener("click", removeDefault);
 };
 
-// Local storage
+// Sets up default each time the page is loaded
+const pageLoad = () => {
+  if (localStorage.getItem("defaultStart") === null || localStorage.getItem("defaultStart") === "null") {
+    getGeolocationWeather();
+  } else {
+    updateOptionsDropdown();
+    addRmDefaultEventListener();
+    fetchCityData(localStorage.getItem("defaultStart"));
+  }
+};
 
-if (localStorage.getItem("defaultStart") === null || localStorage.getItem("defaultStart") === "null") {
-  getGeolocationWeather();
-} else {
-  updateOptionsDropdown();
-  addRmDefaultEventListener();
-  fetchCityData(localStorage.getItem("defaultStart"));
-}
+pageLoad();
