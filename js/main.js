@@ -41,15 +41,16 @@ toggleBtn.addEventListener('click', () => {
 // Set default landing page
 const setDefault = document.querySelector("#set-default");
 
-const addSetDefaultEventListener = () => {
+const clickSetDefault = () => {
   removeDefault();
   const input = getCurrentWeatherObj();
   const inputString = `${input.city}, ${input.country}`;
   localStorage.setItem("defaultStart", inputString);
+  alert(`Your default city is now ${inputString}`);
 };
 
 setDefault.addEventListener("click", () => {
-  addSetDefaultEventListener();
+  clickSetDefault();
 
   updateOptionsDropdown();
 });
@@ -70,7 +71,7 @@ const updateOptionsDropdown = () => {
   const setDefault = document.querySelector("#set-default");
 
   setDefault.addEventListener("click", () => {
-    addSetDefaultEventListener();
+    clickSetDefault();
   });
 };
 
