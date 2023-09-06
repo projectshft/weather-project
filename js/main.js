@@ -43,7 +43,6 @@ const setDefault = document.querySelector("#set-default");
 
 const addSetDefaultEventListener = () => {
   removeDefault();
-
   const input = getCurrentWeatherObj();
   const inputString = `${input.city}, ${input.country}`;
   localStorage.setItem("defaultStart", inputString);
@@ -51,6 +50,7 @@ const addSetDefaultEventListener = () => {
 
 setDefault.addEventListener("click", () => {
   // const input = localStorage.getItem("input");
+
   addSetDefaultEventListener();
 
   updateOptionsDropdown();
@@ -66,12 +66,16 @@ const updateOptionsDropdown = () => {
   document.querySelector(".dropdown-menu").replaceChildren();
 
   const template = `
-  <li><a class="dropdown-item" href="#" id="set-default">Set Default</a></li>
+  <li><a class="dropdown-item" href="#" id="set-default">Set as Default</a></li>
   <li><a class="dropdown-item" href="#" id="rm-default">Remove Default</a></li>`;
 
   document.querySelector(".dropdown-menu").insertAdjacentHTML("beforeend", template);
+  
+  const setDefault = document.querySelector("#set-default");
 
-  addSetDefaultEventListener();
+  setDefault.addEventListener("click", () => {
+    addSetDefaultEventListener();
+  });
 };
 
 const addRmDefaultEventListener = () => {
