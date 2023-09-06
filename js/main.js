@@ -3,21 +3,13 @@ import fetchCityData from "./current_weather.js";
 import getGeolocationWeather from "./geolocation.js";
 import { getCurrentWeatherObj } from "./current_weather.js";
 
-// Store current page
-// window.addEventListener("click", () => {
-//   const currentLocation = document.querySelector("#location-name").innerHTML;
-
-//   localStorage.setItem("currentLocation", currentLocation);
-// });
-
-
 // Get user input
 const searchBtn = document.querySelector("#submit");
 const input = document.querySelector("#search-query");
 
 searchBtn.addEventListener("click", () => {
   const input = document.querySelector("#search-query").value;
-  localStorage.setItem("input", input);
+  //localStorage.setItem("input", input);
   fetchCityData(input);
 
   document.querySelector("#search-query").value = "";
@@ -43,24 +35,31 @@ toggleBtn.addEventListener('click', () => {
   
   const input = getCurrentWeatherObj();
   const inputString = `${input.city}, ${input.country}`;
-  console.log(inputString);
   fetchCityData(inputString);
 });
 
 // Set default landing page
 const setDefault = document.querySelector("#set-default");
 
+const addSetDefaultEventListener = () => {
+  removeDefault();
+
+  const input = getCurrentWeatherObj();
+  const inputString = `${input.city}, ${input.country}`;
+  localStorage.setItem("defaultStart", inputString);
+};
+
 setDefault.addEventListener("click", () => {
-  const input = localStorage.getItem("input");
-  localStorage.setItem("defaultStart", input);
+  // const input = localStorage.getItem("input");
+  addSetDefaultEventListener();
 
   updateOptionsDropdown();
-
-  addRmDefaultEventListener();
+  //addRmDefaultEventListener();
 });
 
 const removeDefault = () => {
   localStorage.removeItem("defaultStart");
+  console.log(getCurrentWeatherObj()); //testing
 };
 
 const updateOptionsDropdown = () => {
@@ -71,6 +70,8 @@ const updateOptionsDropdown = () => {
   <li><a class="dropdown-item" href="#" id="rm-default">Remove Default</a></li>`;
 
   document.querySelector(".dropdown-menu").insertAdjacentHTML("beforeend", template);
+
+  addSetDefaultEventListener();
 };
 
 const addRmDefaultEventListener = () => {
