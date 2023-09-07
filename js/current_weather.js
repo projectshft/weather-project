@@ -66,11 +66,17 @@ const addWeatherData = (weatherData, cityData) => {
     timezone: weatherData.timezone,
     icon: weatherData.weather[0].icon,
   };
+
+  if (weather.state !== null) {
+    localStorage.setItem("currentCity", `${weather.city}, ${weather.state}, ${weather.country}`)
+  } else {
+    localStorage.setItem("currentCity", `${weather.city}, ${weather.country}`);
+  }
   
-  localStorage.setItem("currentCity", weather.city);
-  localStorage.setItem("currentCountry", weather.country);
+  // localStorage.setItem("currentCity", weather.city);
+  // localStorage.setItem("currentState", weather.state); //Pyongyang bug
+  // localStorage.setItem("currentCountry", weather.country);
   renderWeatherData(weather);
-  // renderMap(`${weather.city}, ${weather.country}`);
   renderMap(cityData.latitude, cityData.longitude);
 };
 
@@ -156,11 +162,12 @@ const nightTheme = () => {
   });
 };
 
-export const getCurrentWeatherObj = () => {
-  const weatherObj = {};
-  weatherObj.city = localStorage.getItem("currentCity");
-  weatherObj.country = localStorage.getItem("currentCountry");
-  return weatherObj;
+export const getCurrentWeatherString = () => {
+  const weatherString = localStorage.getItem("currentCity");
+  // weatherObj.city = localStorage.getItem("currentCity");
+  // weatherObj.state = localStorage.getItem("currentState");
+  // weatherObj.country = localStorage.getItem("currentCountry");
+  return weatherString;
 };
 
 

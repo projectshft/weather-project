@@ -1,7 +1,7 @@
 // Module imports
 import fetchCityData from "./current_weather.js";
 import getGeolocationWeather from "./geolocation.js";
-import { getCurrentWeatherObj } from "./current_weather.js";
+import { getCurrentWeatherString } from "./current_weather.js";
 
 // Get user input
 const searchBtn = document.querySelector("#submit");
@@ -33,9 +33,9 @@ toggleBtn.addEventListener('click', () => {
     document.querySelector("#toggle-temp").textContent = "Fahrenheit";
   }
   
-  const input = getCurrentWeatherObj();
-  const inputString = `${input.city}, ${input.country}`;
-  fetchCityData(inputString);
+  const input = getCurrentWeatherString();
+  // const inputString = `${input.city}, ${input.state}, ${input.country}`;
+  fetchCityData(input);
 });
 
 // Set default landing page
@@ -43,10 +43,10 @@ const setDefault = document.querySelector("#set-default");
 
 const clickSetDefault = () => {
   removeDefault();
-  const input = getCurrentWeatherObj();
-  const inputString = `${input.city}, ${input.country}`;
-  localStorage.setItem("defaultStart", inputString);
-  alert(`Your default city is now ${inputString}`);
+  const input = getCurrentWeatherString();
+  // const inputString = `${input.city}, ${input.state}, ${input.country}`;
+  localStorage.setItem("defaultStart", input);
+  alert(`Your default city is now ${input}`);
 };
 
 setDefault.addEventListener("click", () => {

@@ -3,9 +3,6 @@ const renderMap = (lat, lon) => {
 
   document.querySelector(".google-maps").replaceChildren();
 
-  // const template = `
-  // <iframe width="100%" height="450" style="border:0" loading="lazy" allowfullscreen src="https://www.google.com/maps/embed/v1/place?q=${search}&key=${MAP_API_KEY}"></iframe>`;
-
   const template= `<iframe width="100%" height="450" style="border:0" loading="lazy" allowfullscreen src="https://www.google.com/maps/embed/v1/view?key=${MAP_API_KEY}&center=${lat},${lon}&zoom=10"></iframe>`;
   document.querySelector(".google-maps").insertAdjacentHTML("beforeend", template);
 };
