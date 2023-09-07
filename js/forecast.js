@@ -2,6 +2,10 @@ import { getDayName } from "./time.js";
 
 const API_KEY = "078ae2ec7600b1d6a28bd166f6aad9e8";
 
+// Retrieves forecast data for the next 5 days from API
+// @param {object} cityData - Data initially collected from API by fetchCityData function in current_weather.js, which includes latitude and longitude
+// If API call is successful, passes data to addForecastData
+
 const fetchForecastData = async (cityData) => {
   const url = `https://api.openweathermap.org/data/2.5/forecast?lat=${cityData.latitude}&lon=${cityData.longitude}&appid=${API_KEY}`;
 
@@ -14,9 +18,11 @@ const fetchForecastData = async (cityData) => {
   }
 };
 
-const addForecastData = (forecastData) => {
-  console.log(forecastData); //testing
+// Condenses 40 data points retrieved from API into an array of 5 objects, each representing a day
+// @param {object} forecastData - Data from API call
+// Passes days array to reduceForecastData
 
+const addForecastData = (forecastData) => {
   const days = [];
   let num = 0;
   for (let i = 0; i < 40; i += 8) {
@@ -30,8 +36,11 @@ const addForecastData = (forecastData) => {
   };
 
   reduceForecastData(days);
-  console.log(days); // testing
 };
+
+// Extracts relevant data from each day: which day of the week the data represents, the average temp on that day, and the most frequent description in the data ("Clear", "Cloudy", "Rain", etc.)
+// @param {array} days - Array of day objects passed from addForecastData
+// Passes reduced array to renderForecast
 
 const reduceForecastData = (days) => {
   days.forEach((day) => {
@@ -76,12 +85,15 @@ const mostFrequentDescription = (day) => {
   return mostFrequent;
 };
 
+// Renders relevant data (day of the week, description, icon, and average temperature) to the UI
+// @param {array} days - Array of day objects passed from reduceForecastData
+
 const renderForecast = (days) => {
   days.forEach((day) => {
     document.querySelector(`#day${day.order}`).replaceChildren();
 
     day.tempF = Math.round((day.avgTemp - 273.15) * (9/5) + 32);
-    day.tempC = Math.round(day.avgTemp - 273.15); // TODO: Add toggle between F / C -- also had f and c to each object (including in current_weather)
+    day.tempC = Math.round(day.avgTemp - 273.15);
 
     let displayTemp = day.tempF + "&deg;F";
   
@@ -105,5 +117,5 @@ const renderForecast = (days) => {
   
 };
 
-export default fetchForecastData;
+export default fetchForecastData; // Export for use in current_weather.js
 

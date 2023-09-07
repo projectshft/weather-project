@@ -3,13 +3,12 @@ import fetchCityData from "./current_weather.js";
 import getGeolocationWeather from "./geolocation.js";
 import { getCurrentWeatherString } from "./current_weather.js";
 
-// Get user input
+// Retrieve user input
 const searchBtn = document.querySelector("#submit");
 const input = document.querySelector("#search-query");
 
 searchBtn.addEventListener("click", () => {
   const input = document.querySelector("#search-query").value;
-  //localStorage.setItem("input", input);
   fetchCityData(input);
 
   document.querySelector("#search-query").value = "";
@@ -34,7 +33,6 @@ toggleBtn.addEventListener('click', () => {
   }
   
   const input = getCurrentWeatherString();
-  // const inputString = `${input.city}, ${input.state}, ${input.country}`;
   fetchCityData(input);
 });
 
@@ -44,7 +42,6 @@ const setDefault = document.querySelector("#set-default");
 const clickSetDefault = () => {
   removeDefault();
   const input = getCurrentWeatherString();
-  // const inputString = `${input.city}, ${input.state}, ${input.country}`;
   localStorage.setItem("defaultStart", input);
   alert(`Your default city is now ${input}`);
 };
@@ -82,7 +79,7 @@ const addRmDefaultEventListener = () => {
   rmBtn.addEventListener("click", removeDefault);
 };
 
-// Sets up default each time the page is loaded
+// Sets up default location each time the page is loaded
 const pageLoad = () => {
   if (localStorage.getItem("defaultStart") === null || localStorage.getItem("defaultStart") === "null") {
     getGeolocationWeather();

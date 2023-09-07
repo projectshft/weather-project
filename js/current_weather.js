@@ -73,9 +73,6 @@ const addWeatherData = (weatherData, cityData) => {
     localStorage.setItem("currentCity", `${weather.city}, ${weather.country}`);
   }
   
-  // localStorage.setItem("currentCity", weather.city);
-  // localStorage.setItem("currentState", weather.state); //Pyongyang bug
-  // localStorage.setItem("currentCountry", weather.country);
   renderWeatherData(weather);
   renderMap(cityData.latitude, cityData.longitude);
 };
@@ -164,9 +161,6 @@ const nightTheme = () => {
 
 export const getCurrentWeatherString = () => {
   const weatherString = localStorage.getItem("currentCity");
-  // weatherObj.city = localStorage.getItem("currentCity");
-  // weatherObj.state = localStorage.getItem("currentState");
-  // weatherObj.country = localStorage.getItem("currentCountry");
   return weatherString;
 };
 
