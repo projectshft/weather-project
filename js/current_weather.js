@@ -70,7 +70,8 @@ const addWeatherData = (weatherData, cityData) => {
   localStorage.setItem("currentCity", weather.city);
   localStorage.setItem("currentCountry", weather.country);
   renderWeatherData(weather);
-  renderMap(`${weather.city}, ${weather.country}`);
+  // renderMap(`${weather.city}, ${weather.country}`);
+  renderMap(cityData.latitude, cityData.longitude);
 };
 
 const renderWeatherData = (weather) => {
