@@ -3,9 +3,9 @@ import { getLocalTime, getSunriseTime, getSunsetTime, compareTime } from "./time
 import renderMap from "./google_maps.js";
 const API_KEY = "078ae2ec7600b1d6a28bd166f6aad9e8";
 
-// Collects city data from API
-// @param {string} input City name (and, optionally, state, country ISO code) received from user input on UI
-
+/** Collects city data from API
+* @param {string} input - City name (and, optionally, state, country ISO code) received from user input on UI
+*/
 const fetchCityData = async (input) => {
   const url = `https://api.openweathermap.org/geo/1.0/direct?q=${input}&appid=${API_KEY}`;
 
@@ -18,9 +18,9 @@ const fetchCityData = async (input) => {
   }
 };
 
-// Adds relevant data (city name, state if available, country, latitude, longitude) to cityData object
-// @param {json} data - JSON received from fetch API in fetchCityData function is passed to addLatAndLon
-
+/** Adds relevant data (city name, state if available, country, latitude, longitude) to cityData object
+* @param {object} data - JSON received from fetch API in fetchCityData
+*/
 const addLatAndLon = (data) => {
   const cityData = {
     city: data[0].name,
@@ -34,10 +34,11 @@ const addLatAndLon = (data) => {
   fetchForecastData(cityData);
 };
 
-// Retrieves current weather data from API
-// @param {object} cityData - Object passed from addLatAndLon is used to retrieve weather data from that latitude and longitude
-// data {json} is passed to addWeatherData, a function that creates a weather object and adds the data we want
-// Export for use by geolocation.js
+/** Retrieves current weather data from API
+ * Passes data retrieved from API call to addWeatherData
+ * Exported for use by geolocation.js
+ * @param {object} cityData - Object passed from addLatAndLon and used to retrieve weather data from that latitude and longitude
+ */
 
 export const fetchCurrentWeather = async (cityData) => {
   const url = `https://api.openweathermap.org/data/2.5/weather?lat=${cityData.latitude}&lon=${cityData.longitude}&appid=${API_KEY}`;
@@ -50,6 +51,12 @@ export const fetchCurrentWeather = async (cityData) => {
     console.log(error);
   }
 };
+
+/** Consolidates relevant data from the JSON objects returned from our two API calls into one weather object
+ * Passes consolidated data to functions that render the Google map and rest of the UI
+ * @param {object} weatherData - JSON data retrieved by fetchCurrentWeather function
+ * @param {object} cityData - JSON data retrieved by fetchCityData function
+ */
 
 const addWeatherData = (weatherData, cityData) => {
   const weather = { 

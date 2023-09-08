@@ -2,10 +2,10 @@ import { getDayName } from "./time.js";
 
 const API_KEY = "078ae2ec7600b1d6a28bd166f6aad9e8";
 
-// Retrieves forecast data for the next 5 days from API
-// @param {object} cityData - Data initially collected from API by fetchCityData function in current_weather.js, which includes latitude and longitude
-// If API call is successful, passes data to addForecastData
-
+/** Retrieves forecast data for the next 5 days from API
+ * If API call is successful, passes data to addForecastData
+ * @param {object} cityData - Data initially collected from API by fetchCityData function in current_weather.js, which includes latitude and longitude.
+ */
 const fetchForecastData = async (cityData) => {
   const url = `https://api.openweathermap.org/data/2.5/forecast?lat=${cityData.latitude}&lon=${cityData.longitude}&appid=${API_KEY}`;
 
@@ -18,9 +18,10 @@ const fetchForecastData = async (cityData) => {
   }
 };
 
-// Condenses 40 data points retrieved from API into an array of 5 objects, each representing a day
-// @param {object} forecastData - Data from API call
-// Passes days array to reduceForecastData
+/** Condenses 40 data points retrieved from API into an array of 5 objects, each representing a day
+* Passes days array to reduceForecastData
+* @param {object} forecastData - JSON data from forecast API call in fetchForecastData function
+*/
 
 const addForecastData = (forecastData) => {
   const days = [];
@@ -38,9 +39,10 @@ const addForecastData = (forecastData) => {
   reduceForecastData(days);
 };
 
-// Extracts relevant data from each day: which day of the week the data represents, the average temp on that day, and the most frequent description in the data ("Clear", "Cloudy", "Rain", etc.)
-// @param {array} days - Array of day objects passed from addForecastData
-// Passes reduced array to renderForecast
+/**  Extracts relevant data from each day: which day of the week the data represents, the average temp on that day, and the most frequent description in the data ("Clear", "Cloudy", "Rain", etc.)
+ * Passes reduced array to renderForecast
+ * @param {array} days - Array of day objects passed from addForecastData
+ */
 
 const reduceForecastData = (days) => {
   days.forEach((day) => {
@@ -85,9 +87,9 @@ const mostFrequentDescription = (day) => {
   return mostFrequent;
 };
 
-// Renders relevant data (day of the week, description, icon, and average temperature) to the UI
-// @param {array} days - Array of day objects passed from reduceForecastData
-
+/** Renders relevant data (day of the week, description, icon, and average temperature) to the UI
+* @param {array} days - Array of day objects passed from reduceForecastData
+*/
 const renderForecast = (days) => {
   days.forEach((day) => {
     document.querySelector(`#day${day.order}`).replaceChildren();
@@ -117,5 +119,5 @@ const renderForecast = (days) => {
   
 };
 
-export default fetchForecastData; // Export for use in current_weather.js
+export default fetchForecastData; /** @export fetchForecastData for use in current_weather.js */
 
