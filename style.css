@@ -1,0 +1,35 @@
+.bg-day {
+  background-color: #3584a6;
+}
+
+.bg-night {
+  background-color: #0a2029;
+}
+
+.bg-light-blue {
+  background-color: #aadcf1;
+}
+
+.bg-gray {
+  background-color: rgb(142, 170, 194);
+}
+
+.text-blue {
+  color: #13afec;
+}
+
+.margin-top {
+  margin-top: -49px;
+}
+
+.switch-mt {
+  margin-top: 13px;
+}
+
+.space {
+  margin-right: 250px;
+}
+
+.custom-margin-top {
+  margin-top: 1px;
+}
