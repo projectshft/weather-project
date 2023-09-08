@@ -110,7 +110,7 @@ const renderForecast = (days) => {
     </div>
     `;
 
-    document.querySelector(`#day${day.order}`).classList.add("mt-3", "mb-3", "me-3", "pt-3", "pb-3"); // add m, pt-3, pb-3
+    document.querySelector(`#day${day.order}`).classList.add("mt-3", "mb-3", "me-3", "pt-3", "pb-3"); 
 
     document.querySelector(`#day${day.order}`).insertAdjacentHTML("beforeend", template);
   });

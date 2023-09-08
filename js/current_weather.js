@@ -3,7 +3,7 @@ import { getLocalTime, getSunriseTime, getSunsetTime, compareTime } from "./time
 import renderMap from "./google_maps.js";
 const API_KEY = "078ae2ec7600b1d6a28bd166f6aad9e8";
 
-// Collect city data from API
+// Collects city data from API
 // @param {string} input City name (and, optionally, state, country ISO code) received from user input on UI
 
 const fetchCityData = async (input) => {
@@ -18,8 +18,8 @@ const fetchCityData = async (input) => {
   }
 };
 
-// Add relevant data (city name, state if available, country, latitude, longitude) to cityData object
-// @param {json} data JSON received from fetch API in fetchCityData function is passed to addLatAndLon
+// Adds relevant data (city name, state if available, country, latitude, longitude) to cityData object
+// @param {json} data - JSON received from fetch API in fetchCityData function is passed to addLatAndLon
 
 const addLatAndLon = (data) => {
   const cityData = {
@@ -34,8 +34,8 @@ const addLatAndLon = (data) => {
   fetchForecastData(cityData);
 };
 
-// Retrieve current weather data from API
-// @param {object} cityData Object passed from addLatAndLon is used to retrieve weather data from that latitude and longitude
+// Retrieves current weather data from API
+// @param {object} cityData - Object passed from addLatAndLon is used to retrieve weather data from that latitude and longitude
 // data {json} is passed to addWeatherData, a function that creates a weather object and adds the data we want
 // Export for use by geolocation.js
 

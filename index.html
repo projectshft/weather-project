@@ -17,10 +17,14 @@
     <link href="style.css" rel="stylesheet" />
   </head>
   <body class="bg-day text-light">
+    <!-- Header -->
+
     <header class="container mt-5 mb-5">
       <h1 class="text-center">Weather Project</h1>
       <br />
     </header>
+
+    <!-- Navbar -->
 
     <nav
       class="navbar sticky-top navbar-expand-lg bg-body-tertiary margin-top mb-5 py-3"
@@ -92,15 +96,15 @@
       </div>
     </nav>
 
+    <!-- Search results -->
+
     <section class="container">
       <div
         class="row search-results flex-column-reverse flex-md-row mb-5"
       ></div>
 
       <div class="row forecast text-dark mb-5">
-        <div class="col-md day" id="day0">
-          <!-- <div class="border border-dark"></div> add dynamically mt-3 mb-3 to each col class-->
-        </div>
+        <div class="col-md day" id="day0"></div>
         <div class="col-md day" id="day1"></div>
         <div class="col-md day" id="day2"></div>
         <div class="col-md day" id="day3"></div>
@@ -111,7 +115,7 @@
         <div class="col-md google-maps ps-0 pe-0 me-3"></div>
       </div>
     </section>
-    
+
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"

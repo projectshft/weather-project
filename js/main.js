@@ -3,7 +3,9 @@ import fetchCityData from "./current_weather.js";
 import getGeolocationWeather from "./geolocation.js";
 import { getCurrentWeatherString } from "./current_weather.js";
 
-// Retrieve user input
+// Retrieves user input
+// Passes input to fetchCityData function
+
 const searchBtn = document.querySelector("#submit");
 const input = document.querySelector("#search-query");
 
@@ -22,7 +24,8 @@ input.addEventListener("keypress", (event) => {
 });
 
 
-// Toggle celsius/fahrenheit
+// Toggles celsius/fahrenheit
+
 const toggleBtn = document.querySelector("#toggle-temp");
 
 toggleBtn.addEventListener('click', () => {
@@ -36,7 +39,8 @@ toggleBtn.addEventListener('click', () => {
   fetchCityData(input);
 });
 
-// Set default landing page
+// Sets default landing page
+
 const setDefault = document.querySelector("#set-default");
 
 const clickSetDefault = () => {
@@ -80,6 +84,7 @@ const addRmDefaultEventListener = () => {
 };
 
 // Sets up default location each time the page is loaded
+
 const pageLoad = () => {
   if (localStorage.getItem("defaultStart") === null || localStorage.getItem("defaultStart") === "null") {
     getGeolocationWeather();
