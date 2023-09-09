@@ -93,7 +93,7 @@ const fetchFiveDayWeather = function(lat, lon){
 
 const getCoordinates = function(city)
   {
-    const url = `http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=${apiKey}`
+    const url = `https://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=${apiKey}`
     fetch(url, 
       {
         method: 'GET',
