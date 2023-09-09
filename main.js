@@ -2,11 +2,15 @@ const apiKey = '59193db5e99e491a9098d88600213ffa'
 
 const button = document.getElementById('button');
 
-
-button.addEventListener('click', function (){
+const eventFunction = function (){
   const city = document.querySelector('#search-query').value;
   getCoordinates(city);
   document.querySelector('#search-query').value = "";
+}
+
+button.addEventListener('click', eventFunction)
+button.addEventListener('keypress', function(event){
+  if (event.key === "Enter"){eventFunction()}
 })
 
 const fetchWeather = function(lat, lon){
