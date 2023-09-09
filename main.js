@@ -9,8 +9,8 @@ const eventFunction = function (){
 }
 
 button.addEventListener('click', eventFunction)
-button.addEventListener('keypress', function(event){
-  if (event.key === "Enter"){event.preventDefault(); eventFunction()}
+document.querySelector('#search-query').addEventListener('keypress', function(event){
+  if (event.keyCode === 13){event.preventDefault(); eventFunction()}
 })
 
 const fetchWeather = function(lat, lon){
