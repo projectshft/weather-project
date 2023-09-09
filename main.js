@@ -46,7 +46,7 @@ const renderCurrentWeather = function(city, temp, condition){
 }
 
 const fetchFiveDayWeather = function(lat, lon){
-  const url = `https://cors-anywhere.herokuapp.com/api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}&units=imperial`
+  const url = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}&units=imperial`
   fetch(url, {
     method: 'GET',
     dataType: 'json'
