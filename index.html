@@ -27,19 +27,44 @@
           </div>
           <hr />
           <form class="search-form">
-            <h3>Current Weather</h3>
-            <div class="form-group">
-              <input
-                type="text"
-                id="search-query"
-                class="form-control"
-                placeholder="Enter City Name"
-              />
+            <div class="form-group row">
+              <div class="col-md-9">
+                <input
+                  type="text"
+                  id="search-query"
+                  class="form-control"
+                  placeholder="Enter City Name"
+                />
+              </div>
+              <div class="col-md-3">
+                <button type="button" class="btn btn-primary search">
+                  Search
+                </button>
+              </div>
             </div>
-            <button type="button" class="btn btn-primary search">Search</button>
           </form>
           <hr />
-          <div class="weather row"></div>
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-md-12">
+                <h3 id="currentWeatherTitle">Current Weather</h3>
+              </div>
+            </div>
+          </div>
+          <div class="current row text-center">
+            <!-- Current Weather appends here  -->
+          </div>
+
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-md-12">
+                <h3 id="fiveday">Five Day Forecast</h3>
+              </div>
+            </div>
+          </div>
+          <div class="fiveday row justify-content-center">
+            <!-- Five Day forecast appends here -->
+          </div>
         </div>
       </div>
     </div>
