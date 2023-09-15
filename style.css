@@ -1,0 +1,61 @@
+/*  */
+.page {
+  align-content: center;
+}
+
+.page-header {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.search-form {
+  margin-bottom: 75px;
+  align-content: center;
+}
+.form-group {
+  display: flex;
+  flex-direction: row;
+  margin-left: 90px;
+}
+
+#search-query {
+  width: 70%;
+}
+
+.search {
+  margin-left: 20px;
+}
+
+.forecast-display {
+  display: flex;
+  align-items: center;
+}
+
+.today-forecast {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+#today-forecast-data {
+  margin-left: 200px;
+  margin-right: 200px;
+}
+
+#five-day-forecast {
+}
+
+/* Inserted elements for queried weather forecast days */
+.forecast-infobox {
+  vertical-align: center;
+}
+.weather {
+}
+.temperature {
+}
+.icon {
+}
+.day-of-week {
+}
