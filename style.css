@@ -28,6 +28,7 @@
 
 .forecast-display {
   display: flex;
+  flex-direction: column;
   align-items: center;
 }
 
@@ -38,24 +39,31 @@
   justify-content: center;
   align-items: center;
 }
-
 #today-forecast-data {
-  margin-left: 200px;
-  margin-right: 200px;
+  margin-right: 15px;
 }
 
-#five-day-forecast {
+.five-day-forecast {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
 }
 
 /* Inserted elements for queried weather forecast days */
+.forecast {
+  border-color: black;
+  border-style: solid;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 15%;
+}
+
 .forecast-infobox {
-  vertical-align: center;
-}
-.weather {
-}
-.temperature {
-}
-.icon {
-}
-.day-of-week {
+  width: 20%;
 }
