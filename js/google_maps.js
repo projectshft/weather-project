@@ -1,6 +1,6 @@
-// import * as dotenv from 'dotenv';
+import * as dotenv from 'dotenv';
 
-// dotenv.config();
+dotenv.config();
 
 const renderMap = (lat, lon) => {
   const MAP_API_KEY = process.env.GOOGLE_MAPS_API_KEY;
