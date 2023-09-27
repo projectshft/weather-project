@@ -1,5 +1,9 @@
+import * as dotenv from 'dotenv';
+
+dotenv.config();
+
 const renderMap = (lat, lon) => {
-  const MAP_API_KEY = 'AIzaSyBCNbEnV7RZIRMyO9vgfOD-evXXlu6C2yU';
+  const MAP_API_KEY = process.env.GOOGLE_MAPS_API_KEY;
 
   document.querySelector(".google-maps").replaceChildren();
 
