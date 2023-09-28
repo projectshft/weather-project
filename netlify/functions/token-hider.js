@@ -11,8 +11,8 @@ const handler = async function (event) {
 
   // TODO: customize your URL and API keys set in the Netlify Dashboard
   // this is secret too, your frontend won't see this
-  const { API_SECRET = 'shiba' } = process.env
-  const URL = `https://dog.ceo/api/breed/${API_SECRET}/images`
+  const { GOOGLE_MAPS_API_KEY } = process.env
+  const URL = `https://www.youtube.com/`
 
   console.log('Constructed URL is ...', URL)
 
@@ -34,4 +34,15 @@ const handler = async function (event) {
   }
 }
 
-module.exports = { handler }
+// const handler = async function (event) {
+//   const { GOOGLE_MAP_API_KEY } = process.env;
+  
+//   //document.querySelector(".google-maps").replaceChildren();
+
+//   //const template= `<iframe width="100%" height="450" style="border:0" loading="lazy" allowfullscreen src="https://www.google.com/maps/embed/v1/view?key=${GOOGLE_MAP_API_KEY}&center=${lat},${lon}&zoom=10"></iframe>`;
+//   const template = `${GOOGLE_MAP_API_KEY}, friends`
+//   //document.querySelector(".google-maps").insertAdjacentHTML("beforeend", template);
+//   console.log(template);
+// };
+
+module.exports = { handler };
