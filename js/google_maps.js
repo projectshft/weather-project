@@ -1,5 +1,5 @@
 const renderMap = (lat, lon) => {
-  const MAP_API_KEY = process.env.GOOGLE_MAP_API_KEY;
+  const MAP_API_KEY = `AIzaSyDJdTQL_-Rzj4QrYJ02rdsMQD-kpH7Ac7E`;
 
   document.querySelector(".google-maps").replaceChildren();
 
