@@ -3,7 +3,7 @@
 // dotenv.config();
 
 const renderMap = (lat, lon) => {
-  const MAP_API_KEY = 'API key goes here...';
+  const MAP_API_KEY = process.env.GOOGLE_MAP_API_KEY;
 
   document.querySelector(".google-maps").replaceChildren();
 
