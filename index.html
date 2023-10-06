@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Weather Project</title>
+    <!-- Required meta tags -->
+    <link rel="stylesheet" href="style.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" 
+    integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" 
+    crossorigin="anonymous">
+</head>
+<body style='background-color: rgb(190, 220, 230)'>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-10 offset-md-1 text-center">
+        <div class="page-header">
+          <h1><strong>Weather Forecast</strong></h1>
+        </div>
+        <hr />
+        <form class="search-form">
+            <div class="form-group row">
+                <div class="col-md-3">
+                </div>
+                <div class="col-md-6">
+                    <input type="text" id="search-query" class="form-control" placeholder="Enter City Name"/>
+                </div>
+                <div class="col-md-3">
+                  <button type="button" class="btn btn-primary search">
+                    Search
+                  </button>
+                </div>
+            </div>
+              <div class="container-fluid">
+                <div class="row">
+                  <div class="col-md-12">
+                    <h3 id="currentWeatherTitle">Current Weather</h3>
+                  </div>
+                </div>
+              </div>
+              <div class="current row text-center">
+                <!-- Current Weather appends here  -->
+              </div>
+    
+              <div class="container-fluid">
+                <div class="row">
+                  <div class="col-md-12">
+                    <h3 id="fiveday">Five Day Forecast</h3>
+                  </div>
+                </div>
+              </div>
+              <div class="fiveDayForecast row justify-content-center">
+                <!-- Five Day forecast appends here -->
+              </div>
+            </div>
+          </div>
+        </div>
+     <script src="main.js" type="text/javascript"></script>
+  </body>
+</html>
