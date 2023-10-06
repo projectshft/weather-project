@@ -1,0 +1,28 @@
+.icon {
+  width: 100px;
+  height: 100px;
+}
+.add-border {
+  border-color: black;
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 10px;
+  background-color: rgb(244, 236, 227);
+  margin: 5px;
+}
+
+#fiveday {
+  margin-top: 15px;
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+}
+
+#currentWeatherTitle {
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  
+}
+
+.col-md-3 {
+    display: grid;
+    justify-content: center;
+    align-content: center;
+}
