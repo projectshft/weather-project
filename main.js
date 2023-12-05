@@ -24,7 +24,7 @@ const getGeolocation = (lat, lon) => {
   })
     .then(data => data.json())
     .then(data => handleGeolocation(data.results[0].address_components[2].long_name)
-    .catch(error => console.error('Error fetching data:', error));
+    .catch(error => console.error('Error fetching data:', error))
     );
 };
 
@@ -209,6 +209,8 @@ const getWeather = (data) => {
     .then(data => data.json())
     .then(data => showWeather(data))
     .catch(error => console.error('Error fetching data:', error));
+
+  document.querySelector('#city').value = ''
 };
 
 /**
@@ -232,15 +234,14 @@ if(localStorage.getItem('defaultCity')) {
   getLatLong(city);
 };
 
-/* Listen for a click to submit the city, then get the lat/lon */
-document.querySelector('.search').addEventListener('click', () => {
+const handleSubmit = () => {
   const loader = '<div class="loader-container"><div class="loader"></div></div>';
   document.querySelector('body').insertAdjacentHTML('beforebegin', loader);
 
   let q = document.querySelector('#city').value;
 
   getLatLong(q);
+}
 
-  document.querySelector('#city');
-
-});
+/* Listen for a click to submit the city, then get the lat/lon */
+document.querySelector('.search').addEventListener('click', () => handleSubmit());
