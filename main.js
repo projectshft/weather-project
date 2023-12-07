@@ -10,7 +10,6 @@ const handleGeolocation = (data) => {
   let arr = data.split(' ')
   let address = arr[1]
   const add1 = address.replace(',', '')
-  console.log(add1)
   city = add1;
 };
 
@@ -28,7 +27,6 @@ const getGeolocation = (lat, lon) => {
     dataType: "json"
   })
     .then(data => data.json())
-    //.then(data => handleGeolocation(data.plus_code.compound_code)
     .then(data => handleGeolocation(data.plus_code.compound_code))
     .catch(error => console.error('Error fetching data:', error));
 };
