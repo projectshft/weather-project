@@ -7,7 +7,11 @@ let city = localStorage.getItem('defaultCity') ? localStorage.getItem('defaultCi
  */
 
 const handleGeolocation = (data) => {
-  city = data;
+  let arr = data.split(' ')
+  let address = arr[1]
+  const add1 = address.replace(',', '')
+  console.log(add1)
+  city = add1;
 };
 
 /**
@@ -18,14 +22,15 @@ const handleGeolocation = (data) => {
 
 const getGeolocation = (lat, lon) => {
   let url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lon}&key=AIzaSyB-4vMY0awy9BejmkOB8Az55XNs2-GJEiI`;
+
   fetch(url, {
     method: "GET",
     dataType: "json"
   })
     .then(data => data.json())
-    .then(data => handleGeolocation(data.results[0].address_components[2].long_name)
-    .catch(error => console.error('Error fetching data:', error))
-    );
+    //.then(data => handleGeolocation(data.plus_code.compound_code)
+    .then(data => handleGeolocation(data.plus_code.compound_code))
+    .catch(error => console.error('Error fetching data:', error));
 };
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -185,8 +190,6 @@ const showWeather = (data) => {
  */
 
 const getWeather = (data) => {
-
-  console.log(data);
 
   if(!data[0]) {
     document.querySelector('.loader-container').remove();
