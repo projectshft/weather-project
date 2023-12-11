@@ -10,9 +10,9 @@ const kelvinToFahrenheit = function (number) {
 
 const formatDate = function (utc) {
   let utcSeconds = utc;
-  let d = new Date(0);
-  d.setUTCSeconds(utcSeconds);
-  return d.toString().slice(0, 3);
+  let day = new Date(0);
+  day.setUTCSeconds(utcSeconds);
+  return day.toString().slice(0, 3);
 };
 
 const formatDayOfWeek = function (day) {
@@ -152,7 +152,7 @@ class="d-flex flex-column text-center fs-5 justify-content-center m-1"
 <div class="fs-6">${day.weatherCondition}</div>
 <div>${day.temperature}°</div>
 <div class="mx-auto">
-<img src=${day.weatherIcon} alt="" />
+<img src=${day.weatherIcon} alt="#" />
 </div>
 <div id="currentCity">${day.date}</div>
 </div>
