@@ -91,8 +91,14 @@ var add5DayWeather = function (data) {
       temp: fDegrees, 
       city: data.city.name,
       icon: iconUrl,
-      day: data.list[i].dt_txt
+      day: getWeekday(data.list[i].dt_txt),
     };
+    function getWeekday(dateTimeString) {
+      const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+      const date = new Date(dateTimeString); 
+      const weekdayIndex = date.getDay();
+      return daysOfWeek[weekdayIndex];
+    }
 
     weather5DayPosts.push(fiveDayWeather);
   }
