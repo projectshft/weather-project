@@ -27,7 +27,7 @@ const searchWeather = function () {
 };
 
 const fetchWeather = function(city) {
-  const apiKey = '3af4ae633229cbf4ae911666165947c9';
+  const apiKey = ' ';
   const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=imperial`;
   
   fetch(url, {
