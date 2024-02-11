@@ -1,0 +1,42 @@
+.weather-details {
+  display: flex;
+  align-items: center;
+}
+
+.weather-report {
+  text-align: center;
+}
+
+#temperature {
+  font-size: 24px;
+  text-align: center;
+}
+
+#city {
+  font-weight: bold;
+  font-size: 38px;
+}
+
+#description {
+  text-align: center;
+}
+
+img {
+  width: 75px;
+  margin-left: auto;
+}
+
+.weather-five-container {
+  display: flex;
+  width: 200px;
+}
+
+.weather-box-five {
+  border: 1px solid purple;
+  /* display: inline-flex; */
+  width: 10px;
+}
+
+.weather-report-five {
+  width: 10px;
+}
