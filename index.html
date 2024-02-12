@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="style.css" />
+
+    <title>Weather App</title>
+  </head>
+
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-6 offset-md-3">
+          <div class="title">
+            <h1>Five Day Weather Forecast</h1>
+            <hr />
+          </div>
+          <form class="search-city">
+            <div class="form-group d-flex">
+              <input
+                class="form-control"
+                id="search-city"
+                type="text"
+                placeholder="Enter City"
+              />
+              <button type="button" class="btn btn-primary search ms-2">
+                Search
+              </button>
+            </div>
+          </form>
+          <br />
+          <hr />
+          <div class="container">
+            <div
+              class="row current justify-content-center"
+              style="text-align: center"
+            ></div>
+          </div>
+        </div>
+        <div class="container center">
+          <div class="row future-forecast justify-content-center"></div>
+        </div>
+      </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <script src="main.js"></script>
+  </body>
+</html>
