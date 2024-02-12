@@ -1,0 +1,57 @@
+.title {
+  margin-top: 110px;
+  text-align: center;
+}
+
+form {
+  margin-top: 50px;
+}
+
+button {
+  margin-top: 5px;
+  min-width: 10%;
+  max-width: 80%;
+  position: relative;
+}
+
+.form-control {
+  min-width: 150px;
+  max-width: 150px;
+}
+
+.icons {
+  border: solid black 1px;
+}
+c .current .icons {
+  padding-left: 12px;
+  padding-right: 18px;
+}
+
+.future-forecast {
+  margin-top: 50px;
+}
+
+.center {
+  /* padding: 100px 100px; */
+  text-align: center;
+}
+
+.conditions-today {
+  padding-right: 650px;
+  font-size: 30px;
+}
+
+.temp-today {
+  padding-right: 650px;
+  font-size: 24px;
+}
+
+.city {
+  font-size: 40px;
+  padding-right: 650px;
+  margin-bottom: 0px;
+}
+
+.icon-today {
+  border: none;
+}
