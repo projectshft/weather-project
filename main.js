@@ -1,9 +1,3 @@
-// TO DO:
-// Create a "set as default" button to set a default city.  Upon refresh, default city should always render without a prompt.
-// Create button to look up current geolocation by entering city name.
-// Alter page style based on the current weather of the city (maybe a rainy background image for a forecast of rain, etc).
-// Render map with current location of city using Google Maps Embed API.
-
 const weather = [];
 const weatherFiveDay = [];
 
@@ -21,13 +15,17 @@ const searchWeather = function () {
   weather.length = 0;
   weatherFiveDay.length = 0;
   const city = document.querySelector('#search-query').value;
-  fetchWeather(city);
-  fetchFiveDayWeather(city);
-  document.querySelector('#search-query').value = '';
+  if (city !== '') {
+    fetchWeather(city);
+    fetchFiveDayWeather(city);
+    document.querySelector('#search-query').value = '';
+  } else {
+    alert('Please enter a city name.');
+  }
 };
 
 const fetchWeather = function(city) {
-  const apiKey = ' ';
+  const apiKey = '3af4ae633229cbf4ae911666165947c9';
   const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=imperial`;
   
   fetch(url, {
@@ -41,7 +39,7 @@ const fetchWeather = function(city) {
 };
 
 const fetchFiveDayWeather = function (city) {
-  const apiKey = ' ';
+  const apiKey = '';
   const url = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=imperial`;
 
   fetch(url, {
