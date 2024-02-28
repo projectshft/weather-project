@@ -101,42 +101,6 @@ document.getElementById('searchBtn').addEventListener('click', function() {
 
 
 
-// document.getElementById('searchBtn').addEventListener('click', function() {
-//     const city = document.getElementById('cityInput').value;
-//     if (city.trim() !== '') {
-//       fetchWeatherData(city);
-//     }
-//   });
-  
-//   function fetchWeatherData(city) {
-//     const apiKey = '4d2230e28dd5ff342317c6687cd2d078';
-//     const url = `api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid={4d2230e28dd5ff342317c6687cd2d078}`;
-  
-//     fetch(url)
-//       .then(response => {
-//         if (!response.ok) {
-//           throw new Error('City not found');
-//         }
-//         return response.json();
-//       })
-//       .then(data => {
-//         displayWeatherData(data);
-//       })
-//       .catch(error => {
-//         console.error('Error:', error);
-//         alert('City not found');
-//       });
-//   }
-  
-//   function displayWeatherData(data) {
-//     const weatherInfoDiv = document.getElementById('weatherInfo');
-//     weatherInfoDiv.innerHTML = `
-//       <h2>Current Weather</h2>
-//       <p>Temperature: ${data.main.temp} °F</p>
-//       <p>Conditions: ${data.weather[0].main}</p>
-//     `;
-//   }
-
 
 
 // <!doctype html>
