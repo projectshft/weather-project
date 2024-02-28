@@ -1,0 +1,13 @@
+.forecast-container {
+    text-align: center; /* Center-align the forecast cards */
+  }
+  
+  .forecast-card {
+    display: inline-block; /* Display cards in a row */
+    width: 18%; /* Set width for each card */
+    margin: 0 2%; /* Add horizontal margin to create spacing */
+    background-color: #f0f0f0;
+    padding: 10px;
+    text-align: center;
+    border-radius: 5px;
+  }
