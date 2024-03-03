@@ -17,11 +17,40 @@ async function fetchWeather(url) {
 
 //TODO: create template to display data. Also create div for data in html
 function getData(weatherData) {
-  const cityName = data.city.name;
-  const currentTemp = data.list[0].main.temp;
-  const currentConditions = data.list[0].weather[0].main;
+  let allWeather = {
+    cityName: weatherData.city.name,
+    currentTemp: weatherData.list[0].main.temp,
+    currentConditions: weatherData.list[0].weather[0].main,
+    weatherIcon: weatherData.list[0].weather[0].icon
+  };
+  console.log(allWeather);
+  console.log(weatherData.list[0].weather[0].id);
+  displayCurrentWeather(allWeather);
+  // const allTemps = [];
+  // for (let i = 0; i < weatherData.list.length; i++) {
+  //   allTemps.push(weatherData.list[i].main.temp)
+  // }
   
-  console.log(cityName, currentTemp, currentConditions);
+
+
+};
+
+function displayCurrentWeather (weatherObject) {
+  const degreesInFahrenheit = Math.round((weatherObject.currentTemp - 273.15) * (9/5) + 32);
+  const imgUrl = `https://openweathermap.org/img/wn/${weatherObject.weatherIcon}.png`
+  const template = `
+  <div>
+    <div>
+      <h3>${degreesInFahrenheit}\u00B0</h3>
+      <h4>${weatherObject.cityName}</h4>
+      <h5>${weatherObject.currentConditions}</h5>
+    </div>
+    <div>
+      <img class="main-icon" src=${imgUrl} />
+    </div>
+  </div>`;
+  
+  document.querySelector(".weather-report").insertAdjacentHTML("beforeend", template);
 };
 
 fetchWeather(url);
