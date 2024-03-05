@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+    integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weather Project</title>
+</head>
+
+<body>
+  <container class="container-fluid">
+
+    <div class="row">
+
+      <div class="col-md-6 col-md-offset-3">
+        <header class="page-header">
+          <h1>Weather Project</h1>
+        </header>
+
+        <form style="margin-top:30px;" onsubmit="event.preventDefault();">
+
+          <div class="input-group">
+            <input type="text" id="searchInput" class="form-control" placeholder="Search for...">
+            <span class="input-group-btn">
+              <button id="searchBtn" class="btn btn-primary" type="button">Go!</button>
+            </span>
+          </div><!-- /input-group -->
+        </form>
+
+        <div id="dailyWeatherDiv">
+          <div id="dailyWeather" class="col-md-6">
+
+          </div>
+          <div id="dailyWeatherIcon" class="col-md-6 col-md-push-2">
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-12 col-lg-offset-1">
+        <div id="forcastDiv" class="col-lg-12">
+
+        </div>
+      </div>
+    </div>
+
+  </container>
+  <script src="config.js"></script>
+  <script src="main.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,19 @@
+header {
+  font-family: "Montserrat", "Helvetica Neue", sans-serif;
+  font-weight: 500;
+  font-size: 50px;
+  line-height: 75px;
+  margin-bottom: 50px;
+  text-align: center;
+}
+
+#submitSearch {
+  background-color: #027BFF;
+
+}
+
+.forcastBox {
+  border: 1px solid black;
+  text-align: center;
+  /* border-radius: 15px; */
+}
