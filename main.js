@@ -1,16 +1,4 @@
-/* 
-
-A user should be able to enter a city into the url, click "Search" and get weather data on the city they entered.
-
-A user should be able to see the current temperature (in imperial units).
-
-A user should be able to see the current conditions (whether it's cloudy, raining, etc).
-
-When a user does another search, their first search should be replaced.
-
-*/
-
-let key = '47141b27ae5c4862c3e7faece74bb0ed';
+let key = openWeather.key;
 let weatherCalls = [];
 let unit = 'imperial';
 
