@@ -17,40 +17,93 @@ async function fetchWeather(url) {
 
 //TODO: create template to display data. Also create div for data in html
 function getData(weatherData) {
+  const dataList = weatherData.list;
+  const FiveDayTemps = getTemps(dataList);
+  const FiveDays = getDays(dataList);
+
+  // let realTimeDate = new Date(weatherData.list[i].dt_txt).getDay();
+
+
+  console.log(FiveDayTemps); 
+  console.log(FiveDays);
+  
   let allWeather = {
     cityName: weatherData.city.name,
     currentTemp: weatherData.list[0].main.temp,
+    FiveDayTemps: FiveDayTemps,
     currentConditions: weatherData.list[0].weather[0].main,
     weatherIcon: weatherData.list[0].weather[0].icon
   };
   console.log(allWeather);
-  console.log(weatherData.list[0].weather[0].id);
   displayCurrentWeather(allWeather);
-  // const allTemps = [];
-  // for (let i = 0; i < weatherData.list.length; i++) {
-  //   allTemps.push(weatherData.list[i].main.temp)
-  // }
-  
-
 
 };
 
+function getTemps(tempData) {
+  let sumArray = [];
+  const finalArray = [];
+  for (let i = 0; i < tempData.length; i++) {
+    sumArray.push(tempData[i].main.temp);
+    // Use array.reduce to average out the sumArray[], then empty sumArray[] for the next day.
+    if (sumArray.length == 8) {     
+      const arrSum = sumArray.reduce((acc, current) => acc + current, 0)
+      let arrAvg = arrSum / sumArray.length;
+      //convert from Kelvin to Fahrenheit
+      arrAvg = Math.round((arrAvg - 273.15) * (9/5) + 32);
+      finalArray.push(arrAvg);
+      sumArray = [];
+    }
+  };
+  return finalArray;
+}
+
+function getDays(dayData) {
+  let allDays = [];
+  let finalArray = [];
+  for (let i = 0; i < dayData.length; i++) {
+    let realTimeDate = new Date(dayData[i].dt_txt).getDay();
+    allDays.push(realTimeDate);
+  };
+
+  allDays.forEach(e => {
+    if (!finalArray.includes(e)) {
+      finalArray.push(e);
+    }
+  });
+
+  if (finalArray.length > 5) {
+    finalArray.pop();
+  };
+
+  return finalArray;
+};
+
+
 function displayCurrentWeather (weatherObject) {
+  //TODO: move unit conversion to getData()
   const degreesInFahrenheit = Math.round((weatherObject.currentTemp - 273.15) * (9/5) + 32);
-  const imgUrl = `https://openweathermap.org/img/wn/${weatherObject.weatherIcon}.png`
-  const template = `
-  <div>
-    <div>
-      <h3>${degreesInFahrenheit}\u00B0</h3>
-      <h4>${weatherObject.cityName}</h4>
-      <h5>${weatherObject.currentConditions}</h5>
-    </div>
-    <div>
-      <img class="main-icon" src=${imgUrl} />
-    </div>
+  const imgUrl = `https://openweathermap.org/img/wn/${weatherObject.weatherIcon}.png`;
+  const currentWeatherTemplate = `
+      <div class="col-6">
+        <h3>${degreesInFahrenheit}\u00B0</h3>
+        <h4>${weatherObject.cityName}</h4>
+        <h5>${weatherObject.currentConditions}</h5>
+      </div>
+      <div class="col-6">
+        <img class="main-icon" src=${imgUrl} />
+      </div>`;
+
+  const fiveDayTemplate = `
+    <div class="col-6">
+    <h5>${weatherObject.currentConditions}\u00B0</h5>
+    <h5>${weatherObject.cityName}</h5>
+    <h5>${weatherObject.currentConditions}</h5>
+  </div>
+  <div class="col-6">
+    <img class="main-icon" src=${imgUrl} />
   </div>`;
   
-  document.querySelector(".weather-report").insertAdjacentHTML("beforeend", template);
+  document.querySelector(".today-weather").insertAdjacentHTML("beforeend", currentWeatherTemplate);
 };
 
 fetchWeather(url);
