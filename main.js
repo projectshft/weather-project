@@ -17,16 +17,18 @@ async function fetchWeather(url) {
 
 //TODO: create template to display data. Also create div for data in html
 function getData(weatherData) {
-  const dataList = weatherData.list;
-  const FiveDayTemps = getTemps(dataList);
-  const FiveDays = getDays(dataList);
-
-  // let realTimeDate = new Date(weatherData.list[i].dt_txt).getDay();
-
+  const FiveDayTemps = getTemps(weatherData.list);
+  const FiveDays = getDays(weatherData.list);
+  //must pass `weatherData.list` and `main` for weather conditions, or `icon` for icon.
+  const FiveDayConditions = getConditionsAndIcons(weatherData.list, 'main');
+  const FiveDayIcons = getConditionsAndIcons(weatherData.list, 'icon');
 
   console.log(FiveDayTemps); 
   console.log(FiveDays);
-  
+  console.log(FiveDayConditions);
+  console.log(FiveDayIcons);
+
+
   let allWeather = {
     cityName: weatherData.city.name,
     currentTemp: weatherData.list[0].main.temp,
@@ -36,7 +38,6 @@ function getData(weatherData) {
   };
   console.log(allWeather);
   displayCurrentWeather(allWeather);
-
 };
 
 function getTemps(tempData) {
@@ -77,6 +78,17 @@ function getDays(dayData) {
 
   return finalArray;
 };
+
+function getConditionsAndIcons(weatherConditions, neededData) {
+  const weatherOrIcon = [];
+  for (let i = 0; i < weatherConditions.length; i ++) {
+    let conditionOrIcon = weatherConditions[i].weather[0][neededData];
+    if (i == 0 || i % 8 == 0) {
+      weatherOrIcon.push(conditionOrIcon);
+    }
+  }
+  return weatherOrIcon;
+}
 
 
 function displayCurrentWeather (weatherObject) {
