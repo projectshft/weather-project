@@ -1,4 +1,8 @@
 .main-icon {
-  width: 500px;
+  width: 25%;
   height: auto;
+}
+
+.each-day {
+  outline: 1px solid;
 }
