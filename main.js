@@ -1,6 +1,16 @@
+// Get user input
+const searchField = document.getElementById('search-field');
+const searchButton = document.getElementById('search-button');
 
+searchButton.addEventListener('click', function() {
 
-// TODO: Get the location input when the Search button is clicked
+  getCoordinates(searchField.value);
+
+  searchField.value = "";
+
+})
+
+const todayText = document.getElementsByClassName('today-text')[0];
 
 // TODO: Send the current weather data to the 'today' row
 
@@ -8,11 +18,8 @@
 
 // Get the coordinates of a location
 const getCoordinates = function(city) {
-  const place = {
-    name: '',
-    lat: 0,
-    lon: 0,
-  };
+  
+
   const limit = '3';
   const key = '9d545ab1acd07f6fe196233174125a11'
   const request = `http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=${limit}&appid=${key}`
@@ -23,6 +30,9 @@ const getCoordinates = function(city) {
   })
   .then(data => data.json())
   .then(data => {
+    // console.log(data);
+    const template = `<p>${data[0].name}</p>`;
+    todayText.innerHTML = template;
     getCurrentWeather(data[0].lat, data[0].lon, key);
     getFiveDayForcast(data[0].lat, data[0].lon, key);
   });
