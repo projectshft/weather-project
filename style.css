@@ -1,0 +1,25 @@
+/* Center title and input fields*/
+h1 {
+  text-align: center;
+}
+.enter-city {
+  width: 50%;
+  margin: auto;
+}
+.main-icon {
+  width: 50%;
+  height: auto;
+}
+
+/* Set margins to ensure img icons take up appropriate space */
+.today-weather {
+  margin: auto 25%;
+}
+.five-day-icon {
+  width: 25%;
+}
+
+/* Create outline around each day to create readable 5 day forecast */
+.each-day {
+  outline: 1px solid;
+}
