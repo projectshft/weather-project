@@ -1,8 +1,21 @@
+h1 {
+  text-align: center;
+}
+.enter-city {
+  width: 50%;
+  margin: auto;
+}
 .main-icon {
-  width: 25%;
+  width: 50%;
   height: auto;
+}
+.today-weather {
+  margin: auto 25%;
 }
 
 .each-day {
   outline: 1px solid;
+}
+.five-day-icon {
+  width: 25%;
 }

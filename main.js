@@ -1,10 +1,10 @@
-const url = "http://api.openweathermap.org/data/2.5/forecast?lat=45.676998&lon=-111.042931&appid=b68f55460cf44818aabff0456c2d1963";
 const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 let data = "";
 
 
-async function fetchWeather(url) {
+async function fetchWeather(latitude, longitude) {
   try {
+    const url = `http://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=b68f55460cf44818aabff0456c2d1963`;
     const response = await fetch(url);
     if (!response.ok) {
       throw new Error('Network response was not ok');
@@ -15,6 +15,25 @@ async function fetchWeather(url) {
     console.error('Error fetching weather data:', error);
   }
 }
+
+async function fetchCoords(cityName) {
+  
+  console.log(cityName);
+  const url = `http://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=5&appid=b68f55460cf44818aabff0456c2d1963`;
+  try {
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    };
+    data = await response.json();
+    
+    const latitude = data[0].lat;
+    const longitude = data[0].lon;
+    fetchWeather(latitude, longitude);
+  } catch (error) {
+    console.error('Error fetching weather data:', error);
+  }
+};
 
 //TODO: create template to display data. Also create div for data in html
 function getData(weatherData) {
@@ -90,7 +109,10 @@ function getConditionsAndIcons(weatherConditions, neededData) {
 
 
 function displayCurrentWeather (weatherObject) {
+
   //TODO: move unit conversion to getData()
+  document.querySelector(".today-weather").replaceChildren();
+  document.querySelector(".five-day-weather").replaceChildren();
   const degreesInFahrenheit = Math.round((weatherObject.currentTemp - 273.15) * (9/5) + 32);
   const imgUrl = `https://openweathermap.org/img/wn/${weatherObject.weatherIcon}.png`;
   const currentWeatherTemplate = `
@@ -105,14 +127,13 @@ function displayCurrentWeather (weatherObject) {
         
     document.querySelector(".today-weather").insertAdjacentHTML("beforeend", currentWeatherTemplate);
   
-  console.log(typeof weatherObject.fiveDays);
   for (i = 0; i < weatherObject.fiveDays.length; i++) {
     let fiveDayUrls = `https://openweathermap.org/img/wn/${weatherObject.fiveDayIcons[i]}.png`
     const fiveDayTemplate = `
-      <div class="col-sm-2 each-day">
+      <div class="col-md-2 each-day">
         <h5>${weatherObject.fiveDayConditions[i]}\u00B0</h5>
         <h5>${weatherObject.fiveDayTemps[i]}</h5>
-        <img class="main-icon" src=${fiveDayUrls} />
+        <img class="five-day-icon" src=${fiveDayUrls} />
         <h5>${daysOfWeek[weatherObject.fiveDays[i]]}</h5>
       </div>`;
      document.querySelector(".five-day-weather").insertAdjacentHTML("beforeend", fiveDayTemplate); 
@@ -120,5 +141,10 @@ function displayCurrentWeather (weatherObject) {
   
 };
 
-fetchWeather(url);
+
+document.querySelector(".btn").addEventListener("click", function() {
+  let city = document.querySelector(".user-input").value;
+  console.log(city);
+  fetchCoords(city);
+})
 
