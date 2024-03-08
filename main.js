@@ -141,10 +141,12 @@ function getConditionsAndIcons(weatherConditions, neededData) {
   return weatherOrIcon;
 }
 
-
+/**
+ * Displays weather to browser using templates.
+ * @param {*} weatherObject Object with data for current weather and 5 day forecast.
+ */
 function displayCurrentWeather (weatherObject) {
 
-  //TODO: move unit conversion to getData()
   document.querySelector(".today-weather").replaceChildren();
   document.querySelector(".five-day-weather").replaceChildren();
 
@@ -175,12 +177,13 @@ function displayCurrentWeather (weatherObject) {
   
 };
 
-
+//add event listener to get weather for user input.
 document.querySelector(".search").addEventListener("click", function() {
   let city = document.querySelector(".user-input").value;
   fetchCoords(city);
 });
 
+ // add event listener to set city default, saving user input in localStorage.
 document.querySelector(".default").addEventListener("click", function() {
   let defaultCity = document.querySelector(".user-input").value;
   console.log(defaultCity);
