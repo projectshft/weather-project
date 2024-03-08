@@ -1,8 +1,12 @@
 const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-let data = "";
-
-
-async function fetchWeather(latitude, longitude) {
+let cityName = localStorage.getItem('city');
+fetchCoords(cityName);
+/**
+ * Fetches data from openweathermap API for the 5 day forecast at 3 hr increments.
+ * @param {*} latitude The latitude of chosen city.
+ * @param {*} longitude The longitude of chosen city.
+ */
+async function fetchForecast(latitude, longitude) {
   try {
     const url = `http://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=b68f55460cf44818aabff0456c2d1963`;
     const response = await fetch(url);
@@ -16,9 +20,13 @@ async function fetchWeather(latitude, longitude) {
   }
 }
 
+/**
+ * Openweather API requires coordinates, but users need to enter in a city.
+ * Uses openweater geocoding API to convert city to coordinates.
+ * @param {*} cityName Name of city to get coordinates of.
+ */
 async function fetchCoords(cityName) {
   
-  console.log(cityName);
   const url = `http://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=5&appid=b68f55460cf44818aabff0456c2d1963`;
   try {
     const response = await fetch(url);
@@ -29,13 +37,16 @@ async function fetchCoords(cityName) {
     
     const latitude = data[0].lat;
     const longitude = data[0].lon;
-    fetchWeather(latitude, longitude);
+    fetchForecast(latitude, longitude);
   } catch (error) {
     console.error('Error fetching weather data:', error);
   }
 };
 
-//TODO: create template to display data. Also create div for data in html
+/**
+ * Calls all supporting functions, and stores all needed data in `allWeather` object.
+ * @param {*} weatherData The json returned from openweather API.
+ */
 function getData(weatherData) {
   const fiveDayTemps = getTemps(weatherData.list);
   const fiveDays = getDays(weatherData.list);
@@ -43,20 +54,28 @@ function getData(weatherData) {
   const fiveDayConditions = getConditionsAndIcons(weatherData.list, 'main');
   const fiveDayIcons = getConditionsAndIcons(weatherData.list, 'icon');
 
+  const degreesInFahrenheit = Math.round((weatherData.list[0].main.temp - 273.15) * (9/5) + 32);
+
   let allWeather = {
     cityName: weatherData.city.name,
     fiveDays: fiveDays,
-    currentTemp: weatherData.list[0].main.temp,
+    currentTemp: degreesInFahrenheit,
     fiveDayTemps: fiveDayTemps,
     currentConditions: weatherData.list[0].weather[0].main,
     fiveDayConditions: fiveDayConditions,
     weatherIcon: weatherData.list[0].weather[0].icon,
     fiveDayIcons: fiveDayIcons
   };
-  console.log(allWeather);
   displayCurrentWeather(allWeather);
 };
 
+/**
+ * Each item of the list parameter represents a 3 hr increment.
+ * Iterate through each item, pushing it to sumArray[].
+ * Once sumArray reaches length 8, find sum, and average, then push that value to finalArray[]
+ * @param {*} tempData The list returned from API call containing all temperature data.
+ * @returns finalArray[], the array containing the average temperature for each day.
+ */
 function getTemps(tempData) {
   let sumArray = [];
   const finalArray = [];
@@ -75,6 +94,12 @@ function getTemps(tempData) {
   return finalArray;
 }
 
+/**
+ * Iterate through each list item. Use .getDay() to get an integer value representing day of week.
+ * Push all time data to allDays[], and push all of values that are not already contained in finalArray[] to finalArray[].
+ * @param {*} dayData List containing all data for dates.
+ * @returns finalArray. The list containing integer value for each of the next 5 days.
+ */
 function getDays(dayData) {
   let allDays = [];
   let finalArray = [];
@@ -88,7 +113,8 @@ function getDays(dayData) {
       finalArray.push(e);
     }
   });
-
+  //Depending on time of day, the last list items may belong to the 6th day.
+  //If so, pop the 6th value.
   if (finalArray.length > 5) {
     finalArray.pop();
   };
@@ -96,6 +122,14 @@ function getDays(dayData) {
   return finalArray;
 };
 
+/**
+ * Iterates through weatherConditions list, and extracts the first and every 8th icon
+ * representing each day.
+ * Pushes those values to weatherOrIcon[].
+ * @param {*} weatherConditions List containing data for weather conditions and their icons.
+ * @param {*} neededData `main` or `icon. Allows for one function to get both pieces of data.
+ * @returns weatherOrIcon, a list containing the conditions or icon for each day.
+ */
 function getConditionsAndIcons(weatherConditions, neededData) {
   const weatherOrIcon = [];
   for (let i = 0; i < weatherConditions.length; i ++) {
@@ -113,11 +147,11 @@ function displayCurrentWeather (weatherObject) {
   //TODO: move unit conversion to getData()
   document.querySelector(".today-weather").replaceChildren();
   document.querySelector(".five-day-weather").replaceChildren();
-  const degreesInFahrenheit = Math.round((weatherObject.currentTemp - 273.15) * (9/5) + 32);
+
   const imgUrl = `https://openweathermap.org/img/wn/${weatherObject.weatherIcon}.png`;
   const currentWeatherTemplate = `
       <div class="col-6 current-weather">
-        <h3>${degreesInFahrenheit}\u00B0</h3>
+        <h3>${weatherObject.currentTemp}\u00B0</h3>
         <h4>${weatherObject.cityName}</h4>
         <h5>${weatherObject.currentConditions}</h5>
       </div>
@@ -142,9 +176,13 @@ function displayCurrentWeather (weatherObject) {
 };
 
 
-document.querySelector(".btn").addEventListener("click", function() {
+document.querySelector(".search").addEventListener("click", function() {
   let city = document.querySelector(".user-input").value;
-  console.log(city);
   fetchCoords(city);
-})
+});
 
+document.querySelector(".default").addEventListener("click", function() {
+  let defaultCity = document.querySelector(".user-input").value;
+  console.log(defaultCity);
+  localStorage.setItem('city', defaultCity);
+});
