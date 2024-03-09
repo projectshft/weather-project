@@ -1,16 +1,13 @@
-// TODO: Fix today text render
-// TODO: Add today condition icon
-// TODO: Send the current weather data to the 'today' row
-// TODO: Send the 5-days weather data to the 'fivedays' row (one day per column)
+// TODO: Clear today text and icon on consecutive searches
 // TODO: Add 5 days data to an array within the 'place' object
-
+// TODO: Send the 5-days weather data to the 'fivedays' row (one day per column)
 
 const place = {
   city: "",
   state: "",
   country: "",
   currentTemp: "",
-  conditions: "",
+  weather: "",
   latitude: 0,
   longitude: 0,
 };
@@ -53,7 +50,7 @@ const getCoordinates = function(city) {
       place.country = data[0].country;
     }
     getCurrentWeather(data[0].lat, data[0].lon, key);
-    // getFiveDayForcast(data[0].lat, data[0].lon, key);
+    getFiveDayForcast(data[0].lat, data[0].lon, key);
   });
 }
 
@@ -67,9 +64,9 @@ const getCurrentWeather = function(lat, lon, key) {
   })
   .then(data => data.json())
   .then(data => {
-    
-    convertKelvin(data.main.temp);
     place.currentTemp = convertKelvin(data.main.temp);
+    place.weather = data.weather[0];
+    renderToday(place);
   })
 }
 
@@ -91,14 +88,17 @@ const convertKelvin = function(kelvin) {
   return formatted;
 }
 
-// Access the today box and render values
-const todayText = document.getElementsByClassName('today-text')[0];
+// Access the today boxes and render values and icon
+const todayText = document.getElementById('today-text');
+const todayIcon = document.getElementById('today-icon');
 
 const renderToday = function(placeObj) {
   const tempElement = `<li>${placeObj.currentTemp}</li>`;
   const cityElement = `<li><h5>${placeObj.city}</h5></li>`;
-  const conditionElement = `<li>${placeObj.conditions}</li>`;
+  const weatherElement = `<li>${placeObj.weather.main}</li>`;
+  const weatherIcon = `<img src="https://openweathermap.org/img/wn/${placeObj.weather.icon}@2x.png" alt="clear sky"/>`;
   todayText.insertAdjacentHTML('beforeend',tempElement);
   todayText.insertAdjacentHTML('beforeend',cityElement);
-  todayText.insertAdjacentHTML('beforeend',conditionElement);
+  todayText.insertAdjacentHTML('beforeend',weatherElement);
+  todayIcon.insertAdjacentHTML('beforeend',weatherIcon);
 }
