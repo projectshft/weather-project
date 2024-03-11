@@ -109,3 +109,18 @@ body {
     transform: rotate(360deg);
   }
 }
+
+@media (max-width: 950px) {
+  .five-day-container {
+    flex-wrap: wrap;
+  }
+
+  .day-container {
+    width: 200px;
+    height: 120px;
+  }
+
+  .day-icon {
+    display: none;
+  }
+}
