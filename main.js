@@ -220,7 +220,7 @@ const getWeather = (data) => {
  */
 
 const getLatLong = (city) => {
-  const url = `http://api.openweathermap.org/geo/1.0/direct?q=${city}&units=imperial&appid=${key}`;
+  const url = `https://api.openweathermap.org/geo/1.0/direct?q=${city}&units=imperial&appid=${key}`;
   fetch(url, {
     method: "GET",
     dataType: "json"
