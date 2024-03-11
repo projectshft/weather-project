@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
  * @param {object} pos position object from navigator.geolocation API
  */
 
-const handleClickGeo = (pos) => {
+const handleClickGeo = async (pos) => {
 
   const loader = '<div class="loader-container"><div class="loader"></div></div>';
   document.querySelector('body').insertAdjacentHTML('beforebegin', loader);
@@ -51,7 +51,7 @@ const handleClickGeo = (pos) => {
   let lat = pos.coords.latitude;
   let lon = pos.coords.longitude;
 
-  getGeolocation(lat, lon);
+  await getGeolocation(lat, lon);
 
   let data = [{
     "lat": pos.coords.latitude,
