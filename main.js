@@ -27,7 +27,6 @@ const getGeolocation = (lat, lon) => {
     dataType: "json"
   })
     .then(data => data.json())
-    .then(data => console.log(data))
     .then(data => handleGeolocation(data.plus_code.compound_code))
     .catch(error => console.error('Error fetching data:', error));
 };
