@@ -1,6 +1,3 @@
-// TODO: Add 5 days data to an array within the 'place' object
-// TODO: Send the 5-days weather data to the 'fivedays' row (one day per column)
-
 const place = {
   city: "",
   state: "",
@@ -53,8 +50,6 @@ const getCoordinates = function(city) {
   })
   .then(data => data.json())
   .then(data => {
-    // console.log(data);
-    
     place.city = data[0].name;
     place.latitude = data[0].lat;
     place.longitude = data[0].lon;
@@ -71,6 +66,7 @@ const getCoordinates = function(city) {
 
 
 // Get the current weather for the provided coordinates
+// https://openweathermap.org/current
 const getCurrentWeather = function(lat, lon, key) {
   const request = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${key}`
   
@@ -98,14 +94,11 @@ const getFiveDayForecast = function(lat, lon, key) {
   })
   .then(data => data.json())
   .then(data => {
-    // console.log(data.list));
     translateDays(data.list);
+    getMaxTemps();
+    getConditions();
+    renderFiveDays();
   });
-}
-
-const getDay = function(timestamp) {
-  const day = new Date(timestamp * 1000);
-  return day.getDay();
 }
 
 const getDayName = function(timestamp) {
@@ -116,15 +109,15 @@ const getDayName = function(timestamp) {
 }
 
 const translateDays = function(dataset) {
-  
-  const days = place.days;
+
+  const days = [];
 
   for (i in dataset) {
     const day = getDayName(dataset[i].dt) // Day name of current snapshot
     const match = days.find(item => item.name === day); // Check if an object for this day exists.
-    if (match) { // add it to place.days
+    if (match) { // add it to to the Array
       match.list.push(dataset[i]) 
-    } else { // Build on object and add it to place.days
+    } else { // Build on object and add it to the Array
       const dayObj = {};
       dayObj.name = day;
       dayObj.list = [];
@@ -132,6 +125,37 @@ const translateDays = function(dataset) {
       days.push(dayObj);
     }
   }
+  place.days = days;
+}
+
+const getMaxTemps = function() {
+  place.days.forEach(day => {
+    // Build an array of all 'list.main.temp' values
+    const temps = [];
+    day.list.forEach(data => temps.push(data.main.temp));
+    day.temp = convertKelvin(Math.max(...temps));
+  })
+}
+
+const getConditions = function() {
+  place.days.forEach(day => {
+    // Make an array of conditions for each day
+    const conditions = [];
+    day.list.forEach(data => conditions.push(data.weather[0].main));
+    
+    // Cycle through the array and make an object that tracks each unique value
+    const mode = conditions.reduce((acc,condition) => {
+      !!acc[condition] ? acc[condition] += 1 : acc[condition] = 1;
+      return acc;
+    }, {})
+    
+    // Determine the condition that occurs the most
+    day.condition = Object.keys(mode).reduce((a, b) => mode[a] > mode[b] ? a : b);
+  
+    // Find the matching icon for each winning condition
+    const icon = day.list.find(data => day.condition === data.weather[0].main);
+    day.icon = icon.weather[0].icon;
+  })
 }
 
 const convertKelvin = function(kelvin) {
@@ -140,7 +164,7 @@ const convertKelvin = function(kelvin) {
   return formatted;
 }
 
-// Access the today boxes and render values and icon
+// Access today boxes and render values and icon
 const todayText = document.getElementById('today-text');
 const todayIcon = document.getElementById('today-icon');
 
@@ -148,7 +172,7 @@ const renderToday = function() {
   const tempElement = `<li>${place.today.temp}</li>`;
   const cityElement = `<li><h5>${place.city}</h5></li>`;
   const weatherElement = `<li>${place.today.weather.main}</li>`;
-  const weatherIcon = `<img src="https://openweathermap.org/img/wn/${place.today.weather.icon}@2x.png" alt="clear sky"/>`;
+  const weatherIcon = `<img src="https://openweathermap.org/img/wn/${place.today.weather.icon}@2x.png" alt="${place.today.weather.main}"/>`;
   todayText.insertAdjacentHTML('beforeend',tempElement);
   todayText.insertAdjacentHTML('beforeend',cityElement);
   todayText.insertAdjacentHTML('beforeend',weatherElement);
@@ -159,21 +183,29 @@ const renderToday = function() {
 const fiveDays = document.getElementById('fivedays');
 
 const renderFiveDays = function() {
-  // Render next five week days in order of appearance
-  // Loop over the columns within the fivedays row
-  // Access the div within each column and insert the name of the day
-  for (i = 0; i < 5; i++) {
-    //skip if today
-    // if (day !== place.day){}
-    if (place.days[i].length > 0) {
-      const dayNameElement = `<li><h5>${dayNames[i]}</h5></li>`;
-      console.log(dayNameElement);
-    }
-    
+  // Clear the five days
+  while(fiveDays.hasChildNodes()) {
+    fiveDays.removeChild(fiveDays.firstChild);
   }
   
-  
-  // Render the max temp
-  // Render the last condition for that day
-  // Render condition icon
+  place.days.forEach(day => {
+    const dayWeatherElement = `<li>${day.condition}</li>`;
+    const dayTempElement = `<li>${day.temp}</li>`;
+    const dayIconElement = `<img src="https://openweathermap.org/img/wn/${day.icon}.png">`;
+    const dayNameElement = `<li>${day.name}</li>`;
+    const dayTemplate = 
+      `<div class="col justify-content-center border border-dark">
+        <div class="day d-flex align-items-center justify-content-center">
+          <ul class="list-unstyled"">
+            ${dayWeatherElement}
+            ${dayTempElement}
+            ${dayIconElement}
+            ${dayNameElement}
+          </ul>
+        </div>
+      </div>`;
+    if (day.name !== getDayName(place.today.timestamp)) {
+      fiveDays.insertAdjacentHTML("beforeend", dayTemplate);
+    }
+  });
 }
