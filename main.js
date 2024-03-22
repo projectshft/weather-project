@@ -1,11 +1,11 @@
 //api key
-const apiKey = 'cff7059d3ae892ee1e8de147ccce169f'
+const apiKey = 'cff7059d3ae892ee1e8de147ccce169f';
 
 //makes sure API sends imperial units
-const units = '&units=imperial'
+const units = '&units=imperial';
 
 //url for icon use
-const iconUrl = 'https://openweathermap.org/img/wn/'
+const iconUrl = 'https://openweathermap.org/img/wn/';
 
 //arrays to store weather data
 let dayForecast = [];
@@ -55,13 +55,13 @@ const addWeatherData = function (weatherData) {
     temp: weatherData.main.temp,
     place: weatherData.name,
     icon: iconUrl + weatherData.weather[0].icon + '.png'
-  }
+  };
   dayForecast.push(weatherDataObj);
   renderWeather();
 };
 //add forecast data into weekforecast array
 const addForecastData = function (forecastData) {
-  let j = 0
+  let j = 0;
   for(let i = 0; i < forecastData.list.length; i += 8) {
     const forecastPerDay = forecastData.list[i];
     j++;
@@ -70,7 +70,7 @@ const addForecastData = function (forecastData) {
       temp: forecastPerDay.main.temp,
       icon: iconUrl + forecastPerDay.weather[0].icon + '.png',
       day: daysOfTheWeek[day + j]
-    }
+    };
     weekForecast.push(forecastObj);
   }
   renderForecast();
