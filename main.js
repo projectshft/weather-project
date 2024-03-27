@@ -1,5 +1,16 @@
-const key = '9d545ab1acd07f6fe196233174125a11';
-
+const place = {
+  city: "",
+  state: "",
+  country: "",
+  today: {
+    timestamp: 0,
+    temp: 0,
+    weather: "",
+  },
+  days: [],
+  latitude: 0,
+  longitude: 0,
+};
 
 // Get user input
 const searchField = document.getElementById('search-field');
@@ -20,134 +31,121 @@ searchButton.addEventListener('click', function() {
       todayIcon.removeChild(todayIcon.firstChild);
     }
 
-    const getWeather = coordinates => {
-      getToday(coordinates)
-        .then(today => renderToday(today));
-
-      getFiveDays(coordinates)
-        .then(fiveDays => renderFiveDays(fiveDays));
-    };
-
-    getCoordinates(searchValue)
-      .then(coordinates => {
-        getWeather(coordinates);
-      })
-      .catch(error => {
-        console.error('Error:', error);
-      });
-
+    getCoordinates(searchValue);
+    
     searchField.value = "";
   }
 });
 
 // Get the coordinates of a location
-const getCoordinates = city => {
+const getCoordinates = function(city) {
 
-  const request = `http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=${key}`;
+  const limit = '3';
+  const key = '9d545ab1acd07f6fe196233174125a11'
+  const request = `http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=${limit}&appid=${key}`
   
-  return fetch(request)
-      .then(response => response.json())
-      .then(data => {
-          const place = {
-              city: data[0].name,
-              latitude: data[0].lat,
-              longitude: data[0].lon,
-          }
-          if (data[0].state) {
-              place.state = data[0].state;
-          }
-          if (data[0].country) {
-              place.country = data[0].country;
-          }
-          return place;
-      })
-      .catch(error => {
-          console.error("Error fetching data:", error);
-      });
-};
+  const call = fetch(request, {
+    method: 'GET',
+    dataType: 'json'
+  })
+  .then(data => data.json())
+  .then(data => {
+    place.city = data[0].name;
+    place.latitude = data[0].lat;
+    place.longitude = data[0].lon;
+    if (data[0].state) {
+      place.state = data[0].state;
+    }
+    if (data[0].country) {
+      place.country = data[0].country;
+    }
+    getCurrentWeather(data[0].lat, data[0].lon, key);
+    getFiveDayForecast(data[0].lat, data[0].lon, key);
+  });
+}
+
 
 // Get the current weather for the provided coordinates
 // https://openweathermap.org/current
-const getToday = coordinates => {
-    
-  const lat = coordinates.latitude;
-  const lon = coordinates.longitude;
-  const request = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${key}`;
+const getCurrentWeather = function(lat, lon, key) {
+  const request = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${key}`
   
-
-  return fetch(request)
-      .then(response => response.json())
-      .then(data => data)
-      .catch(error => {
-          console.error("Error fetching data:", error);
-      });
-};
+  const call = fetch(request, {
+    method: 'GET',
+    dataType: 'json'
+  })
+  .then(data => data.json())
+  .then(data => {
+    place.today.timestamp = data.dt;
+    place.today.temp = convertKelvin(data.main.temp);
+    place.today.weather = data.weather[0];
+    renderToday();
+  })
+}
 
 // Get the weather for the next five days
 // https://openweathermap.org/forecast5
-const getFiveDays = coordinates => {
-    
-  const lat = coordinates.latitude;
-  const lon = coordinates.longitude;
-  const request = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${key}`;
+const getFiveDayForecast = function(lat, lon, key) {
+  const request = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${key}`
 
-  return fetch(request)
-  .then(response => response.json())
-  .then(data => data);
-};
+  const call = fetch(request, {
+    method: 'GET',
+    dataType: 'json'
+  })
+  .then(data => data.json())
+  .then(data => {
+    translateDays(data.list);
+    getMaxTemps();
+    getConditions();
+    renderFiveDays();
+  });
+}
 
-const getDayName = timestamp => {
+const getDayName = function(timestamp) {
   const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   const date = new Date(timestamp * 1000);
   const dayName = dayNames[date.getDay()];
   return dayName;
-};
+}
 
-const translateDays = fiveDays => {
-    const originalData = fiveDays.list;
-    const days = [];
+const translateDays = function(dataset) {
 
-      for (i in originalData) {
-        const day = getDayName(originalData[i].dt) // Day name of current snapshot
-        const match = days.find(item => item.name === day); // Check if an object for this day exists.
-        if (match) { // add it to to the Array
-          match.list.push(originalData[i]) 
-        } else { // Build on object and add it to the Array
-          const dayObj = {
-            name: day,
-            list: [],
-          };
-          dayObj.list.push(originalData[i])
-          days.push(dayObj);
-        }
-      }
+  const days = [];
 
-    return days;
-};
+  for (i in dataset) {
+    const day = getDayName(dataset[i].dt) // Day name of current snapshot
+    const match = days.find(item => item.name === day); // Check if an object for this day exists.
+    if (match) { // add it to to the Array
+      match.list.push(dataset[i]) 
+    } else { // Build on object and add it to the Array
+      const dayObj = {};
+      dayObj.name = day;
+      dayObj.list = [];
+      dayObj.list.push(dataset[i])
+      days.push(dayObj);
+    }
+  }
+  place.days = days;
+}
 
-const getMaxTemps = data => {
-  
-  data.forEach(day => {
+const getMaxTemps = function() {
+  place.days.forEach(day => {
     // Build an array of all 'list.main.temp' values
     const temps = [];
     day.list.forEach(data => temps.push(data.main.temp));
-    // Select the highest temp for that day
     day.temp = convertKelvin(Math.max(...temps));
   })
-  
-  return data;
-};
+}
 
-const getConditions = data => {
-  
-  data.forEach(day => {
+const getConditions = function() {
+  place.days.forEach(day => {
     // Make an array of conditions for each day
     const conditions = [];
     day.list.forEach(data => conditions.push(data.weather[0].main));
     
     // Cycle through the array and make an object that tracks each unique value
     const mode = conditions.reduce((acc,condition) => {
-      !!acc[condition] ? acc[condition]++ : acc[condition] = 1;
+      !!acc[condition] ? acc[condition] += 1 : acc[condition] = 1;
       return acc;
     }, {})
     
@@ -158,52 +156,39 @@ const getConditions = data => {
     const icon = day.list.find(data => day.condition === data.weather[0].main);
     day.icon = icon.weather[0].icon;
   })
-  return data;
-};
+}
 
-// Simply converts Kelvin to Fahrenheit and formats with a degree character
 const convertKelvin = function(kelvin) {
   const fahrenheit = 1.8 * (kelvin - 273) + 32;
   const formatted = `${Math.round(fahrenheit)}°`;
   return formatted;
-};
+}
 
 // Access today boxes and render values and icon
 const todayText = document.getElementById('today-text');
 const todayIcon = document.getElementById('today-icon');
 
-const renderToday = today => {
-  const tempElement = `<li>${convertKelvin(today.main.temp)}</li>`;
-  const cityElement = `<li><h5>${today.name}</h5></li>`;
-  const weatherElement = `<li>${today.weather[0].main}</li>`;
-  const weatherIcon = `<img src="https://openweathermap.org/img/wn/${today.weather[0].icon}@2x.png" alt="${today.weather[0].main}"/>`;
+const renderToday = function() {
+  const tempElement = `<li>${place.today.temp}</li>`;
+  const cityElement = `<li><h5>${place.city}</h5></li>`;
+  const weatherElement = `<li>${place.today.weather.main}</li>`;
+  const weatherIcon = `<img src="https://openweathermap.org/img/wn/${place.today.weather.icon}@2x.png" alt="${place.today.weather.main}"/>`;
   todayText.insertAdjacentHTML('beforeend',tempElement);
   todayText.insertAdjacentHTML('beforeend',cityElement);
   todayText.insertAdjacentHTML('beforeend',weatherElement);
   todayIcon.insertAdjacentHTML('beforeend',weatherIcon);
-};
+}
 
 // Access the fivedays row
-const fiveDaysElem = document.getElementById('fivedays');
+const fiveDays = document.getElementById('fivedays');
 
-const renderFiveDays = fiveDays => {  
-  const today = getDayName(Date.now() / 1000);
-  
-  // Clear the five days element
-  while(fiveDaysElem.hasChildNodes()) {
-    fiveDaysElem.removeChild(fiveDays.firstChild);
+const renderFiveDays = function() {
+  // Clear the five days
+  while(fiveDays.hasChildNodes()) {
+    fiveDays.removeChild(fiveDays.firstChild);
   }
   
-  // Translate the data to their respective day
-  const withDayNames = translateDays(fiveDays);
-
-  // Get the max temp for each day
-  const withTemps = getMaxTemps(withDayNames);
-  
-  // Get the conditions for each day
-  const withConditions = getConditions(withTemps);
-  
-  withConditions.forEach(day => {
+  place.days.forEach(day => {
     const dayWeatherElement = `<li>${day.condition}</li>`;
     const dayTempElement = `<li>${day.temp}</li>`;
     const dayIconElement = `<img src="https://openweathermap.org/img/wn/${day.icon}.png">`;
@@ -219,8 +204,8 @@ const renderFiveDays = fiveDays => {
           </ul>
         </div>
       </div>`;
-    if (day.name !== today) {
-      fiveDaysElem.insertAdjacentHTML("beforeend", dayTemplate);
+    if (day.name !== getDayName(place.today.timestamp)) {
+      fiveDays.insertAdjacentHTML("beforeend", dayTemplate);
     }
   });
-};
+}
