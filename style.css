@@ -1,0 +1,28 @@
+.title {
+  margin: auto;
+  text-align: center;
+}
+
+form {
+  margin: auto;
+  text-align: center;
+}
+
+.column {
+  float: left;
+  width: 50%;
+  margin: auto;
+  text-align: center;
+}
+
+.current-weather:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.col {
+  border: solid;
+  margin-top: 5%;
+  text-align: center;
+}
