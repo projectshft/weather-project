@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="style.css">  
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weather App Prompt</title>
+</head>
+<body>
+  <div class="container">
+
+    <h1 class="my-4">Weather Project- Module 3</h1>
+    <div class="search-box mb-3 d-flex justify-content-center">
+        <input type="text" id="current-town" class="form-control" placeholder="Enter City Name Here">
+        <div class="search-box-add">
+          <button type="button" class="btn btn-primary" id="button-search">Search</button>
+        </div>
+    </div>
+
+
+
+    <div id="weather-today" class="my-4 city-searched-here mx-auto"></div>
+    <div id="week-forecast" class="row"></div>
+  </div>
+
+  <script src="main.js"></script>
+</body>
+</html>
