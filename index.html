@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <title>Weather Project</title>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="page-header my-3">
+          <h1>Weather Project</h1>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 offset-md-3">
+          <div class="input-group mb-3">
+            <input
+              type="text"
+              class="form-control"
+              id="query"
+              placeholder="City, State, Country"
+            />
+            <div class="input-group-append">
+              <button class="btn btn-primary search" type="button">
+                Search
+              </button>
+            </div>
+          </div>
+
+          <hr />
+        </div>
+      </div>
+       
+      <div class="row justify-content-center forecast-today mt-2 mb-4" id="now">
+      </div>
+
+      <div class="container-fluid forecast-5-day ">  
+      </div>
+      
+    <script src="main.js" type="module"></script>
+  </body>
+</html>
