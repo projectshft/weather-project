@@ -1,0 +1,12 @@
+.day {
+  border: 1px solid black;
+}
+
+.five-day {
+  width: 100%;
+  flex-wrap: nowrap;
+}
+
+.weatherImg {
+  padding-top: 15px;
+}
