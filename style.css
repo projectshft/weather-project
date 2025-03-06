@@ -1,0 +1,29 @@
+body {
+  background-color: rgb(83, 121, 160);
+}
+.weather-card {
+  border: 4mm outset rgb(115, 134, 240);
+  padding: 20px;
+  text-align: center;
+  border-radius: 10%;
+  background-color: rgb(161, 252, 217);
+  width: 225px;
+}
+.weather-icon {
+  font-size: 40px;
+}
+.forecast-card {
+  border: 4mm outset rgb(115, 134, 240);
+  text-align: center;
+  border-radius: 10%;
+  background-color: rgb(161, 252, 217);
+  width: auto;
+  min-width: 200px;
+  padding-top: 20px;
+}
+.forecast-card:hover {
+  border: 3mm inset rgb(115, 134, 240);
+}
+.weather-card:hover {
+  border: 3mm inset rgb(115, 134, 240);
+}
