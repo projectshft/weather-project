@@ -1,4 +1,4 @@
-const apiKey = '1d224a4af2354cde18df2f7243cc84f4';
+const apiKey = '';
 let curWeather = {};
 let fiveDayForecast = [];
 
