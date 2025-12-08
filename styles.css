@@ -1,0 +1,35 @@
+h1 {
+  font-weight: bold;
+  font-size: 60px;
+}
+
+.row {
+  margin-top: 60px;
+}
+
+#currentWeather {
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  gap: 300px;
+  margin-top: 40px;
+}
+
+.city {
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.card {
+  max-width: 250px; 
+}
+
+.card-group {
+  justify-content: center;
+  margin-top: 40px;
+}
+
+.card-text {
+  font-weight: bold;
+}
+
