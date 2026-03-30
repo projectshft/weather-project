@@ -1,0 +1,5 @@
+body {
+  background: linear-gradient(180deg, #dddddd 0%, #67b3ff 100%);
+  font-family: 'Montserrat', sans-serif;
+  min-height: 100vh;
+}
