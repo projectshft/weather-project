@@ -1,0 +1,28 @@
+body {
+  width: 100%;
+  min-height: 100vh;
+  text-align: center;
+  background-color: #bfdfec;
+}
+
+@media (max-width: 576px) {
+  
+  .page-header h1 {
+    font-size: 1.5rem;
+  }
+  
+  .input-group {
+    flex-direction: column;
+  }
+
+  .input-group .form-control, 
+  .input-group .btn {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .forecast {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+}
