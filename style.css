@@ -1,0 +1,42 @@
+.title {
+  color: black;
+  font-size: large;
+  font: bolder;
+}
+
+.search-container {
+  display: flex;
+  gap: 20px
+}
+
+
+.search-bar {
+  width: 250px;
+}
+
+.weather-text {
+  text-align: center;
+  font-weight: bold;
+}
+
+.city-weather-info-container {
+
+  display: flex;
+  align-items: center;
+  gap: 100px
+}
+
+.five-day-forecast-container {}
+
+.five-day-info {
+  display: flex;
+}
+
+.five-day-info div {
+  flex: 1;
+  /* all 5 boxes same width */
+  border: 1px solid black;
+  text-align: center;
+  padding: 20px 0;
+  align-items: center;
+}
